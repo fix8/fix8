@@ -1,67 +1,110 @@
 
 //-----------------------------------------------------------------------------------------
-const BaseTypeMap::value_type FieldSpec::_BaseTypes[] =
+template<>
+const BaseTypeMap::TypePair BaseTypeMap::_valueTable[] =
 {
-	BaseTypeMap::value_type("INT", FieldTrait::ft_int),
-	BaseTypeMap::value_type("FLOAT", FieldTrait::ft_float),
-	BaseTypeMap::value_type("CHAR", FieldTrait::ft_char),
-	BaseTypeMap::value_type("STRING", FieldTrait::ft_string),
-	BaseTypeMap::value_type("PATTERN", FieldTrait::ft_pattern)
+	BaseTypeMap::TypePair("INT", FieldTrait::ft_int),
+	BaseTypeMap::TypePair("FLOAT", FieldTrait::ft_float),
+	BaseTypeMap::TypePair("CHAR", FieldTrait::ft_char),
+	BaseTypeMap::TypePair("STRING", FieldTrait::ft_string),
+	BaseTypeMap::TypePair("PATTERN", FieldTrait::ft_pattern)
 };
-const BaseTypeMap FieldSpec::_basetypemap(FieldSpec::_BaseTypes, FieldSpec::_BaseTypes + sizeof(FieldSpec::_BaseTypes)/sizeof(BaseTypeMap::value_type));
+template<>
+const BaseTypeMap::TypeMap BaseTypeMap::_valuemap(BaseTypeMap::_valueTable, BaseTypeMap::Get_Table_End());
+template<>
+BaseTypeMap::NoValType BaseTypeMap::_noval(FieldTrait::ft_untyped);
 
-const TypeMap::value_type FieldSpec::_Types[] =
+//-----------------------------------------------------------------------------------------
+template<>
+const SubTypeMap::TypePair SubTypeMap::_valueTable[] =
 {
-	TypeMap::value_type("LENGTH", FieldTrait::fst_Length),
-	TypeMap::value_type("TAGNUM", FieldTrait::fst_TagNum),
-	TypeMap::value_type("SEQNUM", FieldTrait::fst_SeqNum),
-	TypeMap::value_type("NUMINGROUP", FieldTrait::fst_NumInGroup),
-	TypeMap::value_type("DAYOFMONTH", FieldTrait::fst_DayOfMonth),
-	TypeMap::value_type("QTY", FieldTrait::fst_Qty),
-	TypeMap::value_type("PRICE", FieldTrait::fst_Price),
-	TypeMap::value_type("PRICEOFFSET", FieldTrait::fst_PriceOffset),
-	TypeMap::value_type("AMT", FieldTrait::fst_Amt),
-	TypeMap::value_type("PERCENTAGE", FieldTrait::fst_Percentage),
-	TypeMap::value_type("BOOLEAN", FieldTrait::fst_Boolean),
-	TypeMap::value_type("MULTIPLECHARVALUE", FieldTrait::fst_MultipleCharValue),
-	TypeMap::value_type("MULTIPLESTRINGVALUE", FieldTrait::fst_MultipleStringValue),
-	TypeMap::value_type("COUNTRY", FieldTrait::fst_Country),
-	TypeMap::value_type("CURRENCY", FieldTrait::fst_Currency),
-	TypeMap::value_type("EXCHANGE", FieldTrait::fst_Exchange),
-	TypeMap::value_type("MONTHYEAR", FieldTrait::fst_MonthYear),
-	TypeMap::value_type("UTCTIMESTAMP", FieldTrait::fst_UTCTimestamp),
-	TypeMap::value_type("UTCTIMEONLY", FieldTrait::fst_UTCTimeOnly),
-	TypeMap::value_type("UTCDATEONLY", FieldTrait::fst_UTCDateOnly),
-	TypeMap::value_type("LOCALMKTDATE", FieldTrait::fst_LocalMktDate),
-	TypeMap::value_type("TZTIMEONLY", FieldTrait::fst_TZTimeOnly),
-	TypeMap::value_type("TZTIMESTAMP", FieldTrait::fst_TZTimestamp),
-	TypeMap::value_type("XMLDATA", FieldTrait::fst_XMLData),
-	TypeMap::value_type("DATA", FieldTrait::fst_data),
-	TypeMap::value_type("TENOR", FieldTrait::fst_Tenor),
-	TypeMap::value_type("RESERVED100PLUS", FieldTrait::fst_Reserved100Plus),
-	TypeMap::value_type("RESERVED1000PLUS", FieldTrait::fst_Reserved1000Plus),
-	TypeMap::value_type("RESERVED4000PLUS", FieldTrait::fst_Reserved4000Plus)
+	SubTypeMap::TypePair("LENGTH", FieldTrait::fst_Length),
+	SubTypeMap::TypePair("TAGNUM", FieldTrait::fst_TagNum),
+	SubTypeMap::TypePair("SEQNUM", FieldTrait::fst_SeqNum),
+	SubTypeMap::TypePair("NUMINGROUP", FieldTrait::fst_NumInGroup),
+	SubTypeMap::TypePair("DAYOFMONTH", FieldTrait::fst_DayOfMonth),
+	SubTypeMap::TypePair("QTY", FieldTrait::fst_Qty),
+	SubTypeMap::TypePair("PRICE", FieldTrait::fst_Price),
+	SubTypeMap::TypePair("PRICEOFFSET", FieldTrait::fst_PriceOffset),
+	SubTypeMap::TypePair("AMT", FieldTrait::fst_Amt),
+	SubTypeMap::TypePair("PERCENTAGE", FieldTrait::fst_Percentage),
+	SubTypeMap::TypePair("BOOLEAN", FieldTrait::fst_Boolean),
+	SubTypeMap::TypePair("MULTIPLECHARVALUE", FieldTrait::fst_MultipleCharValue),
+	SubTypeMap::TypePair("MULTIPLESTRINGVALUE", FieldTrait::fst_MultipleStringValue),
+	SubTypeMap::TypePair("COUNTRY", FieldTrait::fst_Country),
+	SubTypeMap::TypePair("CURRENCY", FieldTrait::fst_Currency),
+	SubTypeMap::TypePair("EXCHANGE", FieldTrait::fst_Exchange),
+	SubTypeMap::TypePair("MONTHYEAR", FieldTrait::fst_MonthYear),
+	SubTypeMap::TypePair("UTCTIMESTAMP", FieldTrait::fst_UTCTimestamp),
+	SubTypeMap::TypePair("UTCTIMEONLY", FieldTrait::fst_UTCTimeOnly),
+	SubTypeMap::TypePair("UTCDATEONLY", FieldTrait::fst_UTCDateOnly),
+	SubTypeMap::TypePair("LOCALMKTDATE", FieldTrait::fst_LocalMktDate),
+	SubTypeMap::TypePair("TZTIMEONLY", FieldTrait::fst_TZTimeOnly),
+	SubTypeMap::TypePair("TZTIMESTAMP", FieldTrait::fst_TZTimestamp),
+	SubTypeMap::TypePair("XMLDATA", FieldTrait::fst_XMLData),
+	SubTypeMap::TypePair("DATA", FieldTrait::fst_data),
+	SubTypeMap::TypePair("TENOR", FieldTrait::fst_Tenor),
+	SubTypeMap::TypePair("RESERVED100PLUS", FieldTrait::fst_Reserved100Plus),
+	SubTypeMap::TypePair("RESERVED1000PLUS", FieldTrait::fst_Reserved1000Plus),
+	SubTypeMap::TypePair("RESERVED4000PLUS", FieldTrait::fst_Reserved4000Plus)
 };
-const TypeMap FieldSpec::_typemap(FieldSpec::_Types, FieldSpec::_Types + sizeof(FieldSpec::_Types)/sizeof(TypeMap::value_type));
+template<>
+const SubTypeMap::TypeMap SubTypeMap::_valuemap(SubTypeMap::_valueTable, SubTypeMap::Get_Table_End());
+template<>
+SubTypeMap::NoValType SubTypeMap::_noval(FieldTrait::fst_untyped);
 
-const CPPTypeMap::value_type FieldSpec::_CPPTypes[] =
+//-----------------------------------------------------------------------------------------
+template<>
+const TypeToCPP::TypePair TypeToCPP::_valueTable[] =
 {
-	CPPTypeMap::value_type(FieldTrait::ft_int, "int"),
-	CPPTypeMap::value_type(FieldTrait::ft_float, "double"),
-	CPPTypeMap::value_type(FieldTrait::ft_char, "char"),
-	CPPTypeMap::value_type(FieldTrait::ft_string, "std::string"),
-	CPPTypeMap::value_type(FieldTrait::ft_pattern, "std::string")
+	TypeToCPP::TypePair(FieldTrait::ft_int, "int"),
+	TypeToCPP::TypePair(FieldTrait::ft_float, "double"),
+	TypeToCPP::TypePair(FieldTrait::ft_char, "char"),
+	TypeToCPP::TypePair(FieldTrait::ft_string, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_pattern, "std::string")
 };
-const CPPTypeMap FieldSpec::_cpptypemap(FieldSpec::_CPPTypes, FieldSpec::_CPPTypes + sizeof(FieldSpec::_CPPTypes)/sizeof(CPPTypeMap::value_type));
+template<>
+const TypeToCPP::TypeMap TypeToCPP::_valuemap(TypeToCPP::_valueTable, TypeToCPP::Get_Table_End());
+template<>
+TypeToCPP::NoValType TypeToCPP::_noval("Unknown");
 
-const FIXCPPTypeMap::value_type FieldSpec::_FIXCPPTypes[] =
+//-----------------------------------------------------------------------------------------
+template<>
+const SubtypeToCPP::TypePair SubtypeToCPP::_valueTable[] =
 {
-	FIXCPPTypeMap::value_type(FieldTrait::ft_int, "int"),
-	FIXCPPTypeMap::value_type(FieldTrait::ft_float, "double"),
-	FIXCPPTypeMap::value_type(FieldTrait::ft_char, "char"),
-	FIXCPPTypeMap::value_type(FieldTrait::ft_string, "std::string"),
-	FIXCPPTypeMap::value_type(FieldTrait::ft_pattern, "std::string")
+	SubtypeToCPP::TypePair(FieldTrait::fst_Length, "int"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_TagNum, "int"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_SeqNum, "int"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_NumInGroup, "int"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_DayOfMonth, "int"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Qty, "double"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Price, "double"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_PriceOffset, "double"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Amt, "double"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Percentage, "double"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Boolean, "char"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_MultipleCharValue, "std::string"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_MultipleStringValue, "std::string"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Country, "std::string"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Currency, "std::string"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Exchange, "std::string"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_MonthYear, "std::string"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_UTCTimestamp, "UTCTimestamp"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_UTCTimeOnly, "UTCTimeOnly"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_UTCDateOnly, "UTCDateOnly"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_LocalMktDate, "LocalMktDate"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_TZTimeOnly, "TZTimeOnly"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_TZTimestamp, "TZTimestamp"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_XMLData, "std::string"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_data, "std::string"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Tenor, "std::string"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Reserved100Plus, "std::string"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Reserved1000Plus, "std::string"),
+	SubtypeToCPP::TypePair(FieldTrait::fst_Reserved4000Plus, "std::string")
 };
-const FIXCPPTypeMap FieldSpec::_fixcpptypemap
-	(FieldSpec::_FIXCPPTypes, FieldSpec::_FIXCPPTypes + sizeof(FieldSpec::_FIXCPPTypes)/sizeof(FIXCPPTypeMap::value_type));
+template<>
+const SubtypeToCPP::TypeMap SubtypeToCPP::_valuemap(SubtypeToCPP::_valueTable, SubtypeToCPP::Get_Table_End());
+template<>
+SubtypeToCPP::NoValType SubtypeToCPP::_noval("Unknown");
+
 //-----------------------------------------------------------------------------------------

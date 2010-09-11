@@ -29,10 +29,10 @@ TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF TH
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -------------------------------------------------------------------------------------------
-$Id: xml.cpp 497 2010-01-10 01:57:03Z davidd $
-$LastChangedDate: 2010-01-10 12:57:03 +1100 (Sun, 10 Jan 2010) $
-$Rev: 497 $
-$URL: svn://catfarm.electro.mine.nu/usr/local/repos/mongod/trunk/base/xml.cpp $
+$Id$
+$LastChangedDate$
+$Rev$
+$URL$
 
 #endif
 //-----------------------------------------------------------------------------------------

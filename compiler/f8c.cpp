@@ -29,9 +29,9 @@ TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF TH
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -------------------------------------------------------------------------------------------
-$Id: f8c.cpp 496 2010-01-04 10:01:54Z davidd $
-$Date: 2010-01-04 21:01:54 +1100 (Mon, 04 Jan 2010) $
-$URL: svn://catfarm.electro.mine.nu/usr/local/repos/mongod/trunk/utils/f8c.cpp $
+$Id$
+$Date$
+$URL$
 
 #endif
 //-----------------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ using namespace std;
 using namespace FIX;
 
 //-----------------------------------------------------------------------------------------
-static const std::string rcsid("$Id: f8c.cpp 496 2010-01-04 10:01:54Z davidd $");
+static const std::string rcsid("$Id$");
 
 //-----------------------------------------------------------------------------------------
 const string GETARGLIST("hvo:p:");
@@ -213,8 +213,8 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 		string number, name, type;
 		if ((*itr)->GetAttr("number", number) && (*itr)->GetAttr("name", name) && (*itr)->GetAttr("type", type))
 		{
-			FieldTrait::FieldSubType fst(FieldSpec::Find_FieldSubType(InPlaceStrToUpper(type)));
-			FieldTrait::FieldType ft(FieldSpec::Find_FieldType(type));
+			FieldTrait::FieldSubType fst(FieldSpec::_subTypeMap.Find_Value(InPlaceStrToUpper(type)));
+			FieldTrait::FieldType ft(FieldSpec::_baseTypeMap.Find_Value(type));
 			pair<FieldSpecMap::iterator, bool> result;
 			if (fst != FieldTrait::fst_untyped)
 				result = fspec.insert(FieldSpecMap::value_type(GetValue<unsigned>(number), FieldSpec(name, fst)));
@@ -225,6 +225,11 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 				cerr << "Unknown field type: " << type << " in " << name << " at "
 					<< inputFile << '(' << (*itr)->GetLine() << ')' << endl;
 				continue;
+			}
+
+			string domain;
+			if ((*itr)->GetAttr("domain", domain))
+			{
 			}
 
 			++fieldsLoaded;
@@ -272,9 +277,9 @@ int process(XmlEntity& xf, ostream& os_cpp, ostream& os_hpp)
 
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
-		FieldTrait::FieldType this_ft(fitr->second._ftype == FieldTrait::ft_untyped ?
-			FieldTrait::Find_FieldType(fitr->second._fstype) : fitr->second._ftype);
-		os_hpp << "typedef Field<" << FieldSpec::Find_CPPType(this_ft)
+		os_hpp << "typedef Field<" <<
+			(fitr->second._ftype != FieldTrait::ft_untyped ? FieldSpec::_typeToCPP.Find_Value_Ref(fitr->second._ftype)
+																		  : FieldSpec::_subtypeToCPP.Find_Value_Ref(fitr->second._fstype))
 			<< ", " << fitr->first << "> " << fitr->second._name << ';' << endl;
 	}
 
