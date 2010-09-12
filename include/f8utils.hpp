@@ -28,10 +28,10 @@ HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LI
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-$Id: xml.hpp 497 2010-01-10 01:57:03Z davidd $
-$LastChangedDate: 2010-01-10 12:57:03 +1100 (Sun, 10 Jan 2010) $
-$Rev: 497 $
-$URL: svn://catfarm.electro.mine.nu/usr/local/repos/mongod/trunk/base/xml.hpp $
+$Id$
+$LastChangedDate$
+$Rev$
+$URL$
 
 #endif
 //-----------------------------------------------------------------------------------------

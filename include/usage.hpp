@@ -28,10 +28,10 @@ HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LI
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-$Id: usage.hpp 496 2010-01-04 10:01:54Z davidd $
-$LastChangedDate: 2010-01-04 21:01:54 +1100 (Mon, 04 Jan 2010) $
-$Rev: 496 $
-$URL: svn://catfarm.electro.mine.nu/usr/local/repos/mongod/trunk/base/usage.hpp $
+$Id$
+$LastChangedDate$
+$Rev$
+$URL$
 
 #endif
 //-----------------------------------------------------------------------------------------
