@@ -12,9 +12,10 @@
 #include <message.hpp>
 
 //-------------------------------------------------------------------------------------------------
-using namespace FIX;
+using namespace FIX8;
 
 //-------------------------------------------------------------------------------------------------
+#if 0
 const FieldTrait::FieldTypeMap::value_type FieldTrait::_subpair[] =
 {
 	FieldTypeMap::value_type(FieldTrait::fst_Length, FieldTrait::ft_int),
@@ -51,6 +52,7 @@ const FieldTrait::FieldTypeMap::value_type FieldTrait::_subpair[] =
 const FieldTrait::FieldTypeMap
 	FieldTrait::_fieldTypeMap(FieldTrait::_subpair, FieldTrait::_subpair
 		+ sizeof(FieldTrait::_subpair)/sizeof(FieldTrait::FieldTypeMap::value_type));
+#endif
 
 //-------------------------------------------------------------------------------------------------
 

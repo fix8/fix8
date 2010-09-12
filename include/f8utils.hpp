@@ -38,7 +38,7 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/mongod/trunk/base/xml.hpp $
 #ifndef _F8_UTILS_HPP_
 #define _F8_UTILS_HPP_
 
-namespace FIX {
+namespace FIX8 {
 
 //----------------------------------------------------------------------------------------
 std::string& InPlaceChrReplace(const char sch, const char rch, std::string& source);
@@ -303,7 +303,7 @@ struct free_ptr
 	void operator()(const T& ptr) const { Deleter()(ptr); }
 };
 
-} // namespace FIX
+} // namespace FIX8
 
 #endif // _F8_UTILS_HPP_
 

@@ -50,23 +50,25 @@ $URL$
 #include <regex.h>
 #include <errno.h>
 #include <string.h>
+//#ifdef HAVE_GETOPT_H
+#include <getopt.h>
+//#endif
 
+// f8 headers
+#include <f8types.hpp>
 #include <field.hpp>
 #include <traits.hpp>
 #include <message.hpp>
 #include <usage.hpp>
 #include <f8utils.hpp>
-#include <xmldecode.hpp>
+#include <xml.hpp>
 #include <f8c.hpp>
 
 //#include <config.h>
-//#ifdef HAVE_GETOPT_H
-#include <getopt.h>
-//#endif
 
 //-----------------------------------------------------------------------------------------
 using namespace std;
-using namespace FIX;
+using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 static const std::string rcsid("$Id$");
@@ -173,8 +175,7 @@ int main(int argc, char **argv)
 	if (!os_cpp.get() || !os_hpp.get())
 		return 1;
 
-	process(*cfr, *os_cpp.get(), *os_hpp.get());
-	return 0;
+	return process(*cfr, *os_cpp.get(), *os_hpp.get());
 }
 
 //-----------------------------------------------------------------------------------------
@@ -213,12 +214,10 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 		string number, name, type;
 		if ((*itr)->GetAttr("number", number) && (*itr)->GetAttr("name", name) && (*itr)->GetAttr("type", type))
 		{
-			FieldTrait::FieldSubType fst(FieldSpec::_subTypeMap.Find_Value(InPlaceStrToUpper(type)));
+			InPlaceStrToUpper(type);
 			FieldTrait::FieldType ft(FieldSpec::_baseTypeMap.Find_Value(type));
 			pair<FieldSpecMap::iterator, bool> result;
-			if (fst != FieldTrait::fst_untyped)
-				result = fspec.insert(FieldSpecMap::value_type(GetValue<unsigned>(number), FieldSpec(name, fst)));
-			else if (ft != FieldTrait::ft_untyped)
+			if (ft != FieldTrait::ft_untyped)
 				result = fspec.insert(FieldSpecMap::value_type(GetValue<unsigned>(number), FieldSpec(name, ft)));
 			else
 			{
@@ -227,10 +226,8 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 				continue;
 			}
 
-			string domain;
-			if ((*itr)->GetAttr("domain", domain))
-			{
-			}
+			(*itr)->GetAttr("description", result.first->second._description);
+			(*itr)->GetAttr("domain", result.first->second._domain);
 
 			++fieldsLoaded;
 
@@ -263,29 +260,42 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 //-----------------------------------------------------------------------------------------
 int process(XmlEntity& xf, ostream& os_cpp, ostream& os_hpp)
 {
+	int result(0);
 	// generate field types
 	FieldSpecMap fspec;
 	int fieldsLoaded(loadfields(xf, fspec));
 	cout << "loaded " << fieldsLoaded << " fields" << endl;
 	if (!fieldsLoaded)
-		return 0;
+		return result;
 
-	os_hpp << "// *** f8c generated file: Do Not Edit" << endl;
+	os_hpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
+	os_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	os_hpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
+	os_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	os_hpp << "#ifndef _" << prefix << "_HPP_" << endl;
 	os_hpp << "#define _" << prefix << "_HPP_" << endl << endl;
-	os_hpp << "namespace FIX {" << endl << endl;
+	os_hpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
+
+	os_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	os_cpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
+	os_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	os_cpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
+	os_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	os_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl << endl;
 
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
-		os_hpp << "typedef Field<" <<
-			(fitr->second._ftype != FieldTrait::ft_untyped ? FieldSpec::_typeToCPP.Find_Value_Ref(fitr->second._ftype)
-																		  : FieldSpec::_subtypeToCPP.Find_Value_Ref(fitr->second._fstype))
+		os_hpp << "typedef Field<" << FieldSpec::_typeToCPP.Find_Value_Ref(fitr->second._ftype)
 			<< ", " << fitr->first << "> " << fitr->second._name << ';' << endl;
 	}
 
-	int result(0);
-	os_hpp << endl << "} // namespace FIX" << endl;
+	os_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	os_hpp << _csMap.Find_Value_Ref(cs_generated_table_def) << endl;
+
+	// terminate files
+	os_hpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
 	os_hpp << "#endif //_" << prefix << "_HPP_" << endl;
+	os_cpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
 	return result;
 }
 

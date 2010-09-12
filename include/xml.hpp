@@ -46,7 +46,7 @@ class XmlEntity
 {
 	static const int MaxDepth = 128;
 	static int errors_, line_, maxdepth_, seq_;
-	static FIX::RegExp rCE_, rCX_;
+	static FIX8::RegExp rCE_, rCX_;
 
 	std::string tag_, *value_, *decl_;
 	int depth_, sequence_, txtline_;

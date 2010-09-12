@@ -1,6 +1,6 @@
 TARGET = ../lib/libf8.so
 INCLUDE = ../include
-CXX_SRCS = xmldecode.cpp f8utils.cpp message.cpp traits.cpp
+CXX_SRCS = xml.cpp f8utils.cpp message.cpp traits.cpp
 CXXFLAGS = -O3 -ggdb -Wall
 LDFLAGS = -ggdb -rdynamic -shared
 OBJS = $(CXX_SRCS:.cpp=.o)

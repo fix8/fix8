@@ -1,110 +1,208 @@
+//-------------------------------------------------------------------------------------------------
+#if 0
 
-//-----------------------------------------------------------------------------------------
+Fix8 is released under the New BSD License.
+
+Copyright (c) 2010, David L. Dight <www@orbweb.org>
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are
+permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this list of
+	 	conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, this list
+	 	of conditions and the following disclaimer in the documentation and/or other
+		materials provided with the distribution.
+    * Neither the name of the author nor the names of its contributors may be used to
+	 	endorse or promote products derived from this software without specific prior
+		written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
+MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
+THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
+SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
+OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
+TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+---------------------------------------------------------------------------------------------------
+$Id$
+$Date$
+$URL$
+
+#endif
+//-------------------------------------------------------------------------------------------------
 template<>
 const BaseTypeMap::TypePair BaseTypeMap::_valueTable[] =
 {
 	BaseTypeMap::TypePair("INT", FieldTrait::ft_int),
+	BaseTypeMap::TypePair("LENGTH", FieldTrait::ft_Length),
+	BaseTypeMap::TypePair("TAGNUM", FieldTrait::ft_TagNum),
+	BaseTypeMap::TypePair("SEQNUM", FieldTrait::ft_SeqNum),
+	BaseTypeMap::TypePair("NUMINGROUP", FieldTrait::ft_NumInGroup),
+	BaseTypeMap::TypePair("DAYOFMONTH", FieldTrait::ft_DayOfMonth),
 	BaseTypeMap::TypePair("FLOAT", FieldTrait::ft_float),
+	BaseTypeMap::TypePair("QTY", FieldTrait::ft_Qty),
+	BaseTypeMap::TypePair("PRICE", FieldTrait::ft_Price),
+	BaseTypeMap::TypePair("PRICEOFFSET", FieldTrait::ft_PriceOffset),
+	BaseTypeMap::TypePair("AMT", FieldTrait::ft_Amt),
+	BaseTypeMap::TypePair("PERCENTAGE", FieldTrait::ft_Percentage),
 	BaseTypeMap::TypePair("CHAR", FieldTrait::ft_char),
+	BaseTypeMap::TypePair("BOOLEAN", FieldTrait::ft_Boolean),
 	BaseTypeMap::TypePair("STRING", FieldTrait::ft_string),
-	BaseTypeMap::TypePair("PATTERN", FieldTrait::ft_pattern)
+	BaseTypeMap::TypePair("MULTIPLECHARVALUE", FieldTrait::ft_MultipleCharValue),
+	BaseTypeMap::TypePair("MULTIPLESTRINGVALUE", FieldTrait::ft_MultipleStringValue),
+	BaseTypeMap::TypePair("COUNTRY", FieldTrait::ft_Country),
+	BaseTypeMap::TypePair("CURRENCY", FieldTrait::ft_Currency),
+	BaseTypeMap::TypePair("EXCHANGE", FieldTrait::ft_Exchange),
+	BaseTypeMap::TypePair("MONTHYEAR", FieldTrait::ft_MonthYear),
+	BaseTypeMap::TypePair("UTCTIMESTAMP", FieldTrait::ft_UTCTimestamp),
+	BaseTypeMap::TypePair("UTCTIMEONLY", FieldTrait::ft_UTCTimeOnly),
+	BaseTypeMap::TypePair("UTCDATEONLY", FieldTrait::ft_UTCDateOnly),
+	BaseTypeMap::TypePair("LOCALMKTDATE", FieldTrait::ft_LocalMktDate),
+	BaseTypeMap::TypePair("TZTIMEONLY", FieldTrait::ft_TZTimeOnly),
+	BaseTypeMap::TypePair("TZTIMESTAMP", FieldTrait::ft_TZTimestamp),
+	BaseTypeMap::TypePair("XMLDATA", FieldTrait::ft_XMLData),
+	BaseTypeMap::TypePair("DATA", FieldTrait::ft_data),
+	BaseTypeMap::TypePair("PATTERN", FieldTrait::ft_pattern),
+	BaseTypeMap::TypePair("TENOR", FieldTrait::ft_Tenor),
+	BaseTypeMap::TypePair("RESERVED100PLUS", FieldTrait::ft_Reserved100Plus),
+	BaseTypeMap::TypePair("RESERVED1000PLUS", FieldTrait::ft_Reserved1000Plus),
+	BaseTypeMap::TypePair("RESERVED4000PLUS", FieldTrait::ft_Reserved4000Plus)
 };
 template<>
 const BaseTypeMap::TypeMap BaseTypeMap::_valuemap(BaseTypeMap::_valueTable, BaseTypeMap::Get_Table_End());
 template<>
 BaseTypeMap::NoValType BaseTypeMap::_noval(FieldTrait::ft_untyped);
 
-//-----------------------------------------------------------------------------------------
-template<>
-const SubTypeMap::TypePair SubTypeMap::_valueTable[] =
-{
-	SubTypeMap::TypePair("LENGTH", FieldTrait::fst_Length),
-	SubTypeMap::TypePair("TAGNUM", FieldTrait::fst_TagNum),
-	SubTypeMap::TypePair("SEQNUM", FieldTrait::fst_SeqNum),
-	SubTypeMap::TypePair("NUMINGROUP", FieldTrait::fst_NumInGroup),
-	SubTypeMap::TypePair("DAYOFMONTH", FieldTrait::fst_DayOfMonth),
-	SubTypeMap::TypePair("QTY", FieldTrait::fst_Qty),
-	SubTypeMap::TypePair("PRICE", FieldTrait::fst_Price),
-	SubTypeMap::TypePair("PRICEOFFSET", FieldTrait::fst_PriceOffset),
-	SubTypeMap::TypePair("AMT", FieldTrait::fst_Amt),
-	SubTypeMap::TypePair("PERCENTAGE", FieldTrait::fst_Percentage),
-	SubTypeMap::TypePair("BOOLEAN", FieldTrait::fst_Boolean),
-	SubTypeMap::TypePair("MULTIPLECHARVALUE", FieldTrait::fst_MultipleCharValue),
-	SubTypeMap::TypePair("MULTIPLESTRINGVALUE", FieldTrait::fst_MultipleStringValue),
-	SubTypeMap::TypePair("COUNTRY", FieldTrait::fst_Country),
-	SubTypeMap::TypePair("CURRENCY", FieldTrait::fst_Currency),
-	SubTypeMap::TypePair("EXCHANGE", FieldTrait::fst_Exchange),
-	SubTypeMap::TypePair("MONTHYEAR", FieldTrait::fst_MonthYear),
-	SubTypeMap::TypePair("UTCTIMESTAMP", FieldTrait::fst_UTCTimestamp),
-	SubTypeMap::TypePair("UTCTIMEONLY", FieldTrait::fst_UTCTimeOnly),
-	SubTypeMap::TypePair("UTCDATEONLY", FieldTrait::fst_UTCDateOnly),
-	SubTypeMap::TypePair("LOCALMKTDATE", FieldTrait::fst_LocalMktDate),
-	SubTypeMap::TypePair("TZTIMEONLY", FieldTrait::fst_TZTimeOnly),
-	SubTypeMap::TypePair("TZTIMESTAMP", FieldTrait::fst_TZTimestamp),
-	SubTypeMap::TypePair("XMLDATA", FieldTrait::fst_XMLData),
-	SubTypeMap::TypePair("DATA", FieldTrait::fst_data),
-	SubTypeMap::TypePair("TENOR", FieldTrait::fst_Tenor),
-	SubTypeMap::TypePair("RESERVED100PLUS", FieldTrait::fst_Reserved100Plus),
-	SubTypeMap::TypePair("RESERVED1000PLUS", FieldTrait::fst_Reserved1000Plus),
-	SubTypeMap::TypePair("RESERVED4000PLUS", FieldTrait::fst_Reserved4000Plus)
-};
-template<>
-const SubTypeMap::TypeMap SubTypeMap::_valuemap(SubTypeMap::_valueTable, SubTypeMap::Get_Table_End());
-template<>
-SubTypeMap::NoValType SubTypeMap::_noval(FieldTrait::fst_untyped);
-
-//-----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 template<>
 const TypeToCPP::TypePair TypeToCPP::_valueTable[] =
 {
 	TypeToCPP::TypePair(FieldTrait::ft_int, "int"),
+	TypeToCPP::TypePair(FieldTrait::ft_Length, "int"),
+	TypeToCPP::TypePair(FieldTrait::ft_TagNum, "int"),
+	TypeToCPP::TypePair(FieldTrait::ft_SeqNum, "int"),
+	TypeToCPP::TypePair(FieldTrait::ft_NumInGroup, "int"),
+	TypeToCPP::TypePair(FieldTrait::ft_DayOfMonth, "int"),
 	TypeToCPP::TypePair(FieldTrait::ft_float, "double"),
+	TypeToCPP::TypePair(FieldTrait::ft_Qty, "double"),
+	TypeToCPP::TypePair(FieldTrait::ft_Price, "double"),
+	TypeToCPP::TypePair(FieldTrait::ft_PriceOffset, "double"),
+	TypeToCPP::TypePair(FieldTrait::ft_Amt, "double"),
+	TypeToCPP::TypePair(FieldTrait::ft_Percentage, "double"),
 	TypeToCPP::TypePair(FieldTrait::ft_char, "char"),
+	TypeToCPP::TypePair(FieldTrait::ft_Boolean, "char"),
 	TypeToCPP::TypePair(FieldTrait::ft_string, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_pattern, "std::string")
+	TypeToCPP::TypePair(FieldTrait::ft_MultipleCharValue, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_MultipleStringValue, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_Country, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_Currency, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_Exchange, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_MonthYear, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_UTCTimestamp, "UTCTimestamp"),
+	TypeToCPP::TypePair(FieldTrait::ft_UTCTimeOnly, "UTCTimeOnly"),
+	TypeToCPP::TypePair(FieldTrait::ft_UTCDateOnly, "UTCDateOnly"),
+	TypeToCPP::TypePair(FieldTrait::ft_LocalMktDate, "LocalMktDate"),
+	TypeToCPP::TypePair(FieldTrait::ft_TZTimeOnly, "TZTimeOnly"),
+	TypeToCPP::TypePair(FieldTrait::ft_TZTimestamp, "TZTimestamp"),
+	TypeToCPP::TypePair(FieldTrait::ft_XMLData, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_data, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_pattern, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_Tenor, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_Reserved100Plus, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_Reserved1000Plus, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_Reserved4000Plus, "std::string")
 };
 template<>
 const TypeToCPP::TypeMap TypeToCPP::_valuemap(TypeToCPP::_valueTable, TypeToCPP::Get_Table_End());
 template<>
 TypeToCPP::NoValType TypeToCPP::_noval("Unknown");
 
-//-----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 template<>
-const SubtypeToCPP::TypePair SubtypeToCPP::_valueTable[] =
+const CSMap::TypePair CSMap::_valueTable[] =
 {
-	SubtypeToCPP::TypePair(FieldTrait::fst_Length, "int"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_TagNum, "int"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_SeqNum, "int"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_NumInGroup, "int"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_DayOfMonth, "int"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Qty, "double"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Price, "double"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_PriceOffset, "double"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Amt, "double"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Percentage, "double"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Boolean, "char"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_MultipleCharValue, "std::string"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_MultipleStringValue, "std::string"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Country, "std::string"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Currency, "std::string"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Exchange, "std::string"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_MonthYear, "std::string"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_UTCTimestamp, "UTCTimestamp"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_UTCTimeOnly, "UTCTimeOnly"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_UTCDateOnly, "UTCDateOnly"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_LocalMktDate, "LocalMktDate"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_TZTimeOnly, "TZTimeOnly"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_TZTimestamp, "TZTimestamp"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_XMLData, "std::string"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_data, "std::string"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Tenor, "std::string"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Reserved100Plus, "std::string"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Reserved1000Plus, "std::string"),
-	SubtypeToCPP::TypePair(FieldTrait::fst_Reserved4000Plus, "std::string")
+	CSMap::TypePair(cs_do_not_edit, "// *** f8c generated file: Do Not Edit"),
+	CSMap::TypePair(cs_start_namespace, "namespace FIX8 {"),
+	CSMap::TypePair(cs_end_namespace, "} // namespace FIX8"),
+	CSMap::TypePair(cs_generated_table_def,
+"template<typename Key, typename Val>\n"
+"class GeneratedTable\n"
+"{\n"
+"	struct Pair\n"
+"	{\n"
+"		Key _key;\n"
+"		Val _value;\n"
+"\n"
+"		struct Less\n"
+"		{\n"
+"			bool operator()(const Pair &p1, const Pair &p2) const { return p1._key < p2._key; }\n"
+"		};\n"
+"	};\n"
+"\n"
+"	static const Pair _pairs[];\n"
+"	static const size_t _pairsz;\n"
+"\n"
+"	typedef Val NoValType;\n"
+"	static NoValType _noval;\n"
+"\n"
+"public:\n"
+"	static const Val& find_ref(const Key& key)\n"
+"	{\n"
+"		const Pair what = { key };\n"
+"		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, Pair::Less));\n"
+"		return res.first != res.second ? res.first->value : _noval;\n"
+"	}\n"
+"	static const Val find_val(const Key& key)\n"
+"	{\n"
+"		const Pair what = { key };\n"
+"		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, Pair::Less));\n"
+"		return res.first != res.second ? res.first->value : _noval;\n"
+"	}\n"
+"};\n"),
+
+	CSMap::TypePair(cs_divider,
+"//-------------------------------------------------------------------------------------------------"),
+
+	CSMap::TypePair(cs_copyright,
+"#if 0\n"
+"\n"
+"Fix8 is released under the New BSD License.\n"
+"\n"
+"Copyright (c) 2010, David L. Dight <www@orbweb.org>\n"
+"All rights reserved.\n"
+"\n"
+"Redistribution and use in source and binary forms, with or without modification, are\n"
+"permitted provided that the following conditions are met:\n"
+"\n"
+"    * Redistributions of source code must retain the above copyright notice, this list of\n"
+"	 	conditions and the following disclaimer.\n"
+"    * Redistributions in binary form must reproduce the above copyright notice, this list\n"
+"	 	of conditions and the following disclaimer in the documentation and/or other\n"
+"		materials provided with the distribution.\n"
+"    * Neither the name of the author nor the names of its contributors may be used to\n"
+"	 	endorse or promote products derived from this software without specific prior\n"
+"		written permission.\n"
+"\n"
+"THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND ANY EXPRESS\n"
+"OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF\n"
+"MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL\n"
+"THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,\n"
+"SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT\n"
+"OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)\n"
+"HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR\n"
+"TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE\n"
+"EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n"
+"\n"
+"#endif\n"),
 };
 template<>
-const SubtypeToCPP::TypeMap SubtypeToCPP::_valuemap(SubtypeToCPP::_valueTable, SubtypeToCPP::Get_Table_End());
+const CSMap::TypeMap CSMap::_valuemap(CSMap::_valueTable, CSMap::Get_Table_End());
 template<>
-SubtypeToCPP::NoValType SubtypeToCPP::_noval("Unknown");
+CSMap::NoValType CSMap::_noval("not found");
 
-//-----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------

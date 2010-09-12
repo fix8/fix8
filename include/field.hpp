@@ -1,9 +1,9 @@
 //-------------------------------------------------------------------------------------------------
-#ifndef _IF_FIX_FIELD_HPP_
-#define _IF_FIX_FIELD_HPP_
+#ifndef _IF_FIX8_FIELD_HPP_
+#define _IF_FIX8_FIELD_HPP_
 
 //-------------------------------------------------------------------------------------------------
-namespace FIX {
+namespace FIX8 {
 
 class BaseField
 {
@@ -227,6 +227,6 @@ public:
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
-} // FIX
+} // FIX8
 
-#endif // _IF_FIX_FIELD_HPP_
+#endif // _IF_FIX8_FIELD_HPP_

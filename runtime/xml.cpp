@@ -71,10 +71,10 @@ $URL$
 #include <vector>
 
 #include <f8utils.hpp>
-#include <xmldecode.hpp>
+#include <xml.hpp>
 
 //----------------------------------------------------------------------------------------
-using namespace FIX;
+using namespace FIX8;
 using namespace std;
 
 //----------------------------------------------------------------------------------------

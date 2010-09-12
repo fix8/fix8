@@ -1,52 +1,46 @@
 //-------------------------------------------------------------------------------------------------
-#ifndef _IF_FIX_TRAITS_HPP_
-#define _IF_FIX_TRAITS_HPP_
+#ifndef _IF_FIX8_TRAITS_HPP_
+#define _IF_FIX8_TRAITS_HPP_
 
 #include <set>
 
 //-------------------------------------------------------------------------------------------------
-namespace FIX {
+namespace FIX8 {
 
 struct FieldTrait
 {
 	unsigned short _fnum;
-	enum FieldType { ft_untyped, ft_int, ft_float, ft_string, ft_char, ft_pattern };
-	enum FieldSubType
+	enum FieldType
 	{
-		fst_untyped,
-		fst_Length, fst_TagNum, fst_SeqNum, fst_NumInGroup, fst_DayOfMonth,
-		fst_Boolean,
-		fst_Qty, fst_Price, fst_PriceOffset, fst_Amt, fst_Percentage,
-		fst_MultipleCharValue, fst_MultipleStringValue, fst_Country, fst_Currency, fst_Exchange, fst_MonthYear,
-		fst_UTCTimestamp, fst_UTCTimeOnly, fst_UTCDateOnly, fst_LocalMktDate, fst_TZTimeOnly, fst_TZTimestamp,
-		fst_data, fst_XMLData,
-		fst_Tenor, fst_Reserved100Plus, fst_Reserved1000Plus, fst_Reserved4000Plus
-	} _fsubtype;
+		ft_untyped,
+		ft_int,
+		ft_Length, ft_TagNum, ft_SeqNum, ft_NumInGroup, ft_DayOfMonth,
+		ft_char,
+		ft_Boolean,
+		ft_float,
+		ft_Qty, ft_Price, ft_PriceOffset, ft_Amt, ft_Percentage,
+		ft_string,
+		ft_MultipleCharValue, ft_MultipleStringValue, ft_Country, ft_Currency, ft_Exchange, ft_MonthYear,
+		ft_UTCTimestamp, ft_UTCTimeOnly, ft_UTCDateOnly, ft_LocalMktDate, ft_TZTimeOnly, ft_TZTimestamp,
+		ft_data, ft_XMLData,
+		ft_pattern,
+		ft_Tenor, ft_Reserved100Plus, ft_Reserved1000Plus, ft_Reserved4000Plus
+	} _ftype;
 
 	unsigned short _pos;
-
-	typedef std::map<FieldSubType, FieldType> FieldTypeMap;
-	static const FieldTypeMap::value_type _subpair[];
-	static const FieldTypeMap _fieldTypeMap;
 
 	enum TraitTypes { mandatory, present, position, group, count };
 	mutable std::bitset<count> _field_traits;
 
-	FieldTrait(const unsigned short field, const FieldSubType fsubtype=fst_untyped,
+	FieldTrait(const unsigned short field, const FieldType ftype=ft_untyped,
 		const unsigned short pos=0, bool ismandatory=false, bool isgroup=false, bool ispresent=false) :
-		_fnum(field), _fsubtype(fsubtype), _pos(pos),
+		_fnum(field), _ftype(ftype), _pos(pos),
 			_field_traits(ismandatory ? 1 : 0 | (ispresent ? 1 : 0) << present | 1 << position | (isgroup ? 1 : 0) << group) {}
 
 	struct Compare : public std::binary_function<FieldTrait, FieldTrait, bool>
 	{
 		bool operator()(const FieldTrait& p1, const FieldTrait& p2) const { return p1._fnum < p2._fnum; }
 	};
-
-	static const FieldType Find_FieldType(FieldSubType fst)
-	{
-		FieldTypeMap::const_iterator itr(_fieldTypeMap.find(fst));
-		return itr != _fieldTypeMap.end() ? itr->second : ft_untyped;
-	}
 };
 
 // which fields are required, which are present
@@ -82,6 +76,6 @@ public:
 	}
 };
 
-} // FIX
+} // FIX8
 
-#endif // _IF_FIX_TRAITS_HPP_
+#endif // _IF_FIX8_TRAITS_HPP_

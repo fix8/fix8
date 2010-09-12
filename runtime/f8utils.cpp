@@ -77,7 +77,7 @@ extern long timezone;
 //-----------------------------------------------------------------------------------------
 using namespace std;
 
-namespace FIX {
+namespace FIX8 {
 
 //----------------------------------------------------------------------------------------
 const std::string TRANSLATIONUNIT(__FILE__);
@@ -194,4 +194,4 @@ const string& StrToLower(const string& src, string& target)
 	return InPlaceStrToLower(target);
 }
 
-} // namespace FIX
+} // namespace FIX8

@@ -1,11 +1,11 @@
 //-------------------------------------------------------------------------------------------------
-#ifndef _IF_FIX_MESSAGE_HPP_
-#define _IF_FIX_MESSAGE_HPP_
+#ifndef _IF_FIX8_MESSAGE_HPP_
+#define _IF_FIX8_MESSAGE_HPP_
 
 #include <map>
 
 //-------------------------------------------------------------------------------------------------
-namespace FIX {
+namespace FIX8 {
 
 // all fields present in a message - mandatory and optional
 typedef std::map<unsigned short, BaseField *> Fields;
@@ -32,6 +32,6 @@ public:
 		_header(header_ft, header_ft_end), _trailer(trailer_ft, trailer_ft_end) {}
 };
 
-} // FIX
+} // FIX8
 
-#endif // _IF_FIX_MESSAGE_HPP_
+#endif // _IF_FIX8_MESSAGE_HPP_
