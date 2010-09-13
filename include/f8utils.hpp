@@ -102,7 +102,7 @@ public:
 	T *operator->() const { return ptr_; }
 	T& operator*() const { return *ptr_; }
 	T *release() { T *tmp(ptr_); ptr_ = 0; return tmp; }
-	void reset(T *p=0) { delete ptr_; ptr_ = p; }
+	T *reset(T *p=0) { delete ptr_; return ptr_ = p; }
 	T *get() const { return ptr_; }
 };
 

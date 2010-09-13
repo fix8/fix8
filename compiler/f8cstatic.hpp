@@ -76,51 +76,52 @@ const BaseTypeMap::TypePair BaseTypeMap::_valueTable[] =
 template<>
 const BaseTypeMap::TypeMap BaseTypeMap::_valuemap(BaseTypeMap::_valueTable, BaseTypeMap::Get_Table_End());
 template<>
-BaseTypeMap::NoValType BaseTypeMap::_noval(FieldTrait::ft_untyped);
+const BaseTypeMap::NoValType BaseTypeMap::_noval(FieldTrait::ft_untyped);
 
 //-------------------------------------------------------------------------------------------------
 template<>
 const TypeToCPP::TypePair TypeToCPP::_valueTable[] =
 {
 	TypeToCPP::TypePair(FieldTrait::ft_int, "int"),
-	TypeToCPP::TypePair(FieldTrait::ft_Length, "int"),
-	TypeToCPP::TypePair(FieldTrait::ft_TagNum, "int"),
-	TypeToCPP::TypePair(FieldTrait::ft_SeqNum, "int"),
-	TypeToCPP::TypePair(FieldTrait::ft_NumInGroup, "int"),
-	TypeToCPP::TypePair(FieldTrait::ft_DayOfMonth, "int"),
+	TypeToCPP::TypePair(FieldTrait::ft_Length, "Length"),
+	TypeToCPP::TypePair(FieldTrait::ft_TagNum, "Tagnum"),
+	TypeToCPP::TypePair(FieldTrait::ft_SeqNum, "Seqnum"),
+	TypeToCPP::TypePair(FieldTrait::ft_NumInGroup, "NumInGroup"),
+	TypeToCPP::TypePair(FieldTrait::ft_DayOfMonth, "DayOfMonth"),
 	TypeToCPP::TypePair(FieldTrait::ft_float, "double"),
-	TypeToCPP::TypePair(FieldTrait::ft_Qty, "double"),
-	TypeToCPP::TypePair(FieldTrait::ft_Price, "double"),
-	TypeToCPP::TypePair(FieldTrait::ft_PriceOffset, "double"),
-	TypeToCPP::TypePair(FieldTrait::ft_Amt, "double"),
-	TypeToCPP::TypePair(FieldTrait::ft_Percentage, "double"),
+	TypeToCPP::TypePair(FieldTrait::ft_Qty, "Qty"),
+	TypeToCPP::TypePair(FieldTrait::ft_Price, "Price"),
+	TypeToCPP::TypePair(FieldTrait::ft_PriceOffset, "PriceOffset"),
+	TypeToCPP::TypePair(FieldTrait::ft_Amt, "Amt"),
+	TypeToCPP::TypePair(FieldTrait::ft_Percentage, "Percentage"),
 	TypeToCPP::TypePair(FieldTrait::ft_char, "char"),
-	TypeToCPP::TypePair(FieldTrait::ft_Boolean, "char"),
+	TypeToCPP::TypePair(FieldTrait::ft_Boolean, "Boolean"),
 	TypeToCPP::TypePair(FieldTrait::ft_string, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_MultipleCharValue, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_MultipleStringValue, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_Country, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_Currency, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_Exchange, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_MonthYear, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_MultipleCharValue, "MultipleCharValue"),
+	TypeToCPP::TypePair(FieldTrait::ft_MultipleStringValue, "MultipleStringValue"),
+	TypeToCPP::TypePair(FieldTrait::ft_Country, "Country"),
+	TypeToCPP::TypePair(FieldTrait::ft_Currency, "Currency"),
+	TypeToCPP::TypePair(FieldTrait::ft_Exchange, "Exchange"),
+	TypeToCPP::TypePair(FieldTrait::ft_MonthYear, "MonthYear"),
 	TypeToCPP::TypePair(FieldTrait::ft_UTCTimestamp, "UTCTimestamp"),
 	TypeToCPP::TypePair(FieldTrait::ft_UTCTimeOnly, "UTCTimeOnly"),
 	TypeToCPP::TypePair(FieldTrait::ft_UTCDateOnly, "UTCDateOnly"),
 	TypeToCPP::TypePair(FieldTrait::ft_LocalMktDate, "LocalMktDate"),
 	TypeToCPP::TypePair(FieldTrait::ft_TZTimeOnly, "TZTimeOnly"),
 	TypeToCPP::TypePair(FieldTrait::ft_TZTimestamp, "TZTimestamp"),
-	TypeToCPP::TypePair(FieldTrait::ft_XMLData, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_data, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_pattern, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_Tenor, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_XMLData, "XMLData"),
+	TypeToCPP::TypePair(FieldTrait::ft_data, "data"),
+	TypeToCPP::TypePair(FieldTrait::ft_pattern, "pattern"),
+	TypeToCPP::TypePair(FieldTrait::ft_Tenor, "Tenor"),
 	TypeToCPP::TypePair(FieldTrait::ft_Reserved100Plus, "std::string"),
 	TypeToCPP::TypePair(FieldTrait::ft_Reserved1000Plus, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_Reserved4000Plus, "std::string")
+	TypeToCPP::TypePair(FieldTrait::ft_Reserved4000Plus, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_Language, "Language")
 };
 template<>
 const TypeToCPP::TypeMap TypeToCPP::_valuemap(TypeToCPP::_valueTable, TypeToCPP::Get_Table_End());
 template<>
-TypeToCPP::NoValType TypeToCPP::_noval("Unknown");
+const TypeToCPP::NoValType TypeToCPP::_noval("Unknown");
 
 //-------------------------------------------------------------------------------------------------
 template<>
@@ -148,7 +149,7 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "	static const size_t _pairsz;\n"
 "\n"
 "	typedef Val NoValType;\n"
-"	static NoValType _noval;\n"
+"	const static NoValType _noval;\n"
 "\n"
 "public:\n"
 "	static const Val& find_ref(const Key& key)\n"
@@ -162,6 +163,12 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "		const Pair what = { key };\n"
 "		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, Pair::Less));\n"
 "		return res.first != res.second ? res.first->value : _noval;\n"
+"	}\n"
+"	static const Val *find_ptr(const Key& key)\n"
+"	{\n"
+"		const Pair what = { key };\n"
+"		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, Pair::Less));\n"
+"		return res.first != res.second ? &res.first->value : 0;\n"
 "	}\n"
 "};\n"),
 
@@ -199,10 +206,20 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n"
 "\n"
 "#endif\n"),
+	CSMap::TypePair(cs_copyright_short,
+	"Copyright (c) 2010, David L. Dight <www@orbweb.org>, All rights reserved."),
+
+	CSMap::TypePair(cs_fcreate_entry_hpp,
+		"typedef GeneratedTable<unsigned, BaseField *(*)(const std::string&)> FCreateEntry;"),
+	CSMap::TypePair(cs_fcreate_entry_table,
+		"template<>\nconst FCreateEntry::Pair FCreateEntry::_pairs[] =\n{"),
+	CSMap::TypePair(cs_fcreate_entry_cpp,
+		"template<>\nconst size_t FCreateEntry::_pairsz(sizeof(_pairs)/sizeof(FCreateEntry));\n"
+		"template<>\nconst FCreateEntry::NoValType FCreateEntry::_noval(0);"),
 };
 template<>
 const CSMap::TypeMap CSMap::_valuemap(CSMap::_valueTable, CSMap::Get_Table_End());
 template<>
-CSMap::NoValType CSMap::_noval("not found");
+const CSMap::NoValType CSMap::_noval("not found");
 
 //-------------------------------------------------------------------------------------------------

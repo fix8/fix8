@@ -7,6 +7,10 @@
 #include <algorithm>
 #include <bitset>
 
+#include <strings.h>
+#include <regex.h>
+
+#include <f8utils.hpp>
 #include <field.hpp>
 #include <traits.hpp>
 #include <message.hpp>

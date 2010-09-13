@@ -20,12 +20,14 @@ struct FieldTrait
 		ft_float,
 		ft_Qty, ft_Price, ft_PriceOffset, ft_Amt, ft_Percentage,
 		ft_string,
-		ft_MultipleCharValue, ft_MultipleStringValue, ft_Country, ft_Currency, ft_Exchange, ft_MonthYear,
-		ft_UTCTimestamp, ft_UTCTimeOnly, ft_UTCDateOnly, ft_LocalMktDate, ft_TZTimeOnly, ft_TZTimestamp,
+		ft_MultipleCharValue, ft_MultipleStringValue, ft_Country, ft_Currency, ft_Exchange,
+		ft_MonthYear, ft_UTCTimestamp, ft_UTCTimeOnly, ft_UTCDateOnly, ft_LocalMktDate, ft_TZTimeOnly, ft_TZTimestamp,
 		ft_data, ft_XMLData,
 		ft_pattern,
-		ft_Tenor, ft_Reserved100Plus, ft_Reserved1000Plus, ft_Reserved4000Plus
-	} _ftype;
+		ft_Tenor, ft_Reserved100Plus, ft_Reserved1000Plus, ft_Reserved4000Plus,
+		ft_Language
+	}
+	_ftype;
 
 	unsigned short _pos;
 

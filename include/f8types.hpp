@@ -77,6 +77,12 @@ public:
 		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, Pair::Less));
 		return res.first != res.second ? res.first->value : _noval;
 	}
+	static const Val *find_ptr(const Key& key)
+	{
+		const Pair what = { key };
+		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, Pair::Less));
+		return res.first != res.second ? &res.first->value : 0;
+	}
 };
 
 } // FIX8

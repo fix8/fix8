@@ -6878,14 +6878,14 @@
       <value enum="B" description="BUY"/>
       <value enum="S" description="SELL"/>
     </field>
-    <field number="5042" name="NoAskLevels" type="INTA"/>
+    <field number="5042" name="NoAskLevels" type="INT"/>
     <field number="5043" name="AskFirm" type="STRING"/>
     <field number="5044" name="AskVol" type="INT"/>
     <field number="5045" name="NoBidLevels" type="INT"/>
     <field number="5046" name="BidFirm" type="STRING"/>
     <field number="5047" name="BidVol" type="INT"/>
     <field number="5048" name="SendMsgType" type="STRING">
-      <value enums="0" description="UserId_To_From"/>
+      <value enum="0" description="UserId_To_From"/>
       <value enum="1" description="SYCOM_Operations_To_From"/>
       <value enum="2" description="All_Users_To"/>
     </field>

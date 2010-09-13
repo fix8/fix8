@@ -41,6 +41,15 @@ $URL$
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
+//-------------------------------------------------------------------------------------------------
+struct Ctxt
+{
+	enum OutputFile { types_cpp, types_hpp, classes_cpp, classes_hpp, count };
+	typedef std::pair<std::string, scoped_ptr<std::ostream> > Output;
+	Output _out[count];
+};
+
+//-------------------------------------------------------------------------------------------------
 template<typename Key, typename Val>
 struct StaticTable
 {
@@ -50,7 +59,7 @@ struct StaticTable
 
 	static const TypePair _valueTable[];
 	static const TypeMap _valuemap;
-	static NoValType _noval;
+	static const NoValType _noval;
 
 	StaticTable() {}
 
@@ -121,6 +130,10 @@ enum comp_str
 	cs_generated_table_def,
 	cs_divider,
 	cs_copyright,
+	cs_copyright_short,
+	cs_fcreate_entry_hpp,
+	cs_fcreate_entry_table,
+	cs_fcreate_entry_cpp,
 };
 
 typedef StaticTable<comp_str, std::string> CSMap;
