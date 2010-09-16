@@ -47,13 +47,14 @@ struct Ctxt
 	enum OutputFile { types_cpp, types_hpp, classes_cpp, classes_hpp, count };
 	typedef std::pair<std::string, scoped_ptr<std::ostream> > Output;
 	Output _out[count];
+	static const std::string _exts[count];
 };
 
 //-------------------------------------------------------------------------------------------------
-template<typename Key, typename Val>
+template<typename Key, typename Val, typename Compare=std::less<Key> >
 struct StaticTable
 {
-	typedef typename std::map<Key, Val> TypeMap;
+	typedef typename std::map<Key, Val, Compare> TypeMap;
 	typedef typename TypeMap::value_type TypePair;
 	typedef Val NoValType;
 
@@ -79,10 +80,61 @@ struct StaticTable
 };
 
 //-------------------------------------------------------------------------------------------------
+struct DomainObject
+{
+	bool _isRange;
+	DomainObject(bool isRange) : _isRange(isRange) {}
+
+	virtual void print(std::ostream& os) = 0;
+	virtual bool comp(const DomainObject *p1, const DomainObject *p2) = 0;
+	struct less
+	{
+		bool operator()(const DomainObject *p1, const DomainObject *p2)
+			{ return const_cast<DomainObject*>(p1)->comp(p1, p2); }
+	};
+
+	friend std::ostream& operator<<(std::ostream& os, DomainObject& what)
+	{
+		what.print(os);
+		return os;
+	}
+
+	virtual ~DomainObject() {}
+
+	static DomainObject *Create(const std::string& from, FieldTrait::FieldType ftype, bool isRange=false);
+};
+
+template <typename T>
+class TypedDomain : public DomainObject
+{
+protected:
+	T _obj;
+
+public:
+	TypedDomain(const T& from, bool isRange=false) : DomainObject(isRange), _obj(from) {}
+	virtual void print(std::ostream& os) { os << _obj; }
+	bool comp(const DomainObject *p1, const DomainObject *p2)
+		{ return (static_cast<const TypedDomain<T>*>(p1))->_obj < static_cast<const TypedDomain<T>*>(p2)->_obj; }
+};
+
+struct StringDomain : public TypedDomain<std::string>
+{
+	StringDomain(const std::string& from, bool isRange=false)
+		: TypedDomain<std::string>(from, isRange) {}
+	void print(std::ostream& os) { os << '"' << _obj << '"'; }
+};
+
+struct CharDomain : public TypedDomain<char>
+{
+	CharDomain(const char& from, bool isRange=false) : TypedDomain<char>(from, isRange) {}
+	void print(std::ostream& os) { os << '\'' << _obj << '\''; }
+};
+
+typedef std::map<DomainObject *, std::string, DomainObject::less> DomainMap;
+
+//-------------------------------------------------------------------------------------------------
 typedef StaticTable<std::string, FieldTrait::FieldType> BaseTypeMap;
 typedef StaticTable<FieldTrait::FieldType, std::string> TypeToCPP;
-
-typedef std::map<std::string, std::string> DomainMap;
 
 struct FieldSpec
 {
@@ -96,10 +148,27 @@ struct FieldSpec
 	FieldSpec(const std::string& name, FieldTrait::FieldType ftype=FieldTrait::ft_untyped)
 		: _name(name), _ftype(ftype), _dvals() {}
 
-	virtual ~FieldSpec() { delete _dvals; }
+	virtual ~FieldSpec()
+	{
+		if (_dvals)
+			std::for_each(_dvals->begin(), _dvals->end(), free_ptr<Delete1stPairObject<> >());
+		delete _dvals;
+	}
 };
 
 typedef std::map<unsigned, FieldSpec> FieldSpecMap;
+
+//-------------------------------------------------------------------------------------------------
+struct MessageSpec
+{
+	std::set<FieldTrait, FieldTrait::Compare> _traits;
+	std::string _name, _description;
+
+	MessageSpec(const std::string& name) : _name(name) {}
+	virtual ~MessageSpec() {}
+};
+
+typedef std::map<unsigned, FieldTrait> MessageSpecMap;
 
 //-------------------------------------------------------------------------------------------------
 #if 0
@@ -127,7 +196,6 @@ enum comp_str
 	cs_do_not_edit,
 	cs_start_namespace,
 	cs_end_namespace,
-	cs_generated_table_def,
 	cs_divider,
 	cs_copyright,
 	cs_copyright_short,

@@ -4967,13 +4967,8 @@
       <value enum="2" description="DISABLE_PREVIOUS_SNAPSHOT_PLUS_UPDATE_REQUEST" />
     </field>
     <field number="264" name="MarketDepth" type="INT">
-<!--
-      Temporarily commented out until we can handle
-      N>1 scenario
-
-      <value enum="0" description="FULL_BOOK"/>
-      <value enum="1" description="TOP_OF_BOOK"/>
--->
+      <value enum="0" description="FULL_BOOK" range="lower"/>
+      <value enum="1" description="TOP_OF_BOOK" range="upper"/>
     </field>
     <field number="265" name="MDUpdateType" type="INT">
       <value enum="0" description="FULL_REFRESH" />
@@ -5140,7 +5135,7 @@
       <value enum="1" description="MANUAL" />
       <value enum="2" description="AUTOMATIC" />
     </field>
-    <field number="304" name="TotNoQuoteEntries" type="INT" />
+    <field number="304" name="TotNoQuoteEntries" type="INT" domain="[1-9999]" />
     <field number="305" name="UnderlyingSecurityIDSource" type="STRING" />
     <field number="306" name="UnderlyingIssuer" type="STRING" />
     <field number="307" name="UnderlyingSecurityDesc" type="STRING" />

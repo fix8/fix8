@@ -15,13 +15,48 @@ struct EnumType
 };
 
 //-------------------------------------------------------------------------------------------------
+// domain range
+class DomainBase
+{
+public:
+	enum DomType { dt_range, dt_set };
+
+protected:
+	static const RegExp _domainSpec;
+
+	const void *_range;
+	DomType _dtype;
+	FieldTrait::FieldType _ftype;
+	const size_t _sz;
+
+public:
+	DomainBase(const void *range, const DomType dt, const FieldTrait::FieldType ftype, const size_t sz)
+		: _range(range), _dtype(dt), _ftype(ftype), _sz(sz) {}
+};
+
+template<typename T>
+class Domain : public DomainBase
+{
+public:
+	Domain(const DomType dt, const FieldTrait::FieldType ftype, const T *range, const size_t sz)
+		: DomainBase(static_cast<void*>(range), dt, ftype, sz) {}
+
+	const bool isValid(const T& what)
+	{
+		return _dtype == dt_set ? std::binary_search(static_cast<T*>(_range), static_cast<T*>(_range) + _sz, what)
+									   : *static_cast<T*>(_range) <= what && what <= *(static_cast<T*>(_range) + 1);
+	}
+};
+
+//-------------------------------------------------------------------------------------------------
 class BaseField
 {
 	const unsigned short _fnum;
+	DomainBase *_dom;
 
 public:
-	BaseField(const unsigned short fnum) : _fnum(fnum) {}
-	virtual ~BaseField() {}
+	BaseField(const unsigned short fnum, DomainBase *dom=0) : _fnum(fnum), _dom(dom) {}
+	virtual ~BaseField() { delete _dom; }
 
 	const unsigned short get_tag() const { return _fnum; }
 	virtual std::string get_raw() const
@@ -57,7 +92,7 @@ class Field<int, field> : public BaseField
 public:
 	Field () : BaseField(field), _value() {}
 	Field (const int val) : BaseField(field), _value(val) {}
-	Field (const std::string& from) : BaseField(field), _value(GetValue<int>(from)) {}
+	Field (const std::string& from, DomainBase *dom=0);
 	virtual ~Field() {}
 
 	const int& get() { return _value; }
@@ -73,7 +108,7 @@ class Field<std::string, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
-	Field (const std::string& from) : BaseField(field), _value(from) {}
+	Field (const std::string& from, DomainBase *dom=0);
 	virtual ~Field() {}
 
 	const std::string& get() { return _value; }
@@ -90,7 +125,7 @@ class Field<double, field> : public BaseField
 public:
 	Field () : BaseField(field), _value() {}
 	Field (const double& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from) : BaseField(field), _value(GetValue<double>(from)) {}
+	Field (const std::string& from, DomainBase *dom=0);
 	virtual ~Field() {}
 
 	const double& get() { return _value; }
@@ -107,7 +142,7 @@ class Field<char, field> : public BaseField
 public:
 	Field () : BaseField(field), _value() {}
 	Field (const char& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from) : BaseField(field), _value(from[0]) {}
+	Field (const std::string& from, DomainBase *dom=0);
 	virtual ~Field() {}
 
 	const char& get() { return _value; }

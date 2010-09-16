@@ -130,48 +130,6 @@ const CSMap::TypePair CSMap::_valueTable[] =
 	CSMap::TypePair(cs_do_not_edit, "// *** f8c generated file: Do Not Edit"),
 	CSMap::TypePair(cs_start_namespace, "namespace FIX8 {"),
 	CSMap::TypePair(cs_end_namespace, "} // namespace FIX8"),
-	CSMap::TypePair(cs_generated_table_def,
-"template<typename Key, typename Val>\n"
-"class GeneratedTable\n"
-"{\n"
-"	struct Pair\n"
-"	{\n"
-"		Key _key;\n"
-"		Val _value;\n"
-"\n"
-"		struct Less\n"
-"		{\n"
-"			bool operator()(const Pair &p1, const Pair &p2) const { return p1._key < p2._key; }\n"
-"		};\n"
-"	};\n"
-"\n"
-"	static const Pair _pairs[];\n"
-"	static const size_t _pairsz;\n"
-"\n"
-"	typedef Val NoValType;\n"
-"	const static NoValType _noval;\n"
-"\n"
-"public:\n"
-"	static const Val& find_ref(const Key& key)\n"
-"	{\n"
-"		const Pair what = { key };\n"
-"		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, Pair::Less));\n"
-"		return res.first != res.second ? res.first->value : _noval;\n"
-"	}\n"
-"	static const Val find_val(const Key& key)\n"
-"	{\n"
-"		const Pair what = { key };\n"
-"		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, Pair::Less));\n"
-"		return res.first != res.second ? res.first->value : _noval;\n"
-"	}\n"
-"	static const Val *find_ptr(const Key& key)\n"
-"	{\n"
-"		const Pair what = { key };\n"
-"		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, Pair::Less));\n"
-"		return res.first != res.second ? &res.first->value : 0;\n"
-"	}\n"
-"};\n"),
-
 	CSMap::TypePair(cs_divider,
 "//-------------------------------------------------------------------------------------------------"),
 

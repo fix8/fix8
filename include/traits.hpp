@@ -14,20 +14,25 @@ struct FieldTrait
 	{
 		ft_untyped,
 		ft_int,
-		ft_Length, ft_TagNum, ft_SeqNum, ft_NumInGroup, ft_DayOfMonth,
+		ft_Length, ft_TagNum, ft_SeqNum, ft_NumInGroup, ft_DayOfMonth, ft_end_int=ft_DayOfMonth,
 		ft_char,
-		ft_Boolean,
+		ft_Boolean, ft_end_char=ft_Boolean,
 		ft_float,
-		ft_Qty, ft_Price, ft_PriceOffset, ft_Amt, ft_Percentage,
+		ft_Qty, ft_Price, ft_PriceOffset, ft_Amt, ft_Percentage, ft_end_float=ft_Percentage,
 		ft_string,
 		ft_MultipleCharValue, ft_MultipleStringValue, ft_Country, ft_Currency, ft_Exchange,
 		ft_MonthYear, ft_UTCTimestamp, ft_UTCTimeOnly, ft_UTCDateOnly, ft_LocalMktDate, ft_TZTimeOnly, ft_TZTimestamp,
 		ft_data, ft_XMLData,
 		ft_pattern,
 		ft_Tenor, ft_Reserved100Plus, ft_Reserved1000Plus, ft_Reserved4000Plus,
-		ft_Language
+		ft_Language, ft_end_string=ft_Language
 	}
 	_ftype;
+
+	static bool is_int(const FieldType ftype) { return ft_int <= ftype && ftype <= ft_end_int; }
+	static bool is_char(const FieldType ftype) { return ft_char <= ftype && ftype <= ft_end_char; }
+	static bool is_string(const FieldType ftype) { return ft_string <= ftype && ftype <= ft_end_string; }
+	static bool is_float(const FieldType ftype) { return ft_float <= ftype && ftype <= ft_end_float; }
 
 	unsigned short _pos;
 

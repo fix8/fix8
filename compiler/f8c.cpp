@@ -74,12 +74,14 @@ using namespace FIX8;
 static const std::string rcsid("$Id$");
 
 //-----------------------------------------------------------------------------------------
-const string GETARGLIST("hvo:p:");
+const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_classes.cpp", "_classes.hpp" };
 
 //-----------------------------------------------------------------------------------------
 namespace {
 
 string inputFile, odir("./"), prefix;
+const string GETARGLIST("hvo:p:");
+const string spacer(3, ' ');
 
 }
 
@@ -92,6 +94,7 @@ void print_usage();
 int process(XmlEntity& xf, Ctxt& ctxt);
 int loadfields(XmlEntity& xf, FieldSpecMap& fspec);
 ostream *openofile(const string& odir, const string& fname);
+void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 
 //-----------------------------------------------------------------------------------------
 class filestdout
@@ -174,13 +177,12 @@ int main(int argc, char **argv)
 	//cout << *cfr;
 
 	Ctxt ctxt;
-	ctxt._out[Ctxt::types_cpp].first = prefix + "_types.cpp";
-	ctxt._out[Ctxt::types_hpp].first = prefix + "_types.hpp";
-	ctxt._out[Ctxt::classes_cpp].first = prefix + "_classes.cpp";
-	ctxt._out[Ctxt::classes_hpp].first = prefix + "_classes.hpp";
-	for (Ctxt::Output *itr(ctxt._out); itr < ctxt._out + Ctxt::count; ++itr)
-		if (!itr->second.reset(openofile(odir, itr->first)))
+	for (unsigned ii(0); ii < Ctxt::count; ++ii)
+	{
+		ctxt._out[ii].first = prefix + ctxt._exts[ii];
+		if (!ctxt._out[ii].second.reset(openofile(odir, ctxt._out[ii].first)))
 			return 1;
+	}
 
 	return process(*cfr, ctxt);
 }
@@ -234,9 +236,72 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 			}
 
 			(*itr)->GetAttr("description", result.first->second._description);
-			(*itr)->GetAttr("domain", result.first->second._domain);
 
 			++fieldsLoaded;
+
+			XmlList domlist;
+			if ((*itr)->find("field/value", domlist))
+			{
+				for(XmlList::const_iterator ditr(domlist.begin()); ditr != domlist.end(); ++ditr)
+				{
+					string enum_str, description;
+					if ((*ditr)->GetAttr("enum", enum_str) && (*ditr)->GetAttr("description", description))
+					{
+						if (!result.first->second._dvals)
+							result.first->second._dvals = new DomainMap;
+						string lower, upper;
+						bool isRange((*ditr)->GetAttr("range", lower) && (lower == "lower" || upper == "upper"));
+						DomainObject *domval(DomainObject::Create(enum_str, ft, isRange));
+						if (domval)
+							result.first->second._dvals->insert(DomainMap::value_type(domval, description));
+					}
+					else
+						cerr << "Value element missing required attributes at "
+							<< inputFile << '(' << (*itr)->GetLine() << ')' << endl;
+				}
+			}
+		}
+		else
+			cerr << "Field element missing required attributes at "
+				<< inputFile << '(' << (*itr)->GetLine() << ')' << endl;
+	}
+
+	return fieldsLoaded;
+}
+
+//-----------------------------------------------------------------------------------------
+#if 0
+int loadmessages(XmlEntity& xf, MessageSpecMap& mspec)
+{
+	int msgssLoaded(0);
+
+	XmlList mlist;
+	if (!xf.find("fix/messages/message", mlist))
+	{
+		cerr << "No messages found in " << inputFile << endl;
+		return 0;
+	}
+
+	for(XmlList::const_iterator itr(mlist.begin()); itr != mlist.end(); ++itr)
+	{
+		string msgcat, name, msgtype;
+		if ((*itr)->GetAttr("msgtype", msgtype) && (*itr)->GetAttr("name", name) && (*itr)->GetAttr("msgcat", msgcat))
+		{
+			FieldTrait::FieldType ft(FieldSpec::_baseTypeMap.Find_Value(type));
+			pair<FieldSpecMap::iterator, bool> result;
+			if (ft != FieldTrait::ft_untyped)
+				result = fspec.insert(FieldSpecMap::value_type(GetValue<unsigned>(number), FieldSpec(name, ft)));
+			else
+			{
+				cerr << "Unknown field type: " << type << " in " << name << " at "
+					<< inputFile << '(' << (*itr)->GetLine() << ')' << endl;
+				continue;
+			}
+
+			(*itr)->GetAttr("description", result.first->second._description);
+			(*itr)->GetAttr("domain", result.first->second._domain);
+
+			++msgssLoaded;
 
 			XmlList domlist;
 			if ((*itr)->find("field/value", domlist))
@@ -257,11 +322,49 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 			}
 		}
 		else
-			cerr << "Field element missing required attributes at "
+			cerr << "Message element missing required attributes at "
 				<< inputFile << '(' << (*itr)->GetLine() << ')' << endl;
 	}
 
-	return fieldsLoaded;
+	return msgssLoaded;
+}
+#endif
+
+//-----------------------------------------------------------------------------------------
+void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp)
+{
+	string typestr("const ");
+	if (FieldTrait::is_int(itr->second._ftype))
+		typestr += "int ";
+	else if (FieldTrait::is_char(itr->second._ftype))
+		typestr += "char ";
+	else if (FieldTrait::is_float(itr->second._ftype))
+		typestr += "double ";
+	else if (FieldTrait::is_string(itr->second._ftype))
+		typestr += "std::string ";
+	else
+		return;
+
+	ost_cpp << typestr << itr->second._name << "_domain[] = " << endl << spacer << "{ ";
+	unsigned cnt(0);
+	for (DomainMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
+	{
+		if (cnt)
+			ost_cpp << ", ";
+		ost_cpp << *ditr->first;
+		ost_hpp << typestr << itr->second._name << '_' << ditr->second;
+		if (ditr->first->_isRange)
+		{
+			if (cnt == 0)
+				ost_hpp << "_lower";
+			else if (cnt == 1)
+				ost_hpp << "_upper";
+		}
+		ost_hpp << '(' << *ditr->first << ");" << endl;
+		++cnt;
+	}
+	ost_hpp << "const size_t " << itr->second._name << "_dom_els(" << itr->second._dvals->size() << ");" << endl;
+	ost_cpp << " };" << endl;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -299,17 +402,19 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	{
 		ost_hpp << "typedef Field<" << FieldSpec::_typeToCPP.Find_Value_Ref(fitr->second._ftype)
 			<< ", " << fitr->first << "> " << fitr->second._name << ';' << endl;
+		if (fitr->second._dvals)
+			processValueEnums(fitr, ost_hpp, ost_cpp);
+		ost_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	}
 
 	// generate field instantiators
 	ost_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
-	const string spacer(3, ' ');
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
 		ost_hpp << "BaseField *Create_" << fitr->second._name << "(const std::string& from);" << endl;
-		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const std::string& from) { return new "
-			<< fitr->second._name << "(from); }" << endl;
+		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const std::string& from)";
+		ost_cpp << " { return new " << fitr->second._name << "(from); }" << endl;
 	}
 
 	// generate field instantiator lookup
@@ -326,9 +431,6 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	}
 	ost_cpp << endl << "};" << endl;
 	ost_cpp << _csMap.Find_Value_Ref(cs_fcreate_entry_cpp) << endl;
-
-	ost_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_hpp << _csMap.Find_Value_Ref(cs_generated_table_def) << endl;
 
 	// terminate files
 	ost_hpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
@@ -352,4 +454,21 @@ void print_usage()
 }
 
 //-------------------------------------------------------------------------------------------------
+DomainObject *DomainObject::Create(const string& from, FieldTrait::FieldType ftype, bool isRange)
+{
+	if (FieldTrait::is_int(ftype))
+		return new TypedDomain<int>(GetValue<int>(from), isRange);
+	if (FieldTrait::is_char(ftype))
+		return new CharDomain(from[0], isRange);
+	if (FieldTrait::is_float(ftype))
+		return new TypedDomain<double>(GetValue<double>(from), isRange);
+	if (FieldTrait::is_string(ftype))
+		return new StringDomain(from, isRange);
+	return 0;
+}
 
+//-------------------------------------------------------------------------------------------------
+template struct TypedDomain<int>;
+template struct TypedDomain<std::string>;
+template struct TypedDomain<char>;
+template struct TypedDomain<double>;
