@@ -29,69 +29,34 @@ TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF TH
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---------------------------------------------------------------------------------------------------
-$Id$
-$Date$
-$URL$
+$Id: f8types.hpp 514 2010-09-13 12:23:27Z davidd $
+$Date: 2010-09-13 22:23:27 +1000 (Mon, 13 Sep 2010) $
+$URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/f8types.hpp $
 
 #endif
 //-------------------------------------------------------------------------------------------------
-#ifndef _F8_TYPES_HPP_
-#define _F8_TYPES_HPP_
+#ifndef _F8_EXCEPTION_HPP_
+#define _F8_EXCEPTION_HPP_
+
+#include <exception>
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
-typedef std::string f8String;
-
 //-------------------------------------------------------------------------------------------------
-template<typename Key, typename Val, unsigned Ver=42>
-class GeneratedTable
+class InvalidMetadata : public std::exception
 {
-	struct Pair
-	{
-		Key _key;
-		Val _value;
-
-		struct Less
-		{
-			bool operator()(const Pair &p1, const Pair &p2) const { return p1._key < p2._key; }
-		};
-	};
-
-	static const Pair _pairs[];
-	static const size_t _pairsz;
-
-	typedef Val NoValType;
-	static const NoValType _noval;
+	std::string _reason;
 
 public:
-	static const Val& find_ref(const Key& key)
-	{
-		static const std::string error_str("Invalid metadata or entry not found");
-		const Pair what = { key };
-		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
-		if (res.first != res.second)
-			return res.first->_value;
-		throw InvalidMetadata(error_str);
-	}
-	static const Val find_val(const Key& key)
-	{
-		const Pair what = { key };
-		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
-		return res.first != res.second ? res.first->_value : _noval;
-	}
-	static const Val *find_ptr(const Key& key)
-	{
-		const Pair what = { key };
-		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
-		return res.first != res.second ? &res.first->_value : 0;
-	}
+	InvalidMetadata(const std::string& reason) : _reason(reason) {}
+	virtual ~InvalidMetadata() throw() {}
 
-	static const unsigned get_version() { return Ver; }
-
-	GeneratedTable() {}
+	virtual const char *what() const throw() { return _reason.c_str(); }
 };
+
+//-------------------------------------------------------------------------------------------------
 
 } // FIX8
 
-#endif // _F8_TYPES_HPP_
+#endif // _F8_EXCEPTION_HPP_

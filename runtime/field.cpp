@@ -19,11 +19,9 @@
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-const RegExp DomainBase::_domainSpec("\\[([^-]+)-([^\\]]+)\\]");
-
-//-------------------------------------------------------------------------------------------------
+#if 0
 template<const unsigned short field>
-Field<UTCTimestamp, field>::Field (const std::string& from) : BaseField(field)
+Field<UTCTimestamp, field>::Field (const std::string& from, const DomainBase *dom) : BaseField(field)
 {
 	if (from.size() == 6) // YYYYMM
 	{
@@ -36,31 +34,32 @@ Field<UTCTimestamp, field>::Field (const std::string& from) : BaseField(field)
 
 //-------------------------------------------------------------------------------------------------
 template<const unsigned short field>
-Field<int, field>::Field (const std::string& from, DomainBase *dom)
+Field<int, field>::Field (const std::string& from, const DomainBase *dom)
 	: BaseField(field, dom), _value(GetValue<int>(from))
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 template<const unsigned short field>
-Field<double, field>::Field (const std::string& from, DomainBase *dom)
+Field<double, field>::Field (const std::string& from, const DomainBase *dom)
 	: BaseField(field, dom), _value(GetValue<double>(from))
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 template<const unsigned short field>
-Field<char, field>::Field (const std::string& from, DomainBase *dom)
+Field<char, field>::Field (const std::string& from, const DomainBase *dom)
 	: BaseField(field, dom), _value(from[0])
 {
 }
 
 //-------------------------------------------------------------------------------------------------
 template<const unsigned short field>
-Field<std::string, field>::Field (const std::string& from, DomainBase *dom)
+Field<std::string, field>::Field (const std::string& from, const DomainBase *dom)
 	: BaseField(field, dom), _value()
 {
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 

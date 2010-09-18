@@ -3,7 +3,7 @@
 .PHONEY: all clean cleanall subdirs $(SUBDIRS)
 
 # The make macros below require that each subdir be enclosed in double quotes
-SUBDIRS = "runtime" "compiler"
+SUBDIRS = "runtime" "compiler" "test"
 
 all: subdirs
 

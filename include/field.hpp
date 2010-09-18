@@ -16,35 +16,20 @@ struct EnumType
 
 //-------------------------------------------------------------------------------------------------
 // domain range
-class DomainBase
+struct DomainBase
 {
-public:
 	enum DomType { dt_range, dt_set };
-
-protected:
-	static const RegExp _domainSpec;
 
 	const void *_range;
 	DomType _dtype;
 	FieldTrait::FieldType _ftype;
 	const size_t _sz;
 
-public:
-	DomainBase(const void *range, const DomType dt, const FieldTrait::FieldType ftype, const size_t sz)
-		: _range(range), _dtype(dt), _ftype(ftype), _sz(sz) {}
-};
-
-template<typename T>
-class Domain : public DomainBase
-{
-public:
-	Domain(const DomType dt, const FieldTrait::FieldType ftype, const T *range, const size_t sz)
-		: DomainBase(static_cast<void*>(range), dt, ftype, sz) {}
-
-	const bool isValid(const T& what)
+	template<typename T>
+	const bool isValid(const T& what) const
 	{
-		return _dtype == dt_set ? std::binary_search(static_cast<T*>(_range), static_cast<T*>(_range) + _sz, what)
-									   : *static_cast<T*>(_range) <= what && what <= *(static_cast<T*>(_range) + 1);
+		return _dtype == dt_set ? std::binary_search(static_cast<const T*>(_range), static_cast<const T*>(_range) + _sz, what)
+									   : *static_cast<const T*>(_range) <= what && what <= *(static_cast<const T*>(_range) + 1);
 	}
 };
 
@@ -52,11 +37,13 @@ public:
 class BaseField
 {
 	const unsigned short _fnum;
-	DomainBase *_dom;
+
+protected:
+	const DomainBase *_dom;
 
 public:
-	BaseField(const unsigned short fnum, DomainBase *dom=0) : _fnum(fnum), _dom(dom) {}
-	virtual ~BaseField() { delete _dom; }
+	BaseField(const unsigned short fnum, const DomainBase *dom=0) : _fnum(fnum), _dom(dom) {}
+	virtual ~BaseField() {}
 
 	const unsigned short get_tag() const { return _fnum; }
 	virtual std::string get_raw() const
@@ -67,6 +54,10 @@ public:
 	}
 
 	virtual std::ostream& print(std::ostream& os) const = 0;
+	virtual bool isValid() const { return true; }
+
+	template<typename T>
+	const T& from() const { return *static_cast<const T*>(this); }
 
 	friend std::ostream& operator<<(std::ostream& os, const BaseField& what) { return what.print(os); }
 };
@@ -76,7 +67,7 @@ class Field : public BaseField
 {
 public:
 	Field () : BaseField(field) {}
-	Field(const std::string& from) {}
+	Field(const std::string& from, const DomainBase *dom=0) : BaseField(field, dom) {}
 	virtual ~Field() {}
 
 	virtual const T& get() = 0;
@@ -92,8 +83,9 @@ class Field<int, field> : public BaseField
 public:
 	Field () : BaseField(field), _value() {}
 	Field (const int val) : BaseField(field), _value(val) {}
-	Field (const std::string& from, DomainBase *dom=0);
+	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(GetValue<int>(from)) {}
 	virtual ~Field() {}
+	virtual bool isValid() const { return _dom ? _dom->isValid(_value) : true; }
 
 	const int& get() { return _value; }
 	const int& set(const int& from) { return _value = from; }
@@ -108,8 +100,9 @@ class Field<std::string, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
-	Field (const std::string& from, DomainBase *dom=0);
+	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(from) {}
 	virtual ~Field() {}
+	virtual bool isValid() const { return _dom ? _dom->isValid(_value) : true; }
 
 	const std::string& get() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
@@ -125,8 +118,9 @@ class Field<double, field> : public BaseField
 public:
 	Field () : BaseField(field), _value() {}
 	Field (const double& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from, DomainBase *dom=0);
+	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(GetValue<double>(from)) {}
 	virtual ~Field() {}
+	virtual bool isValid() const { return _dom ? _dom->isValid(_value) : true; }
 
 	const double& get() { return _value; }
 	const double& set(const double& from) { return _value = from; }
@@ -142,8 +136,9 @@ class Field<char, field> : public BaseField
 public:
 	Field () : BaseField(field), _value() {}
 	Field (const char& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from, DomainBase *dom=0);
+	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(from[0]) {}
 	virtual ~Field() {}
+	virtual bool isValid() const { return _dom ? _dom->isValid(_value) : true; }
 
 	const char& get() { return _value; }
 	const char& set(const char& from) { return _value = from; }
@@ -151,38 +146,27 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-template<const unsigned short field>
-class Field<bool, field> : public BaseField
-{
-	bool _value;
-
-public:
-	Field () : BaseField(field), _value() {}
-	Field (const bool& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from) : BaseField(field), _value(from[0] == 'Y') {}
-	virtual ~Field() {}
-
-	const bool& get() { return _value; }
-	const bool& set(const bool& from) { return _value = from; }
-	std::ostream& print(std::ostream& os) const { return os << (_value ? 'Y' : 'N'); }
-};
-
-//-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_MonthYear> MonthYear;
 
 template<const unsigned short field>
-class Field<MonthYear, field> : public BaseField
+class Field<MonthYear, field> : public Field<std::string, field>
 {
-	std::string _value;
-
 public:
-	Field () : BaseField(field) {}
-	Field (const std::string& from) : BaseField(field), _value(from) {}
+	Field () : Field<std::string, field>(field) {}
+	Field (const std::string& from, const DomainBase *dom=0) : Field<std::string, field>(from, dom) {}
 	virtual ~Field() {}
+};
 
-	const std::string& get() { return _value; }
-	const std::string& set(const std::string& from) { return _value = from; }
-	std::ostream& print(std::ostream& os) const { return os; }
+//-------------------------------------------------------------------------------------------------
+typedef EnumType<FieldTrait::ft_data> data;
+
+template<const unsigned short field>
+class Field<data, field> : public Field<std::string, field>
+{
+public:
+	Field () : Field<std::string, field>(field) {}
+	Field (const std::string& from, const DomainBase *dom=0) : Field<std::string, field>(from, dom) {}
+	virtual ~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -195,7 +179,7 @@ class Field<UTCTimestamp, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
-	Field (const std::string& from);
+	Field (const std::string& from, const DomainBase *dom=0)  : BaseField(field) {}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
@@ -213,7 +197,7 @@ class Field<UTCTimeOnly, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
-	Field (const std::string& from) : BaseField(field) {}
+	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field) {}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
@@ -231,7 +215,7 @@ class Field<UTCDateOnly, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
-	Field (const std::string& from) : BaseField(field) {}
+	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field) {}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
@@ -249,7 +233,7 @@ class Field<LocalMktDate, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
-	Field (const std::string& from) : BaseField(field) {}
+	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field) {}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
@@ -267,7 +251,7 @@ class Field<TZTimeOnly, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
-	Field (const std::string& from) : BaseField(field) {}
+	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field) {}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
@@ -285,107 +269,100 @@ class Field<TZTimestamp, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
-	Field (const std::string& from);
+	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field) {}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
 	std::ostream& print(std::ostream& os) const { return os; }
+	virtual bool isValid() const { return _dom ? _dom->isValid(_value) : true; }
 };
 
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_Length> Length;
 
 template<const unsigned short field>
-class Field<Length, field> : public BaseField
+class Field<Length, field> : public Field<int, field>
 {
-	unsigned _value;
-
 public:
-	Field () : BaseField(field), _value() {}
-	Field (const unsigned& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from);
+	Field (const unsigned& val) : Field<int, field>(val) {}
+	Field (const std::string& from, const DomainBase *dom=0) : Field<int, field>(from, dom) {}
 	virtual ~Field() {}
-
-	const unsigned get() { return _value; }
-	const std::string& set(const unsigned& from) { return _value = from; }
-	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_TagNum> TagNum;
 
 template<const unsigned short field>
-class Field<TagNum, field> : public BaseField
+class Field<TagNum, field> : public Field<int, field>
 {
-	unsigned _value;
-
 public:
-	Field () : BaseField(field), _value() {}
-	Field (const unsigned& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from);
+	Field (const unsigned& val) : Field<int, field>(val) {}
+	Field (const std::string& from, const DomainBase *dom=0) : Field<int, field>(from, dom) {}
 	virtual ~Field() {}
-
-	const unsigned get() { return _value; }
-	const std::string& set(const unsigned& from) { return _value = from; }
-	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_SeqNum> SeqNum;
 
 template<const unsigned short field>
-class Field<SeqNum, field> : public BaseField
+class Field<SeqNum, field> : public Field<int, field>
 {
-	unsigned _value;
-
 public:
-	Field () : BaseField(field), _value() {}
-	Field (const unsigned& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from);
+	Field (const unsigned& val) : Field<int, field>(val) {}
+	Field (const std::string& from, const DomainBase *dom=0) : Field<int, field>(from, dom) {}
 	virtual ~Field() {}
-
-	const unsigned get() { return _value; }
-	const std::string& set(const unsigned& from) { return _value = from; }
-	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_NumInGroup> NumInGroup;
 
 template<const unsigned short field>
-class Field<NumInGroup, field> : public BaseField
+class Field<NumInGroup, field> : public Field<int, field>
 {
-	unsigned _value;
-
 public:
-	Field () : BaseField(field), _value() {}
-	Field (const unsigned& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from);
+	Field (const unsigned& val) : Field<int, field>(val) {}
+	Field (const std::string& from, const DomainBase *dom=0) : Field<int, field>(from, dom) {}
 	virtual ~Field() {}
-
-	const unsigned get() { return _value; }
-	const std::string& set(const unsigned& from) { return _value = from; }
-	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_DayOfMonth> DayOfMonth;
 
 template<const unsigned short field>
-class Field<DayOfMonth, field> : public BaseField
+class Field<DayOfMonth, field> : public Field<int, field>
 {
-	unsigned _value;
+public:
+	Field (const unsigned& val) : Field<int, field>(val) {}
+	Field (const std::string& from, const DomainBase *dom=0) : Field<int, field>(from, dom) {}
+	virtual ~Field() {}
+};
+
+//-------------------------------------------------------------------------------------------------
+typedef EnumType<FieldTrait::ft_Boolean> Boolean;
+
+template<const unsigned short field>
+class Field<Boolean, field> : public BaseField
+{
+	bool _value;
 
 public:
-	Field () : BaseField(field), _value() {}
-	Field (const unsigned& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from);
+	Field () : BaseField(field) {}
+	Field (const bool& val) : BaseField(field), _value(val) {}
+	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field), _value(toupper(from[0]) == 'Y') {}
 	virtual ~Field() {}
 
-	const unsigned get() { return _value; }
-	const std::string& set(const unsigned& from) { return _value = from; }
-	std::ostream& print(std::ostream& os) const { return os << _value; }
+	const std::string& get() { return _value; }
+	const std::string& set(const std::string& from) { return _value = from; }
+	std::ostream& print(std::ostream& os) const { return os << (_value ? 'Y' : 'N'); }
+};
+
+//-------------------------------------------------------------------------------------------------
+struct BaseEntry
+{
+	BaseField *(*_create)(const std::string&, const BaseEntry*);
+	const DomainBase *_dom;
+	const char *_comment;
 };
 
 } // FIX8

@@ -48,6 +48,9 @@ struct Ctxt
 	typedef std::pair<std::string, scoped_ptr<std::ostream> > Output;
 	Output _out[count];
 	static const std::string _exts[count];
+	unsigned _version;
+	std::string _clname;
+	std::string _fixns;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -80,28 +83,32 @@ struct StaticTable
 };
 
 //-------------------------------------------------------------------------------------------------
-struct DomainObject
+class DomainObject
 {
 	bool _isRange;
-	DomainObject(bool isRange) : _isRange(isRange) {}
 
-	virtual void print(std::ostream& os) = 0;
+protected:
 	virtual bool comp(const DomainObject *p1, const DomainObject *p2) = 0;
-	struct less
-	{
-		bool operator()(const DomainObject *p1, const DomainObject *p2)
-			{ return const_cast<DomainObject*>(p1)->comp(p1, p2); }
-	};
-
 	friend std::ostream& operator<<(std::ostream& os, DomainObject& what)
 	{
 		what.print(os);
 		return os;
 	}
 
+	virtual void print(std::ostream& os) = 0;
+
+public:
+	DomainObject(bool isRange) : _isRange(isRange) {}
 	virtual ~DomainObject() {}
 
-	static DomainObject *Create(const std::string& from, FieldTrait::FieldType ftype, bool isRange=false);
+	bool is_range() const { return _isRange; }
+	static DomainObject *create(const std::string& from, FieldTrait::FieldType ftype, bool isRange=false);
+
+	struct less
+	{
+		bool operator()(const DomainObject *p1, const DomainObject *p2)
+			{ return const_cast<DomainObject*>(p1)->comp(p1, p2); }
+	};
 };
 
 template <typename T>
@@ -111,7 +118,7 @@ protected:
 	T _obj;
 
 public:
-	TypedDomain(const T& from, bool isRange=false) : DomainObject(isRange), _obj(from) {}
+	TypedDomain(const T& from, bool isRange) : DomainObject(isRange), _obj(from) {}
 	virtual void print(std::ostream& os) { os << _obj; }
 	bool comp(const DomainObject *p1, const DomainObject *p2)
 		{ return (static_cast<const TypedDomain<T>*>(p1))->_obj < static_cast<const TypedDomain<T>*>(p2)->_obj; }
@@ -119,14 +126,13 @@ public:
 
 struct StringDomain : public TypedDomain<std::string>
 {
-	StringDomain(const std::string& from, bool isRange=false)
-		: TypedDomain<std::string>(from, isRange) {}
+	StringDomain(const std::string& from, bool isRange) : TypedDomain<std::string>(from, isRange) {}
 	void print(std::ostream& os) { os << '"' << _obj << '"'; }
 };
 
 struct CharDomain : public TypedDomain<char>
 {
-	CharDomain(const char& from, bool isRange=false) : TypedDomain<char>(from, isRange) {}
+	CharDomain(const char& from, bool isRange) : TypedDomain<char>(from, isRange) {}
 	void print(std::ostream& os) { os << '\'' << _obj << '\''; }
 };
 
@@ -141,12 +147,14 @@ struct FieldSpec
 	static const BaseTypeMap _baseTypeMap;
 	static const TypeToCPP _typeToCPP;
 
-	std::string _name, _description, _domain;
+	std::string _name, _description, _comment;
 	FieldTrait::FieldType _ftype;
+	DomainBase::DomType _dtype;
+	unsigned _doffset;
 	DomainMap *_dvals;
 
 	FieldSpec(const std::string& name, FieldTrait::FieldType ftype=FieldTrait::ft_untyped)
-		: _name(name), _ftype(ftype), _dvals() {}
+		: _name(name), _ftype(ftype), _dtype(DomainBase::dt_set), _doffset(), _dvals() {}
 
 	virtual ~FieldSpec()
 	{
@@ -196,12 +204,12 @@ enum comp_str
 	cs_do_not_edit,
 	cs_start_namespace,
 	cs_end_namespace,
+	cs_start_anon_namespace,
+	cs_end_anon_namespace,
 	cs_divider,
 	cs_copyright,
 	cs_copyright_short,
-	cs_fcreate_entry_hpp,
-	cs_fcreate_entry_table,
-	cs_fcreate_entry_cpp,
+	cs_generated_includes,
 };
 
 typedef StaticTable<comp_str, std::string> CSMap;

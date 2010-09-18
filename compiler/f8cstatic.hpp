@@ -84,8 +84,8 @@ const TypeToCPP::TypePair TypeToCPP::_valueTable[] =
 {
 	TypeToCPP::TypePair(FieldTrait::ft_int, "int"),
 	TypeToCPP::TypePair(FieldTrait::ft_Length, "Length"),
-	TypeToCPP::TypePair(FieldTrait::ft_TagNum, "Tagnum"),
-	TypeToCPP::TypePair(FieldTrait::ft_SeqNum, "Seqnum"),
+	TypeToCPP::TypePair(FieldTrait::ft_TagNum, "TagNum"),
+	TypeToCPP::TypePair(FieldTrait::ft_SeqNum, "SeqNum"),
 	TypeToCPP::TypePair(FieldTrait::ft_NumInGroup, "NumInGroup"),
 	TypeToCPP::TypePair(FieldTrait::ft_DayOfMonth, "DayOfMonth"),
 	TypeToCPP::TypePair(FieldTrait::ft_float, "double"),
@@ -130,6 +130,30 @@ const CSMap::TypePair CSMap::_valueTable[] =
 	CSMap::TypePair(cs_do_not_edit, "// *** f8c generated file: Do Not Edit"),
 	CSMap::TypePair(cs_start_namespace, "namespace FIX8 {"),
 	CSMap::TypePair(cs_end_namespace, "} // namespace FIX8"),
+	CSMap::TypePair(cs_start_anon_namespace, "namespace {"),
+	CSMap::TypePair(cs_end_anon_namespace, "} // namespace"),
+	CSMap::TypePair(cs_generated_includes,
+"#include <iostream>\n"
+"#include <fstream>\n"
+"#include <iomanip>\n"
+"#include <sstream>\n"
+"#include <vector>\n"
+"#include <map>\n"
+"#include <list>\n"
+"#include <set>\n"
+"#include <iterator>\n"
+"#include <algorithm>\n"
+"#include <bitset>\n"
+"#include <regex.h>\n"
+"#include <errno.h>\n"
+"#include <string.h>\n"
+"// f8 includes\n"
+"#include <f8exception.hpp>\n"
+"#include <f8utils.hpp>\n"
+"#include <traits.hpp>\n"
+"#include <field.hpp>\n"
+"#include <f8types.hpp>\n"
+"#include <message.hpp>"),
 	CSMap::TypePair(cs_divider,
 "//-------------------------------------------------------------------------------------------------"),
 
@@ -166,14 +190,6 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "#endif\n"),
 	CSMap::TypePair(cs_copyright_short,
 	"Copyright (c) 2010, David L. Dight <www@orbweb.org>, All rights reserved."),
-
-	CSMap::TypePair(cs_fcreate_entry_hpp,
-		"typedef GeneratedTable<unsigned, BaseField *(*)(const std::string&)> FCreateEntry;"),
-	CSMap::TypePair(cs_fcreate_entry_table,
-		"template<>\nconst FCreateEntry::Pair FCreateEntry::_pairs[] =\n{"),
-	CSMap::TypePair(cs_fcreate_entry_cpp,
-		"template<>\nconst size_t FCreateEntry::_pairsz(sizeof(_pairs)/sizeof(FCreateEntry));\n"
-		"template<>\nconst FCreateEntry::NoValType FCreateEntry::_noval(0);"),
 };
 template<>
 const CSMap::TypeMap CSMap::_valuemap(CSMap::_valueTable, CSMap::Get_Table_End());

@@ -50,15 +50,17 @@ $URL$
 #include <regex.h>
 #include <errno.h>
 #include <string.h>
+#include <cctype>
 //#ifdef HAVE_GETOPT_H
 #include <getopt.h>
 //#endif
 
 // f8 headers
-#include <f8types.hpp>
+#include <f8exception.hpp>
 #include <f8utils.hpp>
 #include <traits.hpp>
 #include <field.hpp>
+#include <f8types.hpp>
 #include <message.hpp>
 #include <usage.hpp>
 #include <xml.hpp>
@@ -80,7 +82,7 @@ const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_classes.cpp", 
 namespace {
 
 string inputFile, odir("./"), prefix;
-const string GETARGLIST("hvo:p:");
+const string GETARGLIST("hvo:p:n:");
 const string spacer(3, ' ');
 
 }
@@ -92,8 +94,10 @@ const string spacer(3, ' ');
 //-----------------------------------------------------------------------------------------
 void print_usage();
 int process(XmlEntity& xf, Ctxt& ctxt);
+int loadFixVersion (XmlEntity& xf, Ctxt& ctxt);
 int loadfields(XmlEntity& xf, FieldSpecMap& fspec);
 ostream *openofile(const string& odir, const string& fname);
+const string flname(const string& from);
 void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 
 //-----------------------------------------------------------------------------------------
@@ -184,6 +188,9 @@ int main(int argc, char **argv)
 			return 1;
 	}
 
+	if (loadFixVersion (*cfr, ctxt) < 0)
+		return 1;
+	cout << "compiling fix version " << ctxt._version << endl;
 	return process(*cfr, ctxt);
 }
 
@@ -204,6 +211,43 @@ ostream *openofile(const string& odir, const string& fname)
 	}
 
 	return os;
+}
+
+//-----------------------------------------------------------------------------------------
+int loadFixVersion (XmlEntity& xf, Ctxt& ctxt)
+{
+	XmlEntity *fix(xf.find("fix"));
+	if (!fix)
+	{
+		cerr << "No fix header found in " << inputFile << endl;
+		return -1;
+	}
+
+	string major, minor, revision("0");
+
+	if (!fix->GetAttr("major", major) || !fix->GetAttr("minor", minor))
+	{
+		cerr << "Missing required attributes (major/minor) from fix header in " << inputFile << endl;
+		return -1;
+	}
+
+	fix->GetAttr("revision", revision);
+
+	// fix version: <Major><Minor><Revision> eg. 4.2r1 is 421
+	unsigned vers(GetValue<int>(major) * 100 + GetValue<int>(minor) * 10 + GetValue<int>(revision));
+	if (vers < 400 || vers > 600)
+	{
+		cerr << "Invalid FIX version " << vers << " from fix header in " << inputFile << endl;
+		return -1;
+	}
+
+	ctxt._version = vers;
+	ostringstream ostr;
+	ostr << "FIX" << (ctxt._version = vers);
+	ctxt._fixns = ostr.str();
+	ctxt._clname = prefix;
+	ctxt._clname[0] = toupper(ctxt._clname[0]);
+	return 0;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -236,6 +280,7 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 			}
 
 			(*itr)->GetAttr("description", result.first->second._description);
+			(*itr)->GetAttr("comment", result.first->second._comment);
 
 			++fieldsLoaded;
 
@@ -251,7 +296,9 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 							result.first->second._dvals = new DomainMap;
 						string lower, upper;
 						bool isRange((*ditr)->GetAttr("range", lower) && (lower == "lower" || upper == "upper"));
-						DomainObject *domval(DomainObject::Create(enum_str, ft, isRange));
+						DomainObject *domval(DomainObject::create(enum_str, ft, isRange));
+						if (isRange)
+							result.first->second._dtype = DomainBase::dt_range;
 						if (domval)
 							result.first->second._dvals->insert(DomainMap::value_type(domval, description));
 					}
@@ -353,7 +400,7 @@ void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostre
 			ost_cpp << ", ";
 		ost_cpp << *ditr->first;
 		ost_hpp << typestr << itr->second._name << '_' << ditr->second;
-		if (ditr->first->_isRange)
+		if (ditr->first->is_range())
 		{
 			if (cnt == 0)
 				ost_hpp << "_lower";
@@ -365,6 +412,12 @@ void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostre
 	}
 	ost_hpp << "const size_t " << itr->second._name << "_dom_els(" << itr->second._dvals->size() << ");" << endl;
 	ost_cpp << " };" << endl;
+}
+
+//-----------------------------------------------------------------------------------------
+const string flname(const string& from)
+{
+	return from.substr(0, from.find_first_of('.'));
 }
 
 //-----------------------------------------------------------------------------------------
@@ -386,17 +439,24 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ost_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	ost_hpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
 	ost_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_hpp << "#ifndef _" << ctxt._out[Ctxt::types_hpp].first << '_' << endl;
-	ost_hpp << "#define _" << ctxt._out[Ctxt::types_hpp].first << '_' << endl << endl;
+	ost_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::types_hpp].first) << '_' << endl;
+	ost_hpp << "#define _" << flname(ctxt._out[Ctxt::types_hpp].first) << '_' << endl << endl;
 	ost_hpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
+	ost_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	ost_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 	ost_cpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
 	ost_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	ost_cpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
 	ost_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl << endl;
+	ost_cpp << _csMap.Find_Value_Ref(cs_generated_includes) << endl;
+	ost_cpp << "#include <" << ctxt._out[Ctxt::types_hpp].first << '>' << endl;
+	ost_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	ost_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
+	ost_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
 
+	ost_cpp << _csMap.Find_Value_Ref(cs_start_anon_namespace) << endl;
+	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 	// generate field types
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
@@ -407,34 +467,64 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		ost_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	}
 
+	// generate dombase objs
+	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	ost_cpp << "const DomainBase dombases[] =" << endl << '{' << endl;
+	unsigned dcnt(0);
+	for (FieldSpecMap::iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
+	{
+		if (!fitr->second._dvals)
+			continue;
+		ost_cpp << spacer << "{ reinterpret_cast<const void *>(" << fitr->second._name << "_domain), "
+			<< "static_cast<DomainBase::DomType>(" << fitr->second._dtype << "), " << endl << spacer << spacer
+			<< "static_cast<FieldTrait::FieldType>(" << fitr->second._ftype << "), "
+			<< fitr->second._dvals->size() << " }," << endl;
+		fitr->second._doffset = dcnt++;
+	}
+	ost_cpp << "};" << endl;
+
 	// generate field instantiators
-	ost_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
-		ost_hpp << "BaseField *Create_" << fitr->second._name << "(const std::string& from);" << endl;
-		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const std::string& from)";
-		ost_cpp << " { return new " << fitr->second._name << "(from); }" << endl;
+		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const std::string& from, const BaseEntry *be)";
+		ost_cpp << endl << spacer << "{ return new " << fitr->second._name << "(from, be->_dom); }" << endl;
 	}
 
+	ost_cpp << endl << _csMap.Find_Value_Ref(cs_end_anon_namespace) << endl;
+	ost_cpp << "} // namespace " << ctxt._fixns << endl;
+
 	// generate field instantiator lookup
-	ost_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_hpp << _csMap.Find_Value_Ref(cs_fcreate_entry_hpp) << endl;
+	ost_hpp << "typedef GeneratedTable<unsigned, BaseEntry, " << ctxt._version << "> " << ctxt._clname << ';' << endl;
 
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_cpp << _csMap.Find_Value_Ref(cs_fcreate_entry_table) << endl;
+	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "::Pair "
+		<< ctxt._fixns << "::" << ctxt._clname << "::_pairs[] =" << endl << '{' << endl;
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
 		if (fitr != fspec.begin())
 			ost_cpp << ',' << endl;
-		ost_cpp << spacer << "{ " << fitr->first << ", " << "&Create_" << fitr->second._name << " }";
+		ost_cpp << spacer << "{ " << fitr->first << ", { &" << ctxt._fixns << "::Create_" << fitr->second._name << ", ";
+		if (fitr->second._dvals)
+			ost_cpp << "&" << ctxt._fixns << "::dombases[" << fitr->second._doffset << ']';
+		else
+			ost_cpp << '0';
+		if (!fitr->second._comment.empty())
+			ost_cpp << ',' << endl << spacer << spacer << '"' << fitr->second._comment << '"';
+		else
+			ost_cpp << ", 0";
+		ost_cpp << " } }";
 	}
 	ost_cpp << endl << "};" << endl;
-	ost_cpp << _csMap.Find_Value_Ref(cs_fcreate_entry_cpp) << endl;
+	ost_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname << "::_pairsz(sizeof(_pairs)/sizeof("
+		<< ctxt._fixns << "::" << ctxt._clname << "));" << endl;
+	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "::NoValType "
+		<< ctxt._fixns << "::" << ctxt._clname << "::_noval = {0, 0};" << endl;
 
 	// terminate files
-	ost_hpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
-	ost_hpp << "#endif // _" << ctxt._out[Ctxt::types_hpp].first << '_' << endl;
+	ost_hpp << endl << "} // namespace " << ctxt._fixns << endl;
+	ost_hpp << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
+	ost_hpp << "#endif // _" << flname(ctxt._out[Ctxt::types_hpp].first) << '_' << endl;
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
 	return result;
 }
@@ -454,7 +544,7 @@ void print_usage()
 }
 
 //-------------------------------------------------------------------------------------------------
-DomainObject *DomainObject::Create(const string& from, FieldTrait::FieldType ftype, bool isRange)
+DomainObject *DomainObject::create(const string& from, FieldTrait::FieldType ftype, bool isRange)
 {
 	if (FieldTrait::is_int(ftype))
 		return new TypedDomain<int>(GetValue<int>(from), isRange);
@@ -468,7 +558,3 @@ DomainObject *DomainObject::Create(const string& from, FieldTrait::FieldType fty
 }
 
 //-------------------------------------------------------------------------------------------------
-template struct TypedDomain<int>;
-template struct TypedDomain<std::string>;
-template struct TypedDomain<char>;
-template struct TypedDomain<double>;
