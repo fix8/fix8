@@ -51,6 +51,7 @@ struct Ctxt
 	unsigned _version;
 	std::string _clname;
 	std::string _fixns;
+	std::string _systemns;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -165,38 +166,26 @@ struct FieldSpec
 };
 
 typedef std::map<unsigned, FieldSpec> FieldSpecMap;
+typedef std::map<std::string, unsigned> FieldToNumMap;
 
 //-------------------------------------------------------------------------------------------------
+typedef std::map<unsigned, FieldTraits> GroupMap;
+
 struct MessageSpec
 {
-	std::set<FieldTrait, FieldTrait::Compare> _traits;
-	std::string _name, _description;
+	FieldTraits _fields;
+	GroupMap _groups;
+	std::string _name, _description, _comment;
 
 	MessageSpec(const std::string& name) : _name(name) {}
 	virtual ~MessageSpec() {}
 };
 
-typedef std::map<unsigned, FieldTrait> MessageSpecMap;
+typedef std::map<std::string, MessageSpec> MessageSpecMap;
 
 //-------------------------------------------------------------------------------------------------
-#if 0
-struct MessageSpec
-{
-	static const BaseTypeMap _baseTypeMap;
-	static const TypeToCPP _typeToCPP;
-
-	std::string _name, _description, _domain;
-	FieldTrait::FieldType _ftype;
-	DomainMap *_dvals;
-
-	MessageSpec(const std::string& name, FieldTrait::FieldType ftype=FieldTrait::ft_untyped)
-		: _name(name), _ftype(ftype), _dvals() {}
-
-	virtual ~FieldSpec() { delete _dvals; }
-};
-
-typedef std::map<unsigned, MessageSpec> MessageSpecMap;
-#endif
+typedef MessageSpec ComponentSpec;
+typedef MessageSpecMap ComponentSpecMap;
 
 //-------------------------------------------------------------------------------------------------
 enum comp_str

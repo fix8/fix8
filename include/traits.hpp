@@ -34,7 +34,7 @@ struct FieldTrait
 	static bool is_string(const FieldType ftype) { return ft_string <= ftype && ftype <= ft_end_string; }
 	static bool is_float(const FieldType ftype) { return ft_float <= ftype && ftype <= ft_end_float; }
 
-	unsigned short _pos;
+	unsigned short _pos;	// is ordinal, ie 0=n/a, 1=1st, 2=2nd
 
 	enum TraitTypes { mandatory, present, position, group, count };
 	mutable std::bitset<count> _field_traits;
@@ -42,7 +42,8 @@ struct FieldTrait
 	FieldTrait(const unsigned short field, const FieldType ftype=ft_untyped,
 		const unsigned short pos=0, bool ismandatory=false, bool isgroup=false, bool ispresent=false) :
 		_fnum(field), _ftype(ftype), _pos(pos),
-			_field_traits(ismandatory ? 1 : 0 | (ispresent ? 1 : 0) << present | 1 << position | (isgroup ? 1 : 0) << group) {}
+			_field_traits(ismandatory ? 1 : 0 | (ispresent ? 1 : 0) << present
+				| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group) {}
 
 	struct Compare : public std::binary_function<FieldTrait, FieldTrait, bool>
 	{
@@ -50,10 +51,12 @@ struct FieldTrait
 	};
 };
 
+typedef std::set<FieldTrait, FieldTrait::Compare> Presence;
+
 // which fields are required, which are present
 class FieldTraits
 {
-	std::set<FieldTrait, FieldTrait::Compare> _presence;
+	Presence _presence;
 
 public:
 	template<typename InputIterator>
@@ -72,6 +75,8 @@ public:
 		if (itr != _presence.end())
 			itr->_field_traits.set(type, true);
 	}
+
+	bool add(const FieldTrait& what) { return _presence.insert(Presence::value_type(what)).second; }
 
 	bool isPresent(const unsigned short field) const { return get(field, FieldTrait::present); }
 	bool isMandatory(const unsigned short field) const { return get(field, FieldTrait::mandatory); }

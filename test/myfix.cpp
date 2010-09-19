@@ -35,12 +35,12 @@ static const std::string rcsid("$Id: f8c.cpp 515 2010-09-16 01:13:48Z davidd $")
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	cout << "Version: " << FIX441::Myfix::get_version() << endl;
+	cout << "Version: " << SFE::Myfix::get_version() << endl;
 
 	try
 	{
-		//const BaseEntry *be(Myfix441::find_ptr(35));
-		const BaseEntry& be(FIX441::Myfix::find_ref(101));
+		//const BaseEntry *be(Myfix4401::find_ptr(35));
+		const BaseEntry& be(SFE::Myfix::find_ref(101));
 		string logon("A");
 		auto_ptr<BaseField> fld(be._create(logon, &be));
 		if (be._comment)
@@ -53,14 +53,14 @@ int main(int argc, char **argv)
 		cerr << ex.what() << endl;
 	}
 
-	const BaseEntry& be1(FIX441::Myfix::find_ref(98));
+	const BaseEntry& be1(SFE::Myfix::find_ref(98));
 	string encryptmethod("101");
 	auto_ptr<BaseField> fld1(be1._create(encryptmethod, &be1));
 	if (be1._comment)
 		cout << be1._comment << ": ";
 	cout << *fld1 << endl;
 	cout << "is valid: " << boolalpha << fld1->isValid() << endl;
-	FIX441::EncryptMethod& em(dynamic_cast<FIX441::EncryptMethod&>(*fld1));
+	SFE::EncryptMethod& em(dynamic_cast<SFE::EncryptMethod&>(*fld1));
 	cout << em.get() << endl;
 	return 0;
 }

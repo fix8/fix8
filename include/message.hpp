@@ -10,26 +10,28 @@ namespace FIX8 {
 // all fields present in a message - mandatory and optional
 typedef std::map<unsigned short, BaseField *> Fields;
 
-class Message
+class MessageBase
 {
 public:
 	template<typename InputIterator>
-	Message(const InputIterator begin, const InputIterator end) : _fp(begin, end) {}
+	MessageBase(const InputIterator begin, const InputIterator end) : _fp(begin, end) {}
 
-	Message() {}
+	MessageBase() {}
 
 	Fields _fields;
 	FieldTraits _fp;
 };
 
-struct MessageSubElements
+class Message : public MessageBase
 {
-	static const FieldTrait header_ft[], *header_ft_end, trailer_ft[], *trailer_ft_end;
-	Message _header, _trailer;
+protected:
+	MessageBase _header, _trailer;
 
 public:
-	MessageSubElements() :
-		_header(header_ft, header_ft_end), _trailer(trailer_ft, trailer_ft_end) {}
+	template<typename InputIterator>
+	Message(const InputIterator begin, const InputIterator end) : MessageBase(begin, end) {}
+
+	Message() {}
 };
 
 } // FIX8
