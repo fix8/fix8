@@ -128,8 +128,9 @@ ostream& operator<<(ostream& os, const XmlEntity& en)
 //-----------------------------------------------------------------------------------------
 // finite state machine with simple recursive descent parser
 //-----------------------------------------------------------------------------------------
-XmlEntity::XmlEntity(istream& ifs, int txtline, int depth, const char *rootAttr)
-	: value_(), decl_(), depth_(depth), sequence_(++seq_), txtline_(txtline), children_(), attrs_()
+XmlEntity::XmlEntity(istream& ifs, int subidx, int txtline, int depth, const char *rootAttr)
+	: value_(), decl_(), depth_(depth), sequence_(++seq_), txtline_(txtline),
+	chldcnt_(), subidx_(subidx), children_(), attrs_()
 {
 	enum
   	{
@@ -259,7 +260,7 @@ XmlEntity::XmlEntity(istream& ifs, int txtline, int depth, const char *rootAttr)
 					}
 					else
 					{
-						scoped_ptr<XmlEntity> child(new XmlEntity(ifs, line_, depth_ + 1));
+						scoped_ptr<XmlEntity> child(new XmlEntity(ifs, chldcnt_ + 1, line_, depth_ + 1));
 						if (child->GetTag().empty())
 							--seq_;
 						else
@@ -267,6 +268,7 @@ XmlEntity::XmlEntity(istream& ifs, int txtline, int depth, const char *rootAttr)
 							if (!children_)
 								children_ = new XmlSubEls;
 							XmlEntity *chld(child.release());
+							++chldcnt_;
 							children_->insert(XmlSubEls::value_type(chld->GetTag(), chld));
 						}
 					}
@@ -539,7 +541,7 @@ XmlEntity *XmlEntity::Factory(const string& fname)
 {
 	Reset();
 	ifstream ifs(fname.c_str());
-	return ifs ? new XmlEntity(ifs, 0, 0, fname.c_str()) : 0;
+	return ifs ? new XmlEntity(ifs, 0, 0, 0, fname.c_str()) : 0;
 }
 
 //-----------------------------------------------------------------------------------------

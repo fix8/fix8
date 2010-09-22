@@ -9,6 +9,7 @@ namespace FIX8 {
 
 // all fields present in a message - mandatory and optional
 typedef std::map<unsigned short, BaseField *> Fields;
+typedef std::multimap<unsigned short, BaseField *> Positions;
 
 class MessageBase
 {
@@ -20,6 +21,7 @@ public:
 
 	Fields _fields;
 	FieldTraits _fp;
+	Positions _pos;
 };
 
 class Message : public MessageBase

@@ -49,7 +49,7 @@ class XmlEntity
 	static FIX8::RegExp rCE_, rCX_;
 
 	std::string tag_, *value_, *decl_;
-	int depth_, sequence_, txtline_;
+	int depth_, sequence_, txtline_, chldcnt_, subidx_;
 
 	typedef std::multimap<std::string, XmlEntity *> XmlSubEls;
 	XmlSubEls *children_;   // simple n-ary tree
@@ -62,7 +62,7 @@ class XmlEntity
 	XmlAttrs *attrs_;
 
 public:
-	XmlEntity(std::istream& ifs, int txtline=0, int depth=0, const char *rootAttr=0);
+	XmlEntity(std::istream& ifs, int subidx, int txtline=0, int depth=0, const char *rootAttr=0);
 	virtual ~XmlEntity();
 
 	int ParseAttrs(const std::string& attlst);
@@ -100,6 +100,8 @@ public:
 	const int GetDepth() const { return depth_; }
 	const int GetErrorCnt() const { return errors_; }
 	const int GetLineCnt() const { return line_; }
+	const int GetChildCnt() const { return chldcnt_; }
+	const int GetSubIdx() const { return subidx_; }
 	const int GetLine() const { return txtline_; }
 	const int GetSequence() const { return sequence_; }
 	const int GetMaxDepth() const { return maxdepth_; }

@@ -2,7 +2,7 @@ TARGET = ../bin/f8c
 LIBS = -lrt -lf8 -lPocoFoundation
 INCLUDE = -I../include -I.
 CXX_SRCS = f8c.cpp
-HDRS = f8cstatic.hpp f8c.hpp
+HDRS = f8cstatic.hpp f8c.hpp ../include/*.hpp
 CXXFLAGS = -O3 -ggdb -Wall
 LDFLAGS = -ggdb -L../lib
 OBJS = $(CXX_SRCS:.cpp=.o)
