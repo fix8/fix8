@@ -34,7 +34,7 @@ struct FieldTrait
 		const unsigned short _field;
 		const FieldType _ftype;
 		const unsigned short _pos;
-		bool _ismandatory, _isgroup;
+		bool _ismandatory, _isgroup, _iscomponent;
 	};
 
 	static bool is_int(const FieldType ftype) { return ft_int <= ftype && ftype <= ft_end_int; }
@@ -44,16 +44,17 @@ struct FieldTrait
 
 	unsigned short _pos;	// is ordinal, ie 0=n/a, 1=1st, 2=2nd
 
-	enum TraitTypes { mandatory, present, position, group, count };
+	enum TraitTypes { mandatory, present, position, group, component, count };
 	mutable ebitset<TraitTypes, unsigned short> _field_traits;
 
 	FieldTrait(const unsigned short field, const FieldType ftype=ft_untyped,
-		const unsigned short pos=0, bool ismandatory=false, bool isgroup=false, bool ispresent=false) :
+		const unsigned short pos=0, bool ismandatory=false, bool isgroup=false, bool iscomponent=false, bool ispresent=false) :
 		_fnum(field), _ftype(ftype), _pos(pos), _field_traits(ismandatory ? 1 : 0 | (ispresent ? 1 : 0) << present
-		| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group) {}
+		| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group | (iscomponent ? 1 : 0) << component) {}
 
 	FieldTrait(const TraitBase& tb) : _fnum(tb._field), _ftype(tb._ftype), _pos(tb._pos),
-		_field_traits(tb._ismandatory ? 1 : 0 | (tb._pos ? 1 : 0) << position | (tb._isgroup ? 1 : 0) << group) {}
+		_field_traits(tb._ismandatory ? 1 : 0 | (tb._pos ? 1 : 0) << position
+		| (tb._isgroup ? 1 : 0) << group | (tb._iscomponent ? 1 : 0) << component) {}
 
 	struct Compare : public std::binary_function<FieldTrait, FieldTrait, bool>
 	{
@@ -66,12 +67,13 @@ typedef std::set<FieldTrait, FieldTrait::Compare> Presence;
 // which fields are required, which are present
 class FieldTraits
 {
-	bool _hasMandatory, _hasGroup;
+	bool _hasMandatory, _hasGroup, _hasComponent;
 	Presence _presence;
 
 public:
 	template<typename InputIterator>
-	FieldTraits(const InputIterator begin, const InputIterator end) : _hasMandatory(), _hasGroup(), _presence(begin, end) {}
+	FieldTraits(const InputIterator begin, const InputIterator end) : _hasMandatory(), _hasGroup(), _hasComponent(),
+		_presence(begin, end) {}
 	FieldTraits() : _hasMandatory(), _hasGroup() {}
 
 	bool get(const unsigned short field, FieldTrait::TraitTypes type) const
@@ -92,6 +94,7 @@ public:
 	bool isPresent(const unsigned short field) const { return get(field, FieldTrait::present); }
 	bool isMandatory(const unsigned short field) const { return get(field, FieldTrait::mandatory); }
 	bool isGroup(const unsigned short field) const { return get(field, FieldTrait::group); }
+	bool isComponent(const unsigned short field) const { return get(field, FieldTrait::component); }
 	unsigned short getPos(const unsigned short field) const
 	{
 		std::set<FieldTrait, FieldTrait::Compare>::const_iterator itr(_presence.find(field));
@@ -102,6 +105,7 @@ public:
 	bool setHasGroup(bool to=true) { return _hasGroup = to; }
 	bool hasMandatory() const { return _hasMandatory; }
 	bool hasGroup() const { return _hasGroup; }
+	bool hasComponent() const { return _hasComponent; }
 
 	const Presence& get_presence() const { return _presence; }
 };

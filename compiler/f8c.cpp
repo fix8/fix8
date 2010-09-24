@@ -98,7 +98,8 @@ int loadFixVersion (XmlEntity& xf, Ctxt& ctxt);
 int loadfields(XmlEntity& xf, FieldSpecMap& fspec);
 int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& fts,
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
-int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
+int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& cspec,
+	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
 int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
 ostream *openofile(const string& odir, const string& fname);
 const string flname(const string& from);
@@ -443,7 +444,8 @@ int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& 
 }
 
 //-----------------------------------------------------------------------------------------
-int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec)
+int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& cspec,
+	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec)
 {
 	int msgssLoaded(0);
 
@@ -522,6 +524,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const FieldToNumMap& fton
 							<< inputFile << '(' << (*gitr)->GetLine() << ')' << endl;
 				}
 			}
+
 			(*itr)->GetAttr("comment", result.first->second._comment);
 
 			if (!processMessageFields("message/field", *itr, result.first->second._fields, ftonSpec, fspec))
@@ -535,7 +538,21 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const FieldToNumMap& fton
 			if ((*itr)->find("message/component", comlist))
 			{
 				for(XmlList::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
-					cerr << **citr << endl;
+				{
+					string cname, required;
+					if (!(*citr)->GetAttr("name", cname) || !(*citr)->GetAttr("required", required))
+						continue;
+					ComponentSpecMap::const_iterator csitr(cspec.find(cname));
+					if (csitr == cspec.end())
+					{
+						cerr << "Component not found " << name << " at "
+							<< inputFile << '(' << (*citr)->GetLine() << ')' << endl;
+						continue;
+					}
+
+					result.first->second._fields.add(FieldTrait(30000 + (*citr)->GetSubIdx(), FieldTrait::ft_untyped,
+						(*citr)->GetSubIdx(), required == "Y", false, true));
+				}
 			}
 
 			++msgssLoaded;
@@ -708,7 +725,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	loadcomponents(xf, cspec, ftonSpec, fspec);
 
 	MessageSpecMap mspec;
-	if (!loadmessages(xf, mspec, ftonSpec, fspec))
+	if (!loadmessages(xf, mspec, cspec, ftonSpec, fspec))
 		return result;
 
 	// output file preambles
@@ -750,7 +767,8 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 				osc_cpp << spacer << "{ " << flitr->_fnum << ", static_cast<FieldTrait::FieldType>("
 					<< flitr->_ftype << "), " << flitr->_pos << ", "
 					<< (flitr->_field_traits.has(FieldTrait::mandatory) ? '1' : '0') << ", "
-					<< (flitr->_field_traits.has(FieldTrait::group) ? '1' : '0') << " }";
+					<< (flitr->_field_traits.has(FieldTrait::group) ? '1' : '0') << ", "
+					<< (flitr->_field_traits.has(FieldTrait::component) ? '1' : '0') << " }";
 			}
 			osc_cpp << endl << "};" << endl;
 			osc_cpp << "const size_t " << mitr->second._name << "::_fldcnt("
