@@ -97,7 +97,7 @@ int process(XmlEntity& xf, Ctxt& ctxt);
 int loadFixVersion (XmlEntity& xf, Ctxt& ctxt);
 int loadfields(XmlEntity& xf, FieldSpecMap& fspec);
 int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& fts,
-	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
+	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, const bool iscomponent=false);
 int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& cspec,
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
 int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
@@ -324,7 +324,7 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 
 //-----------------------------------------------------------------------------------------
 int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
-	const FieldSpecMap& fspec)
+	const FieldSpecMap& fspec, const bool iscomponent)
 {
 	unsigned processed(0);
 	XmlList flist;
@@ -348,7 +348,7 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 				// add FieldTrait
 				if (required == "Y")
 					hasMandatory = true;
-				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, false)))
+				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, iscomponent)))
 					cerr << "Could not add trait object " << fname << endl;
 				else
 					++processed;
@@ -405,13 +405,13 @@ int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& 
 						if (ftonItr != ftonSpec.end() && (fs_itr = fspec.find(ftonItr->second)) != fspec.end())
 						{
 							if (!result.first->second._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
-								required == "Y", true, false)))
+								required == "Y", true, true)))
 									cerr << "Could not add group trait object " << gname << endl;
 							else
 							{
 								pair<GroupMap::iterator, bool> gresult(
 									result.first->second._groups.insert(GroupMap::value_type(fs_itr->first, FieldTraits())));
-								if (!processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec))
+								if (!processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, true))
 									cerr << "No fields found in component group " << gname << " at "
 										<< inputFile << '(' << (*gitr)->GetLine() << ')' << endl;
 								else
@@ -431,7 +431,7 @@ int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& 
 			}
 			(*itr)->GetAttr("comment", result.first->second._comment);
 
-			processMessageFields("component/field", *itr, result.first->second._fields, ftonSpec, fspec);
+			processMessageFields("component/field", *itr, result.first->second._fields, ftonSpec, fspec, true);
 
 			++msgssLoaded;
 		}
@@ -550,8 +550,15 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 						continue;
 					}
 
-					result.first->second._fields.add(FieldTrait(30000 + (*citr)->GetSubIdx(), FieldTrait::ft_untyped,
-						(*citr)->GetSubIdx(), required == "Y", false, true));
+					if (!processMessageFields("component/field", *citr, result.first->second._fields, ftonSpec, fspec))
+					{
+						cerr << "No fields found in component " << name << " at "
+							<< inputFile << '(' << (*citr)->GetLine() << ')' << endl;
+						continue;
+					}
+
+			//		result.first->second._fields.add(FieldTrait(30000 + (*citr)->GetSubIdx(), FieldTrait::ft_untyped,
+			//			(*citr)->GetSubIdx(), required == "Y", false, true));
 				}
 			}
 
