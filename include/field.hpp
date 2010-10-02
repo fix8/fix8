@@ -78,6 +78,7 @@ public:
 template<const unsigned short field>
 class Field<int, field> : public BaseField
 {
+protected:
 	int _value;
 
 public:
@@ -96,6 +97,7 @@ public:
 template<const unsigned short field>
 class Field<std::string, field> : public BaseField
 {
+protected:
 	std::string _value;
 
 public:
@@ -113,6 +115,7 @@ public:
 template<const unsigned short field>
 class Field<double, field> : public BaseField
 {
+protected:
 	double _value;
 
 public:
@@ -355,6 +358,38 @@ public:
 	const std::string& get() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
 	std::ostream& print(std::ostream& os) const { return os << (_value ? 'Y' : 'N'); }
+};
+
+//-------------------------------------------------------------------------------------------------
+typedef EnumType<FieldTrait::ft_float> Qty;
+typedef EnumType<FieldTrait::ft_float> Amt;
+typedef EnumType<FieldTrait::ft_float> price;
+typedef EnumType<FieldTrait::ft_float> PriceOffset;
+typedef EnumType<FieldTrait::ft_float> Percentage;
+
+template<const unsigned short field>
+class Field<Qty, field> : public Field<double, field>
+{
+public:
+	Field (const double& val) : Field<double, field>(val) {}
+	Field (const std::string& from, const DomainBase *dom=0) : Field<double, field>(from, dom) {}
+	virtual ~Field() {}
+};
+
+//-------------------------------------------------------------------------------------------------
+typedef EnumType<FieldTrait::ft_string> MultipleCharValue;
+typedef EnumType<FieldTrait::ft_string> MultipleStringValue;
+typedef EnumType<FieldTrait::ft_string> country;
+typedef EnumType<FieldTrait::ft_string> currency;
+typedef EnumType<FieldTrait::ft_string> Exchange;
+
+template<const unsigned short field>
+class Field<MultipleCharValue, field> : public Field<std::string, field>
+{
+public:
+	Field (const std::string& val) : Field<std::string, field>(val) {}
+	Field (const std::string& from, const DomainBase *dom=0) : Field<std::string, field>(from, dom) {}
+	virtual ~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------

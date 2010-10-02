@@ -212,9 +212,9 @@ class ebitset
 	integral_type a_;
 
 public:
-	explicit ebitset() : a_() {}
+	ebitset() : a_() {}
 	explicit ebitset(const integral_type a) : a_(a) {}
-	explicit ebitset(T sbit) : a_((1 << sbit) - 1) {}
+	explicit ebitset(const T sbit) : a_((1 << sbit) - 1) {}
 
 	ebitset<T, B>& operator=(const ebitset<T, B>& that)
 	{
@@ -224,7 +224,7 @@ public:
 	}
 
 	bool has(const T sbit) { return a_ & 1 << sbit; }
-	void set(const T sbit) { a_ |= 1 << sbit; }
+	void set(const T sbit, bool on=true) { if (on) a_ |= 1 << sbit; else a_ &= ~(1 << sbit); }
 	void set(const integral_type bset) { a_ = bset; }
 	void clear(const T sbit) { a_ &= ~(1 << sbit); }
 	void clearall() { a_ = 0; }

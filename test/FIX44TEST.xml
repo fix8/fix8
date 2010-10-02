@@ -20,13 +20,32 @@
       <field name="HeartBtInt" required="Y" />
       <field name="RawDataLength" required="N" />
       <field name="RawData" required="N" />
+      <component name="OrderQtyData" required="N" />
       <field name="ResetSeqNumFlag" required="N" />
     </message>
   </messages>
+  <components>
+    <component name="OrderQtyData">
+      <field name="OrderQty" required="N" />
+      <field name="CashOrderQty" required="N" />
+      <field name="OrderPercent" required="N" />
+      <field name="RoundingDirection" required="N" />
+      <field name="RoundingModulus" required="N" />
+    </component>
+  </components>
   <fields>
     <field number="10" name="CheckSum" type="STRING" />
     <field number="112" name="TestReqID" type="STRING" />
     <field number="52" name="SendingTime" type="UTCTIMESTAMP" />
+    <field number="38" name="OrderQty" type="QTY" />
+    <field number="152" name="CashOrderQty" type="QTY" />
+    <field number="469" name="RoundingModulus" type="FLOAT" />
+    <field number="516" name="OrderPercent" type="PERCENTAGE" />
+    <field number="468" name="RoundingDirection" type="CHAR">
+      <value enum="0" description="ROUND_TO_NEAREST" />
+      <value enum="1" description="ROUND_DOWN" />
+      <value enum="2" description="ROUND_UP" />
+    </field>
     <field number="98" name="EncryptMethod" type="INT" comment="Payload encryption method">
       <value enum="0" description="NONE_OTHER" />
       <value enum="1" description="PKCS" />

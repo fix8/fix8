@@ -97,9 +97,10 @@ int process(XmlEntity& xf, Ctxt& ctxt);
 int loadFixVersion (XmlEntity& xf, Ctxt& ctxt);
 int loadfields(XmlEntity& xf, FieldSpecMap& fspec);
 int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& fts,
-	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, const bool iscomponent=false);
+	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, const unsigned component);
 int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& cspec,
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
+int processOrdering(MessageSpecMap& mspec, const ComponentSpecMap& cspec, const FieldSpecMap& fspec);
 int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
 ostream *openofile(const string& odir, const string& fname);
 const string flname(const string& from);
@@ -324,7 +325,7 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 
 //-----------------------------------------------------------------------------------------
 int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
-	const FieldSpecMap& fspec, const bool iscomponent)
+	const FieldSpecMap& fspec, const unsigned subpos)
 {
 	unsigned processed(0);
 	XmlList flist;
@@ -348,7 +349,7 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 				// add FieldTrait
 				if (required == "Y")
 					hasMandatory = true;
-				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, iscomponent)))
+				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, subpos)))
 					cerr << "Could not add trait object " << fname << endl;
 				else
 					++processed;
@@ -377,7 +378,8 @@ int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& 
 		return 0;
 	}
 
-	for(XmlList::const_iterator itr(mlist.begin()); itr != mlist.end(); ++itr)
+	unsigned cnum(0);
+	for(XmlList::const_iterator itr(mlist.begin()); itr != mlist.end(); ++itr, ++cnum)
 	{
 		string name;
 		if ((*itr)->GetAttr("name", name))
@@ -405,7 +407,7 @@ int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& 
 						if (ftonItr != ftonSpec.end() && (fs_itr = fspec.find(ftonItr->second)) != fspec.end())
 						{
 							if (!result.first->second._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
-								required == "Y", true, true)))
+								required == "Y", true, cnum)))
 									cerr << "Could not add group trait object " << gname << endl;
 							else
 							{
@@ -500,17 +502,46 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 						if (ftonItr != ftonSpec.end() && (fs_itr = fspec.find(ftonItr->second)) != fspec.end())
 						{
 							if (!result.first->second._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
-								required == "Y", true, false)))
+								required == "Y", true, 0)))
 									cerr << "Could not add group trait object " << gname << endl;
 							else
 							{
 								pair<GroupMap::iterator, bool> gresult(
 									result.first->second._groups.insert(GroupMap::value_type(fs_itr->first, FieldTraits())));
-								if (!processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec))
+								if (!processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 0))
 									cerr << "No fields found in group message " << gname << " at "
 										<< inputFile << '(' << (*gitr)->GetLine() << ')' << endl;
 								else
+								{
 									gresult.first->second.setHasGroup();
+									XmlList comlist;
+									if ((*gitr)->find("group/component", comlist))
+									{
+										for(XmlList::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
+										{
+											string cname, required;
+											if (!(*citr)->GetAttr("name", cname) || !(*citr)->GetAttr("required", required))
+												continue;
+											ComponentSpecMap::const_iterator csitr(cspec.find(cname));
+											if (csitr == cspec.end())
+											{
+												cerr << "Component not found " << name << " at "
+													<< inputFile << '(' << (*citr)->GetLine() << ')' << endl;
+												continue;
+											}
+
+											for (Presence::iterator deitr(csitr->second._fields.get_presence().begin());
+												deitr != csitr->second._fields.get_presence().end(); ++deitr)
+											{
+												deitr->_pos = (*citr)->GetSubIdx();
+												deitr->_subpos = 1 + distance(csitr->second._fields.get_presence().begin(), deitr);
+												deitr->_field_traits.set(FieldTrait::mandatory,
+													deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y");
+												gresult.first->second.add(*deitr);
+											}
+										}
+									}
+								}
 							}
 						}
 						else
@@ -527,7 +558,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 
 			(*itr)->GetAttr("comment", result.first->second._comment);
 
-			if (!processMessageFields("message/field", *itr, result.first->second._fields, ftonSpec, fspec))
+			if (!processMessageFields("message/field", *itr, result.first->second._fields, ftonSpec, fspec, 0))
 			{
 				cerr << "No fields found in message " << name << " at "
 					<< inputFile << '(' << (*itr)->GetLine() << ')' << endl;
@@ -550,15 +581,15 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 						continue;
 					}
 
-					if (!processMessageFields("component/field", *citr, result.first->second._fields, ftonSpec, fspec))
+					for (Presence::iterator deitr(csitr->second._fields.get_presence().begin());
+						deitr != csitr->second._fields.get_presence().end(); ++deitr)
 					{
-						cerr << "No fields found in component " << name << " at "
-							<< inputFile << '(' << (*citr)->GetLine() << ')' << endl;
-						continue;
+						deitr->_pos = (*citr)->GetSubIdx();
+						deitr->_subpos = 1 + distance(csitr->second._fields.get_presence().begin(), deitr);
+						deitr->_field_traits.set(FieldTrait::mandatory,
+							deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y");
+						result.first->second._fields.add(*deitr);
 					}
-
-			//		result.first->second._fields.add(FieldTrait(30000 + (*citr)->GetSubIdx(), FieldTrait::ft_untyped,
-			//			(*citr)->GetSubIdx(), required == "Y", false, true));
 				}
 			}
 
@@ -613,6 +644,37 @@ void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostre
 const string flname(const string& from)
 {
 	return from.substr(0, from.find_first_of('.'));
+}
+
+//-----------------------------------------------------------------------------------------
+int processOrdering(MessageSpecMap& mspec, const ComponentSpecMap& cspec, const FieldSpecMap& fspec)
+{
+	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
+	{
+		FieldTraitOrder mo;
+		for (Presence::const_iterator flitr(mitr->second._fields.get_presence().begin());
+			flitr != mitr->second._fields.get_presence().end(); ++flitr)
+				mo.insert(FieldTraitOrder::value_type(&*flitr));
+
+		unsigned cnt(0);
+		for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
+			(*fto)->_pos = ++cnt;
+
+		mo.clear();
+
+		for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
+		{
+			for (Presence::const_iterator flitr(gitr->second.get_presence().begin());
+				flitr != gitr->second.get_presence().end(); ++flitr)
+					mo.insert(FieldTraitOrder::value_type(&*flitr));
+
+			unsigned cnt(0);
+			for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
+				(*fto)->_pos = ++cnt;
+		}
+	}
+
+	return 0;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -735,6 +797,8 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	if (!loadmessages(xf, mspec, cspec, ftonSpec, fspec))
 		return result;
 
+	processOrdering(mspec, cspec, fspec);
+
 	// output file preambles
 	osc_hpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
 	osc_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
@@ -751,6 +815,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_cpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_generated_includes) << endl;
+	osc_cpp << "#include <" << ctxt._out[Ctxt::types_hpp].first << '>' << endl;
 	osc_cpp << "#include <" << ctxt._out[Ctxt::classes_hpp].first << '>' << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
@@ -786,10 +851,47 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 
 		osc_hpp << "public:" << endl;
 		osc_hpp << spacer << mitr->second._name << "();" << endl;
-		osc_hpp << spacer << "virtual ~" << mitr->second._name << "() {} " << endl;
+		osc_hpp << spacer << "virtual ~" << mitr->second._name << "() {}" << endl;
 
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << " get_msgtype() { return " << fsitr->second._name
 			<< "(\"" << mitr->first << "\"); }" << endl;
+		if (!mitr->second._groups.empty())
+		{
+			for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
+			{
+				if (gitr->second.get_presence().size())
+				{
+					FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
+					osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+					osc_cpp << "const FieldTrait::TraitBase " << mitr->second._name << "::" << gsitr->second._name << "::_traits[] ="
+						<< endl << '{' << endl;
+					for (Presence::const_iterator flitr(gitr->second.get_presence().begin());
+						flitr != gitr->second.get_presence().end(); ++flitr)
+					{
+						if (flitr != gitr->second.get_presence().begin())
+							osc_cpp << ',' << endl;
+						osc_cpp << spacer << "{ " << flitr->_fnum << ", static_cast<FieldTrait::FieldType>("
+							<< flitr->_ftype << "), " << flitr->_pos << ", "
+							<< (flitr->_field_traits.has(FieldTrait::mandatory) ? '1' : '0') << ", "
+							<< (flitr->_field_traits.has(FieldTrait::group) ? '1' : '0') << ", "
+							<< (flitr->_field_traits.has(FieldTrait::component) ? '1' : '0') << " }";
+					}
+					osc_cpp << endl << "};" << endl;
+					osc_cpp << "const size_t " << mitr->second._name << "::" << gsitr->second._name << "::_fldcnt("
+						<< gitr->second.get_presence().size() << ");" << endl;
+					osc_hpp << endl << spacer << "class " << gsitr->second._name
+						<< " : public MessageBase" << endl << spacer << '{' << endl;
+					osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
+					osc_hpp << spacer << spacer << "static const size_t _fldcnt;" << endl << endl;
+					osc_hpp << spacer << "public:" << endl;
+					osc_hpp << spacer << spacer << gsitr->second._name << "();" << endl;
+					osc_hpp << spacer << spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
+					osc_hpp << endl << spacer << spacer << "static const " << fsitr->second._name
+						<< " get_msgtype() { return " << fsitr->second._name << "(\"" << gsitr->second._name << "\"); }" << endl;
+					osc_hpp << spacer << "};" << endl;
+				}
+			}
+		}
 		osc_hpp << "};" << endl << endl;
 		osc_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	}

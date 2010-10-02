@@ -42,23 +42,34 @@ struct FieldTrait
 	static bool is_string(const FieldType ftype) { return ft_string <= ftype && ftype <= ft_end_string; }
 	static bool is_float(const FieldType ftype) { return ft_float <= ftype && ftype <= ft_end_float; }
 
-	unsigned short _pos;	// is ordinal, ie 0=n/a, 1=1st, 2=2nd
+	mutable unsigned short _pos;	// is ordinal, ie 0=n/a, 1=1st, 2=2nd
+	mutable unsigned short _subpos;
 
 	enum TraitTypes { mandatory, present, position, group, component, count };
 	mutable ebitset<TraitTypes, unsigned short> _field_traits;
 
 	FieldTrait(const unsigned short field, const FieldType ftype=ft_untyped,
-		const unsigned short pos=0, bool ismandatory=false, bool isgroup=false, bool iscomponent=false, bool ispresent=false) :
-		_fnum(field), _ftype(ftype), _pos(pos), _field_traits(ismandatory ? 1 : 0 | (ispresent ? 1 : 0) << present
-		| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group | (iscomponent ? 1 : 0) << component) {}
+		const unsigned short pos=0, bool ismandatory=false, bool isgroup=false, const unsigned subpos=0,
+			bool ispresent=false) :
+		_fnum(field), _ftype(ftype), _pos(pos), _subpos(subpos),
+		_field_traits(ismandatory ? 1 : 0 | (ispresent ? 1 : 0) << present
+		| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group | (subpos ? 1 : 0) << component) {}
 
-	FieldTrait(const TraitBase& tb) : _fnum(tb._field), _ftype(tb._ftype), _pos(tb._pos),
+	FieldTrait(const TraitBase& tb) : _fnum(tb._field), _ftype(tb._ftype), _pos(tb._pos), _subpos(),
 		_field_traits(tb._ismandatory ? 1 : 0 | (tb._pos ? 1 : 0) << position
 		| (tb._isgroup ? 1 : 0) << group | (tb._iscomponent ? 1 : 0) << component) {}
 
 	struct Compare : public std::binary_function<FieldTrait, FieldTrait, bool>
 	{
 		bool operator()(const FieldTrait& p1, const FieldTrait& p2) const { return p1._fnum < p2._fnum; }
+	};
+
+	struct PosCompare : public std::binary_function<FieldTrait, FieldTrait, bool>
+	{
+		bool operator()(const FieldTrait* p1, const FieldTrait* p2) const
+		{
+			return p1->_pos < p2->_pos || (p1->_pos == p2->_pos && p1->_subpos < p2->_subpos);
+		}
 	};
 };
 
@@ -74,7 +85,7 @@ public:
 	template<typename InputIterator>
 	FieldTraits(const InputIterator begin, const InputIterator end) : _hasMandatory(), _hasGroup(), _hasComponent(),
 		_presence(begin, end) {}
-	FieldTraits() : _hasMandatory(), _hasGroup() {}
+	FieldTraits() : _hasMandatory(), _hasGroup(), _hasComponent() {}
 
 	bool get(const unsigned short field, FieldTrait::TraitTypes type) const
 	{

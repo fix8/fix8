@@ -182,6 +182,7 @@ struct MessageSpec
 };
 
 typedef std::map<std::string, MessageSpec> MessageSpecMap;
+typedef std::multiset<const FieldTrait *, FieldTrait::PosCompare> FieldTraitOrder;
 
 //-------------------------------------------------------------------------------------------------
 typedef MessageSpec ComponentSpec;
