@@ -24,16 +24,28 @@ public:
 	Positions _pos;
 };
 
+class header;
+class trailer;
+
 class Message : public MessageBase
 {
 protected:
-	MessageBase _header, _trailer;
+	header *_header;
+	trailer *_trailer;
 
 public:
 	template<typename InputIterator>
-	Message(const InputIterator begin, const InputIterator end) : MessageBase(begin, end) {}
+	Message(const InputIterator begin, const InputIterator end)
+		: MessageBase(begin, end), _header(), _trailer() {}
 
 	Message() {}
+};
+
+//-------------------------------------------------------------------------------------------------
+struct BaseMsgEntry
+{
+	Message *(*_create)(const std::string&, const BaseMsgEntry*);
+	const char *_comment;
 };
 
 } // FIX8

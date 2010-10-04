@@ -44,7 +44,7 @@ namespace FIX8 {
 typedef std::string f8String;
 
 //-------------------------------------------------------------------------------------------------
-template<typename Key, typename Val, unsigned Ver=42>
+template<typename Key, typename Val, unsigned Ver=4200>
 class GeneratedTable
 {
 	struct Pair

@@ -76,7 +76,7 @@ using namespace FIX8;
 static const std::string rcsid("$Id$");
 
 //-----------------------------------------------------------------------------------------
-const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_classes.cpp", "_classes.hpp" };
+const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp", "_classes.hpp" };
 
 //-----------------------------------------------------------------------------------------
 namespace {
@@ -86,6 +86,9 @@ const string GETARGLIST("hvo:p:");
 const string spacer(3, ' ');
 
 }
+
+//-----------------------------------------------------------------------------------------
+const CSMap _csMap;
 
 //-----------------------------------------------------------------------------------------
 // static data
@@ -100,11 +103,12 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, const unsigned component);
 int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& cspec,
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
-int processOrdering(MessageSpecMap& mspec, const ComponentSpecMap& cspec, const FieldSpecMap& fspec);
+void processOrdering(MessageSpecMap& mspec, const ComponentSpecMap& cspec, const FieldSpecMap& fspec);
 int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
 ostream *openofile(const string& odir, const string& fname);
 const string flname(const string& from);
 void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
+const string& mkel(const string& base, const string& compon, string& where);
 
 //-----------------------------------------------------------------------------------------
 class filestdout
@@ -217,6 +221,14 @@ ostream *openofile(const string& odir, const string& fname)
 	}
 
 	return os;
+}
+
+//-----------------------------------------------------------------------------------------
+const string& mkel(const string& base, const string& compon, string& where)
+{
+	ostringstream ostr;
+	ostr << base << '/' << compon;
+	return where = ostr.str();
 }
 
 //-----------------------------------------------------------------------------------------
@@ -458,6 +470,18 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 		return 0;
 	}
 
+	if (!xf.find("fix/header", mlist))
+	{
+		cerr << "No header found in " << inputFile << endl;
+		return 0;
+	}
+
+	if (!xf.find("fix/trailer", mlist))
+	{
+		cerr << "No trailer found in " << inputFile << endl;
+		return 0;
+	}
+
 	// lookup msgtype domain - all messages must have corresponding entry here
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
 	if (fsitr == fspec.end())
@@ -468,8 +492,12 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 
 	for(XmlList::const_iterator itr(mlist.begin()); itr != mlist.end(); ++itr)
 	{
-		string msgcat, name, msgtype;
-		if ((*itr)->GetAttr("msgtype", msgtype) && (*itr)->GetAttr("name", name) && (*itr)->GetAttr("msgcat", msgcat))
+		string msgcat, name, msgtype, elname;
+		if ((*itr)->GetTag() == "header")
+			msgtype = name = elname = "header";
+		else if ((*itr)->GetTag() == "trailer")
+			msgtype = name = elname = "trailer";
+		else if ((*itr)->GetAttr("msgtype", msgtype) && (*itr)->GetAttr("name", name) && (*itr)->GetAttr("msgcat", msgcat))
 		{
 			StringDomain sdom(msgtype, false);
 			DomainMap::const_iterator ditr(fsitr->second._dvals->find(&sdom));
@@ -479,125 +507,132 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 					" domain at " << inputFile << '(' << (*itr)->GetLine() << ')' << endl;
 				continue;
 			}
-			pair<MessageSpecMap::iterator, bool> result(
-				mspec.insert(MessageSpecMap::value_type(msgtype, MessageSpec(name))));
-			if (!result.second)
-			{
-				cerr << "Could not add message " << name << " (" << msgtype << ") at "
-					<< inputFile << '(' << (*itr)->GetLine() << ')' << endl;
-				continue;
-			}
 
-			XmlList grplist;
-			if ((*itr)->find("message/group", grplist))
+			elname = "message";
+		}
+		else
+		{
+			cerr << "Message element missing required attributes at "
+				<< inputFile << '(' << (*itr)->GetLine() << ')' << endl;
+			continue;
+		}
+
+		pair<MessageSpecMap::iterator, bool> result(
+			mspec.insert(MessageSpecMap::value_type(msgtype, MessageSpec(name))));
+		if (!result.second)
+		{
+			cerr << "Could not add message " << name << " (" << msgtype << ") at "
+				<< inputFile << '(' << (*itr)->GetLine() << ')' << endl;
+			continue;
+		}
+
+		string elpart;
+		XmlList grplist;
+		if ((*itr)->find(mkel(elname, "group", elpart), grplist))
+		{
+			for(XmlList::const_iterator gitr(grplist.begin()); gitr != grplist.end(); ++gitr)
 			{
-				for(XmlList::const_iterator gitr(grplist.begin()); gitr != grplist.end(); ++gitr)
+				string gname, required;
+				if ((*gitr)->GetAttr("name", gname) && (*gitr)->GetAttr("required", required))
 				{
-					string gname, required;
-					if ((*gitr)->GetAttr("name", gname) && (*gitr)->GetAttr("required", required))
+					// add group FieldTrait
+					FieldToNumMap::const_iterator ftonItr(ftonSpec.find(gname));
+					FieldSpecMap::const_iterator fs_itr;
+					if (ftonItr != ftonSpec.end() && (fs_itr = fspec.find(ftonItr->second)) != fspec.end())
 					{
-						// add group FieldTrait
-						FieldToNumMap::const_iterator ftonItr(ftonSpec.find(gname));
-						FieldSpecMap::const_iterator fs_itr;
-						if (ftonItr != ftonSpec.end() && (fs_itr = fspec.find(ftonItr->second)) != fspec.end())
+						if (!result.first->second._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
+							required == "Y", true, 0)))
+								cerr << "Could not add group trait object " << gname << endl;
+						else
 						{
-							if (!result.first->second._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
-								required == "Y", true, 0)))
-									cerr << "Could not add group trait object " << gname << endl;
+							pair<GroupMap::iterator, bool> gresult(
+								result.first->second._groups.insert(GroupMap::value_type(fs_itr->first, FieldTraits())));
+							if (!processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 0))
+								cerr << "No fields found in group message " << gname << " at "
+									<< inputFile << '(' << (*gitr)->GetLine() << ')' << endl;
 							else
 							{
-								pair<GroupMap::iterator, bool> gresult(
-									result.first->second._groups.insert(GroupMap::value_type(fs_itr->first, FieldTraits())));
-								if (!processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 0))
-									cerr << "No fields found in group message " << gname << " at "
-										<< inputFile << '(' << (*gitr)->GetLine() << ')' << endl;
-								else
+								gresult.first->second.setHasGroup();
+								XmlList comlist;
+								if ((*gitr)->find("group/component", comlist))
 								{
-									gresult.first->second.setHasGroup();
-									XmlList comlist;
-									if ((*gitr)->find("group/component", comlist))
+									for(XmlList::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
 									{
-										for(XmlList::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
+										string cname, required;
+										if (!(*citr)->GetAttr("name", cname) || !(*citr)->GetAttr("required", required))
+											continue;
+										ComponentSpecMap::const_iterator csitr(cspec.find(cname));
+										if (csitr == cspec.end())
 										{
-											string cname, required;
-											if (!(*citr)->GetAttr("name", cname) || !(*citr)->GetAttr("required", required))
-												continue;
-											ComponentSpecMap::const_iterator csitr(cspec.find(cname));
-											if (csitr == cspec.end())
-											{
-												cerr << "Component not found " << name << " at "
-													<< inputFile << '(' << (*citr)->GetLine() << ')' << endl;
-												continue;
-											}
+											cerr << "Component not found " << name << " at "
+												<< inputFile << '(' << (*citr)->GetLine() << ')' << endl;
+											continue;
+										}
 
-											for (Presence::iterator deitr(csitr->second._fields.get_presence().begin());
-												deitr != csitr->second._fields.get_presence().end(); ++deitr)
-											{
-												deitr->_pos = (*citr)->GetSubIdx();
-												deitr->_subpos = 1 + distance(csitr->second._fields.get_presence().begin(), deitr);
-												deitr->_field_traits.set(FieldTrait::mandatory,
-													deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y");
-												gresult.first->second.add(*deitr);
-											}
+										for (Presence::iterator deitr(csitr->second._fields.get_presence().begin());
+											deitr != csitr->second._fields.get_presence().end(); ++deitr)
+										{
+											deitr->_pos = (*citr)->GetSubIdx();
+											deitr->_subpos = 1 + distance(csitr->second._fields.get_presence().begin(), deitr);
+											deitr->_field_traits.set(FieldTrait::mandatory,
+												deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y");
+											gresult.first->second.add(*deitr);
 										}
 									}
 								}
 							}
 						}
-						else
-						{
-							cerr << "Could not locate group Field " << gname << " from known field types in " << inputFile << endl;
-							continue;
-						}
 					}
 					else
-						cerr << "Group element missing required attributes at "
-							<< inputFile << '(' << (*gitr)->GetLine() << ')' << endl;
-				}
-			}
-
-			(*itr)->GetAttr("comment", result.first->second._comment);
-
-			if (!processMessageFields("message/field", *itr, result.first->second._fields, ftonSpec, fspec, 0))
-			{
-				cerr << "No fields found in message " << name << " at "
-					<< inputFile << '(' << (*itr)->GetLine() << ')' << endl;
-				continue;
-			}
-
-			XmlList comlist;
-			if ((*itr)->find("message/component", comlist))
-			{
-				for(XmlList::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
-				{
-					string cname, required;
-					if (!(*citr)->GetAttr("name", cname) || !(*citr)->GetAttr("required", required))
-						continue;
-					ComponentSpecMap::const_iterator csitr(cspec.find(cname));
-					if (csitr == cspec.end())
 					{
-						cerr << "Component not found " << name << " at "
-							<< inputFile << '(' << (*citr)->GetLine() << ')' << endl;
+						cerr << "Could not locate group Field " << gname << " from known field types in " << inputFile << endl;
 						continue;
 					}
-
-					for (Presence::iterator deitr(csitr->second._fields.get_presence().begin());
-						deitr != csitr->second._fields.get_presence().end(); ++deitr)
-					{
-						deitr->_pos = (*citr)->GetSubIdx();
-						deitr->_subpos = 1 + distance(csitr->second._fields.get_presence().begin(), deitr);
-						deitr->_field_traits.set(FieldTrait::mandatory,
-							deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y");
-						result.first->second._fields.add(*deitr);
-					}
 				}
+				else
+					cerr << "Group element missing required attributes at "
+						<< inputFile << '(' << (*gitr)->GetLine() << ')' << endl;
 			}
-
-			++msgssLoaded;
 		}
-		else
-			cerr << "Message element missing required attributes at "
+
+		(*itr)->GetAttr("comment", result.first->second._comment);
+
+		if (!processMessageFields(mkel(elname, "field", elpart), *itr, result.first->second._fields, ftonSpec, fspec, 0))
+		{
+			cerr << "No fields found in message " << name << " at "
 				<< inputFile << '(' << (*itr)->GetLine() << ')' << endl;
+			continue;
+		}
+
+		XmlList comlist;
+		if ((*itr)->find(mkel(elname, "component", elpart), comlist))
+		{
+			for(XmlList::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
+			{
+				string cname, required;
+				if (!(*citr)->GetAttr("name", cname) || !(*citr)->GetAttr("required", required))
+					continue;
+				ComponentSpecMap::const_iterator csitr(cspec.find(cname));
+				if (csitr == cspec.end())
+				{
+					cerr << "Component not found " << name << " at "
+						<< inputFile << '(' << (*citr)->GetLine() << ')' << endl;
+					continue;
+				}
+
+				for (Presence::iterator deitr(csitr->second._fields.get_presence().begin());
+					deitr != csitr->second._fields.get_presence().end(); ++deitr)
+				{
+					deitr->_pos = (*citr)->GetSubIdx();
+					deitr->_subpos = 1 + distance(csitr->second._fields.get_presence().begin(), deitr);
+					deitr->_field_traits.set(FieldTrait::mandatory,
+						deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y");
+					result.first->second._fields.add(*deitr);
+				}
+			}
+		}
+
+		++msgssLoaded;
 	}
 
 	return msgssLoaded;
@@ -647,7 +682,7 @@ const string flname(const string& from)
 }
 
 //-----------------------------------------------------------------------------------------
-int processOrdering(MessageSpecMap& mspec, const ComponentSpecMap& cspec, const FieldSpecMap& fspec)
+void processOrdering(MessageSpecMap& mspec, const ComponentSpecMap& cspec, const FieldSpecMap& fspec)
 {
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 	{
@@ -668,13 +703,11 @@ int processOrdering(MessageSpecMap& mspec, const ComponentSpecMap& cspec, const 
 				flitr != gitr->second.get_presence().end(); ++flitr)
 					mo.insert(FieldTraitOrder::value_type(&*flitr));
 
-			unsigned cnt(0);
+			unsigned gcnt(0);
 			for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
-				(*fto)->_pos = ++cnt;
+				(*fto)->_pos = ++gcnt;
 		}
 	}
-
-	return 0;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -682,8 +715,9 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 {
 	ostream& ost_cpp(*ctxt._out[Ctxt::types_cpp].second.get());
 	ostream& ost_hpp(*ctxt._out[Ctxt::types_hpp].second.get());
-	ostream& osc_cpp(*ctxt._out[Ctxt::classes_cpp].second.get());
+	ostream& osr_cpp(*ctxt._out[Ctxt::traits_cpp].second.get());
 	ostream& osc_hpp(*ctxt._out[Ctxt::classes_hpp].second.get());
+	ostream& osc_cpp(*ctxt._out[Ctxt::classes_cpp].second.get());
 	int result(0);
 
 // ================================= Field processing =====================================
@@ -717,6 +751,8 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	// generate field types
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
+		if (!fitr->second._comment.empty())
+			ost_hpp << "// " << fitr->second._comment << endl;
 		ost_hpp << "typedef Field<" << FieldSpec::_typeToCPP.Find_Value_Ref(fitr->second._ftype)
 			<< ", " << fitr->first << "> " << fitr->second._name << ';' << endl;
 		if (fitr->second._dvals)
@@ -752,11 +788,11 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ost_cpp << "} // namespace " << ctxt._fixns << endl;
 
 	// generate field instantiator lookup
-	ost_hpp << "typedef GeneratedTable<unsigned, BaseEntry, " << ctxt._version << "> " << ctxt._clname << ';' << endl;
+	ost_hpp << "typedef GeneratedTable<unsigned, BaseEntry, " << ctxt._version << "> " << ctxt._clname << "_be;" << endl;
 
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "::Pair "
-		<< ctxt._fixns << "::" << ctxt._clname << "::_pairs[] =" << endl << '{' << endl;
+	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_be::Pair "
+		<< ctxt._fixns << "::" << ctxt._clname << "_be::_pairs[] =" << endl << '{' << endl;
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
 		if (fitr != fspec.begin())
@@ -773,10 +809,10 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		ost_cpp << " } }";
 	}
 	ost_cpp << endl << "};" << endl;
-	ost_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname << "::_pairsz(sizeof(_pairs)/sizeof("
-		<< ctxt._fixns << "::" << ctxt._clname << "));" << endl;
-	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "::NoValType "
-		<< ctxt._fixns << "::" << ctxt._clname << "::_noval = {0, 0};" << endl;
+	ost_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname << "_be::_pairsz(sizeof(_pairs)/sizeof("
+		<< ctxt._fixns << "::" << ctxt._clname << "_be));" << endl;
+	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_be::NoValType "
+		<< ctxt._fixns << "::" << ctxt._clname << "_be::_noval = {0, 0};" << endl;
 
 	// terminate files
 	ost_hpp << endl << "} // namespace " << ctxt._fixns << endl;
@@ -810,6 +846,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	osc_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+
 	osc_cpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
@@ -821,36 +858,56 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
 	osc_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
 
+	osr_cpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
+	osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osr_cpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
+	osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osr_cpp << _csMap.Find_Value_Ref(cs_generated_includes) << endl;
+	osr_cpp << "#include <" << ctxt._out[Ctxt::types_hpp].first << '>' << endl;
+	osr_cpp << "#include <" << ctxt._out[Ctxt::classes_hpp].first << '>' << endl;
+	osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osr_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
+	osr_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
+
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 	{
-		osc_hpp << "class " << mitr->second._name << " : public Message" << endl << '{' << endl;
+		bool isTrailer(mitr->second._name == "trailer");
+		bool isHeader(mitr->second._name == "header");
+		if (!mitr->second._comment.empty())
+			osc_hpp << "// " << mitr->second._comment << endl;
+		osc_hpp << "class " << mitr->second._name << " : public "
+			<< (isTrailer || isHeader ? "MessageBase" : "Message") << endl << '{' << endl;
 
 		if (mitr->second._fields.get_presence().size())
 		{
-			osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-			osc_cpp << "const FieldTrait::TraitBase " << mitr->second._name << "::_traits[] ="
+			osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+			osr_cpp << "const FieldTrait::TraitBase " << mitr->second._name << "::_traits[] ="
 				<< endl << '{' << endl;
 			for (Presence::const_iterator flitr(mitr->second._fields.get_presence().begin());
 				flitr != mitr->second._fields.get_presence().end(); ++flitr)
 			{
 				if (flitr != mitr->second._fields.get_presence().begin())
-					osc_cpp << ',' << endl;
-				osc_cpp << spacer << "{ " << flitr->_fnum << ", static_cast<FieldTrait::FieldType>("
+					osr_cpp << ',' << endl;
+				osr_cpp << spacer << "{ " << flitr->_fnum << ", static_cast<FieldTrait::FieldType>("
 					<< flitr->_ftype << "), " << flitr->_pos << ", "
 					<< (flitr->_field_traits.has(FieldTrait::mandatory) ? '1' : '0') << ", "
 					<< (flitr->_field_traits.has(FieldTrait::group) ? '1' : '0') << ", "
 					<< (flitr->_field_traits.has(FieldTrait::component) ? '1' : '0') << " }";
 			}
-			osc_cpp << endl << "};" << endl;
-			osc_cpp << "const size_t " << mitr->second._name << "::_fldcnt("
+			osr_cpp << endl << "};" << endl;
+			osr_cpp << "const size_t " << mitr->second._name << "::_fldcnt("
 				<< mitr->second._fields.get_presence().size() << ");" << endl;
 			osc_hpp << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
 			osc_hpp << spacer << "static const size_t _fldcnt;" << endl << endl;
 		}
 
 		osc_hpp << "public:" << endl;
-		osc_hpp << spacer << mitr->second._name << "();" << endl;
+		osc_hpp << spacer << mitr->second._name << "()";
+		if (mitr->second._fields.get_presence().size())
+			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message") << "(_traits, _traits + _fldcnt)";
+		osc_hpp << " {}" << endl;
+
 		osc_hpp << spacer << "virtual ~" << mitr->second._name << "() {}" << endl;
 
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << " get_msgtype() { return " << fsitr->second._name
@@ -862,29 +919,29 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 				if (gitr->second.get_presence().size())
 				{
 					FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
-					osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-					osc_cpp << "const FieldTrait::TraitBase " << mitr->second._name << "::" << gsitr->second._name << "::_traits[] ="
+					osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+					osr_cpp << "const FieldTrait::TraitBase " << mitr->second._name << "::" << gsitr->second._name << "::_traits[] ="
 						<< endl << '{' << endl;
 					for (Presence::const_iterator flitr(gitr->second.get_presence().begin());
 						flitr != gitr->second.get_presence().end(); ++flitr)
 					{
 						if (flitr != gitr->second.get_presence().begin())
-							osc_cpp << ',' << endl;
-						osc_cpp << spacer << "{ " << flitr->_fnum << ", static_cast<FieldTrait::FieldType>("
+							osr_cpp << ',' << endl;
+						osr_cpp << spacer << "{ " << flitr->_fnum << ", static_cast<FieldTrait::FieldType>("
 							<< flitr->_ftype << "), " << flitr->_pos << ", "
 							<< (flitr->_field_traits.has(FieldTrait::mandatory) ? '1' : '0') << ", "
 							<< (flitr->_field_traits.has(FieldTrait::group) ? '1' : '0') << ", "
 							<< (flitr->_field_traits.has(FieldTrait::component) ? '1' : '0') << " }";
 					}
-					osc_cpp << endl << "};" << endl;
-					osc_cpp << "const size_t " << mitr->second._name << "::" << gsitr->second._name << "::_fldcnt("
+					osr_cpp << endl << "};" << endl;
+					osr_cpp << "const size_t " << mitr->second._name << "::" << gsitr->second._name << "::_fldcnt("
 						<< gitr->second.get_presence().size() << ");" << endl;
 					osc_hpp << endl << spacer << "class " << gsitr->second._name
 						<< " : public MessageBase" << endl << spacer << '{' << endl;
 					osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
 					osc_hpp << spacer << spacer << "static const size_t _fldcnt;" << endl << endl;
 					osc_hpp << spacer << "public:" << endl;
-					osc_hpp << spacer << spacer << gsitr->second._name << "();" << endl;
+					osc_hpp << spacer << spacer << gsitr->second._name << "() : MessageBase(_traits, _traits + _fldcnt) {}" << endl;
 					osc_hpp << spacer << spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
 					osc_hpp << endl << spacer << spacer << "static const " << fsitr->second._name
 						<< " get_msgtype() { return " << fsitr->second._name << "(\"" << gsitr->second._name << "\"); }" << endl;
@@ -896,10 +953,42 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		osc_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	}
 
+// =============================== Message class instantiation ==============================
+
+	osc_hpp << "typedef GeneratedTable<unsigned, BaseMsgEntry, " << ctxt._version << "> " << ctxt._clname << "_bm;" << endl;
+
+#if 0
+	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_bm::Pair "
+		<< ctxt._fixns << "::" << ctxt._clname << "_bm::_pairs[] =" << endl << '{' << endl;
+	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
+	{
+		if (fitr != fspec.begin())
+			ost_cpp << ',' << endl;
+		ost_cpp << spacer << "{ " << fitr->first << ", { &" << ctxt._fixns << "::Create_" << fitr->second._name << ", ";
+		if (fitr->second._dvals)
+			ost_cpp << "&" << ctxt._fixns << "::dombases[" << fitr->second._doffset << ']';
+		else
+			ost_cpp << '0';
+		if (!fitr->second._comment.empty())
+			ost_cpp << ',' << endl << spacer << spacer << '"' << fitr->second._comment << '"';
+		else
+			ost_cpp << ", 0";
+		ost_cpp << " } }";
+	}
+	ost_cpp << endl << "};" << endl;
+	ost_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname << "_bm::_pairsz(sizeof(_pairs)/sizeof("
+		<< ctxt._fixns << "::" << ctxt._clname << "_bm));" << endl;
+	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_bm::NoValType "
+		<< ctxt._fixns << "::" << ctxt._clname << "_bm::_noval = {0, 0};" << endl;
+#endif
+
 	// terminate files
 	osc_hpp << endl << "} // namespace " << ctxt._fixns << endl;
 	osc_hpp << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
 	osc_hpp << "#endif // _" << flname(ctxt._out[Ctxt::classes_hpp].first) << '_' << endl;
+	osr_cpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
+	osr_cpp << "} // namespace " << ctxt._fixns << endl;
 	osc_cpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
 	osc_cpp << "} // namespace " << ctxt._fixns << endl;
 

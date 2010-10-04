@@ -132,13 +132,13 @@
       <field name="TradingSessionID" required="N" />
       <field name="TradingSessionSubID" required="N" />
     </message>
-    <message name="IndicationOfInterest" msgtype="6" msgcat="app">
+    <message name="IndicationOfInterest" msgtype="6" msgcat="app" comment="Expresses interest in an instrument">
       <field name="IOIid" required="Y" />
       <field name="IOITransType" required="Y" />
       <field name="IOIRefID" required="N" />
       <component name="Instrument" required="Y" />
       <component name="FinancingDetails" required="N" />
-      <group name="NoUnderlyings" required="N">
+      <group name="NoUnderlyings" required="N" comment="Number of underlying instruments">
         <component name="UnderlyingInstrument" required="N" />
       </group>
       <field name="Side" required="Y" />
@@ -6884,12 +6884,12 @@
       <value enum="1" description="SYCOM_Operations_To_From"/>
       <value enum="2" description="All_Users_To"/>
     </field>
-    <field number="5049" name="SendMsgUserId" type="STRING"/>
+    <field number="5049" name="SendMsgUserId" type="STRING" comment="User id for message being sent"/>
     <field number="5050" name="SendMsgText" type="STRING"/>
     <field number="5051" name="QuoteVolume" type="INT"/>
     <field number="5052" name="QuoteFirm" type="STRING"/>
     <field number="5053" name="UserMsgCatReq" type="INT">
-      <value enum="10" description="Filtered_Market_Update_Request"/>
+      <value enum="10" description="Filtered_Market_Update_Request" comment="example value"/>
       <value enum="11" description="Filtered_Market_Download_Request"/>
       <value enum="14" description="Depth_Of_Market_Request"/>
     </field>

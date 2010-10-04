@@ -44,7 +44,7 @@ namespace FIX8 {
 //-------------------------------------------------------------------------------------------------
 struct Ctxt
 {
-	enum OutputFile { types_cpp, types_hpp, classes_cpp, classes_hpp, count };
+	enum OutputFile { types_cpp, types_hpp, traits_cpp, classes_cpp, classes_hpp, count };
 	typedef std::pair<std::string, scoped_ptr<std::ostream> > Output;
 	Output _out[count];
 	static const std::string _exts[count];
@@ -203,7 +203,6 @@ enum comp_str
 };
 
 typedef StaticTable<comp_str, std::string> CSMap;
-static const CSMap _csMap;
 
 } // FIX8
 
