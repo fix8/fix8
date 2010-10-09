@@ -31,9 +31,7 @@ struct FieldTrait
 
 	struct TraitBase
 	{
-		const unsigned short _field;
-		const FieldType _ftype;
-		const unsigned short _pos;
+		const unsigned short _field, _ftype, _pos;
 		bool _ismandatory, _isgroup, _iscomponent;
 	};
 
@@ -55,8 +53,8 @@ struct FieldTrait
 		_field_traits(ismandatory ? 1 : 0 | (ispresent ? 1 : 0) << present
 		| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group | (subpos ? 1 : 0) << component) {}
 
-	FieldTrait(const TraitBase& tb) : _fnum(tb._field), _ftype(tb._ftype), _pos(tb._pos), _subpos(),
-		_field_traits(tb._ismandatory ? 1 : 0 | (tb._pos ? 1 : 0) << position
+	FieldTrait(const TraitBase& tb) : _fnum(tb._field), _ftype(static_cast<FieldTrait::FieldType>(tb._ftype)),
+		_pos(tb._pos), _subpos(), _field_traits(tb._ismandatory ? 1 : 0 | (tb._pos ? 1 : 0) << position
 		| (tb._isgroup ? 1 : 0) << group | (tb._iscomponent ? 1 : 0) << component) {}
 
 	struct Compare : public std::binary_function<FieldTrait, FieldTrait, bool>

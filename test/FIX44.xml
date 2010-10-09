@@ -3650,29 +3650,6 @@
     <field name="EncodedTextLen" required="N" />
     <field name="EncodedText" required="N" />
   </message>
-  <!--Custom messages start here-->
-   <message name="Undifferentiated_Placeholder" msgtype="U" msgcat="app"/>
-   <message name="BaseContractDownloadRequest_Placeholder" msgtype="U0" msgcat="app"/>
-   <message name="BaseContractDownload_Placeholder" msgtype="U1" msgcat="app"/>
-   <message name="ContractParameterDownloadRequest_Placeholder" msgtype="U2" msgcat="app"/>
-   <message name="ContractParameterDownload_Placeholder" msgtype="U3" msgcat="app"/>
-   <message name="MarketStateDownloadRequest_Placeholder" msgtype="U4" msgcat="app"/>
-   <message name="MarketStateDownload_Placeholder" msgtype="U5" msgcat="app"/>
-   <message name="TradeOrderDownloadRequest_Placeholder" msgtype="U7" msgcat="app"/>
-   <message name="TradeOrderDownloadComplete_Placeholder" msgtype="U8" msgcat="app"/>
-   <message name="MarketUpdate_Placeholder" msgtype="U6" msgcat="app"/>
-   <message name="CustomMarketUpdate_Placeholder" msgtype="U18" msgcat="app"/>
-   <message name="FilteredMarketUpdateRequest_Placeholder" msgtype="U10" msgcat="app"/>
-   <message name="FilteredMarketDownloadRequest_Placeholder" msgtype="U11" msgcat="app"/>
-   <message name="AtBestRequest_Placeholder" msgtype="U12" msgcat="app"/>
-   <message name="AtBestUpdate_Placeholder" msgtype="U13" msgcat="app"/>
-   <message name="DepthOfMarketRequest_Placeholder" msgtype="U14" msgcat="app"/>
-   <message name="DepthOfMarketUpdate_Placeholder" msgtype="U15" msgcat="app"/>
-   <message name="UserTextMessage_Placeholder" msgtype="U16" msgcat="app"/>
-   <message name="RequestForQuoteMessage_Placeholder" msgtype="U17" msgcat="app"/>
-   <message name="UserDefinedRequestReject_Placeholder" msgtype="U9" msgcat="app"/>
-   <message name="NewCustomOrder_Placeholder" msgtype="U19" msgcat="app"/>
-   <message name="CustomOrderExecutionReport_Placeholder" msgtype="U20" msgcat="app"/>
   </messages>
   <components>
     <component name="Instrument">
