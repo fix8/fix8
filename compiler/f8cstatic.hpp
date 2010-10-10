@@ -1,7 +1,7 @@
 //-------------------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the New BSD License.
+fix8 is released under the New BSD License.
 
 Copyright (c) 2010, David L. Dight <fix@fix8.org>
 All rights reserved.
@@ -96,7 +96,7 @@ const TypeToCPP::TypePair TypeToCPP::_valueTable[] =
 	TypeToCPP::TypePair(FieldTrait::ft_Percentage, "Percentage"),
 	TypeToCPP::TypePair(FieldTrait::ft_char, "char"),
 	TypeToCPP::TypePair(FieldTrait::ft_Boolean, "Boolean"),
-	TypeToCPP::TypePair(FieldTrait::ft_string, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_string, "f8String"),
 	TypeToCPP::TypePair(FieldTrait::ft_MultipleCharValue, "MultipleCharValue"),
 	TypeToCPP::TypePair(FieldTrait::ft_MultipleStringValue, "MultipleStringValue"),
 	TypeToCPP::TypePair(FieldTrait::ft_Country, "country"),
@@ -113,9 +113,9 @@ const TypeToCPP::TypePair TypeToCPP::_valueTable[] =
 	TypeToCPP::TypePair(FieldTrait::ft_data, "data"),
 	TypeToCPP::TypePair(FieldTrait::ft_pattern, "pattern"),
 	TypeToCPP::TypePair(FieldTrait::ft_Tenor, "Tenor"),
-	TypeToCPP::TypePair(FieldTrait::ft_Reserved100Plus, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_Reserved1000Plus, "std::string"),
-	TypeToCPP::TypePair(FieldTrait::ft_Reserved4000Plus, "std::string"),
+	TypeToCPP::TypePair(FieldTrait::ft_Reserved100Plus, "f8String"),
+	TypeToCPP::TypePair(FieldTrait::ft_Reserved1000Plus, "f8String"),
+	TypeToCPP::TypePair(FieldTrait::ft_Reserved4000Plus, "f8String"),
 	TypeToCPP::TypePair(FieldTrait::ft_Language, "Language")
 };
 template<>

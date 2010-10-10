@@ -70,6 +70,8 @@ $URL$
 #include <list>
 #include <vector>
 
+#include <f8exception.hpp>
+#include <f8types.hpp>
 #include <f8utils.hpp>
 #include <xml.hpp>
 
@@ -79,7 +81,6 @@ using namespace std;
 
 //----------------------------------------------------------------------------------------
 int XmlEntity::errors_(0), XmlEntity::line_(1), XmlEntity::maxdepth_(0), XmlEntity::seq_(0);
-const int RegExp::SubLimit_, RegExp::MaxErrLen_;
 RegExp XmlEntity::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlEntity::rCX_("&(amp|lt|gt|apos|quot);");
 
 //-----------------------------------------------------------------------------------------
@@ -493,10 +494,11 @@ template string XmlEntity::FindAttr<string>(const string& tag, const string defV
 //-----------------------------------------------------------------------------------------
 const string& XmlEntity::InplaceXlate (string& what)
 {
-	while (rCX_.SearchString(what, 2) == 2)
+	RegMatch match;
+	while (rCX_.SearchString(match, what, 2) == 2)
 	{
 		string whatv, replv;
-		rCX_.SubExpr(what, whatv, 1);
+		rCX_.SubExpr(match, what, whatv, 1);
 		if (whatv == "amp")
 			replv = "&";
 		else if (whatv == "lt")
@@ -510,13 +512,13 @@ const string& XmlEntity::InplaceXlate (string& what)
 		else
 			break;	// cannot be reached
 
-		rCX_.Replace(what, replv);
+		rCX_.Replace(match, what, replv);
 	}
 
-	while (rCE_.SearchString(what, 2) == 2)	// translate Numeric character references &#x12d; or &#12;
+	while (rCE_.SearchString(match, what, 2) == 2)	// translate Numeric character references &#x12d; or &#12;
 	{
 		string whatv;
-		rCE_.SubExpr(what, whatv, 1);
+		rCE_.SubExpr(match, what, whatv, 1);
 		istringstream istr(whatv);
 		int value;
 		if (whatv[0] == 'x')
@@ -530,7 +532,7 @@ const string& XmlEntity::InplaceXlate (string& what)
 		if (value & 0xff00)	// handle hi byte
 			oval += static_cast<char>(value >> 8 & 0xff);
 		oval += static_cast<char>(value & 0xff);
-		rCE_.Replace(what, oval);
+		rCE_.Replace(match, what, oval);
 	}
 
 	return what;
@@ -545,50 +547,3 @@ XmlEntity *XmlEntity::Factory(const string& fname)
 }
 
 //-----------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------
-RegExp::RegExp(const char *pattern, const int flags) : subexprs_(), pattern_(pattern), subCnt_()
-{
-	if ((errCode_ = regcomp(&reg_, pattern_.c_str(), REG_EXTENDED|flags)) != 0)
-	{
-		char rbuf[MaxErrLen_];
-		regerror(errCode_, &reg_, rbuf, MaxErrLen_);
-		errString = rbuf;
-	}
-}
-
-//----------------------------------------------------------------------------------------
-int RegExp::SearchString(const string& source, const int subExpr)
-{
-	subCnt_ = 0;
-	if (regexec(&reg_, source.c_str(), subExpr <= SubLimit_ ? subExpr : SubLimit_, subexprs_, 0) == 0)
-		while (subCnt_ < subExpr && subexprs_[subCnt_].rm_so != -1)
-			++subCnt_;
-	return subCnt_;
-}
-
-//----------------------------------------------------------------------------------------
-string& RegExp::SubExpr(const string& source, string& target, const int num)
-{
-	if (num < subCnt_)
-		target = source.substr(subexprs_[num].rm_so, subexprs_[num].rm_eo - subexprs_[num].rm_so);
-	else
-		target.empty();
-	return target;
-}
-
-//----------------------------------------------------------------------------------------
-string& RegExp::Erase(string& source, const int num)
-{
-	if (num < subCnt_)
-		source.erase(subexprs_[num].rm_so, subexprs_[num].rm_eo - subexprs_[num].rm_so);
-	return source;
-}
-
-//----------------------------------------------------------------------------------------
-string& RegExp::Replace(string& source, const string& with, const int num)
-{
-	if (num < subCnt_)
-		source.replace(subexprs_[num].rm_so, subexprs_[num].rm_eo - subexprs_[num].rm_so, with);
-	return source;
-}
-

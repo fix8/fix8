@@ -36,8 +36,7 @@ static const std::string rcsid("$Id: f8c.cpp 515 2010-09-16 01:13:48Z davidd $")
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	cout << "Version: " << CME::Myfix_BaseEntry::get_version() << endl;
-
+#if 0
 	try
 	{
 		const BaseEntry& be(CME::Myfix_BaseEntry::find_ref(35));
@@ -65,6 +64,21 @@ int main(int argc, char **argv)
 	cout << "is valid: " << boolalpha << fld1->isValid() << endl;
 	//CME::EncryptMethod& em(dynamic_cast<CME::EncryptMethod&>(*fld1));
 	//cout << em.get() << endl;
+#endif
+
+	string from("35=1005=hello114=Y87=STOP47=10.239=14");
+	RegExp elmnt("([0-9]+)=([^]+)");
+	RegMatch match;
+	unsigned s_offset(0);
+	while (s_offset < from.size() && elmnt.SearchString(match, from, 3, s_offset) == 3)
+	{
+		string tag, val;
+		elmnt.SubExpr(match, from, tag, s_offset, 1);
+		elmnt.SubExpr(match, from, val, s_offset, 2);
+		cout << tag << " => " << val << endl;
+		s_offset += match.SubSize();
+	}
+	cout << "ol=" << from.size() << " cl=" << s_offset << endl;
 	return 0;
 }
 

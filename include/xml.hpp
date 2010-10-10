@@ -68,12 +68,12 @@ public:
 	int ParseAttrs(const std::string& attlst);
 
 	XmlEntity *find(const std::string& what, bool ignorecase=false,
-			const std::string *atag=0, const std::string *aval=0, const char delim='/');
+		const std::string *atag=0, const std::string *aval=0, const char delim='/');
 	int find(const std::string& what, XmlList& rlst, bool ignorecase=false,
-			const std::string *atag=0, const std::string *aval=0, const char delim='/');
+		const std::string *atag=0, const std::string *aval=0, const char delim='/');
 	template<typename T>
 	int findSort(const std::string& what, XmlList& rlst, bool ignorecase=false,
-			const std::string *atag=0, const std::string *aval=0, const char delim='/')
+		const std::string *atag=0, const std::string *aval=0, const char delim='/')
 	{
 		int result(find (what, rlst, ignorecase, atag, aval, delim));
 		if (result)

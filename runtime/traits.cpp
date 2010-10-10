@@ -11,6 +11,8 @@
 #include <regex.h>
 
 #include <f8utils.hpp>
+#include <f8exception.hpp>
+#include <f8types.hpp>
 #include <traits.hpp>
 #include <field.hpp>
 #include <message.hpp>

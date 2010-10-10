@@ -1,9 +1,9 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Orbweb is released under the New BSD License.
+fix8 is released under the New BSD License.
 
-Copyright (c) 2007-2010, David L. Dight <www@orbweb.org>
+Copyright (c) 2007-2010, David L. Dight <fix@fix8.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -67,6 +67,9 @@ $URL$
 #include <set>
 #include <list>
 #include <vector>
+#include <algorithm>
+#include <f8exception.hpp>
+#include <f8types.hpp>
 #include <f8utils.hpp>
 
 //----------------------------------------------------------------------------------------
@@ -192,6 +195,53 @@ const string& StrToLower(const string& src, string& target)
 {
 	target.assign (src);
 	return InPlaceStrToLower(target);
+}
+
+//----------------------------------------------------------------------------------------
+RegExp::RegExp(const char *pattern, const int flags) : pattern_(pattern)
+{
+	if ((errCode_ = regcomp(&reg_, pattern_.c_str(), REG_EXTENDED|flags)) != 0)
+	{
+		char rbuf[MaxErrLen_];
+		regerror(errCode_, &reg_, rbuf, MaxErrLen_);
+		errString = rbuf;
+	}
+}
+
+//----------------------------------------------------------------------------------------
+int RegExp::SearchString(RegMatch& match, const string& source, const int subExpr, const int offset)
+{
+	match.subCnt_ = 0;
+	if (regexec(&reg_, source.c_str() + offset, subExpr <= RegMatch::SubLimit_ ? subExpr : RegMatch::SubLimit_, match.subexprs_, 0) == 0)
+		while (match.subCnt_ < subExpr && match.subexprs_[match.subCnt_].rm_so != -1)
+			++match.subCnt_;
+	return match.subCnt_;
+}
+
+//----------------------------------------------------------------------------------------
+string& RegExp::SubExpr(RegMatch& match, const string& source, string& target, const int offset, const int num)
+{
+	if (num < match.subCnt_)
+		target = source.substr(offset + match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
+	else
+		target.empty();
+	return target;
+}
+
+//----------------------------------------------------------------------------------------
+string& RegExp::Erase(RegMatch& match, string& source, const int num)
+{
+	if (num < match.subCnt_)
+		source.erase(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
+	return source;
+}
+
+//----------------------------------------------------------------------------------------
+string& RegExp::Replace(RegMatch& match, string& source, const string& with, const int num)
+{
+	if (num < match.subCnt_)
+		source.replace(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so, with);
+	return source;
 }
 
 } // namespace FIX8

@@ -643,7 +643,7 @@ void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostre
 	else if (FieldTrait::is_float(itr->second._ftype))
 		typestr += "double ";
 	else if (FieldTrait::is_string(itr->second._ftype))
-		typestr += "std::string ";
+		typestr += "f8String ";
 	else
 		return;
 
@@ -777,7 +777,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
-		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const std::string& from, const BaseEntry *be)";
+		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const BaseEntry *be)";
 		ost_cpp << endl << spacer << "{ return new " << fitr->second._name << "(from, be->_dom); }" << endl;
 	}
 
@@ -785,7 +785,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ost_cpp << "} // namespace " << ctxt._fixns << endl;
 
 	// generate field instantiator lookup
-	ost_hpp << "typedef GeneratedTable<unsigned, BaseEntry, " << ctxt._version << "> " << ctxt._clname << "_BaseEntry;" << endl;
+	ost_hpp << "typedef GeneratedTable<unsigned, BaseEntry> " << ctxt._clname << "_BaseEntry;" << endl;
 
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair "
@@ -977,11 +977,11 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 
 // =============================== Message class instantiation ==============================
 
-	osc_hpp << "typedef GeneratedTable<const char *, BaseMsgEntry, " << ctxt._version << "> " << ctxt._clname << "_BaseMsgEntry;" << endl;
+	osc_hpp << "typedef GeneratedTable<const char *, BaseMsgEntry> " << ctxt._clname << "_BaseMsgEntry;" << endl;
 
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 	{
-		osc_cpp << "Message *Create_" << mitr->second._name << "(const std::string& from)";
+		osc_cpp << "Message *Create_" << mitr->second._name << "(const f8String& from)";
 		osc_cpp << endl << spacer << "{ return ";
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
 			osc_cpp << "(Message *)";

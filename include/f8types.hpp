@@ -1,9 +1,9 @@
 //-------------------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the New BSD License.
+fix8 is released under the New BSD License.
 
-Copyright (c) 2010, David L. Dight <www@orbweb.org>
+Copyright (c) 2010, David L. Dight <fix@fix8.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -44,7 +44,7 @@ namespace FIX8 {
 typedef std::string f8String;
 
 //-------------------------------------------------------------------------------------------------
-template<typename Key, typename Val, unsigned Ver=4200>
+template<typename Key, typename Val>
 class GeneratedTable
 {
 	struct Pair
@@ -86,8 +86,6 @@ public:
 		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
 		return res.first != res.second ? &res.first->_value : 0;
 	}
-
-	static const unsigned get_version() { return Ver; }
 
 	GeneratedTable() {}
 };

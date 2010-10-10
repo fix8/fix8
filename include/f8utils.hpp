@@ -1,9 +1,9 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Orbweb is released under the New BSD License.
+fix8 is released under the New BSD License.
 
-Copyright (c) 2007-2010, David L. Dight <www@orbweb.org>
+Copyright (c) 2007-2010, David L. Dight <fix@fix8.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -107,25 +107,44 @@ public:
 };
 
 //----------------------------------------------------------------------------------------
+class RegMatch
+{
+	static const int SubLimit_ = 32;
+
+	regmatch_t subexprs_[SubLimit_];
+	int subCnt_;
+
+public:
+	RegMatch() : subexprs_(), subCnt_() {}
+	virtual ~RegMatch() {}
+
+	const int SubCnt() const { return subCnt_; }
+	const int SubSize(const int which=0) const
+	{
+		return which < subCnt_ ? subexprs_[which].rm_eo - subexprs_[which].rm_so : -1;
+	}
+
+	friend class RegExp;
+};
+
+//----------------------------------------------------------------------------------------
 class RegExp
 {
-	static const int SubLimit_ = 32, MaxErrLen_ = 256;
+	static const int MaxErrLen_ = 256;
 
 	regex_t reg_;
-	regmatch_t subexprs_[SubLimit_];
 	const std::string pattern_;
 	std::string errString;
-	int subCnt_, errCode_;
+	int errCode_;
 
 public:
 	RegExp(const char *pattern, const int flags=0);
 	virtual ~RegExp() { if (errCode_ == 0) regfree(&reg_); }
 
-	int SearchString (const std::string& source, const int subExpr=SubLimit_);
-	const int SubCnt() const { return subCnt_; }
-	std::string& SubExpr (const std::string& source, std::string& target, const int num=0);
-	std::string& Erase(std::string& source, const int num=0);
-	std::string& Replace(std::string& source, const std::string& with, const int num=0);
+	int SearchString(RegMatch& match, const std::string& source, const int subExpr, const int offset=0);
+	std::string& SubExpr(RegMatch& match, const std::string& source, std::string& target, const int offset=0, const int num=0);
+	std::string& Erase(RegMatch& match, std::string& source, const int num=0);
+	std::string& Replace(RegMatch& match, std::string& source, const std::string& with, const int num=0);
 
 	const std::string& GetPattern() const { return pattern_; }
 	const std::string& ErrString() const { return errString; }

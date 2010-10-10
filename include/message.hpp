@@ -14,15 +14,23 @@ typedef std::multimap<unsigned short, BaseField *> Positions;
 
 class MessageBase
 {
+	static RegExp _elmnt;
+
 public:
 	template<typename InputIterator>
 	MessageBase(const InputIterator begin, const InputIterator end) : _fp(begin, end) {}
 
 	MessageBase() {}
-	virtual ~MessageBase()
-		{ std::for_each (_fields.begin(), _fields.end(), free_ptr<Delete2ndPairObject<> >()); }
+	virtual ~MessageBase() { clearFields(); }
 
-	unsigned decode(const std::string& from, unsigned offset=0);
+	void clearFields()
+	{
+		std::for_each (_fields.begin(), _fields.end(), free_ptr<Delete2ndPairObject<> >());
+		_fields.clear();
+	}
+	void clearPresent() { _fp.clearFlag(FieldTrait::present); }
+
+	unsigned decode(const class F8MetaCntx& ctx, const f8String& from, const unsigned offset=0);
 	unsigned setupPositions();
 
 	Fields _fields;
@@ -37,16 +45,21 @@ class GroupBase
 
 public:
 	GroupBase() {}
-	virtual ~GroupBase() { std::for_each (_msgs.begin(), _msgs.end(), free_ptr<>()); }
+	virtual ~GroupBase() { clearFields(); }
 
 	virtual MessageBase *Create_Group() = 0;
 	void add(MessageBase *what) { _msgs.push_back(what); }
 	MessageBase *operator[](unsigned where) { return where < _msgs.size() ? _msgs[where] : 0; }
-	MessageBase *at(unsigned where) { return operator[](where); }
+	void clearFields()
+	{
+		std::for_each (_msgs.begin(), _msgs.end(), free_ptr<>());
+		_msgs.clear();
+	}
 };
 
 typedef std::map<unsigned short, GroupBase *> Groups;
 
+//-------------------------------------------------------------------------------------------------
 class Message : public MessageBase
 {
 protected:
@@ -59,11 +72,13 @@ public:
 		: MessageBase(begin, end), _header(), _trailer() {}
 
 	Message() {}
-	virtual ~Message()
+	virtual ~Message() { clearFields(); }
+	void clearFields()
 	{
 		delete _header;
 		delete _trailer;
 		std::for_each (_groups.begin(), _groups.end(), free_ptr<Delete2ndPairObject<> >());
+		_groups.clear();
 	}
 };
 
@@ -72,6 +87,17 @@ struct BaseMsgEntry
 {
 	Message *(*_create)(const std::string&);
 	const char *_comment;
+};
+
+//-------------------------------------------------------------------------------------------------
+class F8MetaCntx
+{
+	const unsigned _version;
+	const GeneratedTable<const char *, BaseMsgEntry>& _BaseMsgEntry;
+	const GeneratedTable<unsigned, BaseEntry>& _BaseEntry;
+
+	F8MetaCntx(const unsigned version, const GeneratedTable<const char *, BaseMsgEntry>& bme,
+		const GeneratedTable<unsigned, BaseEntry>& be) : _version(version), _BaseMsgEntry(bme), _BaseEntry(be) {}
 };
 
 } // FIX8

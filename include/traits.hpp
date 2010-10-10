@@ -99,6 +99,8 @@ public:
 	}
 
 	bool add(const FieldTrait& what) { return _presence.insert(Presence::value_type(what)).second; }
+	void clearFlag(FieldTrait::TraitTypes type)
+		{ for (Presence::const_iterator itr(_presence.begin()); itr != _presence.end(); (*itr++)._field_traits.clear(type)); }
 
 	bool isPresent(const unsigned short field) const { return get(field, FieldTrait::present); }
 	bool isMandatory(const unsigned short field) const { return get(field, FieldTrait::mandatory); }
