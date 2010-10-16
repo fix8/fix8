@@ -52,6 +52,7 @@ struct Ctxt
 	std::string _clname;
 	std::string _fixns;
 	std::string _systemns;
+	std::string _beginstr;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -181,7 +182,13 @@ struct MessageSpec
 	virtual ~MessageSpec() {}
 };
 
-typedef std::map<std::string, MessageSpec> MessageSpecMap;
+struct ROT13Compare
+{
+	bool operator()(const f8String& p1, const f8String& p2) const
+		{ return ROT13Hash(p1) < ROT13Hash(p2); }
+};
+
+typedef std::map<const std::string, MessageSpec> MessageSpecMap;
 typedef std::multiset<const FieldTrait *, FieldTrait::PosCompare> FieldTraitOrder;
 
 //-------------------------------------------------------------------------------------------------

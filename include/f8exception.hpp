@@ -44,15 +44,71 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/f8types.hpp $
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-class InvalidMetadata : public std::exception
+class f8Exception : public std::exception
 {
 	std::string _reason;
 
-public:
-	InvalidMetadata(const std::string& reason) : _reason(reason) {}
-	virtual ~InvalidMetadata() throw() {}
+protected:
+	template<typename T>
+	void format(const std::string& msg, T what)
+	{
+		std::ostringstream ostr;
+		ostr << msg << ": " << what;
+		_reason = ostr.str();
+	}
 
+public:
+	f8Exception() {}
+	virtual ~f8Exception() throw() {}
 	virtual const char *what() const throw() { return _reason.c_str(); }
+};
+
+//-------------------------------------------------------------------------------------------------
+class InvalidMetadata : public f8Exception
+{
+public:
+	InvalidMetadata(const std::string& detail) { format("Invalid Metadata", detail); }
+	~InvalidMetadata() throw() {}
+};
+
+//-------------------------------------------------------------------------------------------------
+class DuplicateField : public f8Exception
+{
+public:
+	DuplicateField(const unsigned field) { format("Duplicate field", field); }
+	~DuplicateField() throw() {}
+};
+
+//-------------------------------------------------------------------------------------------------
+class InvalidField : public f8Exception
+{
+public:
+	InvalidField(const unsigned field) { format("Invalid Field", field); }
+	~InvalidField() throw() {}
+};
+
+//-------------------------------------------------------------------------------------------------
+class InvalidRepeatingGroup : public f8Exception
+{
+public:
+	InvalidRepeatingGroup(const unsigned field) { format("Invalid Repeating Group", field); }
+	~InvalidRepeatingGroup() throw() {}
+};
+
+//-------------------------------------------------------------------------------------------------
+class MissingRepeatingGroupField : public f8Exception
+{
+public:
+	MissingRepeatingGroupField(const unsigned field) { format("First Field of a Repeating Group is Mandatory", field); }
+	~MissingRepeatingGroupField() throw() {}
+};
+
+//-------------------------------------------------------------------------------------------------
+class MissingMandatoryField : public f8Exception
+{
+public:
+	MissingMandatoryField(const unsigned field) { format("Mandatory Field is missing", field); }
+	~MissingMandatoryField() throw() {}
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -77,6 +77,14 @@ static const std::string rcsid("$Id$");
 
 //-----------------------------------------------------------------------------------------
 const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp", "_classes.hpp" };
+template<>
+const size_t GeneratedTable<unsigned int, BaseEntry>::_pairsz(0);
+template<>
+const GeneratedTable<unsigned int, BaseEntry>::Pair GeneratedTable<unsigned int, BaseEntry>::_pairs[] = {};
+template<>
+const size_t GeneratedTable<const f8String, BaseMsgEntry>::_pairsz(0);
+template<>
+const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8String, BaseMsgEntry>::_pairs[] = {};
 
 //-----------------------------------------------------------------------------------------
 namespace {
@@ -268,6 +276,14 @@ int loadFixVersion (XmlEntity& xf, Ctxt& ctxt)
 	if (ctxt._fixns.empty())
 		ctxt._fixns = ctxt._systemns;
 	ctxt._clname = prefix;
+
+	ostr.str("");
+	if (GetValue<int>(major) > 4)
+		ostr << "FIXT.1.1";
+	else
+		ostr << "FIX." << major << '.' << minor;
+	ctxt._beginstr = ostr.str();
+
 	return 0;
 }
 
@@ -667,6 +683,17 @@ void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostre
 	}
 	ost_hpp << "const size_t " << itr->second._name << "_dom_els(" << itr->second._dvals->size() << ");" << endl;
 	ost_cpp << " };" << endl;
+
+	ost_cpp << "const char *" << itr->second._name << "_descriptions[] = " << endl << spacer << "{ ";
+	cnt = 0;
+	for (DomainMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
+	{
+		if (cnt)
+			ost_cpp << ", ";
+		ost_cpp << '"' << ditr->second << '"';
+		++cnt;
+	}
+	ost_cpp << " };" << endl;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -768,7 +795,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		ost_cpp << spacer << "{ reinterpret_cast<const void *>(" << fitr->second._name << "_domain), "
 			<< "static_cast<DomainBase::DomType>(" << fitr->second._dtype << "), " << endl << spacer << spacer
 			<< "static_cast<FieldTrait::FieldType>(" << fitr->second._ftype << "), "
-			<< fitr->second._dvals->size() << " }," << endl;
+			<< fitr->second._dvals->size() << ", " << fitr->second._name << "_descriptions }," << endl;
 		fitr->second._doffset = dcnt++;
 	}
 	ost_cpp << "};" << endl;
@@ -777,8 +804,8 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
-		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const BaseEntry *be)";
-		ost_cpp << endl << spacer << "{ return new " << fitr->second._name << "(from, be->_dom); }" << endl;
+		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const DomainBase *db)";
+		ost_cpp << endl << spacer << "{ return new " << fitr->second._name << "(from, db); }" << endl;
 	}
 
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_end_anon_namespace) << endl;
@@ -799,6 +826,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 			ost_cpp << "&" << ctxt._fixns << "::dombases[" << fitr->second._doffset << ']';
 		else
 			ost_cpp << '0';
+		ost_cpp << ", \"" << fitr->second._name << '\"';
 		if (!fitr->second._comment.empty())
 			ost_cpp << ',' << endl << spacer << spacer << '"' << fitr->second._comment << '"';
 		else
@@ -848,6 +876,9 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_hpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
 	osc_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
+	osc_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osc_hpp << "typedef GeneratedTable<const f8String, BaseMsgEntry> " << ctxt._clname << "_BaseMsgEntry;" << endl;
+	osc_hpp << "extern F8MetaCntx ctx;" << endl;
 	osc_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 
 	osc_cpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
@@ -908,14 +939,18 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const size_t " << mitr->second._name << "::_fldcnt("
 				<< mitr->second._fields.get_presence().size() << ");" << endl;
+			osr_cpp << "const f8String " << mitr->second._name << "::_msgtype(\""
+				<< mitr->first << "\");" << endl;
 			osc_hpp << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
-			osc_hpp << spacer << "static const size_t _fldcnt;" << endl << endl;
+			osc_hpp << spacer << "static const size_t _fldcnt;" << endl;
+			osc_hpp << spacer << "static const f8String _msgtype;" << endl << endl;
 		}
 
 		osc_hpp << "public:" << endl;
 		osc_hpp << spacer << mitr->second._name << "()";
 		if (mitr->second._fields.get_presence().size())
-			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message") << "(_traits, _traits + _fldcnt)";
+			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
+				<< "(ctx, _msgtype, _traits, _traits + _fldcnt)";
 		if (!isTrailer && !isHeader && !mitr->second._groups.empty())
 		{
 			osc_hpp << endl << spacer << '{' << endl;
@@ -933,7 +968,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		osc_hpp << spacer << "virtual ~" << mitr->second._name << "() {}" << endl;
 
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << " get_msgtype() { return " << fsitr->second._name
-			<< "(\"" << mitr->first << "\"); }" << endl;
+			<< "(_msgtype); }" << endl;
 		for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
 		{
 			FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
@@ -959,16 +994,19 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const size_t " << mitr->second._name << "::" << gsitr->second._name << "::_fldcnt("
 				<< gitr->second.get_presence().size() << ");" << endl;
+			osr_cpp << "const f8String " << mitr->second._name << "::" << gsitr->second._name << "::_msgtype(\""
+				<< gsitr->second._name << "\");" << endl;
 			osc_hpp << endl << spacer << "class " << gsitr->second._name
 				<< " : public GroupBase" << endl << spacer << '{' << endl;
 			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
-			osc_hpp << spacer << spacer << "static const size_t _fldcnt;" << endl << endl;
+			osc_hpp << spacer << spacer << "static const size_t _fldcnt;" << endl;
+			osc_hpp << spacer << spacer << "static const f8String _msgtype;" << endl << endl;
 			osc_hpp << spacer << "public:" << endl;
 			osc_hpp << spacer << spacer << gsitr->second._name << "() {}" << endl;
 			osc_hpp << spacer << spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
-			osc_hpp << spacer << spacer << "MessageBase *Create_Group() { return new MessageBase(_traits, _traits + _fldcnt); }" << endl;
+			osc_hpp << spacer << spacer << "MessageBase *create_group() { return new MessageBase(ctx, _msgtype, _traits, _traits + _fldcnt); }" << endl;
 			osc_hpp << endl << spacer << spacer << "static const " << fsitr->second._name
-				<< " get_msgtype() { return " << fsitr->second._name << "(\"" << gsitr->second._name << "\"); }" << endl;
+				<< " get_msgtype() { return " << fsitr->second._name << "(_msgtype); }" << endl;
 			osc_hpp << spacer << "};" << endl;
 		}
 		osc_hpp << "};" << endl << endl;
@@ -977,16 +1015,17 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 
 // =============================== Message class instantiation ==============================
 
-	osc_hpp << "typedef GeneratedTable<const char *, BaseMsgEntry> " << ctxt._clname << "_BaseMsgEntry;" << endl;
-
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 	{
-		osc_cpp << "Message *Create_" << mitr->second._name << "(const f8String& from)";
-		osc_cpp << endl << spacer << "{ return ";
+		osc_cpp << "Message *Create_" << mitr->second._name << "() { return ";
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
-			osc_cpp << "(Message *)";
-		osc_cpp << "new " << mitr->second._name << "; }" << endl;
+			osc_cpp << "reinterpret_cast<Message *>(new " << mitr->second._name << "); }" << endl;
+		else
+			osc_cpp << "new " << mitr->second._name << "; }" << endl;
 	}
+	osc_cpp << endl;
+	osc_cpp << "const " << ctxt._clname << "_BaseMsgEntry bme;" << endl;
+	osc_cpp << "const " << ctxt._clname << "_BaseEntry be;" << endl;
 	osc_cpp << endl << _csMap.Find_Value_Ref(cs_end_anon_namespace) << endl;
 
 	osc_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
@@ -997,6 +1036,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		if (mitr != mspec.begin())
 			osc_cpp << ',' << endl;
 		osc_cpp << spacer << "{ \"" << mitr->first << "\", { &" << ctxt._fixns << "::Create_" << mitr->second._name;
+		osc_cpp << ", \"" << mitr->second._name << '"';
 		if (!mitr->second._comment.empty())
 			osc_cpp << ',' << endl << spacer << spacer << '"' << mitr->second._comment << "\" }";
 		else
@@ -1004,10 +1044,12 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		osc_cpp << " }";
 	}
 	osc_cpp << endl << "};" << endl;
-	osc_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_pairsz(sizeof(_pairs)/sizeof("
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry));" << endl;
+	osc_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname
+		<< "_BaseMsgEntry::_pairsz(sizeof(_pairs)/sizeof(" << ctxt._fixns << "::"
+		<< ctxt._clname << "_BaseMsgEntry::Pair));" << endl;
 	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::NoValType "
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = {0, 0};" << endl;
+	osc_cpp << "F8MetaCntx ctx(" << ctxt._version << ", bme, be, \"" << ctxt._beginstr << "\");" << endl;
 
 	// terminate files
 	osc_hpp << endl << "} // namespace " << ctxt._fixns << endl;
@@ -1015,8 +1057,9 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_hpp << "#endif // _" << flname(ctxt._out[Ctxt::classes_hpp].first) << '_' << endl;
 	osr_cpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
 	osr_cpp << "} // namespace " << ctxt._fixns << endl;
-	osc_cpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
-	osc_cpp << "} // namespace " << ctxt._fixns << endl;
+	osc_cpp << endl << "} // namespace " << ctxt._fixns << endl;
+	osc_cpp << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
+	osc_cpp << endl;
 
 	return result;
 }

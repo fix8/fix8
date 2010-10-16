@@ -85,15 +85,23 @@ public:
 		_presence(begin, end) {}
 	FieldTraits() : _hasMandatory(), _hasGroup(), _hasComponent() {}
 
-	bool get(const unsigned short field, FieldTrait::TraitTypes type) const
+	bool get(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present) const
 	{
-		std::set<FieldTrait, FieldTrait::Compare>::const_iterator itr(_presence.find(field));
+		Presence::const_iterator itr(_presence.find(field));
 		return itr != _presence.end() ? itr->_field_traits.has(type) : false;
 	}
 
-	void set(const unsigned short field, FieldTrait::TraitTypes type)
+	unsigned short find_missing(FieldTrait::TraitTypes type=FieldTrait::mandatory) const
 	{
-		std::set<FieldTrait, FieldTrait::Compare>::iterator itr(_presence.find(field));
+		for (Presence::const_iterator itr(_presence.end()); itr != _presence.end(); ++itr)
+			if (itr->_field_traits.has(type) && !itr->_field_traits.has(FieldTrait::present))
+				return itr->_fnum;
+		return 0;
+	}
+
+	void set(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present)
+	{
+		Presence::iterator itr(_presence.find(field));
 		if (itr != _presence.end())
 			itr->_field_traits.set(type);
 	}
@@ -114,6 +122,7 @@ public:
 
 	bool setHasMandatory(bool to=true) { return _hasMandatory = to; }
 	bool setHasGroup(bool to=true) { return _hasGroup = to; }
+	bool setComponent(bool to=true) { return _hasComponent = to; }
 	bool hasMandatory() const { return _hasMandatory; }
 	bool hasGroup() const { return _hasGroup; }
 	bool hasComponent() const { return _hasComponent; }

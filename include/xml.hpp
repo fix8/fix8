@@ -35,8 +35,8 @@ $URL$
 
 #endif
 //-----------------------------------------------------------------------------------------
-#ifndef _XMLDECODE_HPP_
-#define _XMLDECODE_HPP_
+#ifndef _XML_ENTITY_HPP_
+#define _XML_ENTITY_HPP_
 
 //----------------------------------------------------------------------------------------
 class XmlEntity;
@@ -124,5 +124,5 @@ struct EntityOrderComp
 		{ return a->GetSequence() < b->GetSequence(); }
 };
 
-#endif // _XMLDECODE_HPP_
+#endif // _XML_ENTITY_HPP_
 

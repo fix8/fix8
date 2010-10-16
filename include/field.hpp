@@ -34,7 +34,6 @@ $Rev$
 $URL$
 
 #endif
-//-----------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 #ifndef _IF_FIX8_FIELD_HPP_
 #define _IF_FIX8_FIELD_HPP_
@@ -61,9 +60,10 @@ struct DomainBase
 	DomType _dtype;
 	FieldTrait::FieldType _ftype;
 	const size_t _sz;
+	const char **_descriptions;
 
 	template<typename T>
-	const bool isValid(const T& what) const
+	const bool is_valid(const T& what) const
 	{
 		return _dtype == dt_set ? std::binary_search(static_cast<const T*>(_range), static_cast<const T*>(_range) + _sz, what)
 									   : *static_cast<const T*>(_range) <= what && what <= *(static_cast<const T*>(_range) + 1);
@@ -91,10 +91,17 @@ public:
 	}
 
 	virtual std::ostream& print(std::ostream& os) const = 0;
-	virtual bool isValid() const { return true; }
+	virtual bool is_valid() const { return true; }
 
 	template<typename T>
 	const T& from() const { return *static_cast<const T*>(this); }
+
+	size_t encode(std::ostream& os, const BaseField& what)
+	{
+		const std::ios::pos_type where(os.tellp());
+		os << _fnum << '=' << what << '\x01';
+		return os.tellp() - where;
+	}
 
 	friend std::ostream& operator<<(std::ostream& os, const BaseField& what) { return what.print(os); }
 };
@@ -123,7 +130,7 @@ public:
 	Field (const int val) : BaseField(field), _value(val) {}
 	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(GetValue<int>(from)) {}
 	virtual ~Field() {}
-	virtual bool isValid() const { return _dom ? _dom->isValid(_value) : true; }
+	virtual bool is_valid() const { return _dom ? _dom->is_valid(_value) : true; }
 
 	const int& get() { return _value; }
 	const int& set(const int& from) { return _value = from; }
@@ -141,7 +148,7 @@ public:
 	Field () : BaseField(field) {}
 	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(from) {}
 	virtual ~Field() {}
-	virtual bool isValid() const { return _dom ? _dom->isValid(_value) : true; }
+	virtual bool is_valid() const { return _dom ? _dom->is_valid(_value) : true; }
 
 	const std::string& get() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
@@ -160,7 +167,7 @@ public:
 	Field (const double& val) : BaseField(field), _value(val) {}
 	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(GetValue<double>(from)) {}
 	virtual ~Field() {}
-	virtual bool isValid() const { return _dom ? _dom->isValid(_value) : true; }
+	virtual bool is_valid() const { return _dom ? _dom->is_valid(_value) : true; }
 
 	const double& get() { return _value; }
 	const double& set(const double& from) { return _value = from; }
@@ -178,7 +185,7 @@ public:
 	Field (const char& val) : BaseField(field), _value(val) {}
 	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(from[0]) {}
 	virtual ~Field() {}
-	virtual bool isValid() const { return _dom ? _dom->isValid(_value) : true; }
+	virtual bool is_valid() const { return _dom ? _dom->is_valid(_value) : true; }
 
 	const char& get() { return _value; }
 	const char& set(const char& from) { return _value = from; }
@@ -315,7 +322,7 @@ public:
 	const Poco::DateTime& get() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
 	std::ostream& print(std::ostream& os) const { return os; }
-	virtual bool isValid() const { return _dom ? _dom->isValid(_value) : true; }
+	virtual bool is_valid() const { return _dom ? _dom->is_valid(_value) : true; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -432,9 +439,9 @@ public:
 //-------------------------------------------------------------------------------------------------
 struct BaseEntry
 {
-	BaseField *(*_create)(const std::string&, const BaseEntry*);
+	BaseField *(*_create)(const std::string&, const DomainBase*);
 	const DomainBase *_dom;
-	const char *_comment;
+	const char *_name, *_comment;
 };
 
 } // FIX8

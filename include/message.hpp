@@ -8,97 +8,141 @@
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
-// all fields present in a message - mandatory and optional
-typedef std::map<unsigned short, BaseField *> Fields;
-typedef std::multimap<unsigned short, BaseField *> Positions;
-
-class MessageBase
-{
-	static RegExp _elmnt;
-
-public:
-	template<typename InputIterator>
-	MessageBase(const InputIterator begin, const InputIterator end) : _fp(begin, end) {}
-
-	MessageBase() {}
-	virtual ~MessageBase() { clearFields(); }
-
-	void clearFields()
-	{
-		std::for_each (_fields.begin(), _fields.end(), free_ptr<Delete2ndPairObject<> >());
-		_fields.clear();
-	}
-	void clearPresent() { _fp.clearFlag(FieldTrait::present); }
-
-	unsigned decode(const class F8MetaCntx& ctx, const f8String& from, const unsigned offset=0);
-	unsigned setupPositions();
-
-	Fields _fields;
-	FieldTraits _fp;
-	Positions _pos;
-};
-
 //-------------------------------------------------------------------------------------------------
+class MessageBase;
+
+class F8MetaCntx;
+
 class GroupBase
 {
 	std::vector<MessageBase *> _msgs;
 
 public:
 	GroupBase() {}
-	virtual ~GroupBase() { clearFields(); }
+	virtual ~GroupBase() { clear(); }
 
-	virtual MessageBase *Create_Group() = 0;
+	virtual MessageBase *create_group() = 0;
 	void add(MessageBase *what) { _msgs.push_back(what); }
+	size_t size() const { return _msgs.size(); }
 	MessageBase *operator[](unsigned where) { return where < _msgs.size() ? _msgs[where] : 0; }
-	void clearFields()
+
+	void clear()
 	{
 		std::for_each (_msgs.begin(), _msgs.end(), free_ptr<>());
 		_msgs.clear();
 	}
+
+	friend class MessageBase;
 };
 
 typedef std::map<unsigned short, GroupBase *> Groups;
+
+//-------------------------------------------------------------------------------------------------
+typedef std::map<unsigned short, BaseField *> Fields;
+typedef std::multimap<unsigned short, BaseField *> Positions;
+
+class MessageBase
+{
+protected:
+	static RegExp _elmnt;
+
+	Fields _fields;
+	FieldTraits _fp;
+	Positions _pos;
+	Groups _groups;
+	const f8String& _msgType;
+	const class F8MetaCntx& _ctx;
+
+	GroupBase *find_group(const unsigned short fnum)
+	{
+		Groups::const_iterator gitr(_groups.find(fnum));
+		return gitr != _groups.end() ? gitr->second : 0;
+	}
+
+	void add_field(const unsigned short fnum, const unsigned pos, BaseField *what)
+	{
+		_fields.insert(Fields::value_type(fnum, what));
+		_pos.insert(Positions::value_type(pos, what));
+	}
+
+public:
+	template<typename InputIterator>
+	MessageBase(const class F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
+		: _fp(begin, end), _msgType(msgType), _ctx(ctx) {}
+
+	//MessageBase() {}
+	virtual ~MessageBase() { clear(); }
+
+	void clear()
+	{
+		std::for_each (_fields.begin(), _fields.end(), free_ptr<Delete2ndPairObject<> >());
+		_fields.clear();
+		std::for_each (_groups.begin(), _groups.end(), free_ptr<Delete2ndPairObject<> >());
+		_groups.clear();
+		_fp.clearFlag(FieldTrait::present);
+		_pos.clear();
+	}
+
+	unsigned decode(const f8String& from, const unsigned offset);
+	unsigned decode_group(const unsigned short fnum, const f8String& from, const unsigned offset);
+	unsigned encode(f8String& to, const unsigned offset);
+	unsigned encode_group(const unsigned short fnum, f8String& to, const unsigned offset);
+	unsigned check_positions();
+
+	virtual void print(std::ostream& os);
+};
 
 //-------------------------------------------------------------------------------------------------
 class Message : public MessageBase
 {
 protected:
 	MessageBase *_header, *_trailer;
-	Groups _groups;
 
 public:
 	template<typename InputIterator>
-	Message(const InputIterator begin, const InputIterator end)
-		: MessageBase(begin, end), _header(), _trailer() {}
+	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
+		: MessageBase(ctx, msgType, begin, end), _header(), _trailer() {}
 
-	Message() {}
-	virtual ~Message() { clearFields(); }
-	void clearFields()
+	//Message() {}
+	virtual ~Message()
 	{
 		delete _header;
 		delete _trailer;
-		std::for_each (_groups.begin(), _groups.end(), free_ptr<Delete2ndPairObject<> >());
-		_groups.clear();
 	}
+
+	unsigned decode(const f8String& from);
+	unsigned encode(f8String& to);
+
+	virtual void print(std::ostream& os);
 };
 
 //-------------------------------------------------------------------------------------------------
 struct BaseMsgEntry
 {
-	Message *(*_create)(const std::string&);
-	const char *_comment;
+	Message *(*_create)();
+	const char *_name, *_comment;
 };
 
 //-------------------------------------------------------------------------------------------------
-class F8MetaCntx
+// metadata context object
+struct F8MetaCntx
 {
 	const unsigned _version;
-	const GeneratedTable<const char *, BaseMsgEntry>& _BaseMsgEntry;
-	const GeneratedTable<unsigned, BaseEntry>& _BaseEntry;
+	const GeneratedTable<const f8String, BaseMsgEntry>& _bme;
+	const GeneratedTable<unsigned, BaseEntry>& _be;
+	Message *(*_create_header)(), *(*_create_trailer)();
+	const f8String _beginStr;
 
-	F8MetaCntx(const unsigned version, const GeneratedTable<const char *, BaseMsgEntry>& bme,
-		const GeneratedTable<unsigned, BaseEntry>& be) : _version(version), _BaseMsgEntry(bme), _BaseEntry(be) {}
+	F8MetaCntx(const unsigned version, const GeneratedTable<const f8String, BaseMsgEntry>& bme,
+		const GeneratedTable<unsigned, BaseEntry>& be, const f8String& bg) :
+			 _version(version), _bme(bme), _be(be),
+			_create_header(_bme.find_ptr("header")->_create),
+			_create_trailer(_bme.find_ptr("trailer")->_create), _beginStr(bg) {}
+
+	const unsigned version() const { return _version; }
 };
+
+//-------------------------------------------------------------------------------------------------
 
 } // FIX8
 

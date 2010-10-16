@@ -35,35 +35,7 @@ Field<UTCTimestamp, field>::Field (const std::string& from, const DomainBase *do
 }
 
 //-------------------------------------------------------------------------------------------------
-template<const unsigned short field>
-Field<int, field>::Field (const std::string& from, const DomainBase *dom)
-	: BaseField(field, dom), _value(GetValue<int>(from))
-{
-}
-
-//-------------------------------------------------------------------------------------------------
-template<const unsigned short field>
-Field<double, field>::Field (const std::string& from, const DomainBase *dom)
-	: BaseField(field, dom), _value(GetValue<double>(from))
-{
-}
-
-//-------------------------------------------------------------------------------------------------
-template<const unsigned short field>
-Field<char, field>::Field (const std::string& from, const DomainBase *dom)
-	: BaseField(field, dom), _value(from[0])
-{
-}
-
-//-------------------------------------------------------------------------------------------------
-template<const unsigned short field>
-Field<std::string, field>::Field (const std::string& from, const DomainBase *dom)
-	: BaseField(field, dom), _value()
-{
-}
 #endif
-
-//-------------------------------------------------------------------------------------------------
 
 } // namespace FIX8
 
