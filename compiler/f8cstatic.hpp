@@ -190,6 +190,18 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "#endif\n"),
 	CSMap::TypePair(cs_copyright_short,
 	"Copyright (c) 2010, David L. Dight <fix@fix8.org>, All rights reserved."),
+	CSMap::TypePair(cs_header_preamble,
+"	void add_preamble()\n"
+"	{\n"
+"		add_field(Magic_BeginString, 1, new Field<f8String, Magic_BeginString>(ctx._beginStr));\n"
+"		add_field(Magic_BodyLength, 2, new Field<f8String, Magic_BodyLength>(0));\n"
+"		add_field(Magic_MsgType, 3, new Field<f8String, Magic_MsgType>);\n"
+"	}"),
+	CSMap::TypePair(cs_trailer_preamble,
+"	void add_preamble()\n"
+"	{\n"
+"		add_field(new Field<f8String, Magic_CheckSum>);\n"
+"	}"),
 };
 template<>
 const CSMap::TypeMap CSMap::_valuemap(CSMap::_valueTable, CSMap::Get_Table_End());

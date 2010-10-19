@@ -108,6 +108,7 @@ void print_usage();
 int process(XmlEntity& xf, Ctxt& ctxt);
 int loadFixVersion (XmlEntity& xf, Ctxt& ctxt);
 int loadfields(XmlEntity& xf, FieldSpecMap& fspec);
+void processSpecialTraits(const unsigned short field, FieldTraits& fts);
 int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& fts,
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, const unsigned component);
 int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& cspec,
@@ -247,7 +248,7 @@ int loadFixVersion (XmlEntity& xf, Ctxt& ctxt)
 	XmlEntity *fix(xf.find("fix"));
 	if (!fix)
 	{
-		cerr << "No fix header found in " << inputFile << endl;
+		cerr << "No fix header element found in " << inputFile << endl;
 		return -1;
 	}
 
@@ -352,6 +353,18 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 
 	return fieldsLoaded;
 }
+//-----------------------------------------------------------------------------------------
+void processSpecialTraits(const unsigned short field, FieldTraits& fts)
+{
+	switch(field)
+	{
+	case Magic_BeginString:
+	case Magic_BodyLength:
+	case Magic_CheckSum:
+		fts.set(field, FieldTrait::suppress);
+		break;
+	}
+}
 
 //-----------------------------------------------------------------------------------------
 int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
@@ -382,7 +395,10 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, subpos)))
 					cerr << "Could not add trait object " << fname << endl;
 				else
+				{
+					processSpecialTraits(fs_itr->first, fts);
 					++processed;
+				}
 			}
 			else
 				cerr << "Field element missing required attributes at "
@@ -490,13 +506,13 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 
 	if (!xf.find("fix/header", mlist))
 	{
-		cerr << "No header found in " << inputFile << endl;
+		cerr << "No header element found in " << inputFile << endl;
 		return 0;
 	}
 
 	if (!xf.find("fix/trailer", mlist))
 	{
-		cerr << "No trailer found in " << inputFile << endl;
+		cerr << "No trailer element found in " << inputFile << endl;
 		return 0;
 	}
 
@@ -805,7 +821,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
 		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const DomainBase *db)";
-		ost_cpp << endl << spacer << "{ return new " << fitr->second._name << "(from, db); }" << endl;
+		ost_cpp << " { return new " << fitr->second._name << "(from, db); }" << endl;
 	}
 
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_end_anon_namespace) << endl;
@@ -930,11 +946,11 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 						osr_cpp << endl;
 				}
 
+				ostringstream tostr;
+				tostr << "0x" << setw(3) << setfill('0') << hex << flitr->_field_traits.get();
 				osr_cpp << spacer << "{ " << setw(4) << right << flitr->_fnum << ", "
-					<< setw(3) << right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", "
-					<< (flitr->_field_traits.has(FieldTrait::mandatory) ? '1' : '0') << ", "
-					<< (flitr->_field_traits.has(FieldTrait::group) ? '1' : '0') << ", "
-					<< (flitr->_field_traits.has(FieldTrait::component) ? '1' : '0') << " }";
+					<< setw(3) << right << flitr->_ftype << ", " << setw(3) << right
+					<< flitr->_pos << ", " << tostr.str() << " }";
 			}
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const size_t " << mitr->second._name << "::_fldcnt("
@@ -951,7 +967,9 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		if (mitr->second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
 				<< "(ctx, _msgtype, _traits, _traits + _fldcnt)";
-		if (!isTrailer && !isHeader && !mitr->second._groups.empty())
+		if (isHeader || isTrailer)
+			osc_hpp << " { add_preamble(); }" << endl;
+		else if (!mitr->second._groups.empty())
 		{
 			osc_hpp << endl << spacer << '{' << endl;
 			for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
@@ -969,6 +987,11 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << " get_msgtype() { return " << fsitr->second._name
 			<< "(_msgtype); }" << endl;
+		if (isHeader)
+			osc_hpp << endl << _csMap.Find_Value_Ref(cs_header_preamble) << endl;
+		else if (isTrailer)
+			osc_hpp << endl << _csMap.Find_Value_Ref(cs_trailer_preamble) << endl;
+
 		for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
 		{
 			FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
@@ -985,11 +1008,10 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 						osr_cpp << endl;
 				}
 
-				osr_cpp << spacer << "{ " << setw(4) << right << flitr->_fnum << ", "
-					<< setw(3) << right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", "
-					<< (flitr->_field_traits.has(FieldTrait::mandatory) ? '1' : '0') << ", "
-					<< (flitr->_field_traits.has(FieldTrait::group) ? '1' : '0') << ", "
-					<< (flitr->_field_traits.has(FieldTrait::component) ? '1' : '0') << " }";
+				ostringstream tostr;
+				tostr << "0x" << setw(3) << setfill('0') << hex << flitr->_field_traits.get();
+				osr_cpp << spacer << "{ " << setw(4) << right << flitr->_fnum << ", " << setw(3)
+					<< right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", " << tostr.str() << " }";
 			}
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const size_t " << mitr->second._name << "::" << gsitr->second._name << "::_fldcnt("

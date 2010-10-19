@@ -35,13 +35,20 @@ $URL$
 
 #endif
 //-------------------------------------------------------------------------------------------------
-#ifndef _IF_FIX8_FIELD_HPP_
-#define _IF_FIX8_FIELD_HPP_
+#ifndef _FIX8_FIELD_HPP_
+#define _FIX8_FIELD_HPP_
 
 #include <Poco/DateTime.h>
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
+
+//-------------------------------------------------------------------------------------------------
+// magic FIX field numbers
+const unsigned Magic_BeginString(8);
+const unsigned Magic_BodyLength(9);
+const unsigned Magic_CheckSum(10);
+const unsigned Magic_MsgType(35);
 
 //-------------------------------------------------------------------------------------------------
 template<unsigned field>
@@ -96,14 +103,15 @@ public:
 	template<typename T>
 	const T& from() const { return *static_cast<const T*>(this); }
 
-	size_t encode(std::ostream& os, const BaseField& what)
+	size_t encode(std::ostream& os)
 	{
 		const std::ios::pos_type where(os.tellp());
-		os << _fnum << '=' << what << '\x01';
+		os << _fnum << '=' << *this << '\x01';
 		return os.tellp() - where;
 	}
 
 	friend std::ostream& operator<<(std::ostream& os, const BaseField& what) { return what.print(os); }
+	friend class MessageBase;
 };
 
 template<typename T, const unsigned short field>
@@ -446,4 +454,4 @@ struct BaseEntry
 
 } // FIX8
 
-#endif // _IF_FIX8_FIELD_HPP_
+#endif // _FIX8_FIELD_HPP_

@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------------------------
-#ifndef _IF_FIX8_TRAITS_HPP_
-#define _IF_FIX8_TRAITS_HPP_
+#ifndef _FIX8_TRAITS_HPP_
+#define _FIX8_TRAITS_HPP_
 
 #include <set>
 
@@ -32,7 +32,7 @@ struct FieldTrait
 	struct TraitBase
 	{
 		const unsigned short _field, _ftype, _pos;
-		bool _ismandatory, _isgroup, _iscomponent;
+		unsigned _field_traits;
 	};
 
 	static bool is_int(const FieldType ftype) { return ft_int <= ftype && ftype <= ft_end_int; }
@@ -43,7 +43,7 @@ struct FieldTrait
 	mutable unsigned short _pos;	// is ordinal, ie 0=n/a, 1=1st, 2=2nd
 	mutable unsigned short _subpos;
 
-	enum TraitTypes { mandatory, present, position, group, component, count };
+	enum TraitTypes { mandatory, present, position, group, component, suppress, count };
 	mutable ebitset<TraitTypes, unsigned short> _field_traits;
 
 	FieldTrait(const unsigned short field, const FieldType ftype=ft_untyped,
@@ -54,8 +54,7 @@ struct FieldTrait
 		| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group | (subpos ? 1 : 0) << component) {}
 
 	FieldTrait(const TraitBase& tb) : _fnum(tb._field), _ftype(static_cast<FieldTrait::FieldType>(tb._ftype)),
-		_pos(tb._pos), _subpos(), _field_traits(tb._ismandatory ? 1 : 0 | (tb._pos ? 1 : 0) << position
-		| (tb._isgroup ? 1 : 0) << group | (tb._iscomponent ? 1 : 0) << component) {}
+		_pos(tb._pos), _subpos(), _field_traits(tb._field_traits | (tb._pos ? 1 : 0) << position) {}
 
 	struct Compare : public std::binary_function<FieldTrait, FieldTrait, bool>
 	{
@@ -65,9 +64,7 @@ struct FieldTrait
 	struct PosCompare : public std::binary_function<FieldTrait, FieldTrait, bool>
 	{
 		bool operator()(const FieldTrait* p1, const FieldTrait* p2) const
-		{
-			return p1->_pos < p2->_pos || (p1->_pos == p2->_pos && p1->_subpos < p2->_subpos);
-		}
+			{ return p1->_pos < p2->_pos || (p1->_pos == p2->_pos && p1->_subpos < p2->_subpos); }
 	};
 };
 
@@ -84,6 +81,12 @@ public:
 	FieldTraits(const InputIterator begin, const InputIterator end) : _hasMandatory(), _hasGroup(), _hasComponent(),
 		_presence(begin, end) {}
 	FieldTraits() : _hasMandatory(), _hasGroup(), _hasComponent() {}
+
+	bool has(const unsigned short field) const
+	{
+		Presence::const_iterator itr(_presence.find(field));
+		return itr != _presence.end();
+	}
 
 	bool get(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present) const
 	{
@@ -106,30 +109,38 @@ public:
 			itr->_field_traits.set(type);
 	}
 
+	void clear(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present)
+	{
+		Presence::iterator itr(_presence.find(field));
+		if (itr != _presence.end())
+			itr->_field_traits.clear(type);
+	}
+
+	bool set_hasMandatory(bool to=true) { return _hasMandatory = to; }
+	bool set_hasGroup(bool to=true) { return _hasGroup = to; }
+	bool set_component(bool to=true) { return _hasComponent = to; }
+
 	bool add(const FieldTrait& what) { return _presence.insert(Presence::value_type(what)).second; }
-	void clearFlag(FieldTrait::TraitTypes type)
+	void clear_flag(FieldTrait::TraitTypes type)
 		{ for (Presence::const_iterator itr(_presence.begin()); itr != _presence.end(); (*itr++)._field_traits.clear(type)); }
 
-	bool isPresent(const unsigned short field) const { return get(field, FieldTrait::present); }
-	bool isMandatory(const unsigned short field) const { return get(field, FieldTrait::mandatory); }
-	bool isGroup(const unsigned short field) const { return get(field, FieldTrait::group); }
-	bool isComponent(const unsigned short field) const { return get(field, FieldTrait::component); }
+	bool is_present(const unsigned short field) const { return get(field, FieldTrait::present); }
+	bool is_mandatory(const unsigned short field) const { return get(field, FieldTrait::mandatory); }
+	bool is_group(const unsigned short field) const { return get(field, FieldTrait::group); }
+	bool is_component(const unsigned short field) const { return get(field, FieldTrait::component); }
 	unsigned short getPos(const unsigned short field) const
 	{
 		std::set<FieldTrait, FieldTrait::Compare>::const_iterator itr(_presence.find(field));
 		return itr != _presence.end() && itr->_field_traits.has(FieldTrait::position) ? itr->_pos : 0;
 	}
 
-	bool setHasMandatory(bool to=true) { return _hasMandatory = to; }
-	bool setHasGroup(bool to=true) { return _hasGroup = to; }
-	bool setComponent(bool to=true) { return _hasComponent = to; }
-	bool hasMandatory() const { return _hasMandatory; }
-	bool hasGroup() const { return _hasGroup; }
-	bool hasComponent() const { return _hasComponent; }
+	bool has_mandatory() const { return _hasMandatory; }
+	bool has_group() const { return _hasGroup; }
+	bool has_component() const { return _hasComponent; }
 
 	const Presence& get_presence() const { return _presence; }
 };
 
 } // FIX8
 
-#endif // _IF_FIX8_TRAITS_HPP_
+#endif // _FIX8_TRAITS_HPP_

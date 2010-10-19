@@ -5,7 +5,9 @@
 #include <set>
 #include <iterator>
 #include <memory>
+#include <iomanip>
 #include <algorithm>
+#include <numeric>
 #include <bitset>
 
 #include <strings.h>
@@ -26,6 +28,11 @@ using namespace std;
 RegExp MessageBase::_elmnt("([0-9]+)=([^\x01]+)\x01");
 
 //-------------------------------------------------------------------------------------------------
+namespace {
+	const string spacer(3, ' ');
+}
+
+//-------------------------------------------------------------------------------------------------
 unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 {
 	RegMatch match;
@@ -44,7 +51,7 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 			throw InvalidField(tv);
 		s_offset += match.SubSize();
 		auto_ptr<BaseField> fld(be->_create(val, be->_dom));
-		if (_fp.isGroup(tv))
+		if (_fp.is_group(tv))
 			s_offset = decode_group(tv, from, s_offset);
 		add_field(tv, ++pos, fld.release());
 		_fp.set(tv);	// is present
@@ -115,26 +122,108 @@ unsigned Message::decode(const f8String& from)
 	offset = MessageBase::decode(from, offset);
 	_trailer = _ctx._create_trailer();
 	offset = _trailer->decode(from, offset);
-	return 0;
+	return offset;
 }
 
 //-------------------------------------------------------------------------------------------------
-void MessageBase::print(std::ostream& os)
+unsigned MessageBase::encode(ostream& to)
 {
+	const std::ios::pos_type where(to.tellp());
 	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
-		os << *itr->second << std::endl;
+	{
+		if (!_fp.get(itr->second->_fnum, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
+		{
+			itr->second->encode(to);
+			if (_fp.get(itr->second->_fnum, FieldTrait::group))
+				encode_group(itr->second->_fnum, to);
+		}
+	}
+
+	return to.tellp() - where;
 }
 
-void Message::print(std::ostream& os)
+//-------------------------------------------------------------------------------------------------
+unsigned MessageBase::encode_group(const unsigned short fnum, std::ostream& to)
+{
+	const std::ios::pos_type where(to.tellp());
+	GroupBase *grpbase(find_group(fnum));
+	if (!grpbase)
+		throw InvalidRepeatingGroup(fnum);
+	for (GroupElement::iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr)
+		(*itr)->encode(to);
+	return to.tellp() - where;
+}
+
+//-------------------------------------------------------------------------------------------------
+unsigned Message::encode(f8String& to)
+{
+	ostringstream msg;
+	if (!_header)
+		throw MissingMessageComponent("header");
+	Fields::const_iterator fitr(_header->_fields.find(Magic_MsgType));
+	static_cast<Field<f8String, Magic_MsgType> *>(fitr->second)->set(_msgType);
+	_header->encode(msg);
+	MessageBase::encode(msg);
+	if (!_trailer)
+		throw MissingMessageComponent("trailer");
+	_trailer->encode(msg);
+	const unsigned msgLen(msg.str().size());	// checksummable msglength
+
+	if ((fitr = _trailer->_fields.find(Magic_CheckSum)) == _trailer->_fields.end())
+		throw MissingMandatoryField(Magic_CheckSum);
+	static_cast<Field<f8String, Magic_CheckSum> *>(fitr->second)->set(fmt_checksum(
+		accumulate(msg.str().begin(), msg.str().end(), 0) % 256));
+	_trailer->_fp.clear(Magic_CheckSum, FieldTrait::suppress);
+	fitr->second->encode(msg);
+
+	ostringstream hmsg;
+	if ((fitr = _header->_fields.find(Magic_BeginString)) == _header->_fields.end())
+		throw MissingMandatoryField(Magic_BeginString);
+	_header->_fp.clear(Magic_BeginString, FieldTrait::suppress);
+	fitr->second->encode(hmsg);
+
+	if ((fitr = _header->_fields.find(Magic_BodyLength)) == _header->_fields.end())
+		throw MissingMandatoryField(Magic_BodyLength);
+	_header->_fp.clear(Magic_BodyLength, FieldTrait::suppress);
+	static_cast<Field<Length, Magic_BodyLength> *>(fitr->second)->set(msgLen);
+	fitr->second->encode(hmsg);
+
+	hmsg << msg.str();
+	to = hmsg.str();
+	return to.size();
+}
+
+//-------------------------------------------------------------------------------------------------
+const f8String MessageBase::fmt_checksum(unsigned val)
+{
+	ostringstream ostr;
+	ostr << setw(3) << setfill('0') << val;
+	return ostr.str();
+}
+
+//-------------------------------------------------------------------------------------------------
+void MessageBase::print(ostream& os)
+{
+	const BaseMsgEntry& tbme(_ctx._bme.find_ref(_msgType));
+	os << tbme._name << " (" << _msgType << ')' << endl;
+	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
+	{
+		const BaseEntry& tbe(_ctx._be.find_ref(itr->second->_fnum));
+		os << spacer << tbe._name << " (" << itr->second->_fnum << "): " << *itr->second << endl;
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+void Message::print(ostream& os)
 {
 	if (_header)
 		_header->print(os);
 	else
-		os << "Null Header" << std::endl;
+		os << "Null Header" << endl;
 	MessageBase::print(os);
 	if (_trailer)
 		_trailer->print(os);
 	else
-		os << "Null Trailer" << std::endl;
+		os << "Null Trailer" << endl;
 }
 

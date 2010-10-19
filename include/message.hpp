@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------------------------
-#ifndef _IF_FIX8_MESSAGE_HPP_
-#define _IF_FIX8_MESSAGE_HPP_
+#ifndef _FIX8_MESSAGE_HPP_
+#define _FIX8_MESSAGE_HPP_
 
 #include <map>
 #include <vector>
@@ -10,12 +10,14 @@ namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
 class MessageBase;
+typedef std::vector<MessageBase *> GroupElement;
 
 class F8MetaCntx;
 
+//-------------------------------------------------------------------------------------------------
 class GroupBase
 {
-	std::vector<MessageBase *> _msgs;
+	GroupElement _msgs;
 
 public:
 	GroupBase() {}
@@ -63,6 +65,7 @@ protected:
 	{
 		_fields.insert(Fields::value_type(fnum, what));
 		_pos.insert(Positions::value_type(pos, what));
+		_fp.set(fnum, FieldTrait::present);
 	}
 
 public:
@@ -70,7 +73,6 @@ public:
 	MessageBase(const class F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
 		: _fp(begin, end), _msgType(msgType), _ctx(ctx) {}
 
-	//MessageBase() {}
 	virtual ~MessageBase() { clear(); }
 
 	void clear()
@@ -79,17 +81,33 @@ public:
 		_fields.clear();
 		std::for_each (_groups.begin(), _groups.end(), free_ptr<Delete2ndPairObject<> >());
 		_groups.clear();
-		_fp.clearFlag(FieldTrait::present);
+		_fp.clear_flag(FieldTrait::present);
 		_pos.clear();
 	}
 
 	unsigned decode(const f8String& from, const unsigned offset);
 	unsigned decode_group(const unsigned short fnum, const f8String& from, const unsigned offset);
-	unsigned encode(f8String& to, const unsigned offset);
-	unsigned encode_group(const unsigned short fnum, f8String& to, const unsigned offset);
+	unsigned encode(std::ostream& to);
+	unsigned encode_group(const unsigned short fnum, std::ostream& to);
 	unsigned check_positions();
 
+	bool add_field(BaseField *what)
+	{
+		const unsigned short fnum(what->_fnum);
+		if (_fp.has(fnum))
+		{
+			add_field(fnum, _fp.getPos(fnum), what);
+			return true;
+		}
+		return false;
+	}
+
+	bool operator+=(BaseField *what) { return add_field(what); }
+
 	virtual void print(std::ostream& os);
+	friend class Message;
+
+	static const f8String fmt_checksum(unsigned val);
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -103,7 +121,6 @@ public:
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
 		: MessageBase(ctx, msgType, begin, end), _header(), _trailer() {}
 
-	//Message() {}
 	virtual ~Message()
 	{
 		delete _header;
@@ -146,4 +163,4 @@ struct F8MetaCntx
 
 } // FIX8
 
-#endif // _IF_FIX8_MESSAGE_HPP_
+#endif // _FIX8_MESSAGE_HPP_

@@ -207,6 +207,8 @@ enum comp_str
 	cs_copyright,
 	cs_copyright_short,
 	cs_generated_includes,
+	cs_header_preamble,
+	cs_trailer_preamble,
 };
 
 typedef StaticTable<comp_str, std::string> CSMap;
