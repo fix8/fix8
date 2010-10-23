@@ -87,14 +87,10 @@ template<>
 const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8String, BaseMsgEntry>::_pairs[] = {};
 
 //-----------------------------------------------------------------------------------------
-namespace {
-
 string inputFile, odir("./"), prefix;
 bool verbose(false);
-const string GETARGLIST("hvVo:p:");
-const string spacer(3, ' ');
-
-}
+extern const string GETARGLIST("hvVo:p:");
+extern const string spacer(3, ' ');
 
 //-----------------------------------------------------------------------------------------
 const CSMap _csMap;
@@ -113,7 +109,7 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, const unsigned component);
 int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& cspec,
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
-void processOrdering(MessageSpecMap& mspec, const ComponentSpecMap& cspec, const FieldSpecMap& fspec);
+void processOrdering(MessageSpecMap& mspec);
 int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
 ostream *openofile(const string& odir, const string& fname);
 const string flname(const string& from);
@@ -216,79 +212,6 @@ int main(int argc, char **argv)
 }
 
 //-----------------------------------------------------------------------------------------
-ostream *openofile(const string& odir, const string& fname)
-{
-	ostringstream ofs;
-	string odirect(odir);
-	ofs << CheckAddTrailingSlash(odirect) << fname;
-	ofstream *os(new ofstream(ofs.str().c_str()));
-	if (!*os)
-	{
-		cerr << "Error opening file \'" << ofs.str() << '\'';
-		if	(errno)
-			cerr << " (" << strerror(errno) << ')';
-		cerr << endl;
-		return 0;
-	}
-
-	return os;
-}
-
-//-----------------------------------------------------------------------------------------
-const string& mkel(const string& base, const string& compon, string& where)
-{
-	ostringstream ostr;
-	ostr << base << '/' << compon;
-	return where = ostr.str();
-}
-
-//-----------------------------------------------------------------------------------------
-int loadFixVersion (XmlEntity& xf, Ctxt& ctxt)
-{
-	XmlEntity *fix(xf.find("fix"));
-	if (!fix)
-	{
-		cerr << "No fix header element found in " << inputFile << endl;
-		return -1;
-	}
-
-	string major, minor, revision("0");
-
-	if (!fix->GetAttr("major", major) || !fix->GetAttr("minor", minor))
-	{
-		cerr << "Missing required attributes (major/minor) from fix header in " << inputFile << endl;
-		return -1;
-	}
-
-	fix->GetAttr("revision", revision);
-	fix->GetAttr("ns", ctxt._fixns);
-
-	// fix version: <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
-	ctxt._version = GetValue<int>(major) * 1000 + GetValue<int>(minor) * 100 + GetValue<int>(revision);
-	if (ctxt._version < 4000 || ctxt._version > 6000)
-	{
-		cerr << "Invalid FIX version " << ctxt._version << " from fix header in " << inputFile << endl;
-		return -1;
-	}
-
-	ostringstream ostr;
-	ostr << "FIX" << ctxt._version;
-	ctxt._systemns = ostr.str();
-	if (ctxt._fixns.empty())
-		ctxt._fixns = ctxt._systemns;
-	ctxt._clname = prefix;
-
-	ostr.str("");
-	if (GetValue<int>(major) > 4)
-		ostr << "FIXT.1.1";
-	else
-		ostr << "FIX." << major << '.' << minor;
-	ctxt._beginstr = ostr.str();
-
-	return 0;
-}
-
-//-----------------------------------------------------------------------------------------
 int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 {
 	int fieldsLoaded(0);
@@ -353,64 +276,6 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 
 	return fieldsLoaded;
 }
-//-----------------------------------------------------------------------------------------
-void processSpecialTraits(const unsigned short field, FieldTraits& fts)
-{
-	switch(field)
-	{
-	case Magic_BeginString:
-	case Magic_BodyLength:
-	case Magic_CheckSum:
-		fts.set(field, FieldTrait::suppress);
-		break;
-	}
-}
-
-//-----------------------------------------------------------------------------------------
-int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
-	const FieldSpecMap& fspec, const unsigned subpos)
-{
-	unsigned processed(0);
-	XmlList flist;
-	if (xt->find(where, flist))
-	{
-		bool hasMandatory(false);
-
-		for(XmlList::const_iterator fitr(flist.begin()); fitr != flist.end(); ++fitr)
-		{
-			string fname, required;
-			if ((*fitr)->GetAttr("name", fname) && (*fitr)->GetAttr("required", required))
-			{
-				FieldToNumMap::const_iterator ftonItr(ftonSpec.find(fname));
-				FieldSpecMap::const_iterator fs_itr;
-				if (ftonItr == ftonSpec.end() || (fs_itr = fspec.find(ftonItr->second)) == fspec.end())
-				{
-					cerr << "Could not locate Field " << fname << " from known field types in " << inputFile << endl;
-					continue;
-				}
-
-				// add FieldTrait
-				if (required == "Y")
-					hasMandatory = true;
-				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, subpos)))
-					cerr << "Could not add trait object " << fname << endl;
-				else
-				{
-					processSpecialTraits(fs_itr->first, fts);
-					++processed;
-				}
-			}
-			else
-				cerr << "Field element missing required attributes at "
-					<< inputFile << '(' << (*fitr)->GetLine() << ')' << endl;
-		}
-
-		if (hasMandatory)
-			fts.setHasMandatory();
-	}
-
-	return processed;
-}
 
 //-----------------------------------------------------------------------------------------
 int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec)
@@ -459,11 +324,11 @@ int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& 
 							{
 								pair<GroupMap::iterator, bool> gresult(
 									result.first->second._groups.insert(GroupMap::value_type(fs_itr->first, FieldTraits())));
-								if (!processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, true))
+								if (!processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 1))
 									cerr << "No fields found in component group " << gname << " at "
 										<< inputFile << '(' << (*gitr)->GetLine() << ')' << endl;
 								else
-									gresult.first->second.setHasGroup();
+									gresult.first->second.set_group();
 							}
 						}
 						else
@@ -479,7 +344,7 @@ int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& 
 			}
 			(*itr)->GetAttr("comment", result.first->second._comment);
 
-			processMessageFields("component/field", *itr, result.first->second._fields, ftonSpec, fspec, true);
+			processMessageFields("component/field", *itr, result.first->second._fields, ftonSpec, fspec, 1);
 
 			++msgssLoaded;
 		}
@@ -582,7 +447,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 							pair<GroupMap::iterator, bool> gresult(
 								result.first->second._groups.insert(GroupMap::value_type(fs_itr->first, FieldTraits())));
 							processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 0);
-							gresult.first->second.setHasGroup();
+							gresult.first->second.set_group();
 							XmlList comlist;
 							if ((*gitr)->find("group/component", comlist))
 							{
@@ -601,11 +466,10 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 
 									for (Presence::iterator deitr(csitr->second._fields.get_presence().begin());
 										deitr != csitr->second._fields.get_presence().end(); ++deitr)
-									{ // do we need an 'add'
-										deitr->_pos = (*citr)->GetSubIdx();
-										deitr->_subpos = 1 + distance(csitr->second._fields.get_presence().begin(), deitr);
+									{
 										deitr->_field_traits.set(FieldTrait::mandatory,
-											deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y");
+											(deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y")
+											|| deitr->_pos == 1);
 										if (!gresult.first->second.add(*deitr))
 											cerr << "group Component failed to add " << name << " at "
 												<< inputFile << '(' << (*citr)->GetLine() << ')' << endl;
@@ -649,8 +513,6 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 				for (Presence::iterator deitr(csitr->second._fields.get_presence().begin());
 					deitr != csitr->second._fields.get_presence().end(); ++deitr)
 				{
-					deitr->_pos = (*citr)->GetSubIdx();
-					deitr->_subpos = 1 + distance(csitr->second._fields.get_presence().begin(), deitr);
 					deitr->_field_traits.set(FieldTrait::mandatory,
 						deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y");
 					result.first->second._fields.add(*deitr);
@@ -662,89 +524,6 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 	}
 
 	return msgssLoaded;
-}
-
-//-----------------------------------------------------------------------------------------
-void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp)
-{
-	string typestr("const ");
-	if (FieldTrait::is_int(itr->second._ftype))
-		typestr += "int ";
-	else if (FieldTrait::is_char(itr->second._ftype))
-		typestr += "char ";
-	else if (FieldTrait::is_float(itr->second._ftype))
-		typestr += "double ";
-	else if (FieldTrait::is_string(itr->second._ftype))
-		typestr += "f8String ";
-	else
-		return;
-
-	ost_cpp << typestr << itr->second._name << "_domain[] = " << endl << spacer << "{ ";
-	unsigned cnt(0);
-	for (DomainMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
-	{
-		if (cnt)
-			ost_cpp << ", ";
-		ost_cpp << *ditr->first;
-		ost_hpp << typestr << itr->second._name << '_' << ditr->second;
-		if (ditr->first->is_range())
-		{
-			if (cnt == 0)
-				ost_hpp << "_lower";
-			else if (cnt == 1)
-				ost_hpp << "_upper";
-		}
-		ost_hpp << '(' << *ditr->first << ");" << endl;
-		++cnt;
-	}
-	ost_hpp << "const size_t " << itr->second._name << "_dom_els(" << itr->second._dvals->size() << ");" << endl;
-	ost_cpp << " };" << endl;
-
-	ost_cpp << "const char *" << itr->second._name << "_descriptions[] = " << endl << spacer << "{ ";
-	cnt = 0;
-	for (DomainMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
-	{
-		if (cnt)
-			ost_cpp << ", ";
-		ost_cpp << '"' << ditr->second << '"';
-		++cnt;
-	}
-	ost_cpp << " };" << endl;
-}
-
-//-----------------------------------------------------------------------------------------
-const string flname(const string& from)
-{
-	return from.substr(0, from.find_first_of('.'));
-}
-
-//-----------------------------------------------------------------------------------------
-void processOrdering(MessageSpecMap& mspec, const ComponentSpecMap& cspec, const FieldSpecMap& fspec)
-{
-	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
-	{
-		FieldTraitOrder mo;
-		for (Presence::const_iterator flitr(mitr->second._fields.get_presence().begin());
-			flitr != mitr->second._fields.get_presence().end(); ++flitr)
-				mo.insert(FieldTraitOrder::value_type(&*flitr));
-
-		unsigned cnt(0);
-		for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
-			(*fto)->_pos = ++cnt;
-
-		mo.clear();
-
-		for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
-		{
-			for (Presence::const_iterator flitr(gitr->second.get_presence().begin());
-				flitr != gitr->second.get_presence().end(); ++flitr)
-					mo.insert(FieldTraitOrder::value_type(&*flitr));
-
-			unsigned gcnt(0);
-			for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
-				(*fto)->_pos = ++gcnt;
-		}
-	}
 }
 
 //-----------------------------------------------------------------------------------------
@@ -851,7 +630,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	}
 	ost_cpp << endl << "};" << endl;
 	ost_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairsz(sizeof(_pairs)/sizeof("
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry));" << endl;
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair));" << endl;
 	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::NoValType "
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_noval = {0, 0};" << endl;
 
@@ -880,7 +659,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	if (verbose)
 		cout << msgsloaded << " messages found" << endl;
 
-	processOrdering(mspec, cspec, fspec);
+	processOrdering(mspec);
 
 	// output file preambles
 	osc_hpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
@@ -1022,13 +801,15 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 				<< " : public GroupBase" << endl << spacer << '{' << endl;
 			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
 			osc_hpp << spacer << spacer << "static const size_t _fldcnt;" << endl;
-			osc_hpp << spacer << spacer << "static const f8String _msgtype;" << endl << endl;
+			osc_hpp << spacer << spacer << "static const f8String _msgtype;" << endl;
+			osc_hpp << spacer << spacer << "static const unsigned short _field = " << gsitr->first << ';' << endl << endl;
 			osc_hpp << spacer << "public:" << endl;
-			osc_hpp << spacer << spacer << gsitr->second._name << "() {}" << endl;
+			osc_hpp << spacer << spacer << gsitr->second._name << "() : GroupBase(_field) {}" << endl;
 			osc_hpp << spacer << spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
 			osc_hpp << spacer << spacer << "MessageBase *create_group() { return new MessageBase(ctx, _msgtype, _traits, _traits + _fldcnt); }" << endl;
 			osc_hpp << endl << spacer << spacer << "static const " << fsitr->second._name
 				<< " get_msgtype() { return " << fsitr->second._name << "(_msgtype); }" << endl;
+			osc_hpp << spacer << spacer << "static const unsigned short get_fnum() { return _field; }" << endl;
 			osc_hpp << spacer << "};" << endl;
 		}
 		osc_hpp << "};" << endl << endl;
@@ -1086,33 +867,3 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	return result;
 }
 
-//-----------------------------------------------------------------------------------------
-void print_usage()
-{
-	UsageMan um("f8c", GETARGLIST, "<input xml schema>");
-	um.setdesc("f8c -- compile xml schema into fix8 application classes");
-	um.add('o', "odir <file>", "output target directory");
-	um.add('p', "prefix <file>", "output filename prefix");
-	um.add('h', "help", "help, this screen");
-	um.add('v', "version", "print version, exit");
-	um.add('V', "verbose", "be more verbose when processing");
-	um.add("e.g.");
-	um.add("@f8c -p myfix myfix.xml");
-	um.print(cerr);
-}
-
-//-------------------------------------------------------------------------------------------------
-DomainObject *DomainObject::create(const string& from, FieldTrait::FieldType ftype, bool isRange)
-{
-	if (FieldTrait::is_int(ftype))
-		return new TypedDomain<int>(GetValue<int>(from), isRange);
-	if (FieldTrait::is_char(ftype))
-		return new CharDomain(from[0], isRange);
-	if (FieldTrait::is_float(ftype))
-		return new TypedDomain<double>(GetValue<double>(from), isRange);
-	if (FieldTrait::is_string(ftype))
-		return new StringDomain(from, isRange);
-	return 0;
-}
-
-//-------------------------------------------------------------------------------------------------

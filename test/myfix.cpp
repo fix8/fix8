@@ -66,6 +66,7 @@ int main(int argc, char **argv)
 	//cout << em.get() << endl;
 #endif
 
+#if 0
 	string from("35=1005=hello114=Y87=STOP47=10.239=14");
 	RegExp elmnt("([0-9]+)=([^\x01]+)\x01");
 	RegMatch match;
@@ -81,6 +82,44 @@ int main(int argc, char **argv)
 	cout << "ol=" << from.size() << " cl=" << s_offset << endl;
 
 	cout << TEX::ctx.version() << endl;
+#endif
+
+	try
+	{
+		TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
+		*nos += new TEX::TransactTime("Wed Oct 20 05:36:21 EST 2010");
+		*nos += new TEX::OrderQty(100);
+		*nos += new TEX::ClOrdID("ord01");
+		*nos += new TEX::Symbol("BHP");
+		*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
+		*nos += new TEX::Side(TEX::Side_BUY);
+		*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+
+		*nos += new TEX::NoUnderlyings(2);
+		GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
+		MessageBase *gr1(noul->create_group());
+		*gr1 += new TEX::UnderlyingSymbol("BLAH");
+		*noul += gr1;
+		MessageBase *gr2(noul->create_group());
+		*gr2 += new TEX::UnderlyingSymbol("FOO");
+		*noul += gr2;
+
+		f8String omsg;
+		nos->encode(omsg);
+		cout << omsg << endl;
+		nos->print(cout);
+
+		delete nos;
+
+		Message *rc(TEX::ctx._bme.find_ptr("D")->_create());
+		rc->decode(omsg);
+		rc->print(cout);
+	}
+	catch (f8Exception& e)
+	{
+		cerr << e.what() << endl;
+	}
+
 	return 0;
 }
 

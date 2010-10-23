@@ -10,6 +10,7 @@ namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
 class MessageBase;
+class Message;
 typedef std::vector<MessageBase *> GroupElement;
 
 class F8MetaCntx;
@@ -17,14 +18,16 @@ class F8MetaCntx;
 //-------------------------------------------------------------------------------------------------
 class GroupBase
 {
+	unsigned short _fnum;
 	GroupElement _msgs;
 
 public:
-	GroupBase() {}
+	GroupBase(const unsigned short fnum) : _fnum(fnum) {}
 	virtual ~GroupBase() { clear(); }
 
 	virtual MessageBase *create_group() = 0;
 	void add(MessageBase *what) { _msgs.push_back(what); }
+	void operator+=(MessageBase *what) { add(what); }
 	size_t size() const { return _msgs.size(); }
 	MessageBase *operator[](unsigned where) { return where < _msgs.size() ? _msgs[where] : 0; }
 
@@ -38,6 +41,32 @@ public:
 };
 
 typedef std::map<unsigned short, GroupBase *> Groups;
+
+//-------------------------------------------------------------------------------------------------
+struct BaseMsgEntry
+{
+	Message *(*_create)();
+	const char *_name, *_comment;
+};
+
+//-------------------------------------------------------------------------------------------------
+// metadata context object
+struct F8MetaCntx
+{
+	const unsigned _version;
+	const GeneratedTable<const f8String, BaseMsgEntry>& _bme;
+	const GeneratedTable<unsigned, BaseEntry>& _be;
+	Message *(*_mk_hdr)(), *(*_mk_trl)();
+	const f8String _beginStr;
+
+	F8MetaCntx(const unsigned version, const GeneratedTable<const f8String, BaseMsgEntry>& bme,
+		const GeneratedTable<unsigned, BaseEntry>& be, const f8String& bg) :
+			 _version(version), _bme(bme), _be(be),
+			_mk_hdr(_bme.find_ptr("header")->_create),
+			_mk_trl(_bme.find_ptr("trailer")->_create), _beginStr(bg) {}
+
+	const unsigned version() const { return _version; }
+};
 
 //-------------------------------------------------------------------------------------------------
 typedef std::map<unsigned short, BaseField *> Fields;
@@ -54,12 +83,6 @@ protected:
 	Groups _groups;
 	const f8String& _msgType;
 	const class F8MetaCntx& _ctx;
-
-	GroupBase *find_group(const unsigned short fnum)
-	{
-		Groups::const_iterator gitr(_groups.find(fnum));
-		return gitr != _groups.end() ? gitr->second : 0;
-	}
 
 	void add_field(const unsigned short fnum, const unsigned pos, BaseField *what)
 	{
@@ -101,13 +124,23 @@ public:
 		}
 		return false;
 	}
-
 	bool operator+=(BaseField *what) { return add_field(what); }
 
-	virtual void print(std::ostream& os);
-	friend class Message;
+	template<typename T>
+	GroupBase *find_group() { return find_group(T::get_fnum()); }
+	GroupBase *find_group(const unsigned short fnum)
+	{
+		Groups::const_iterator gitr(_groups.find(fnum));
+		return gitr != _groups.end() ? gitr->second : 0;
+	}
 
-	static const f8String fmt_checksum(unsigned val);
+	void add_group(GroupBase *what)
+		{ _groups.insert(Groups::value_type(what->_fnum, what)); }
+	void operator+=(GroupBase *what) { add_group(what); }
+
+	virtual void print(std::ostream& os);
+	virtual void print_group(const unsigned short fnum, std::ostream& os);
+	friend class Message;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -119,7 +152,7 @@ protected:
 public:
 	template<typename InputIterator>
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
-		: MessageBase(ctx, msgType, begin, end), _header(), _trailer() {}
+		: MessageBase(ctx, msgType, begin, end), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl()) {}
 
 	virtual ~Message()
 	{
@@ -127,36 +160,21 @@ public:
 		delete _trailer;
 	}
 
+	MessageBase *Header() { return _header; }
+	MessageBase *Trailer() { return _trailer; }
+
 	unsigned decode(const f8String& from);
 	unsigned encode(f8String& to);
 
 	virtual void print(std::ostream& os);
-};
 
-//-------------------------------------------------------------------------------------------------
-struct BaseMsgEntry
-{
-	Message *(*_create)();
-	const char *_name, *_comment;
-};
-
-//-------------------------------------------------------------------------------------------------
-// metadata context object
-struct F8MetaCntx
-{
-	const unsigned _version;
-	const GeneratedTable<const f8String, BaseMsgEntry>& _bme;
-	const GeneratedTable<unsigned, BaseEntry>& _be;
-	Message *(*_create_header)(), *(*_create_trailer)();
-	const f8String _beginStr;
-
-	F8MetaCntx(const unsigned version, const GeneratedTable<const f8String, BaseMsgEntry>& bme,
-		const GeneratedTable<unsigned, BaseEntry>& be, const f8String& bg) :
-			 _version(version), _bme(bme), _be(be),
-			_create_header(_bme.find_ptr("header")->_create),
-			_create_trailer(_bme.find_ptr("trailer")->_create), _beginStr(bg) {}
-
-	const unsigned version() const { return _version; }
+	static unsigned calc_chksum(const f8String& from)
+	{
+		unsigned val(0);
+		for (f8String::const_iterator itr(from.begin()); itr != from.end(); ++itr)
+			val += *itr;
+		return val % 256;
+	}
 };
 
 //-------------------------------------------------------------------------------------------------

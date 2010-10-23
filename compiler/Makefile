@@ -1,7 +1,7 @@
 TARGET = ../bin/f8c
 LIBS = -lrt -lf8 -lPocoFoundation
 INCLUDE = -I../include -I.
-CXX_SRCS = f8c.cpp
+CXX_SRCS = f8c.cpp f8cutils.cpp
 HDRS = f8cstatic.hpp f8c.hpp ../include/*.hpp
 CXXFLAGS = -O3 -ggdb -Wall
 LDFLAGS = -ggdb -L../lib

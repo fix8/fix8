@@ -4043,9 +4043,9 @@
       <value enum="M" description="MID_PRICE" />
       <value enum="N" description="NON_NEGOTIABLE" />
       <value enum="O" description="OPENING_PEG" />
-      <value enum="P" description="MARKET_PEG_OR_SFE_PURGE_ON_LOGOFF"/>
+      <value enum="P" description="MARKET_PEG"/>
       <value enum="Q" description="CANCEL_ON_SYSTEM_FAILURE" />
-      <value enum="R" description="PRIMARY_PEG_OR_SFE_RETAIN_ON_LOGOFF"/>
+      <value enum="R" description="PRIMARY_PEG"/>
       <value enum="S" description="SUSPEND" />
       <value enum="T" description="FIXED_PEG_TO_LOCAL_BEST_BID_OR_OFFER_AT_TIME_OF_ORDER" />
       <value enum="U" description="CUSTOMER_DISPLAY_INSTRUCTION" />
@@ -4260,16 +4260,15 @@
       <value enum="x" description="CANCELLED_PARTIAL"/>
     </field>
     <field number="40" name="OrdType" type="STRING">
-      <value enum="1" description="MARKET_OR_SFE_LIMIT"/>
-      <value enum="2" description="LIMIT_OR_SFE_TIMED"/>
-      <value enum="3" description="STOP_OR_SFE_FOK"/>
-      <value enum="4" description="STOP_LIMIT_OR_SFE_MARKET"/>
-      <value enum="5" description="MARKET_ON_CLOSE_OR_SFE_MARKET_IF_TOUCHED"/>
-      <value enum="6" description="WITH_OR_WITHOUT_OR_SFE_STOP"/>
-      <value enum="7" description="LIMIT_OR_BETTER_OR_SFE_STOP_LIMIT"/>
-      <value enum="8" description="LIMIT_WITH_OR_WITHOUT_OR_SFE_GTC"/>
-      <value enum="9" description="ON_BASIS_OR_SFE_DISCRETIONARY"/>
-      <value enum="10" description="SFE_MARKET_LIMIT"/>
+      <value enum="1" description="MARKET"/>
+      <value enum="2" description="LIMIT"/>
+      <value enum="3" description="STOP"/>
+      <value enum="4" description="STOP_LIMIT"/>
+      <value enum="5" description="MARKET_ON_CLOSE"/>
+      <value enum="6" description="WITH_OR_WITHOUT"/>
+      <value enum="7" description="LIMIT_OR_BETTER"/>
+      <value enum="8" description="LIMIT_WITH"/>
+      <value enum="9" description="ON_BASIS"/>
       <value enum="A" description="ON_CLOSE" />
       <value enum="B" description="LIMIT_ON_CLOSE" />
       <value enum="C" description="FOREX_MARKET" />
@@ -4433,13 +4432,13 @@
     <field number="99" name="StopPx" type="PRICE" />
     <field number="100" name="ExDestination" type="EXCHANGE" />
     <field number="102" name="CxlRejReason" type="INT">
-      <value enum="0" description="TOO_LATE_TO_CANCEL_OR_SFE_CONTRACT_NOT_TRADING"/>
+      <value enum="0" description="TOO_LATE_TO_CANCEL"/>
       <value enum="1" description="UNKNOWN_ORDER"/>
       <value enum="2" description="BROKER_EXCHANGE_OPTION" />
       <value enum="3" description="ORDER_ALREADY_IN_PENDING_CANCEL_OR_PENDING_REPLACE_STATUS" />
       <value enum="4" description="UNABLE_TO_PROCESS_ORDER_MASS_CANCEL_REQUEST" />
-      <value enum="5" description="ORIGORDMODTIME_DID_NOT_MATCH_LAST_TRANSACTTIME_OF_ORDER_OR_SFE_INVALID_VOLUME"/>
-      <value enum="6" description="DUPLICATE_CLORDID_RECEIVED_OR_SFE_INVALID_ACCOUNT"/>
+      <value enum="5" description="ORIGORDMODTIME_DID_NOT_MATCH_LAST_TRANSACTTIME_OF_ORDER"/>
+      <value enum="6" description="DUPLICATE_CLORDID_RECEIVED"/>
       <value enum="7" description="INVALID_ORDER_TYPE"/>
       <value enum="8" description="INVALID_PROCESSCODE"/>
       <value enum="9" description="INVALID_EXECINST"/>
@@ -4457,17 +4456,17 @@
       <value enum="2" description="EXCHANGE_CLOSED" />
       <value enum="3" description="ORDER_EXCEEDS_LIMIT" />
       <value enum="4" description="TOO_LATE_TO_ENTER" />
-      <value enum="5" description="UNKNOWN_ORDER_OR_SFE_INVALID_VOLUME" />
-      <value enum="6" description="DUPLICATE_ORDER_OR_SFE_INVALID_ACCOUNT" />
-      <value enum="7" description="DUPLICATE_OF_A_VERBALLY_COMMUNICATED_ORDER_OR_SFE_INVALID_ORDER_TYPE" />
-      <value enum="8" description="STALE_ORDER_OR_SFE_INVALID_PROCESSCODE" />
-      <value enum="9" description="TRADE_ALONG_REQUIRED_OR_SFE_INVALID_EXECINST" />
-      <value enum="10" description="INVALID_INVESTOR_ID_OR_SFE_PRICE_OUTSIDE_MARKET" />
-      <value enum="11" description="UNSUPPORTED_ORDER_CHARACTERISTIC_OR_SFE_INVALID_SIDE" />
-      <value enum="12" description="SURVEILLENCE_OPTION_OR_SFE_INVALID_SHARED_ORDER_INDICATOR" />
+      <value enum="5" description="UNKNOWN_ORDER" />
+      <value enum="6" description="DUPLICATE_ORDER" />
+      <value enum="7" description="DUPLICATE_OF_A_VERBALLY_COMMUNICATED_ORDER" />
+      <value enum="8" description="STALE_ORDER" />
+      <value enum="9" description="TRADE_ALONG_REQUIRED" />
+      <value enum="10" description="INVALID_INVESTOR_ID" />
+      <value enum="11" description="UNSUPPORTED_ORDER_CHARACTERISTIC" />
+      <value enum="12" description="SURVEILLENCE_OPTION" />
       <value enum="13" description="INCORRECT_QUANTITY" />
       <value enum="14" description="INCORRECT_ALLOCATED_QUANTITY" />
-      <value enum="15" description="UNKNOWN_ACCOUNTINVALID_ORDEROR_SFE_INVALID_ORDER" />
+      <value enum="15" description="UNKNOWN_ACCOUNTINVALID_ORDER" />
       <value enum="16" description="INVALID_CUSTOM_RATIO"/>
       <value enum="17" description="INVALID_CUSTOM_LEG_SEQUENCE"/>
       <value enum="99" description="OTHER" />

@@ -72,8 +72,19 @@ struct DomainBase
 	template<typename T>
 	const bool is_valid(const T& what) const
 	{
-		return _dtype == dt_set ? std::binary_search(static_cast<const T*>(_range), static_cast<const T*>(_range) + _sz, what)
-									   : *static_cast<const T*>(_range) <= what && what <= *(static_cast<const T*>(_range) + 1);
+		const T *rng(static_cast<const T*>(_range));
+		return _dtype == dt_set ? std::binary_search(rng, rng + _sz, what) : *rng <= what && what <= *(rng + 1);
+	}
+
+	template<typename T>
+	const int get_dom_idx(const T& what) const
+	{
+		if (_dtype == dt_set)
+		{
+			const T *rng(static_cast<const T*>(_range)), *res(std::lower_bound(rng, rng + _sz, what));
+			return res != rng + _sz ? res - rng : -1;
+		}
+		return 0;
 	}
 };
 
@@ -99,6 +110,7 @@ public:
 
 	virtual std::ostream& print(std::ostream& os) const = 0;
 	virtual bool is_valid() const { return true; }
+	virtual int get_dom_idx() const { return -1; }
 
 	template<typename T>
 	const T& from() const { return *static_cast<const T*>(this); }
@@ -124,6 +136,7 @@ public:
 
 	virtual const T& get() = 0;
 	virtual const T& set(const T& from) = 0;
+	virtual const T& set_from_raw(const std::string& from) = 0;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -139,9 +152,11 @@ public:
 	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(GetValue<int>(from)) {}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _dom ? _dom->is_valid(_value) : true; }
+	virtual int get_dom_idx() const { return _dom ? _dom->get_dom_idx(_value) : -1; }
 
 	const int& get() { return _value; }
 	const int& set(const int& from) { return _value = from; }
+	const int& set_from_raw(const std::string& from) { return _value = GetValue<int>(from); }
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
@@ -157,9 +172,11 @@ public:
 	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(from) {}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _dom ? _dom->is_valid(_value) : true; }
+	virtual int get_dom_idx() const { return _dom ? _dom->get_dom_idx(_value) : -1; }
 
 	const std::string& get() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
+	const std::string& set_from_raw(const std::string& from) { return _value = from; }
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
@@ -176,9 +193,11 @@ public:
 	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(GetValue<double>(from)) {}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _dom ? _dom->is_valid(_value) : true; }
+	virtual int get_dom_idx() const { return _dom ? _dom->get_dom_idx(_value) : -1; }
 
 	const double& get() { return _value; }
 	const double& set(const double& from) { return _value = from; }
+	const double& set_from_raw(const std::string& from) { return _value = GetValue<double>(from); }
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
@@ -194,9 +213,11 @@ public:
 	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field, dom), _value(from[0]) {}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _dom ? _dom->is_valid(_value) : true; }
+	virtual int get_dom_idx() const { return _dom ? _dom->get_dom_idx(_value) : -1; }
 
 	const char& get() { return _value; }
 	const char& set(const char& from) { return _value = from; }
+	const char& set_from_raw(const std::string& from) { return _value = from[0]; }
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
@@ -330,7 +351,6 @@ public:
 	const Poco::DateTime& get() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
 	std::ostream& print(std::ostream& os) const { return os; }
-	virtual bool is_valid() const { return _dom ? _dom->is_valid(_value) : true; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -407,8 +427,9 @@ public:
 	Field (const std::string& from, const DomainBase *dom=0) : BaseField(field), _value(toupper(from[0]) == 'Y') {}
 	virtual ~Field() {}
 
-	const std::string& get() { return _value; }
-	const std::string& set(const std::string& from) { return _value = from; }
+	const bool get() { return _value; }
+	const bool set(const bool from) { return _value = from; }
+	const bool set_from_raw(const std::string& from) { return toupper(from[0]) == 'Y'; }
 	std::ostream& print(std::ostream& os) const { return os << (_value ? 'Y' : 'N'); }
 };
 

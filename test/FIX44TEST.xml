@@ -23,6 +23,15 @@
       <component name="OrderQtyData" required="N" />
       <field name="ResetSeqNumFlag" required="N" />
     </message>
+    <message name="Order" msgtype="D" msgcat="admin">
+      <field name="HeartBtInt" required="Y" />
+      <field name="RawDataLength" required="N" />
+      <field name="RawData" required="N" />
+		<group name="NoOrderQtyData" required="N">
+			<component name="OrderQtyData" required="N" />
+		</group>
+      <field name="ResetSeqNumFlag" required="N" />
+    </message>
   </messages>
   <components>
     <component name="OrderQtyData">
@@ -37,6 +46,7 @@
     <field number="10" name="CheckSum" type="STRING" />
     <field number="112" name="TestReqID" type="STRING" />
     <field number="52" name="SendingTime" type="UTCTIMESTAMP" />
+    <field number="711" name="NoOrderQtyData" type="NUMINGROUP" />
     <field number="38" name="OrderQty" type="QTY" />
     <field number="152" name="CashOrderQty" type="QTY" />
     <field number="469" name="RoundingModulus" type="FLOAT" />

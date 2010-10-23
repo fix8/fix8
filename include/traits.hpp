@@ -43,7 +43,7 @@ struct FieldTrait
 	mutable unsigned short _pos;	// is ordinal, ie 0=n/a, 1=1st, 2=2nd
 	mutable unsigned short _subpos;
 
-	enum TraitTypes { mandatory, present, position, group, component, suppress, count };
+	enum TraitTypes { mandatory, present, position, group, component, suppress, automatic, count };
 	mutable ebitset<TraitTypes, unsigned short> _field_traits;
 
 	FieldTrait(const unsigned short field, const FieldType ftype=ft_untyped,
@@ -88,6 +88,12 @@ public:
 		return itr != _presence.end();
 	}
 
+	unsigned getval(const unsigned short field)
+	{
+		Presence::const_iterator itr(_presence.find(field));
+		return itr != _presence.end() ? itr->_field_traits.get() : 0;
+	}
+
 	bool get(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present) const
 	{
 		Presence::const_iterator itr(_presence.find(field));
@@ -116,8 +122,8 @@ public:
 			itr->_field_traits.clear(type);
 	}
 
-	bool set_hasMandatory(bool to=true) { return _hasMandatory = to; }
-	bool set_hasGroup(bool to=true) { return _hasGroup = to; }
+	bool set_mandatory(bool to=true) { return _hasMandatory = to; }
+	bool set_group(bool to=true) { return _hasGroup = to; }
 	bool set_component(bool to=true) { return _hasComponent = to; }
 
 	bool add(const FieldTrait& what) { return _presence.insert(Presence::value_type(what)).second; }

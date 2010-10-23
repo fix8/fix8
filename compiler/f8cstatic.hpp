@@ -194,7 +194,7 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "	void add_preamble()\n"
 "	{\n"
 "		add_field(Magic_BeginString, 1, new Field<f8String, Magic_BeginString>(ctx._beginStr));\n"
-"		add_field(Magic_BodyLength, 2, new Field<f8String, Magic_BodyLength>(0));\n"
+"		add_field(Magic_BodyLength, 2, new Field<Length, Magic_BodyLength>(0));\n"
 "		add_field(Magic_MsgType, 3, new Field<f8String, Magic_MsgType>);\n"
 "	}"),
 	CSMap::TypePair(cs_trailer_preamble,
