@@ -118,10 +118,14 @@ public:
 	RegMatch() : subexprs_(), subCnt_() {}
 	virtual ~RegMatch() {}
 
-	const int SubCnt() const { return subCnt_; }
-	const int SubSize(const int which=0) const
+	const unsigned SubCnt() const { return subCnt_; }
+	const size_t SubSize(const int which=0) const
 	{
 		return which < subCnt_ ? subexprs_[which].rm_eo - subexprs_[which].rm_so : -1;
+	}
+	const unsigned SubPos(const int which=0) const
+	{
+		return which < subCnt_ ? subexprs_[which].rm_so : -1;
 	}
 
 	friend class RegExp;

@@ -59,8 +59,8 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8c.cpp $
 #include <f8exception.hpp>
 #include <f8utils.hpp>
 #include <traits.hpp>
-#include <field.hpp>
 #include <f8types.hpp>
+#include <field.hpp>
 #include <message.hpp>
 #include <usage.hpp>
 #include <xml.hpp>
@@ -212,9 +212,9 @@ void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostre
 	else
 		return;
 
-	ost_cpp << typestr << itr->second._name << "_domain[] = " << endl << spacer << "{ ";
+	ost_cpp << typestr << itr->second._name << "_realm[] = " << endl << spacer << "{ ";
 	unsigned cnt(0);
-	for (DomainMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
+	for (RealmMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
 	{
 		if (cnt)
 			ost_cpp << ", ";
@@ -230,12 +230,12 @@ void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostre
 		ost_hpp << '(' << *ditr->first << ");" << endl;
 		++cnt;
 	}
-	ost_hpp << "const size_t " << itr->second._name << "_dom_els(" << itr->second._dvals->size() << ");" << endl;
+	ost_hpp << "const size_t " << itr->second._name << "_realm_els(" << itr->second._dvals->size() << ");" << endl;
 	ost_cpp << " };" << endl;
 
 	ost_cpp << "const char *" << itr->second._name << "_descriptions[] = " << endl << spacer << "{ ";
 	cnt = 0;
-	for (DomainMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
+	for (RealmMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
 	{
 		if (cnt)
 			ost_cpp << ", ";
@@ -341,16 +341,16 @@ void print_usage()
 }
 
 //-------------------------------------------------------------------------------------------------
-DomainObject *DomainObject::create(const string& from, FieldTrait::FieldType ftype, bool isRange)
+RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype, bool isRange)
 {
 	if (FieldTrait::is_int(ftype))
-		return new TypedDomain<int>(GetValue<int>(from), isRange);
+		return new TypedRealm<int>(GetValue<int>(from), isRange);
 	if (FieldTrait::is_char(ftype))
-		return new CharDomain(from[0], isRange);
+		return new CharRealm(from[0], isRange);
 	if (FieldTrait::is_float(ftype))
-		return new TypedDomain<double>(GetValue<double>(from), isRange);
+		return new TypedRealm<double>(GetValue<double>(from), isRange);
 	if (FieldTrait::is_string(ftype))
-		return new StringDomain(from, isRange);
+		return new StringRealm(from, isRange);
 	return 0;
 }
 

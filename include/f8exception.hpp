@@ -114,6 +114,13 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+class BadCheckSum : public f8Exception
+{
+public:
+	BadCheckSum(const std::string& msgtype) { format("Checksum failure", msgtype); }
+};
+
+//-------------------------------------------------------------------------------------------------
 
 } // FIX8
 

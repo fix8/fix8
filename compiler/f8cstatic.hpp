@@ -151,8 +151,8 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "#include <f8exception.hpp>\n"
 "#include <f8utils.hpp>\n"
 "#include <traits.hpp>\n"
-"#include <field.hpp>\n"
 "#include <f8types.hpp>\n"
+"#include <field.hpp>\n"
 "#include <message.hpp>"),
 	CSMap::TypePair(cs_divider,
 "//-------------------------------------------------------------------------------------------------"),

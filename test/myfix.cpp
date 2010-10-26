@@ -11,6 +11,7 @@
 #include <iterator>
 #include <algorithm>
 #include <bitset>
+#include <typeinfo>
 
 #include <regex.h>
 #include <errno.h>
@@ -20,10 +21,11 @@
 #include <f8exception.hpp>
 #include <f8utils.hpp>
 #include <traits.hpp>
-#include <field.hpp>
 #include <f8types.hpp>
+#include <field.hpp>
 #include <message.hpp>
 #include "Myfix_types.hpp"
+#include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
 
 //-----------------------------------------------------------------------------------------
@@ -32,6 +34,20 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 static const std::string rcsid("$Id: f8c.cpp 515 2010-09-16 01:13:48Z davidd $");
+
+//-----------------------------------------------------------------------------------------
+class tex_router : public TEX::Myfix_Router
+{
+public:
+	virtual bool operator()(const TEX::NewOrderSingle *msg)
+	{
+		TEX::OrderQty qty;
+		msg->get(qty);
+		cout << qty.get() << endl;
+		msg->print(cout);
+		return true;
+	}
+};
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
@@ -87,13 +103,14 @@ int main(int argc, char **argv)
 	try
 	{
 		TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
-		*nos += new TEX::TransactTime("Wed Oct 20 05:36:21 EST 2010");
+		*nos += new TEX::TransactTime("20110904-10:15:14");
 		*nos += new TEX::OrderQty(100);
 		*nos += new TEX::ClOrdID("ord01");
 		*nos += new TEX::Symbol("BHP");
 		*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
 		*nos += new TEX::Side(TEX::Side_BUY);
 		*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+		//*nos += new TEX::Subject("blah");
 
 		*nos += new TEX::NoUnderlyings(2);
 		GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
@@ -111,9 +128,12 @@ int main(int argc, char **argv)
 
 		delete nos;
 
-		Message *rc(TEX::ctx._bme.find_ptr("D")->_create());
-		rc->decode(omsg);
-		rc->print(cout);
+		cout << endl;
+		//omsg[omsg.size() - 2] = '9';
+		Message *mc(Message::factory(TEX::ctx, omsg));
+		tex_router mr;
+		mc->process(mr);
+		delete mc;
 	}
 	catch (f8Exception& e)
 	{

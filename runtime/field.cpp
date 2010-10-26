@@ -21,21 +21,6 @@
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-#if 0
-template<const unsigned short field>
-Field<UTCTimestamp, field>::Field (const std::string& from, const DomainBase *dom) : BaseField(field)
-{
-	if (from.size() == 6) // YYYYMM
-	{
-		_value.assign(GetValue<int>(from.substr(4)), GetValue<int>(from.substr(4, 2)), 1);
-	}
-	else if (from.size() == 8) // YYYYMMDD/WW
-	{
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
-#endif
 
 } // namespace FIX8
 

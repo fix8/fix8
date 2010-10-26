@@ -44,7 +44,7 @@ namespace FIX8 {
 //-------------------------------------------------------------------------------------------------
 struct Ctxt
 {
-	enum OutputFile { types_cpp, types_hpp, traits_cpp, classes_cpp, classes_hpp, count };
+	enum OutputFile { types_cpp, types_hpp, traits_cpp, classes_cpp, classes_hpp, router_hpp, count };
 	typedef std::pair<std::string, scoped_ptr<std::ostream> > Output;
 	Output _out[count];
 	static const std::string _exts[count];
@@ -85,13 +85,13 @@ struct StaticTable
 };
 
 //-------------------------------------------------------------------------------------------------
-class DomainObject
+class RealmObject
 {
 	bool _isRange;
 
 protected:
-	virtual bool comp(const DomainObject *p1, const DomainObject *p2) = 0;
-	friend std::ostream& operator<<(std::ostream& os, DomainObject& what)
+	virtual bool comp(const RealmObject *p1, const RealmObject *p2) = 0;
+	friend std::ostream& operator<<(std::ostream& os, RealmObject& what)
 	{
 		what.print(os);
 		return os;
@@ -100,45 +100,45 @@ protected:
 	virtual void print(std::ostream& os) = 0;
 
 public:
-	DomainObject(bool isRange) : _isRange(isRange) {}
-	virtual ~DomainObject() {}
+	RealmObject(bool isRange) : _isRange(isRange) {}
+	virtual ~RealmObject() {}
 
 	bool is_range() const { return _isRange; }
-	static DomainObject *create(const std::string& from, FieldTrait::FieldType ftype, bool isRange=false);
+	static RealmObject *create(const std::string& from, FieldTrait::FieldType ftype, bool isRange=false);
 
 	struct less
 	{
-		bool operator()(const DomainObject *p1, const DomainObject *p2)
-			{ return const_cast<DomainObject*>(p1)->comp(p1, p2); }
+		bool operator()(const RealmObject *p1, const RealmObject *p2)
+			{ return const_cast<RealmObject*>(p1)->comp(p1, p2); }
 	};
 };
 
 template <typename T>
-class TypedDomain : public DomainObject
+class TypedRealm : public RealmObject
 {
 protected:
 	T _obj;
 
 public:
-	TypedDomain(const T& from, bool isRange) : DomainObject(isRange), _obj(from) {}
+	TypedRealm(const T& from, bool isRange) : RealmObject(isRange), _obj(from) {}
 	virtual void print(std::ostream& os) { os << _obj; }
-	bool comp(const DomainObject *p1, const DomainObject *p2)
-		{ return (static_cast<const TypedDomain<T>*>(p1))->_obj < static_cast<const TypedDomain<T>*>(p2)->_obj; }
+	bool comp(const RealmObject *p1, const RealmObject *p2)
+		{ return (static_cast<const TypedRealm<T>*>(p1))->_obj < static_cast<const TypedRealm<T>*>(p2)->_obj; }
 };
 
-struct StringDomain : public TypedDomain<std::string>
+struct StringRealm : public TypedRealm<std::string>
 {
-	StringDomain(const std::string& from, bool isRange) : TypedDomain<std::string>(from, isRange) {}
+	StringRealm(const std::string& from, bool isRange) : TypedRealm<std::string>(from, isRange) {}
 	void print(std::ostream& os) { os << '"' << _obj << '"'; }
 };
 
-struct CharDomain : public TypedDomain<char>
+struct CharRealm : public TypedRealm<char>
 {
-	CharDomain(const char& from, bool isRange) : TypedDomain<char>(from, isRange) {}
+	CharRealm(const char& from, bool isRange) : TypedRealm<char>(from, isRange) {}
 	void print(std::ostream& os) { os << '\'' << _obj << '\''; }
 };
 
-typedef std::map<DomainObject *, std::string, DomainObject::less> DomainMap;
+typedef std::map<RealmObject *, std::string, RealmObject::less> RealmMap;
 
 //-------------------------------------------------------------------------------------------------
 typedef StaticTable<std::string, FieldTrait::FieldType> BaseTypeMap;
@@ -151,12 +151,12 @@ struct FieldSpec
 
 	std::string _name, _description, _comment;
 	FieldTrait::FieldType _ftype;
-	DomainBase::DomType _dtype;
+	RealmBase::RealmType _dtype;
 	unsigned _doffset;
-	DomainMap *_dvals;
+	RealmMap *_dvals;
 
 	FieldSpec(const std::string& name, FieldTrait::FieldType ftype=FieldTrait::ft_untyped)
-		: _name(name), _ftype(ftype), _dtype(DomainBase::dt_set), _doffset(), _dvals() {}
+		: _name(name), _ftype(ftype), _dtype(RealmBase::dt_set), _doffset(), _dvals() {}
 
 	virtual ~FieldSpec()
 	{

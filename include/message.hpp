@@ -11,6 +11,7 @@ namespace FIX8 {
 //-------------------------------------------------------------------------------------------------
 class MessageBase;
 class Message;
+class Router;
 typedef std::vector<MessageBase *> GroupElement;
 
 class F8MetaCntx;
@@ -41,6 +42,13 @@ public:
 };
 
 typedef std::map<unsigned short, GroupBase *> Groups;
+
+//-------------------------------------------------------------------------------------------------
+class Router
+{
+public:
+	virtual bool operator()(const Message *msg) { return false; }
+};
 
 //-------------------------------------------------------------------------------------------------
 struct BaseMsgEntry
@@ -96,6 +104,9 @@ public:
 	MessageBase(const class F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
 		: _fp(begin, end), _msgType(msgType), _ctx(ctx) {}
 
+	MessageBase(const MessageBase& from);
+	MessageBase& operator=(const MessageBase& that);
+
 	virtual ~MessageBase() { clear(); }
 
 	void clear()
@@ -113,6 +124,7 @@ public:
 	unsigned encode(std::ostream& to);
 	unsigned encode_group(const unsigned short fnum, std::ostream& to);
 	unsigned check_positions();
+	void check_set_rlm(BaseField *where);
 
 	bool add_field(BaseField *what)
 	{
@@ -122,13 +134,27 @@ public:
 			add_field(fnum, _fp.getPos(fnum), what);
 			return true;
 		}
+		else
+			throw InvalidField(fnum);
 		return false;
 	}
 	bool operator+=(BaseField *what) { return add_field(what); }
 
 	template<typename T>
+	bool get(T& to) const
+	{
+		Fields::const_iterator fitr(_fields.find(to._fnum));
+		if (fitr != _fields.end())
+		{
+			to.set(fitr->second->from<T>().get());
+			return true;
+		}
+		return false;
+	}
+
+	template<typename T>
 	GroupBase *find_group() { return find_group(T::get_fnum()); }
-	GroupBase *find_group(const unsigned short fnum)
+	GroupBase *find_group(const unsigned short fnum) const
 	{
 		Groups::const_iterator gitr(_groups.find(fnum));
 		return gitr != _groups.end() ? gitr->second : 0;
@@ -138,8 +164,8 @@ public:
 		{ _groups.insert(Groups::value_type(what->_fnum, what)); }
 	void operator+=(GroupBase *what) { add_group(what); }
 
-	virtual void print(std::ostream& os);
-	virtual void print_group(const unsigned short fnum, std::ostream& os);
+	virtual void print(std::ostream& os) const;
+	virtual void print_group(const unsigned short fnum, std::ostream& os) const;
 	friend class Message;
 };
 
@@ -147,6 +173,7 @@ public:
 class Message : public MessageBase
 {
 protected:
+	static RegExp _hdr, _tlr;
 	MessageBase *_header, *_trailer;
 
 public:
@@ -166,15 +193,21 @@ public:
 	unsigned decode(const f8String& from);
 	unsigned encode(f8String& to);
 
-	virtual void print(std::ostream& os);
+	virtual bool process(Router& rt) const { return (rt)(this); }
 
-	static unsigned calc_chksum(const f8String& from)
+	virtual void print(std::ostream& os) const;
+
+	static unsigned calc_chksum(const f8String& from, const unsigned offset=0, const int len=-1)
 	{
 		unsigned val(0);
-		for (f8String::const_iterator itr(from.begin()); itr != from.end(); ++itr)
-			val += *itr;
+		const char *eptr(from.c_str() + (len != -1 ? len + offset : from.size() - offset));
+		for (const char *ptr(from.c_str() + offset); ptr < eptr; ++ptr)
+			val += *ptr;
 		return val % 256;
 	}
+
+	static const f8String fmt_chksum(const unsigned val);
+	static Message *factory(const F8MetaCntx& ctx, const f8String& from);
 };
 
 //-------------------------------------------------------------------------------------------------

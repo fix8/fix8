@@ -26,6 +26,8 @@ using namespace std;
 
 //-------------------------------------------------------------------------------------------------
 RegExp MessageBase::_elmnt("([0-9]+)=([^\x01]+)\x01");
+RegExp Message::_hdr("8=([^\x01]+)\x01{1}9=([^\x01]+)\x01{1}(35=)([^\x01]+)\x01");
+RegExp Message::_tlr("(10=)([^\x01]+)\x01");
 
 //-------------------------------------------------------------------------------------------------
 namespace {
@@ -40,16 +42,15 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 
 	for (unsigned pos(0); s_offset < from.size() && _elmnt.SearchString(match, from, 3, s_offset) == 3; )
 	{
-		f8String tag, val, all;
-		_elmnt.SubExpr(match, from, all, s_offset, 0);
+		f8String tag, val;
 		_elmnt.SubExpr(match, from, tag, s_offset, 1);
 		_elmnt.SubExpr(match, from, val, s_offset, 2);
-		cout << all << endl;
 		const unsigned tv(GetValue<unsigned>(tag));
 		const BaseEntry *be(_ctx._be.find_ptr(tv));
-		if (!be || !_fp.has(tv))
+		if (!be)
+			throw InvalidField(tv);
+		if (!_fp.has(tv))
 			break;
-			//throw InvalidField(tv);
 		s_offset += match.SubSize();
 		if (_fp.get(tv))
 		{
@@ -58,13 +59,10 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 		}
 		else
 		{
-			auto_ptr<BaseField> fld(be->_create(val, be->_dom));
-			add_field(tv, ++pos, fld.release());
+			add_field(tv, ++pos, be->_create(val, be->_rlm));
 			if (_fp.is_group(tv))
 				s_offset = decode_group(tv, from, s_offset);
 		}
-
-		//cout << s_offset << ':' << from.size() << endl;
 	}
 
 	//const unsigned short missing(_fp.find_missing());
@@ -77,7 +75,6 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& from, const unsigned offset)
 {
-	cout << "decode_group" << endl;
 	unsigned s_offset(offset);
 	GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
@@ -100,17 +97,19 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 			if (pos == 0 && grp->_fp.getPos(tv) != 1)	// first field in group is mandatory
 				throw MissingRepeatingGroupField(tv);
 			const BaseEntry *be(_ctx._be.find_ptr(tv));
-			if (!be)	// field not found in sub-group - end of repeats?
+			if (!be)
+				throw InvalidField(tv);
+			if (!grp->_fp.has(tv))	// field not found in sub-group - end of repeats?
 			{
 				ok = false;
 				break;
 			}
 			s_offset += match.SubSize();
-			grp->add_field(tv, ++pos, be->_create(val, be->_dom));
+			grp->add_field(tv, ++pos, be->_create(val, be->_rlm));
 			grp->_fp.set(tv);	// is present
-			*grpbase += grp.release();
-			cout << "ag:" << tv << endl;
 		}
+
+		*grpbase += grp.release();
 
 		//const unsigned short missing(grp->_fp.find_missing());
 		//if (missing)
@@ -136,14 +135,64 @@ unsigned Message::decode(const f8String& from)
 }
 
 //-------------------------------------------------------------------------------------------------
+Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
+{
+	RegMatch match;
+	Message *msg(0);
+	if (_hdr.SearchString(match, from, 5, 0) == 5)
+	{
+		f8String ver, len, mtype;
+		_hdr.SubExpr(match, from, ver, 0, 1);
+		_hdr.SubExpr(match, from, len, 0, 2);
+		_hdr.SubExpr(match, from, mtype, 0, 4);
+		const int mtpos(match.SubPos(3));
+		const unsigned mlen(GetValue<unsigned>(len));
+
+		msg = ctx._bme.find_ptr(mtype)->_create();
+		msg->decode(from);
+
+		Fields::const_iterator fitr(msg->_header->_fields.find(Magic_BodyLength));
+		static_cast<Field<Length, Magic_BodyLength> *>(fitr->second)->set(mlen);
+		fitr = msg->_header->_fields.find(Magic_MsgType);
+		static_cast<Field<f8String, Magic_MsgType> *>(fitr->second)->set(mtype);
+		msg->check_set_rlm(fitr->second);
+
+		if (_tlr.SearchString(match, from, 3, 0) == 3)
+		{
+			f8String chksum;
+			_hdr.SubExpr(match, from, chksum, 0, 2);
+			const unsigned chkpos(match.SubPos(1));
+
+			Fields::const_iterator fitr(msg->_trailer->_fields.find(Magic_CheckSum));
+			static_cast<Field<f8String, Magic_CheckSum> *>(fitr->second)->set(chksum);
+			unsigned chkval(GetValue<unsigned>(chksum));
+			if (chkval != calc_chksum(from, mtpos, chkpos - mtpos))
+				throw BadCheckSum(mtype);
+		}
+
+	}
+
+	return msg;
+}
+
+//-------------------------------------------------------------------------------------------------
+void MessageBase::check_set_rlm(BaseField *where)
+{
+	if (!where->_rlm)
+	{
+		const BaseEntry *tbe(_ctx._be.find_ptr(where->_fnum));
+		if (tbe && tbe->_rlm)
+			where->_rlm = tbe->_rlm;	// populate realm;
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
 unsigned MessageBase::encode(ostream& to)
 {
 	const std::ios::pos_type where(to.tellp());
 	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
 	{
-		const BaseEntry& tbe(_ctx._be.find_ref(itr->second->_fnum));
-		if (tbe._dom && !itr->second->_dom)
-			itr->second->_dom = tbe._dom;	// populate dom for outbounds
+		check_set_rlm(itr->second);
 		if (!_fp.get(itr->second->_fnum, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
 		{
 			itr->second->encode(to);
@@ -184,8 +233,7 @@ unsigned Message::encode(f8String& to)
 
 	if ((fitr = _trailer->_fields.find(Magic_CheckSum)) == _trailer->_fields.end())
 		throw MissingMandatoryField(Magic_CheckSum);
-	f8String chksum;
-	static_cast<Field<f8String, Magic_CheckSum> *>(fitr->second)->set(PutValue(calc_chksum(msg.str()), chksum));
+	static_cast<Field<f8String, Magic_CheckSum> *>(fitr->second)->set(fmt_chksum(calc_chksum(msg.str())));
 	_trailer->_fp.clear(Magic_CheckSum, FieldTrait::suppress);
 	fitr->second->encode(msg);
 
@@ -207,7 +255,7 @@ unsigned Message::encode(f8String& to)
 }
 
 //-------------------------------------------------------------------------------------------------
-void MessageBase::print(ostream& os)
+void MessageBase::print(ostream& os) const
 {
 	const BaseMsgEntry *tbme(_ctx._bme.find_ptr(_msgType));
 	if (tbme)
@@ -217,30 +265,37 @@ void MessageBase::print(ostream& os)
 		const BaseEntry& tbe(_ctx._be.find_ref(itr->second->_fnum));
 		os << spacer << tbe._name << " (" << itr->second->_fnum << "): ";
 		int idx;
-		if (itr->second->_dom && (idx = (itr->second->get_dom_idx())) >= 0)
-			os << itr->second->_dom->_descriptions[idx] << " (" << *itr->second << ')' << endl;
+		if (itr->second->_rlm && (idx = (itr->second->get_rlm_idx())) >= 0)
+			os << itr->second->_rlm->_descriptions[idx] << " (" << *itr->second << ')' << endl;
 		else
 			os << *itr->second << endl;
 		if (_fp.is_group(itr->second->_fnum))
 			print_group(itr->second->_fnum, os);
 	}
 }
+//-------------------------------------------------------------------------------------------------
+const f8String Message::fmt_chksum(const unsigned val)
+{
+	std::ostringstream ostr;
+	ostr << std::setfill('0') << std::setw(3) << val;
+	return ostr.str();
+}
 
 //-------------------------------------------------------------------------------------------------
-void MessageBase::print_group(const unsigned short fnum, ostream& os)
+void MessageBase::print_group(const unsigned short fnum, ostream& os) const
 {
-	GroupBase *grpbase(find_group(fnum));
+	const GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
 		throw InvalidRepeatingGroup(fnum);
-	for (GroupElement::iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr)
+	for (GroupElement::const_iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr)
 	{
-		os << spacer << spacer << "Repeating group" << endl << spacer << spacer;
+		os << spacer << spacer << "Repeating group (\"" << (*itr)->_msgType << "\")" << endl << spacer << spacer;
 		(*itr)->print(os);
 	}
 }
 
 //-------------------------------------------------------------------------------------------------
-void Message::print(ostream& os)
+void Message::print(ostream& os) const
 {
 	if (_header)
 		_header->print(os);

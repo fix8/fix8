@@ -59,8 +59,8 @@ $URL$
 #include <f8exception.hpp>
 #include <f8utils.hpp>
 #include <traits.hpp>
-#include <field.hpp>
 #include <f8types.hpp>
+#include <field.hpp>
 #include <message.hpp>
 #include <usage.hpp>
 #include <xml.hpp>
@@ -76,7 +76,8 @@ using namespace FIX8;
 static const std::string rcsid("$Id$");
 
 //-----------------------------------------------------------------------------------------
-const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp", "_classes.hpp" };
+const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp",
+	"_classes.hpp", "_router.hpp" };
 template<>
 const size_t GeneratedTable<unsigned int, BaseEntry>::_pairsz(0);
 template<>
@@ -245,23 +246,23 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 
 			++fieldsLoaded;
 
-			XmlList domlist;
-			if ((*itr)->find("field/value", domlist))
+			XmlList realmlist;
+			if ((*itr)->find("field/value", realmlist))
 			{
-				for(XmlList::const_iterator ditr(domlist.begin()); ditr != domlist.end(); ++ditr)
+				for(XmlList::const_iterator ditr(realmlist.begin()); ditr != realmlist.end(); ++ditr)
 				{
 					string enum_str, description;
 					if ((*ditr)->GetAttr("enum", enum_str) && (*ditr)->GetAttr("description", description))
 					{
 						if (!result.first->second._dvals)
-							result.first->second._dvals = new DomainMap;
+							result.first->second._dvals = new RealmMap;
 						string lower, upper;
 						bool isRange((*ditr)->GetAttr("range", lower) && (lower == "lower" || upper == "upper"));
-						DomainObject *domval(DomainObject::create(enum_str, ft, isRange));
+						RealmObject *realmval(RealmObject::create(enum_str, ft, isRange));
 						if (isRange)
-							result.first->second._dtype = DomainBase::dt_range;
-						if (domval)
-							result.first->second._dvals->insert(DomainMap::value_type(domval, description));
+							result.first->second._dtype = RealmBase::dt_range;
+						if (realmval)
+							result.first->second._dvals->insert(RealmMap::value_type(realmval, description));
 					}
 					else
 						cerr << "Value element missing required attributes at "
@@ -381,11 +382,11 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 		return 0;
 	}
 
-	// lookup msgtype domain - all messages must have corresponding entry here
+	// lookup msgtype realm - all messages must have corresponding entry here
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
 	if (fsitr == fspec.end())
 	{
-		cerr << "Could not locate MsgType domain defintions in " << inputFile << endl;
+		cerr << "Could not locate MsgType realm defintions in " << inputFile << endl;
 		return 0;
 	}
 
@@ -398,12 +399,12 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 			msgtype = name = elname = "trailer";
 		else if ((*itr)->GetAttr("msgtype", msgtype) && (*itr)->GetAttr("name", name) && (*itr)->GetAttr("msgcat", msgcat))
 		{
-			StringDomain sdom(msgtype, false);
-			DomainMap::const_iterator ditr(fsitr->second._dvals->find(&sdom));
+			StringRealm srealm(msgtype, false);
+			RealmMap::const_iterator ditr(fsitr->second._dvals->find(&srealm));
 			if (ditr == fsitr->second._dvals->end())
 			{
 				cerr << "Message " << name << " does not have corrresponding entry in MsgType field"
-					" domain at " << inputFile << '(' << (*itr)->GetLine() << ')' << endl;
+					" realm at " << inputFile << '(' << (*itr)->GetLine() << ')' << endl;
 				continue;
 			}
 
@@ -534,6 +535,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ostream& osr_cpp(*ctxt._out[Ctxt::traits_cpp].second.get());
 	ostream& osc_hpp(*ctxt._out[Ctxt::classes_hpp].second.get());
 	ostream& osc_cpp(*ctxt._out[Ctxt::classes_cpp].second.get());
+	ostream& osu_hpp(*ctxt._out[Ctxt::router_hpp].second.get());
 	int result(0);
 
 // ================================= Field processing =====================================
@@ -542,7 +544,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	if (!fields)
 		return 0;
 	if (verbose)
-		cout << fields << " fields found" << endl;
+		cout << fields << " fields processed" << endl;
 
 	// output file preambles
 	ost_hpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
@@ -579,16 +581,16 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		ost_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	}
 
-	// generate dombase objs
+	// generate realmbase objs
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_cpp << "const DomainBase dombases[] =" << endl << '{' << endl;
+	ost_cpp << "const RealmBase realmbases[] =" << endl << '{' << endl;
 	unsigned dcnt(0);
 	for (FieldSpecMap::iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
 		if (!fitr->second._dvals)
 			continue;
-		ost_cpp << spacer << "{ reinterpret_cast<const void *>(" << fitr->second._name << "_domain), "
-			<< "static_cast<DomainBase::DomType>(" << fitr->second._dtype << "), " << endl << spacer << spacer
+		ost_cpp << spacer << "{ reinterpret_cast<const void *>(" << fitr->second._name << "_realm), "
+			<< "static_cast<RealmBase::RealmType>(" << fitr->second._dtype << "), " << endl << spacer << spacer
 			<< "static_cast<FieldTrait::FieldType>(" << fitr->second._ftype << "), "
 			<< fitr->second._dvals->size() << ", " << fitr->second._name << "_descriptions }," << endl;
 		fitr->second._doffset = dcnt++;
@@ -599,7 +601,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
-		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const DomainBase *db)";
+		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const RealmBase *db)";
 		ost_cpp << " { return new " << fitr->second._name << "(from, db); }" << endl;
 	}
 
@@ -618,7 +620,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 			ost_cpp << ',' << endl;
 		ost_cpp << spacer << "{ " << fitr->first << ", { &" << ctxt._fixns << "::Create_" << fitr->second._name << ", ";
 		if (fitr->second._dvals)
-			ost_cpp << "&" << ctxt._fixns << "::dombases[" << fitr->second._doffset << ']';
+			ost_cpp << "&" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
 		else
 			ost_cpp << '0';
 		ost_cpp << ", \"" << fitr->second._name << '\"';
@@ -649,7 +651,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ComponentSpecMap cspec;
 	int components(loadcomponents(xf, cspec, ftonSpec, fspec));
 	if (verbose)
-		cout << components << " components found" << endl;
+		cout << components << " components processed" << endl;
 
 	MessageSpecMap mspec;
 
@@ -657,11 +659,21 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	if (!msgsloaded)
 		return result;
 	if (verbose)
-		cout << msgsloaded << " messages found" << endl;
+		cout << msgsloaded << " messages processed" << endl;
 
 	processOrdering(mspec);
 
 	// output file preambles
+	osu_hpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
+	osu_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osu_hpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
+	osu_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osu_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::router_hpp].first) << '_' << endl;
+	osu_hpp << "#define _" << flname(ctxt._out[Ctxt::router_hpp].first) << '_' << endl << endl;
+	osu_hpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
+	osu_hpp << "namespace " << ctxt._fixns << " {" << endl;
+	osu_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+
 	osc_hpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
 	osc_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osc_hpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
@@ -674,6 +686,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osc_hpp << "typedef GeneratedTable<const f8String, BaseMsgEntry> " << ctxt._clname << "_BaseMsgEntry;" << endl;
 	osc_hpp << "extern F8MetaCntx ctx;" << endl;
+	osc_hpp << "class " << ctxt._clname << "_Router;" << endl;
 	osc_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
 
 	osc_cpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
@@ -682,6 +695,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_generated_includes) << endl;
 	osc_cpp << "#include <" << ctxt._out[Ctxt::types_hpp].first << '>' << endl;
+	osc_cpp << "#include <" << ctxt._out[Ctxt::router_hpp].first << '>' << endl;
 	osc_cpp << "#include <" << ctxt._out[Ctxt::classes_hpp].first << '>' << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
@@ -695,6 +709,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osr_cpp << _csMap.Find_Value_Ref(cs_generated_includes) << endl;
 	osr_cpp << "#include <" << ctxt._out[Ctxt::types_hpp].first << '>' << endl;
+	osr_cpp << "#include <" << ctxt._out[Ctxt::router_hpp].first << '>' << endl;
 	osr_cpp << "#include <" << ctxt._out[Ctxt::classes_hpp].first << '>' << endl;
 	osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osr_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
@@ -763,6 +778,9 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 			osc_hpp << " {}" << endl;
 
 		osc_hpp << spacer << "virtual ~" << mitr->second._name << "() {}" << endl;
+		if (!isHeader && !isTrailer)
+			osc_hpp << spacer << "virtual bool process(Router& rt) const { return (static_cast<"
+				<< ctxt._clname << "_Router&>(rt))(this); }" << endl;
 
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << " get_msgtype() { return " << fsitr->second._name
 			<< "(_msgtype); }" << endl;
@@ -854,10 +872,30 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = {0, 0};" << endl;
 	osc_cpp << "F8MetaCntx ctx(" << ctxt._version << ", bme, be, \"" << ctxt._beginstr << "\");" << endl;
 
+// ==================================== Message router ==================================
+
+	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
+		osu_hpp << "class " << mitr->second._name << ';' << endl;
+	osu_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osu_hpp << "class " << ctxt._clname << "_Router : public Router" << endl
+		<< '{' << endl << "public:" << endl;
+	osu_hpp << spacer << ctxt._clname << "_Router() {}" << endl;
+	osu_hpp << spacer << "virtual ~" << ctxt._clname << "_Router() {}" << endl << endl;
+	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
+	{
+		if (mitr->second._name == "trailer" || mitr->second._name == "header")
+			continue;
+		osu_hpp << spacer << "virtual bool operator()(const " << mitr->second._name << " *msg) { return false; }" << endl;
+	}
+	osu_hpp << "};" << endl;
+
 	// terminate files
 	osc_hpp << endl << "} // namespace " << ctxt._fixns << endl;
 	osc_hpp << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
 	osc_hpp << "#endif // _" << flname(ctxt._out[Ctxt::classes_hpp].first) << '_' << endl;
+	osu_hpp << endl << "} // namespace " << ctxt._fixns << endl;
+	osu_hpp << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
+	osu_hpp << "#endif // _" << flname(ctxt._out[Ctxt::router_hpp].first) << '_' << endl;
 	osr_cpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
 	osr_cpp << "} // namespace " << ctxt._fixns << endl;
 	osc_cpp << endl << "} // namespace " << ctxt._fixns << endl;
