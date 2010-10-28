@@ -19,11 +19,14 @@
 
 // f8 headers
 #include <f8exception.hpp>
+#include <thread.hpp>
 #include <f8utils.hpp>
 #include <traits.hpp>
 #include <f8types.hpp>
 #include <field.hpp>
 #include <message.hpp>
+#include <session.hpp>
+#include <logger.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
@@ -39,11 +42,14 @@ static const std::string rcsid("$Id: f8c.cpp 515 2010-09-16 01:13:48Z davidd $")
 class tex_router : public TEX::Myfix_Router
 {
 public:
-	virtual bool operator()(const TEX::NewOrderSingle *msg)
+	virtual bool operator() (const TEX::NewOrderSingle *msg) const
 	{
 		TEX::OrderQty qty;
 		msg->get(qty);
-		cout << qty.get() << endl;
+		cout << "Order qty:" << qty.get() << endl;
+		TEX::Price price;
+		msg->get(price);
+		cout << "price:" << price.get() << endl;
 		msg->print(cout);
 		return true;
 	}
@@ -100,11 +106,15 @@ int main(int argc, char **argv)
 	cout << TEX::ctx.version() << endl;
 #endif
 
+
 	try
 	{
+		FileLogger flog("/gihferjgkaerg/khjgaera/myfix.log");
+
 		TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
 		*nos += new TEX::TransactTime("20110904-10:15:14");
 		*nos += new TEX::OrderQty(100);
+		*nos += new TEX::Price(47.78);
 		*nos += new TEX::ClOrdID("ord01");
 		*nos += new TEX::Symbol("BHP");
 		*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
@@ -125,6 +135,7 @@ int main(int argc, char **argv)
 		nos->encode(omsg);
 		cout << omsg << endl;
 		nos->print(cout);
+		flog.send(omsg);
 
 		delete nos;
 
@@ -134,6 +145,12 @@ int main(int argc, char **argv)
 		tex_router mr;
 		mc->process(mr);
 		delete mc;
+
+		SessionID id(TEX::ctx._beginStr, "DLD_TEX", "TEX_DLD");
+		cout << id << endl;
+		SessionID nid(id.get_id());
+		cout << nid << endl;
+		flog.stop();
 	}
 	catch (f8Exception& e)
 	{

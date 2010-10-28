@@ -187,11 +187,11 @@ void processSpecialTraits(const unsigned short field, FieldTraits& fts)
 {
 	switch(field)
 	{
-	case Magic_BeginString:
-	case Magic_BodyLength:
-	case Magic_CheckSum:
+	case Common_BeginString:
+	case Common_BodyLength:
+	case Common_CheckSum:
 		fts.set(field, FieldTrait::suppress);	// drop through
-	case Magic_MsgType:
+	case Common_MsgType:
 		fts.set(field, FieldTrait::automatic);
 		break;
 	}

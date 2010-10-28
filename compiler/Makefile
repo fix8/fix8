@@ -1,5 +1,5 @@
 TARGET = ../bin/f8c
-LIBS = -lrt -lf8 -lPocoFoundation
+LIBS = -lrt -lf8 -lPocoFoundation -ltbb
 INCLUDE = -I../include -I.
 CXX_SRCS = f8c.cpp f8cutils.cpp
 HDRS = f8cstatic.hpp f8c.hpp ../include/*.hpp

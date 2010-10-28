@@ -121,6 +121,13 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+class ThreadException : public f8Exception
+{
+public:
+	ThreadException(const std::string& reason) { format("Thread exception", reason); }
+};
+
+//-------------------------------------------------------------------------------------------------
 
 } // FIX8
 

@@ -46,11 +46,15 @@ $URL$
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-// magic FIX field numbers
-const unsigned Magic_BeginString(8);
-const unsigned Magic_BodyLength(9);
-const unsigned Magic_CheckSum(10);
-const unsigned Magic_MsgType(35);
+// Common FIX field numbers
+const unsigned Common_BeginString(8);
+const unsigned Common_BodyLength(9);
+const unsigned Common_CheckSum(10);
+const unsigned Common_MsgSeqNum(34);
+const unsigned Common_MsgType(35);
+const unsigned Common_SenderCompID(49);
+const unsigned Common_SendingTime(52);
+const unsigned Common_TargetCompID(56);
 
 //-------------------------------------------------------------------------------------------------
 template<unsigned field>
@@ -150,6 +154,7 @@ protected:
 
 public:
 	Field () : BaseField(field), _value() {}
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const int val) : BaseField(field), _value(val) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(GetValue<int>(from)) {}
 	virtual ~Field() {}
@@ -171,6 +176,7 @@ protected:
 
 public:
 	Field () : BaseField(field) {}
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
@@ -191,6 +197,7 @@ protected:
 
 public:
 	Field () : BaseField(field), _value() {}
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const double& val) : BaseField(field), _value(val) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(GetValue<double>(from)) {}
 	virtual ~Field() {}
@@ -211,6 +218,7 @@ class Field<char, field> : public BaseField
 
 public:
 	Field () : BaseField(field), _value() {}
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const char& val) : BaseField(field), _value(val) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from[0]) {}
 	virtual ~Field() {}
@@ -231,6 +239,7 @@ class Field<MonthYear, field> : public Field<std::string, field>
 {
 public:
 	Field () : Field<std::string, field>(field) {}
+	Field (const Field& from) : Field<std::string, field>(from) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : Field<std::string, field>(from, rlm) {}
 	virtual ~Field() {}
 };
@@ -243,6 +252,7 @@ class Field<data, field> : public Field<std::string, field>
 {
 public:
 	Field () : Field<std::string, field>(field) {}
+	Field (const Field& from) : Field<std::string, field>(from) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : Field<std::string, field>(from, rlm) {}
 	virtual ~Field() {}
 };
@@ -260,6 +270,7 @@ class Field<UTCTimestamp, field> : public BaseField
 
 public:
 	Field () : BaseField(field), _tzdiff() {}
+	Field (const Field& from) : BaseField(field), _value(from._value), _tzdiff(from._tzdiff) {}
 	Field (const Poco::DateTime& val) : BaseField(field), _value(val) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field)
 	{
@@ -293,6 +304,7 @@ class Field<UTCTimeOnly, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field) {}
 	virtual ~Field() {}
 
@@ -311,6 +323,7 @@ class Field<UTCDateOnly, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field) {}
 	virtual ~Field() {}
 
@@ -329,6 +342,7 @@ class Field<LocalMktDate, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field) {}
 	virtual ~Field() {}
 
@@ -347,6 +361,7 @@ class Field<TZTimeOnly, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field) {}
 	virtual ~Field() {}
 
@@ -365,6 +380,7 @@ class Field<TZTimestamp, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field) {}
 	virtual ~Field() {}
 
@@ -380,7 +396,9 @@ template<const unsigned short field>
 class Field<Length, field> : public Field<int, field>
 {
 public:
+	Field () : Field<int, field>() {}
 	Field (const unsigned& val) : Field<int, field>(val) {}
+	Field (const Field& from) : Field<int, field>(from) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 	virtual ~Field() {}
 };
@@ -392,7 +410,9 @@ template<const unsigned short field>
 class Field<TagNum, field> : public Field<int, field>
 {
 public:
+	Field () : Field<int, field>() {}
 	Field (const unsigned& val) : Field<int, field>(val) {}
+	Field (const Field& from) : Field<int, field>(from) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 	virtual ~Field() {}
 };
@@ -404,7 +424,9 @@ template<const unsigned short field>
 class Field<SeqNum, field> : public Field<int, field>
 {
 public:
+	Field () : Field<int, field>() {}
 	Field (const unsigned& val) : Field<int, field>(val) {}
+	Field (const Field& from) : Field<int, field>(from) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 	virtual ~Field() {}
 };
@@ -416,7 +438,9 @@ template<const unsigned short field>
 class Field<NumInGroup, field> : public Field<int, field>
 {
 public:
+	Field () : Field<int, field>() {}
 	Field (const unsigned& val) : Field<int, field>(val) {}
+	Field (const Field& from) : Field<int, field>(from) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 	virtual ~Field() {}
 };
@@ -428,7 +452,9 @@ template<const unsigned short field>
 class Field<DayOfMonth, field> : public Field<int, field>
 {
 public:
+	Field () : Field<int, field>() {}
 	Field (const unsigned& val) : Field<int, field>(val) {}
+	Field (const Field& from) : Field<int, field>(from) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 	virtual ~Field() {}
 };
@@ -444,6 +470,7 @@ class Field<Boolean, field> : public BaseField
 public:
 	Field () : BaseField(field) {}
 	Field (const bool& val) : BaseField(field), _value(val) {}
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field), _value(toupper(from[0]) == 'Y') {}
 	virtual ~Field() {}
 

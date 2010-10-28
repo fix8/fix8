@@ -130,8 +130,7 @@ unsigned Message::decode(const f8String& from)
 {
 	unsigned offset(_header->decode(from, 0));
 	offset = MessageBase::decode(from, offset);
-	offset = _trailer->decode(from, offset);
-	return offset;
+	return _trailer->decode(from, offset);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -151,10 +150,10 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 		msg = ctx._bme.find_ptr(mtype)->_create();
 		msg->decode(from);
 
-		Fields::const_iterator fitr(msg->_header->_fields.find(Magic_BodyLength));
-		static_cast<Field<Length, Magic_BodyLength> *>(fitr->second)->set(mlen);
-		fitr = msg->_header->_fields.find(Magic_MsgType);
-		static_cast<Field<f8String, Magic_MsgType> *>(fitr->second)->set(mtype);
+		Fields::const_iterator fitr(msg->_header->_fields.find(Common_BodyLength));
+		static_cast<Field<Length, Common_BodyLength> *>(fitr->second)->set(mlen);
+		fitr = msg->_header->_fields.find(Common_MsgType);
+		static_cast<Field<f8String, Common_MsgType> *>(fitr->second)->set(mtype);
 		msg->check_set_rlm(fitr->second);
 
 		if (_tlr.SearchString(match, from, 3, 0) == 3)
@@ -163,8 +162,8 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 			_hdr.SubExpr(match, from, chksum, 0, 2);
 			const unsigned chkpos(match.SubPos(1));
 
-			Fields::const_iterator fitr(msg->_trailer->_fields.find(Magic_CheckSum));
-			static_cast<Field<f8String, Magic_CheckSum> *>(fitr->second)->set(chksum);
+			Fields::const_iterator fitr(msg->_trailer->_fields.find(Common_CheckSum));
+			static_cast<Field<f8String, Common_CheckSum> *>(fitr->second)->set(chksum);
 			unsigned chkval(GetValue<unsigned>(chksum));
 			if (chkval != calc_chksum(from, mtpos, chkpos - mtpos))
 				throw BadCheckSum(mtype);
@@ -222,8 +221,8 @@ unsigned Message::encode(f8String& to)
 	ostringstream msg;
 	if (!_header)
 		throw MissingMessageComponent("header");
-	Fields::const_iterator fitr(_header->_fields.find(Magic_MsgType));
-	static_cast<Field<f8String, Magic_MsgType> *>(fitr->second)->set(_msgType);
+	Fields::const_iterator fitr(_header->_fields.find(Common_MsgType));
+	static_cast<Field<f8String, Common_MsgType> *>(fitr->second)->set(_msgType);
 	_header->encode(msg);
 	MessageBase::encode(msg);
 	if (!_trailer)
@@ -231,22 +230,22 @@ unsigned Message::encode(f8String& to)
 	_trailer->encode(msg);
 	const unsigned msgLen(msg.str().size());	// checksummable msglength
 
-	if ((fitr = _trailer->_fields.find(Magic_CheckSum)) == _trailer->_fields.end())
-		throw MissingMandatoryField(Magic_CheckSum);
-	static_cast<Field<f8String, Magic_CheckSum> *>(fitr->second)->set(fmt_chksum(calc_chksum(msg.str())));
-	_trailer->_fp.clear(Magic_CheckSum, FieldTrait::suppress);
+	if ((fitr = _trailer->_fields.find(Common_CheckSum)) == _trailer->_fields.end())
+		throw MissingMandatoryField(Common_CheckSum);
+	static_cast<Field<f8String, Common_CheckSum> *>(fitr->second)->set(fmt_chksum(calc_chksum(msg.str())));
+	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
 	fitr->second->encode(msg);
 
 	ostringstream hmsg;
-	if ((fitr = _header->_fields.find(Magic_BeginString)) == _header->_fields.end())
-		throw MissingMandatoryField(Magic_BeginString);
-	_header->_fp.clear(Magic_BeginString, FieldTrait::suppress);
+	if ((fitr = _header->_fields.find(Common_BeginString)) == _header->_fields.end())
+		throw MissingMandatoryField(Common_BeginString);
+	_header->_fp.clear(Common_BeginString, FieldTrait::suppress);
 	fitr->second->encode(hmsg);
 
-	if ((fitr = _header->_fields.find(Magic_BodyLength)) == _header->_fields.end())
-		throw MissingMandatoryField(Magic_BodyLength);
-	_header->_fp.clear(Magic_BodyLength, FieldTrait::suppress);
-	static_cast<Field<Length, Magic_BodyLength> *>(fitr->second)->set(msgLen);
+	if ((fitr = _header->_fields.find(Common_BodyLength)) == _header->_fields.end())
+		throw MissingMandatoryField(Common_BodyLength);
+	_header->_fp.clear(Common_BodyLength, FieldTrait::suppress);
+	static_cast<Field<Length, Common_BodyLength> *>(fitr->second)->set(msgLen);
 	fitr->second->encode(hmsg);
 
 	hmsg << msg.str();

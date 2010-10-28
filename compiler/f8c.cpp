@@ -562,7 +562,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ost_cpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
 	ost_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	ost_cpp << _csMap.Find_Value_Ref(cs_generated_includes) << endl;
-	ost_cpp << "#include <" << ctxt._out[Ctxt::types_hpp].first << '>' << endl;
+	ost_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first << '"' << endl;
 	ost_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	ost_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
 	ost_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
@@ -694,9 +694,9 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_cpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_generated_includes) << endl;
-	osc_cpp << "#include <" << ctxt._out[Ctxt::types_hpp].first << '>' << endl;
-	osc_cpp << "#include <" << ctxt._out[Ctxt::router_hpp].first << '>' << endl;
-	osc_cpp << "#include <" << ctxt._out[Ctxt::classes_hpp].first << '>' << endl;
+	osc_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first << '"' << endl;
+	osc_cpp << "#include \"" << ctxt._out[Ctxt::router_hpp].first << '"' << endl;
+	osc_cpp << "#include \"" << ctxt._out[Ctxt::classes_hpp].first << '"' << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osc_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
 	osc_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
@@ -708,9 +708,9 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osr_cpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
 	osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osr_cpp << _csMap.Find_Value_Ref(cs_generated_includes) << endl;
-	osr_cpp << "#include <" << ctxt._out[Ctxt::types_hpp].first << '>' << endl;
-	osr_cpp << "#include <" << ctxt._out[Ctxt::router_hpp].first << '>' << endl;
-	osr_cpp << "#include <" << ctxt._out[Ctxt::classes_hpp].first << '>' << endl;
+	osr_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first << '"' << endl;
+	osr_cpp << "#include \"" << ctxt._out[Ctxt::router_hpp].first << '"' << endl;
+	osr_cpp << "#include \"" << ctxt._out[Ctxt::classes_hpp].first << '"' << endl;
 	osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
 	osr_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
 	osr_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
@@ -885,7 +885,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	{
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
 			continue;
-		osu_hpp << spacer << "virtual bool operator()(const " << mitr->second._name << " *msg) { return false; }" << endl;
+		osu_hpp << spacer << "virtual bool operator() (const " << mitr->second._name << " *msg) const { return false; }" << endl;
 	}
 	osu_hpp << "};" << endl;
 

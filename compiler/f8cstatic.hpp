@@ -193,14 +193,14 @@ const CSMap::TypePair CSMap::_valueTable[] =
 	CSMap::TypePair(cs_header_preamble,
 "	void add_preamble()\n"
 "	{\n"
-"		add_field(Magic_BeginString, 1, new Field<f8String, Magic_BeginString>(ctx._beginStr));\n"
-"		add_field(Magic_BodyLength, 2, new Field<Length, Magic_BodyLength>(0));\n"
-"		add_field(Magic_MsgType, 3, new Field<f8String, Magic_MsgType>);\n"
+"		add_field(Common_BeginString, 1, new Field<f8String, Common_BeginString>(ctx._beginStr));\n"
+"		add_field(Common_BodyLength, 2, new Field<Length, Common_BodyLength>(0));\n"
+"		add_field(Common_MsgType, 3, new Field<f8String, Common_MsgType>);\n"
 "	}"),
 	CSMap::TypePair(cs_trailer_preamble,
 "	void add_preamble()\n"
 "	{\n"
-"		add_field(new Field<f8String, Magic_CheckSum>);\n"
+"		add_field(new Field<f8String, Common_CheckSum>);\n"
 "	}"),
 };
 template<>
