@@ -90,6 +90,44 @@ public:
 	GeneratedTable() {}
 };
 
+//-------------------------------------------------------------------------------------------------
+template<typename Key, typename Val, typename Compare=std::less<Key> >
+struct StaticTable
+{
+#ifdef HAS_TR1_UNORDERED_MAP
+	typedef typename std::tr1::unordered_map<Key, Val, Compare> TypeMap;
+#else
+	typedef typename std::map<Key, Val, Compare> TypeMap;
+#endif
+	typedef typename TypeMap::value_type TypePair;
+	typedef Val NoValType;
+
+	static const TypePair _valueTable[];
+	static const TypeMap _valuemap;
+	static const NoValType _noval;
+
+	StaticTable() {}
+
+	static const Val find_value(const Key& key)
+	{
+		typename TypeMap::const_iterator itr(_valuemap.find(key));
+		return itr != _valuemap.end() ? itr->second : _noval;
+	}
+	static const Val& find_value_ref(const Key& key)
+	{
+		typename TypeMap::const_iterator itr(_valuemap.find(key));
+		return itr != _valuemap.end() ? itr->second : _noval;
+	}
+	static const Val *find_ptr(const Key& key)
+	{
+		typename TypeMap::const_iterator itr(_valuemap.find(key));
+		return itr != _valuemap.end() ? &itr->second : 0;
+	}
+
+	static const size_t get_count() { return _valuemap.size(); }
+	static const TypePair *get_table_end() { return _valueTable + sizeof(_valueTable)/sizeof(TypePair); }
+};
+
 } // FIX8
 
 #endif // _F8_TYPES_HPP_

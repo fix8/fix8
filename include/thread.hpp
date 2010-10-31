@@ -35,8 +35,8 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8c.cpp $
 
 #endif
 //-----------------------------------------------------------------------------------------
-#ifndef _MODERN_THREAD_HPP_
-#define _MODERN_THREAD_HPP_
+#ifndef _FIX8_THREAD_HPP_
+#define _FIX8_THREAD_HPP_
 
 //----------------------------------------------------------------------------------------
 #include<pthread.h>
@@ -180,4 +180,4 @@ public:
 
 } // FIX8
 
-#endif // _MODERN_THREAD_HPP_
+#endif // _FIX8_THREAD_HPP_

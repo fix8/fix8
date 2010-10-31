@@ -34,6 +34,25 @@ namespace {
 RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 
 //-------------------------------------------------------------------------------------------------
+template<>
+const Session::Handlers::TypePair Session::Handlers::_valueTable[] =
+{
+	Session::Handlers::TypePair(Common_MsgType_HEARTBEAT, &Session::Heartbeat),
+	Session::Handlers::TypePair(Common_MsgType_TEST_REQUEST, &Session::TestRequest),
+	Session::Handlers::TypePair(Common_MsgType_RESEND_REQUEST, &Session::ResendRequest),
+	Session::Handlers::TypePair(Common_MsgType_REJECT, &Session::Reject),
+	Session::Handlers::TypePair(Common_MsgType_SEQUENCE_RESET, &Session::SequenceReset),
+	Session::Handlers::TypePair(Common_MsgType_LOGOUT, &Session::Logout),
+	Session::Handlers::TypePair(Common_MsgType_LOGON, &Session::Logon),
+};
+
+template<>
+const Session::Handlers::TypeMap Session::Handlers::_valuemap(Session::Handlers::_valueTable,
+	Session::Handlers::get_table_end());
+template<>
+const Session::Handlers::NoValType Session::Handlers::_noval(&Session::Application);
+
+//-------------------------------------------------------------------------------------------------
 const f8String& SessionID::make_id()
 {
 	ostringstream ostr;
@@ -55,6 +74,22 @@ void SessionID::from_string(const f8String& from)
 		_sid.SubExpr(match, from, tcid, 0, 3);
 		_targetCompID.set(tcid);
 		make_id();
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+Session::Session()
+{
+}
+
+//-------------------------------------------------------------------------------------------------
+void Session::start()
+{
+	while(true)
+	{
+		Message *msg;
+		(this->*_handlers.find_value_ref(msg->get_msgtype()))(msg);
 	}
 }
 

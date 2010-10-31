@@ -162,6 +162,8 @@ public:
 	unsigned check_positions();
 	void check_set_rlm(BaseField *where);
 
+	const f8String& get_msgtype() const { return _msgType; }
+
 	bool add_field(BaseField *what)
 	{
 		const unsigned short fnum(what->_fnum);

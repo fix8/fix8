@@ -236,6 +236,7 @@ class ebitset
 
 public:
 	ebitset() : a_() {}
+	ebitset(const ebitset<T, B>& from) { a_ = from.a_; }
 	explicit ebitset(const integral_type a) : a_(a) {}
 	explicit ebitset(const T sbit) : a_((1 << sbit) - 1) {}
 

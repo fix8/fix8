@@ -155,7 +155,7 @@ int main(int argc, char **argv)
 		{
 		case 'v':
 			//cout << "f8c for "PACKAGE" version "VERSION << endl;
-			cout << "f8c " << _csMap.Find_Value_Ref(cs_copyright_short) << endl;
+			cout << "f8c " << _csMap.find_value_ref(cs_copyright_short) << endl;
 			cout << rcsid << endl;
 			return 0;
 		case 'V': verbose = true; break;
@@ -230,7 +230,7 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 		if ((*itr)->GetAttr("number", number) && (*itr)->GetAttr("name", name) && (*itr)->GetAttr("type", type))
 		{
 			InPlaceStrToUpper(type);
-			FieldTrait::FieldType ft(FieldSpec::_baseTypeMap.Find_Value(type));
+			FieldTrait::FieldType ft(FieldSpec::_baseTypeMap.find_value(type));
 			pair<FieldSpecMap::iterator, bool> result;
 			if (ft != FieldTrait::ft_untyped)
 				result = fspec.insert(FieldSpecMap::value_type(GetValue<unsigned>(number), FieldSpec(name, ft)));
@@ -547,42 +547,42 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		cout << fields << " fields processed" << endl;
 
 	// output file preambles
-	ost_hpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
-	ost_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_hpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
-	ost_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	ost_hpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
+	ost_hpp << _csMap.find_value_ref(cs_divider) << endl;
+	ost_hpp << _csMap.find_value_ref(cs_copyright) << endl;
+	ost_hpp << _csMap.find_value_ref(cs_divider) << endl;
 	ost_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::types_hpp].first) << '_' << endl;
 	ost_hpp << "#define _" << flname(ctxt._out[Ctxt::types_hpp].first) << '_' << endl << endl;
-	ost_hpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
+	ost_hpp << _csMap.find_value_ref(cs_start_namespace) << endl;
 	ost_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
-	ost_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_cpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
-	ost_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_cpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
-	ost_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_cpp << _csMap.Find_Value_Ref(cs_generated_includes) << endl;
+	ost_hpp << endl << _csMap.find_value_ref(cs_divider) << endl;
+	ost_cpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
+	ost_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	ost_cpp << _csMap.find_value_ref(cs_copyright) << endl;
+	ost_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	ost_cpp << _csMap.find_value_ref(cs_generated_includes) << endl;
 	ost_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first << '"' << endl;
-	ost_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	ost_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
+	ost_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	ost_cpp << _csMap.find_value_ref(cs_start_namespace) << endl;
 	ost_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
 
-	ost_cpp << _csMap.Find_Value_Ref(cs_start_anon_namespace) << endl;
-	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	ost_cpp << _csMap.find_value_ref(cs_start_anon_namespace) << endl;
+	ost_cpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 	// generate field types
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
 		if (!fitr->second._comment.empty())
 			ost_hpp << "// " << fitr->second._comment << endl;
-		ost_hpp << "typedef Field<" << FieldSpec::_typeToCPP.Find_Value_Ref(fitr->second._ftype)
+		ost_hpp << "typedef Field<" << FieldSpec::_typeToCPP.find_value_ref(fitr->second._ftype)
 			<< ", " << fitr->first << "> " << fitr->second._name << ';' << endl;
 		if (fitr->second._dvals)
 			processValueEnums(fitr, ost_hpp, ost_cpp);
-		ost_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+		ost_hpp << _csMap.find_value_ref(cs_divider) << endl;
 	}
 
 	// generate realmbase objs
-	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	ost_cpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 	ost_cpp << "const RealmBase realmbases[] =" << endl << '{' << endl;
 	unsigned dcnt(0);
 	for (FieldSpecMap::iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
@@ -598,20 +598,20 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ost_cpp << "};" << endl;
 
 	// generate field instantiators
-	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	ost_cpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
 		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const RealmBase *db)";
 		ost_cpp << " { return new " << fitr->second._name << "(from, db); }" << endl;
 	}
 
-	ost_cpp << endl << _csMap.Find_Value_Ref(cs_end_anon_namespace) << endl;
+	ost_cpp << endl << _csMap.find_value_ref(cs_end_anon_namespace) << endl;
 	ost_cpp << "} // namespace " << ctxt._fixns << endl;
 
 	// generate field instantiator lookup
 	ost_hpp << "typedef GeneratedTable<unsigned, BaseEntry> " << ctxt._clname << "_BaseEntry;" << endl;
 
-	ost_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	ost_cpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair "
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairs[] =" << endl << '{' << endl;
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
@@ -638,9 +638,9 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 
 	// terminate files
 	ost_hpp << endl << "} // namespace " << ctxt._fixns << endl;
-	ost_hpp << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
+	ost_hpp << _csMap.find_value_ref(cs_end_namespace) << endl;
 	ost_hpp << "#endif // _" << flname(ctxt._out[Ctxt::types_hpp].first) << '_' << endl;
-	ost_cpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
+	ost_cpp << endl << _csMap.find_value_ref(cs_end_namespace) << endl;
 
 // ================================= Message processing ===================================
 
@@ -664,55 +664,55 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	processOrdering(mspec);
 
 	// output file preambles
-	osu_hpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
-	osu_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	osu_hpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
-	osu_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osu_hpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
+	osu_hpp << _csMap.find_value_ref(cs_divider) << endl;
+	osu_hpp << _csMap.find_value_ref(cs_copyright) << endl;
+	osu_hpp << _csMap.find_value_ref(cs_divider) << endl;
 	osu_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::router_hpp].first) << '_' << endl;
 	osu_hpp << "#define _" << flname(ctxt._out[Ctxt::router_hpp].first) << '_' << endl << endl;
-	osu_hpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
+	osu_hpp << _csMap.find_value_ref(cs_start_namespace) << endl;
 	osu_hpp << "namespace " << ctxt._fixns << " {" << endl;
-	osu_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osu_hpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 
-	osc_hpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
-	osc_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	osc_hpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
-	osc_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osc_hpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
+	osc_hpp << _csMap.find_value_ref(cs_divider) << endl;
+	osc_hpp << _csMap.find_value_ref(cs_copyright) << endl;
+	osc_hpp << _csMap.find_value_ref(cs_divider) << endl;
 	osc_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::classes_hpp].first) << '_' << endl;
 	osc_hpp << "#define _" << flname(ctxt._out[Ctxt::classes_hpp].first) << '_' << endl << endl;
-	osc_hpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
+	osc_hpp << _csMap.find_value_ref(cs_start_namespace) << endl;
 	osc_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
-	osc_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osc_hpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 	osc_hpp << "typedef GeneratedTable<const f8String, BaseMsgEntry> " << ctxt._clname << "_BaseMsgEntry;" << endl;
 	osc_hpp << "extern F8MetaCntx ctx;" << endl;
 	osc_hpp << "class " << ctxt._clname << "_Router;" << endl;
-	osc_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osc_hpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 
-	osc_cpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
-	osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	osc_cpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
-	osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	osc_cpp << _csMap.Find_Value_Ref(cs_generated_includes) << endl;
+	osc_cpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
+	osc_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	osc_cpp << _csMap.find_value_ref(cs_copyright) << endl;
+	osc_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	osc_cpp << _csMap.find_value_ref(cs_generated_includes) << endl;
 	osc_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first << '"' << endl;
 	osc_cpp << "#include \"" << ctxt._out[Ctxt::router_hpp].first << '"' << endl;
 	osc_cpp << "#include \"" << ctxt._out[Ctxt::classes_hpp].first << '"' << endl;
-	osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	osc_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
+	osc_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	osc_cpp << _csMap.find_value_ref(cs_start_namespace) << endl;
 	osc_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
-	osc_cpp << _csMap.Find_Value_Ref(cs_start_anon_namespace) << endl << endl;
-	osc_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osc_cpp << _csMap.find_value_ref(cs_start_anon_namespace) << endl << endl;
+	osc_cpp << _csMap.find_value_ref(cs_divider) << endl;
 
-	osr_cpp << _csMap.Find_Value_Ref(cs_do_not_edit) << endl;
-	osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	osr_cpp << _csMap.Find_Value_Ref(cs_copyright) << endl;
-	osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	osr_cpp << _csMap.Find_Value_Ref(cs_generated_includes) << endl;
+	osr_cpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
+	osr_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	osr_cpp << _csMap.find_value_ref(cs_copyright) << endl;
+	osr_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	osr_cpp << _csMap.find_value_ref(cs_generated_includes) << endl;
 	osr_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first << '"' << endl;
 	osr_cpp << "#include \"" << ctxt._out[Ctxt::router_hpp].first << '"' << endl;
 	osr_cpp << "#include \"" << ctxt._out[Ctxt::classes_hpp].first << '"' << endl;
-	osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
-	osr_cpp << _csMap.Find_Value_Ref(cs_start_namespace) << endl;
+	osr_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	osr_cpp << _csMap.find_value_ref(cs_start_namespace) << endl;
 	osr_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
 
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
@@ -727,7 +727,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 
 		if (mitr->second._fields.get_presence().size())
 		{
-			osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+			osr_cpp << _csMap.find_value_ref(cs_divider) << endl;
 			osr_cpp << "const FieldTrait::TraitBase " << mitr->second._name << "::_traits[] ="
 				<< endl << '{' << endl;
 			for (Presence::const_iterator flitr(mitr->second._fields.get_presence().begin());
@@ -785,14 +785,14 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << " get_msgtype() { return " << fsitr->second._name
 			<< "(_msgtype); }" << endl;
 		if (isHeader)
-			osc_hpp << endl << _csMap.Find_Value_Ref(cs_header_preamble) << endl;
+			osc_hpp << endl << _csMap.find_value_ref(cs_header_preamble) << endl;
 		else if (isTrailer)
-			osc_hpp << endl << _csMap.Find_Value_Ref(cs_trailer_preamble) << endl;
+			osc_hpp << endl << _csMap.find_value_ref(cs_trailer_preamble) << endl;
 
 		for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
 		{
 			FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
-			osr_cpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+			osr_cpp << _csMap.find_value_ref(cs_divider) << endl;
 			osr_cpp << "const FieldTrait::TraitBase " << mitr->second._name << "::" << gsitr->second._name << "::_traits[] ="
 				<< endl << '{' << endl;
 			for (Presence::const_iterator flitr(gitr->second.get_presence().begin());
@@ -831,7 +831,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 			osc_hpp << spacer << "};" << endl;
 		}
 		osc_hpp << "};" << endl << endl;
-		osc_hpp << _csMap.Find_Value_Ref(cs_divider) << endl;
+		osc_hpp << _csMap.find_value_ref(cs_divider) << endl;
 	}
 
 // =============================== Message class instantiation ==============================
@@ -847,9 +847,9 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_cpp << endl;
 	osc_cpp << "const " << ctxt._clname << "_BaseMsgEntry bme;" << endl;
 	osc_cpp << "const " << ctxt._clname << "_BaseEntry be;" << endl;
-	osc_cpp << endl << _csMap.Find_Value_Ref(cs_end_anon_namespace) << endl;
+	osc_cpp << endl << _csMap.find_value_ref(cs_end_anon_namespace) << endl;
 
-	osc_cpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osc_cpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::Pair "
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_pairs[] =" << endl << '{' << endl;
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
@@ -876,7 +876,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 		osu_hpp << "class " << mitr->second._name << ';' << endl;
-	osu_hpp << endl << _csMap.Find_Value_Ref(cs_divider) << endl;
+	osu_hpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 	osu_hpp << "class " << ctxt._clname << "_Router : public Router" << endl
 		<< '{' << endl << "public:" << endl;
 	osu_hpp << spacer << ctxt._clname << "_Router() {}" << endl;
@@ -891,15 +891,15 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 
 	// terminate files
 	osc_hpp << endl << "} // namespace " << ctxt._fixns << endl;
-	osc_hpp << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
+	osc_hpp << _csMap.find_value_ref(cs_end_namespace) << endl;
 	osc_hpp << "#endif // _" << flname(ctxt._out[Ctxt::classes_hpp].first) << '_' << endl;
 	osu_hpp << endl << "} // namespace " << ctxt._fixns << endl;
-	osu_hpp << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
+	osu_hpp << _csMap.find_value_ref(cs_end_namespace) << endl;
 	osu_hpp << "#endif // _" << flname(ctxt._out[Ctxt::router_hpp].first) << '_' << endl;
-	osr_cpp << endl << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
+	osr_cpp << endl << _csMap.find_value_ref(cs_end_namespace) << endl;
 	osr_cpp << "} // namespace " << ctxt._fixns << endl;
 	osc_cpp << endl << "} // namespace " << ctxt._fixns << endl;
-	osc_cpp << _csMap.Find_Value_Ref(cs_end_namespace) << endl;
+	osc_cpp << _csMap.find_value_ref(cs_end_namespace) << endl;
 	osc_cpp << endl;
 
 	return result;

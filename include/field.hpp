@@ -56,6 +56,15 @@ const unsigned Common_SenderCompID(49);
 const unsigned Common_SendingTime(52);
 const unsigned Common_TargetCompID(56);
 
+// Common msgtypes
+const f8String Common_MsgType_HEARTBEAT("0");
+const f8String Common_MsgType_TEST_REQUEST("1");
+const f8String Common_MsgType_RESEND_REQUEST("2");
+const f8String Common_MsgType_REJECT("3");
+const f8String Common_MsgType_SEQUENCE_RESET("4");
+const f8String Common_MsgType_LOGOUT("5");
+const f8String Common_MsgType_LOGON("A");
+
 //-------------------------------------------------------------------------------------------------
 template<unsigned field>
 struct EnumType

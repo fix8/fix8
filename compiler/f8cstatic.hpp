@@ -74,7 +74,7 @@ const BaseTypeMap::TypePair BaseTypeMap::_valueTable[] =
 	BaseTypeMap::TypePair("RESERVED4000PLUS", FieldTrait::ft_Reserved4000Plus)
 };
 template<>
-const BaseTypeMap::TypeMap BaseTypeMap::_valuemap(BaseTypeMap::_valueTable, BaseTypeMap::Get_Table_End());
+const BaseTypeMap::TypeMap BaseTypeMap::_valuemap(BaseTypeMap::_valueTable, BaseTypeMap::get_table_end());
 template<>
 const BaseTypeMap::NoValType BaseTypeMap::_noval(FieldTrait::ft_untyped);
 
@@ -119,7 +119,7 @@ const TypeToCPP::TypePair TypeToCPP::_valueTable[] =
 	TypeToCPP::TypePair(FieldTrait::ft_Language, "Language")
 };
 template<>
-const TypeToCPP::TypeMap TypeToCPP::_valuemap(TypeToCPP::_valueTable, TypeToCPP::Get_Table_End());
+const TypeToCPP::TypeMap TypeToCPP::_valuemap(TypeToCPP::_valueTable, TypeToCPP::get_table_end());
 template<>
 const TypeToCPP::NoValType TypeToCPP::_noval("Unknown");
 
@@ -204,7 +204,7 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "	}"),
 };
 template<>
-const CSMap::TypeMap CSMap::_valuemap(CSMap::_valueTable, CSMap::Get_Table_End());
+const CSMap::TypeMap CSMap::_valuemap(CSMap::_valueTable, CSMap::get_table_end());
 template<>
 const CSMap::NoValType CSMap::_noval("not found");
 

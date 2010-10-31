@@ -56,35 +56,6 @@ struct Ctxt
 };
 
 //-------------------------------------------------------------------------------------------------
-template<typename Key, typename Val, typename Compare=std::less<Key> >
-struct StaticTable
-{
-	typedef typename std::map<Key, Val, Compare> TypeMap;
-	typedef typename TypeMap::value_type TypePair;
-	typedef Val NoValType;
-
-	static const TypePair _valueTable[];
-	static const TypeMap _valuemap;
-	static const NoValType _noval;
-
-	StaticTable() {}
-
-	static const Val Find_Value(const Key& key)
-	{
-		typename TypeMap::const_iterator itr(_valuemap.find(key));
-		return itr != _valuemap.end() ? itr->second : _noval;
-	}
-	static const Val& Find_Value_Ref(const Key& key)
-	{
-		typename TypeMap::const_iterator itr(_valuemap.find(key));
-		return itr != _valuemap.end() ? itr->second : _noval;
-	}
-
-	static const size_t Get_Count() { return _valuemap.size(); }
-	static const TypePair *Get_Table_End() { return _valueTable + sizeof(_valueTable)/sizeof(TypePair); }
-};
-
-//-------------------------------------------------------------------------------------------------
 class RealmObject
 {
 	bool _isRange;

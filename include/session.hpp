@@ -76,20 +76,46 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-enum SessionState
+struct SessionState
 {
-	Login, Normal, Retransmit, Testrequest, Logout, Count
+	enum States
+	{
+		st_activated,
+		st_wait_for_logon, st_logon_sent, st_logon_received, st_logoff_sent, st_logoff_received,
+		st_sequence_reset_sent, st_sequence_reset_received,
+	};
+
+	ebitset<States> _ss;
 };
 
 //-------------------------------------------------------------------------------------------------
 class Session
 {
+	virtual bool Logon(Message *msg) { return false; }
+	virtual bool Logout(Message *msg) { return false; }
+	virtual bool Heartbeat(Message *msg) { return false; }
+	virtual bool ResendRequest(Message *msg) { return false; }
+	virtual bool SequenceReset(Message *msg) { return false; }
+	virtual bool TestRequest(Message *msg) { return false; }
+	virtual bool Reject(Message *msg) { return false; }
+	virtual bool Application(Message *msg) { return false; }
+
+	typedef StaticTable<const f8String, bool (Session::*)(Message *)> Handlers;
+	Handlers _handlers;
+
 protected:
+	typedef Field<SeqNum, Common_MsgSeqNum> msg_seq_num;
+	typedef Field<f8String, Common_SenderCompID> sender_comp_id;
+	typedef Field<f8String, Common_TargetCompID> target_comp_id;
+	typedef Field<UTCTimestamp, Common_SendingTime> sending_time;
 
 public:
-	Session() {}
+	Session();
 	virtual ~Session() {}
 
+	void start();
+
+	friend class StaticTable<const f8String, bool (Session::*)(Message *)>;
 };
 
 //-------------------------------------------------------------------------------------------------
