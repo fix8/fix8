@@ -36,7 +36,7 @@ $URL$
 
 #endif
 //-----------------------------------------------------------------------------------------
-
+#include <config.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -59,9 +59,10 @@ $URL$
 #include <arpa/inet.h>
 #include <regex.h>
 #include <alloca.h>
-//#include <pcreposix.h>
 
-//#include <config.h>
+#ifdef HAS_TR1_UNORDERED_MAP
+#include <tr1/unordered_map>
+#endif
 
 #include <map>
 #include <set>

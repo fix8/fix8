@@ -1,0 +1,12 @@
+$Id: ChangeLog 477 2009-01-03 01:41:00Z davidd $
+
+ver 0.1.7 (alpha)	Thu Aug 14 14:15:47 EST 2008
+	* multi-interface listen transparent IPV4 and IPV6 interfaces
+	* multiple regex source expressions for file/dir aliases
+	* HAS_TCP_QUICKACK and HAS_TCP_DEFER_ACCEPT
+	* ip based virtual hosting through rewrite engine
+
+ver 0.1.6 (alpha)	Tue Jul  5 10:15:51 EST 2008
+	* reverse proxy plugin supporting random, round-robin, hash and carp(fair) strategy
+	* Instruct plugin allowing permissioning on files/directories
+

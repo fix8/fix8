@@ -1,0 +1,4 @@
+#! /bin/sh
+echo using autoreconf
+set -x
+autoreconf -v -i

@@ -94,11 +94,7 @@ public:
 template<typename Key, typename Val, typename Compare=std::less<Key> >
 struct StaticTable
 {
-#ifdef HAS_TR1_UNORDERED_MAP
-	typedef typename std::tr1::unordered_map<Key, Val, Compare> TypeMap;
-#else
 	typedef typename std::map<Key, Val, Compare> TypeMap;
-#endif
 	typedef typename TypeMap::value_type TypePair;
 	typedef Val NoValType;
 

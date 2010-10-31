@@ -35,6 +35,7 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8c.cpp $
 
 #endif
 //-----------------------------------------------------------------------------------------
+#include <config.h>
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -47,13 +48,14 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8c.cpp $
 #include <algorithm>
 #include <bitset>
 
+#ifdef HAS_TR1_UNORDERED_MAP
+#include <tr1/unordered_map>
+#endif
+
 #include <regex.h>
 #include <errno.h>
 #include <string.h>
 #include <cctype>
-//#ifdef HAVE_GETOPT_H
-#include <getopt.h>
-//#endif
 
 // f8 headers
 #include <f8exception.hpp>

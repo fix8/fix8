@@ -35,6 +35,7 @@ $URL$
 
 #endif
 //-----------------------------------------------------------------------------------------
+#include <config.h>
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -51,9 +52,14 @@ $URL$
 #include <errno.h>
 #include <string.h>
 #include <cctype>
-//#ifdef HAVE_GETOPT_H
+
+#ifdef HAS_TR1_UNORDERED_MAP
+#include <tr1/unordered_map>
+#endif
+
+#ifdef HAVE_GETOPT_H
 #include <getopt.h>
-//#endif
+#endif
 
 // f8 headers
 #include <f8exception.hpp>

@@ -36,7 +36,7 @@ $URL$
 
 #endif
 //-----------------------------------------------------------------------------------------
-
+#include <config.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -57,7 +57,6 @@ $URL$
 #include <time.h>
 #include <regex.h>
 
-//#include <config.h>
 #if !defined __GNUG__ || defined HAVE_ALLOCA_H
 #include <alloca.h>
 #endif
