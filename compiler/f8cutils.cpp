@@ -29,9 +29,9 @@ TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF TH
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -------------------------------------------------------------------------------------------
-$Id: f8c.cpp 526 2010-10-19 11:19:50Z davidd $
-$Date: 2010-10-19 22:19:50 +1100 (Tue, 19 Oct 2010) $
-$URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8c.cpp $
+$Id$
+$Date$
+$URL$
 
 #endif
 //-----------------------------------------------------------------------------------------
@@ -48,14 +48,14 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8c.cpp $
 #include <algorithm>
 #include <bitset>
 
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
-
 #include <regex.h>
 #include <errno.h>
 #include <string.h>
 #include <cctype>
+
+#ifdef HAS_TR1_UNORDERED_MAP
+#include <tr1/unordered_map>
+#endif
 
 // f8 headers
 #include <f8exception.hpp>
@@ -68,14 +68,12 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8c.cpp $
 #include <xml.hpp>
 #include <f8c.hpp>
 
-//#include <config.h>
-
 //-----------------------------------------------------------------------------------------
 using namespace std;
 using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
-static const std::string rcsid("$Id: f8c.cpp 526 2010-10-19 11:19:50Z davidd $");
+static const std::string rcsid("$Id$");
 
 //-----------------------------------------------------------------------------------------
 extern string inputFile, odir, prefix;

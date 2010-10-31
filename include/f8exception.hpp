@@ -29,9 +29,9 @@ TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF TH
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---------------------------------------------------------------------------------------------------
-$Id: f8types.hpp 514 2010-09-13 12:23:27Z davidd $
-$Date: 2010-09-13 22:23:27 +1000 (Mon, 13 Sep 2010) $
-$URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/f8types.hpp $
+$Id$
+$Date$
+$URL$
 
 #endif
 //-------------------------------------------------------------------------------------------------

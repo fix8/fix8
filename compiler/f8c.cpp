@@ -141,7 +141,7 @@ int main(int argc, char **argv)
 {
 	int val;
 
-//#ifdef HAVE_GETOPT_LONG
+#ifdef HAVE_GETOPT_LONG
 	option long_options[] =
 	{
 		{ "help",			0,	0,	'h' },
@@ -153,15 +153,15 @@ int main(int argc, char **argv)
 	};
 
 	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)
-//#else
-//	while ((val = getopt (argc, argv, GETARGLIST.c_str())) != -1)
-//#endif
+#else
+	while ((val = getopt (argc, argv, GETARGLIST.c_str())) != -1)
+#endif
 	{
       switch (val)
 		{
 		case 'v':
-			//cout << "f8c for "PACKAGE" version "VERSION << endl;
-			cout << "f8c " << _csMap.find_value_ref(cs_copyright_short) << endl;
+			cout << "f8c for "PACKAGE" version "VERSION << endl;
+			cout << _csMap.find_value_ref(cs_copyright_short) << endl;
 			cout << rcsid << endl;
 			return 0;
 		case 'V': verbose = true; break;

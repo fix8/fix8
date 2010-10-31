@@ -12,6 +12,10 @@
 #include <numeric>
 #include <bitset>
 
+#ifdef HAS_TR1_UNORDERED_MAP
+#include <tr1/unordered_map>
+#endif
+
 #include <strings.h>
 #include <regex.h>
 

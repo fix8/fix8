@@ -29,9 +29,9 @@ TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF TH
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---------------------------------------------------------------------------------------------------
-$Id: f8c.hpp 528 2010-10-26 11:26:18Z davidd $
-$Date: 2010-10-26 22:26:18 +1100 (Tue, 26 Oct 2010) $
-$URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8c.hpp $
+$Id$
+$Date$
+$URL$
 
 #endif
 //-------------------------------------------------------------------------------------------------

@@ -36,7 +36,7 @@ using namespace std;
 using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
-static const std::string rcsid("$Id: f8c.cpp 515 2010-09-16 01:13:48Z davidd $");
+static const std::string rcsid("$Id$");
 
 //-----------------------------------------------------------------------------------------
 class tex_router : public TEX::Myfix_Router

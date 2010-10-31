@@ -3,10 +3,10 @@ AC_COPYRIGHT([Orbweb is released under the New BSD License.
 Copyright (c) 2010, David L. Dight <fix@fix8.org>
 All rights reserved.])
 
-# $Id: configure.ac 496 2010-01-04 10:01:54Z davidd $
-# $LastChangedDate: 2010-01-04 21:01:54 +1100 (Mon, 04 Jan 2010) $
-AC_REVISION([$Rev: 496 $])
-# $URL: svn://catfarm.electro.mine.nu/usr/local/repos/mongod/trunk/configure.ac $
+# $Id$
+# $LastChangedDate$
+AC_REVISION([$Rev$])
+# $URL$
 
 AC_PREREQ(2.61)
 AC_INIT([fix8], [m4_esyscmd([./version.sh | tr -d '\n'])],fix@fix8.org)
@@ -123,8 +123,8 @@ AC_CHECK_FUNCS([scandir getopt_long sysconf getaddrinfo getnameinfo \
 AC_CHECK_HEADERS([getopt.h fcntl.h netdb.h regex.h signal.h string.h sys/time.h \
 	arpa/inet.h sys/stat.h sys/types.h select.h sys/event.h h \
 	netinet/tcp.h \
-	sys/wait.h netinet/in.h getopt.h limits.h sys/sendfile.h sys/ioctl.h unistd.h \
-	sys/fs/s5param.h sys/socket.h time.h syslog.h termios.h alloca.h
+	sys/wait.h netinet/in.h getopt.h limits.h sys/ioctl.h unistd.h \
+	sys/socket.h time.h syslog.h termios.h alloca.h
 	])
 
 PROCSTAT=/proc/stat
@@ -186,100 +186,6 @@ if test "$HAVE_GPROF" != "no"; then
 	fi
 fi
 
-AC_MSG_CHECKING(for TCP_QUICKACK support)
-AC_ARG_WITH(tcpquickack, AC_HELP_STRING([--with-tcpquickack],
-	[enable support for TCP_QUICKACK (default=yes)]),
-	[have_tcp_quickack=$withval],[have_tcp_quickack=yes])
-if test "$have_tcp_quickack" != "no"; then
-	AC_TRY_COMPILE([
-	#include <netinet/tcp.h>
-		],[int a = TCP_QUICKACK; ],
-		have_tcp_quickack=yes, have_tcp_quickack=no)
-	if test "$have_tcp_quickack" = yes; then
-	    AC_DEFINE(HAS_TCP_QUICKACK, 1, [Define to 1 if your os supports TCP_QUICKACK (default=yes)])
-	    AC_MSG_RESULT(yes)
-	else
-	    AC_MSG_RESULT(no)
-	fi
-else
-	 AC_MSG_RESULT(no)
-fi
-
-AC_MSG_CHECKING(for TCP_DEFER_ACCEPT support)
-AC_ARG_WITH(tcpdeferaccept, AC_HELP_STRING([--with-tcpdeferaccept],
-	[enable support for TCP_DEFER_ACCEPT (default=yes)]),
-	[have_tcp_defer=$withval],[have_tcp_defer=yes])
-if test "$have_tcp_defer" != "no"; then
-	AC_TRY_COMPILE([
-	#include <netinet/tcp.h>
-		],[int a = TCP_DEFER_ACCEPT; ],
-		have_tcp_defer=yes, have_tcp_defer=no)
-	if test "$have_tcp_defer" = yes; then
-	    AC_DEFINE(HAS_TCP_DEFER_ACCEPT, 1,
-			[Define to 1 if your os supports TCP_DEFER_ACCEPT (default=yes)])
-	    AC_MSG_RESULT(yes)
-	else
-	    AC_MSG_RESULT(no)
-	fi
-else
-	 AC_MSG_RESULT(no)
-fi
-
-AC_MSG_CHECKING(for TCP_NODELAY support)
-	AC_TRY_COMPILE([
-	#include <netinet/tcp.h>
-		],[int a = TCP_NODELAY; ],
-		have_tcpnodelay=yes, have_tcpnodelay=no)
-	if test "$have_tcpnodelay" = yes; then
-	    AC_DEFINE(HAS_TCP_NODELAY, 1, [Define to 1 if your os supports TCP_NODELAY (default=yes)])
-	    AC_MSG_RESULT(yes)
-	else
-	    AC_MSG_RESULT(no)
-	fi
-
-AC_MSG_CHECKING(for TCP_CORK support (Linux))
-	AC_TRY_COMPILE([
-	#include <netinet/tcp.h>
-		],[int a = TCP_CORK; ],
-		have_tcpcork=yes, have_tcpcork=no)
-	if test "$have_tcpcork" = yes; then
-	    AC_DEFINE(HAS_TCP_CORK, 1, [Define to 1 if your os supports TCP_CORK (default=yes)])
-	    AC_MSG_RESULT(yes)
-	else
-	    AC_MSG_RESULT(no)
-	fi
-
-AC_MSG_CHECKING(for SO_ACCEPTFILTER support (BSD))
-AC_ARG_WITH(acceptfilter, AC_HELP_STRING([--with-acceptfilter],
-	[enable support for SO_ACCEPTFILTER (default=no)]),
-	[have_acceptfilter=$withval],[have_acceptfilter=yes])
-if test "$have_acceptfilter" != "no"; then
-	AC_TRY_COMPILE([
-	#include <netinet/tcp.h>
-		],[int a = SO_ACCEPTFILTER; ],
-		have_acceptfilter=yes, have_acceptfilter=no)
-	if test "$have_acceptfilter" = yes; then
-	    AC_DEFINE(HAS_SO_ACCEPTFILTER, 1, [Define to 1 if your os supports SO_ACCEPTFILTER (default=no)])
-	    AC_MSG_RESULT(yes)
-	else
-	    AC_MSG_RESULT(no)
-	fi
-else
-	 AC_MSG_RESULT(no)
-fi
-
-AC_MSG_CHECKING(for FIONREAD support)
-	AC_TRY_COMPILE([
-	#include <sys/ioctl.h>
-		],[int a = FIONREAD; ],
-		have_fionread=yes, have_fionread=no)
-	if test "$have_fionread" = yes; then
-	    AC_DEFINE(HAS_FIONREAD, 1, [Define to 1 if your os supports ioctl FIONREAD])
-	    AC_MSG_RESULT(yes)
-	else
-	    AC_MSG_RESULT(no)
-	fi
-
 AC_CHECK_LIB(crypt, crypt, [
 	AC_CHECK_HEADERS([crypt.h],
 	[
@@ -292,18 +198,20 @@ AM_CONDITIONAL(USECCRYPT, [test x$havecrypt = xyes])
 m4_include(m4/ax_compare_version.m4)
 m4_include(m4/ax_path_bdb.m4)
 
-AC_ARG_ENABLE([bdb],
-[AC_HELP_STRING([--enable-bdb],[Enable BDB support (default=no) SDB enabled by default])],
-[case "${enableval}" in
-	yes)
-	AX_PATH_BDB([3],[ LIBS="$BDB_LIBS $LIBS"
-	LDFLAGS="$BDB_LDFLAGS $LDFLAGS"
-	CPPFLAGS="$CPPFLAGS $BDB_CPPFLAGS"
-	AC_DEFINE(HAVE_BDB, 1, [Define to 1 if you have berkeley DB])
-	]);;
-	no) bdb=no;;
-	*) AC_MSG_ERROR(bad value ${enableval} for --enable-bdb) ;;
-esac],[bdb=no])
+have_bdb=no
+AX_PATH_BDB([3],[ LIBS="$BDB_LIBS $LIBS"
+LDFLAGS="$BDB_LDFLAGS $LDFLAGS"
+CPPFLAGS="$CPPFLAGS $BDB_CPPFLAGS"
+have_bdb=yes
+AC_DEFINE(HAVE_BDB, 1, [Define to 1 if you have berkeley DB])
+	])
+
+if test "$have_bdb" = "no"; then
+		echo
+		echo "ERROR: Berkeley DB. Install and try again."
+		echo
+		exit 1
+fi
 
 # Check for timersub macro in sys/time.h
 AC_CACHE_CHECK([for timersub macro in sys/time.h], ac_cv_timersubmacro,
@@ -335,21 +243,6 @@ else
 	 AC_MSG_RESULT(no)
 fi
 
-AC_CHECK_LIB(curses, initscr, [
-	AC_CHECK_HEADERS([ncurses.h],
-	[
-		AC_DEFINE([HAVE_NCURSES], [1], [Define to 1 if libcurses is present])
-		AC_DEFINE([HAVE_NCURSES_H], [1], [Define to 1 if ncurses.h is present])
-		havecurses=yes
-	])
-])
-if test "x$havecurses" != "xyes"; then
-	echo
-	echo "ERROR: ncurses dev headers or libraries not found. Install and try again"
-	echo
-	exit 1
-fi
-
 AC_CHECK_LIB(z, deflate, [
 	AC_CHECK_HEADERS([zlib.h],
 	[
@@ -362,8 +255,6 @@ AC_CHECK_LIB(z, deflate, [
 ])
 AM_CONDITIONAL(USECOMPRESSION, [test x$havecompression = xyes])
 AC_SUBST(Z_LIB)
-
-m4_include(m4/sendfile.m4)
 
 if test x"$GCC" != x"yes"; then
 	case x"$build" in
