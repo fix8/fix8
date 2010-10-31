@@ -39,7 +39,7 @@
 #
 #############################################################################################
 MAJOR_VERSION_NUM=0
-MINOR_VERSION_NUM=3
+MINOR_VERSION_NUM=1
 PATCH_VERSION_NUM=2
 
 # we would expect svnversion to return a string like 123:126
