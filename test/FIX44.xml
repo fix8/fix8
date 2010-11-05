@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <fix major="4" minor="4" ns="TEX">
   <header>
     <field name="BeginString" required="Y" />

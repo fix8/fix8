@@ -72,8 +72,6 @@ $URL$
 #include <xml.hpp>
 #include <f8c.hpp>
 
-//#include <config.h>
-
 //-----------------------------------------------------------------------------------------
 using namespace std;
 using namespace FIX8;
@@ -96,7 +94,7 @@ const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8
 //-----------------------------------------------------------------------------------------
 string inputFile, odir("./"), prefix;
 bool verbose(false);
-extern const string GETARGLIST("hvVo:p:");
+extern const string GETARGLIST("hvVo:p:d");
 extern const string spacer(3, ' ');
 
 //-----------------------------------------------------------------------------------------
@@ -140,6 +138,7 @@ public:
 int main(int argc, char **argv)
 {
 	int val;
+	bool dump(false);
 
 #ifdef HAVE_GETOPT_LONG
 	option long_options[] =
@@ -148,6 +147,7 @@ int main(int argc, char **argv)
 		{ "version",		0,	0,	'v' },
 		{ "verbose",		0,	0,	'V' },
 		{ "odir",			0,	0,	'o' },
+		{ "dump",			0,	0,	'd' },
 		{ "prefix",			0,	0,	'p' },
 		{ 0 },
 	};
@@ -168,6 +168,7 @@ int main(int argc, char **argv)
 		case 'h': print_usage(); return 0;
 		case ':': case '?': return 1;
 		case 'o': odir = optarg; break;
+		case 'd': dump = true; break;
 		case 'p': prefix = optarg; break;
 		default: break;
 		}
@@ -202,7 +203,11 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	//cout << *cfr;
+	if (dump)
+	{
+		cout << *cfr;
+		return 0;
+	}
 
 	Ctxt ctxt;
 	if (loadFixVersion (*cfr, ctxt) < 0)
@@ -424,7 +429,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 		}
 
 		pair<MessageSpecMap::iterator, bool> result(
-			mspec.insert(MessageSpecMap::value_type(msgtype, MessageSpec(name))));
+			mspec.insert(MessageSpecMap::value_type(msgtype, MessageSpec(name, msgcat % "admin"))));
 		if (!result.second)
 		{
 			cerr << "Could not add message " << name << " (" << msgtype << ") at "
@@ -785,8 +790,12 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 
 		osc_hpp << spacer << "virtual ~" << mitr->second._name << "() {}" << endl;
 		if (!isHeader && !isTrailer)
+		{
 			osc_hpp << spacer << "virtual bool process(Router& rt) const { return (static_cast<"
 				<< ctxt._clname << "_Router&>(rt))(this); }" << endl;
+			if (mitr->second._is_admin)
+				osc_hpp << spacer << "virtual bool is_admin() const { return true; }" << endl;
+		}
 
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << " get_msgtype() { return " << fsitr->second._name
 			<< "(_msgtype); }" << endl;

@@ -37,7 +37,6 @@ SUBDIRS = runtime compiler test
 
 #############################################################################################
 ACLOCAL_AMFLAGS = -I m4
-INCLUDE = include
 
 $(distdir).tar.gz:
 	make dist

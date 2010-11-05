@@ -232,8 +232,8 @@ public:
 	unsigned encode(f8String& to);
 
 	virtual bool process(Router& rt) const { return (rt)(this); }
-
 	virtual void print(std::ostream& os) const;
+	virtual bool is_admin() const { return false; }
 
 	static unsigned calc_chksum(const f8String& from, const unsigned offset=0, const int len=-1)
 	{

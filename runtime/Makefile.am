@@ -36,7 +36,8 @@
 lib_LTLIBRARIES = libf8.la
 INCLUDES = -I$(top_srcdir)/include
 
-libf8_la_SOURCES = xml.cpp f8utils.cpp message.cpp traits.cpp field.cpp session.cpp logger.cpp
+libf8_la_SOURCES = xml.cpp f8utils.cpp message.cpp traits.cpp \
+						 field.cpp session.cpp logger.cpp persist.cpp
 
 AM_LDFLAGS = -ggdb -rdynamic -shared
 
@@ -46,10 +47,5 @@ endif
 
 if USECCRYPT
 AM_LDFLAGS += -lcrypt
-endif
-
-if USESSL
-libf8_la_SOURCES += ssl.cpp
-AM_LDFLAGS += -lssl
 endif
 

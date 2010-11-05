@@ -314,4 +314,4 @@ Optional Packages:
   --with-sendfile-support Check for sendfile support (default=yes)
 
 Report bugs to <www@orbweb.org>.
-$Id: INSTALL 479 2009-01-16 09:41:17Z davidd $
+$Id$

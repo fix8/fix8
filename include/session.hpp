@@ -76,21 +76,38 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-struct SessionState
+struct States
 {
-	enum States
+	enum Tests
 	{
-		st_activated,
+		pr_begin_str, pr_logged_in, pr_low, pr_high, pr_comp_id, pr_target_id, pr_logon_timeout,
+	};
+
+	enum ConnectionStates
+	{
+		ct_activated,
+		ct_logged_in
+	};
+
+	enum SessionStates
+	{
 		st_wait_for_logon, st_logon_sent, st_logon_received, st_logoff_sent, st_logoff_received,
 		st_sequence_reset_sent, st_sequence_reset_received,
 	};
 
-	ebitset<States> _ss;
+	enum Role
+	{
+		rl_initiator, rl_acceptor
+	};
+
+	//ebitset<States> _ss;
 };
 
 //-------------------------------------------------------------------------------------------------
 class Session
 {
+	Thread<Session> _thread;
+
 	virtual bool Logon(Message *msg) { return false; }
 	virtual bool Logout(Message *msg) { return false; }
 	virtual bool Heartbeat(Message *msg) { return false; }
@@ -113,7 +130,10 @@ public:
 	Session();
 	virtual ~Session() {}
 
-	void start();
+	int start();
+
+	typedef std::pair<const unsigned, const f8String> SequencePair;
+	virtual bool retrans_callback(const SequencePair& with) { return true; }
 
 	friend class StaticTable<const f8String, bool (Session::*)(Message *)>;
 };

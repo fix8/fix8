@@ -27,9 +27,9 @@
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $Id: version.sh 497 2010-01-10 01:57:03Z davidd $
-# $LastChangedDate: 2010-01-10 12:57:03 +1100 (Sun, 10 Jan 2010) $
-# $URL: svn://catfarm.electro.mine.nu/usr/local/repos/mongod/trunk/version.sh $
+# $Id$
+# $LastChangedDate$
+# $URL$
 #############################################################################################
 #
 # This is the master version file, called by configure
@@ -40,7 +40,6 @@
 #############################################################################################
 MAJOR_VERSION_NUM=0
 MINOR_VERSION_NUM=1
-PATCH_VERSION_NUM=2
 
 # we would expect svnversion to return a string like 123:126
 BUILD_VERSION_NUM=0
@@ -48,6 +47,6 @@ if test "`type -t svnversion`" = file; then
 	BUILD_VERSION_NUM=`svnversion | sed 's/[^0-9]/ /g' | awk '{printf "%d",$2}'`
 fi
 if test $BUILD_VERSION_NUM = 0; then
-	BUILD_VERSION_NUM=`echo "$Revision: 497 $" | sed 's/[^0-9]/ /g' | awk '{printf "%d",$1}'`
+	BUILD_VERSION_NUM=`echo "$Revision$" | sed 's/[^0-9]/ /g' | awk '{printf "%d",$1}'`
 fi
-echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$PATCH_VERSION_NUM.$BUILD_VERSION_NUM
+echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$BUILD_VERSION_NUM

@@ -73,7 +73,6 @@ struct EnumType
 };
 
 //-------------------------------------------------------------------------------------------------
-// rlmain range
 struct RealmBase
 {
 	enum RealmType { dt_range, dt_set };

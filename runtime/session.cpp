@@ -25,7 +25,9 @@
 #include <traits.hpp>
 #include <field.hpp>
 #include <message.hpp>
+#include <thread.hpp>
 #include <session.hpp>
+#include <persist.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
@@ -85,17 +87,20 @@ void SessionID::from_string(const f8String& from)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-Session::Session()
+Session::Session() : _thread(ref(*this), &Session::start)
 {
+	_thread.Start();
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::start()
+int Session::start()
 {
 	while(true)
 	{
 		Message *msg;
 		(this->*_handlers.find_value_ref(msg->get_msgtype()))(msg);
 	}
+
+	return 0;
 }
 

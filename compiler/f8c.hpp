@@ -148,8 +148,9 @@ struct MessageSpec
 	FieldTraits _fields;
 	GroupMap _groups;
 	std::string _name, _description, _comment;
+	bool _is_admin;
 
-	MessageSpec(const std::string& name) : _name(name) {}
+	MessageSpec(const std::string& name, bool admin=false) : _name(name), _is_admin(admin) {}
 	virtual ~MessageSpec() {}
 };
 

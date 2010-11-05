@@ -1,4 +1,4 @@
-$Id: ChangeLog 477 2009-01-03 01:41:00Z davidd $
+$Id$
 
 ver 0.1.7 (alpha)	Thu Aug 14 14:15:47 EST 2008
 	* multi-interface listen transparent IPV4 and IPV6 interfaces

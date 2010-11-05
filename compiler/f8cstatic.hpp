@@ -145,7 +145,7 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "#include <algorithm>\n"
 "#include <bitset>\n"
 "#include <regex.h>\n"
-"#include <errno.h>\n"
+"#include <cerrno>\n"
 "#include <string.h>\n"
 "// f8 includes\n"
 "#include <f8exception.hpp>\n"

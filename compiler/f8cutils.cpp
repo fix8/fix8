@@ -332,6 +332,7 @@ void print_usage()
 	um.setdesc("f8c -- compile xml schema into fix8 application classes");
 	um.add('o', "odir <file>", "output target directory");
 	um.add('p', "prefix <file>", "output filename prefix");
+	um.add('d', "dump", "dump parsed source xml file");
 	um.add('h', "help", "help, this screen");
 	um.add('v', "version", "print version, exit");
 	um.add('V', "verbose", "be more verbose when processing");
