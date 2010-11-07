@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the New BSD License.
+FIX8 is released under the New BSD License.
 
 Copyright (c) 2010, David L. Dight <fix@fix8.org>
 All rights reserved.
@@ -29,9 +29,9 @@ TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF TH
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -------------------------------------------------------------------------------------------
-$Id$
-$Date$
-$URL$
+$Id: f8cutils.cpp 540 2010-11-05 21:25:33Z davidd $
+$Date: 2010-11-06 08:25:33 +1100 (Sat, 06 Nov 2010) $
+$URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8cutils.cpp $
 
 #endif
 //-----------------------------------------------------------------------------------------
@@ -71,79 +71,135 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-namespace {
-	const string spacer(3, ' ');
+RegExp FIXReader::_hdr("8=([^\x01]+)\x01{1}9=([^\x01]+)\x01");
+
+//-------------------------------------------------------------------------------------------------
+int FIXReader::operator()()
+{
+   unsigned processed(0), dropped(0), invalid(0);
+
+   for (;;)
+   {
+		try
+		{
+			f8String msg;
+
+			if (read(msg))	// will block
+			{
+				if (_msg_queue.try_push (msg))
+				{
+					cerr << "FIXReader: message queue is full" << endl;
+					++dropped;
+				}
+				else
+					++processed;
+			}
+			else
+				++invalid;
+		}
+		catch (exception& e)
+		{
+			cerr << e.what() << endl;
+			++invalid;
+		}
+   }
+
+	cerr << "FIXReader: " << processed << " messages processed, " << dropped << " dropped, "
+		<< invalid << " invalid" << endl;
+
+	return 0;
 }
 
 //-------------------------------------------------------------------------------------------------
-RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
-
-//-------------------------------------------------------------------------------------------------
-template<>
-const Session::Handlers::TypePair Session::Handlers::_valueTable[] =
+int FIXReader::callback_processor()
 {
-	Session::Handlers::TypePair(Common_MsgType_HEARTBEAT, &Session::Heartbeat),
-	Session::Handlers::TypePair(Common_MsgType_TEST_REQUEST, &Session::TestRequest),
-	Session::Handlers::TypePair(Common_MsgType_RESEND_REQUEST, &Session::ResendRequest),
-	Session::Handlers::TypePair(Common_MsgType_REJECT, &Session::Reject),
-	Session::Handlers::TypePair(Common_MsgType_SEQUENCE_RESET, &Session::SequenceReset),
-	Session::Handlers::TypePair(Common_MsgType_LOGOUT, &Session::Logout),
-	Session::Handlers::TypePair(Common_MsgType_LOGON, &Session::Logon),
-};
-template<>
-const Session::Handlers::NoValType Session::Handlers::_noval(&Session::Application);
+   for (;;)
+   {
+      f8String msg;
 
-template<>
-const Session::Handlers::TypeMap Session::Handlers::_valuemap(Session::Handlers::_valueTable,
-	Session::Handlers::get_table_end());
+      _msg_queue.pop (msg); // will block
+      if (msg.empty() || !(_session.*_callback)(msg)) // return false to exit
+			break;
+   }
 
-//-------------------------------------------------------------------------------------------------
-const f8String& SessionID::make_id()
-{
-	ostringstream ostr;
-	ostr << _beginString << ':' << _senderCompID << "->" << _targetCompID;
-	return _id = ostr.str();
+	return 0;
 }
 
 //-------------------------------------------------------------------------------------------------
-void SessionID::from_string(const f8String& from)
+bool FIXReader::read(f8String& to)	// read a complete FIX message
 {
-	RegMatch match;
-	if (_sid.SearchString(match, from, 4) == 4)
+	char msg_buf[max_msg_len] = {};
+	int result;
+	if ((result = _sock->receiveBytes(msg_buf, _bg_sz) == static_cast<int>(_bg_sz)))
 	{
-		f8String bstr, scid, tcid;
-		_sid.SubExpr(match, from, bstr, 0, 1);
-		_beginString.set(bstr);
-		_sid.SubExpr(match, from, scid, 0, 2);
-		_senderCompID.set(scid);
-		_sid.SubExpr(match, from, tcid, 0, 3);
-		_targetCompID.set(tcid);
-		make_id();
+		char bt;
+		size_t offs(_bg_sz);
+		do	// get the last chrs of bodylength and ^A
+		{
+			if (_sock->receiveBytes(&bt, 1) != 1)
+				return false;
+			if (!isdigit(bt) || bt != 0x1)
+				throw IllegalMessage(msg_buf);
+			msg_buf[offs++] = bt;
+		}
+		while (bt != 0x1);
+		to.assign(msg_buf, offs);
+
+		RegMatch match;
+		if (_hdr.SearchString(match, to, 3, 0) == 3)
+		{
+			f8String bgstr, len;
+			_hdr.SubExpr(match, to, bgstr, 0, 1);
+			_hdr.SubExpr(match, to, len, 0, 2);
+
+			if (bgstr != _begin_str)	// invalid begin string
+				throw InvalidVersion(bgstr);
+
+			const unsigned mlen(GetValue<unsigned>(len));
+			if (mlen == 0 || mlen > max_msg_len) // invalid msglen
+				throw InvalidBodyLength(mlen);
+
+			if ((result = _sock->receiveBytes(msg_buf, mlen) == static_cast<int>(mlen)))
+				return false;
+
+			to += string(msg_buf, mlen);
+			return true;
+		}
+
+		throw IllegalMessage(to);
 	}
+
+	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-Session::Session() : _connection()
+int FIXWriter::operator()()
 {
+	int result(0);
+
+   for (;;)
+   {
+      f8String msg;
+
+      _msg_queue.pop (msg); // will block
+      if (msg.empty() || (result = _sock->sendBytes(msg.data(), msg.size()) < static_cast<int>(msg.size())))
+			break;
+   }
+
+	return result;
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::begin(Connection *connection)
+bool FIXWriter::write(const f8String& from)
 {
-	_connection = connection; // takes owership
-	_connection->start();
+	return !_msg_queue.try_push (from);
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::process(const f8String& from)
+void Connection::start()
 {
-	while(true)
-	{
-		Message *msg;
-		(this->*_handlers.find_value_ref(msg->get_msgtype()))(msg);
-	}
-
-	return true;
+	_writer.start();
+	_reader->start();
 }
 

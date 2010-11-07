@@ -1,7 +1,7 @@
 #############################################################################################
-# Orbweb is released under the New BSD License.
+# Fix8 is released under the New BSD License.
 #
-# Copyright (c) 2007-2010, David L. Dight <www@f8.org>
+# Copyright (c) 2010, David L. Dight <fix@fix8.org>
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are
@@ -37,7 +37,8 @@ lib_LTLIBRARIES = libf8.la
 INCLUDES = -I$(top_srcdir)/include
 
 libf8_la_SOURCES = xml.cpp f8utils.cpp message.cpp traits.cpp \
-						 field.cpp session.cpp logger.cpp persist.cpp
+						 field.cpp session.cpp logger.cpp persist.cpp \
+						 connection.cpp
 
 AM_LDFLAGS = -ggdb -rdynamic -shared
 

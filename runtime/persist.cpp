@@ -1,3 +1,40 @@
+//-----------------------------------------------------------------------------------------
+#if 0
+
+Fix8 is released under the New BSD License.
+
+Copyright (c) 2010, David L. Dight <fix@fix8.org>
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are
+permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this list of
+	 	conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, this list
+	 	of conditions and the following disclaimer in the documentation and/or other
+		materials provided with the distribution.
+    * Neither the name of the author nor the names of its contributors may be used to
+	 	endorse or promote products derived from this software without specific prior
+		written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
+MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
+THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
+SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
+OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
+TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-------------------------------------------------------------------------------------------
+$Id: f8cutils.cpp 540 2010-11-05 21:25:33Z davidd $
+$Date: 2010-11-06 08:25:33 +1100 (Sat, 06 Nov 2010) $
+$URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8cutils.cpp $
+
+#endif
+//-----------------------------------------------------------------------------------------
 #include <config.h>
 #include <iostream>
 #include <sstream>
@@ -98,10 +135,62 @@ BDBPersister::~BDBPersister()
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned BDBPersister::get(const unsigned from, const unsigned to,
+unsigned BDBPersister::get_last_seqnum(unsigned& sequence) const
+{
+   Dbc *cursorp;
+   _db->cursor (0, &cursorp, 0);
+
+   KeyDataBuffer buffer;
+   KeyDataPair keyPair(buffer);
+   int retval(cursorp->get(&keyPair._key, &keyPair._data, DB_LAST));
+   cursorp->close();
+   if (retval)
+   {
+      cerr << "last record not found (" << db_strerror(retval) << ')' << endl;
+      return 0;
+   }
+   return sequence = buffer.keyBuf_.int_;
+}
+
+//-------------------------------------------------------------------------------------------------
+unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& session,
 	bool (Session::*callback)(const Session::SequencePair& with))
 {
-	return 0;
+	unsigned last_seq(0);
+	get_last_seqnum(last_seq);
+	unsigned recs_sent(0), startSeqNum(find_nearest_highest_seqnum (from, last_seq));
+	const unsigned finish(to == 0 ? last_seq : to);
+	if (!startSeqNum || from > finish)
+	{
+		cerr << "No records found" << endl;
+		return 0;
+	}
+
+	KeyDataBuffer buffer(startSeqNum);
+	KeyDataPair keyPair(buffer);
+	Dbc *cursorp;
+	_db->cursor (0, &cursorp, 0);
+	int retval;
+
+	if ((retval = cursorp->get(&keyPair._key, &keyPair._data, DB_SET)) == 0)
+	{
+		do
+		{
+			unsigned seqnum(buffer.keyBuf_.int_);
+			if (!seqnum || seqnum > finish)
+				break;
+			Session::SequencePair result(seqnum, buffer.dataBuf_);
+			++recs_sent;
+			if (!(session.*callback)(result))
+				break;
+		}
+		while(cursorp->get(&keyPair._key, &keyPair._data, DB_NEXT) == 0);
+	}
+	else
+		cerr << "record not found (" << db_strerror(retval) << ')' << endl;
+	cursorp->close();
+
+	return recs_sent;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -114,7 +203,7 @@ bool BDBPersister::put(const unsigned seqnum, const f8String& what)
 	int retval(_db->put(0, &keyPair._key, &keyPair._data, 0));  // will overwrite if found
 	if (retval)
 	{
-		cerr << "Could not add %s(%s) [%s]" << seqnum << db_strerror(retval) << endl;
+		cerr << "Could not add " << seqnum << '(' << db_strerror(retval) << ')' << endl;
 		return false;
 	}
 
@@ -131,16 +220,27 @@ bool BDBPersister::get(const unsigned seqnum, f8String& to)
    int retval(_db->get(0, &keyPair._key, &keyPair._data, 0));
    if (retval)
    {
-		cerr << "Could not get %s(%s) [%s]" << seqnum << db_strerror(retval) << endl;
+		cerr << "Could not get " << seqnum << '(' << db_strerror(retval) << ')' << endl;
       return false;
    }
    to.assign(buffer.dataBuf_);
    return true;
 }
 
-//-------------------------------------------------------------------------------------------------
-unsigned BDBPersister::get_last_seqnum(unsigned& to) const
+//---------------------------------------------------------------------------------------------------
+unsigned BDBPersister::find_nearest_highest_seqnum (const unsigned requested, const unsigned last)
 {
-	return 0;
+	if (_opened && last)
+	{
+		for (unsigned startseqnum(requested); startseqnum <= last; ++startseqnum)
+		{
+			KeyDataBuffer buffer(startseqnum);
+			KeyDataPair keyPair(buffer);
+			if (_db->get(0, &keyPair._key, &keyPair._data, 0) == 0)
+				return startseqnum;
+		}
+	}
+
+   return 0;
 }
 

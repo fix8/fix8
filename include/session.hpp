@@ -38,6 +38,9 @@ $URL$
 #ifndef _FIX8_SESSION_HPP_
 #define _FIX8_SESSION_HPP_
 
+#include <Poco/Net/StreamSocket.h>
+#include <connection.hpp>
+
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
@@ -61,6 +64,8 @@ public:
 	SessionID(const begin_string& beginString, const sender_compid& senderCompID, const target_compid& targetCompID)
 		: _beginString(beginString), _senderCompID(senderCompID), _targetCompID(targetCompID) { make_id(); }
 	SessionID(const f8String& from) { from_string(from); }
+	SessionID(const SessionID& from) : _beginString(from._beginString), _senderCompID(from._senderCompID),
+		_targetCompID(from._targetCompID), _id(from._id) {}
 
 	virtual ~SessionID() {}
 
@@ -104,10 +109,24 @@ struct States
 };
 
 //-------------------------------------------------------------------------------------------------
+class Persister;
+
+class SessionContext
+{
+	States::Role _role;
+	SessionID _sid;
+	Persister *_persist;
+
+public:
+	SessionContext(States::Role role, SessionID& sid, Persister *persist) :
+		_role(role), _sid(sid), _persist(persist) {}
+
+	friend class Session;
+};
+
+//-------------------------------------------------------------------------------------------------
 class Session
 {
-	Thread<Session> _thread;
-
 	virtual bool Logon(Message *msg) { return false; }
 	virtual bool Logout(Message *msg) { return false; }
 	virtual bool Heartbeat(Message *msg) { return false; }
@@ -126,11 +145,14 @@ protected:
 	typedef Field<f8String, Common_TargetCompID> target_comp_id;
 	typedef Field<UTCTimestamp, Common_SendingTime> sending_time;
 
+	Connection *_connection;
+
 public:
 	Session();
-	virtual ~Session() {}
+	virtual ~Session() { delete _connection; }
 
-	int start();
+	void begin(Connection *connection);
+	bool process(const f8String& from);
 
 	typedef std::pair<const unsigned, const f8String> SequencePair;
 	virtual bool retrans_callback(const SequencePair& with) { return true; }

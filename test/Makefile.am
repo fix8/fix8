@@ -43,5 +43,5 @@ CLEANFILES = $(BUILT_SOURCES)
 $(BUILT_SOURCES): $(XML_SCHEMA)
 	$(top_srcdir)/compiler/f8c $(XML_SCHEMA)
 
-f8test_LDFLAGS = -rdynamic -ldl -lrt -lf8 -lPocoFoundation -ltbb -L$(top_srcdir)/runtime -ldb_cxx
+f8test_LDFLAGS = -rdynamic -ldl -lrt -lf8 -lPocoFoundation -lPocoNet -ltbb -L$(top_srcdir)/runtime -ldb_cxx
 

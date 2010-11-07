@@ -58,7 +58,7 @@ public:
 
 	virtual bool put(const unsigned seqnum, const f8String& what) = 0;
 	virtual bool get(const unsigned seqnum, f8String& to) = 0;
-	virtual unsigned get(const unsigned from, const unsigned to,
+	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with)) = 0;
 	virtual unsigned get_last_seqnum(unsigned& to) const = 0;
 };
@@ -121,10 +121,11 @@ public:
 	virtual ~BDBPersister();
 
 	virtual bool initialise(const f8String& dbDir, const f8String& dbFname);
+	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last);
 
 	virtual bool put(const unsigned seqnum, const f8String& what);
 	virtual bool get(const unsigned seqnum, f8String& to);
-	virtual unsigned get(const unsigned from, const unsigned to,
+	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with));
 	virtual unsigned get_last_seqnum(unsigned& to) const;
 };

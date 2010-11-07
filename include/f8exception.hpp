@@ -86,6 +86,27 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+class InvalidBodyLength : public f8Exception
+{
+public:
+	InvalidBodyLength(const unsigned field) { format("Invalid BodyLength", field); }
+};
+
+//-------------------------------------------------------------------------------------------------
+class IllegalMessage : public f8Exception
+{
+public:
+	IllegalMessage(const std::string& str) { format("Illegal FIX Message", str); }
+};
+
+//-------------------------------------------------------------------------------------------------
+class InvalidVersion : public f8Exception
+{
+public:
+	InvalidVersion(const std::string& str) { format("Invalid FIX Version", str); }
+};
+
+//-------------------------------------------------------------------------------------------------
 class InvalidRepeatingGroup : public f8Exception
 {
 public:
