@@ -113,11 +113,26 @@ int FIXReader::operator()()
 //-------------------------------------------------------------------------------------------------
 int FIXReader::callback_processor()
 {
+	bool stopping(false);
+
    for (;;)
    {
       f8String msg;
 
-      _msg_queue.pop (msg); // will block
+		if (stopping)	// make sure we dequeue any pending msgs before exiting
+		{
+			if (!_msg_queue.try_pop(msg))
+				break;
+		}
+		else
+			_msg_queue.pop (msg); // will block
+
+      if (msg.empty())  // means exit
+		{
+         stopping = true;
+			continue;
+		}
+
       if (msg.empty() || !(_session.*_callback)(msg)) // return false to exit
 			break;
    }

@@ -76,22 +76,34 @@ using namespace std;
 int Logger::operator()()
 {
    unsigned received(0);
+	bool stopping(false);
 
    for (;;)
    {
 		string msg;
-      _msg_queue.pop (msg); // will block
+		if (stopping)	// make sure we dequeue any pending msgs before exiting
+		{
+			if (!_msg_queue.try_pop(msg))
+				break;
+		}
+		else
+			_msg_queue.pop (msg); // will block
+
       if (msg.empty())  // means exit
-         break;
+		{
+         stopping = true;
+			continue;
+		}
+
 		++received;
 
 		if (_flags & sequence)
-			get_stream() << setw(8) << right << setfill('0') << ++_sequence << ' ';
+			get_stream() << setw(7) << right << setfill('0') << ++_sequence << ' ';
 
 		if (_flags & timestamp)
 		{
 			string ts;
-			get_stream() << GetTimeAsStringMS(ts) << ": ";
+			get_stream() << GetTimeAsStringMS(ts) << ' ';
 		}
 
 		get_stream() << msg << endl;
@@ -121,12 +133,12 @@ const string& Logger::GetTimeAsStringMS(string& result, timespec *tv)
    oss << ':' << setw(2) << tim.tm_min << ':';
    oss.setf(ios::showpoint);
    oss.setf(ios::fixed);
-   oss << setw(7) << setfill('0') << setprecision(4) << secs;
+   oss << setw(9) << setfill('0') << setprecision(6) << secs;
    return result = oss.str();
 }
 
 //-------------------------------------------------------------------------------------------------
-FileLogger::FileLogger(const std::string& fname, const unsigned flags, const unsigned rotnum)
+FileLogger::FileLogger(const std::string& fname, const ebitset<Flags> flags, const unsigned rotnum)
 	: Logger(flags), _rotnum(rotnum)
 {
    // | uses IFS safe cfpopen; ! uses old popen if available
@@ -166,7 +178,7 @@ FileLogger::FileLogger(const std::string& fname, const unsigned flags, const uns
 //-------------------------------------------------------------------------------------------------
 bool FileLogger::rotate()
 {
-   if (_flags & pipe)
+   if (!(_flags & pipe))
    {
       string thislFile(_pathname);
       if (_flags & compress)

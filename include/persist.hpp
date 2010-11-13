@@ -61,11 +61,16 @@ public:
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with)) = 0;
 	virtual unsigned get_last_seqnum(unsigned& to) const = 0;
+	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum) = 0;
+	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) = 0;
+	virtual void stop() {}
 };
 
 //-------------------------------------------------------------------------------------------------
 class BDBPersister : public Persister
 {
+	Thread<BDBPersister> _thread;
+
 	DbEnv _dbEnv;
 	Db *_db;
 	f8String _dbDir, _dbFname;
@@ -90,6 +95,14 @@ class BDBPersister : public Persister
       KeyDataBuffer(const unsigned ival) : keyBuf_(ival), dataBufLen_(), dataBuf_() {}
       KeyDataBuffer(const unsigned ival, const f8String& src) : keyBuf_(ival), dataBuf_()
 			{ src.copy(dataBuf_, dataBufLen_ = src.size() > MaxMsgLen ? MaxMsgLen : src.size()); }
+      KeyDataBuffer(const unsigned snd, const unsigned trg) : keyBuf_()
+		{
+			unsigned *loc(reinterpret_cast<unsigned *>(dataBuf_));
+			*loc++ = snd;
+			*loc = trg;
+		}
+
+		bool empty() const { return dataBufLen_ == 0 && keyBuf_.int_ == 0; }
    };
 
    struct KeyDataPair
@@ -116,8 +129,11 @@ class BDBPersister : public Persister
 		return a < b ? -1 : a > b ? 1 : 0;
 	}
 
+	tbb::concurrent_bounded_queue<KeyDataBuffer> _persist_queue;
+	bool write(const KeyDataBuffer& what) { return _persist_queue.try_push (what) == 0; }
+
 public:
-	BDBPersister() : _dbEnv(0), _db(new Db(&_dbEnv, 0)), _wasCreated() {}
+	BDBPersister() : _thread(ref(*this)), _dbEnv(0), _db(new Db(&_dbEnv, 0)), _wasCreated() {}
 	virtual ~BDBPersister();
 
 	virtual bool initialise(const f8String& dbDir, const f8String& dbFname);
@@ -128,6 +144,11 @@ public:
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with));
 	virtual unsigned get_last_seqnum(unsigned& to) const;
+	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
+	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum);
+
+	void stop() { write(KeyDataBuffer()); _thread.Join(); }
+	int operator()();	// write thread
 };
 
 //-------------------------------------------------------------------------------------------------

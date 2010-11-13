@@ -42,6 +42,7 @@ $URL$
 #include <Poco/Util/Timer.h>
 #include <Poco/Util/TimerTask.h>
 #include <Poco/Util/TimerTaskAdapter.h>
+#include <tbb/atomic.h>
 #include <connection.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -120,7 +121,7 @@ class Session
 protected:
 	const F8MetaCntx& _ctx;
 	Connection *_connection;
-	unsigned _next_sender_seq, _next_target_seq;
+	tbb::atomic<unsigned> _next_sender_seq, _next_target_seq;
 	SessionID _sid;
 
 	Persister *_persist;
@@ -150,9 +151,10 @@ protected:
 	virtual bool handle_reject(Message *msg) { return false; }
 	virtual Message *generate_reject() { return 0; }
 
+	virtual bool handle_admin(Message *msg) { return true; }
 	virtual bool handle_application(Message *msg);
 
-	Message *msg_create(const f8String& msg_type)
+	Message *create_msg(const f8String& msg_type)
 	{
 		const BaseMsgEntry *bme(_ctx._bme.find_ptr(msg_type));
 		if (!bme)
@@ -175,6 +177,7 @@ public:
 
 	Connection *get_connection() { return _connection; }
 	const F8MetaCntx& get_ctx() const { return _ctx; }
+	bool log(const std::string& what) const;
 
 	friend class StaticTable<const f8String, bool (Session::*)(Message *)>;
 };

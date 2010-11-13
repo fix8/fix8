@@ -121,6 +121,7 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
       _wasCreated = true;
    }
 
+	_thread.Start();
    return _opened = true;
 
 }
@@ -128,6 +129,7 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
 //-------------------------------------------------------------------------------------------------
 BDBPersister::~BDBPersister()
 {
+	stop();
 	if (_opened)
 		_db->close(0);
 	delete _db;
@@ -194,26 +196,46 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 }
 
 //-------------------------------------------------------------------------------------------------
-bool BDBPersister::put(const unsigned seqnum, const f8String& what)
+bool BDBPersister::put(const unsigned sender_seqnum, const unsigned target_seqnum)
 {
 	if (!_opened)
 		return false;
-	KeyDataBuffer buffer(seqnum, what);
-	KeyDataPair keyPair(buffer);
-	int retval(_db->put(0, &keyPair._key, &keyPair._data, 0));  // will overwrite if found
-	if (retval)
-	{
-		cerr << "Could not add " << seqnum << '(' << db_strerror(retval) << ')' << endl;
-		return false;
-	}
+	KeyDataBuffer buffer(sender_seqnum, target_seqnum);
+	return write(buffer);
+}
 
-	return true;
+//-------------------------------------------------------------------------------------------------
+bool BDBPersister::put(const unsigned seqnum, const f8String& what)
+{
+	if (!_opened || !seqnum)
+		return false;
+	KeyDataBuffer buffer(seqnum, what);
+	return write(buffer);
+}
+
+//-------------------------------------------------------------------------------------------------
+bool BDBPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum)
+{
+	if (!_opened)
+      return false;
+   KeyDataBuffer buffer(0);
+   KeyDataPair keyPair(buffer);
+   int retval(_db->get(0, &keyPair._key, &keyPair._data, 0));
+   if (retval)
+   {
+		cerr << "Could not get control 0" << '(' << db_strerror(retval) << ')' << endl;
+      return false;
+   }
+	unsigned *loc(reinterpret_cast<unsigned *>(buffer.dataBuf_));
+	sender_seqnum = *loc++;
+	target_seqnum = *loc;
+   return true;
 }
 
 //-------------------------------------------------------------------------------------------------
 bool BDBPersister::get(const unsigned seqnum, f8String& to)
 {
-	if (!_opened)
+	if (!_opened || !seqnum)
       return false;
    KeyDataBuffer buffer(seqnum);
    KeyDataPair keyPair(buffer);
@@ -240,6 +262,40 @@ unsigned BDBPersister::find_nearest_highest_seqnum (const unsigned requested, co
 				return startseqnum;
 		}
 	}
+
+   return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+int BDBPersister::operator()()
+{
+   unsigned received(0);
+	bool stopping(false);
+
+   for (;;)
+   {
+		KeyDataBuffer buffer;
+		if (stopping)	// make sure we dequeue any pending msgs before exiting
+		{
+			if (!_persist_queue.try_pop(buffer))
+				break;
+		}
+		else
+			_persist_queue.pop (buffer); // will block
+
+      if (buffer.empty())  // means exit
+		{
+         stopping = true;
+			continue;
+		}
+
+		++received;
+
+		KeyDataPair keyPair(buffer);
+		int retval(_db->put(0, &keyPair._key, &keyPair._data, 0));  // will overwrite if found
+		if (retval)
+			cerr << "Could not add" << '(' << db_strerror(retval) << ')' << endl;
+   }
 
    return 0;
 }

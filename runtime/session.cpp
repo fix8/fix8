@@ -127,16 +127,16 @@ void SessionID::from_string(const f8String& from)
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger) :
-	_ctx(ctx), _connection(), _next_sender_seq(1), _next_target_seq(1),
-	_sid(sid), _persist(persist), _logger(logger)
+	_ctx(ctx), _connection(), _sid(sid), _persist(persist), _logger(logger)
 {
+	_next_sender_seq = _next_target_seq = 1;
 }
 
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger) :
-	_ctx(ctx), _connection(), _next_sender_seq(1), _next_target_seq(1),
-	_persist(persist), _logger(logger)
+	_ctx(ctx), _connection(), _persist(persist), _logger(logger)
 {
+	_next_sender_seq = _next_target_seq = 1;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -145,6 +145,12 @@ Session::~Session()
 	delete _persist;
 	delete _logger;
 	delete _connection;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Session::log(const std::string& what) const
+{
+	return _logger ? _logger->send(what) : false;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -166,19 +172,20 @@ void Session::heartbeat_service(Poco::Util::TimerTask &tt)
 {
 	const f8String testReqID;
 	Message *msg(generate_heartbeat(testReqID));
+	send(msg);
 }
 
 //-------------------------------------------------------------------------------------------------
 bool Session::process(const f8String& from)
 {
-	Message *msg;
-	return (this->*_handlers.find_value_ref(msg->get_msgtype()))(msg);
+	Message *msg(Message::factory(_ctx, from));
+	return handle_admin(msg) && (this->*_handlers.find_value_ref(msg->get_msgtype()))(msg);
 }
 
 //-------------------------------------------------------------------------------------------------
 Message *Session::generate_heartbeat(const f8String& testReqID)
 {
-	Message *msg(msg_create(Common_MsgType_HEARTBEAT));
+	Message *msg(create_msg(Common_MsgType_HEARTBEAT));
 	if (!testReqID.empty())
 		*msg += new test_request_id(testReqID);
 
@@ -188,7 +195,7 @@ Message *Session::generate_heartbeat(const f8String& testReqID)
 //-------------------------------------------------------------------------------------------------
 Message *Session::generate_test_request(const f8String& testReqID)
 {
-	Message *msg(msg_create(Common_MsgType_TEST_REQUEST));
+	Message *msg(create_msg(Common_MsgType_TEST_REQUEST));
 	*msg += new test_request_id(testReqID);
 
 	return msg;
@@ -197,7 +204,7 @@ Message *Session::generate_test_request(const f8String& testReqID)
 //-------------------------------------------------------------------------------------------------
 Message *Session::generate_logon(const unsigned heartbtint)
 {
-	Message *msg(msg_create(Common_MsgType_LOGON));
+	Message *msg(create_msg(Common_MsgType_LOGON));
 	*msg += new heartbeat_interval(heartbtint);
 
 	return msg;
@@ -206,14 +213,14 @@ Message *Session::generate_logon(const unsigned heartbtint)
 //-------------------------------------------------------------------------------------------------
 Message *Session::generate_logout()
 {
-	Message *msg(msg_create(Common_MsgType_LOGOUT));
+	Message *msg(create_msg(Common_MsgType_LOGOUT));
 	return msg;
 }
 
 //-------------------------------------------------------------------------------------------------
 Message *Session::generate_resend_request(const unsigned begin, const unsigned end)
 {
-	Message *msg(msg_create(Common_MsgType_RESEND_REQUEST));
+	Message *msg(create_msg(Common_MsgType_RESEND_REQUEST));
 	*msg += new begin_seq_num(begin);
 	*msg += new end_seq_num(end);
 
@@ -223,7 +230,7 @@ Message *Session::generate_resend_request(const unsigned begin, const unsigned e
 //-------------------------------------------------------------------------------------------------
 Message *Session::generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag)
 {
-	Message *msg(msg_create(Common_MsgType_SEQUENCE_RESET));
+	Message *msg(create_msg(Common_MsgType_SEQUENCE_RESET));
 	*msg += new new_seq_num(newseqnum);
 
 	if (gapfillflag)
