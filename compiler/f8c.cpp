@@ -228,14 +228,14 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 {
 	int fieldsLoaded(0);
 
-	XmlList flist;
+	XmlEntity::XmlSet flist;
 	if (!xf.find("fix/fields/field", flist))
 	{
 		cerr << "No fields found in " << inputFile << endl;
 		return 0;
 	}
 
-	for(XmlList::const_iterator itr(flist.begin()); itr != flist.end(); ++itr)
+	for(XmlEntity::XmlSet::const_iterator itr(flist.begin()); itr != flist.end(); ++itr)
 	{
 		string number, name, type;
 		if ((*itr)->GetAttr("number", number) && (*itr)->GetAttr("name", name) && (*itr)->GetAttr("type", type))
@@ -257,10 +257,10 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 
 			++fieldsLoaded;
 
-			XmlList realmlist;
+			XmlEntity::XmlSet realmlist;
 			if ((*itr)->find("field/value", realmlist))
 			{
-				for(XmlList::const_iterator ditr(realmlist.begin()); ditr != realmlist.end(); ++ditr)
+				for(XmlEntity::XmlSet::const_iterator ditr(realmlist.begin()); ditr != realmlist.end(); ++ditr)
 				{
 					string enum_str, description;
 					if ((*ditr)->GetAttr("enum", enum_str) && (*ditr)->GetAttr("description", description))
@@ -294,7 +294,7 @@ int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& 
 {
 	int msgssLoaded(0);
 
-	XmlList mlist;
+	XmlEntity::XmlSet mlist;
 	if (!xf.find("fix/components/component", mlist))
 	{
 		cerr << "No components found in " << inputFile << endl;
@@ -302,7 +302,7 @@ int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& 
 	}
 
 	unsigned cnum(0);
-	for(XmlList::const_iterator itr(mlist.begin()); itr != mlist.end(); ++itr, ++cnum)
+	for(XmlEntity::XmlSet::const_iterator itr(mlist.begin()); itr != mlist.end(); ++itr, ++cnum)
 	{
 		string name;
 		if ((*itr)->GetAttr("name", name))
@@ -316,10 +316,10 @@ int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& 
 				continue;
 			}
 
-			XmlList grplist;
+			XmlEntity::XmlSet grplist;
 			if ((*itr)->find("component/group", grplist))
 			{
-				for(XmlList::const_iterator gitr(grplist.begin()); gitr != grplist.end(); ++gitr)
+				for(XmlEntity::XmlSet::const_iterator gitr(grplist.begin()); gitr != grplist.end(); ++gitr)
 				{
 					string gname, required;
 					if ((*gitr)->GetAttr("name", gname) && (*gitr)->GetAttr("required", required))
@@ -374,7 +374,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 {
 	int msgssLoaded(0);
 
-	XmlList mlist;
+	XmlEntity::XmlSet mlist;
 	if (!xf.find("fix/messages/message", mlist))
 	{
 		cerr << "No messages found in " << inputFile << endl;
@@ -401,7 +401,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 		return 0;
 	}
 
-	for(XmlList::const_iterator itr(mlist.begin()); itr != mlist.end(); ++itr)
+	for(XmlEntity::XmlSet::const_iterator itr(mlist.begin()); itr != mlist.end(); ++itr)
 	{
 		string msgcat, name, msgtype, elname;
 		if ((*itr)->GetTag() == "header")
@@ -438,10 +438,10 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 		}
 
 		string elpart;
-		XmlList grplist;
+		XmlEntity::XmlSet grplist;
 		if ((*itr)->find(mkel(elname, "group", elpart), grplist))
 		{
-			for(XmlList::const_iterator gitr(grplist.begin()); gitr != grplist.end(); ++gitr)
+			for(XmlEntity::XmlSet::const_iterator gitr(grplist.begin()); gitr != grplist.end(); ++gitr)
 			{
 				string gname, required;
 				if ((*gitr)->GetAttr("name", gname) && (*gitr)->GetAttr("required", required))
@@ -460,10 +460,10 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 								result.first->second._groups.insert(GroupMap::value_type(fs_itr->first, FieldTraits())));
 							processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 0);
 							gresult.first->second.set_group();
-							XmlList comlist;
+							XmlEntity::XmlSet comlist;
 							if ((*gitr)->find("group/component", comlist))
 							{
-								for(XmlList::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
+								for(XmlEntity::XmlSet::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
 								{
 									string cname, required;
 									if (!(*citr)->GetAttr("name", cname) || !(*citr)->GetAttr("required", required))
@@ -506,10 +506,10 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 
 		processMessageFields(mkel(elname, "field", elpart), *itr, result.first->second._fields, ftonSpec, fspec, 0);
 
-		XmlList comlist;
+		XmlEntity::XmlSet comlist;
 		if ((*itr)->find(mkel(elname, "component", elpart), comlist))
 		{
-			for(XmlList::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
+			for(XmlEntity::XmlSet::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
 			{
 				string cname, required;
 				if (!(*citr)->GetAttr("name", cname) || !(*citr)->GetAttr("required", required))
@@ -644,7 +644,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ost_cpp << endl << "};" << endl;
 	ost_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairsz(sizeof(_pairs)/sizeof("
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair));" << endl;
-	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::NoValType "
+	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::NotFoundType "
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_noval = {0, 0};" << endl;
 
 	// terminate files
@@ -883,7 +883,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname
 		<< "_BaseMsgEntry::_pairsz(sizeof(_pairs)/sizeof(" << ctxt._fixns << "::"
 		<< ctxt._clname << "_BaseMsgEntry::Pair));" << endl;
-	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::NoValType "
+	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::NotFoundType "
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = {0, 0};" << endl;
 	osc_cpp << "F8MetaCntx ctx(" << ctxt._version << ", bme, be, \"" << ctxt._beginstr << "\");" << endl;
 

@@ -128,13 +128,6 @@ protected:
 	const f8String& _msgType;
 	const class F8MetaCntx& _ctx;
 
-	void add_field(const unsigned short fnum, const unsigned pos, BaseField *what)
-	{
-		_fields.insert(Fields::value_type(fnum, what));
-		_pos.insert(Positions::value_type(pos, what));
-		_fp.set(fnum, FieldTrait::present);
-	}
-
 public:
 	template<typename InputIterator>
 	MessageBase(const class F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
@@ -164,6 +157,15 @@ public:
 
 	const f8String& get_msgtype() const { return _msgType; }
 
+	void add_field(const unsigned short fnum, const unsigned pos, BaseField *what)
+	{
+		_fields.insert(Fields::value_type(fnum, what));
+		_pos.insert(Positions::value_type(pos, what));
+		_fp.set(fnum, FieldTrait::present);
+	}
+
+	void set(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present) { _fp.set(field, type); }
+
 	bool add_field(BaseField *what)
 	{
 		const unsigned short fnum(what->_fnum);
@@ -190,6 +192,7 @@ public:
 		return false;
 	}
 
+	Fields::const_iterator find_field(const unsigned short fnum) const { return _fields.find(fnum); }
 	template<typename T>
 	GroupBase *find_group() { return find_group(T::get_fnum()); }
 	GroupBase *find_group(const unsigned short fnum) const
@@ -201,6 +204,8 @@ public:
 	void add_group(GroupBase *what)
 		{ _groups.insert(Groups::value_type(what->_fnum, what)); }
 	void operator+=(GroupBase *what) { add_group(what); }
+
+	unsigned short getPos(const unsigned short field) const { return _fp.getPos(field); }
 
 	virtual void print(std::ostream& os) const;
 	virtual void print_group(const unsigned short fnum, std::ostream& os) const;

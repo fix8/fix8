@@ -41,7 +41,7 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/session.hpp $
 #include <Poco/Net/StreamSocket.h>
 #include <tbb/concurrent_queue.h>
 
-//-------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 namespace FIX8 {
 
 class Session;
@@ -67,13 +67,12 @@ public:
 class FIXReader : public AsyncHalfDuplexSocket
 {
 	static RegExp _hdr;
-	static const size_t max_msg_len = 1024;
+	static const size_t _max_msg_len = 1024, _chksum_sz = 7;
 
 	Thread<FIXReader> _callback_thread;
 	int callback_processor();
 
-	const f8String& _begin_str;
-	const size_t _bg_sz; // 8=FIXx.x^A9=x
+	size_t _bg_sz; // 8=FIXx.x^A9=x
 	Session& _session;
 	bool (Session::*_callback)(const f8String&);
 
@@ -83,11 +82,14 @@ protected:
 	int operator()();
 
 public:
-	FIXReader(Poco::Net::StreamSocket *sock, const f8String& begin_str, Session& session,
-		bool (Session::*callback)(const f8String&)) : AsyncHalfDuplexSocket(sock),
-		_callback_thread(ref(*this), &FIXReader::callback_processor), _begin_str(begin_str),
-		_bg_sz(2 + begin_str.size() + 1 + 3),
-		_session(session), _callback(callback) { _callback_thread.Start(); }
+	FIXReader(Poco::Net::StreamSocket *sock, Session& session, bool (Session::*callback)(const f8String&))
+		: AsyncHalfDuplexSocket(sock),
+		_callback_thread(ref(*this), &FIXReader::callback_processor), _bg_sz(),
+		_session(session), _callback(callback)
+	{
+		set_preamble_sz();
+		_callback_thread.Start();
+	}
 
 	virtual ~FIXReader() {}
 
@@ -96,6 +98,8 @@ public:
 		AsyncHalfDuplexSocket::start();
 		_callback_thread.Start();
 	}
+
+	void set_preamble_sz();
 };
 
 //----------------------------------------------------------------------------------------
@@ -115,25 +119,26 @@ public:
 class Connection
 {
 public:
-	enum ConnectionType { cn_acceptor, cn_initiator };
+	enum ConnectionRole { cn_acceptor, cn_initiator };
 
 private:
 	Poco::Net::StreamSocket *_sock;
 	bool _connected;
-	ConnectionType _type;
+	ConnectionRole _role;
 
 protected:
 	FIXReader *_reader;
 	FIXWriter _writer;
 
 public:
-	Connection(Poco::Net::StreamSocket *sock, bool connected, ConnectionType type, FIXReader *reader)
-		: _sock(sock), _connected(connected), _type(type), _reader(reader), _writer(sock) {} // takes owership
+	Connection(Poco::Net::StreamSocket *sock, bool connected, ConnectionRole role, FIXReader *reader)
+		: _sock(sock), _connected(connected), _role(role), _reader(reader), _writer(sock) {} // takes owership
 	virtual ~Connection() { delete _reader; }
 
-	const ConnectionType get_type() const { return _type; }
+	const ConnectionRole get_role() const { return _role; }
 	void start();
 	virtual bool connect() { return _connected; }
+	virtual bool write(const f8String& from) { return _writer.write(from); }
 };
 
 //-------------------------------------------------------------------------------------------------

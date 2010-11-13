@@ -37,6 +37,7 @@ $URL$
 //-----------------------------------------------------------------------------------------
 #include <config.h>
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <vector>
 #include <map>
@@ -65,6 +66,7 @@ $URL$
 #include <thread.hpp>
 #include <session.hpp>
 #include <persist.hpp>
+#include <logger.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
@@ -82,16 +84,16 @@ RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 template<>
 const Session::Handlers::TypePair Session::Handlers::_valueTable[] =
 {
-	Session::Handlers::TypePair(Common_MsgType_HEARTBEAT, &Session::Heartbeat),
-	Session::Handlers::TypePair(Common_MsgType_TEST_REQUEST, &Session::TestRequest),
-	Session::Handlers::TypePair(Common_MsgType_RESEND_REQUEST, &Session::ResendRequest),
-	Session::Handlers::TypePair(Common_MsgType_REJECT, &Session::Reject),
-	Session::Handlers::TypePair(Common_MsgType_SEQUENCE_RESET, &Session::SequenceReset),
-	Session::Handlers::TypePair(Common_MsgType_LOGOUT, &Session::Logout),
-	Session::Handlers::TypePair(Common_MsgType_LOGON, &Session::Logon),
+	Session::Handlers::TypePair(Common_MsgType_HEARTBEAT, &Session::handle_heartbeat),
+	Session::Handlers::TypePair(Common_MsgType_TEST_REQUEST, &Session::handle_test_request),
+	Session::Handlers::TypePair(Common_MsgType_RESEND_REQUEST, &Session::handle_resend_request),
+	Session::Handlers::TypePair(Common_MsgType_REJECT, &Session::handle_reject),
+	Session::Handlers::TypePair(Common_MsgType_SEQUENCE_RESET, &Session::handle_sequence_reset),
+	Session::Handlers::TypePair(Common_MsgType_LOGOUT, &Session::handle_logout),
+	Session::Handlers::TypePair(Common_MsgType_LOGON, &Session::handle_logon),
 };
 template<>
-const Session::Handlers::NoValType Session::Handlers::_noval(&Session::Application);
+const Session::Handlers::NotFoundType Session::Handlers::_noval(&Session::handle_application);
 
 template<>
 const Session::Handlers::TypeMap Session::Handlers::_valuemap(Session::Handlers::_valueTable,
@@ -124,26 +126,136 @@ void SessionID::from_string(const f8String& from)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-Session::Session() : _connection()
+Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger) :
+	_ctx(ctx), _connection(), _next_sender_seq(1), _next_target_seq(1),
+	_sid(sid), _persist(persist), _logger(logger)
 {
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::begin(Connection *connection)
+Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger) :
+	_ctx(ctx), _connection(), _next_sender_seq(1), _next_target_seq(1),
+	_persist(persist), _logger(logger)
+{
+}
+
+//-------------------------------------------------------------------------------------------------
+Session::~Session()
+{
+	delete _persist;
+	delete _logger;
+	delete _connection;
+}
+
+//-------------------------------------------------------------------------------------------------
+int Session::begin(Connection *connection)
 {
 	_connection = connection; // takes owership
 	_connection->start();
+	if (!_connection->connect())
+		return -1;;
+
+	_heartbeat_timer.scheduleAtFixedRate(
+		new Poco::Util::TimerTaskAdapter<Session>(*this, &Session::heartbeat_service), 1000 * 10, 1000 * 10);
+
+	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+void Session::heartbeat_service(Poco::Util::TimerTask &tt)
+{
+	const f8String testReqID;
+	Message *msg(generate_heartbeat(testReqID));
 }
 
 //-------------------------------------------------------------------------------------------------
 bool Session::process(const f8String& from)
 {
-	while(true)
+	Message *msg;
+	return (this->*_handlers.find_value_ref(msg->get_msgtype()))(msg);
+}
+
+//-------------------------------------------------------------------------------------------------
+Message *Session::generate_heartbeat(const f8String& testReqID)
+{
+	Message *msg(msg_create(Common_MsgType_HEARTBEAT));
+	if (!testReqID.empty())
+		*msg += new test_request_id(testReqID);
+
+	return msg;
+}
+
+//-------------------------------------------------------------------------------------------------
+Message *Session::generate_test_request(const f8String& testReqID)
+{
+	Message *msg(msg_create(Common_MsgType_TEST_REQUEST));
+	*msg += new test_request_id(testReqID);
+
+	return msg;
+}
+
+//-------------------------------------------------------------------------------------------------
+Message *Session::generate_logon(const unsigned heartbtint)
+{
+	Message *msg(msg_create(Common_MsgType_LOGON));
+	*msg += new heartbeat_interval(heartbtint);
+
+	return msg;
+}
+
+//-------------------------------------------------------------------------------------------------
+Message *Session::generate_logout()
+{
+	Message *msg(msg_create(Common_MsgType_LOGOUT));
+	return msg;
+}
+
+//-------------------------------------------------------------------------------------------------
+Message *Session::generate_resend_request(const unsigned begin, const unsigned end)
+{
+	Message *msg(msg_create(Common_MsgType_RESEND_REQUEST));
+	*msg += new begin_seq_num(begin);
+	*msg += new end_seq_num(end);
+
+	return msg;
+}
+
+//-------------------------------------------------------------------------------------------------
+Message *Session::generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag)
+{
+	Message *msg(msg_create(Common_MsgType_SEQUENCE_RESET));
+	*msg += new new_seq_num(newseqnum);
+
+	if (gapfillflag)
+		*msg += new gap_fill_flag(true);
+
+	return msg;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Session::send(Message *tosend)	// takes ownership and destroys
+{
+	auto_ptr<Message> msg(tosend);
+	*msg->Header() += new msg_seq_num(_next_sender_seq);
+	f8String output;
+	unsigned enclen(msg->encode(output));
+	if (!_connection->write(output))
 	{
-		Message *msg;
-		(this->*_handlers.find_value_ref(msg->get_msgtype()))(msg);
+		cerr << "Message write failed!" << endl;
+		return false;
 	}
 
+	if (!tosend->is_admin() && _persist)
+		_persist->put(_next_sender_seq, output);
+
+	++_next_sender_seq;
+
 	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Session::handle_application(Message *msg)
+{
+	return false;
 }
 

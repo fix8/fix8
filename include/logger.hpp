@@ -43,22 +43,84 @@ $URL$
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
+//------------------------------------------------------------------------------
+class fdoutbuf : public std::streambuf // inspiration from Josuttis N.M.
+{
+protected:
+   int fd;
+
+   virtual int_type overflow (int_type c)
+   {
+      if (c != EOF)
+      {
+         char z(c);
+         if (write(fd, &z, 1) != 1)
+            return EOF;
+      }
+      return c;
+   }
+
+   virtual std::streamsize xsputn (const char *s, std::streamsize num)
+   {
+      return write (fd, s, num);
+   }
+
+public:
+   fdoutbuf (int _fd) : fd(_fd) {}
+   virtual ~fdoutbuf () {}
+};
+
+extern "C"
+{
+	FILE *cfpopen(char *command, char *type);
+	int cfpclose(FILE *pp);
+}
+
+class fptrostream : public std::ostream
+{
+   FILE *fptr_;
+   bool cf_;
+
+protected:
+   fdoutbuf buf_;
+
+public:
+   fptrostream (FILE *fptr, bool cf=true) : std::ostream(&buf_), fptr_(fptr), cf_(cf), buf_(fileno(fptr)) {}
+   virtual ~fptrostream ()
+	{
+		if (cf_)
+			cfpclose(fptr_);
+		else
+			pclose(fptr_);
+	}
+
+   int getfileno() { return fileno(fptr_); }
+};
+
 //-------------------------------------------------------------------------------------------------
 class Logger
 {
 	Thread<Logger> _thread;
 
+public:
+	enum Flags { append, timestamp, sequence, compress, pipe };
+	static const unsigned rotation_default = 5, max_rotation = 64;
+
 protected:
+	ebitset<Flags> _flags;
 	tbb::concurrent_bounded_queue<std::string> _msg_queue;
+	unsigned _sequence;
 
 public:
-	Logger() : _thread(ref(*this)) { _thread.Start(); }
+	Logger(const unsigned flags) : _thread(ref(*this)), _flags(flags), _sequence() { _thread.Start(); }
 	virtual ~Logger() {}
 
 	virtual std::ostream& get_stream() const { return std::cout; }
 	bool send(const std::string& what) { return _msg_queue.try_push (what) == 0; }
 	void stop() { send(std::string()); }
+	virtual bool rotate() { return true; }
 
+	static const std::string& GetTimeAsStringMS(std::string& result, timespec *tv=0);
 	int operator()();
 };
 
@@ -68,7 +130,7 @@ class GenericLogger : public Logger
 	std::ostream& _os;
 
 public:
-	GenericLogger(std::ostream& os) : _os(os) {}
+	GenericLogger(std::ostream& os, const unsigned flags) : Logger(flags), _os(os) {}
 	virtual ~GenericLogger() {}
 
 	virtual std::ostream& get_stream() const { return _os; }
@@ -77,14 +139,16 @@ public:
 //-------------------------------------------------------------------------------------------------
 class FileLogger : public Logger
 {
-	std::ofstream *_ofs;
+	std::ostream *_ofs;
+	std::string _pathname;
+	unsigned _rotnum;
 
 public:
-	FileLogger(const char *fname, bool append=true)
-		: _ofs(new std::ofstream(fname, std::ios_base::out|append ? std::ios_base::app : std::ios_base::trunc)) {}
+	FileLogger(const std::string& pathname, const unsigned flags, const unsigned rotnum=0);
 	virtual ~FileLogger() { delete _ofs; }
 
 	virtual std::ostream& get_stream() const { return *_ofs; }
+	virtual bool rotate();
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -36,13 +36,15 @@
 lib_LTLIBRARIES = libf8.la
 INCLUDES = -I$(top_srcdir)/include
 
-libf8_la_SOURCES = xml.cpp f8utils.cpp message.cpp traits.cpp \
-						 field.cpp session.cpp logger.cpp persist.cpp \
-						 connection.cpp
+libf8_la_SOURCES = 	popen.c \
+							xml.cpp f8utils.cpp message.cpp traits.cpp \
+							field.cpp session.cpp logger.cpp persist.cpp \
+							connection.cpp configuration.cpp
 
 AM_LDFLAGS = -ggdb -rdynamic -shared
 
 if USECOMPRESSION
+libf8_la_SOURCES += gzstream.cpp
 AM_LDFLAGS += -lz
 endif
 

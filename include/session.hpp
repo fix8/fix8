@@ -39,6 +39,9 @@ $URL$
 #define _FIX8_SESSION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
+#include <Poco/Util/Timer.h>
+#include <Poco/Util/TimerTask.h>
+#include <Poco/Util/TimerTaskAdapter.h>
 #include <connection.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -66,6 +69,7 @@ public:
 	SessionID(const f8String& from) { from_string(from); }
 	SessionID(const SessionID& from) : _beginString(from._beginString), _senderCompID(from._senderCompID),
 		_targetCompID(from._targetCompID), _id(from._id) {}
+	SessionID() {}
 
 	virtual ~SessionID() {}
 
@@ -100,62 +104,77 @@ struct States
 		st_sequence_reset_sent, st_sequence_reset_received,
 	};
 
-	enum Role
-	{
-		rl_initiator, rl_acceptor
-	};
-
 	//ebitset<States> _ss;
 };
 
 //-------------------------------------------------------------------------------------------------
 class Persister;
-
-class SessionContext
-{
-	States::Role _role;
-	SessionID _sid;
-	Persister *_persist;
-
-public:
-	SessionContext(States::Role role, SessionID& sid, Persister *persist) :
-		_role(role), _sid(sid), _persist(persist) {}
-
-	friend class Session;
-};
+class Logger;
 
 //-------------------------------------------------------------------------------------------------
 class Session
 {
-	virtual bool Logon(Message *msg) { return false; }
-	virtual bool Logout(Message *msg) { return false; }
-	virtual bool Heartbeat(Message *msg) { return false; }
-	virtual bool ResendRequest(Message *msg) { return false; }
-	virtual bool SequenceReset(Message *msg) { return false; }
-	virtual bool TestRequest(Message *msg) { return false; }
-	virtual bool Reject(Message *msg) { return false; }
-	virtual bool Application(Message *msg) { return false; }
-
 	typedef StaticTable<const f8String, bool (Session::*)(Message *)> Handlers;
 	Handlers _handlers;
 
 protected:
-	typedef Field<SeqNum, Common_MsgSeqNum> msg_seq_num;
-	typedef Field<f8String, Common_SenderCompID> sender_comp_id;
-	typedef Field<f8String, Common_TargetCompID> target_comp_id;
-	typedef Field<UTCTimestamp, Common_SendingTime> sending_time;
-
+	const F8MetaCntx& _ctx;
 	Connection *_connection;
+	unsigned _next_sender_seq, _next_target_seq;
+	SessionID _sid;
+
+	Persister *_persist;
+	Logger *_logger;
+
+	Poco::Util::Timer _heartbeat_timer;
+	void heartbeat_service(Poco::Util::TimerTask &);	// generate heartbeats
+
+	virtual bool handle_logon(Message *msg) { return false; }
+	virtual Message *generate_logon(const unsigned heartbeat_interval);
+
+	virtual bool handle_logout(Message *msg) { return false; }
+	virtual Message *generate_logout();
+
+	virtual bool handle_heartbeat(Message *msg) { return false; }
+	virtual Message *generate_heartbeat(const f8String& testReqID);
+
+	virtual bool handle_resend_request(Message *msg) { return false; }
+	virtual Message *generate_resend_request(const unsigned begin, const unsigned end);
+
+	virtual bool handle_sequence_reset(Message *msg) { return false; }
+	virtual Message *generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag=false);
+
+	virtual bool handle_test_request(Message *msg) { return false; }
+	virtual Message *generate_test_request(const f8String& testReqID);
+
+	virtual bool handle_reject(Message *msg) { return false; }
+	virtual Message *generate_reject() { return 0; }
+
+	virtual bool handle_application(Message *msg);
+
+	Message *msg_create(const f8String& msg_type)
+	{
+		const BaseMsgEntry *bme(_ctx._bme.find_ptr(msg_type));
+		if (!bme)
+			throw InvalidMetadata(msg_type);
+		return bme->_create();
+	}
 
 public:
-	Session();
-	virtual ~Session() { delete _connection; }
+	Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist=0, Logger *logger=0);
+	Session(const F8MetaCntx& ctx, Persister *persist=0, Logger *logger=0);
+	virtual ~Session();
 
-	void begin(Connection *connection);
+	int begin(Connection *connection);
 	bool process(const f8String& from);
 
 	typedef std::pair<const unsigned, const f8String> SequencePair;
 	virtual bool retrans_callback(const SequencePair& with) { return true; }
+
+	bool send(Message *msg);
+
+	Connection *get_connection() { return _connection; }
+	const F8MetaCntx& get_ctx() const { return _ctx; }
 
 	friend class StaticTable<const f8String, bool (Session::*)(Message *)>;
 };

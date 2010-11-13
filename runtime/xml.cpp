@@ -413,15 +413,15 @@ XmlEntity *XmlEntity::find(const string& what, bool ignorecase, const string *at
 }
 
 //-----------------------------------------------------------------------------------------
-int XmlEntity::find(const string& what, XmlList& rlst, bool ignorecase,
+int XmlEntity::find(const string& what, XmlSet& eset, bool ignorecase,
 	const string *atag, const string *aval, const char delim) 	// find all matching entities
 {
 	if (ignorecase ? what % tag_ : what == tag_)
 	{
 		if (atag && aval && !findAttrByValue(*atag, *aval))
 			return 0;
-		rlst.push_back(this);
-		return rlst.size();
+		eset.insert(this);
+		return eset.size();
 	}
 
 	if (children_)
@@ -436,8 +436,8 @@ int XmlEntity::find(const string& what, XmlList& rlst, bool ignorecase,
 			string nwhat(fpos == string::npos ? lwhat : lwhat.substr(0, fpos));
 			pair<XmlSubEls::iterator, XmlSubEls::iterator> result(children_->equal_range(nwhat));
 			while (result.first != result.second)
-				(*result.first++).second->find(lwhat, rlst, ignorecase, atag, aval);
-			return rlst.size();
+				(*result.first++).second->find(lwhat, eset, ignorecase, atag, aval);
+			return eset.size();
 		}
 	}
 

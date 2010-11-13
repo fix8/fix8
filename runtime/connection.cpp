@@ -126,11 +126,18 @@ int FIXReader::callback_processor()
 }
 
 //-------------------------------------------------------------------------------------------------
+void FIXReader::set_preamble_sz()
+{
+	_bg_sz = 2 + _session.get_ctx()._beginStr.size() + 1 + 3;
+}
+
+//-------------------------------------------------------------------------------------------------
 bool FIXReader::read(f8String& to)	// read a complete FIX message
 {
-	char msg_buf[max_msg_len] = {};
-	int result;
-	if ((result = _sock->receiveBytes(msg_buf, _bg_sz) == static_cast<int>(_bg_sz)))
+	char msg_buf[_max_msg_len] = {};
+	int result(_sock->receiveBytes(msg_buf, _bg_sz));
+
+	if (result == static_cast<int>(_bg_sz))
 	{
 		char bt;
 		size_t offs(_bg_sz);
@@ -138,11 +145,11 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 		{
 			if (_sock->receiveBytes(&bt, 1) != 1)
 				return false;
-			if (!isdigit(bt) || bt != 0x1)
+			if (!isdigit(bt) || bt != default_field_separator)
 				throw IllegalMessage(msg_buf);
 			msg_buf[offs++] = bt;
 		}
-		while (bt != 0x1);
+		while (bt != default_field_separator && offs < _max_msg_len);
 		to.assign(msg_buf, offs);
 
 		RegMatch match;
@@ -152,17 +159,22 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			_hdr.SubExpr(match, to, bgstr, 0, 1);
 			_hdr.SubExpr(match, to, len, 0, 2);
 
-			if (bgstr != _begin_str)	// invalid begin string
+			if (bgstr != _session.get_ctx()._beginStr)	// invalid begin string
 				throw InvalidVersion(bgstr);
 
 			const unsigned mlen(GetValue<unsigned>(len));
-			if (mlen == 0 || mlen > max_msg_len) // invalid msglen
+			if (mlen == 0 || mlen > _max_msg_len - _bg_sz - _chksum_sz) // invalid msglen
 				throw InvalidBodyLength(mlen);
 
+			// read the body
 			if ((result = _sock->receiveBytes(msg_buf, mlen) == static_cast<int>(mlen)))
 				return false;
 
-			to += string(msg_buf, mlen);
+			// read the checksum
+			if ((result = _sock->receiveBytes(msg_buf + mlen, _chksum_sz) == static_cast<int>(_chksum_sz)))
+				return false;
+
+			to += string(msg_buf, mlen + _chksum_sz);
 			return true;
 		}
 

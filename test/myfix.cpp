@@ -110,7 +110,7 @@ int main(int argc, char **argv)
 	try
 	{
 		//FileLogger flog("myfix.log");
-		Logger flog;
+		Logger flog(0);
 
 		TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
 		*nos += new TEX::TransactTime("20110904-10:15:14");

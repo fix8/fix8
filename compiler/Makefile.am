@@ -38,5 +38,11 @@ INCLUDES = -I$(top_srcdir)/include
 
 f8c_SOURCES = 	f8c.cpp f8cutils.cpp f8cstatic.hpp f8c.hpp
 
-f8c_LDFLAGS = -rdynamic -ldl -lrt -lf8 -lPocoFoundation -lPocoNet -ltbb -L$(top_srcdir)/runtime -ldb_cxx
+POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
+
+f8c_LDFLAGS = -rdynamic -ldl -lrt -lf8 $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime -ldb_cxx
+
+if USECOMPRESSION
+f8c_LDFLAGS += -lz
+endif
 

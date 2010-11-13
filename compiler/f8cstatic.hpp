@@ -76,7 +76,7 @@ const BaseTypeMap::TypePair BaseTypeMap::_valueTable[] =
 template<>
 const BaseTypeMap::TypeMap BaseTypeMap::_valuemap(BaseTypeMap::_valueTable, BaseTypeMap::get_table_end());
 template<>
-const BaseTypeMap::NoValType BaseTypeMap::_noval(FieldTrait::ft_untyped);
+const BaseTypeMap::NotFoundType BaseTypeMap::_noval(FieldTrait::ft_untyped);
 
 //-------------------------------------------------------------------------------------------------
 template<>
@@ -121,7 +121,7 @@ const TypeToCPP::TypePair TypeToCPP::_valueTable[] =
 template<>
 const TypeToCPP::TypeMap TypeToCPP::_valuemap(TypeToCPP::_valueTable, TypeToCPP::get_table_end());
 template<>
-const TypeToCPP::NoValType TypeToCPP::_noval("Unknown");
+const TypeToCPP::NotFoundType TypeToCPP::_noval("Unknown");
 
 //-------------------------------------------------------------------------------------------------
 template<>
@@ -193,19 +193,19 @@ const CSMap::TypePair CSMap::_valueTable[] =
 	CSMap::TypePair(cs_header_preamble,
 "	void add_preamble()\n"
 "	{\n"
-"		add_field(Common_BeginString, 1, new Field<f8String, Common_BeginString>(ctx._beginStr));\n"
-"		add_field(Common_BodyLength, 2, new Field<Length, Common_BodyLength>(0));\n"
-"		add_field(Common_MsgType, 3, new Field<f8String, Common_MsgType>);\n"
+"		add_field(Common_BeginString, 1, new begin_string(ctx._beginStr));\n"
+"		add_field(Common_BodyLength, 2, new body_length(0));\n"
+"		add_field(Common_MsgType, 3, new msg_type);\n"
 "	}"),
 	CSMap::TypePair(cs_trailer_preamble,
 "	void add_preamble()\n"
 "	{\n"
-"		add_field(new Field<f8String, Common_CheckSum>);\n"
+"		add_field(new check_sum);\n"
 "	}"),
 };
 template<>
 const CSMap::TypeMap CSMap::_valuemap(CSMap::_valueTable, CSMap::get_table_end());
 template<>
-const CSMap::NoValType CSMap::_noval("not found");
+const CSMap::NotFoundType CSMap::_noval("not found");
 
 //-------------------------------------------------------------------------------------------------

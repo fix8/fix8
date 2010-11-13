@@ -43,6 +43,8 @@ namespace FIX8 {
 
 typedef std::string f8String;
 
+const unsigned char default_field_separator(0x1);
+
 //-------------------------------------------------------------------------------------------------
 template<typename Key, typename Val>
 class GeneratedTable
@@ -61,8 +63,8 @@ class GeneratedTable
 	static const Pair _pairs[];
 	static const size_t _pairsz;
 
-	typedef Val NoValType;
-	static const NoValType _noval;
+	typedef Val NotFoundType;
+	static const NotFoundType _noval;
 
 public:
 	static const Val& find_ref(const Key& key)
@@ -96,11 +98,11 @@ struct StaticTable
 {
 	typedef typename std::map<Key, Val> TypeMap;
 	typedef typename TypeMap::value_type TypePair;
-	typedef Val NoValType;
+	typedef Val NotFoundType;
 
 	static const TypePair _valueTable[];
 	static const TypeMap _valuemap;
-	static const NoValType _noval;
+	static const NotFoundType _noval;
 
 	StaticTable() {}
 

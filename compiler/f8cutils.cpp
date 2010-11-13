@@ -250,12 +250,12 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 	const FieldSpecMap& fspec, const unsigned subpos)
 {
 	unsigned processed(0);
-	XmlList flist;
+	XmlEntity::XmlSet flist;
 	if (xt->find(where, flist))
 	{
 		bool hasMandatory(false);
 
-		for(XmlList::const_iterator fitr(flist.begin()); fitr != flist.end(); ++fitr)
+		for(XmlEntity::XmlSet::const_iterator fitr(flist.begin()); fitr != flist.end(); ++fitr)
 		{
 			string fname, required;
 			if ((*fitr)->GetAttr("name", fname) && (*fitr)->GetAttr("required", required))

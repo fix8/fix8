@@ -189,13 +189,16 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 		const int mtpos(match.SubPos(3));
 		const unsigned mlen(GetValue<unsigned>(len));
 
-		msg = ctx._bme.find_ptr(mtype)->_create();
+		const BaseMsgEntry *bme(ctx._bme.find_ptr(mtype));
+		if (!bme)
+			throw InvalidMessage(mtype);
+		msg = bme->_create();
 		msg->decode(from);
 
 		Fields::const_iterator fitr(msg->_header->_fields.find(Common_BodyLength));
-		static_cast<Field<Length, Common_BodyLength> *>(fitr->second)->set(mlen);
+		static_cast<body_length *>(fitr->second)->set(mlen);
 		fitr = msg->_header->_fields.find(Common_MsgType);
-		static_cast<Field<f8String, Common_MsgType> *>(fitr->second)->set(mtype);
+		static_cast<msg_type *>(fitr->second)->set(mtype);
 		msg->check_set_rlm(fitr->second);
 
 		if (_tlr.SearchString(match, from, 3, 0) == 3)
@@ -205,7 +208,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 			const unsigned chkpos(match.SubPos(1));
 
 			Fields::const_iterator fitr(msg->_trailer->_fields.find(Common_CheckSum));
-			static_cast<Field<f8String, Common_CheckSum> *>(fitr->second)->set(chksum);
+			static_cast<check_sum *>(fitr->second)->set(chksum);
 			unsigned chkval(GetValue<unsigned>(chksum));
 			if (chkval != calc_chksum(from, mtpos, chkpos - mtpos))
 				throw BadCheckSum(mtype);
@@ -264,7 +267,7 @@ unsigned Message::encode(f8String& to)
 	if (!_header)
 		throw MissingMessageComponent("header");
 	Fields::const_iterator fitr(_header->_fields.find(Common_MsgType));
-	static_cast<Field<f8String, Common_MsgType> *>(fitr->second)->set(_msgType);
+	static_cast<msg_type *>(fitr->second)->set(_msgType);
 	_header->encode(msg);
 	MessageBase::encode(msg);
 	if (!_trailer)
@@ -274,7 +277,7 @@ unsigned Message::encode(f8String& to)
 
 	if ((fitr = _trailer->_fields.find(Common_CheckSum)) == _trailer->_fields.end())
 		throw MissingMandatoryField(Common_CheckSum);
-	static_cast<Field<f8String, Common_CheckSum> *>(fitr->second)->set(fmt_chksum(calc_chksum(msg.str())));
+	static_cast<check_sum *>(fitr->second)->set(fmt_chksum(calc_chksum(msg.str())));
 	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
 	fitr->second->encode(msg);
 
@@ -287,7 +290,7 @@ unsigned Message::encode(f8String& to)
 	if ((fitr = _header->_fields.find(Common_BodyLength)) == _header->_fields.end())
 		throw MissingMandatoryField(Common_BodyLength);
 	_header->_fp.clear(Common_BodyLength, FieldTrait::suppress);
-	static_cast<Field<Length, Common_BodyLength> *>(fitr->second)->set(msgLen);
+	static_cast<body_length *>(fitr->second)->set(msgLen);
 	fitr->second->encode(hmsg);
 
 	hmsg << msg.str();

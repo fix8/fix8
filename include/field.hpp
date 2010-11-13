@@ -46,26 +46,6 @@ $URL$
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-// Common FIX field numbers
-const unsigned Common_BeginString(8);
-const unsigned Common_BodyLength(9);
-const unsigned Common_CheckSum(10);
-const unsigned Common_MsgSeqNum(34);
-const unsigned Common_MsgType(35);
-const unsigned Common_SenderCompID(49);
-const unsigned Common_SendingTime(52);
-const unsigned Common_TargetCompID(56);
-
-// Common msgtypes
-const f8String Common_MsgType_HEARTBEAT("0");
-const f8String Common_MsgType_TEST_REQUEST("1");
-const f8String Common_MsgType_RESEND_REQUEST("2");
-const f8String Common_MsgType_REJECT("3");
-const f8String Common_MsgType_SEQUENCE_RESET("4");
-const f8String Common_MsgType_LOGOUT("5");
-const f8String Common_MsgType_LOGON("A");
-
-//-------------------------------------------------------------------------------------------------
 template<unsigned field>
 struct EnumType
 {
@@ -132,7 +112,7 @@ public:
 	size_t encode(std::ostream& os)
 	{
 		const std::ios::pos_type where(os.tellp());
-		os << _fnum << '=' << *this << '\x01';
+		os << _fnum << '=' << *this << default_field_separator;
 		return os.tellp() - where;
 	}
 
@@ -528,6 +508,60 @@ struct BaseEntry
 	const RealmBase *_rlm;
 	const char *_name, *_comment;
 };
+
+//-------------------------------------------------------------------------------------------------
+// Common FIX field numbers
+
+const unsigned Common_BeginSeqNo(7);
+const unsigned Common_BeginString(8);
+const unsigned Common_BodyLength(9);
+const unsigned Common_CheckSum(10);
+const unsigned Common_EndSeqNo(16);
+const unsigned Common_MsgSeqNum(34);
+const unsigned Common_MsgType(35);
+const unsigned Common_NewSeqNo(36);
+const unsigned Common_PossDupFlag(43);
+const unsigned Common_RefSeqNum(45);
+const unsigned Common_SenderCompID(49);
+const unsigned Common_SendingTime(52);
+const unsigned Common_TargetCompID(56);
+const unsigned Common_EncryptMethod(98);
+const unsigned Common_HeartBtInt(108);
+const unsigned Common_TestReqID(112);
+const unsigned Common_GapFillFlag(123);
+const unsigned Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
+
+// Common msgtypes
+const f8String Common_MsgType_HEARTBEAT("0");
+const f8String Common_MsgType_TEST_REQUEST("1");
+const f8String Common_MsgType_RESEND_REQUEST("2");
+const f8String Common_MsgType_REJECT("3");
+const f8String Common_MsgType_SEQUENCE_RESET("4");
+const f8String Common_MsgType_LOGOUT("5");
+const f8String Common_MsgType_LOGON("A");
+
+//-------------------------------------------------------------------------------------------------
+typedef Field<SeqNum, Common_MsgSeqNum> msg_seq_num;
+typedef Field<SeqNum, Common_BeginSeqNo> begin_seq_num;
+typedef Field<SeqNum, Common_EndSeqNo> end_seq_num;
+typedef Field<SeqNum, Common_NewSeqNo> new_seq_num;
+typedef Field<SeqNum, Common_RefSeqNum> ref_seq_num;
+
+typedef Field<Length, Common_BodyLength> body_length;
+
+typedef Field<f8String, Common_SenderCompID> sender_comp_id;
+typedef Field<f8String, Common_TargetCompID> target_comp_id;
+typedef Field<f8String, Common_MsgType> msg_type;
+typedef Field<f8String, Common_CheckSum> check_sum;
+typedef Field<f8String, Common_BeginString> begin_string;
+typedef Field<f8String, Common_TestReqID> test_request_id;
+
+typedef Field<UTCTimestamp, Common_SendingTime> sending_time;
+
+typedef Field<Boolean, Common_GapFillFlag> gap_fill_flag;
+typedef Field<Boolean, Common_PossDupFlag> poss_dup_flag;
+
+typedef Field<int, Common_HeartBtInt> heartbeat_interval;
 
 } // FIX8
 

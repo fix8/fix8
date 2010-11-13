@@ -39,9 +39,6 @@ $URL$
 #define _XML_ENTITY_HPP_
 
 //----------------------------------------------------------------------------------------
-class XmlEntity;
-typedef std::list<XmlEntity *> XmlList;
-
 class XmlEntity
 {
 	static const int MaxDepth = 128;
@@ -61,25 +58,24 @@ class XmlEntity
 #endif
 	XmlAttrs *attrs_;
 
+	struct EntityOrderComp
+	{
+		bool operator()(const XmlEntity *a, const XmlEntity *b) const
+			{ return a->GetSequence() < b->GetSequence(); }
+	};
+
 public:
 	XmlEntity(std::istream& ifs, int subidx, int txtline=0, int depth=0, const char *rootAttr=0);
 	virtual ~XmlEntity();
 
 	int ParseAttrs(const std::string& attlst);
 
+	typedef std::set<XmlEntity *, EntityOrderComp> XmlSet;
+
 	XmlEntity *find(const std::string& what, bool ignorecase=false,
 		const std::string *atag=0, const std::string *aval=0, const char delim='/');
-	int find(const std::string& what, XmlList& rlst, bool ignorecase=false,
+	int find(const std::string& what, XmlSet& eset, bool ignorecase=false,
 		const std::string *atag=0, const std::string *aval=0, const char delim='/');
-	template<typename T>
-	int findSort(const std::string& what, XmlList& rlst, bool ignorecase=false,
-		const std::string *atag=0, const std::string *aval=0, const char delim='/')
-	{
-		int result(find (what, rlst, ignorecase, atag, aval, delim));
-		if (result)
-			rlst.sort(T());
-		return result;
-	}
 
 	bool GetAttr(const std::string& what, std::string& target) const;
 	bool GetAttrValue(std::string& target) const
@@ -116,12 +112,6 @@ public:
 	const std::string& InplaceXlate (std::string& what);
 
 	friend std::ostream& operator<<(std::ostream& os, const XmlEntity& en);
-};
-
-struct EntityOrderComp
-{
-	bool operator()(const XmlEntity *a, const XmlEntity *b) const
-		{ return a->GetSequence() < b->GetSequence(); }
 };
 
 #endif // _XML_ENTITY_HPP_

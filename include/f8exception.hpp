@@ -65,86 +65,81 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-class InvalidMetadata : public f8Exception
+struct InvalidMetadata : f8Exception
 {
-public:
 	InvalidMetadata(const std::string& detail) { format("Invalid Metadata", detail); }
+	InvalidMetadata(const unsigned field) { format("Invalid Metadata", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
-class DuplicateField : public f8Exception
+struct DuplicateField : f8Exception
 {
-public:
 	DuplicateField(const unsigned field) { format("Duplicate Field", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
-class InvalidField : public f8Exception
+struct InvalidField : f8Exception
 {
-public:
 	InvalidField(const unsigned field) { format("Invalid Field", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
-class InvalidBodyLength : public f8Exception
+struct InvalidBodyLength : f8Exception
 {
-public:
 	InvalidBodyLength(const unsigned field) { format("Invalid BodyLength", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
-class IllegalMessage : public f8Exception
+struct InvalidMessage : f8Exception
 {
-public:
+	InvalidMessage(const std::string& str) { format("Invalid FIX Message", str); }
+};
+
+//-------------------------------------------------------------------------------------------------
+struct IllegalMessage : f8Exception
+{
 	IllegalMessage(const std::string& str) { format("Illegal FIX Message", str); }
 };
 
 //-------------------------------------------------------------------------------------------------
-class InvalidVersion : public f8Exception
+struct InvalidVersion : f8Exception
 {
-public:
 	InvalidVersion(const std::string& str) { format("Invalid FIX Version", str); }
 };
 
 //-------------------------------------------------------------------------------------------------
-class InvalidRepeatingGroup : public f8Exception
+struct InvalidRepeatingGroup : f8Exception
 {
-public:
 	InvalidRepeatingGroup(const unsigned field) { format("Invalid Repeating Group", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
-class MissingRepeatingGroupField : public f8Exception
+struct MissingRepeatingGroupField : f8Exception
 {
-public:
 	MissingRepeatingGroupField(const unsigned field) { format("First Field in a Repeating Group is Mandatory", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
-class MissingMessageComponent : public f8Exception
+struct MissingMessageComponent : f8Exception
 {
-public:
 	MissingMessageComponent(const char *text) { format("Missing Message Component", text); }
 };
 
 //-------------------------------------------------------------------------------------------------
-class MissingMandatoryField : public f8Exception
+struct MissingMandatoryField : f8Exception
 {
-public:
 	MissingMandatoryField(const unsigned field) { format("Missing Mandatory Field", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
-class BadCheckSum : public f8Exception
+struct BadCheckSum : f8Exception
 {
-public:
 	BadCheckSum(const std::string& msgtype) { format("Checksum failure", msgtype); }
 };
 
 //-------------------------------------------------------------------------------------------------
-class ThreadException : public f8Exception
+struct ThreadException : f8Exception
 {
-public:
 	ThreadException(const std::string& reason) { format("Thread exception", reason); }
 };
 

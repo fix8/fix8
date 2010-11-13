@@ -247,7 +247,8 @@ public:
 		return *this;
 	}
 
-	bool has(const T sbit) { return a_ & 1 << sbit; }
+	integral_type has(const T sbit) { return a_ & 1 << sbit; }
+	integral_type operator&(const T sbit) { return a_ & 1 << sbit; }
 	void set(const T sbit, bool on=true) { if (on) a_ |= 1 << sbit; else a_ &= ~(1 << sbit); }
 	void set(const integral_type bset) { a_ = bset; }
 	void clear(const T sbit) { a_ &= ~(1 << sbit); }
