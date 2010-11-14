@@ -136,12 +136,14 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger) :
 	_ctx(ctx), _connection(), _persist(persist), _logger(logger)
 {
-	_next_sender_seq = _next_target_seq = 1;
+	_next_sender_seq = _next_target_seq = 1; // atomic init
 }
 
 //-------------------------------------------------------------------------------------------------
 Session::~Session()
 {
+	log("Session terminating");
+	_logger->stop();
 	delete _persist;
 	delete _logger;
 	delete _connection;
@@ -156,15 +158,38 @@ bool Session::log(const std::string& what) const
 //-------------------------------------------------------------------------------------------------
 int Session::begin(Connection *connection)
 {
+	log("Starting session");
 	_connection = connection; // takes owership
-	_connection->start();
-	if (!_connection->connect())
+	if (!_connection->connect()) // if already connected returns true
 		return -1;;
-
-	_heartbeat_timer.scheduleAtFixedRate(
-		new Poco::Util::TimerTaskAdapter<Session>(*this, &Session::heartbeat_service), 1000 * 10, 1000 * 10);
+	_connection->start();
+	log("Session connected");
 
 	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Session::process(const f8String& from)
+{
+	auto_ptr<Message> msg(Message::factory(_ctx, from));
+	return handle_admin(msg.get()) && (this->*_handlers.find_value_ref(msg->get_msgtype()))(msg.get());
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Session::handle_logon(const Message *msg)
+{
+	if (_connection->get_role() == Connection::cn_initiator)
+	{
+		heartbeat_interval hbi;
+		if (msg->get(hbi))
+			_connection->set_hb_interval(hbi.get());
+	}
+
+	_heartbeat_timer.scheduleAtFixedRate(
+		new Poco::Util::TimerTaskAdapter<Session>(*this, &Session::heartbeat_service),
+		1000 * _connection->get_hb_interval(), 1000 * _connection->get_hb_interval());
+
+	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -173,13 +198,6 @@ void Session::heartbeat_service(Poco::Util::TimerTask &tt)
 	const f8String testReqID;
 	Message *msg(generate_heartbeat(testReqID));
 	send(msg);
-}
-
-//-------------------------------------------------------------------------------------------------
-bool Session::process(const f8String& from)
-{
-	Message *msg(Message::factory(_ctx, from));
-	return handle_admin(msg) && (this->*_handlers.find_value_ref(msg->get_msgtype()))(msg);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -252,8 +270,12 @@ bool Session::send(Message *tosend)	// takes ownership and destroys
 		return false;
 	}
 
-	if (!tosend->is_admin() && _persist)
-		_persist->put(_next_sender_seq, output);
+	if (_persist)
+	{
+		if (!tosend->is_admin())
+			_persist->put(_next_sender_seq, output);
+		_persist->put(_next_sender_seq + 1, _next_target_seq);
+	}
 
 	++_next_sender_seq;
 
@@ -261,7 +283,7 @@ bool Session::send(Message *tosend)	// takes ownership and destroys
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::handle_application(Message *msg)
+bool Session::handle_application(const Message *msg)
 {
 	return false;
 }

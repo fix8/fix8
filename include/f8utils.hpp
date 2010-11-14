@@ -38,6 +38,8 @@ $URL$
 #ifndef _F8_UTILS_HPP_
 #define _F8_UTILS_HPP_
 
+#include <tbb/atomic.h>
+
 namespace FIX8 {
 
 //----------------------------------------------------------------------------------------
@@ -257,6 +259,8 @@ public:
 	integral_type get() const { return a_; }
 
 	void operator|=(const T sbit) { a_ |= 1 << sbit; }
+	ebitset& operator<<(const T sbit) { a_ |= 1 << sbit; return *this; }
+	//friend ebitset operator|(const T lbit, const T rbit) { return ebitset(lbit) |= 1 << rbit; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -330,6 +334,31 @@ struct free_ptr
 	void operator()(const T& ptr) const { Deleter()(ptr); }
 };
 
+//----------------------------------------------------------------------------------------
+template <typename T>
+class Singleton
+{
+	typedef T* ptr_type;
+	static tbb::atomic<ptr_type> _instance;
+
+protected:
+	Singleton() {}
+	virtual ~Singleton()
+	{
+		delete _instance;
+		_instance = 0;
+	}
+
+public:
+	static ptr_type instance()
+	{
+		if (_instance == 0)
+			_instance = new T;
+		return _instance;
+	}
+};
+
+//----------------------------------------------------------------------------------------
 } // namespace FIX8
 
 #endif // _F8_UTILS_HPP_

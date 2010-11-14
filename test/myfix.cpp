@@ -26,6 +26,7 @@
 #include <field.hpp>
 #include <message.hpp>
 #include <session.hpp>
+#include <persist.hpp>
 #include <logger.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
@@ -37,6 +38,22 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 static const std::string rcsid("$Id$");
+
+//-----------------------------------------------------------------------------------------
+extern const char glob_log0[] = { "f8global0.log" };
+extern const char glob_log1[] = { "f8global1.log" };
+
+template<const char *fn>
+class TestLogger : public Singleton<TestLogger<fn> >, public FileLogger
+{
+public:
+	TestLogger() : FileLogger(fn, Logger::LogFlags() << Logger::timestamp << Logger::sequence << Logger::append) {}
+};
+
+template<>
+tbb::atomic<TestLogger<glob_log0> *> Singleton<TestLogger<glob_log0> >::_instance = tbb::atomic<TestLogger<glob_log0> *>();
+template<>
+tbb::atomic<TestLogger<glob_log1> *> Singleton<TestLogger<glob_log1> >::_instance = tbb::atomic<TestLogger<glob_log1> *>();
 
 //-----------------------------------------------------------------------------------------
 class tex_router : public TEX::Myfix_Router
@@ -55,9 +72,37 @@ public:
 	}
 };
 
+class myfix_session : public Session
+{
+public:
+	myfix_session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger)
+		: Session(ctx, sid, persist, logger) {}
+
+	Message *generate_logon(const unsigned heartbtint)
+	{
+		TEX::Logon *msg(static_cast<TEX::Logon *>(Session::generate_logon(10)));
+		return msg;
+	}
+};
+
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
+	TestLogger<glob_log0>::instance()->send("test fix client starting up...");
+	TestLogger<glob_log1>::instance()->send("test fix client starting up...");
+	const SessionID id(TEX::ctx._beginStr, "DLD_TEX", "TEX_DLD");
+	BDBPersister *bdp(new BDBPersister);
+	bdp->initialise("./run", "myfix.db");
+	Logger::LogFlags logflags;
+	logflags << Logger::timestamp << Logger::sequence << Logger::append << Logger::compress;
+	FileLogger *log(new FileLogger("./run/myfix.log", logflags));
+	myfix_session ms(TEX::ctx, id, bdp, log);
+	Poco::Net::StreamSocket *sock(new Poco::Net::StreamSocket);
+	Poco::Net::SocketAddress addr("127.0.0.1:11001");
+	FIXReader *fr(new FIXReader(sock, ms, &Session::process));
+	ClientConnection *cc(new ClientConnection(sock, addr, fr));
+	ms.begin(cc);
+
 #if 0
 	try
 	{
@@ -89,24 +134,6 @@ int main(int argc, char **argv)
 #endif
 
 #if 0
-	string from("35=1005=hello114=Y87=STOP47=10.239=14");
-	RegExp elmnt("([0-9]+)=([^\x01]+)\x01");
-	RegMatch match;
-	unsigned s_offset(0);
-	while (s_offset < from.size() && elmnt.SearchString(match, from, 3, s_offset) == 3)
-	{
-		string tag, val;
-		elmnt.SubExpr(match, from, tag, s_offset, 1);
-		elmnt.SubExpr(match, from, val, s_offset, 2);
-		cout << tag << " => " << val << endl;
-		s_offset += match.SubSize();
-	}
-	cout << "ol=" << from.size() << " cl=" << s_offset << endl;
-
-	cout << TEX::ctx.version() << endl;
-#endif
-
-
 	try
 	{
 		//FileLogger flog("myfix.log");
@@ -157,6 +184,7 @@ int main(int argc, char **argv)
 	{
 		cerr << e.what() << endl;
 	}
+#endif
 
 	return 0;
 }

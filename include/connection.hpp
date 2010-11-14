@@ -39,6 +39,8 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/session.hpp $
 #define _FIX8_CONNECTION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
+#include <Poco/Timespan.h>
+#include <Poco/Net/NetException.h>
 #include <tbb/concurrent_queue.h>
 
 //----------------------------------------------------------------------------------------
@@ -56,11 +58,12 @@ protected:
 	tbb::concurrent_bounded_queue<f8String> _msg_queue;
 
 public:
-	AsyncHalfDuplexSocket(Poco::Net::StreamSocket *sock)  : _thread(ref(*this)) {}
+	AsyncHalfDuplexSocket(Poco::Net::StreamSocket *sock)  : _thread(ref(*this)), _sock(sock) {}
 	virtual ~AsyncHalfDuplexSocket() {}
 	size_t queued() const { return _msg_queue.size(); }
 	virtual int operator()() = 0;
 	virtual void start() { _thread.Start(); }
+	Poco::Net::StreamSocket *socket() { return _sock; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -88,7 +91,6 @@ public:
 		_session(session), _callback(callback)
 	{
 		set_preamble_sz();
-		_callback_thread.Start();
 	}
 
 	virtual ~FIXReader() {}
@@ -100,6 +102,7 @@ public:
 	}
 
 	void set_preamble_sz();
+	Session& get_session() { return _session; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -119,26 +122,34 @@ public:
 class Connection
 {
 public:
-	enum ConnectionRole { cn_acceptor, cn_initiator };
-
-private:
-	Poco::Net::StreamSocket *_sock;
-	bool _connected;
-	ConnectionRole _role;
+	enum Role { cn_acceptor, cn_initiator };
 
 protected:
+	Poco::Net::StreamSocket *_sock;
+	bool _connected;
+	Role _role;
+	unsigned _hb_interval;
+
 	FIXReader *_reader;
 	FIXWriter _writer;
 
 public:
-	Connection(Poco::Net::StreamSocket *sock, bool connected, ConnectionRole role, FIXReader *reader)
-		: _sock(sock), _connected(connected), _role(role), _reader(reader), _writer(sock) {} // takes owership
+	Connection(Poco::Net::StreamSocket *sock, FIXReader *reader)	// client
+		: _sock(sock), _connected(), _role(cn_initiator),
+		_hb_interval(), _reader(reader), _writer(sock) {} // takes owership
+
+	Connection(Poco::Net::StreamSocket *sock, FIXReader *reader, const unsigned hb_interval) // server
+		: _sock(sock), _connected(true), _role(cn_acceptor), _hb_interval(hb_interval),
+		  _reader(reader), _writer(sock) {} // takes owership
+
 	virtual ~Connection() { delete _reader; }
 
-	const ConnectionRole get_role() const { return _role; }
+	const Role get_role() const { return _role; }
 	void start();
 	virtual bool connect() { return _connected; }
 	virtual bool write(const f8String& from) { return _writer.write(from); }
+	void set_hb_interval(const unsigned hb_interval) { _hb_interval = hb_interval; }
+	unsigned get_hb_interval() const { return _hb_interval; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -148,7 +159,7 @@ class ClientConnection : public Connection
 
 public:
 	ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, FIXReader *reader)
-		: Connection(sock, false, Connection::cn_initiator, reader), _addr(addr) {}
+		: Connection(sock, reader), _addr(addr) {}
 	virtual ~ClientConnection() {}
 	bool connect();
 };
@@ -158,8 +169,8 @@ class ServerConnection : public Connection
 {
 
 public:
-	ServerConnection(Poco::Net::StreamSocket *sock, FIXReader *reader) :
-		Connection(sock, true, Connection::cn_acceptor, reader) {}
+	ServerConnection(Poco::Net::StreamSocket *sock, FIXReader *reader, const unsigned hb_interval) :
+		Connection(sock, reader, hb_interval) {}
 	virtual ~ServerConnection() {}
 };
 

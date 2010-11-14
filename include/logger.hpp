@@ -105,6 +105,7 @@ class Logger
 public:
 	enum Flags { append, timestamp, sequence, compress, pipe };
 	static const unsigned rotation_default = 5, max_rotation = 64;
+	typedef ebitset<Flags> LogFlags;
 
 protected:
 	ebitset<Flags> _flags;
@@ -112,8 +113,8 @@ protected:
 	unsigned _sequence;
 
 public:
-	Logger(const ebitset<Flags> flags) : _thread(ref(*this)), _flags(flags), _sequence() { _thread.Start(); }
-	virtual ~Logger() { stop(); }
+	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _sequence() { _thread.Start(); }
+	virtual ~Logger() {}
 
 	virtual std::ostream& get_stream() const { return std::cout; }
 	bool send(const std::string& what) { return _msg_queue.try_push (what) == 0; }
@@ -130,7 +131,7 @@ class GenericLogger : public Logger
 	std::ostream& _os;
 
 public:
-	GenericLogger(std::ostream& os, const ebitset<Flags> flags) : Logger(flags), _os(os) {}
+	GenericLogger(std::ostream& os, const LogFlags flags) : Logger(flags), _os(os) {}
 	virtual ~GenericLogger() {}
 
 	virtual std::ostream& get_stream() const { return _os; }
@@ -144,11 +145,19 @@ class FileLogger : public Logger
 	unsigned _rotnum;
 
 public:
-	FileLogger(const std::string& pathname, const ebitset<Flags> flags, const unsigned rotnum=rotation_default);
+	FileLogger(const std::string& pathname, const LogFlags flags, const unsigned rotnum=rotation_default);
 	virtual ~FileLogger() { delete _ofs; }
 
 	virtual std::ostream& get_stream() const { return *_ofs; }
 	virtual bool rotate();
+};
+
+//-------------------------------------------------------------------------------------------------
+class GlobalLogger : public FileLogger
+{
+public:
+	GlobalLogger(const std::string& pathname)
+		: FileLogger(pathname, LogFlags() << timestamp << sequence << append) {}
 };
 
 //-------------------------------------------------------------------------------------------------

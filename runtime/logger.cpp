@@ -128,12 +128,12 @@ const string& Logger::GetTimeAsStringMS(string& result, timespec *tv)
    localtime_r(&startTime->tv_sec, &tim);
    double secs(tim.tm_sec + startTime->tv_nsec/1000000000.);
    ostringstream oss;
-   oss << setfill('0') << setw(4) << (tim.tm_year + 1900);
+   oss << '[' << setfill('0') << setw(4) << (tim.tm_year + 1900);
    oss << setw(2) << (tim.tm_mon + 1) << setw(2) << tim.tm_mday << ' ' << setw(2) << tim.tm_hour;
    oss << ':' << setw(2) << tim.tm_min << ':';
    oss.setf(ios::showpoint);
    oss.setf(ios::fixed);
-   oss << setw(9) << setfill('0') << setprecision(6) << secs;
+   oss << setw(9) << setfill('0') << setprecision(6) << secs << ']';
    return result = oss.str();
 }
 

@@ -115,7 +115,7 @@ class Logger;
 //-------------------------------------------------------------------------------------------------
 class Session
 {
-	typedef StaticTable<const f8String, bool (Session::*)(Message *)> Handlers;
+	typedef StaticTable<const f8String, bool (Session::*)(const Message *)> Handlers;
 	Handlers _handlers;
 
 protected:
@@ -130,29 +130,29 @@ protected:
 	Poco::Util::Timer _heartbeat_timer;
 	void heartbeat_service(Poco::Util::TimerTask &);	// generate heartbeats
 
-	virtual bool handle_logon(Message *msg) { return false; }
+	virtual bool handle_logon(const Message *msg);
 	virtual Message *generate_logon(const unsigned heartbeat_interval);
 
-	virtual bool handle_logout(Message *msg) { return false; }
+	virtual bool handle_logout(const Message *msg) { return false; }
 	virtual Message *generate_logout();
 
-	virtual bool handle_heartbeat(Message *msg) { return false; }
+	virtual bool handle_heartbeat(const Message *msg) { return false; }
 	virtual Message *generate_heartbeat(const f8String& testReqID);
 
-	virtual bool handle_resend_request(Message *msg) { return false; }
+	virtual bool handle_resend_request(const Message *msg) { return false; }
 	virtual Message *generate_resend_request(const unsigned begin, const unsigned end);
 
-	virtual bool handle_sequence_reset(Message *msg) { return false; }
+	virtual bool handle_sequence_reset(const Message *msg) { return false; }
 	virtual Message *generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag=false);
 
-	virtual bool handle_test_request(Message *msg) { return false; }
+	virtual bool handle_test_request(const Message *msg) { return false; }
 	virtual Message *generate_test_request(const f8String& testReqID);
 
-	virtual bool handle_reject(Message *msg) { return false; }
+	virtual bool handle_reject(const Message *msg) { return false; }
 	virtual Message *generate_reject() { return 0; }
 
-	virtual bool handle_admin(Message *msg) { return true; }
-	virtual bool handle_application(Message *msg);
+	virtual bool handle_admin(const Message *msg) { return true; }
+	virtual bool handle_application(const Message *msg);
 
 	Message *create_msg(const f8String& msg_type)
 	{
@@ -179,7 +179,7 @@ public:
 	const F8MetaCntx& get_ctx() const { return _ctx; }
 	bool log(const std::string& what) const;
 
-	friend class StaticTable<const f8String, bool (Session::*)(Message *)>;
+	friend class StaticTable<const f8String, bool (Session::*)(const Message *)>;
 };
 
 //-------------------------------------------------------------------------------------------------

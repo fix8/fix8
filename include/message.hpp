@@ -47,10 +47,7 @@ namespace FIX8 {
 //-------------------------------------------------------------------------------------------------
 class MessageBase;
 class Message;
-class Router;
 typedef std::vector<MessageBase *> GroupElement;
-
-class F8MetaCntx;
 
 //-------------------------------------------------------------------------------------------------
 class GroupBase

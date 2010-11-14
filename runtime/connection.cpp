@@ -97,7 +97,7 @@ int FIXReader::operator()()
 			else
 				++invalid;
 		}
-		catch (exception& e)
+		catch (exception& e)	// also catches Poco::Net::NetException
 		{
 			cerr << e.what() << endl;
 			++invalid;
@@ -203,16 +203,28 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 //-------------------------------------------------------------------------------------------------
 int FIXWriter::operator()()
 {
-	int result(0);
+	int result(0), processed(0), invalid(0);
 
    for (;;)
    {
-      f8String msg;
+		try
+		{
+			f8String msg;
 
-      _msg_queue.pop (msg); // will block
-      if (msg.empty() || (result = _sock->sendBytes(msg.data(), msg.size()) < static_cast<int>(msg.size())))
-			break;
-   }
+			_msg_queue.pop (msg); // will block
+			if (msg.empty() || (result = _sock->sendBytes(msg.data(), msg.size()) < static_cast<int>(msg.size())))
+				break;
+
+			++processed;
+		}
+		catch (exception& e)	// also catches Poco::Net::NetException
+		{
+			cerr << e.what() << endl;
+			++invalid;
+		}
+	}
+
+	cerr << "FIXWriter: " << processed << " messages processed, " << invalid << " invalid" << endl;
 
 	return result;
 }
@@ -228,5 +240,23 @@ void Connection::start()
 {
 	_writer.start();
 	_reader->start();
+}
+
+//-------------------------------------------------------------------------------------------------
+bool ClientConnection::connect()
+{
+	Poco::Timespan timeout(1000000);
+   try
+   {
+      _sock->connect(_addr, timeout);
+   }
+	catch (exception& e)	// also catches Poco::Net::NetException
+	{
+		cerr << e.what() << endl;
+		return false;
+	}
+
+	_reader->get_session().log("Connection successful");
+	return _connected = true;
 }
 
