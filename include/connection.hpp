@@ -56,14 +56,18 @@ class AsyncHalfDuplexSocket
 protected:
 	Poco::Net::StreamSocket *_sock;
 	tbb::concurrent_bounded_queue<f8String> _msg_queue;
+	Session& _session;
 
 public:
-	AsyncHalfDuplexSocket(Poco::Net::StreamSocket *sock)  : _thread(ref(*this)), _sock(sock) {}
+	AsyncHalfDuplexSocket(Poco::Net::StreamSocket *sock, Session& session)
+		: _thread(ref(*this)), _sock(sock), _session(session) {}
 	virtual ~AsyncHalfDuplexSocket() {}
 	size_t queued() const { return _msg_queue.size(); }
 	virtual int operator()() = 0;
 	virtual void start() { _thread.Start(); }
 	Poco::Net::StreamSocket *socket() { return _sock; }
+	int join() { return _thread.Join(); }
+	Session& get_session() { return _session; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -76,19 +80,19 @@ class FIXReader : public AsyncHalfDuplexSocket
 	int callback_processor();
 
 	size_t _bg_sz; // 8=FIXx.x^A9=x
-	Session& _session;
 	bool (Session::*_callback)(const f8String&);
 
 	bool read(f8String& to);
+	int sockRead(char *where, size_t sz);
 
 protected:
 	int operator()();
 
 public:
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, bool (Session::*callback)(const f8String&))
-		: AsyncHalfDuplexSocket(sock),
+		: AsyncHalfDuplexSocket(sock, session),
 		_callback_thread(ref(*this), &FIXReader::callback_processor), _bg_sz(),
-		_session(session), _callback(callback)
+		_callback(callback)
 	{
 		set_preamble_sz();
 	}
@@ -102,7 +106,6 @@ public:
 	}
 
 	void set_preamble_sz();
-	Session& get_session() { return _session; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -112,7 +115,7 @@ protected:
 	int operator()();
 
 public:
-	FIXWriter(Poco::Net::StreamSocket *sock) : AsyncHalfDuplexSocket(sock) {}
+	FIXWriter(Poco::Net::StreamSocket *sock, Session& session) : AsyncHalfDuplexSocket(sock, session) {}
 	virtual ~FIXWriter() {}
 
 	bool write(const f8String& from);
@@ -136,11 +139,11 @@ protected:
 public:
 	Connection(Poco::Net::StreamSocket *sock, FIXReader *reader)	// client
 		: _sock(sock), _connected(), _role(cn_initiator),
-		_hb_interval(), _reader(reader), _writer(sock) {} // takes owership
+		_hb_interval(), _reader(reader), _writer(sock, reader->get_session()) {} // takes owership
 
 	Connection(Poco::Net::StreamSocket *sock, FIXReader *reader, const unsigned hb_interval) // server
 		: _sock(sock), _connected(true), _role(cn_acceptor), _hb_interval(hb_interval),
-		  _reader(reader), _writer(sock) {} // takes owership
+		  _reader(reader), _writer(sock, reader->get_session()) {} // takes owership
 
 	virtual ~Connection() { delete _reader; }
 
@@ -150,6 +153,8 @@ public:
 	virtual bool write(const f8String& from) { return _writer.write(from); }
 	void set_hb_interval(const unsigned hb_interval) { _hb_interval = hb_interval; }
 	unsigned get_hb_interval() const { return _hb_interval; }
+	int join() { return _reader->join(); }
+	Session& get_session() { return _reader->get_session(); }
 };
 
 //-------------------------------------------------------------------------------------------------

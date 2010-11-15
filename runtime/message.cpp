@@ -55,12 +55,7 @@ $URL$
 #include <strings.h>
 #include <regex.h>
 
-#include <f8exception.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
-#include <traits.hpp>
-#include <field.hpp>
-#include <message.hpp>
+#include <f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
@@ -126,7 +121,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 	for (; ok && s_offset < from.size(); )
 	{
 		RegMatch match;
-		auto_ptr<MessageBase> grp(grpbase->create_group());
+		scoped_ptr<MessageBase> grp(grpbase->create_group());
 
 		for (unsigned pos(0); s_offset < from.size() && _elmnt.SearchString(match, from, 3, s_offset) == 3; )
 		{

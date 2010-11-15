@@ -56,16 +56,7 @@ $URL$
 #include <strings.h>
 #include <regex.h>
 
-#include <f8exception.hpp>
-#include <thread.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
-#include <traits.hpp>
-#include <field.hpp>
-#include <message.hpp>
-#include <logger.hpp>
-#include <xml.hpp>
-#include <configuration.hpp>
+#include <f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;

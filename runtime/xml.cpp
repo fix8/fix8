@@ -69,10 +69,7 @@ $URL$
 #include <list>
 #include <vector>
 
-#include <f8exception.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
-#include <xml.hpp>
+#include <f8includes.hpp>
 
 //----------------------------------------------------------------------------------------
 using namespace FIX8;

@@ -55,18 +55,8 @@ $URL$
 
 #include <strings.h>
 #include <regex.h>
-#include <config.h>
 
-#include <f8exception.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
-#include <traits.hpp>
-#include <field.hpp>
-#include <message.hpp>
-#include <thread.hpp>
-#include <session.hpp>
-#include <persist.hpp>
-#include <logger.hpp>
+#include <f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
@@ -129,6 +119,7 @@ void SessionID::from_string(const f8String& from)
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger) :
 	_ctx(ctx), _connection(), _sid(sid), _persist(persist), _logger(logger)
 {
+	_shutdown = false;
 	_next_sender_seq = _next_target_seq = 1;
 }
 
@@ -136,6 +127,7 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger) :
 	_ctx(ctx), _connection(), _persist(persist), _logger(logger)
 {
+	_shutdown = false;
 	_next_sender_seq = _next_target_seq = 1; // atomic init
 }
 
@@ -145,8 +137,8 @@ Session::~Session()
 	log("Session terminating");
 	_logger->stop();
 	delete _persist;
-	delete _logger;
 	delete _connection;
+	delete _logger;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -156,7 +148,7 @@ bool Session::log(const std::string& what) const
 }
 
 //-------------------------------------------------------------------------------------------------
-int Session::begin(Connection *connection)
+int Session::begin(Connection *connection, bool wait)
 {
 	log("Starting session");
 	_connection = connection; // takes owership
@@ -165,13 +157,19 @@ int Session::begin(Connection *connection)
 	_connection->start();
 	log("Session connected");
 
+	if (wait)	// wait for
+	{
+		_connection->join();
+		_shutdown = true;
+	}
+
 	return 0;
 }
 
 //-------------------------------------------------------------------------------------------------
 bool Session::process(const f8String& from)
 {
-	auto_ptr<Message> msg(Message::factory(_ctx, from));
+	scoped_ptr<Message> msg(Message::factory(_ctx, from));
 	return handle_admin(msg.get()) && (this->*_handlers.find_value_ref(msg->get_msgtype()))(msg.get());
 }
 
@@ -260,7 +258,7 @@ Message *Session::generate_sequence_reset(const unsigned newseqnum, const bool g
 //-------------------------------------------------------------------------------------------------
 bool Session::send(Message *tosend)	// takes ownership and destroys
 {
-	auto_ptr<Message> msg(tosend);
+	scoped_ptr<Message> msg(tosend);
 	*msg->Header() += new msg_seq_num(_next_sender_seq);
 	f8String output;
 	unsigned enclen(msg->encode(output));

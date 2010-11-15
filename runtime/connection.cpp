@@ -56,19 +56,14 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8cutils.cpp $
 #include <regex.h>
 #include <config.h>
 
-#include <f8exception.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
-#include <traits.hpp>
-#include <field.hpp>
-#include <message.hpp>
-#include <thread.hpp>
-#include <session.hpp>
-#include <persist.hpp>
+#include <f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
 using namespace std;
+
+//-------------------------------------------------------------------------------------------------
+extern char glob_log0[max_global_filename_length];
 
 //-------------------------------------------------------------------------------------------------
 RegExp FIXReader::_hdr("8=([^\x01]+)\x01{1}9=([^\x01]+)\x01");
@@ -78,7 +73,7 @@ int FIXReader::operator()()
 {
    unsigned processed(0), dropped(0), invalid(0);
 
-   for (;;)
+   for (;!_session.is_shutdown();)
    {
 		try
 		{
@@ -88,7 +83,7 @@ int FIXReader::operator()()
 			{
 				if (_msg_queue.try_push (msg))
 				{
-					cerr << "FIXReader: message queue is full" << endl;
+					SingleLogger<glob_log0>::instance()->send("FIXReader: message queue is full");
 					++dropped;
 				}
 				else
@@ -97,15 +92,27 @@ int FIXReader::operator()()
 			else
 				++invalid;
 		}
+		catch (Poco::Net::NetException& e)
+		{
+			_session.log(e.what());
+			break;
+		}
+		catch (PeerResetConnection& e)
+		{
+			_session.log(e.what());
+			break;
+		}
 		catch (exception& e)	// also catches Poco::Net::NetException
 		{
-			cerr << e.what() << endl;
+			_session.log(e.what());
 			++invalid;
 		}
    }
 
-	cerr << "FIXReader: " << processed << " messages processed, " << dropped << " dropped, "
-		<< invalid << " invalid" << endl;
+	ostringstream ostr;
+	ostr << "FIXReader: " << processed << " messages processed, " << dropped << " dropped, "
+		<< invalid << " invalid";
+	SingleLogger<glob_log0>::instance()->send(ostr.str());
 
 	return 0;
 }
@@ -115,7 +122,7 @@ int FIXReader::callback_processor()
 {
 	bool stopping(false);
 
-   for (;;)
+   for (;!_session.is_shutdown();)
    {
       f8String msg;
 
@@ -147,10 +154,19 @@ void FIXReader::set_preamble_sz()
 }
 
 //-------------------------------------------------------------------------------------------------
+int FIXReader::sockRead(char *where, size_t sz)
+{
+	int result(_sock->receiveBytes(where, sz));
+	if (result == 0)
+		throw PeerResetConnection("connection gone");
+	return result;
+}
+
+//-------------------------------------------------------------------------------------------------
 bool FIXReader::read(f8String& to)	// read a complete FIX message
 {
 	char msg_buf[_max_msg_len] = {};
-	int result(_sock->receiveBytes(msg_buf, _bg_sz));
+	int result(sockRead(msg_buf, _bg_sz));
 
 	if (result == static_cast<int>(_bg_sz))
 	{
@@ -158,7 +174,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 		size_t offs(_bg_sz);
 		do	// get the last chrs of bodylength and ^A
 		{
-			if (_sock->receiveBytes(&bt, 1) != 1)
+			if (sockRead(&bt, 1) != 1)
 				return false;
 			if (!isdigit(bt) || bt != default_field_separator)
 				throw IllegalMessage(msg_buf);
@@ -182,11 +198,11 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 				throw InvalidBodyLength(mlen);
 
 			// read the body
-			if ((result = _sock->receiveBytes(msg_buf, mlen) == static_cast<int>(mlen)))
+			if ((result = sockRead(msg_buf, mlen) == static_cast<int>(mlen)))
 				return false;
 
 			// read the checksum
-			if ((result = _sock->receiveBytes(msg_buf + mlen, _chksum_sz) == static_cast<int>(_chksum_sz)))
+			if ((result = sockRead(msg_buf + mlen, _chksum_sz) == static_cast<int>(_chksum_sz)))
 				return false;
 
 			to += string(msg_buf, mlen + _chksum_sz);
@@ -205,7 +221,7 @@ int FIXWriter::operator()()
 {
 	int result(0), processed(0), invalid(0);
 
-   for (;;)
+   for (;!_session.is_shutdown();)
    {
 		try
 		{
@@ -219,12 +235,14 @@ int FIXWriter::operator()()
 		}
 		catch (exception& e)	// also catches Poco::Net::NetException
 		{
-			cerr << e.what() << endl;
+			_session.log(e.what());
 			++invalid;
 		}
 	}
 
-	cerr << "FIXWriter: " << processed << " messages processed, " << invalid << " invalid" << endl;
+	ostringstream ostr;
+	ostr << "FIXWriter: " << processed << " messages processed, " << invalid << " invalid";
+	SingleLogger<glob_log0>::instance()->send(ostr.str());
 
 	return result;
 }

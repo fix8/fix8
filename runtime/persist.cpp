@@ -55,21 +55,15 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8cutils.cpp $
 #include <strings.h>
 #include <cerrno>
 #include <regex.h>
-#include <config.h>
 
-#include <f8exception.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
-#include <traits.hpp>
-#include <field.hpp>
-#include <message.hpp>
-#include <thread.hpp>
-#include <session.hpp>
-#include <persist.hpp>
+#include <f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
 using namespace std;
+
+//-------------------------------------------------------------------------------------------------
+extern char glob_log0[max_global_filename_length];
 
 //-------------------------------------------------------------------------------------------------
 bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
@@ -90,7 +84,11 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
       _db->open(0, _dbFname.c_str(), 0, DB_BTREE, 0, 0); // try and open existing if possible
 		unsigned last;
       if (get_last_seqnum(last))
-         cerr << _dbFname << ": Last sequence is " << last << endl;
+		{
+			ostringstream ostr;
+         ostr << _dbFname << ": Last sequence is " << last;
+			SingleLogger<glob_log0>::instance()->send(ostr.str());
+		}
    }
    catch(DbException& dbe)
    {
@@ -101,7 +99,11 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
          notFound = true;
          break;
       default:
-         cerr << "Error opening existing database: " << dbe.what() << " (" << dbe.get_errno() << ')' << endl;
+			{
+				ostringstream ostr;
+				ostr << "Error opening existing database: " << dbe.what() << " (" << dbe.get_errno() << ')';
+				SingleLogger<glob_log0>::instance()->send(ostr.str());
+			}
          return false;
       }
    }
@@ -114,7 +116,9 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
       }
       catch(DbException& dbe)
       {
-         cerr << "Error creating new database: " << dbe.what() << " (" << dbe.get_errno() << ')' << endl;
+			ostringstream ostr;
+         ostr << "Error creating new database: " << dbe.what() << " (" << dbe.get_errno() << ')';
+			SingleLogger<glob_log0>::instance()->send(ostr.str());
          return false;
       }
 
@@ -148,7 +152,9 @@ unsigned BDBPersister::get_last_seqnum(unsigned& sequence) const
    cursorp->close();
    if (retval)
    {
-      cerr << "last record not found (" << db_strerror(retval) << ')' << endl;
+		ostringstream ostr;
+      ostr << "last record not found (" << db_strerror(retval) << ')';
+		SingleLogger<glob_log0>::instance()->send(ostr.str());
       return 0;
    }
    return sequence = buffer.keyBuf_.int_;
@@ -164,7 +170,7 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 	const unsigned finish(to == 0 ? last_seq : to);
 	if (!startSeqNum || from > finish)
 	{
-		cerr << "No records found" << endl;
+		SingleLogger<glob_log0>::instance()->send("No records found");
 		return 0;
 	}
 
@@ -189,7 +195,11 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 		while(cursorp->get(&keyPair._key, &keyPair._data, DB_NEXT) == 0);
 	}
 	else
-		cerr << "record not found (" << db_strerror(retval) << ')' << endl;
+	{
+		ostringstream ostr;
+		ostr << "record not found (" << db_strerror(retval) << ')';
+		SingleLogger<glob_log0>::instance()->send(ostr.str());
+	}
 	cursorp->close();
 
 	return recs_sent;
@@ -223,7 +233,9 @@ bool BDBPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum)
    int retval(_db->get(0, &keyPair._key, &keyPair._data, 0));
    if (retval)
    {
-		cerr << "Could not get control 0" << '(' << db_strerror(retval) << ')' << endl;
+		ostringstream ostr;
+		ostr << "Could not get control 0" << '(' << db_strerror(retval) << ')';
+		SingleLogger<glob_log0>::instance()->send(ostr.str());
       return false;
    }
 	unsigned *loc(reinterpret_cast<unsigned *>(buffer.dataBuf_));
@@ -242,7 +254,9 @@ bool BDBPersister::get(const unsigned seqnum, f8String& to)
    int retval(_db->get(0, &keyPair._key, &keyPair._data, 0));
    if (retval)
    {
-		cerr << "Could not get " << seqnum << '(' << db_strerror(retval) << ')' << endl;
+		ostringstream ostr;
+		ostr << "Could not get " << seqnum << '(' << db_strerror(retval) << ')';
+		SingleLogger<glob_log0>::instance()->send(ostr.str());
       return false;
    }
    to.assign(buffer.dataBuf_);
@@ -294,7 +308,11 @@ int BDBPersister::operator()()
 		KeyDataPair keyPair(buffer);
 		int retval(_db->put(0, &keyPair._key, &keyPair._data, 0));  // will overwrite if found
 		if (retval)
-			cerr << "Could not add" << '(' << db_strerror(retval) << ')' << endl;
+		{
+			ostringstream ostr;
+			ostr << "Could not add" << '(' << db_strerror(retval) << ')';
+			SingleLogger<glob_log0>::instance()->send(ostr.str());
+		}
    }
 
    return 0;

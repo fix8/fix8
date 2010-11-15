@@ -144,6 +144,12 @@ struct ThreadException : f8Exception
 };
 
 //-------------------------------------------------------------------------------------------------
+struct PeerResetConnection : f8Exception
+{
+	PeerResetConnection(const std::string& reason) { format("PeerResetConnection exception", reason); }
+};
+
+//-------------------------------------------------------------------------------------------------
 
 } // FIX8
 

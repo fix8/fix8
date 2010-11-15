@@ -49,28 +49,27 @@ $URL$
 #include <numeric>
 #include <bitset>
 #include <time.h>
+#include <strings.h>
+#include <regex.h>
 
 #ifdef HAS_TR1_UNORDERED_MAP
 #include <tr1/unordered_map>
 #endif
 
-#include <strings.h>
-#include <regex.h>
-
-#include <f8exception.hpp>
-#include <thread.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
-#include <traits.hpp>
-#include <field.hpp>
-#include <message.hpp>
-#include <gzstream.hpp>
-#include <logger.hpp>
+#include <f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
 const std::string TRANSLATIONUNIT(__FILE__);
 using namespace FIX8;
 using namespace std;
+
+//-------------------------------------------------------------------------------------------------
+extern char glob_log0[max_global_filename_length];
+char glob_log0[max_global_filename_length] = { "global_filename_unset.log" };
+
+template<>
+tbb::atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
+	= tbb::atomic<SingleLogger<glob_log0> *>();
 
 //-------------------------------------------------------------------------------------------------
 int Logger::operator()()
@@ -139,7 +138,7 @@ const string& Logger::GetTimeAsStringMS(string& result, timespec *tv)
 
 //-------------------------------------------------------------------------------------------------
 FileLogger::FileLogger(const std::string& fname, const ebitset<Flags> flags, const unsigned rotnum)
-	: Logger(flags), _rotnum(rotnum)
+	: Logger(flags), _ofs(), _rotnum(rotnum)
 {
    // | uses IFS safe cfpopen; ! uses old popen if available
    if (fname[0] == '|' || fname[0] == '!')
@@ -168,7 +167,7 @@ FileLogger::FileLogger(const std::string& fname, const ebitset<Flags> flags, con
          _flags |= pipe;
       }
    }
-   else
+   else if (!fname.empty())
    {
       _pathname = fname;
       rotate();

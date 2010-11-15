@@ -62,14 +62,7 @@ $URL$
 #endif
 
 // f8 headers
-#include <f8exception.hpp>
-#include <f8utils.hpp>
-#include <traits.hpp>
-#include <f8types.hpp>
-#include <field.hpp>
-#include <message.hpp>
-#include <usage.hpp>
-#include <xml.hpp>
+#include <f8includes.hpp>
 #include <f8c.hpp>
 
 //-----------------------------------------------------------------------------------------

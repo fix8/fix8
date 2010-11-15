@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 #if 0
 
 Fix8 is released under the New BSD License.
@@ -28,36 +28,28 @@ HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LI
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
--------------------------------------------------------------------------------------------
-$Id$
-$Date$
-$URL$
+---------------------------------------------------------------------------------------------------
+$Id: logger.hpp 549 2010-11-14 11:09:12Z davidd $
+$Date: 2010-11-14 22:09:12 +1100 (Sun, 14 Nov 2010) $
+$URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/logger.hpp $
 
 #endif
-//-----------------------------------------------------------------------------------------
-#include <config.h>
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <set>
-#include <iterator>
-#include <algorithm>
-#include <bitset>
-
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
-
-#include <strings.h>
-#include <regex.h>
-
-#include <f8includes.hpp>
-
 //-------------------------------------------------------------------------------------------------
-namespace FIX8 {
+#ifndef _FIX8_INCLUDES_HPP_
+#define _FIX8_INCLUDES_HPP_
 
-//-------------------------------------------------------------------------------------------------
+#include <f8exception.hpp>
+#include <f8utils.hpp>
+#include <xml.hpp>
+#include <thread.hpp>
+#include <gzstream.hpp>
+#include <logger.hpp>
+#include <f8types.hpp>
+#include <traits.hpp>
+#include <field.hpp>
+#include <configuration.hpp>
+#include <message.hpp>
+#include <session.hpp>
+#include <persist.hpp>
 
-} // namespace FIX8
-
+#endif // _FIX8_INCLUDES_HPP_

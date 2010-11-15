@@ -69,9 +69,8 @@ $URL$
 #include <list>
 #include <vector>
 #include <algorithm>
-#include <f8exception.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
+
+#include <f8includes.hpp>
 
 //----------------------------------------------------------------------------------------
 #ifndef HAVE_GMTOFF

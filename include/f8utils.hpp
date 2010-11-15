@@ -263,6 +263,39 @@ public:
 	//friend ebitset operator|(const T lbit, const T rbit) { return ebitset(lbit) |= 1 << rbit; }
 };
 
+// atomic bitset for enums
+template<typename T, typename B=unsigned int>
+class ebitset_r
+{
+	typedef B integral_type;
+	tbb::atomic<integral_type> a_;
+
+public:
+	ebitset_r() { a_ = 0; }
+	ebitset_r(const ebitset_r<T, B>& from) { a_ = from.a_; }
+	explicit ebitset_r(const integral_type a) { a_ = a; }
+	explicit ebitset_r(const T sbit) { a_ = (1 << sbit) - 1; }
+
+	ebitset_r<T, B>& operator=(const ebitset_r<T, B>& that)
+	{
+		if (this != &that)
+			a_ = that.a_;
+		return *this;
+	}
+
+	integral_type has(const T sbit) { return a_ & 1 << sbit; }
+	integral_type operator&(const T sbit) { return a_ & 1 << sbit; }
+	void set(const T sbit, bool on=true) { if (on) a_ |= 1 << sbit; else a_ &= ~(1 << sbit); }
+	void set(const integral_type bset) { a_ = bset; }
+	void clear(const T sbit) { a_ &= ~(1 << sbit); }
+	void clearall() { a_ = 0; }
+	void setall(const T sbit) { a_ = (1 << sbit) - 1; }
+	integral_type get() const { return a_; }
+
+	void operator|=(const T sbit) { a_ |= 1 << sbit; }
+	ebitset_r& operator<<(const T sbit) { a_ |= 1 << sbit; return *this; }
+};
+
 //----------------------------------------------------------------------------------------
 inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
 {
@@ -340,6 +373,9 @@ class Singleton
 {
 	typedef T* ptr_type;
 	static tbb::atomic<ptr_type> _instance;
+
+	Singleton(const Singleton&);
+	Singleton& operator=(const Singleton&);
 
 protected:
 	Singleton() {}

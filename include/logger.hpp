@@ -108,7 +108,7 @@ public:
 	typedef ebitset<Flags> LogFlags;
 
 protected:
-	ebitset<Flags> _flags;
+	LogFlags _flags;
 	tbb::concurrent_bounded_queue<std::string> _msg_queue;
 	unsigned _sequence;
 
@@ -148,16 +148,18 @@ public:
 	FileLogger(const std::string& pathname, const LogFlags flags, const unsigned rotnum=rotation_default);
 	virtual ~FileLogger() { delete _ofs; }
 
-	virtual std::ostream& get_stream() const { return *_ofs; }
+	virtual std::ostream& get_stream() const { return _ofs ? *_ofs : std::cerr; }
 	virtual bool rotate();
 };
 
 //-------------------------------------------------------------------------------------------------
-class GlobalLogger : public FileLogger
+const size_t max_global_filename_length(128);
+
+template<char *fn>
+class SingleLogger : public Singleton<SingleLogger<fn> >, public FileLogger
 {
 public:
-	GlobalLogger(const std::string& pathname)
-		: FileLogger(pathname, LogFlags() << timestamp << sequence << append) {}
+	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << append) {}
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -40,20 +40,16 @@ using namespace FIX8;
 static const std::string rcsid("$Id$");
 
 //-----------------------------------------------------------------------------------------
-extern const char glob_log0[] = { "f8global0.log" };
+extern char glob_log0[];
+typedef SingleLogger<glob_log0> GlobalLogger;
+
+#if 0
 extern const char glob_log1[] = { "f8global1.log" };
 
-template<const char *fn>
-class TestLogger : public Singleton<TestLogger<fn> >, public FileLogger
-{
-public:
-	TestLogger() : FileLogger(fn, Logger::LogFlags() << Logger::timestamp << Logger::sequence << Logger::append) {}
-};
-
 template<>
-tbb::atomic<TestLogger<glob_log0> *> Singleton<TestLogger<glob_log0> >::_instance = tbb::atomic<TestLogger<glob_log0> *>();
-template<>
-tbb::atomic<TestLogger<glob_log1> *> Singleton<TestLogger<glob_log1> >::_instance = tbb::atomic<TestLogger<glob_log1> *>();
+tbb::atomic<SingleLogger<glob_log1> *> Singleton<SingleLogger<glob_log1> >::_instance
+	= tbb::atomic<SingleLogger<glob_log1> *>();
+#endif
 
 //-----------------------------------------------------------------------------------------
 class tex_router : public TEX::Myfix_Router
@@ -88,13 +84,15 @@ public:
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	TestLogger<glob_log0>::instance()->send("test fix client starting up...");
-	TestLogger<glob_log1>::instance()->send("test fix client starting up...");
+	strcpy(glob_log0, argv[1]);
+	GlobalLogger::instance()->send("test fix client starting up...");
+	//SingleLogger<glob_log1>::instance()->send("test fix client starting up...");
+
 	const SessionID id(TEX::ctx._beginStr, "DLD_TEX", "TEX_DLD");
 	BDBPersister *bdp(new BDBPersister);
 	bdp->initialise("./run", "myfix.db");
 	Logger::LogFlags logflags;
-	logflags << Logger::timestamp << Logger::sequence << Logger::append << Logger::compress;
+	logflags << Logger::timestamp << Logger::sequence << Logger::append;
 	FileLogger *log(new FileLogger("./run/myfix.log", logflags));
 	myfix_session ms(TEX::ctx, id, bdp, log);
 	Poco::Net::StreamSocket *sock(new Poco::Net::StreamSocket);

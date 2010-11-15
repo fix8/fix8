@@ -119,9 +119,10 @@ class Session
 	Handlers _handlers;
 
 protected:
+	tbb::atomic<bool> _shutdown;
+	tbb::atomic<unsigned> _next_sender_seq, _next_target_seq;
 	const F8MetaCntx& _ctx;
 	Connection *_connection;
-	tbb::atomic<unsigned> _next_sender_seq, _next_target_seq;
 	SessionID _sid;
 
 	Persister *_persist;
@@ -167,8 +168,9 @@ public:
 	Session(const F8MetaCntx& ctx, Persister *persist=0, Logger *logger=0);
 	virtual ~Session();
 
-	int begin(Connection *connection);
+	int begin(Connection *connection, bool wait=true);
 	bool process(const f8String& from);
+	bool is_shutdown() const { return _shutdown; }
 
 	typedef std::pair<const unsigned, const f8String> SequencePair;
 	virtual bool retrans_callback(const SequencePair& with) { return true; }
