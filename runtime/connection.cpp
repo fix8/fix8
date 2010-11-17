@@ -73,7 +73,7 @@ int FIXReader::operator()()
 {
    unsigned processed(0), dropped(0), invalid(0);
 
-   for (;!_session.is_shutdown();)
+   for (;;)
    {
 		try
 		{
@@ -81,9 +81,9 @@ int FIXReader::operator()()
 
 			if (read(msg))	// will block
 			{
-				if (_msg_queue.try_push (msg))
+				if (!_msg_queue.try_push (msg))
 				{
-					SingleLogger<glob_log0>::instance()->send("FIXReader: message queue is full");
+					_session.log("FIXReader: message queue is full");
 					++dropped;
 				}
 				else
@@ -112,7 +112,7 @@ int FIXReader::operator()()
 	ostringstream ostr;
 	ostr << "FIXReader: " << processed << " messages processed, " << dropped << " dropped, "
 		<< invalid << " invalid";
-	SingleLogger<glob_log0>::instance()->send(ostr.str());
+	_session.log(ostr.str());
 
 	return 0;
 }
@@ -122,7 +122,7 @@ int FIXReader::callback_processor()
 {
 	bool stopping(false);
 
-   for (;!_session.is_shutdown();)
+   for (;;)
    {
       f8String msg;
 
@@ -140,8 +140,12 @@ int FIXReader::callback_processor()
 			continue;
 		}
 
-      if (msg.empty() || !(_session.*_callback)(msg)) // return false to exit
-			break;
+      if (!_session.process(msg))
+		{
+			ostringstream ostr;
+			ostr << "Unhandled message: " << msg;
+			_session.log(ostr.str());
+		}
    }
 
 	return 0;
@@ -176,7 +180,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 		{
 			if (sockRead(&bt, 1) != 1)
 				return false;
-			if (!isdigit(bt) || bt != default_field_separator)
+			if (!isdigit(bt) && bt != default_field_separator)
 				throw IllegalMessage(msg_buf);
 			msg_buf[offs++] = bt;
 		}
@@ -198,11 +202,11 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 				throw InvalidBodyLength(mlen);
 
 			// read the body
-			if ((result = sockRead(msg_buf, mlen) == static_cast<int>(mlen)))
+			if ((result = sockRead(msg_buf, mlen) != static_cast<int>(mlen)))
 				return false;
 
 			// read the checksum
-			if ((result = sockRead(msg_buf + mlen, _chksum_sz) == static_cast<int>(_chksum_sz)))
+			if ((result = sockRead(msg_buf + mlen, _chksum_sz) != static_cast<int>(_chksum_sz)))
 				return false;
 
 			to += string(msg_buf, mlen + _chksum_sz);
@@ -221,7 +225,7 @@ int FIXWriter::operator()()
 {
 	int result(0), processed(0), invalid(0);
 
-   for (;!_session.is_shutdown();)
+   for (;;)
    {
 		try
 		{
@@ -242,7 +246,7 @@ int FIXWriter::operator()()
 
 	ostringstream ostr;
 	ostr << "FIXWriter: " << processed << " messages processed, " << invalid << " invalid";
-	SingleLogger<glob_log0>::instance()->send(ostr.str());
+	_session.log(ostr.str());
 
 	return result;
 }
@@ -250,14 +254,14 @@ int FIXWriter::operator()()
 //-------------------------------------------------------------------------------------------------
 bool FIXWriter::write(const f8String& from)
 {
-	return !_msg_queue.try_push (from);
+	return _msg_queue.try_push (from);
 }
 
 //-------------------------------------------------------------------------------------------------
 void Connection::start()
 {
 	_writer.start();
-	_reader->start();
+	_reader.start();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -274,7 +278,7 @@ bool ClientConnection::connect()
 		return false;
 	}
 
-	_reader->get_session().log("Connection successful");
+	_session.log("Connection successful");
 	return _connected = true;
 }
 

@@ -287,12 +287,13 @@ public:
 	integral_type operator&(const T sbit) { return a_ & 1 << sbit; }
 	void set(const T sbit, bool on=true) { if (on) a_ |= 1 << sbit; else a_ &= ~(1 << sbit); }
 	void set(const integral_type bset) { a_ = bset; }
-	void clear(const T sbit) { a_ &= ~(1 << sbit); }
+	void clear(const T sbit) { integral_type a = a_; a &= ~(1 << sbit); a_ = a; }
 	void clearall() { a_ = 0; }
 	void setall(const T sbit) { a_ = (1 << sbit) - 1; }
 	integral_type get() const { return a_; }
 
-	void operator|=(const T sbit) { a_ |= 1 << sbit; }
+	void operator|=(const T sbit) { integral_type a = a_; a |= 1 << sbit; a_ = a; }
+	void operator&=(const T sbit) { integral_type a = a_; a &= 1 << sbit; a_ = a; }
 	ebitset_r& operator<<(const T sbit) { a_ |= 1 << sbit; return *this; }
 };
 

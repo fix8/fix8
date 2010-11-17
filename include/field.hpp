@@ -85,7 +85,7 @@ struct RealmBase
 //-------------------------------------------------------------------------------------------------
 class BaseField
 {
-	const unsigned short _fnum;
+	unsigned short _fnum;
 
 protected:
 	const RealmBase *_rlm;

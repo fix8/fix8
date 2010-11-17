@@ -65,7 +65,7 @@ using namespace std;
 
 //-------------------------------------------------------------------------------------------------
 extern char glob_log0[max_global_filename_length];
-char glob_log0[max_global_filename_length] = { "global_filename_unset.log" };
+char glob_log0[max_global_filename_length] = { "global_filename_not_set.log" };
 
 template<>
 tbb::atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
@@ -76,10 +76,11 @@ int Logger::operator()()
 {
    unsigned received(0);
 	bool stopping(false);
+	ThreadCodes thread_codes;
 
    for (;;)
    {
-		string msg;
+		LogElement msg;
 		if (stopping)	// make sure we dequeue any pending msgs before exiting
 		{
 			if (!_msg_queue.try_pop(msg))
@@ -88,7 +89,7 @@ int Logger::operator()()
 		else
 			_msg_queue.pop (msg); // will block
 
-      if (msg.empty())  // means exit
+      if (msg.second.empty())  // means exit
 		{
          stopping = true;
 			continue;
@@ -99,13 +100,27 @@ int Logger::operator()()
 		if (_flags & sequence)
 			get_stream() << setw(7) << right << setfill('0') << ++_sequence << ' ';
 
+		if (_flags & thread)
+		{
+			ThreadCodes::const_iterator itr(thread_codes.find(msg.first));
+			char t_code;
+			if (itr == thread_codes.end())
+			{
+				t_code = _t_code++;
+				thread_codes.insert(ThreadCodes::value_type(msg.first, t_code));
+			}
+			else
+				t_code = itr->second;
+			get_stream() << t_code << ' ';
+		}
+
 		if (_flags & timestamp)
 		{
 			string ts;
 			get_stream() << GetTimeAsStringMS(ts) << ' ';
 		}
 
-		get_stream() << msg << endl;
+		get_stream() << msg.second << endl;
    }
 
    return 0;
@@ -125,14 +140,14 @@ const string& Logger::GetTimeAsStringMS(string& result, timespec *tv)
 
    struct tm tim;
    localtime_r(&startTime->tv_sec, &tim);
-   double secs(tim.tm_sec + startTime->tv_nsec/1000000000.);
+	const double one_billion(1000000000.), secs(tim.tm_sec + startTime->tv_nsec/one_billion);
    ostringstream oss;
-   oss << '[' << setfill('0') << setw(4) << (tim.tm_year + 1900);
-   oss << setw(2) << (tim.tm_mon + 1) << setw(2) << tim.tm_mday << ' ' << setw(2) << tim.tm_hour;
+   oss << setfill('0') << setw(4) << (tim.tm_year + 1900) << '-';
+   oss << setw(2) << (tim.tm_mon + 1)  << '-' << setw(2) << tim.tm_mday << ' ' << setw(2) << tim.tm_hour;
    oss << ':' << setw(2) << tim.tm_min << ':';
    oss.setf(ios::showpoint);
    oss.setf(ios::fixed);
-   oss << setw(9) << setfill('0') << setprecision(6) << secs << ']';
+   oss << setw(9) << setfill('0') << setprecision(6) << secs;
    return result = oss.str();
 }
 
@@ -180,9 +195,10 @@ bool FileLogger::rotate()
    if (!(_flags & pipe))
    {
       string thislFile(_pathname);
+#ifdef HAVE_COMPRESSION
       if (_flags & compress)
          thislFile += ".gz";
-
+#endif
       if (_rotnum > 0)
       {
          vector<string> rlst;

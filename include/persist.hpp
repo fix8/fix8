@@ -39,6 +39,7 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/session.hpp $
 #define _FIX8_PERSIST_HPP_
 
 #include <db_cxx.h>
+#include <tbb/concurrent_queue.h>
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {

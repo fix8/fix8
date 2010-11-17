@@ -50,6 +50,7 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/logger.hpp $
 #include <configuration.hpp>
 #include <message.hpp>
 #include <session.hpp>
+#include <connection.hpp>
 #include <persist.hpp>
 
 #endif // _FIX8_INCLUDES_HPP_

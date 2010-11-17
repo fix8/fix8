@@ -18,19 +18,13 @@
 #include <string.h>
 
 // f8 headers
-#include <f8exception.hpp>
-#include <thread.hpp>
-#include <f8utils.hpp>
-#include <traits.hpp>
-#include <f8types.hpp>
-#include <field.hpp>
-#include <message.hpp>
-#include <session.hpp>
-#include <persist.hpp>
-#include <logger.hpp>
+#include <f8includes.hpp>
+#include <usage.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
+
+#include <Poco/Net/ServerSocket.h>
 
 //-----------------------------------------------------------------------------------------
 using namespace std;
@@ -38,6 +32,10 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 static const std::string rcsid("$Id$");
+
+//-----------------------------------------------------------------------------------------
+void print_usage();
+const string GETARGLIST("hl:s");
 
 //-----------------------------------------------------------------------------------------
 extern char glob_log0[];
@@ -68,41 +66,91 @@ public:
 	}
 };
 
+//-----------------------------------------------------------------------------------------
 class myfix_session : public Session
 {
 public:
-	myfix_session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger)
-		: Session(ctx, sid, persist, logger) {}
-
-	Message *generate_logon(const unsigned heartbtint)
-	{
-		TEX::Logon *msg(static_cast<TEX::Logon *>(Session::generate_logon(10)));
-		return msg;
-	}
+	myfix_session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger)
+		: Session(ctx, sid, persist, logger, plogger) {}
+	myfix_session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger)
+		: Session(ctx, persist, logger, plogger) {}
+	bool authenticate(SessionID& id) { return true; }
 };
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	strcpy(glob_log0, argv[1]);
-	GlobalLogger::instance()->send("test fix client starting up...");
-	//SingleLogger<glob_log1>::instance()->send("test fix client starting up...");
+	int val;
+	bool server(false);
 
-	const SessionID id(TEX::ctx._beginStr, "DLD_TEX", "TEX_DLD");
-	BDBPersister *bdp(new BDBPersister);
-	bdp->initialise("./run", "myfix.db");
-	Logger::LogFlags logflags;
-	logflags << Logger::timestamp << Logger::sequence << Logger::append;
-	FileLogger *log(new FileLogger("./run/myfix.log", logflags));
-	myfix_session ms(TEX::ctx, id, bdp, log);
-	Poco::Net::StreamSocket *sock(new Poco::Net::StreamSocket);
+#ifdef HAVE_GETOPT_LONG
+	option long_options[] =
+	{
+		{ "help",			0,	0,	'h' },
+		{ "log",				0,	0,	'l' },
+		{ "server",			0,	0,	's' },
+		{ 0 },
+	};
+
+	while ((val = getopt_long (argc, argv, GETARGLIST.c_str(), long_options, 0)) != -1)
+#else
+	while ((val = getopt (argc, argv, GETARGLIST.c_str())) != -1)
+#endif
+	{
+      switch (val)
+		{
+		case ':': case '?': return 1;
+		case 'h': print_usage(); return 0;
+		case 'l': strcpy(glob_log0, optarg); break;
+		case 's': server = true; break;
+		default: break;
+		}
+	}
+
+	Logger::LogFlags logflags, noflags;
+	logflags << Logger::timestamp << Logger::sequence << Logger::append << Logger::thread;
+	BDBPersister bdp;
 	Poco::Net::SocketAddress addr("127.0.0.1:11001");
-	FIXReader *fr(new FIXReader(sock, ms, &Session::process));
-	ClientConnection *cc(new ClientConnection(sock, addr, fr));
-	ms.begin(cc);
+
+	try
+	{
+		if (!server)
+		{
+			GlobalLogger::instance()->send("test fix client starting up...");
+
+			const SessionID id(TEX::ctx._beginStr, "DLD_TEX", "TEX_DLD");
+			bdp.initialise("./run", "myfix_client.db");
+			FileLogger log("./run/myfix_client.log", logflags);
+			FileLogger plog("./run/myfix_client_protocol.log", noflags);
+			myfix_session ms(TEX::ctx, id, &bdp, &log, &plog);
+			Poco::Net::StreamSocket sock;
+			ClientConnection cc(&sock, addr, ms);
+			ms.start(&cc);
+		}
+		else
+		{
+			GlobalLogger::instance()->send("test fix server starting up...");
+
+			bdp.initialise("./run", "myfix_server.db");
+			FileLogger log("./run/myfix_server.log", logflags);
+			FileLogger plog("./run/myfix_server_protocol.log", noflags);
+			myfix_session ms(TEX::ctx, &bdp, &log, &plog);
+			Poco::Net::ServerSocket ss(addr);
+			Poco::Net::SocketAddress claddr;
+			Poco::Net::StreamSocket sock(ss.acceptConnection(claddr));
+			GlobalLogger::instance()->send("client connection established...");
+			ServerConnection sc(&sock, ms, 5);
+			ms.start(&sc);
+		}
+	}
+	catch (f8Exception& e)
+	{
+		cerr << e.what() << endl;
+		cerr << e.what() << endl;
+	}
 
 #if 0
-	try
+		try
 	{
 		const BaseEntry& be(TEX::Myfix_BaseEntry::find_ref(35));
 		//const BaseEntry& be(TEX::Myfix::find_ref(101));
@@ -185,5 +233,16 @@ int main(int argc, char **argv)
 #endif
 
 	return 0;
+}
+
+//-----------------------------------------------------------------------------------------
+void print_usage()
+{
+	UsageMan um("f8test", GETARGLIST, "<input xml schema>");
+	um.setdesc("f8test -- f8 test client/server");
+	um.add('s', "server", "run in server mode (default client mode)");
+	um.add('h', "help", "help, this screen");
+	um.add('l', "log", "global log filename");
+	um.print(cerr);
 }
 

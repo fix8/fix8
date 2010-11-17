@@ -116,18 +116,18 @@ void SessionID::from_string(const f8String& from)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger) :
-	_ctx(ctx), _connection(), _sid(sid), _persist(persist), _logger(logger)
+Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
+	_ctx(ctx), _connection(), _sid(sid), _persist(persist), _logger(logger), _plogger(plogger)	// initiator
 {
-	_shutdown = false;
+	_state = States::st_not_logged_in;
 	_next_sender_seq = _next_target_seq = 1;
 }
 
 //-------------------------------------------------------------------------------------------------
-Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger) :
-	_ctx(ctx), _connection(), _persist(persist), _logger(logger)
+Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
+	_ctx(ctx), _connection(), _persist(persist), _logger(logger), _plogger(plogger)	// acceptor
 {
-	_shutdown = false;
+	_state = States::st_wait_for_logon;
 	_next_sender_seq = _next_target_seq = 1; // atomic init
 }
 
@@ -136,9 +136,12 @@ Session::~Session()
 {
 	log("Session terminating");
 	_logger->stop();
-	delete _persist;
-	delete _connection;
-	delete _logger;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Session::plog(const std::string& what) const
+{
+	return _plogger ? _plogger->send(what) : false;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -148,7 +151,7 @@ bool Session::log(const std::string& what) const
 }
 
 //-------------------------------------------------------------------------------------------------
-int Session::begin(Connection *connection, bool wait)
+int Session::start(Connection *connection, bool wait)
 {
 	log("Starting session");
 	_connection = connection; // takes owership
@@ -157,20 +160,38 @@ int Session::begin(Connection *connection, bool wait)
 	_connection->start();
 	log("Session connected");
 
+	if (_connection->get_role() == Connection::cn_initiator)
+	{
+		Message *msg(generate_logon(_connection->get_hb_interval()));
+		send(msg);
+		_state = States::st_logon_sent;
+	}
+
 	if (wait)	// wait for
 	{
 		_connection->join();
-		_shutdown = true;
 	}
 
 	return 0;
 }
 
 //-------------------------------------------------------------------------------------------------
+void Session::stop()
+{
+	_control |= shutdown;
+	_connection->stop();
+}
+
+//-------------------------------------------------------------------------------------------------
 bool Session::process(const f8String& from)
 {
+	_last_received = Poco::DateTime();
+	plog(from);
 	scoped_ptr<Message> msg(Message::factory(_ctx, from));
-	return handle_admin(msg.get()) && (this->*_handlers.find_value_ref(msg->get_msgtype()))(msg.get());
+	msg->print(cout);
+	handle_admin(msg.get());
+	(this->*_handlers.find_value_ref(msg->get_msgtype()))(msg.get());
+	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -182,20 +203,89 @@ bool Session::handle_logon(const Message *msg)
 		if (msg->get(hbi))
 			_connection->set_hb_interval(hbi.get());
 	}
+	else // acceptor
+	{
+		sender_comp_id sci;
+		const_cast<Message*>(msg)->Header()->get(sci);
+		target_comp_id tci;
+		const_cast<Message*>(msg)->Header()->get(tci);
+		SessionID id(_ctx._beginStr, tci.get(), sci.get());
+		if (authenticate(id))
+		{
+			_sid = id;
+			Message *msg(generate_logon(_connection->get_hb_interval()));
+			send(msg);
+			_state = States::st_logon_sent;
+		}
+		else
+		{
+			ostringstream ostr;
+			ostr << id << " failed authentication";
+			log(ostr.str());
+			stop();
+			return false;
+		}
+	}
 
-	_heartbeat_timer.scheduleAtFixedRate(
+	ostringstream ostr;
+	ostr << "Heartbeat interval is " << _connection->get_hb_interval();
+	log(ostr.str());
+
+	_heartbeat_timer_outbound.scheduleAtFixedRate(
 		new Poco::Util::TimerTaskAdapter<Session>(*this, &Session::heartbeat_service),
+		1000 * _connection->get_hb_interval(), 1000 * _connection->get_hb_interval());
+
+	_heartbeat_timer_inbound.scheduleAtFixedRate(
+		new Poco::Util::TimerTaskAdapter<Session>(*this, &Session::heartbeat_processor),
 		1000 * _connection->get_hb_interval(), 1000 * _connection->get_hb_interval());
 
 	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
+bool Session::handle_heartbeat(const Message *msg)
+{
+	log("Session::handle_heartbeat");
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
 void Session::heartbeat_service(Poco::Util::TimerTask &tt)
 {
-	const f8String testReqID;
-	Message *msg(generate_heartbeat(testReqID));
-	send(msg);
+	Poco::Timespan ts(Poco::DateTime() - _last_sent);
+	if (ts.seconds() >= static_cast<long>(_connection->get_hb_interval()))
+	{
+		const f8String testReqID;
+		Message *msg(generate_heartbeat(testReqID));
+		send(msg);
+	}
+	else if (ts.seconds() > 0)	// reschedule
+	{
+		_heartbeat_timer_outbound.cancel();
+		_heartbeat_timer_outbound.scheduleAtFixedRate(
+			new Poco::Util::TimerTaskAdapter<Session>(*this, &Session::heartbeat_service),
+			1000 * ts.seconds(), 1000 * _connection->get_hb_interval());
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+void Session::heartbeat_processor(Poco::Util::TimerTask &tt)
+{
+	Poco::Timespan ts(Poco::DateTime() - _last_received);
+	if (ts.seconds() >= static_cast<long>(_connection->get_hb_interval() + _connection->get_hb_interval() / 5))	// 20% rule
+	{
+		const f8String testReqID("TEST");
+		Message *msg(generate_test_request(testReqID));
+		send(msg);
+		_state = States::st_test_request_sent;
+	}
+	else if (ts.seconds() > 0)	// reschedule
+	{
+		_heartbeat_timer_inbound.cancel();
+		_heartbeat_timer_inbound.scheduleAtFixedRate(
+			new Poco::Util::TimerTaskAdapter<Session>(*this, &Session::heartbeat_processor),
+			1000 * ts.seconds(), 1000 * _connection->get_hb_interval());
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -260,13 +350,20 @@ bool Session::send(Message *tosend)	// takes ownership and destroys
 {
 	scoped_ptr<Message> msg(tosend);
 	*msg->Header() += new msg_seq_num(_next_sender_seq);
+	*msg->Header() += new sending_time;
+	*msg->Header() += new sender_comp_id(_sid.get_senderCompID());
+	*msg->Header() += new target_comp_id(_sid.get_targetCompID());
+
+	modify_outbound(msg.get());
 	f8String output;
 	unsigned enclen(msg->encode(output));
 	if (!_connection->write(output))
 	{
-		cerr << "Message write failed!" << endl;
+		cerr << "Message write failed!: " << enclen << endl;
 		return false;
 	}
+	_last_sent = Poco::DateTime();
+	plog(output);
 
 	if (_persist)
 	{

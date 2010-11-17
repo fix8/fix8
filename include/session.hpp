@@ -43,7 +43,6 @@ $URL$
 #include <Poco/Util/TimerTask.h>
 #include <Poco/Util/TimerTaskAdapter.h>
 #include <tbb/atomic.h>
-#include <connection.hpp>
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
@@ -53,19 +52,16 @@ class SessionID // quickfix style sessionid
 {
 	static RegExp _sid;
 
-	typedef Field<f8String, Common_BeginString> begin_string;
-	typedef Field<f8String, Common_SenderCompID> sender_compid;
-	typedef Field<f8String, Common_TargetCompID> target_compid;
 	begin_string _beginString;
-	sender_compid _senderCompID;
-	target_compid _targetCompID;
+	sender_comp_id _senderCompID;
+	target_comp_id _targetCompID;
 
 	f8String _id;
 
 public:
 	SessionID(const f8String& beginString, const f8String& senderCompID, const f8String& targetCompID)
 		: _beginString(beginString), _senderCompID(senderCompID), _targetCompID(targetCompID) { make_id(); }
-	SessionID(const begin_string& beginString, const sender_compid& senderCompID, const target_compid& targetCompID)
+	SessionID(const begin_string& beginString, const sender_comp_id& senderCompID, const target_comp_id& targetCompID)
 		: _beginString(beginString), _senderCompID(senderCompID), _targetCompID(targetCompID) { make_id(); }
 	SessionID(const f8String& from) { from_string(from); }
 	SessionID(const SessionID& from) : _beginString(from._beginString), _senderCompID(from._senderCompID),
@@ -78,8 +74,8 @@ public:
 	void from_string(const f8String& from);
 
 	const begin_string& get_beginString() const { return _beginString; }
-	const sender_compid& get_senderCompID() const { return _senderCompID; }
-	const target_compid& get_targetCompID() const { return _targetCompID; }
+	const sender_comp_id& get_senderCompID() const { return _senderCompID; }
+	const target_comp_id& get_targetCompID() const { return _targetCompID; }
 	const f8String& get_id() const { return _id; }
 
 	friend std::ostream& operator<<(std::ostream& os, const SessionID& what) { return os << what._id; }
@@ -101,8 +97,8 @@ struct States
 
 	enum SessionStates
 	{
-		st_wait_for_logon, st_logon_sent, st_logon_received, st_logoff_sent, st_logoff_received,
-		st_sequence_reset_sent, st_sequence_reset_received,
+		st_wait_for_logon, st_not_logged_in, st_logon_sent, st_logon_received, st_logoff_sent, st_logoff_received,
+		st_test_request_sent, st_sequence_reset_sent, st_sequence_reset_received,
 	};
 
 	//ebitset<States> _ss;
@@ -111,25 +107,34 @@ struct States
 //-------------------------------------------------------------------------------------------------
 class Persister;
 class Logger;
+class Connection;
 
 //-------------------------------------------------------------------------------------------------
 class Session
 {
+public:
+	enum SessionControl { shutdown, count };
+	typedef ebitset_r<SessionControl> Control;
+
+private:
 	typedef StaticTable<const f8String, bool (Session::*)(const Message *)> Handlers;
 	Handlers _handlers;
 
 protected:
-	tbb::atomic<bool> _shutdown;
+	Control _control;
 	tbb::atomic<unsigned> _next_sender_seq, _next_target_seq;
+	tbb::atomic<States::SessionStates> _state;
+	Poco::DateTime _last_sent, _last_received;
 	const F8MetaCntx& _ctx;
 	Connection *_connection;
 	SessionID _sid;
 
 	Persister *_persist;
-	Logger *_logger;
+	Logger *_logger, *_plogger;
 
-	Poco::Util::Timer _heartbeat_timer;
+	Poco::Util::Timer _heartbeat_timer_outbound, _heartbeat_timer_inbound;
 	void heartbeat_service(Poco::Util::TimerTask &);	// generate heartbeats
+	void heartbeat_processor(Poco::Util::TimerTask &);	// enforce heartbeats
 
 	virtual bool handle_logon(const Message *msg);
 	virtual Message *generate_logon(const unsigned heartbeat_interval);
@@ -137,7 +142,7 @@ protected:
 	virtual bool handle_logout(const Message *msg) { return false; }
 	virtual Message *generate_logout();
 
-	virtual bool handle_heartbeat(const Message *msg) { return false; }
+	virtual bool handle_heartbeat(const Message *msg);
 	virtual Message *generate_heartbeat(const f8String& testReqID);
 
 	virtual bool handle_resend_request(const Message *msg) { return false; }
@@ -154,6 +159,8 @@ protected:
 
 	virtual bool handle_admin(const Message *msg) { return true; }
 	virtual bool handle_application(const Message *msg);
+	virtual void modify_outbound(Message *msg) {}
+	virtual bool authenticate(SessionID& id) { return true; }
 
 	Message *create_msg(const f8String& msg_type)
 	{
@@ -164,22 +171,23 @@ protected:
 	}
 
 public:
-	Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist=0, Logger *logger=0);
-	Session(const F8MetaCntx& ctx, Persister *persist=0, Logger *logger=0);
+	Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist=0, Logger *logger=0, Logger *plogger=0);
+	Session(const F8MetaCntx& ctx, Persister *persist=0, Logger *logger=0, Logger *plogger=0);
 	virtual ~Session();
 
-	int begin(Connection *connection, bool wait=true);
-	bool process(const f8String& from);
-	bool is_shutdown() const { return _shutdown; }
+	int start(Connection *connection, bool wait=true);
+	virtual bool process(const f8String& from);
 
 	typedef std::pair<const unsigned, const f8String> SequencePair;
 	virtual bool retrans_callback(const SequencePair& with) { return true; }
 
-	bool send(Message *msg);
-
+	virtual bool send(Message *msg);
+	void stop();
 	Connection *get_connection() { return _connection; }
 	const F8MetaCntx& get_ctx() const { return _ctx; }
 	bool log(const std::string& what) const;
+	bool plog(const std::string& what) const;
+	Control& get_control() { return _control; }
 
 	friend class StaticTable<const f8String, bool (Session::*)(const Message *)>;
 };

@@ -68,7 +68,7 @@ struct FieldTrait
 	struct TraitBase
 	{
 		const unsigned short _field, _ftype, _pos;
-		unsigned _field_traits;
+		const unsigned _field_traits;
 	};
 
 	static bool is_int(const FieldType ftype) { return ft_int <= ftype && ftype <= ft_end_int; }

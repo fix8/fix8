@@ -65,9 +65,9 @@ public:
 	size_t queued() const { return _msg_queue.size(); }
 	virtual int operator()() = 0;
 	virtual void start() { _thread.Start(); }
+	virtual void quit() { _thread.Kill(1); }
 	Poco::Net::StreamSocket *socket() { return _sock; }
 	int join() { return _thread.Join(); }
-	Session& get_session() { return _session; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -80,7 +80,6 @@ class FIXReader : public AsyncHalfDuplexSocket
 	int callback_processor();
 
 	size_t _bg_sz; // 8=FIXx.x^A9=x
-	bool (Session::*_callback)(const f8String&);
 
 	bool read(f8String& to);
 	int sockRead(char *where, size_t sz);
@@ -89,10 +88,8 @@ protected:
 	int operator()();
 
 public:
-	FIXReader(Poco::Net::StreamSocket *sock, Session& session, bool (Session::*callback)(const f8String&))
-		: AsyncHalfDuplexSocket(sock, session),
-		_callback_thread(ref(*this), &FIXReader::callback_processor), _bg_sz(),
-		_callback(callback)
+	FIXReader(Poco::Net::StreamSocket *sock, Session& session)
+		: AsyncHalfDuplexSocket(sock, session), _callback_thread(ref(*this), &FIXReader::callback_processor), _bg_sz()
 	{
 		set_preamble_sz();
 	}
@@ -104,6 +101,8 @@ public:
 		AsyncHalfDuplexSocket::start();
 		_callback_thread.Start();
 	}
+
+	virtual void quit() { _callback_thread.Kill(1); AsyncHalfDuplexSocket::quit(); }
 
 	void set_preamble_sz();
 };
@@ -130,31 +129,33 @@ public:
 protected:
 	Poco::Net::StreamSocket *_sock;
 	bool _connected;
+	Session& _session;
 	Role _role;
 	unsigned _hb_interval;
 
-	FIXReader *_reader;
+	FIXReader _reader;
 	FIXWriter _writer;
 
 public:
-	Connection(Poco::Net::StreamSocket *sock, FIXReader *reader)	// client
-		: _sock(sock), _connected(), _role(cn_initiator),
-		_hb_interval(), _reader(reader), _writer(sock, reader->get_session()) {} // takes owership
+	Connection(Poco::Net::StreamSocket *sock, Session &session)	// client
+		: _sock(sock), _connected(), _session(session), _role(cn_initiator),
+		_hb_interval(), _reader(sock, session), _writer(sock, session) {}
 
-	Connection(Poco::Net::StreamSocket *sock, FIXReader *reader, const unsigned hb_interval) // server
-		: _sock(sock), _connected(true), _role(cn_acceptor), _hb_interval(hb_interval),
-		  _reader(reader), _writer(sock, reader->get_session()) {} // takes owership
+	Connection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval) // server
+		: _sock(sock), _connected(true), _session(session), _role(cn_acceptor), _hb_interval(hb_interval),
+		  _reader(sock, session), _writer(sock, session) {}
 
-	virtual ~Connection() { delete _reader; }
+	virtual ~Connection() {}
 
 	const Role get_role() const { return _role; }
 	void start();
+	void stop() { _reader.quit(); _writer.quit(); }
 	virtual bool connect() { return _connected; }
 	virtual bool write(const f8String& from) { return _writer.write(from); }
 	void set_hb_interval(const unsigned hb_interval) { _hb_interval = hb_interval; }
 	unsigned get_hb_interval() const { return _hb_interval; }
-	int join() { return _reader->join(); }
-	Session& get_session() { return _reader->get_session(); }
+	int join() { return _reader.join(); }
+	Session& get_session() { return _session; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -163,8 +164,8 @@ class ClientConnection : public Connection
 	Poco::Net::SocketAddress _addr;
 
 public:
-	ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, FIXReader *reader)
-		: Connection(sock, reader), _addr(addr) {}
+	ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session)
+		: Connection(sock, session), _addr(addr) {}
 	virtual ~ClientConnection() {}
 	bool connect();
 };
@@ -174,8 +175,8 @@ class ServerConnection : public Connection
 {
 
 public:
-	ServerConnection(Poco::Net::StreamSocket *sock, FIXReader *reader, const unsigned hb_interval) :
-		Connection(sock, reader, hb_interval) {}
+	ServerConnection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval) :
+		Connection(sock, session, hb_interval) {}
 	virtual ~ServerConnection() {}
 };
 

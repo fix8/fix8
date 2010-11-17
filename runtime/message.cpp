@@ -102,7 +102,7 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 		}
 	}
 
-	//const unsigned short missing(_fp.find_missing());
+	const unsigned short missing(_fp.find_missing());
 	//if (missing)
 	//	throw MissingMandatoryField(missing);
 
@@ -148,7 +148,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 
 		*grpbase += grp.release();
 
-		//const unsigned short missing(grp->_fp.find_missing());
+		const unsigned short missing(grp->_fp.find_missing());
 		//if (missing)
 		//	throw MissingMandatoryField(missing);
 	}

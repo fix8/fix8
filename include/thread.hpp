@@ -107,6 +107,8 @@ public:
 	void Exit(int exitvalue) const { pthread_exit(reinterpret_cast<void *>(exitvalue)); }
 	const int GetExitVal() const { return _exitval; }
 
+	void Kill(int signum) const { pthread_kill(_tid, signum); }
+
 	const pthread_t GetThreadID() const { return _tid; }
 	static const pthread_t GetID() { return pthread_self(); }
 

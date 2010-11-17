@@ -103,21 +103,24 @@ class Logger
 	Thread<Logger> _thread;
 
 public:
-	enum Flags { append, timestamp, sequence, compress, pipe };
+	enum Flags { append, timestamp, sequence, compress, pipe, thread };
 	static const unsigned rotation_default = 5, max_rotation = 64;
 	typedef ebitset<Flags> LogFlags;
 
 protected:
 	LogFlags _flags;
-	tbb::concurrent_bounded_queue<std::string> _msg_queue;
+	typedef std::pair<pthread_t, std::string> LogElement;
+	tbb::concurrent_bounded_queue<LogElement> _msg_queue;
 	unsigned _sequence;
+	char _t_code;
+	typedef std::map<pthread_t, char> ThreadCodes;
 
 public:
-	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _sequence() { _thread.Start(); }
+	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _sequence(), _t_code('A') { _thread.Start(); }
 	virtual ~Logger() {}
 
 	virtual std::ostream& get_stream() const { return std::cout; }
-	bool send(const std::string& what) { return _msg_queue.try_push (what) == 0; }
+	bool send(const std::string& what) { return _msg_queue.try_push (LogElement(pthread_self(), what)) == 0; }
 	void stop() { send(std::string()); _thread.Join(); }
 	virtual bool rotate() { return true; }
 
@@ -159,7 +162,7 @@ template<char *fn>
 class SingleLogger : public Singleton<SingleLogger<fn> >, public FileLogger
 {
 public:
-	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << append) {}
+	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << append << thread) {}
 };
 
 //-------------------------------------------------------------------------------------------------
