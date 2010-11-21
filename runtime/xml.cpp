@@ -80,8 +80,6 @@ int XmlEntity::errors_(0), XmlEntity::line_(1), XmlEntity::maxdepth_(0), XmlEnti
 RegExp XmlEntity::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlEntity::rCX_("&(amp|lt|gt|apos|quot);");
 
 //-----------------------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlEntity& en)
 {
 	const string spacer(en.depth_ * 3, ' ');

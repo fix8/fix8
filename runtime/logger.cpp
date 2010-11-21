@@ -64,8 +64,7 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-extern char glob_log0[max_global_filename_length];
-char glob_log0[max_global_filename_length] = { "global_filename_not_set.log" };
+char FIX8::glob_log0[max_global_filename_length] = { "global_filename_not_set.log" };
 
 template<>
 tbb::atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
@@ -120,7 +119,7 @@ int Logger::operator()()
 			get_stream() << GetTimeAsStringMS(ts) << ' ';
 		}
 
-		get_stream() << msg.second << endl;
+		get_stream() << msg.second << std::endl;
    }
 
    return 0;

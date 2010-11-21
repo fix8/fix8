@@ -97,19 +97,6 @@ void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostre
 const string& mkel(const string& base, const string& compon, string& where);
 
 //-----------------------------------------------------------------------------------------
-class filestdout
-{
-	std::ostream *os_;
-	bool del_;
-
-public:
-	filestdout(std::ostream *os, bool del=false) : os_(os), del_(del) {}
-	~filestdout() { if (del_) delete os_; }
-
-	std::ostream& operator()() { return *os_; }
-};
-
-//-----------------------------------------------------------------------------------------
 ostream *openofile(const string& odir, const string& fname)
 {
 	ostringstream ofs;

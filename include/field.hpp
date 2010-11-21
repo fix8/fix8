@@ -525,6 +525,7 @@ const unsigned Common_RefSeqNum(45);
 const unsigned Common_SenderCompID(49);
 const unsigned Common_SendingTime(52);
 const unsigned Common_TargetCompID(56);
+const unsigned Common_Text(58);
 const unsigned Common_EncryptMethod(98);
 const unsigned Common_HeartBtInt(108);
 const unsigned Common_TestReqID(112);
@@ -555,6 +556,7 @@ typedef Field<f8String, Common_MsgType> msg_type;
 typedef Field<f8String, Common_CheckSum> check_sum;
 typedef Field<f8String, Common_BeginString> begin_string;
 typedef Field<f8String, Common_TestReqID> test_request_id;
+typedef Field<f8String, Common_Text> text;;
 
 typedef Field<UTCTimestamp, Common_SendingTime> sending_time;
 
@@ -562,6 +564,7 @@ typedef Field<Boolean, Common_GapFillFlag> gap_fill_flag;
 typedef Field<Boolean, Common_PossDupFlag> poss_dup_flag;
 
 typedef Field<int, Common_HeartBtInt> heartbeat_interval;
+typedef Field<int, Common_EncryptMethod> encrypt_method;
 
 } // FIX8
 

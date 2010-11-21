@@ -121,6 +121,7 @@ int FIXReader::operator()()
 int FIXReader::callback_processor()
 {
 	bool stopping(false);
+	int processed(0), ignored(0);
 
    for (;;)
    {
@@ -145,8 +146,15 @@ int FIXReader::callback_processor()
 			ostringstream ostr;
 			ostr << "Unhandled message: " << msg;
 			_session.log(ostr.str());
+			++ignored;
 		}
+		else
+			++processed;
    }
+
+	ostringstream ostr;
+	ostr << "FIXCallback: " << processed << " messages processed, " << ignored << " ignored";
+	_session.log(ostr.str());
 
 	return 0;
 }
@@ -265,6 +273,15 @@ void Connection::start()
 }
 
 //-------------------------------------------------------------------------------------------------
+void Connection::stop()
+{
+	_reader.stop();
+	_writer.stop();
+	//_reader.quit();
+	_writer.quit();
+}
+
+//-------------------------------------------------------------------------------------------------
 bool ClientConnection::connect()
 {
 	Poco::Timespan timeout(1000000);
@@ -274,7 +291,9 @@ bool ClientConnection::connect()
    }
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
-		cerr << e.what() << endl;
+		ostringstream ostr;
+		ostr << "exception: " << e.what();
+		_session.log(ostr.str());
 		return false;
 	}
 

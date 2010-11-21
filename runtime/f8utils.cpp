@@ -198,6 +198,21 @@ const string& StrToLower(const string& src, string& target)
 }
 
 //----------------------------------------------------------------------------------------
+string Str_error(const int err, const char *str)
+{
+	const size_t max_str(256);
+	char buf[max_str] = {};
+	strerror_r(err, buf, max_str - 1);
+	if (str && *str)
+	{
+		ostringstream ostr;
+		ostr << str << ": " << buf;
+		return ostr.str();
+	}
+	return string(buf);
+}
+
+//----------------------------------------------------------------------------------------
 RegExp::RegExp(const char *pattern, const int flags) : pattern_(pattern)
 {
 	if ((errCode_ = regcomp(&reg_, pattern_.c_str(), REG_EXTENDED|flags)) != 0)
@@ -245,3 +260,4 @@ string& RegExp::Replace(RegMatch& match, string& source, const string& with, con
 }
 
 } // namespace FIX8
+

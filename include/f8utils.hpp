@@ -50,6 +50,7 @@ const std::string& StrToLower(const std::string& src, std::string& target);
 unsigned ROT13Hash (const std::string& str);
 std::string& CheckAddTrailingSlash(std::string& source);
 std::string& CheckRemoveTrailingSlash(std::string& src);
+std::string Str_error(const int err, const char *str=0);
 
 //----------------------------------------------------------------------------------------
 // case insensitive ==

@@ -140,13 +140,13 @@ struct BadCheckSum : f8Exception
 //-------------------------------------------------------------------------------------------------
 struct ThreadException : f8Exception
 {
-	ThreadException(const std::string& reason) { format("Thread exception", reason); }
+	ThreadException(const std::string& reason) { format("Thread error", reason); }
 };
 
 //-------------------------------------------------------------------------------------------------
 struct PeerResetConnection : f8Exception
 {
-	PeerResetConnection(const std::string& reason) { format("PeerResetConnection exception", reason); }
+	PeerResetConnection(const std::string& reason) { format("Peer reset connection", reason); }
 };
 
 //-------------------------------------------------------------------------------------------------

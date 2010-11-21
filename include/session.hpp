@@ -39,9 +39,6 @@ $URL$
 #define _FIX8_SESSION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
-#include <Poco/Util/Timer.h>
-#include <Poco/Util/TimerTask.h>
-#include <Poco/Util/TimerTaskAdapter.h>
 #include <tbb/atomic.h>
 
 //-------------------------------------------------------------------------------------------------
@@ -89,19 +86,12 @@ struct States
 		pr_begin_str, pr_logged_in, pr_low, pr_high, pr_comp_id, pr_target_id, pr_logon_timeout,
 	};
 
-	enum ConnectionStates
-	{
-		ct_activated,
-		ct_logged_in
-	};
-
 	enum SessionStates
 	{
+		st_continuous, st_session_terminated,
 		st_wait_for_logon, st_not_logged_in, st_logon_sent, st_logon_received, st_logoff_sent, st_logoff_received,
 		st_test_request_sent, st_sequence_reset_sent, st_sequence_reset_received,
 	};
-
-	//ebitset<States> _ss;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -112,8 +102,10 @@ class Connection;
 //-------------------------------------------------------------------------------------------------
 class Session
 {
+	static RegExp _seq;
+
 public:
-	enum SessionControl { shutdown, count };
+	enum SessionControl { shutdown, print, debug, count };
 	typedef ebitset_r<SessionControl> Control;
 
 private:
@@ -132,14 +124,15 @@ protected:
 	Persister *_persist;
 	Logger *_logger, *_plogger;
 
-	Poco::Util::Timer _heartbeat_timer_outbound, _heartbeat_timer_inbound;
-	void heartbeat_service(Poco::Util::TimerTask &);	// generate heartbeats
-	void heartbeat_processor(Poco::Util::TimerTask &);	// enforce heartbeats
+	Timer<Session> _timer;
+	TimerEvent<Session> _outbound, _inbound;
+	bool heartbeat_service();	// generate heartbeats
+	bool heartbeat_processor();	// enforce heartbeats
 
 	virtual bool handle_logon(const Message *msg);
 	virtual Message *generate_logon(const unsigned heartbeat_interval);
 
-	virtual bool handle_logout(const Message *msg) { return false; }
+	virtual bool handle_logout(const Message *msg);
 	virtual Message *generate_logout();
 
 	virtual bool handle_heartbeat(const Message *msg);
@@ -151,16 +144,16 @@ protected:
 	virtual bool handle_sequence_reset(const Message *msg) { return false; }
 	virtual Message *generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag=false);
 
-	virtual bool handle_test_request(const Message *msg) { return false; }
+	virtual bool handle_test_request(const Message *msg);
 	virtual Message *generate_test_request(const f8String& testReqID);
 
 	virtual bool handle_reject(const Message *msg) { return false; }
-	virtual Message *generate_reject() { return 0; }
+	virtual Message *generate_reject(const unsigned seqnum, const char *what);
 
 	virtual bool handle_admin(const Message *msg) { return true; }
 	virtual bool handle_application(const Message *msg);
 	virtual void modify_outbound(Message *msg) {}
-	virtual bool authenticate(SessionID& id) { return true; }
+	virtual bool authenticate(SessionID& id, const Message *msg) { return true; }
 
 	Message *create_msg(const f8String& msg_type)
 	{
@@ -185,9 +178,10 @@ public:
 	void stop();
 	Connection *get_connection() { return _connection; }
 	const F8MetaCntx& get_ctx() const { return _ctx; }
-	bool log(const std::string& what) const;
-	bool plog(const std::string& what) const;
-	Control& get_control() { return _control; }
+	bool log(const std::string& what) const { return _logger ? _logger->send(what) : false; }
+	bool plog(const std::string& what) const { return _plogger ? _plogger->send(what) : false; }
+
+	Control& control() { return _control; }
 
 	friend class StaticTable<const f8String, bool (Session::*)(const Message *)>;
 };

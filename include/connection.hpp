@@ -103,6 +103,7 @@ public:
 	}
 
 	virtual void quit() { _callback_thread.Kill(1); AsyncHalfDuplexSocket::quit(); }
+	virtual void stop() { const f8String from; _msg_queue.try_push(from); }
 
 	void set_preamble_sz();
 };
@@ -118,6 +119,7 @@ public:
 	virtual ~FIXWriter() {}
 
 	bool write(const f8String& from);
+	virtual void stop() { const f8String from; _msg_queue.try_push(from); }
 };
 
 //----------------------------------------------------------------------------------------
@@ -149,7 +151,7 @@ public:
 
 	const Role get_role() const { return _role; }
 	void start();
-	void stop() { _reader.quit(); _writer.quit(); }
+	void stop();
 	virtual bool connect() { return _connected; }
 	virtual bool write(const f8String& from) { return _writer.write(from); }
 	void set_hb_interval(const unsigned hb_interval) { _hb_interval = hb_interval; }

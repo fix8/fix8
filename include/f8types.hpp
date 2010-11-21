@@ -93,10 +93,10 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-template<typename Key, typename Val>
+template<typename Key, typename Val, typename Compare=std::less<Key> >
 struct StaticTable
 {
-	typedef typename std::map<Key, Val> TypeMap;
+	typedef typename std::map<Key, Val, Compare> TypeMap;
 	typedef typename TypeMap::value_type TypePair;
 	typedef Val NotFoundType;
 

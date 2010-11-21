@@ -101,6 +101,7 @@ public:
 class Logger
 {
 	Thread<Logger> _thread;
+	std::ostringstream _buf;
 
 public:
 	enum Flags { append, timestamp, sequence, compress, pipe, thread };
@@ -164,6 +165,10 @@ class SingleLogger : public Singleton<SingleLogger<fn> >, public FileLogger
 public:
 	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << append << thread) {}
 };
+
+//-----------------------------------------------------------------------------------------
+extern char glob_log0[max_global_filename_length];
+typedef SingleLogger<glob_log0> GlobalLogger;
 
 //-------------------------------------------------------------------------------------------------
 

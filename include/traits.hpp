@@ -138,8 +138,8 @@ public:
 
 	unsigned short find_missing(FieldTrait::TraitTypes type=FieldTrait::mandatory) const
 	{
-		for (Presence::const_iterator itr(_presence.end()); itr != _presence.end(); ++itr)
-			if (itr->_field_traits.has(type) && !itr->_field_traits.has(FieldTrait::present))
+		for (Presence::const_iterator itr(_presence.begin()); itr != _presence.end(); ++itr)
+			if ((itr->_field_traits & type) && (itr->_field_traits & FieldTrait::present) == 0)
 				return itr->_fnum;
 		return 0;
 	}

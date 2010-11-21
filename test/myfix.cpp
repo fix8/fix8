@@ -12,6 +12,9 @@
 #include <algorithm>
 #include <bitset>
 #include <typeinfo>
+#include <sys/ioctl.h>
+#include <signal.h>
+#include <termios.h>
 
 #include <regex.h>
 #include <errno.h>
@@ -25,6 +28,7 @@
 #include "Myfix_classes.hpp"
 
 #include <Poco/Net/ServerSocket.h>
+#include "myfix.hpp"
 
 //-----------------------------------------------------------------------------------------
 using namespace std;
@@ -36,46 +40,35 @@ static const std::string rcsid("$Id$");
 //-----------------------------------------------------------------------------------------
 void print_usage();
 const string GETARGLIST("hl:s");
+bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
-extern char glob_log0[];
-typedef SingleLogger<glob_log0> GlobalLogger;
-
-#if 0
-extern const char glob_log1[] = { "f8global1.log" };
-
 template<>
-tbb::atomic<SingleLogger<glob_log1> *> Singleton<SingleLogger<glob_log1> >::_instance
-	= tbb::atomic<SingleLogger<glob_log1> *>();
-#endif
+const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
+{
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+};
+template<>
+const MyMenu::Handlers::NotFoundType MyMenu::Handlers::_noval = &MyMenu::nothing;
+template<>
+const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
+	MyMenu::Handlers::get_table_end());
 
 //-----------------------------------------------------------------------------------------
-class tex_router : public TEX::Myfix_Router
+void sig_handler(int sig)
 {
-public:
-	virtual bool operator() (const TEX::NewOrderSingle *msg) const
-	{
-		TEX::OrderQty qty;
-		msg->get(qty);
-		cout << "Order qty:" << qty.get() << endl;
-		TEX::Price price;
-		msg->get(price);
-		cout << "price:" << price.get() << endl;
-		msg->print(cout);
-		return true;
-	}
-};
-
-//-----------------------------------------------------------------------------------------
-class myfix_session : public Session
-{
-public:
-	myfix_session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger)
-		: Session(ctx, sid, persist, logger, plogger) {}
-	myfix_session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger)
-		: Session(ctx, persist, logger, plogger) {}
-	bool authenticate(SessionID& id) { return true; }
-};
+   switch (sig)
+   {
+   case SIGTERM:
+   case SIGINT:
+      term_received = true;
+      signal(sig, sig_handler);
+      break;
+   }
+}
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
@@ -107,6 +100,9 @@ int main(int argc, char **argv)
 		}
 	}
 
+	signal(SIGTERM, sig_handler);
+	signal(SIGINT, sig_handler);
+
 	Logger::LogFlags logflags, noflags;
 	logflags << Logger::timestamp << Logger::sequence << Logger::append << Logger::thread;
 	BDBPersister bdp;
@@ -114,125 +110,116 @@ int main(int argc, char **argv)
 
 	try
 	{
-		if (!server)
-		{
-			GlobalLogger::instance()->send("test fix client starting up...");
-
-			const SessionID id(TEX::ctx._beginStr, "DLD_TEX", "TEX_DLD");
-			bdp.initialise("./run", "myfix_client.db");
-			FileLogger log("./run/myfix_client.log", logflags);
-			FileLogger plog("./run/myfix_client_protocol.log", noflags);
-			myfix_session ms(TEX::ctx, id, &bdp, &log, &plog);
-			Poco::Net::StreamSocket sock;
-			ClientConnection cc(&sock, addr, ms);
-			ms.start(&cc);
-		}
-		else
+		if (server)
 		{
 			GlobalLogger::instance()->send("test fix server starting up...");
 
 			bdp.initialise("./run", "myfix_server.db");
-			FileLogger log("./run/myfix_server.log", logflags);
-			FileLogger plog("./run/myfix_server_protocol.log", noflags);
-			myfix_session ms(TEX::ctx, &bdp, &log, &plog);
+			FileLogger log("./run/myfix_server.log", logflags, 2);
+			FileLogger plog("./run/myfix_server_protocol.log", noflags, 2);
+			myfix_session_server ms(TEX::ctx, &bdp, &log, &plog);
 			Poco::Net::ServerSocket ss(addr);
 			Poco::Net::SocketAddress claddr;
 			Poco::Net::StreamSocket sock(ss.acceptConnection(claddr));
 			GlobalLogger::instance()->send("client connection established...");
 			ServerConnection sc(&sock, ms, 5);
+			ms.control() |= Session::print;
 			ms.start(&sc);
+		}
+		else
+		{
+			GlobalLogger::instance()->send("test fix client starting up...");
+
+			const SessionID id(TEX::ctx._beginStr, "DLD_TEX", "TEX_DLD");
+			bdp.initialise("./run", "myfix_client.db");
+			FileLogger log("./run/myfix_client.log", logflags, 2);
+			FileLogger plog("./run/myfix_client_protocol.log", noflags, 2);
+			myfix_session_client ms(TEX::ctx, id, &bdp, &log, &plog);
+			Poco::Net::StreamSocket sock;
+			ClientConnection cc(&sock, addr, ms);
+			ms.control() |= Session::print;
+			ms.start(&cc, false);
+
+			MyMenu mymenu(ms, 0, cout);
+			char ch;
+			mymenu.set_raw_mode();
+			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3)
+			{
+				if (!mymenu.process(ch))
+					break;
+			}
+			mymenu.unset_raw_mode();
+
+			ms.stop();
 		}
 	}
 	catch (f8Exception& e)
 	{
-		cerr << e.what() << endl;
-		cerr << e.what() << endl;
+		cerr << "exception: " << e.what() << endl;
 	}
-
-#if 0
-		try
-	{
-		const BaseEntry& be(TEX::Myfix_BaseEntry::find_ref(35));
-		//const BaseEntry& be(TEX::Myfix::find_ref(101));
-		string logon("A");
-		auto_ptr<BaseField> fld(be._create(logon, &be));
-		if (be._comment)
-			cout << be._comment << ": ";
-		cout << *fld << endl;
-		cout << "is valid: " << boolalpha << fld->is_valid() << endl << endl;
-	}
-	catch (InvalidMetadata& ex)
-	{
-		cerr << ex.what() << endl;
-	}
-
-	FieldTrait::TraitBase a = { 1, FieldTrait::ft_int, 0, true, false, false };
-
-	const BaseEntry& be1(TEX::Myfix_BaseEntry::find_ref(98));
-	string encryptmethod("101");
-	auto_ptr<BaseField> fld1(be1._create(encryptmethod, &be1));
-	if (be1._comment)
-		cout << be1._comment << ": ";
-	cout << *fld1 << endl;
-	cout << "is valid: " << boolalpha << fld1->is_valid() << endl;
-	//TEX::EncryptMethod& em(dynamic_cast<TEX::EncryptMethod&>(*fld1));
-	//cout << em.get() << endl;
-#endif
-
-#if 0
-	try
-	{
-		//FileLogger flog("myfix.log");
-		Logger flog(ebitset<Logger::Flags>(0));
-
-		TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
-		*nos += new TEX::TransactTime("20110904-10:15:14");
-		*nos += new TEX::OrderQty(100);
-		*nos += new TEX::Price(47.78);
-		*nos += new TEX::ClOrdID("ord01");
-		*nos += new TEX::Symbol("BHP");
-		*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
-		*nos += new TEX::Side(TEX::Side_BUY);
-		*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
-		//*nos += new TEX::Subject("blah");
-
-		*nos += new TEX::NoUnderlyings(2);
-		GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
-		MessageBase *gr1(noul->create_group());
-		*gr1 += new TEX::UnderlyingSymbol("BLAH");
-		*noul += gr1;
-		MessageBase *gr2(noul->create_group());
-		*gr2 += new TEX::UnderlyingSymbol("FOO");
-		*noul += gr2;
-
-		f8String omsg;
-		nos->encode(omsg);
-		cout << omsg << endl;
-		nos->print(cout);
-		flog.send(omsg);
-
-		delete nos;
-
-		cout << endl;
-		//omsg[omsg.size() - 2] = '9';
-		Message *mc(Message::factory(TEX::ctx, omsg));
-		tex_router mr;
-		mc->process(mr);
-		delete mc;
-
-		SessionID id(TEX::ctx._beginStr, "DLD_TEX", "TEX_DLD");
-		cout << id << endl;
-		SessionID nid(id.get_id());
-		cout << nid << endl;
-		flog.stop();
-	}
-	catch (f8Exception& e)
-	{
-		cerr << e.what() << endl;
-	}
-#endif
 
 	return 0;
+}
+
+//-----------------------------------------------------------------------------------------
+bool myfix_session_client::handle_application(const Message *msg)
+{
+	msg->process(_router);
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool myfix_session_server::handle_application(const Message *msg)
+{
+	msg->process(_router);
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::new_order_single()
+{
+	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
+	*nos += new TEX::TransactTime("20110904-10:15:14");
+	*nos += new TEX::OrderQty(100);
+	*nos += new TEX::Price(47.78);
+	//*nos += new TEX::ClOrdID("ord01");
+	*nos += new TEX::Symbol("BHP");
+	*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
+	*nos += new TEX::Side(TEX::Side_BUY);
+	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+
+	*nos += new TEX::NoUnderlyings(2);
+	GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
+	MessageBase *gr1(noul->create_group());
+	*gr1 += new TEX::UnderlyingSymbol("BLAH");
+	*noul += gr1;
+	MessageBase *gr2(noul->create_group());
+	*gr2 += new TEX::UnderlyingSymbol("FOO");
+	*noul += gr2;
+
+	_session.send(nos);
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::help()
+{
+	get_ostr() << endl;
+	get_ostr() << "Key\tCommand" << endl;
+	get_ostr() << "===\t=======" << endl;
+	for (Handlers::TypeMap::const_iterator itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
+		get_ostr() << itr->first._key << '\t' << itr->first._help << endl;
+	get_ostr() << endl;
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::do_logout()
+{
+	TEX::Logout *lo(new TEX::Logout);
+	_session.send(lo);
+	return true;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -244,5 +231,18 @@ void print_usage()
 	um.add('h', "help", "help, this screen");
 	um.add('l', "log", "global log filename");
 	um.print(cerr);
+}
+
+//-----------------------------------------------------------------------------------------
+bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
+{
+	TEX::OrderQty qty;
+	msg->get(qty);
+	cout << "Order qty:" << qty.get() << endl;
+	TEX::Price price;
+	msg->get(price);
+	cout << "price:" << price.get() << endl;
+	msg->print(cout);
+	return true;
 }
 
