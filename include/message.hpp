@@ -150,6 +150,7 @@ public:
 	unsigned encode(std::ostream& to);
 	unsigned encode_group(const unsigned short fnum, std::ostream& to);
 	unsigned check_positions();
+	unsigned copy_legal(MessageBase *to) const;
 	void check_set_rlm(BaseField *where);
 
 	const f8String& get_msgtype() const { return _msgType; }

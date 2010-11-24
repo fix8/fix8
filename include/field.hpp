@@ -38,6 +38,7 @@ $URL$
 #ifndef _FIX8_FIELD_HPP_
 #define _FIX8_FIELD_HPP_
 
+#include <Poco/Timestamp.h>
 #include <Poco/DateTime.h>
 #include <Poco/DateTimeParser.h>
 #include <Poco/DateTimeFormatter.h>

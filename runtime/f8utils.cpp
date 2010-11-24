@@ -96,30 +96,7 @@ int Hex2Dec(const char src)
 	return -1;
 }
 
-const string& GetTimeAsStringMS(string& result, timeval *tv)
-{
-	timeval *startTime, gotTime;
-	if (tv)
-		startTime = tv;
-	else
-	{
-		gettimeofday(&gotTime, 0);
-		startTime = &gotTime;
-	}
-
-	struct tm tim;
-	localtime_r(&startTime->tv_sec, &tim);
-	double secs(tim.tm_sec + startTime->tv_usec/1000000.);
-	ostringstream oss;
-	oss << setfill('0') << setw(4) << (tim.tm_year + 1900);
-	oss << setw(2) << (tim.tm_mon + 1) << setw(2) << tim.tm_mday << ' ' << setw(2) << tim.tm_hour;
-	oss << ':' << setw(2) << tim.tm_min << ':';
-	oss.setf(ios::showpoint);
-	oss.setf(ios::fixed);
-	oss << setw(7) << setfill('0') << setprecision(4) << secs;
-	return result = oss.str();
-}
-
+//-----------------------------------------------------------------------------------------
 const int GetGMTOffsetInSecs()
 {
 	tm tim;
@@ -133,6 +110,32 @@ const int GetGMTOffsetInSecs()
 	-(timezone - (tim.tm_isdst > 0 ? 60 * 60 : 0))
 #endif
 	;
+}
+
+//-------------------------------------------------------------------------------------------------
+const string& GetTimeAsStringMS(string& result, Tickval *tv, const unsigned dplaces)
+{
+   Tickval *startTime, gotTime;
+   if (tv)
+      startTime = tv;
+   else
+   {
+		gotTime.now();
+      startTime = &gotTime;
+   }
+
+   struct tm tim;
+	time_t tval(startTime->secs());
+   localtime_r(&tval, &tim);
+	const double secs((startTime->secs() % 60) + static_cast<double>(startTime->nsecs()) / Tickval::billion);
+   ostringstream oss;
+   oss << setfill('0') << setw(4) << (tim.tm_year + 1900) << '-';
+   oss << setw(2) << (tim.tm_mon + 1)  << '-' << setw(2) << tim.tm_mday << ' ' << setw(2) << tim.tm_hour;
+   oss << ':' << setw(2) << tim.tm_min << ':';
+   oss.setf(ios::showpoint);
+   oss.setf(ios::fixed);
+   oss << setw(3 + dplaces) << setfill('0') << setprecision(dplaces) << secs;
+   return result = oss.str();
 }
 
 //----------------------------------------------------------------------------------------

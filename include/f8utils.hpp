@@ -51,6 +51,7 @@ unsigned ROT13Hash (const std::string& str);
 std::string& CheckAddTrailingSlash(std::string& source);
 std::string& CheckRemoveTrailingSlash(std::string& src);
 std::string Str_error(const int err, const char *str=0);
+const std::string& GetTimeAsStringMS(std::string& result, class Tickval *tv=0, const unsigned dplaces=6);
 
 //----------------------------------------------------------------------------------------
 // case insensitive ==
@@ -373,8 +374,7 @@ struct free_ptr
 template <typename T>
 class Singleton
 {
-	typedef T* ptr_type;
-	static tbb::atomic<ptr_type> _instance;
+	static tbb::atomic<T*> _instance;
 
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
@@ -388,11 +388,11 @@ protected:
 	}
 
 public:
-	static ptr_type instance()
+	static T& instance()
 	{
 		if (_instance == 0)
 			_instance = new T;
-		return _instance;
+		return *_instance;
 	}
 };
 

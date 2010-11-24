@@ -43,126 +43,146 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/message.hpp $
 #include <tbb/mutex.h>
 #include <sys/time.h>
 
-//----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 namespace FIX8
 {
 
 //---------------------------------------------------------------------------------------------------
-class Timespec
+class Tickval
 {
-	timespec _spec;
+public:
+	typedef unsigned long long ticks;
+	static const ticks million = 1000ULL * 1000ULL;
+	static const ticks billion = million * 1000ULL;
+
+private:
+	ticks _value;
 
 public:
-	Timespec() : _spec() {}
-	Timespec(const Timespec& what) : _spec(what._spec) {}
-	Timespec(const timespec& what) : _spec(what) {}
-   Timespec& operator=(const Timespec& that)
+	Tickval() : _value() {}
+	Tickval(const Tickval& from) : _value(from._value) {}
+	Tickval(const ticks& from) : _value(from) {}
+	Tickval(const timespec& from) : _value(_cvt(from)) {}
+	Tickval& operator=(const Tickval& that)
 	{
 		if (this != &that)
-			_spec = that._spec;
+			_value = that._value;
+		return *this;
+	}
+	Tickval& operator=(const timespec& that)
+	{
+		_value = _cvt(that);
 		return *this;
 	}
 
-	virtual ~Timespec() {}
+	const ticks& get_ticks() const { return _value; }
 
-	operator timespec&() { return _spec; }
-	timespec *operator&() { return &_spec; }
-	operator void*() { return _spec.tv_sec || _spec.tv_nsec ? this : 0; }
-	double AsDouble() const { return _spec.tv_sec + _spec.tv_nsec / Timespec::nanosecD; }
+	Tickval& now() { return get_tickval(*this); }
 
-	void clear()
+	unsigned secs() const { return static_cast<unsigned>(_value / billion); }
+	unsigned msecs() const { return static_cast<unsigned>(_value % million); }
+	unsigned nsecs() const { return static_cast<unsigned>(_value % billion); }
+	double todouble() const { return static_cast<double>(_value) / billion; }
+
+	static Tickval get_tickval()
 	{
-		_spec.tv_sec = 0;
-		_spec.tv_nsec = 0;
+		timespec ts;
+		clock_gettime(CLOCK_REALTIME, &ts);
+		return Tickval(ts);
 	}
 
-	bool operator!()
+	static Tickval& get_tickval(Tickval& to)
 	{
-		return !_spec.tv_sec && !_spec.tv_nsec;
+		timespec ts;
+		clock_gettime(CLOCK_REALTIME, &ts);
+		return to = ts;
 	}
 
-	static const int nanosecU = 1000000000;
-	static const double nanosecD = 1000000000.;
+	bool operator!() const { return _value == 0ULL; }
+	operator void*() { return _value == 0ULL ? 0 : this; }
+
+	friend Tickval operator-(const Tickval& newtime, const Tickval& oldtime);
+	friend Tickval& operator-=(Tickval& oldtime, const Tickval& newtime);
+	friend Tickval operator+(const Tickval& newtime, const Tickval& oldtime);
+	friend Tickval& operator+=(Tickval& oldtime, const Tickval& newtime);
+	friend bool operator==(const Tickval& a, const Tickval& b);
+	friend bool operator!=(const Tickval& a, const Tickval& b);
+	friend bool operator>(const Tickval& a, const Tickval& b);
+	friend bool operator<(const Tickval& a, const Tickval& b);
+	friend bool operator>=(const Tickval& a, const Tickval& b);
+	friend bool operator<=(const Tickval& a, const Tickval& b);
+	friend Tickval& operator+=(Tickval& oldtime, const ticks& ns);
+	friend Tickval& operator-=(Tickval& oldtime, const ticks& ns);
+
+private:
+	ticks _cvt(const timespec& from)
+	{
+		return billion * static_cast<ticks>(from.tv_sec) + static_cast<ticks>(from.tv_nsec);
+	}
 };
 
-inline timespec operator-(const timespec& newtime, const timespec& oldtime)
+inline Tickval operator-(const Tickval& newtime, const Tickval& oldtime)
 {
-	timespec result = { newtime.tv_sec - oldtime.tv_sec, newtime.tv_nsec - oldtime.tv_nsec };
-	if (result.tv_nsec < 0)
-	{
-		--result.tv_sec;
-		result.tv_nsec += Timespec::nanosecU;
-	}
-
-	return result;
+	return Tickval(newtime._value - oldtime._value);
 }
 
-inline timespec& operator-=(timespec& oldtime, const timespec& newtime)
+inline Tickval& operator-=(Tickval& oldtime, const Tickval& newtime)
 {
-	oldtime.tv_sec -= newtime.tv_sec;
-	oldtime.tv_nsec -= newtime.tv_nsec;
-	if (oldtime.tv_nsec < 0)
-	{
-		--oldtime.tv_sec;
-		oldtime.tv_nsec += Timespec::nanosecU;
-	}
-
+	oldtime._value -= newtime._value;
 	return oldtime;
 }
 
-inline timespec operator+(const timespec& newtime, const timespec& oldtime)
+inline Tickval operator+(const Tickval& newtime, const Tickval& oldtime)
 {
-	timespec result = { newtime.tv_sec + oldtime.tv_sec, newtime.tv_nsec + oldtime.tv_nsec };
-	if (result.tv_nsec >= Timespec::nanosecU)
-	{
-		++result.tv_sec;
-		result.tv_nsec -= Timespec::nanosecU;
-	}
-
-	return result;
+	return Tickval(newtime._value + oldtime._value);
 }
 
-inline timespec& operator+=(timespec& oldtime, const timespec& newtime)
+inline Tickval& operator+=(Tickval& oldtime, const Tickval::ticks& ns)
 {
-	oldtime.tv_sec += newtime.tv_sec;
-	oldtime.tv_nsec += newtime.tv_nsec;
-	if (oldtime.tv_nsec >= Timespec::nanosecU)
-	{
-		++oldtime.tv_sec;
-		oldtime.tv_nsec -= Timespec::nanosecU;
-	}
-
+	oldtime._value += ns;
 	return oldtime;
 }
 
-inline bool operator==(const timespec& a, const timespec& b)
+inline Tickval& operator-=(Tickval& oldtime, const Tickval::ticks& ns)
 {
-	return a.tv_sec == b.tv_sec && a.tv_nsec == b.tv_nsec;
+	oldtime._value -= ns;
+	return oldtime;
 }
 
-inline bool operator!=(const timespec& a, const timespec& b)
+inline Tickval& operator+=(Tickval& oldtime, const Tickval& newtime)
 {
-	return !(a == b);
+	oldtime._value += newtime._value;
+	return oldtime;
 }
 
-inline bool operator>(const timespec& a, const timespec& b)
+inline bool operator==(const Tickval& a, const Tickval& b)
 {
-	return a.tv_sec == b.tv_sec ? a.tv_nsec > b.tv_nsec : a.tv_sec > b.tv_sec;
+	return a._value == b._value;
 }
 
-inline bool operator<(const timespec& a, const timespec& b)
+inline bool operator!=(const Tickval& a, const Tickval& b)
 {
-	return a.tv_sec == b.tv_sec ? a.tv_nsec < b.tv_nsec : a.tv_sec < b.tv_sec;
+	return a._value != b._value;
 }
 
-inline bool operator>=(const timespec& a, const timespec& b)
+inline bool operator>(const Tickval& a, const Tickval& b)
 {
-	return !(a < b);
+	return a._value > b._value;
 }
 
-inline bool operator<=(const timespec& a, const timespec& b)
+inline bool operator<(const Tickval& a, const Tickval& b)
 {
-	return !(a > b);
+	return a._value < b._value;
+}
+
+inline bool operator>=(const Tickval& a, const Tickval& b)
+{
+	return a._value >= b._value;
+}
+
+inline bool operator<=(const Tickval& a, const Tickval& b)
+{
+	return a._value <= b._value;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -173,13 +193,13 @@ template<typename T>
 class TimerEvent
 {
    bool (T::*_callback)();
-	mutable Timespec _t;
+	mutable Tickval _t;
 
 public:
 	TimerEvent(bool (T::*callback)()) : _callback(callback), _t() {}
 	~TimerEvent() {}
-	void set(const timespec& t) const { _t = t; }
-	bool operator<(const TimerEvent<T>& right) const { return FIX8::operator> (_t, right._t); };
+	void set(const Tickval& t) const { _t = t; }
+	bool operator<(const TimerEvent<T>& right) const { return _t > right._t; };
 
 	friend class Timer<T>;
 };
@@ -196,11 +216,12 @@ class Timer
    std::priority_queue<TimerEvent<T> > _event_queue;
 
 public:
-   Timer(T& monitor, int granularity=1) : _monitor(monitor), _thread(ref(*this)), _granularity(granularity) { _thread.Start(); }
+   Timer(T& monitor, int granularity=1) : _monitor(monitor), _thread(ref(*this)), _granularity(granularity) {}
    virtual ~Timer() {}
 
    bool schedule(const TimerEvent<T>& what, const unsigned timeToWaitMS);
    void join() { _thread.Join(); }
+	void start() { _thread.Start(); }
    int operator()();
 };
 
@@ -226,11 +247,9 @@ int Timer<T>::operator()()
                break;
             }
 
-            timespec tmp;
-				clock_gettime(CLOCK_REALTIME, &tmp);
-            if (FIX8::operator<(op._t, tmp))  // has elapsed
+            if (op._t < Tickval::get_tickval())  // has elapsed
             {
-					const TimerEvent<T> rop(_event_queue.top());
+					const TimerEvent<T> rop(_event_queue.top()); // take a copy
                _event_queue.pop(); // remove from queue
 					guard.release();
 					++elapsed;
@@ -249,9 +268,9 @@ int Timer<T>::operator()()
    }
 
 	std::ostringstream ostr;
-	ostr << "Terminating Timeout thread (" << elapsed << " elapsed, " << _event_queue.size()
+	ostr << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size()
 		<< " queued).";
-	GlobalLogger::instance()->send(ostr.str());
+	GlobalLogger::instance().send(ostr.str());
 	return 0;
 }
 
@@ -259,16 +278,13 @@ int Timer<T>::operator()()
 template<typename T>
 bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWaitMS)
 {
-   struct timespec tofire = {};
+	Tickval tofire;
 
    if (timeToWaitMS)
    {
       // Calculate time to fire (secs, nsecs)
-      tofire.tv_sec = timeToWaitMS / 1000;
-      tofire.tv_nsec = (timeToWaitMS % 1000) * 1000 * 1000;
-		timespec now;
-		clock_gettime(CLOCK_REALTIME, &now);
-		tofire += now;
+		Tickval::get_tickval(tofire);
+		tofire += timeToWaitMS * Tickval::million;
    }
 
 	what.set(tofire);

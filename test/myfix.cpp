@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 	{
 		if (server)
 		{
-			GlobalLogger::instance()->send("test fix server starting up...");
+			GlobalLogger::instance().send("test fix server starting up...");
 
 			bdp.initialise("./run", "myfix_server.db");
 			FileLogger log("./run/myfix_server.log", logflags, 2);
@@ -121,14 +121,14 @@ int main(int argc, char **argv)
 			Poco::Net::ServerSocket ss(addr);
 			Poco::Net::SocketAddress claddr;
 			Poco::Net::StreamSocket sock(ss.acceptConnection(claddr));
-			GlobalLogger::instance()->send("client connection established...");
+			GlobalLogger::instance().send("client connection established...");
 			ServerConnection sc(&sock, ms, 5);
 			ms.control() |= Session::print;
 			ms.start(&sc);
 		}
 		else
 		{
-			GlobalLogger::instance()->send("test fix client starting up...");
+			GlobalLogger::instance().send("test fix client starting up...");
 
 			const SessionID id(TEX::ctx._beginStr, "DLD_TEX", "TEX_DLD");
 			bdp.initialise("./run", "myfix_client.db");

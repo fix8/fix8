@@ -87,6 +87,7 @@ class BDBPersister : public Persister
          char char_[sizeof(unsigned)];
          Ubuf() : int_() {}
          Ubuf(const unsigned val) : int_(val) {}
+         Ubuf(const Ubuf& from) : int_(from.int_) {}
       }
       keyBuf_;
 		unsigned dataBufLen_;
@@ -96,12 +97,14 @@ class BDBPersister : public Persister
       KeyDataBuffer(const unsigned ival) : keyBuf_(ival), dataBufLen_(), dataBuf_() {}
       KeyDataBuffer(const unsigned ival, const f8String& src) : keyBuf_(ival), dataBuf_()
 			{ src.copy(dataBuf_, dataBufLen_ = src.size() > MaxMsgLen ? MaxMsgLen : src.size()); }
-      KeyDataBuffer(const unsigned snd, const unsigned trg) : keyBuf_()
+      KeyDataBuffer(const unsigned snd, const unsigned trg) : keyBuf_(), dataBufLen_(2 * sizeof(unsigned))
 		{
 			unsigned *loc(reinterpret_cast<unsigned *>(dataBuf_));
 			*loc++ = snd;
 			*loc = trg;
 		}
+      KeyDataBuffer(const KeyDataBuffer& from) : keyBuf_(from.keyBuf_), dataBufLen_(from.dataBufLen_)
+			{ memcpy(dataBuf_, from.dataBuf_, dataBufLen_); }
 
 		bool empty() const { return dataBufLen_ == 0 && keyBuf_.int_ == 0; }
    };

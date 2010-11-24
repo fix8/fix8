@@ -214,6 +214,23 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 }
 
 //-------------------------------------------------------------------------------------------------
+// copy all fields from this message to 'to' where the field is legal for 'to' and it is not
+// already present
+unsigned MessageBase::copy_legal(MessageBase *to) const
+{
+	unsigned copied(0);
+	for (Presence::const_iterator itr(_fp.get_presence().begin()); itr != _fp.get_presence().end(); ++itr)
+	{
+		if ((itr->_field_traits & FieldTrait::present) && to->_fp.has(itr->_fnum) && !to->_fp.get(itr->_fnum))
+		{
+			++copied;
+		}
+	}
+
+	return copied;
+}
+
+//-------------------------------------------------------------------------------------------------
 void MessageBase::check_set_rlm(BaseField *where)
 {
 	if (!where->_rlm)

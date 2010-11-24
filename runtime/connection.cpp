@@ -218,6 +218,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 				return false;
 
 			to += string(msg_buf, mlen + _chksum_sz);
+			_session.update_received();
 			return true;
 		}
 
@@ -242,6 +243,7 @@ int FIXWriter::operator()()
 			_msg_queue.pop (msg); // will block
 			if (msg.empty() || (result = _sock->sendBytes(msg.data(), msg.size()) < static_cast<int>(msg.size())))
 				break;
+			_session.update_sent();
 
 			++processed;
 		}

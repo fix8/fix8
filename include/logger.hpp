@@ -98,6 +98,8 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+class Tickval;
+
 class Logger
 {
 	Thread<Logger> _thread;
@@ -125,7 +127,6 @@ public:
 	void stop() { send(std::string()); _thread.Join(); }
 	virtual bool rotate() { return true; }
 
-	static const std::string& GetTimeAsStringMS(std::string& result, timespec *tv=0);
 	int operator()();
 };
 

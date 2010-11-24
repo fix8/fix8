@@ -46,10 +46,10 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/logger.hpp $
 #include <logger.hpp>
 #include <f8types.hpp>
 #include <traits.hpp>
+#include <timer.hpp>
 #include <field.hpp>
 #include <configuration.hpp>
 #include <message.hpp>
-#include <timer.hpp>
 #include <session.hpp>
 #include <connection.hpp>
 #include <persist.hpp>

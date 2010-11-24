@@ -112,11 +112,13 @@ private:
 	typedef StaticTable<const f8String, bool (Session::*)(const Message *)> Handlers;
 	Handlers _handlers;
 
+	void atomic_init(States::SessionStates st);
+
 protected:
 	Control _control;
 	tbb::atomic<unsigned> _next_sender_seq, _next_target_seq;
 	tbb::atomic<States::SessionStates> _state;
-	Poco::DateTime _last_sent, _last_received;
+	tbb::atomic<Tickval *> _last_sent, _last_received;
 	const F8MetaCntx& _ctx;
 	Connection *_connection;
 	SessionID _sid;
@@ -125,9 +127,8 @@ protected:
 	Logger *_logger, *_plogger;
 
 	Timer<Session> _timer;
-	TimerEvent<Session> _outbound, _inbound;
+	TimerEvent<Session> _hb_processor;
 	bool heartbeat_service();	// generate heartbeats
-	bool heartbeat_processor();	// enforce heartbeats
 
 	virtual bool handle_logon(const Message *msg);
 	virtual Message *generate_logon(const unsigned heartbeat_interval);
@@ -180,6 +181,8 @@ public:
 	const F8MetaCntx& get_ctx() const { return _ctx; }
 	bool log(const std::string& what) const { return _logger ? _logger->send(what) : false; }
 	bool plog(const std::string& what) const { return _plogger ? _plogger->send(what) : false; }
+	void update_sent() { _last_sent->now(); }
+	void update_received() { _last_received->now(); }
 
 	Control& control() { return _control; }
 

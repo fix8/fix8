@@ -133,7 +133,7 @@ protected:
 	bool _connected;
 	Session& _session;
 	Role _role;
-	unsigned _hb_interval;
+	unsigned _hb_interval, _hb_interval20pc;
 
 	FIXReader _reader;
 	FIXWriter _writer;
@@ -145,6 +145,7 @@ public:
 
 	Connection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval) // server
 		: _sock(sock), _connected(true), _session(session), _role(cn_acceptor), _hb_interval(hb_interval),
+		_hb_interval20pc(hb_interval + hb_interval / 5),
 		  _reader(sock, session), _writer(sock, session) {}
 
 	virtual ~Connection() {}
@@ -156,6 +157,7 @@ public:
 	virtual bool write(const f8String& from) { return _writer.write(from); }
 	void set_hb_interval(const unsigned hb_interval) { _hb_interval = hb_interval; }
 	unsigned get_hb_interval() const { return _hb_interval; }
+	unsigned get_hb_interval20pc() const { return _hb_interval20pc; }
 	int join() { return _reader.join(); }
 	Session& get_session() { return _session; }
 };
