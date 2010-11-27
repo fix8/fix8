@@ -238,13 +238,12 @@ int FIXWriter::operator()()
    {
 		try
 		{
-			f8String msg;
-
-			_msg_queue.pop (msg); // will block
-			if (msg.empty() || (result = _sock->sendBytes(msg.data(), msg.size()) < static_cast<int>(msg.size())))
+			Message *inmsg;
+			_msg_queue.pop (inmsg); // will block
+			if (!inmsg)
 				break;
-			_session.update_sent();
-
+			scoped_ptr<Message> msg(inmsg);
+			_session.send_process(msg.get());
 			++processed;
 		}
 		catch (exception& e)	// also catches Poco::Net::NetException
@@ -262,11 +261,6 @@ int FIXWriter::operator()()
 }
 
 //-------------------------------------------------------------------------------------------------
-bool FIXWriter::write(const f8String& from)
-{
-	return _msg_queue.try_push (from);
-}
-
 //-------------------------------------------------------------------------------------------------
 void Connection::start()
 {
@@ -280,9 +274,10 @@ void Connection::stop()
 	_reader.stop();
 	_writer.stop();
 	//_reader.quit();
-	_writer.quit();
+	//_writer.quit();
 }
 
+//-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 bool ClientConnection::connect()
 {

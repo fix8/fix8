@@ -319,8 +319,6 @@ int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& 
 								if (!processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 1))
 									cerr << "No fields found in component group " << gname << " at "
 										<< inputFile << '(' << (*gitr)->GetLine() << ')' << endl;
-								else
-									gresult.first->second.set_group();
 							}
 						}
 						else
@@ -439,7 +437,6 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 							pair<GroupMap::iterator, bool> gresult(
 								result.first->second._groups.insert(GroupMap::value_type(fs_itr->first, FieldTraits())));
 							processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 0);
-							gresult.first->second.set_group();
 							XmlEntity::XmlSet comlist;
 							if ((*gitr)->find("group/component", comlist))
 							{
@@ -869,9 +866,9 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 
 // ==================================== Message router ==================================
 
-	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
-		osu_hpp << "class " << mitr->second._name << ';' << endl;
-	osu_hpp << endl << _csMap.find_value_ref(cs_divider) << endl;
+	//for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
+	//	osu_hpp << "class " << mitr->second._name << ';' << endl;
+	//osu_hpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 	osu_hpp << "class " << ctxt._clname << "_Router : public Router" << endl
 		<< '{' << endl << "public:" << endl;
 	osu_hpp << spacer << ctxt._clname << "_Router() {}" << endl;
@@ -880,7 +877,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	{
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
 			continue;
-		osu_hpp << spacer << "virtual bool operator() (const " << mitr->second._name << " *msg) const { return false; }" << endl;
+		osu_hpp << spacer << "virtual bool operator() (const class " << mitr->second._name << " *msg) const { return false; }" << endl;
 	}
 	osu_hpp << "};" << endl;
 

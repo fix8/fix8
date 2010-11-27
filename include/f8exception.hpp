@@ -129,6 +129,7 @@ struct MissingMessageComponent : f8Exception
 struct MissingMandatoryField : f8Exception
 {
 	MissingMandatoryField(const unsigned field) { format("Missing Mandatory Field", field); }
+	MissingMandatoryField(const std::string& reason) { format("Missing Mandatory Field", reason); }
 };
 
 //-------------------------------------------------------------------------------------------------

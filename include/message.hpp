@@ -150,7 +150,7 @@ public:
 	unsigned encode(std::ostream& to);
 	unsigned encode_group(const unsigned short fnum, std::ostream& to);
 	unsigned check_positions();
-	unsigned copy_legal(MessageBase *to) const;
+	unsigned copy_legal(MessageBase *to, bool force=false) const;
 	void check_set_rlm(BaseField *where);
 
 	const f8String& get_msgtype() const { return _msgType; }
@@ -172,8 +172,7 @@ public:
 			add_field(fnum, _fp.getPos(fnum), what);
 			return true;
 		}
-		else
-			throw InvalidField(fnum);
+		throw InvalidField(fnum);
 		return false;
 	}
 	bool operator+=(BaseField *what) { return add_field(what); }
@@ -182,15 +181,24 @@ public:
 	bool get(T& to) const
 	{
 		Fields::const_iterator fitr(_fields.find(to._fnum));
-		if (fitr != _fields.end())
-		{
-			to.set(fitr->second->from<T>().get());
-			return true;
-		}
-		return false;
+		if (fitr == _fields.end())
+			return false;
+		to.set(fitr->second->from<T>().get());
+		return true;
 	}
 
+	template<typename T>
+	bool operator()(T& to) const { return get(to); }
+
 	Fields::const_iterator find_field(const unsigned short fnum) const { return _fields.find(fnum); }
+	BaseField *get_field(const unsigned short fnum) const
+	{
+		Fields::const_iterator itr(_fields.find(fnum));
+		return itr != _fields.end() ? itr->second : 0;
+	}
+
+	BaseField *replace(const unsigned short fnum, BaseField *with);
+
 	template<typename T>
 	GroupBase *find_group() { return find_group(T::get_fnum()); }
 	GroupBase *find_group(const unsigned short fnum) const
@@ -207,6 +215,7 @@ public:
 
 	virtual void print(std::ostream& os) const;
 	virtual void print_group(const unsigned short fnum, std::ostream& os) const;
+	friend std::ostream& operator<<(std::ostream& os, const MessageBase& what) { what.print(os); return os; }
 	friend class Message;
 };
 
@@ -222,20 +231,16 @@ public:
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
 		: MessageBase(ctx, msgType, begin, end), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl()) {}
 
-	virtual ~Message()
-	{
-		delete _header;
-		delete _trailer;
-	}
+	virtual ~Message() { delete _header; delete _trailer; }
 
-	MessageBase *Header() { return _header; }
-	MessageBase *Trailer() { return _trailer; }
+	MessageBase *Header() const { return _header; }
+	MessageBase *Trailer() const { return _trailer; }
 
 	unsigned decode(const f8String& from);
 	unsigned encode(f8String& to);
+	Message *copy() const;
 
 	virtual bool process(Router& rt) const { return (rt)(this); }
-	virtual void print(std::ostream& os) const;
 	virtual bool is_admin() const { return false; }
 
 	static unsigned calc_chksum(const f8String& from, const unsigned offset=0, const int len=-1)
@@ -249,6 +254,9 @@ public:
 
 	static const f8String fmt_chksum(const unsigned val);
 	static Message *factory(const F8MetaCntx& ctx, const f8String& from);
+
+	virtual void print(std::ostream& os) const;
+	friend std::ostream& operator<<(std::ostream& os, const Message& what) { what.print(os); return os; }
 };
 
 //-------------------------------------------------------------------------------------------------

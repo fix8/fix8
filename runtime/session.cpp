@@ -183,6 +183,9 @@ int Session::start(Connection *connection, bool wait)
 void Session::stop()
 {
 	_control |= shutdown;
+	_timer.schedule(_hb_processor, 0);
+	if (_persist)
+		_persist->stop();
 	_connection->stop();
 }
 
@@ -201,10 +204,7 @@ bool Session::process(const f8String& from)
 		plog(from);
 		scoped_ptr<Message> msg(Message::factory(_ctx, from));
 		if (_control & print)
-		{
-			msg->print(cout);
-			cout << endl;
-		}
+			cout << *msg << endl;
 
 		return (msg->is_admin() ? handle_admin(msg.get()) : true)
 			&& (this->*_handlers.find_value_ref(msg->get_msgtype()))(msg.get());
@@ -239,7 +239,7 @@ bool Session::handle_logon(const Message *msg)
 		const_cast<Message*>(msg)->Header()->get(sci);
 		target_comp_id tci;
 		const_cast<Message*>(msg)->Header()->get(tci);
-		SessionID id(_ctx._beginStr, tci.get(), sci.get());
+		SessionID id(_ctx._beginStr, tci(), sci());
 		if (authenticate(id, msg))
 		{
 			_sid = id;
@@ -255,6 +255,17 @@ bool Session::handle_logon(const Message *msg)
 			stop();
 			_state = States::st_session_terminated;
 			return false;
+		}
+	}
+
+	if (_persist)
+	{
+		unsigned sender_seqnum, target_seqnum;
+		if (_persist->get(sender_seqnum, target_seqnum))
+		{
+			ostringstream ostr;
+			ostr << "Last sent: " << sender_seqnum << ", last received: " << target_seqnum;
+			log(ostr.str());
 		}
 	}
 
@@ -276,11 +287,37 @@ bool Session::handle_logout(const Message *msg)
 }
 
 //-------------------------------------------------------------------------------------------------
+bool Session::handle_resend_request(const Message *msg)
+{
+	begin_seq_num begin;
+	msg->get(begin);
+	end_seq_num end;
+	msg->get(end);
+
+	if (!_persist)
+		send(generate_sequence_reset(_next_sender_seq + 1, true));
+	else if (begin() > end() || begin() == 0)
+	{
+		msg_seq_num seqnum;
+		msg->Header()->get(seqnum);
+		send(generate_reject(seqnum(), "Invalid begin or end resend seqnum"));
+	}
+	return true;
+}
+
+
+//-------------------------------------------------------------------------------------------------
+bool Session::retrans_callback(const SequencePair& with)
+{
+	return send(Message::factory(_ctx, with.second));
+}
+
+//-------------------------------------------------------------------------------------------------
 bool Session::handle_test_request(const Message *msg)
 {
 	test_request_id testReqID;
 	msg->get(testReqID);
-	Message *trmsg(generate_heartbeat(testReqID.get()));
+	Message *trmsg(generate_heartbeat(testReqID()));
 	send(trmsg);
 	return true;
 }
@@ -398,35 +435,49 @@ Message *Session::generate_sequence_reset(const unsigned newseqnum, const bool g
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::send(Message *tosend)	// takes ownership and destroys
+bool Session::send(Message *tosend)
 {
-	scoped_ptr<Message> msg(tosend);
-	*msg->Header() += new msg_seq_num(_next_sender_seq);
-	*msg->Header() += new sending_time;
+	return _connection->write(tosend);
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Session::send_process(Message *msg) // called from the connection thread
+{
 	*msg->Header() += new sender_comp_id(_sid.get_senderCompID());
 	*msg->Header() += new target_comp_id(_sid.get_targetCompID());
+	msg_seq_num seqnum;
+	if (msg->Header()->get(seqnum))	// is a resend
+	{
+		*msg->Header() += new poss_dup_flag(true);
+		sending_time sendtime;
+		msg->Header()->get(sendtime);
+		*msg->Header() += new orig_sending_time(sendtime());
+	}
+	else
+		*msg->Header() += new msg_seq_num(_next_sender_seq);
+	*msg->Header() += new sending_time;
 
 	try
 	{
-		modify_outbound(msg.get());
+		modify_outbound(msg);
 		f8String output;
-		unsigned enclen(msg->encode(output));
-		if (!_connection->write(output))
+		const unsigned enclen(msg->encode(output));
+		if (!_connection->send(output))
 		{
 			ostringstream ostr;
-			ostr << "Message write failed!: " << enclen;
+			ostr << "Message write failed: " << enclen;
 			log(ostr.str());
 			return false;
 		}
+		_last_sent->now();
 		plog(output);
 
 		if (_persist)
 		{
-			if (!tosend->is_admin())
+			if (!msg->is_admin())
 				_persist->put(_next_sender_seq, output);
 			_persist->put(_next_sender_seq + 1, _next_target_seq);
 		}
-
 		++_next_sender_seq;
 	}
 	catch (f8Exception& e)

@@ -49,13 +49,14 @@ namespace FIX8 {
 class Session;
 
 //----------------------------------------------------------------------------------------
+template <typename T>
 class AsyncHalfDuplexSocket
 {
 	Thread<AsyncHalfDuplexSocket> _thread;
 
 protected:
 	Poco::Net::StreamSocket *_sock;
-	tbb::concurrent_bounded_queue<f8String> _msg_queue;
+	tbb::concurrent_bounded_queue<T> _msg_queue;
 	Session& _session;
 
 public:
@@ -71,7 +72,7 @@ public:
 };
 
 //----------------------------------------------------------------------------------------
-class FIXReader : public AsyncHalfDuplexSocket
+class FIXReader : public AsyncHalfDuplexSocket<f8String>
 {
 	static RegExp _hdr;
 	static const size_t _max_msg_len = 1024, _chksum_sz = 7;
@@ -89,7 +90,7 @@ protected:
 
 public:
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session)
-		: AsyncHalfDuplexSocket(sock, session), _callback_thread(ref(*this), &FIXReader::callback_processor), _bg_sz()
+		: AsyncHalfDuplexSocket<f8String>(sock, session), _callback_thread(ref(*this), &FIXReader::callback_processor), _bg_sz()
 	{
 		set_preamble_sz();
 	}
@@ -98,28 +99,29 @@ public:
 
 	virtual void start()
 	{
-		AsyncHalfDuplexSocket::start();
+		AsyncHalfDuplexSocket<f8String>::start();
 		_callback_thread.Start();
 	}
 
-	virtual void quit() { _callback_thread.Kill(1); AsyncHalfDuplexSocket::quit(); }
+	virtual void quit() { _callback_thread.Kill(1); AsyncHalfDuplexSocket<f8String>::quit(); }
 	virtual void stop() { const f8String from; _msg_queue.try_push(from); }
 
 	void set_preamble_sz();
 };
 
 //----------------------------------------------------------------------------------------
-class FIXWriter : public AsyncHalfDuplexSocket
+class FIXWriter : public AsyncHalfDuplexSocket<Message *>
 {
 protected:
 	int operator()();
 
 public:
-	FIXWriter(Poco::Net::StreamSocket *sock, Session& session) : AsyncHalfDuplexSocket(sock, session) {}
+	FIXWriter(Poco::Net::StreamSocket *sock, Session& session) : AsyncHalfDuplexSocket<Message *>(sock, session) {}
 	virtual ~FIXWriter() {}
 
-	bool write(const f8String& from);
-	virtual void stop() { const f8String from; _msg_queue.try_push(from); }
+	bool write(Message *from) { return _msg_queue.try_push(from); }
+	int send(const f8String& msg) { return _sock->sendBytes(msg.data(), msg.size()); }
+	virtual void stop() { _msg_queue.try_push(0); }
 };
 
 //----------------------------------------------------------------------------------------
@@ -154,7 +156,8 @@ public:
 	void start();
 	void stop();
 	virtual bool connect() { return _connected; }
-	virtual bool write(const f8String& from) { return _writer.write(from); }
+	virtual bool write(Message *from) { return _writer.write(from); }
+	int send(const f8String& from) { return _writer.send(from); }
 	void set_hb_interval(const unsigned hb_interval) { _hb_interval = hb_interval; }
 	unsigned get_hb_interval() const { return _hb_interval; }
 	unsigned get_hb_interval20pc() const { return _hb_interval20pc; }

@@ -184,7 +184,7 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 	{
 		do
 		{
-			unsigned seqnum(buffer.keyBuf_.int_);
+			const unsigned seqnum(buffer.keyBuf_.int_);
 			if (!seqnum || seqnum > finish)
 				break;
 			Session::SequencePair result(seqnum, buffer.dataBuf_);
@@ -228,13 +228,13 @@ bool BDBPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum)
 {
 	if (!_opened)
       return false;
-   KeyDataBuffer buffer(0);
+   KeyDataBuffer buffer(0, 0);
    KeyDataPair keyPair(buffer);
    int retval(_db->get(0, &keyPair._key, &keyPair._data, 0));
    if (retval)
    {
 		ostringstream ostr;
-		ostr << "Could not get control 0" << '(' << db_strerror(retval) << ')';
+		ostr << "Could not get control 0 " << '(' << db_strerror(retval) << ')';
 		GlobalLogger::instance().send(ostr.str());
       return false;
    }
@@ -283,7 +283,7 @@ unsigned BDBPersister::find_nearest_highest_seqnum (const unsigned requested, co
 //-------------------------------------------------------------------------------------------------
 int BDBPersister::operator()()
 {
-   unsigned received(0);
+   unsigned received(0), persisted(0);
 	bool stopping(false);
 
    for (;;)
@@ -313,7 +313,13 @@ int BDBPersister::operator()()
 			ostr << "Could not add" << '(' << db_strerror(retval) << ')';
 			GlobalLogger::instance().send(ostr.str());
 		}
+		else
+			++persisted;
    }
+
+	ostringstream ostr;
+	ostr << received << " messages received, " << persisted << " messages persisted";
+	GlobalLogger::instance().send(ostr.str());
 
    return 0;
 }

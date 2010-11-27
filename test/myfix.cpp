@@ -47,6 +47,7 @@ template<>
 const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
 {
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
@@ -179,10 +180,10 @@ bool myfix_session_server::handle_application(const Message *msg)
 bool MyMenu::new_order_single()
 {
 	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
-	*nos += new TEX::TransactTime("20110904-10:15:14");
+	*nos += new TEX::TransactTime;
 	*nos += new TEX::OrderQty(100);
 	*nos += new TEX::Price(47.78);
-	//*nos += new TEX::ClOrdID("ord01");
+	*nos += new TEX::ClOrdID("ord01");
 	*nos += new TEX::Symbol("BHP");
 	*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
 	*nos += new TEX::Side(TEX::Side_BUY);
@@ -203,6 +204,15 @@ bool MyMenu::new_order_single()
 }
 
 //-----------------------------------------------------------------------------------------
+bool MyMenu::new_order_single_50()
+{
+	for (int ii(0); ii < 50; ++ii)
+		new_order_single();
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
 bool MyMenu::help()
 {
 	get_ostr() << endl;
@@ -217,8 +227,7 @@ bool MyMenu::help()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::do_logout()
 {
-	TEX::Logout *lo(new TEX::Logout);
-	_session.send(lo);
+	_session.send(new TEX::Logout);
 	return true;
 }
 
@@ -238,11 +247,31 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
 	TEX::OrderQty qty;
 	msg->get(qty);
-	cout << "Order qty:" << qty.get() << endl;
+	cout << "Order qty:" << qty() << endl;
 	TEX::Price price;
 	msg->get(price);
-	cout << "price:" << price.get() << endl;
-	msg->print(cout);
+	cout << "price:" << price() << endl;
+
+	TEX::ExecutionReport *er(new TEX::ExecutionReport);
+	msg->copy_legal(er);
+	*er += new TEX::OrderID("ord01");
+	*er += new TEX::ExecID("exec01");
+	*er += new TEX::ExecType(TEX::ExecType_NEW);
+	*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
+	*er += new TEX::LeavesQty(qty() - 50);
+	*er += new TEX::CumQty(50);
+	*er += new TEX::AvgPx(price());
+
+	_session.send(er);
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
+{
+	//scoped_ptr<Message> cp(msg->copy());
+	//cp->print(cout);
 	return true;
 }
 

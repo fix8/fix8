@@ -139,7 +139,7 @@ protected:
 	virtual bool handle_heartbeat(const Message *msg);
 	virtual Message *generate_heartbeat(const f8String& testReqID);
 
-	virtual bool handle_resend_request(const Message *msg) { return false; }
+	virtual bool handle_resend_request(const Message *msg);
 	virtual Message *generate_resend_request(const unsigned begin, const unsigned end);
 
 	virtual bool handle_sequence_reset(const Message *msg) { return false; }
@@ -173,9 +173,10 @@ public:
 	virtual bool process(const f8String& from);
 
 	typedef std::pair<const unsigned, const f8String> SequencePair;
-	virtual bool retrans_callback(const SequencePair& with) { return true; }
+	virtual bool retrans_callback(const SequencePair& with);
 
 	virtual bool send(Message *msg);
+	bool send_process(Message *msg);
 	void stop();
 	Connection *get_connection() { return _connection; }
 	const F8MetaCntx& get_ctx() const { return _ctx; }
@@ -183,6 +184,7 @@ public:
 	bool plog(const std::string& what) const { return _plogger ? _plogger->send(what) : false; }
 	void update_sent() { _last_sent->now(); }
 	void update_received() { _last_received->now(); }
+	const SessionID& get_sid() const { return _sid; }
 
 	Control& control() { return _control; }
 

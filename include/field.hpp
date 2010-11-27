@@ -54,7 +54,7 @@ struct EnumType
 };
 
 //-------------------------------------------------------------------------------------------------
-struct RealmBase
+struct RealmBase	// metadata domain
 {
 	enum RealmType { dt_range, dt_set };
 
@@ -104,6 +104,7 @@ public:
 	}
 
 	virtual std::ostream& print(std::ostream& os) const = 0;
+	virtual BaseField *copy() = 0;
 	virtual bool is_valid() const { return true; }
 	virtual int get_rlm_idx() const { return -1; }
 
@@ -130,8 +131,10 @@ public:
 	virtual ~Field() {}
 
 	virtual const T& get() = 0;
+	virtual const T& operator()() = 0;
 	virtual const T& set(const T& from) = 0;
 	virtual const T& set_from_raw(const std::string& from) = 0;
+	virtual Field *copy() = 0;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -151,8 +154,10 @@ public:
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	const int& get() { return _value; }
+	const int& operator()() { return _value; }
 	const int& set(const int& from) { return _value = from; }
 	const int& set_from_raw(const std::string& from) { return _value = GetValue<int>(from); }
+	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
@@ -172,8 +177,10 @@ public:
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	const std::string& get() { return _value; }
+	const std::string& operator()() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
 	const std::string& set_from_raw(const std::string& from) { return _value = from; }
+	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
@@ -194,8 +201,10 @@ public:
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	virtual const double& get() { return _value; }
+	virtual const double& operator()() { return _value; }
 	virtual const double& set(const double& from) { return _value = from; }
 	virtual const double& set_from_raw(const std::string& from) { return _value = GetValue<double>(from); }
+	virtual Field *copy() { return new Field(*this); }
 	virtual std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
@@ -215,8 +224,10 @@ public:
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	const char& get() { return _value; }
+	const char& operator()() { return _value; }
 	const char& set(const char& from) { return _value = from; }
 	const char& set_from_raw(const std::string& from) { return _value = from[0]; }
+	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
@@ -272,7 +283,10 @@ public:
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& operator()() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
+	void set(const Poco::DateTime& from) { _value = from; }
+	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const
 		{ return os << Poco::DateTimeFormatter::format(_value, _fmt_sec); }
 
@@ -298,7 +312,9 @@ public:
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& operator()() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
+	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os; }
 };
 
@@ -317,7 +333,9 @@ public:
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& operator()() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
+	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os; }
 };
 
@@ -336,7 +354,9 @@ public:
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& operator()() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
+	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os; }
 };
 
@@ -355,7 +375,9 @@ public:
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& operator()() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
+	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os; }
 };
 
@@ -374,7 +396,9 @@ public:
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& operator()() { return _value; }
 	const std::string& set(const std::string& from) { return _value = from; }
+	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os; }
 };
 
@@ -464,8 +488,10 @@ public:
 	virtual ~Field() {}
 
 	const bool get() { return _value; }
+	const bool operator()() { return _value; }
 	const bool set(const bool from) { return _value = from; }
 	const bool set_from_raw(const std::string& from) { return toupper(from[0]) == 'Y'; }
+	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os << (_value ? 'Y' : 'N'); }
 };
 
@@ -530,6 +556,7 @@ const unsigned Common_Text(58);
 const unsigned Common_EncryptMethod(98);
 const unsigned Common_HeartBtInt(108);
 const unsigned Common_TestReqID(112);
+const unsigned Common_OrigSendingTime(122);
 const unsigned Common_GapFillFlag(123);
 const unsigned Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
 
@@ -560,6 +587,7 @@ typedef Field<f8String, Common_TestReqID> test_request_id;
 typedef Field<f8String, Common_Text> text;;
 
 typedef Field<UTCTimestamp, Common_SendingTime> sending_time;
+typedef Field<UTCTimestamp, Common_OrigSendingTime> orig_sending_time;
 
 typedef Field<Boolean, Common_GapFillFlag> gap_fill_flag;
 typedef Field<Boolean, Common_PossDupFlag> poss_dup_flag;

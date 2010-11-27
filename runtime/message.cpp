@@ -104,7 +104,12 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 
 	const unsigned short missing(_fp.find_missing());
 	if (missing)
-		throw MissingMandatoryField(missing);
+	{
+		const BaseEntry& tbe(_ctx._be.find_ref(missing));
+		ostringstream ostr;
+		ostr << tbe._name << " (" << missing << ')';
+		throw MissingMandatoryField(ostr.str());
+	}
 
 	return s_offset;
 }
@@ -148,7 +153,12 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 
 		const unsigned short missing(grp->_fp.find_missing());
 		if (missing)
-			throw MissingMandatoryField(missing);
+		{
+			const BaseEntry& tbe(_ctx._be.find_ref(missing));
+			ostringstream ostr;
+			ostr << tbe._name << " (" << missing << ')';
+			throw MissingMandatoryField(ostr.str());
+		}
 		*grpbase += grp.release();
 	}
 
@@ -215,14 +225,32 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 
 //-------------------------------------------------------------------------------------------------
 // copy all fields from this message to 'to' where the field is legal for 'to' and it is not
-// already present
-unsigned MessageBase::copy_legal(MessageBase *to) const
+// already present in 'to'; includes repeating groups;
+// if force, copy all fields regardless, replacing any existing, adding any new
+unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 {
 	unsigned copied(0);
 	for (Presence::const_iterator itr(_fp.get_presence().begin()); itr != _fp.get_presence().end(); ++itr)
 	{
-		if ((itr->_field_traits & FieldTrait::present) && to->_fp.has(itr->_fnum) && !to->_fp.get(itr->_fnum))
+		if (itr->_field_traits & FieldTrait::present && (force || (to->_fp.has(itr->_fnum) && !to->_fp.get(itr->_fnum))))
 		{
+			if (itr->_field_traits & FieldTrait::group)
+			{
+				GroupBase *gb(find_group(itr->_fnum)), *gb1(to->find_group(itr->_fnum));
+				for (GroupElement::const_iterator gitr(gb->_msgs.begin()); gitr != gb->_msgs.end(); ++gitr)
+				{
+					MessageBase *grc(gb1->create_group());
+					(*gitr)->copy_legal(grc, force);
+					*gb1 += grc;
+				}
+			}
+
+			BaseField *nf(get_field(itr->_fnum)->copy());
+			to->check_set_rlm(nf);
+			if (force && to->_fp.get(itr->_fnum))
+				delete to->replace(itr->_fnum, nf);
+			else
+				to->add_field(nf);
 			++copied;
 		}
 	}
@@ -343,22 +371,54 @@ void MessageBase::print_group(const unsigned short fnum, ostream& os) const
 	if (!grpbase)
 		throw InvalidRepeatingGroup(fnum);
 	for (GroupElement::const_iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr)
+		os << spacer << spacer << "Repeating group (\"" << (*itr)->_msgType << "\")" << endl
+			<< spacer << spacer << **itr;
+}
+
+//-------------------------------------------------------------------------------------------------
+BaseField *MessageBase::replace(const unsigned short fnum, BaseField *with)
+{
+	BaseField *old(0);
+	Fields::iterator itr(_fields.find(fnum));
+	if (itr != _fields.end())
 	{
-		os << spacer << spacer << "Repeating group (\"" << (*itr)->_msgType << "\")" << endl << spacer << spacer;
-		(*itr)->print(os);
+		old = itr->second;
+		const unsigned pos(_fp.getPos(fnum));
+		for (Positions::iterator pitr(_pos.lower_bound(pos)); pitr != _pos.upper_bound(pos); ++pitr)
+		{
+			if (pitr->second == old)
+			{
+				_pos.erase(pitr);
+				break;
+			}
+		}
+		_pos.insert(Positions::value_type(pos, with));
+		itr->second = with;
 	}
+	return old;
+}
+
+//-------------------------------------------------------------------------------------------------
+Message *Message::copy() const
+{
+	const BaseMsgEntry& bme(_ctx._bme.find_ref(_msgType));
+	Message *msg(bme._create());
+	copy_legal(msg, true);
+	_header->copy_legal(msg->_header, true);
+	_trailer->copy_legal(msg->_trailer, true);
+	return msg;
 }
 
 //-------------------------------------------------------------------------------------------------
 void Message::print(ostream& os) const
 {
 	if (_header)
-		_header->print(os);
+		os << *_header;
 	else
 		os << "Null Header" << endl;
 	MessageBase::print(os);
 	if (_trailer)
-		_trailer->print(os);
+		os << *_trailer;
 	else
 		os << "Null Trailer" << endl;
 }

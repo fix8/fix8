@@ -52,8 +52,9 @@ class Tickval
 {
 public:
 	typedef unsigned long long ticks;
-	static const ticks million = 1000ULL * 1000ULL;
-	static const ticks billion = million * 1000ULL;
+	static const ticks thousand = 1000ULL;
+	static const ticks million = thousand * thousand;
+	static const ticks billion = thousand * million;
 
 private:
 	ticks _value;

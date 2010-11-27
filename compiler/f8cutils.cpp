@@ -240,8 +240,6 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 	XmlEntity::XmlSet flist;
 	if (xt->find(where, flist))
 	{
-		bool hasMandatory(false);
-
 		for(XmlEntity::XmlSet::const_iterator fitr(flist.begin()); fitr != flist.end(); ++fitr)
 		{
 			string fname, required;
@@ -256,8 +254,6 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 				}
 
 				// add FieldTrait
-				if (required == "Y")
-					hasMandatory = true;
 				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, subpos)))
 					cerr << "Could not add trait object " << fname << endl;
 				else
@@ -270,9 +266,6 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 				cerr << "Field element missing required attributes at "
 					<< inputFile << '(' << (*fitr)->GetLine() << ')' << endl;
 		}
-
-		if (hasMandatory)
-			fts.set_mandatory();
 	}
 
 	return processed;

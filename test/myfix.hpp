@@ -48,7 +48,7 @@ class tex_router_client : public FIX8::TEX::Myfix_Router
 public:
 	tex_router_client(myfix_session_client& session) : _session(session) {}
 
-	virtual bool operator() (const FIX8::TEX::NewOrderSingle *msg) const { return true; }
+	virtual bool operator() (const FIX8::TEX::ExecutionReport *msg) const;
 };
 
 //-----------------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ public:
 //-------------------------------------------------------------------------------------------------
 class MyMenu
 {
-	bool raw_mode;
+	bool _raw_mode;
 	termio _tty_state;
 
 	struct MenuItem
@@ -140,7 +140,7 @@ class MyMenu
 
 public:
 	MyMenu(myfix_session_client& session, int infd, std::ostream& ostr)
-		: raw_mode(), _tty_state(), _session(session), _fd(infd), _istr(new fdinbuf(infd)), _ostr(ostr) {}
+		: _raw_mode(), _tty_state(), _session(session), _fd(infd), _istr(new fdinbuf(infd)), _ostr(ostr) {}
 	virtual ~MyMenu() {}
 
 	std::istream& get_istr() { return _istr; }
@@ -148,6 +148,7 @@ public:
 	bool process(const char ch) { return (this->*_handlers.find_value_ref(MenuItem(ch, std::string())))(); }
 
 	bool new_order_single();
+	bool new_order_single_50();
 	bool help();
 	bool nothing() { return true; }
 	bool do_exit() { return false; }
@@ -155,28 +156,32 @@ public:
 
 	void unset_raw_mode()
 	{
-		if (raw_mode)
+		if (_raw_mode)
 		{
 			if (ioctl(_fd, TCSETA, &_tty_state) < 0)
 				std::cerr << FIX8::Str_error(errno, "Cannot reset ioctl") << std::endl;
-			raw_mode = false;
+			else
+				_raw_mode = false;
 		}
 	}
 
 	void set_raw_mode()
 	{
-		if (!raw_mode)
+		if (!_raw_mode)
 		{
-			termio tty_state;
 			if (ioctl(_fd, TCGETA, &_tty_state) < 0)
+			{
 				std::cerr << FIX8::Str_error(errno, "Cannot set ioctl") << std::endl;
-			tty_state = _tty_state;
+				return;
+			}
+			termio tty_state(_tty_state);
 			tty_state.c_lflag = 0;
 			tty_state.c_cc[VTIME] = 0;
 			tty_state.c_cc[VMIN] = 1;
 			if (ioctl(_fd, TCSETA, &tty_state) < 0)
 				std::cerr << FIX8::Str_error(errno, "Cannot reset ioctl") << std::endl;
-			raw_mode = true;
+			else
+				_raw_mode = true;
 		}
 	}
 
