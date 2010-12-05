@@ -39,7 +39,7 @@ INCLUDES = -I$(top_srcdir)/include
 libf8_la_SOURCES = 	popen.c \
 							xml.cpp f8utils.cpp message.cpp traits.cpp \
 							field.cpp session.cpp logger.cpp persist.cpp \
-							connection.cpp configuration.cpp
+							connection.cpp configuration.cpp memory.cpp
 
 AM_LDFLAGS = -ggdb -rdynamic -shared
 

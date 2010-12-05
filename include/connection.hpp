@@ -158,7 +158,8 @@ public:
 	virtual bool connect() { return _connected; }
 	virtual bool write(Message *from) { return _writer.write(from); }
 	int send(const f8String& from) { return _writer.send(from); }
-	void set_hb_interval(const unsigned hb_interval) { _hb_interval = hb_interval; }
+	void set_hb_interval(const unsigned hb_interval)
+		{ _hb_interval = hb_interval; _hb_interval20pc = hb_interval + hb_interval / 5; }
 	unsigned get_hb_interval() const { return _hb_interval; }
 	unsigned get_hb_interval20pc() const { return _hb_interval20pc; }
 	int join() { return _reader.join(); }

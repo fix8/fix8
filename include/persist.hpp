@@ -51,6 +51,7 @@ class Persister
 	Persister& operator=(const Persister&);
 
 protected:
+	static const size_t MaxMsgLen = 1024;
 	bool _opened;
 
 public:
@@ -58,12 +59,13 @@ public:
 	virtual ~Persister() {}
 
 	virtual bool put(const unsigned seqnum, const f8String& what) = 0;
-	virtual bool get(const unsigned seqnum, f8String& to) = 0;
-	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
-		bool (Session::*)(const Session::SequencePair& with)) = 0;
-	virtual unsigned get_last_seqnum(unsigned& to) const = 0;
 	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum) = 0;
-	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) = 0;
+	virtual bool get(const unsigned seqnum, f8String& to) const = 0;
+	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
+		bool (Session::*)(const Session::SequencePair& with)) const = 0;
+	virtual unsigned get_last_seqnum(unsigned& to) const = 0;
+	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const = 0;
+	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const = 0;
 	virtual void stop() {}
 };
 
@@ -76,8 +78,6 @@ class BDBPersister : public Persister
 	Db *_db;
 	f8String _dbDir, _dbFname;
 	bool _wasCreated;
-
-	static const size_t MaxMsgLen = 1024;
 
    struct KeyDataBuffer
    {
@@ -141,18 +141,38 @@ public:
 	virtual ~BDBPersister();
 
 	virtual bool initialise(const f8String& dbDir, const f8String& dbFname);
-	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last);
+	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
 
 	virtual bool put(const unsigned seqnum, const f8String& what);
-	virtual bool get(const unsigned seqnum, f8String& to);
-	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
-		bool (Session::*)(const Session::SequencePair& with));
-	virtual unsigned get_last_seqnum(unsigned& to) const;
 	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
-	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum);
+	virtual bool get(const unsigned seqnum, f8String& to) const;
+	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
+		bool (Session::*)(const Session::SequencePair& with)) const;
+	virtual unsigned get_last_seqnum(unsigned& to) const;
+	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
 
 	void stop() { write(KeyDataBuffer()); _thread.Join(); }
 	int operator()();	// write thread
+};
+
+//-------------------------------------------------------------------------------------------------
+class MemoryPersister : public Persister
+{
+	typedef std::map<unsigned, const f8String> Store;
+	Store _store;
+
+public:
+	MemoryPersister() {}
+	virtual ~MemoryPersister() {}
+
+	virtual bool put(const unsigned seqnum, const f8String& what);
+	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
+	virtual bool get(const unsigned seqnum, f8String& to) const;
+	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
+		bool (Session::*)(const Session::SequencePair& with)) const;
+	virtual unsigned get_last_seqnum(unsigned& to) const;
+	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
+	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
 };
 
 //-------------------------------------------------------------------------------------------------

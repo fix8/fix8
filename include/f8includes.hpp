@@ -40,6 +40,7 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/logger.hpp $
 
 #include <f8exception.hpp>
 #include <f8utils.hpp>
+#include <memory.hpp>
 #include <xml.hpp>
 #include <thread.hpp>
 #include <gzstream.hpp>

@@ -83,7 +83,7 @@ struct States
 {
 	enum Tests
 	{
-		pr_begin_str, pr_logged_in, pr_low, pr_high, pr_comp_id, pr_target_id, pr_logon_timeout,
+		pr_begin_str, pr_logged_in, pr_low, pr_high, pr_comp_id, pr_target_id, pr_logon_timeout, pr_resend,
 	};
 
 	enum SessionStates
@@ -155,6 +155,7 @@ protected:
 	virtual bool handle_application(const Message *msg);
 	virtual void modify_outbound(Message *msg) {}
 	virtual bool authenticate(SessionID& id, const Message *msg) { return true; }
+	virtual void recover_seqnums();
 
 	Message *create_msg(const f8String& msg_type)
 	{

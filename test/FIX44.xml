@@ -6737,7 +6737,7 @@
     <field number="954" name="Nested3PartySubIDType" type="INT" />
     <field number="955" name="LegContractSettlMonth" type="MONTHYEAR" />
     <field number="956" name="LegInterestAccrualDate" type="LOCALMKTDATE" />
-  <!-- Custom fields start here -->
+  <!-- SFE Custom fields start here -->
     <field number="5001" name="UserMsgCat" type="INT">
       <value enum="0" description="BaseContractDownloadRequest"/>
       <value enum="1" description="Commodity_Download"/>

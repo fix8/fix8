@@ -151,6 +151,18 @@ struct PeerResetConnection : f8Exception
 };
 
 //-------------------------------------------------------------------------------------------------
+struct InvalidMemoryPtr : f8Exception
+{
+	InvalidMemoryPtr(const void *ptr) { format("Invalid Memory pool ptr", ptr); }
+};
+
+//-------------------------------------------------------------------------------------------------
+struct FreelistFull : f8Exception
+{
+	FreelistFull() { format("Memory poll freelist", "freelist is full"); }
+};
+
+//-------------------------------------------------------------------------------------------------
 
 } // FIX8
 

@@ -63,11 +63,6 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-namespace {
-	const string spacer(3, ' ');
-}
-
-//-------------------------------------------------------------------------------------------------
 RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 RegExp Session::_seq("34=([^\x01]+)\x01");
 
@@ -166,6 +161,8 @@ int Session::start(Connection *connection, bool wait)
 
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
+		recover_seqnums();
+
 		Message *msg(generate_logon(_connection->get_hb_interval()));
 		send(msg);
 		_state = States::st_logon_sent;
@@ -205,6 +202,7 @@ bool Session::process(const f8String& from)
 		scoped_ptr<Message> msg(Message::factory(_ctx, from));
 		if (_control & print)
 			cout << *msg << endl;
+		_next_target_seq = seqnum + 1;
 
 		return (msg->is_admin() ? handle_admin(msg.get()) : true)
 			&& (this->*_handlers.find_value_ref(msg->get_msgtype()))(msg.get());
@@ -229,16 +227,18 @@ bool Session::handle_logon(const Message *msg)
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
 		heartbeat_interval hbi;
-		if (msg->get(hbi))
-			_connection->set_hb_interval(hbi.get());
+		msg->get(hbi);
+		_connection->set_hb_interval(hbi());
 		_state = States::st_continuous;
 	}
 	else // acceptor
 	{
+		recover_seqnums();
+
 		sender_comp_id sci;
-		const_cast<Message*>(msg)->Header()->get(sci);
+		msg->Header()->get(sci);
 		target_comp_id tci;
-		const_cast<Message*>(msg)->Header()->get(tci);
+		msg->Header()->get(tci);
 		SessionID id(_ctx._beginStr, tci(), sci());
 		if (authenticate(id, msg))
 		{
@@ -255,17 +255,6 @@ bool Session::handle_logon(const Message *msg)
 			stop();
 			_state = States::st_session_terminated;
 			return false;
-		}
-	}
-
-	if (_persist)
-	{
-		unsigned sender_seqnum, target_seqnum;
-		if (_persist->get(sender_seqnum, target_seqnum))
-		{
-			ostringstream ostr;
-			ostr << "Last sent: " << sender_seqnum << ", last received: " << target_seqnum;
-			log(ostr.str());
 		}
 	}
 
@@ -338,6 +327,7 @@ bool Session::heartbeat_service()
 	now.now();
 	if ((now - *_last_received).secs() > _connection->get_hb_interval20pc())
 	{
+		cout << _connection->get_hb_interval20pc() << endl;
 		if (_state == States::st_test_request_sent)	// already sent
 		{
 			send(generate_logout());
@@ -477,6 +467,7 @@ bool Session::send_process(Message *msg) // called from the connection thread
 			if (!msg->is_admin())
 				_persist->put(_next_sender_seq, output);
 			_persist->put(_next_sender_seq + 1, _next_target_seq);
+			//cout << (_next_sender_seq + 1) << ' ' << _next_target_seq << endl;
 		}
 		++_next_sender_seq;
 	}
@@ -492,5 +483,22 @@ bool Session::send_process(Message *msg) // called from the connection thread
 bool Session::handle_application(const Message *msg)
 {
 	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+void Session::recover_seqnums()
+{
+	if (_persist)
+	{
+		unsigned sender_seqnum, target_seqnum;
+		if (_persist->get(sender_seqnum, target_seqnum))
+		{
+			ostringstream ostr;
+			ostr << "Last sent: " << sender_seqnum << ", last received: " << target_seqnum;
+			log(ostr.str());
+			_next_sender_seq = sender_seqnum;
+			_next_target_seq = target_seqnum;
+		}
+	}
 }
 

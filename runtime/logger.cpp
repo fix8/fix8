@@ -173,7 +173,7 @@ bool FileLogger::rotate()
       if (_flags & compress)
          thislFile += ".gz";
 #endif
-      if (_rotnum > 0)
+      if (_rotnum > 0 && !(_flags & append))
       {
          vector<string> rlst;
          rlst.push_back(thislFile);

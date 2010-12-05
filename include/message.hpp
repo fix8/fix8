@@ -63,7 +63,7 @@ public:
 	void add(MessageBase *what) { _msgs.push_back(what); }
 	void operator+=(MessageBase *what) { add(what); }
 	size_t size() const { return _msgs.size(); }
-	MessageBase *operator[](unsigned where) { return where < _msgs.size() ? _msgs[where] : 0; }
+	MessageBase *operator[](unsigned idx) { return idx < _msgs.size() ? _msgs[idx] : 0; }
 
 	void clear()
 	{

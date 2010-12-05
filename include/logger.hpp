@@ -164,7 +164,7 @@ template<char *fn>
 class SingleLogger : public Singleton<SingleLogger<fn> >, public FileLogger
 {
 public:
-	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << append << thread) {}
+	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << thread) {}
 };
 
 //-----------------------------------------------------------------------------------------

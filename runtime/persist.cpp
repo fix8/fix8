@@ -162,7 +162,7 @@ unsigned BDBPersister::get_last_seqnum(unsigned& sequence) const
 
 //-------------------------------------------------------------------------------------------------
 unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& session,
-	bool (Session::*callback)(const Session::SequencePair& with))
+	bool (Session::*callback)(const Session::SequencePair& with)) const
 {
 	unsigned last_seq(0);
 	get_last_seqnum(last_seq);
@@ -224,7 +224,7 @@ bool BDBPersister::put(const unsigned seqnum, const f8String& what)
 }
 
 //-------------------------------------------------------------------------------------------------
-bool BDBPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum)
+bool BDBPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) const
 {
 	if (!_opened)
       return false;
@@ -245,7 +245,7 @@ bool BDBPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum)
 }
 
 //-------------------------------------------------------------------------------------------------
-bool BDBPersister::get(const unsigned seqnum, f8String& to)
+bool BDBPersister::get(const unsigned seqnum, f8String& to) const
 {
 	if (!_opened || !seqnum)
       return false;
@@ -264,7 +264,7 @@ bool BDBPersister::get(const unsigned seqnum, f8String& to)
 }
 
 //---------------------------------------------------------------------------------------------------
-unsigned BDBPersister::find_nearest_highest_seqnum (const unsigned requested, const unsigned last)
+unsigned BDBPersister::find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const
 {
 	if (_opened && last)
 	{
@@ -322,5 +322,104 @@ int BDBPersister::operator()()
 	GlobalLogger::instance().send(ostr.str());
 
    return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& session,
+	bool (Session::*callback)(const Session::SequencePair& with)) const
+{
+	unsigned last_seq(0);
+	get_last_seqnum(last_seq);
+	unsigned recs_sent(0), startSeqNum(find_nearest_highest_seqnum (from, last_seq));
+	const unsigned finish(to == 0 ? last_seq : to);
+	if (!startSeqNum || from > finish)
+	{
+		GlobalLogger::instance().send("No records found");
+		return 0;
+	}
+
+	Store::const_iterator itr(_store.find(startSeqNum));
+	if (itr != _store.end())
+	{
+		do
+		{
+			if (!itr->first || itr->first > finish)
+				break;
+			Session::SequencePair result(itr->first, itr->second);
+			++recs_sent;
+			if (!(session.*callback)(result))
+				break;
+		}
+		while(++itr != _store.end());
+	}
+	else
+	{
+		ostringstream ostr;
+		ostr << "record not found";
+		GlobalLogger::instance().send(ostr.str());
+	}
+
+	return recs_sent;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool MemoryPersister::put(const unsigned sender_seqnum, const unsigned target_seqnum)
+{
+	const unsigned arr[2] = { sender_seqnum, target_seqnum };
+	return _store.insert(Store::value_type(0,
+		f8String(reinterpret_cast<const char *>(arr), sizeof(arr)))).second;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool MemoryPersister::put(const unsigned seqnum, const f8String& what)
+{
+	return !seqnum ? false : _store.insert(Store::value_type(seqnum, what)).second;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool MemoryPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) const
+{
+	Store::const_iterator itr(_store.find(0));
+	if (itr == _store.end())
+		return false;
+	const unsigned *loc(reinterpret_cast<const unsigned *>(&itr->second));
+	sender_seqnum = *loc++;
+	target_seqnum = *loc;
+   return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool MemoryPersister::get(const unsigned seqnum, f8String& to) const
+{
+	if (!seqnum)
+		return false;
+	Store::const_iterator itr(_store.find(seqnum));
+	if (itr == _store.end())
+		return false;
+	to = itr->second;
+   return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+unsigned MemoryPersister::find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const
+{
+	if (last)
+	{
+		for (unsigned startseqnum(requested); startseqnum <= last; ++startseqnum)
+		{
+			Store::const_iterator itr(_store.find(startseqnum));
+			if (itr != _store.end())
+				return itr->first;
+		}
+	}
+
+   return 0;
+}
+
+//---------------------------------------------------------------------------------------------------
+unsigned MemoryPersister::get_last_seqnum(unsigned& to) const
+{
+	return !_store.empty() ? _store.end()->first : 0;
 }
 

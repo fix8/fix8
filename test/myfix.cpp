@@ -104,9 +104,11 @@ int main(int argc, char **argv)
 	signal(SIGTERM, sig_handler);
 	signal(SIGINT, sig_handler);
 
-	Logger::LogFlags logflags, noflags;
-	logflags << Logger::timestamp << Logger::sequence << Logger::append << Logger::thread;
-	BDBPersister bdp;
+	Logger::LogFlags logflags, plogflags;
+	logflags << Logger::timestamp << Logger::sequence << Logger::thread;
+	plogflags << Logger::append;
+	//BDBPersister bdp;
+	MemoryPersister bdp;
 	Poco::Net::SocketAddress addr("127.0.0.1:11001");
 
 	try
@@ -115,9 +117,9 @@ int main(int argc, char **argv)
 		{
 			GlobalLogger::instance().send("test fix server starting up...");
 
-			bdp.initialise("./run", "myfix_server.db");
+			//bdp.initialise("./run", "myfix_server.db");
 			FileLogger log("./run/myfix_server.log", logflags, 2);
-			FileLogger plog("./run/myfix_server_protocol.log", noflags, 2);
+			FileLogger plog("./run/myfix_server_protocol.log", plogflags, 2);
 			myfix_session_server ms(TEX::ctx, &bdp, &log, &plog);
 			Poco::Net::ServerSocket ss(addr);
 			Poco::Net::SocketAddress claddr;
@@ -125,16 +127,16 @@ int main(int argc, char **argv)
 			GlobalLogger::instance().send("client connection established...");
 			ServerConnection sc(&sock, ms, 5);
 			ms.control() |= Session::print;
-			ms.start(&sc);
+			ms.start(&sc);	// will wait
 		}
 		else
 		{
 			GlobalLogger::instance().send("test fix client starting up...");
 
 			const SessionID id(TEX::ctx._beginStr, "DLD_TEX", "TEX_DLD");
-			bdp.initialise("./run", "myfix_client.db");
+			//bdp.initialise("./run", "myfix_client.db");
 			FileLogger log("./run/myfix_client.log", logflags, 2);
-			FileLogger plog("./run/myfix_client_protocol.log", noflags, 2);
+			FileLogger plog("./run/myfix_client_protocol.log", plogflags, 2);
 			myfix_session_client ms(TEX::ctx, id, &bdp, &log, &plog);
 			Poco::Net::StreamSocket sock;
 			ClientConnection cc(&sock, addr, ms);
@@ -198,6 +200,10 @@ bool MyMenu::new_order_single()
 	*gr2 += new TEX::UnderlyingSymbol("FOO");
 	*noul += gr2;
 
+	cout << "sizeof(TEX::NewOrderSingle): " << sizeof(TEX::NewOrderSingle) << endl;
+	cout << "sizeof(TEX::ExecutionReport): " << sizeof(TEX::ExecutionReport) << endl;
+	cout << "sizeof(TEX::header): " << sizeof(TEX::header) << endl;
+	cout << "sizeof(TEX::trailer): " << sizeof(TEX::trailer) << endl;
 	_session.send(nos);
 
 	return true;
