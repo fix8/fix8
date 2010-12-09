@@ -11,7 +11,7 @@ AC_REVISION([$Rev$])
 AC_PREREQ(2.61)
 AC_INIT([fix8], [m4_esyscmd([./version.sh | tr -d '\n'])],fix@fix8.org)
 AM_INIT_AUTOMAKE
-AC_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADER(include/f8config.h)
 AH_TOP([//-----------------------------------------------------------------------------------------
 #if 0
 fix8 is released under the New BSD License.
@@ -143,8 +143,8 @@ AC_CHECK_FILE("$PROCPIDSTATM",
 		AC_DEFINE_UNQUOTED(HAVE_PROC_PID_STATM, 1, [Define to 1 if /proc/[pid]/statm is available])
 	])
 
-DEVURANDOM="/dev/urandom"
-AC_CHECK_FILE($DEVURANDOM,
+DEVURANDOM=/dev/urandom
+AC_CHECK_FILE("$DEVURANDOM",
 	[
 		AC_DEFINE(HAVE_DEV_URANDOM, 1, [Define to 1 if the /dev/urandom device is available])
 	])
@@ -269,6 +269,14 @@ else
 	CFLAGS="$CFLAGS -Wall"
 	CXXFLAGS="$CXXFLAGS -Wall"
 fi
+
+AC_ARG_ENABLE([poolalloc],
+[AC_HELP_STRING([--enable-poolalloc],[Enable Memory Pool Allocator (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(POOLALLOC, 1, [Define to 1 for Memory Pool Allocator]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-poolalloc) ;;
+esac])
 
 AC_ARG_ENABLE([debug],
 [AC_HELP_STRING([--enable-debug],[Enable DEBUG support (default=no)])],

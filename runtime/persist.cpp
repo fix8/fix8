@@ -35,7 +35,6 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8cutils.cpp $
 
 #endif
 //-----------------------------------------------------------------------------------------
-#include <config.h>
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -47,10 +46,6 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8cutils.cpp $
 #include <algorithm>
 #include <numeric>
 #include <bitset>
-
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
 
 #include <strings.h>
 #include <cerrno>

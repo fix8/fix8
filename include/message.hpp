@@ -47,7 +47,11 @@ namespace FIX8 {
 //-------------------------------------------------------------------------------------------------
 class MessageBase;
 class Message;
+#if defined POOLALLOC
+typedef std::vector<MessageBase *, f8Allocator<MessageBase *> > GroupElement;
+#else
 typedef std::vector<MessageBase *> GroupElement;
+#endif
 
 //-------------------------------------------------------------------------------------------------
 class GroupBase
@@ -74,7 +78,12 @@ public:
 	friend class MessageBase;
 };
 
+#if defined POOLALLOC
+typedef std::map<unsigned short, GroupBase *, std::less<unsigned short>,
+	f8Allocator<std::pair<unsigned short, GroupBase *> > > Groups;
+#else
 typedef std::map<unsigned short, GroupBase *> Groups;
+#endif
 
 //-------------------------------------------------------------------------------------------------
 class Router
@@ -110,8 +119,15 @@ struct F8MetaCntx
 };
 
 //-------------------------------------------------------------------------------------------------
+#if defined POOLALLOC
+typedef std::map<unsigned short, BaseField *, std::less<unsigned short>,
+	f8Allocator<std::pair<unsigned short, BaseField *> > > Fields;
+typedef std::multimap<unsigned short, BaseField *, std::less<unsigned short>,
+	f8Allocator<std::pair<unsigned short, BaseField *> > > Positions;
+#else
 typedef std::map<unsigned short, BaseField *> Fields;
 typedef std::multimap<unsigned short, BaseField *> Positions;
+#endif
 
 class MessageBase
 {

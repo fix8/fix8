@@ -35,7 +35,6 @@ $URL$
 
 #endif
 //-----------------------------------------------------------------------------------------
-#include <config.h>
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -53,19 +52,9 @@ $URL$
 #include <string.h>
 #include <cctype>
 
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
-
 // f8 headers
-#include <f8exception.hpp>
-#include <f8utils.hpp>
-#include <traits.hpp>
-#include <f8types.hpp>
-#include <field.hpp>
-#include <message.hpp>
+#include <f8includes.hpp>
 #include <usage.hpp>
-#include <xml.hpp>
 #include <f8c.hpp>
 
 //-----------------------------------------------------------------------------------------
@@ -79,6 +68,21 @@ static const std::string rcsid("$Id$");
 extern string inputFile, odir, prefix;
 extern bool verbose;
 extern const string spacer, GETARGLIST;
+
+//-------------------------------------------------------------------------------------------------
+#if defined POOLALLOC
+Region BaseAllocator::_rpairs[] =
+{
+	Region(4000000, 8),
+	Region(4000000, 16),
+	Region(1000000, 48),
+	Region(1000000, 64),
+	Region(500000, 128)
+};
+
+RegionManager BaseAllocator::_mmgr(RegionList(BaseAllocator::_rpairs, BaseAllocator::_rpairs
+	+ sizeof(BaseAllocator::_rpairs)/sizeof(Region)));
+#endif
 
 //-----------------------------------------------------------------------------------------
 void print_usage();

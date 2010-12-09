@@ -38,14 +38,21 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/logger.hpp $
 #ifndef _FIX8_INCLUDES_HPP_
 #define _FIX8_INCLUDES_HPP_
 
+#include <f8config.h>
+
+#ifdef HAS_TR1_UNORDERED_MAP
+#include <tr1/unordered_map>
+#endif
+
 #include <f8exception.hpp>
-#include <f8utils.hpp>
 #include <memory.hpp>
+#include <f8allocator.hpp>
+#include <f8types.hpp>
+#include <f8utils.hpp>
 #include <xml.hpp>
 #include <thread.hpp>
 #include <gzstream.hpp>
 #include <logger.hpp>
-#include <f8types.hpp>
 #include <traits.hpp>
 #include <timer.hpp>
 #include <field.hpp>

@@ -133,6 +133,7 @@ const CSMap::TypePair CSMap::_valueTable[] =
 	CSMap::TypePair(cs_start_anon_namespace, "namespace {"),
 	CSMap::TypePair(cs_end_anon_namespace, "} // namespace"),
 	CSMap::TypePair(cs_generated_includes,
+"#include <f8config.h>\n"
 "#include <iostream>\n"
 "#include <fstream>\n"
 "#include <iomanip>\n"
@@ -147,8 +148,15 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "#include <regex.h>\n"
 "#include <cerrno>\n"
 "#include <string.h>\n"
+"#if defined HAS_TR1_UNORDERED_MAP\n"
+"#include <tr1/unordered_map>\n"
+"#endif\n"
 "// f8 includes\n"
 "#include <f8exception.hpp>\n"
+"#if defined POOLALLOC\n"
+"#include <memory.hpp>\n"
+"#include <f8allocator.hpp>\n"
+"#endif\n"
 "#include <f8utils.hpp>\n"
 "#include <traits.hpp>\n"
 "#include <f8types.hpp>\n"

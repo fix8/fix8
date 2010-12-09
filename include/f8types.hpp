@@ -43,6 +43,12 @@ namespace FIX8 {
 
 typedef std::string f8String;
 
+#if defined POOLALLOC
+typedef std::basic_string<char, std::char_traits<char>, f8Allocator<char> > pf8String;
+#else
+typedef std::string pf8String;
+#endif
+
 const unsigned char default_field_separator(0x1);
 
 //-------------------------------------------------------------------------------------------------

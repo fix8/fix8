@@ -46,8 +46,25 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/configuration.h
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
+struct BaseAllocator
+{
+	static Region _rpairs[];
+	static RegionManager _mmgr;
+};
+
+}
+
+#if 0
+inline void *operator new(size_t sz, const bool type) { return type ? FIX8::BaseAllocator::_mmgr.alloc(sz) : std::malloc(sz); }
+inline void *operator new[](size_t sz, const bool type) { return type ? FIX8::BaseAllocator::_mmgr.alloc(sz) : std::malloc(sz); }
+inline void operator delete(void *what, const bool type) { type ? FIX8::BaseAllocator::_mmgr.release(what) : std::free(what); }
+inline void operator delete[](void *what, const bool type) { type ? FIX8::BaseAllocator::_mmgr.release(what) : std::free(what); }
+#endif
+
+namespace FIX8 {
+
 template <typename T>
-class F8Allocator
+class f8Allocator : private BaseAllocator
 {
 public:
 	typedef T value_type;
@@ -59,33 +76,32 @@ public:
 	typedef std::ptrdiff_t difference_type;
 
 	template <typename U>
-	struct rebind { typedef F8Allocator<U> other; };
+	struct rebind { typedef f8Allocator<U> other; };
 
 	pointer address (reference value) const { return &value; }
 	const_pointer address (const_reference value) const { return &value; }
 
-	F8Allocator() throw() {}
-	F8Allocator(const F8Allocator&) throw() {}
+	f8Allocator() throw() {}
+	f8Allocator(const f8Allocator&) throw() {}
 	template <typename U>
-	F8Allocator (const F8Allocator<U>&) throw() {}
-	~F8Allocator() throw() {}
+	f8Allocator (const f8Allocator<U>&) throw() {}
+	~f8Allocator() throw() {}
 
 	size_type max_size () const throw() { return std::numeric_limits<std::size_t>::max() / sizeof(T); }
 
-	pointer allocate (size_type num, F8Allocator<void>::const_pointer=0)
-	{
-		pointer ret = static_cast<pointer>(::operator new(num * sizeof(T)));
-		return ret;
-	}
-
+	pointer allocate (size_type num, const void *hint=0) throw(std::bad_alloc)
+		{ return static_cast<pointer>(_mmgr.alloc(num * sizeof(T))); }
 	void construct (pointer p, const T& value) { new (static_cast<void*>(p))T(value); }
 	void destroy (pointer p) { p->~T(); }
-	void deallocate (pointer p, size_type num) { ::operator delete static_cast<void*>(p); }
+	void deallocate (pointer p, size_type num) throw(std::bad_alloc)
+		{ _mmgr.release(static_cast<void*>(p)); }
 };
 
 template <typename T1, typename T2>
-bool operator== (const F8Allocator<T1>&, const F8Allocator<T2>&) throw() { return true; }
+inline bool operator== (const f8Allocator<T1>&, const f8Allocator<T2>&) throw() { return true; }
 template <typename T1, typename T2>
-bool operator!= (const F8Allocator<T1>&, const F8Allocator<T2>&) throw() { return false; }
+inline bool operator!= (const f8Allocator<T1>&, const f8Allocator<T2>&) throw() { return false; }
+
+}
 
 #endif // _FIX8_ALLOCATOR_HPP_

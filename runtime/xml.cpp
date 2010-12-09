@@ -36,7 +36,6 @@ $URL$
 
 #endif
 //-----------------------------------------------------------------------------------------
-#include <config.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -57,13 +56,6 @@ $URL$
 #include <time.h>
 #include <regex.h>
 
-#if !defined __GNUG__ || defined HAVE_ALLOCA_H
-#include <alloca.h>
-#endif
-
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
 #include <map>
 #include <set>
 #include <list>

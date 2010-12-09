@@ -35,7 +35,7 @@
 #include <iostream>
 #include <string.h>  // for memcpy
 
-#include <config.h>
+#include <f8config.h>
 
 #ifdef GZSTREAM_NAMESPACE
 namespace GZSTREAM_NAMESPACE {

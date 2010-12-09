@@ -35,7 +35,6 @@ $URL$
 
 #endif
 //-----------------------------------------------------------------------------------------
-#include <config.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -51,10 +50,6 @@ $URL$
 #include <time.h>
 #include <strings.h>
 #include <regex.h>
-
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
 
 #include <f8includes.hpp>
 

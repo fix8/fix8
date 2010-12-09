@@ -22,6 +22,11 @@
 
 // f8 headers
 #include <f8includes.hpp>
+
+#ifdef HAVE_GETOPT_H
+#include <getopt.h>
+#endif
+
 #include <usage.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
@@ -57,6 +62,21 @@ const MyMenu::Handlers::NotFoundType MyMenu::Handlers::_noval = &MyMenu::nothing
 template<>
 const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
 	MyMenu::Handlers::get_table_end());
+
+//-------------------------------------------------------------------------------------------------
+#if defined POOLALLOC
+Region BaseAllocator::_rpairs[] =
+{
+	Region(4000000, 8),
+	Region(4000000, 16),
+	Region(1000000, 48),
+	Region(1000000, 64),
+	Region(500000, 128)
+};
+
+RegionManager BaseAllocator::_mmgr(RegionList(BaseAllocator::_rpairs, BaseAllocator::_rpairs
+	+ sizeof(BaseAllocator::_rpairs)/sizeof(Region)));
+#endif
 
 //-----------------------------------------------------------------------------------------
 void sig_handler(int sig)

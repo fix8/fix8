@@ -35,7 +35,6 @@ $URL$
 
 #endif
 //-----------------------------------------------------------------------------------------
-#include <config.h>
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -53,17 +52,13 @@ $URL$
 #include <string.h>
 #include <cctype>
 
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
+// f8 headers
+#include <f8includes.hpp>
+#include <f8c.hpp>
 
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>
 #endif
-
-// f8 headers
-#include <f8includes.hpp>
-#include <f8c.hpp>
 
 //-----------------------------------------------------------------------------------------
 using namespace std;
