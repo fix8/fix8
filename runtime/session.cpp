@@ -83,7 +83,7 @@ const Session::Handlers::TypeMap Session::Handlers::_valuemap(Session::Handlers:
 //-------------------------------------------------------------------------------------------------
 const f8String& SessionID::make_id()
 {
-	ostringstream ostr;
+	f8ostrstream ostr;
 	ostr << _beginString << ':' << _senderCompID << "->" << _targetCompID;
 	return _id = ostr.str();
 }
@@ -197,7 +197,11 @@ bool Session::process(const f8String& from)
 		scoped_ptr<Message> msg(Message::factory(_ctx, from));
 		if (_control & print)
 			cout << *msg << endl;
-		_next_target_seq = seqnum + 1;
+		if (States::is_established(_state))
+		{
+			sequence_check(seqnum);
+			_next_target_seq = seqnum + 1;
+		}
 
 		return (msg->is_admin() ? handle_admin(msg.get()) : true)
 			&& (this->*_handlers.find_value_ref(msg->get_msgtype()))(msg.get());
@@ -214,6 +218,11 @@ bool Session::process(const f8String& from)
 	}
 
 	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+void Session::sequence_check(const unsigned seqnum)
+{
 }
 
 //-------------------------------------------------------------------------------------------------

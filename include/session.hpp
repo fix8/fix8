@@ -92,6 +92,9 @@ struct States
 		st_wait_for_logon, st_not_logged_in, st_logon_sent, st_logon_received, st_logoff_sent, st_logoff_received,
 		st_test_request_sent, st_sequence_reset_sent, st_sequence_reset_received,
 	};
+
+	static bool is_established(const SessionStates& ss)
+		{	return ss != st_wait_for_logon && ss != st_not_logged_in; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -185,6 +188,7 @@ public:
 	bool plog(const std::string& what) const { return _plogger ? _plogger->send(what) : false; }
 	void update_sent() { _last_sent->now(); }
 	void update_received() { _last_received->now(); }
+	void sequence_check(const unsigned seqnum);
 	const SessionID& get_sid() const { return _sid; }
 
 	Control& control() { return _control; }

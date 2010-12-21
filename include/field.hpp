@@ -84,7 +84,7 @@ struct RealmBase	// metadata domain
 };
 
 //-------------------------------------------------------------------------------------------------
-class BaseField
+class BaseField : public f8Base
 {
 	unsigned short _fnum;
 
@@ -122,18 +122,19 @@ public:
 	friend class MessageBase;
 };
 
+//-------------------------------------------------------------------------------------------------
 template<typename T, const unsigned short field>
 class Field : public BaseField
 {
 public:
 	Field () : BaseField(field) {}
-	Field(const std::string& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+	Field(const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 	virtual ~Field() {}
 
 	virtual const T& get() = 0;
 	virtual const T& operator()() = 0;
 	virtual const T& set(const T& from) = 0;
-	virtual const T& set_from_raw(const std::string& from) = 0;
+	virtual const T& set_from_raw(const f8String& from) = 0;
 	virtual Field *copy() = 0;
 };
 
@@ -148,7 +149,7 @@ public:
 	Field () : BaseField(field), _value() {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const int val) : BaseField(field), _value(val) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(GetValue<int>(from)) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(GetValue<int>(from)) {}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
@@ -156,30 +157,30 @@ public:
 	const int& get() { return _value; }
 	const int& operator()() { return _value; }
 	const int& set(const int& from) { return _value = from; }
-	const int& set_from_raw(const std::string& from) { return _value = GetValue<int>(from); }
+	const int& set_from_raw(const f8String& from) { return _value = GetValue<int>(from); }
 	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
 
 //-------------------------------------------------------------------------------------------------
 template<const unsigned short field>
-class Field<std::string, field> : public BaseField
+class Field<f8String, field> : public BaseField
 {
 protected:
-	std::string _value;
+	f8String _value;
 
 public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
-	const std::string& get() { return _value; }
-	const std::string& operator()() { return _value; }
-	const std::string& set(const std::string& from) { return _value = from; }
-	const std::string& set_from_raw(const std::string& from) { return _value = from; }
+	const f8String& get() { return _value; }
+	const f8String& operator()() { return _value; }
+	const f8String& set(const f8String& from) { return _value = from; }
+	const f8String& set_from_raw(const f8String& from) { return _value = from; }
 	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
@@ -195,7 +196,7 @@ public:
 	Field () : BaseField(field), _value() {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const double& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(GetValue<double>(from)) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(GetValue<double>(from)) {}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
@@ -203,7 +204,7 @@ public:
 	virtual const double& get() { return _value; }
 	virtual const double& operator()() { return _value; }
 	virtual const double& set(const double& from) { return _value = from; }
-	virtual const double& set_from_raw(const std::string& from) { return _value = GetValue<double>(from); }
+	virtual const double& set_from_raw(const f8String& from) { return _value = GetValue<double>(from); }
 	virtual Field *copy() { return new Field(*this); }
 	virtual std::ostream& print(std::ostream& os) const { return os << _value; }
 };
@@ -218,7 +219,7 @@ public:
 	Field () : BaseField(field), _value() {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const char& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from[0]) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from[0]) {}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
@@ -226,7 +227,7 @@ public:
 	const char& get() { return _value; }
 	const char& operator()() { return _value; }
 	const char& set(const char& from) { return _value = from; }
-	const char& set_from_raw(const std::string& from) { return _value = from[0]; }
+	const char& set_from_raw(const f8String& from) { return _value = from[0]; }
 	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 };
@@ -235,12 +236,12 @@ public:
 typedef EnumType<FieldTrait::ft_MonthYear> MonthYear;
 
 template<const unsigned short field>
-class Field<MonthYear, field> : public Field<std::string, field>
+class Field<MonthYear, field> : public Field<f8String, field>
 {
 public:
-	Field () : Field<std::string, field>(field) {}
-	Field (const Field& from) : Field<std::string, field>(from) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : Field<std::string, field>(from, rlm) {}
+	Field () : Field<f8String, field>(field) {}
+	Field (const Field& from) : Field<f8String, field>(from) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
 	virtual ~Field() {}
 };
 
@@ -248,12 +249,12 @@ public:
 typedef EnumType<FieldTrait::ft_data> data;
 
 template<const unsigned short field>
-class Field<data, field> : public Field<std::string, field>
+class Field<data, field> : public Field<f8String, field>
 {
 public:
-	Field () : Field<std::string, field>(field) {}
-	Field (const Field& from) : Field<std::string, field>(from) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : Field<std::string, field>(from, rlm) {}
+	Field () : Field<f8String, field>(field) {}
+	Field (const Field& from) : Field<f8String, field>(from) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
 	virtual ~Field() {}
 };
 
@@ -263,7 +264,7 @@ typedef EnumType<FieldTrait::ft_UTCTimestamp> UTCTimestamp;
 template<const unsigned short field>
 class Field<UTCTimestamp, field> : public BaseField
 {
-	static const f8String _fmt_sec, _fmt_ms;
+	static const std::string _fmt_sec, _fmt_ms;
 	static const size_t _sec_only = 17, _with_ms = 21;
 	Poco::DateTime _value;
 	int _tzdiff;
@@ -272,7 +273,7 @@ public:
 	Field () : BaseField(field), _tzdiff() {}
 	Field (const Field& from) : BaseField(field), _value(from._value), _tzdiff(from._tzdiff) {}
 	Field (const Poco::DateTime& val) : BaseField(field), _value(val) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field)
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field)
 	{
 		if (from.size() == _sec_only) // 19981231-23:59:59
 			Poco::DateTimeParser::parse(_fmt_sec, from, _value, _tzdiff);
@@ -284,7 +285,7 @@ public:
 
 	const Poco::DateTime& get() { return _value; }
 	const Poco::DateTime& operator()() { return _value; }
-	const std::string& set(const std::string& from) { return _value = from; }
+	const f8String& set(const f8String& from) { return _value = from; }
 	void set(const Poco::DateTime& from) { _value = from; }
 	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const
@@ -293,9 +294,9 @@ public:
 };
 
 template<const unsigned short field>
-const f8String Field<UTCTimestamp, field>::_fmt_sec("%Y%m%d-%H:%M:%S");
+const std::string Field<UTCTimestamp, field>::_fmt_sec("%Y%m%d-%H:%M:%S");
 template<const unsigned short field>
-const f8String Field<UTCTimestamp, field>::_fmt_ms("%Y%m%d-%H:%M:%S.%i");
+const std::string Field<UTCTimestamp, field>::_fmt_ms("%Y%m%d-%H:%M:%S.%i");
 
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_UTCTimeOnly> UTCTimeOnly;
@@ -308,12 +309,12 @@ class Field<UTCTimeOnly, field> : public BaseField
 public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
 	const Poco::DateTime& operator()() { return _value; }
-	const std::string& set(const std::string& from) { return _value = from; }
+	const f8String& set(const f8String& from) { return _value = from; }
 	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os; }
 };
@@ -329,12 +330,12 @@ class Field<UTCDateOnly, field> : public BaseField
 public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
 	const Poco::DateTime& operator()() { return _value; }
-	const std::string& set(const std::string& from) { return _value = from; }
+	const f8String& set(const f8String& from) { return _value = from; }
 	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os; }
 };
@@ -350,12 +351,12 @@ class Field<LocalMktDate, field> : public BaseField
 public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
 	const Poco::DateTime& operator()() { return _value; }
-	const std::string& set(const std::string& from) { return _value = from; }
+	const f8String& set(const f8String& from) { return _value = from; }
 	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os; }
 };
@@ -371,12 +372,12 @@ class Field<TZTimeOnly, field> : public BaseField
 public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
 	const Poco::DateTime& operator()() { return _value; }
-	const std::string& set(const std::string& from) { return _value = from; }
+	const f8String& set(const f8String& from) { return _value = from; }
 	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os; }
 };
@@ -392,12 +393,12 @@ class Field<TZTimestamp, field> : public BaseField
 public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
 	const Poco::DateTime& operator()() { return _value; }
-	const std::string& set(const std::string& from) { return _value = from; }
+	const f8String& set(const f8String& from) { return _value = from; }
 	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os; }
 };
@@ -412,7 +413,7 @@ public:
 	Field () : Field<int, field>() {}
 	Field (const unsigned& val) : Field<int, field>(val) {}
 	Field (const Field& from) : Field<int, field>(from) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 	virtual ~Field() {}
 };
 
@@ -426,7 +427,7 @@ public:
 	Field () : Field<int, field>() {}
 	Field (const unsigned& val) : Field<int, field>(val) {}
 	Field (const Field& from) : Field<int, field>(from) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 	virtual ~Field() {}
 };
 
@@ -440,7 +441,7 @@ public:
 	Field () : Field<int, field>() {}
 	Field (const unsigned& val) : Field<int, field>(val) {}
 	Field (const Field& from) : Field<int, field>(from) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 	virtual ~Field() {}
 };
 
@@ -454,7 +455,7 @@ public:
 	Field () : Field<int, field>() {}
 	Field (const unsigned& val) : Field<int, field>(val) {}
 	Field (const Field& from) : Field<int, field>(from) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 	virtual ~Field() {}
 };
 
@@ -468,7 +469,7 @@ public:
 	Field () : Field<int, field>() {}
 	Field (const unsigned& val) : Field<int, field>(val) {}
 	Field (const Field& from) : Field<int, field>(from) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 	virtual ~Field() {}
 };
 
@@ -484,13 +485,13 @@ public:
 	Field () : BaseField(field) {}
 	Field (const bool& val) : BaseField(field), _value(val) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : BaseField(field), _value(toupper(from[0]) == 'Y') {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(toupper(from[0]) == 'Y') {}
 	virtual ~Field() {}
 
 	const bool get() { return _value; }
 	const bool operator()() { return _value; }
 	const bool set(const bool from) { return _value = from; }
-	const bool set_from_raw(const std::string& from) { return toupper(from[0]) == 'Y'; }
+	const bool set_from_raw(const f8String& from) { return toupper(from[0]) == 'Y'; }
 	virtual Field *copy() { return new Field(*this); }
 	std::ostream& print(std::ostream& os) const { return os << (_value ? 'Y' : 'N'); }
 };
@@ -508,7 +509,7 @@ class Field<Qty, field> : public Field<double, field>
 public:
 	Field () : Field<double, field>() {}
 	Field (const double& val) : Field<double, field>(val) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : Field<double, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<double, field>(from, rlm) {}
 	virtual ~Field() {}
 };
 
@@ -520,18 +521,18 @@ typedef EnumType<FieldTrait::ft_string> currency;
 typedef EnumType<FieldTrait::ft_string> Exchange;
 
 template<const unsigned short field>
-class Field<MultipleCharValue, field> : public Field<std::string, field>
+class Field<MultipleCharValue, field> : public Field<f8String, field>
 {
 public:
-	Field (const std::string& val) : Field<std::string, field>(val) {}
-	Field (const std::string& from, const RealmBase *rlm=0) : Field<std::string, field>(from, rlm) {}
+	Field (const f8String& val) : Field<f8String, field>(val) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
 	virtual ~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
 struct BaseEntry
 {
-	BaseField *(*_create)(const std::string&, const RealmBase*);
+	BaseField *(*_create)(const f8String&, const RealmBase*);
 	const RealmBase *_rlm;
 	const char *_name, *_comment;
 };

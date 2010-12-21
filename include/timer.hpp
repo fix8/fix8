@@ -101,6 +101,8 @@ public:
 
 	bool operator!() const { return _value == 0ULL; }
 	operator void*() { return _value == 0ULL ? 0 : this; }
+	operator unsigned long long() { return _value; }
+	operator double() { return todouble(); }
 
 	friend Tickval operator-(const Tickval& newtime, const Tickval& oldtime);
 	friend Tickval& operator-=(Tickval& oldtime, const Tickval& newtime);

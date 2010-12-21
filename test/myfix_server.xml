@@ -1,0 +1,7 @@
+<fix8>
+	<session mode="acceptor">
+		<connection ip="127.0.0.1" port="11001"/>
+		<logging protocol="./run/myfix_server_protocol.log" general="./run/myfix_server.log"/>
+		<persist dir="./run" db="myfix_server.db"/>
+	</session>
+</fix8>

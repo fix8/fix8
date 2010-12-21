@@ -68,6 +68,7 @@ static const std::string rcsid("$Id$");
 extern string inputFile, odir, prefix;
 extern bool verbose;
 extern const string spacer, GETARGLIST;
+extern const CSMap _csMap;
 
 //-------------------------------------------------------------------------------------------------
 #if defined POOLALLOC
@@ -340,3 +341,13 @@ RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype
 }
 
 //-------------------------------------------------------------------------------------------------
+void generate_preamble(ostream& to)
+{
+	to << _csMap.find_value_ref(cs_divider) << endl;
+	string result;
+	to << _csMap.find_value_ref(cs_do_not_edit) << GetTimeAsStringMS(result, 0, 0) << " ***" << endl;
+	to << _csMap.find_value_ref(cs_divider) << endl;
+	to << _csMap.find_value_ref(cs_copyright) << endl;
+	to << _csMap.find_value_ref(cs_divider) << endl;
+}
+

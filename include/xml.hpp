@@ -64,6 +64,9 @@ class XmlEntity
 			{ return a->GetSequence() < b->GetSequence(); }
 	};
 
+	XmlEntity(const XmlEntity&);
+	XmlEntity& operator=(const XmlEntity&);
+
 public:
 	XmlEntity(std::istream& ifs, int subidx, int txtline=0, int depth=0, const char *rootAttr=0);
 	virtual ~XmlEntity();
@@ -93,6 +96,8 @@ public:
 	bool findAttrByValue(const std::string& what, const std::string& target);
 	template<typename T> T FindAttr(const std::string& what, const T defValue);
 
+	const std::string& InplaceXlate (std::string& what);
+
 	const int GetDepth() const { return depth_; }
 	const int GetErrorCnt() const { return errors_; }
 	const int GetLineCnt() const { return line_; }
@@ -108,8 +113,6 @@ public:
 
 	static void Reset() { errors_ = maxdepth_ = seq_ = 0; line_ = 1; }
 	static XmlEntity *Factory(const std::string& fname);
-
-	const std::string& InplaceXlate (std::string& what);
 
 	friend std::ostream& operator<<(std::ostream& os, const XmlEntity& en);
 };

@@ -70,7 +70,7 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
    _dbFname = dbFname;
 
    // Use concurrent db and default shared memory pool
-   _dbEnv.open(_dbDir.c_str(), DB_CREATE | DB_INIT_MPOOL | DB_INIT_CDB, 0);
+   _dbEnv.open(_dbDir.c_str(), DB_CREATE | DB_INIT_MPOOL | DB_INIT_CDB | DB_THREAD, 0);
 
    bool notFound(false);
    try

@@ -42,9 +42,11 @@ $URL$
 namespace FIX8 {
 
 typedef std::string f8String;
+typedef std::ostringstream f8ostrstream;
 
 #if defined POOLALLOC
 typedef std::basic_string<char, std::char_traits<char>, f8Allocator<char> > pf8String;
+//typedef std::basic_ostringstream<char, std::char_traits<char>, f8Allocator<char> > f8ostrstream;
 #else
 typedef std::string pf8String;
 #endif

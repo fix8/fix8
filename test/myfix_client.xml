@@ -1,0 +1,6 @@
+<fix8>
+	<session name="TEX1" mode="initiator" fix_version="4400"
+				heartbeat_interval="10" ip="127.0.0.1" port="11001" sender="DLD_TEX" target="TEX_DLD"
+				protocol_log="./run/myfix_client_protocol.log" general_log="./run/myfix_client.log"
+				persist_dir="./run" persist_db="myfix_client.db"/>
+</fix8>

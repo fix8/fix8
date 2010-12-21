@@ -127,7 +127,7 @@ const TypeToCPP::NotFoundType TypeToCPP::_noval("Unknown");
 template<>
 const CSMap::TypePair CSMap::_valueTable[] =
 {
-	CSMap::TypePair(cs_do_not_edit, "// *** f8c generated file: Do Not Edit"),
+	CSMap::TypePair(cs_do_not_edit, "// *** f8c generated file: Do Not Edit! Created: "),
 	CSMap::TypePair(cs_start_namespace, "namespace FIX8 {"),
 	CSMap::TypePair(cs_end_namespace, "} // namespace FIX8"),
 	CSMap::TypePair(cs_start_anon_namespace, "namespace {"),

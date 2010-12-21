@@ -73,7 +73,7 @@ MemoryPool::MemoryPool(const size_t numblocks, const size_t blksz) throw(bad_all
       throw bad_alloc();
    _store_end = static_cast<char*>(_store) + _blksz * _numblocks;
    _free_list.set_capacity(_numblocks);
-   cout << "Memorypool allocated " << _blksz * _numblocks << " bytes" << endl;
+   //cout << "Memorypool allocated " << _blksz * _numblocks << " bytes" << endl;
 }
 
 //-------------------------------------------------------------------------------------------------

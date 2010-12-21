@@ -297,7 +297,7 @@ unsigned MessageBase::encode_group(const unsigned short fnum, std::ostream& to)
 //-------------------------------------------------------------------------------------------------
 unsigned Message::encode(f8String& to)
 {
-	ostringstream msg;
+	f8ostrstream msg;
 	if (!_header)
 		throw MissingMessageComponent("header");
 	Fields::const_iterator fitr(_header->_fields.find(Common_MsgType));
@@ -315,7 +315,7 @@ unsigned Message::encode(f8String& to)
 	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
 	fitr->second->encode(msg);
 
-	ostringstream hmsg;
+	f8ostrstream hmsg;
 	if ((fitr = _header->_fields.find(Common_BeginString)) == _header->_fields.end())
 		throw MissingMandatoryField(Common_BeginString);
 	_header->_fp.clear(Common_BeginString, FieldTrait::suppress);
@@ -354,7 +354,7 @@ void MessageBase::print(ostream& os) const
 //-------------------------------------------------------------------------------------------------
 const f8String Message::fmt_chksum(const unsigned val)
 {
-	std::ostringstream ostr;
+	f8ostrstream ostr;
 	ostr << std::setfill('0') << std::setw(3) << val;
 	return ostr.str();
 }

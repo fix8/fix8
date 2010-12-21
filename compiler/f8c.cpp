@@ -108,6 +108,7 @@ ostream *openofile(const string& odir, const string& fname);
 const string flname(const string& from);
 void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
+void generate_preamble(ostream& to);
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
@@ -530,20 +531,14 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		cout << fields << " fields processed" << endl;
 
 	// output file preambles
-	ost_hpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
-	ost_hpp << _csMap.find_value_ref(cs_divider) << endl;
-	ost_hpp << _csMap.find_value_ref(cs_copyright) << endl;
-	ost_hpp << _csMap.find_value_ref(cs_divider) << endl;
+	generate_preamble(ost_hpp);
 	ost_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::types_hpp].first) << '_' << endl;
 	ost_hpp << "#define _" << flname(ctxt._out[Ctxt::types_hpp].first) << '_' << endl << endl;
 	ost_hpp << _csMap.find_value_ref(cs_start_namespace) << endl;
 	ost_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	ost_hpp << endl << _csMap.find_value_ref(cs_divider) << endl;
-	ost_cpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
-	ost_cpp << _csMap.find_value_ref(cs_divider) << endl;
-	ost_cpp << _csMap.find_value_ref(cs_copyright) << endl;
-	ost_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	generate_preamble(ost_cpp);
 	ost_cpp << _csMap.find_value_ref(cs_generated_includes) << endl;
 	ost_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first << '"' << endl;
 	ost_cpp << _csMap.find_value_ref(cs_divider) << endl;
@@ -647,20 +642,14 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	processOrdering(mspec);
 
 	// output file preambles
-	osu_hpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
-	osu_hpp << _csMap.find_value_ref(cs_divider) << endl;
-	osu_hpp << _csMap.find_value_ref(cs_copyright) << endl;
-	osu_hpp << _csMap.find_value_ref(cs_divider) << endl;
+	generate_preamble(osu_hpp);
 	osu_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::router_hpp].first) << '_' << endl;
 	osu_hpp << "#define _" << flname(ctxt._out[Ctxt::router_hpp].first) << '_' << endl << endl;
 	osu_hpp << _csMap.find_value_ref(cs_start_namespace) << endl;
 	osu_hpp << "namespace " << ctxt._fixns << " {" << endl;
 	osu_hpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 
-	osc_hpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
-	osc_hpp << _csMap.find_value_ref(cs_divider) << endl;
-	osc_hpp << _csMap.find_value_ref(cs_copyright) << endl;
-	osc_hpp << _csMap.find_value_ref(cs_divider) << endl;
+	generate_preamble(osc_hpp);
 	osc_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::classes_hpp].first) << '_' << endl;
 	osc_hpp << "#define _" << flname(ctxt._out[Ctxt::classes_hpp].first) << '_' << endl << endl;
 	osc_hpp << _csMap.find_value_ref(cs_start_namespace) << endl;
@@ -672,10 +661,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_hpp << "class " << ctxt._clname << "_Router;" << endl;
 	osc_hpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 
-	osc_cpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
-	osc_cpp << _csMap.find_value_ref(cs_divider) << endl;
-	osc_cpp << _csMap.find_value_ref(cs_copyright) << endl;
-	osc_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	generate_preamble(osc_cpp);
 	osc_cpp << _csMap.find_value_ref(cs_generated_includes) << endl;
 	osc_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first << '"' << endl;
 	osc_cpp << "#include \"" << ctxt._out[Ctxt::router_hpp].first << '"' << endl;
@@ -686,10 +672,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	osc_cpp << _csMap.find_value_ref(cs_start_anon_namespace) << endl << endl;
 	osc_cpp << _csMap.find_value_ref(cs_divider) << endl;
 
-	osr_cpp << _csMap.find_value_ref(cs_do_not_edit) << endl;
-	osr_cpp << _csMap.find_value_ref(cs_divider) << endl;
-	osr_cpp << _csMap.find_value_ref(cs_copyright) << endl;
-	osr_cpp << _csMap.find_value_ref(cs_divider) << endl;
+	generate_preamble(osr_cpp);
 	osr_cpp << _csMap.find_value_ref(cs_generated_includes) << endl;
 	osr_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first << '"' << endl;
 	osr_cpp << "#include \"" << ctxt._out[Ctxt::router_hpp].first << '"' << endl;
@@ -732,11 +715,11 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const size_t " << mitr->second._name << "::_fldcnt("
 				<< mitr->second._fields.get_presence().size() << ");" << endl;
-			osr_cpp << "const f8String " << mitr->second._name << "::_msgtype(\""
+			osr_cpp << "const std::string " << mitr->second._name << "::_msgtype(\""
 				<< mitr->first << "\");" << endl;
 			osc_hpp << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
 			osc_hpp << spacer << "static const size_t _fldcnt;" << endl;
-			osc_hpp << spacer << "static const f8String _msgtype;" << endl << endl;
+			osc_hpp << spacer << "static const std::string _msgtype;" << endl << endl;
 		}
 
 		osc_hpp << "public:" << endl;
@@ -800,13 +783,13 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const size_t " << mitr->second._name << "::" << gsitr->second._name << "::_fldcnt("
 				<< gitr->second.get_presence().size() << ");" << endl;
-			osr_cpp << "const f8String " << mitr->second._name << "::" << gsitr->second._name << "::_msgtype(\""
+			osr_cpp << "const std::string " << mitr->second._name << "::" << gsitr->second._name << "::_msgtype(\""
 				<< gsitr->second._name << "\");" << endl;
 			osc_hpp << endl << spacer << "class " << gsitr->second._name
 				<< " : public GroupBase" << endl << spacer << '{' << endl;
 			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
 			osc_hpp << spacer << spacer << "static const size_t _fldcnt;" << endl;
-			osc_hpp << spacer << spacer << "static const f8String _msgtype;" << endl;
+			osc_hpp << spacer << spacer << "static const std::string _msgtype;" << endl;
 			osc_hpp << spacer << spacer << "static const unsigned short _field = " << gsitr->first << ';' << endl << endl;
 			osc_hpp << spacer << "public:" << endl;
 			osc_hpp << spacer << spacer << gsitr->second._name << "() : GroupBase(_field) {}" << endl;

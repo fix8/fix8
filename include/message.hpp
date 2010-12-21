@@ -54,7 +54,7 @@ typedef std::vector<MessageBase *> GroupElement;
 #endif
 
 //-------------------------------------------------------------------------------------------------
-class GroupBase
+class GroupBase : public f8Base
 {
 	unsigned short _fnum;
 	GroupElement _msgs;
@@ -69,10 +69,11 @@ public:
 	size_t size() const { return _msgs.size(); }
 	MessageBase *operator[](unsigned idx) { return idx < _msgs.size() ? _msgs[idx] : 0; }
 
-	void clear()
+	void clear(bool reuse=false)
 	{
 		std::for_each (_msgs.begin(), _msgs.end(), free_ptr<>());
-		_msgs.clear();
+		if (reuse)
+			_msgs.clear();
 	}
 
 	friend class MessageBase;
@@ -129,7 +130,7 @@ typedef std::map<unsigned short, BaseField *> Fields;
 typedef std::multimap<unsigned short, BaseField *> Positions;
 #endif
 
-class MessageBase
+class MessageBase : public f8Base
 {
 protected:
 	static RegExp _elmnt;
@@ -151,14 +152,17 @@ public:
 
 	virtual ~MessageBase() { clear(); }
 
-	void clear()
+	void clear(bool reuse=false)
 	{
 		std::for_each (_fields.begin(), _fields.end(), free_ptr<Delete2ndPairObject<> >());
-		_fields.clear();
 		std::for_each (_groups.begin(), _groups.end(), free_ptr<Delete2ndPairObject<> >());
-		_groups.clear();
-		_fp.clear_flag(FieldTrait::present);
-		_pos.clear();
+		if (reuse)
+		{
+			_fields.clear();
+			_groups.clear();
+			_fp.clear_flag(FieldTrait::present);
+			_pos.clear();
+		}
 	}
 
 	unsigned decode(const f8String& from, const unsigned offset);

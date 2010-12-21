@@ -84,11 +84,7 @@ const std::string TRANSLATIONUNIT(__FILE__);
 int Hex2Dec(const char src)
 {
 	const char sr(toupper(src));
-	if (sr >= '0' && sr <= '9')
-		return sr - '0';
-	else if (sr >= 'A' && sr <= 'F')
-		return sr - '7';
-	return -1;
+	return sr >= '0' && sr <= '9' ? sr - '0' : sr >= 'A' && sr <= 'F' ? sr - '7' : -1;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -122,14 +118,19 @@ const string& GetTimeAsStringMS(string& result, Tickval *tv, const unsigned dpla
    struct tm tim;
 	time_t tval(startTime->secs());
    localtime_r(&tval, &tim);
-	const double secs((startTime->secs() % 60) + static_cast<double>(startTime->nsecs()) / Tickval::billion);
    ostringstream oss;
    oss << setfill('0') << setw(4) << (tim.tm_year + 1900) << '-';
    oss << setw(2) << (tim.tm_mon + 1)  << '-' << setw(2) << tim.tm_mday << ' ' << setw(2) << tim.tm_hour;
    oss << ':' << setw(2) << tim.tm_min << ':';
-   oss.setf(ios::showpoint);
-   oss.setf(ios::fixed);
-   oss << setw(3 + dplaces) << setfill('0') << setprecision(dplaces) << secs;
+	if (dplaces)
+	{
+		const double secs((startTime->secs() % 60) + static_cast<double>(startTime->nsecs()) / Tickval::billion);
+		oss.setf(ios::showpoint);
+		oss.setf(ios::fixed);
+		oss << setw(3 + dplaces) << setfill('0') << setprecision(dplaces) << secs;
+	}
+	else
+		oss << setfill('0') << setw(2) << tim.tm_sec;
    return result = oss.str();
 }
 
