@@ -44,14 +44,59 @@ namespace FIX8 {
 //-------------------------------------------------------------------------------------------------
 class Configuration
 {
-	XmlEntity *_root;
 	std::string _xmlfile;
+	XmlEntity *_root;
+	typedef std::map<const std::string, XmlEntity *> ConfigMap;
+	ConfigMap _sessions, _persisters;
+	std::vector<XmlEntity *> _allsessions;
+
+	const XmlEntity *find_element(const std::string& tag, const ConfigMap& from) const
+		{ ConfigMap::const_iterator itr(from.find(tag)); return itr != from.end() ? itr->second : 0; }
+	const XmlEntity *find_persister(const std::string& tag) const { return find_element(tag, _persisters); }
+
+	unsigned get_unsigned(const std::string& tag, const XmlEntity *from, unsigned def_val=0) const
+	{
+		std::string val;
+		return from->GetAttr(tag, val) ? GetValue<unsigned>(val) : 0;
+	}
+
+	const std::string& get_string(const std::string& tag, const XmlEntity *from, std::string& to) const
+	{
+		from->GetAttr(tag, to);
+		return to;
+	}
+
+	template<typename T>
+	T& get_string_field(const XmlEntity *from, const std::string& tag, T& to) const
+	{
+		std::string val;
+		if (from->GetAttr(tag, val))
+			to.set(val);
+		return to;
+	}
 
 public:
-	Configuration(const std::string& xmlfile) : _root(), _xmlfile(xmlfile) {}
+	Configuration(const std::string& xmlfile) : _xmlfile(xmlfile), _root(XmlEntity::Factory(_xmlfile)) {}
 	virtual ~Configuration() { delete _root; }
 
-	bool process();
+	int process();
+	const XmlEntity *get_session(const unsigned num) const
+		{ return num < _allsessions.size() ? _allsessions[num] : 0; }
+	const XmlEntity *find_session(const std::string& tag) const { return find_element(tag, _sessions); }
+
+	const Connection::Role get_role(const XmlEntity *from) const;
+	bool get_address(const XmlEntity *from, Poco::Net::SocketAddress& to) const;
+	const std::string& get_logname(const XmlEntity *from, std::string& to) const
+		{ return get_string("logname", from, to); }
+	const std::string& get_protocol_logname(const XmlEntity *from, std::string& to) const
+		{ return get_string("protocol_logname", from, to); }
+	unsigned get_version(const XmlEntity *from) const { return get_unsigned("fix_version", from); }
+	unsigned get_heartbeat_interval(const XmlEntity *from) const { return get_unsigned("heartbeat_interval", from); }
+	sender_comp_id& get_sender_comp_id(const XmlEntity *from, sender_comp_id& to) const
+		{ return get_string_field(from, "sender_comp_id", to); }
+	target_comp_id& get_target_comp_id(const XmlEntity *from, target_comp_id& to) const
+		{ return get_string_field(from, "target_comp_id", to); }
+	Persister *create_persister(const XmlEntity *from) const;
 };
 
 //-------------------------------------------------------------------------------------------------

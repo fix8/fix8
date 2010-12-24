@@ -150,6 +150,12 @@ public:
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const int val) : BaseField(field), _value(val) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(GetValue<int>(from)) {}
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
@@ -173,6 +179,12 @@ public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
@@ -197,6 +209,12 @@ public:
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const double& val) : BaseField(field), _value(val) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(GetValue<double>(from)) {}
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
@@ -220,6 +238,12 @@ public:
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const char& val) : BaseField(field), _value(val) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from[0]) {}
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
 	virtual ~Field() {}
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
@@ -280,6 +304,15 @@ public:
 		else if (from.size() == _with_ms) // 19981231-23:59:59.123
 			Poco::DateTimeParser::parse(_fmt_ms, from, _value, _tzdiff);
 	}
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+		{
+			_value = that._value;
+			_tzdiff = that._tzdiff;
+		}
+		return *this;
+	}
 
 	virtual ~Field() {}
 
@@ -310,6 +343,12 @@ public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
@@ -331,6 +370,12 @@ public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
@@ -352,6 +397,12 @@ public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
@@ -373,6 +424,12 @@ public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
@@ -394,6 +451,12 @@ public:
 	Field () : BaseField(field) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
 	virtual ~Field() {}
 
 	const Poco::DateTime& get() { return _value; }
@@ -486,6 +549,12 @@ public:
 	Field (const bool& val) : BaseField(field), _value(val) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(toupper(from[0]) == 'Y') {}
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
 	virtual ~Field() {}
 
 	const bool get() { return _value; }

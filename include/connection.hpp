@@ -128,7 +128,7 @@ public:
 class Connection
 {
 public:
-	enum Role { cn_acceptor, cn_initiator };
+	enum Role { cn_acceptor, cn_initiator, cn_unknown };
 
 protected:
 	Poco::Net::StreamSocket *_sock;

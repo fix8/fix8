@@ -188,5 +188,22 @@ public:
 	friend class FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
 };
 
+//-----------------------------------------------------------------------------------------
+struct RandDev
+{
+	static void init()
+	{
+		time_t tval(time(0));
+		srandom (static_cast<unsigned>(((tval % getpid()) * tval)));
+	}
+
+	template<typename T>
+   static T getrandom(const T range=0)
+   {
+		T target(random());
+		return range ? target / (RAND_MAX / range + 1) : target;
+	}
+};
+
 #endif // _FIX8_MYFIX_HPP_
 

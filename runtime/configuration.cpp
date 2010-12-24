@@ -58,8 +58,83 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-bool Configuration::process()
+int Configuration::process()
 {
-	return (_root = XmlEntity::Factory(_xmlfile));
+	if (!_root)
+		return -1;
+
+	XmlEntity::XmlSet slist;
+	if (!_root->find("fix8/session", slist))
+		return 0;
+	for(XmlEntity::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
+	{
+		string name;
+		if ((*itr)->GetAttr("name", name) && (*itr)->FindAttr("active", false))
+		{
+			_sessions.insert(ConfigMap::value_type(name, *itr));
+			_allsessions.push_back(*itr);
+		}
+	}
+
+	slist.clear();
+	if (_root->find("fix8/persist", slist))
+	{
+		for(XmlEntity::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
+		{
+			string name;
+			if ((*itr)->GetAttr("name", name))
+				_persisters.insert(ConfigMap::value_type(name, *itr));
+		}
+	}
+
+	return _sessions.size();
+}
+
+//-------------------------------------------------------------------------------------------------
+const Connection::Role Configuration::get_role(const XmlEntity *from) const
+{
+	std::string role;
+	return from->GetAttr("role", role) ? role % "initiator" ? Connection::cn_initiator
+		: role % "acceptor" ? Connection::cn_acceptor : Connection::cn_unknown : Connection::cn_unknown;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Configuration::get_address(const XmlEntity *from, Poco::Net::SocketAddress& to) const
+{
+	std::string ip, port;
+	if (from->GetAttr("ip", ip) && from->GetAttr("port", port))
+	{
+		to = Poco::Net::SocketAddress(ip, port);
+		return true;
+	}
+
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+Persister *Configuration::create_persister(const XmlEntity *from) const
+{
+	string name;
+	if (!from->GetAttr("persist", name))
+		return 0;
+	const XmlEntity *which(find_persister(name));
+	if (!which)
+		return 0;
+	string type;
+	if (!which->GetAttr("type", type))
+		return 0;
+	if (type % "bdb")
+	{
+		string dir, db;
+		if (which->GetAttr("dir", dir) && which->GetAttr("db", db))
+		{
+			scoped_ptr<BDBPersister> result(new BDBPersister);
+			if (result->initialise(dir, db))
+				return result.release();
+		}
+	}
+	else if (type % "mem")
+		return new MemoryPersister;
+	return 0;
 }
 

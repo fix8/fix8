@@ -121,43 +121,68 @@ int main(int argc, char **argv)
 		}
 	}
 
+	RandDev::init();
+
 	signal(SIGTERM, sig_handler);
 	signal(SIGINT, sig_handler);
 
 	Logger::LogFlags logflags, plogflags;
 	logflags << Logger::timestamp << Logger::sequence << Logger::thread;
 	plogflags << Logger::append;
-	//BDBPersister bdp;
-	MemoryPersister bdp;
-	Poco::Net::SocketAddress addr("127.0.0.1:11001");
+	string logname, prot_logname;
+	Poco::Net::SocketAddress addr;
 
 	try
 	{
 		if (server)
 		{
+			const string server_conf_file("myfix_server.xml");
+			if (!exist(server_conf_file))
+				throw f8Exception("server config file not found", server_conf_file);
+			Configuration conf(server_conf_file);
+			conf.process();
+			const XmlEntity *ses(conf.get_session(0));
+			if (!ses)
+				throw f8Exception("could not locate server session in config file", server_conf_file);
+			if (conf.get_role(ses) != Connection::cn_acceptor)
+				throw f8Exception("Invalid role");
 			GlobalLogger::instance().send("test fix server starting up...");
 
-			//bdp.initialise("./run", "myfix_server.db");
-			FileLogger log("./run/myfix_server.log", logflags, 2);
-			FileLogger plog("./run/myfix_server_protocol.log", plogflags, 2);
-			myfix_session_server ms(TEX::ctx, &bdp, &log, &plog);
+			FileLogger log(conf.get_logname(ses, logname), logflags, 2);
+			FileLogger plog(conf.get_protocol_logname(ses, prot_logname), plogflags, 2);
+			scoped_ptr<Persister> bdp(conf.create_persister(ses));
+			myfix_session_server ms(TEX::ctx, bdp.get(), &log, &plog);
+			conf.get_address(ses, addr);
 			Poco::Net::ServerSocket ss(addr);
 			Poco::Net::SocketAddress claddr;
 			Poco::Net::StreamSocket sock(ss.acceptConnection(claddr));
 			GlobalLogger::instance().send("client connection established...");
-			ServerConnection sc(&sock, ms, 5);
+			ServerConnection sc(&sock, ms, conf.get_heartbeat_interval(ses));
 			ms.control() |= Session::print;
 			ms.start(&sc);	// will wait
 		}
 		else
 		{
+			const string client_conf_file("myfix_client.xml");
+			if (!exist(client_conf_file))
+				throw f8Exception("client config file not found", client_conf_file);
+			Configuration conf(client_conf_file);
+			conf.process();
+			const XmlEntity *ses(conf.get_session(0));
+			if (!ses)
+				throw f8Exception("could not locate client session in config file", client_conf_file);
+			if (conf.get_role(ses) != Connection::cn_initiator)
+				throw f8Exception("Invalid role");
 			GlobalLogger::instance().send("test fix client starting up...");
 
-			const SessionID id(TEX::ctx._beginStr, "DLD_TEX", "TEX_DLD");
-			//bdp.initialise("./run", "myfix_client.db");
-			FileLogger log("./run/myfix_client.log", logflags, 2);
-			FileLogger plog("./run/myfix_client_protocol.log", plogflags, 2);
-			myfix_session_client ms(TEX::ctx, id, &bdp, &log, &plog);
+			sender_comp_id sci;
+			target_comp_id tci;
+			const SessionID id(TEX::ctx._beginStr, conf.get_sender_comp_id(ses, sci), conf.get_target_comp_id(ses, tci));
+			FileLogger log(conf.get_logname(ses, logname), logflags, 2);
+			FileLogger plog(conf.get_protocol_logname(ses, prot_logname), plogflags, 2);
+			scoped_ptr<Persister> bdp(conf.create_persister(ses));
+			myfix_session_client ms(TEX::ctx, id, bdp.get(), &log, &plog);
+			conf.get_address(ses, addr);
 			Poco::Net::StreamSocket sock;
 			ClientConnection cc(&sock, addr, ms);
 			ms.control() |= Session::print;
@@ -203,8 +228,8 @@ bool MyMenu::new_order_single()
 {
 	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
 	*nos += new TEX::TransactTime;
-	*nos += new TEX::OrderQty(100);
-	*nos += new TEX::Price(47.78);
+	*nos += new TEX::OrderQty(1 + RandDev::getrandom(999));
+	*nos += new TEX::Price(RandDev::getrandom(500.));
 	*nos += new TEX::ClOrdID("ord01");
 	*nos += new TEX::Symbol("BHP");
 	*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
@@ -220,10 +245,12 @@ bool MyMenu::new_order_single()
 	*gr2 += new TEX::UnderlyingSymbol("FOO");
 	*noul += gr2;
 
+#if 0
 	cout << "sizeof(TEX::NewOrderSingle): " << sizeof(TEX::NewOrderSingle) << endl;
 	cout << "sizeof(TEX::ExecutionReport): " << sizeof(TEX::ExecutionReport) << endl;
 	cout << "sizeof(TEX::header): " << sizeof(TEX::header) << endl;
 	cout << "sizeof(TEX::trailer): " << sizeof(TEX::trailer) << endl;
+#endif
 	_session.send(nos);
 
 	return true;
@@ -273,6 +300,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
 	TEX::OrderQty qty;
 	msg->get(qty);
+	unsigned trdqty(1 + RandDev::getrandom(qty() - 1));
 	cout << "Order qty:" << qty() << endl;
 	TEX::Price price;
 	msg->get(price);
@@ -284,8 +312,8 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	*er += new TEX::ExecID("exec01");
 	*er += new TEX::ExecType(TEX::ExecType_NEW);
 	*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
-	*er += new TEX::LeavesQty(qty() - 50);
-	*er += new TEX::CumQty(50);
+	*er += new TEX::LeavesQty(qty() - trdqty);
+	*er += new TEX::CumQty(trdqty);
 	*er += new TEX::AvgPx(price());
 
 	_session.send(er);

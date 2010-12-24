@@ -415,6 +415,6 @@ unsigned MemoryPersister::find_nearest_highest_seqnum (const unsigned requested,
 //---------------------------------------------------------------------------------------------------
 unsigned MemoryPersister::get_last_seqnum(unsigned& to) const
 {
-	return !_store.empty() ? _store.end()->first : 0;
+	return _store.empty() ? 0 : _store.rbegin()->first;
 }
 

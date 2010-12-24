@@ -48,20 +48,24 @@ class f8Exception : public std::exception
 {
 	std::string _reason;
 
-protected:
+public:
 	f8Exception() {}
+	f8Exception(const std::string& msg) : _reason(msg) {}
 
 	template<typename T>
-	void format(const std::string& msg, T what)
+	f8Exception(const std::string& msg, const T& val) : _reason(msg) { format(msg, val); }
+
+	virtual ~f8Exception() throw() {}
+	virtual const char *what() const throw() { return _reason.c_str(); }
+
+protected:
+	template<typename T>
+	void format(const std::string& msg, const T what)
 	{
 		std::ostringstream ostr;
 		ostr << msg << ": " << what;
 		_reason = ostr.str();
 	}
-
-public:
-	virtual ~f8Exception() throw() {}
-	virtual const char *what() const throw() { return _reason.c_str(); }
 };
 
 //-------------------------------------------------------------------------------------------------
