@@ -72,7 +72,8 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 	RegMatch match;
 	unsigned s_offset(offset);
 
-	for (unsigned pos(0); s_offset < from.size() && _elmnt.SearchString(match, from, 3, s_offset) == 3; )
+	for (unsigned pos(distance(_pos.begin(), _pos.end()));
+		s_offset < from.size() && _elmnt.SearchString(match, from, 3, s_offset) == 3; )
 	{
 		f8String tag, val;
 		_elmnt.SubExpr(match, from, tag, s_offset, 1);
@@ -144,6 +145,8 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 			s_offset += match.SubSize();
 			grp->add_field(tv, ++pos, be->_create(val, be->_rlm));
 			grp->_fp.set(tv);	// is present
+			if (grp->_fp.is_group(tv))
+				s_offset = grp->decode_group(tv, from, s_offset);
 		}
 
 		const unsigned short missing(grp->_fp.find_missing());

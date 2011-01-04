@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<fix major="major" minor="minor" ns="ns">
+	<messages name="messages" message="message" header="header" trailer="trailer">
+		<message name="name" msgtype="msgtype" msgcat="msgcat" comment="comment" field="field" group="group"/>
+		<field name="name" required="required"/>
+		<group name="name" required="required"/>
+		<component name="name" required="required"/>
+	</messages>
+   <components name="components" component="component">
+		<component name="name" field="field" group="group">
+			<field name="name" required="required"/>
+			<group name="name" required="required"/>
+		</component>
+   </components>
+   <fields name="fields" field="field" value="value">
+		<field number="number" name="name" type="type" comment="comment"/>
+		<value enum="enum" description="description"/>
+   </fields>
+</fix>

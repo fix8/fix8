@@ -143,7 +143,7 @@ protected:
 public:
 	Connection(Poco::Net::StreamSocket *sock, Session &session)	// client
 		: _sock(sock), _connected(), _session(session), _role(cn_initiator),
-		_hb_interval(), _reader(sock, session), _writer(sock, session) {}
+		_hb_interval(10), _reader(sock, session), _writer(sock, session) {}
 
 	Connection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval) // server
 		: _sock(sock), _connected(true), _session(session), _role(cn_acceptor), _hb_interval(hb_interval),

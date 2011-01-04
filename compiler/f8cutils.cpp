@@ -69,6 +69,7 @@ extern string inputFile, odir, prefix;
 extern bool verbose;
 extern const string spacer, GETARGLIST;
 extern const CSMap _csMap;
+extern unsigned glob_errors;
 
 //-------------------------------------------------------------------------------------------------
 #if defined POOLALLOC
@@ -254,13 +255,14 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 				FieldSpecMap::const_iterator fs_itr;
 				if (ftonItr == ftonSpec.end() || (fs_itr = fspec.find(ftonItr->second)) == fspec.end())
 				{
-					cerr << "Could not locate Field " << fname << " from known field types in " << inputFile << endl;
+					cerr << inputFile << '(' << (*fitr)->GetLine() << "): Field element missing required attributes" << endl;
+					++glob_errors;
 					continue;
 				}
 
 				// add FieldTrait
 				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, subpos)))
-					cerr << "Could not add trait object " << fname << endl;
+					cerr << inputFile << '(' << (*fitr)->GetLine() << "): Could not add trait object " << fname << endl;
 				else
 				{
 					processSpecialTraits(fs_itr->first, fts);
@@ -268,8 +270,10 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 				}
 			}
 			else
-				cerr << "Field element missing required attributes at "
-					<< inputFile << '(' << (*fitr)->GetLine() << ')' << endl;
+			{
+				cerr << inputFile << '(' << (*fitr)->GetLine() << "): Field element missing required attributes" << endl;
+				++glob_errors;
+			}
 		}
 	}
 

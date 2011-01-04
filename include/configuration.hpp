@@ -76,7 +76,8 @@ class Configuration
 	}
 
 public:
-	Configuration(const std::string& xmlfile) : _xmlfile(xmlfile), _root(XmlEntity::Factory(_xmlfile)) {}
+	Configuration(const std::string& xmlfile, bool do_process=false)
+		: _xmlfile(xmlfile), _root(XmlEntity::Factory(_xmlfile)) { if (do_process) process(); }
 	virtual ~Configuration() { delete _root; }
 
 	int process();

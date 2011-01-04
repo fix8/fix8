@@ -45,14 +45,11 @@ namespace FIX8 {
 struct Ctxt
 {
 	enum OutputFile { types_cpp, types_hpp, traits_cpp, classes_cpp, classes_hpp, router_hpp, count };
-	typedef std::pair<std::string, scoped_ptr<std::ostream> > Output;
+	typedef std::pair<std::pair<std::string, std::string>, std::ostream *> Output;
 	Output _out[count];
 	static const std::string _exts[count];
 	unsigned _version;
-	std::string _clname;
-	std::string _fixns;
-	std::string _systemns;
-	std::string _beginstr;
+	std::string _clname, _fixns, _systemns, _beginstr;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -137,11 +134,12 @@ struct FieldSpec
 	}
 };
 
+//-------------------------------------------------------------------------------------------------
 typedef std::map<unsigned, FieldSpec> FieldSpecMap;
 typedef std::map<std::string, unsigned> FieldToNumMap;
+typedef std::map<unsigned, FieldTraits> GroupMap;
 
 //-------------------------------------------------------------------------------------------------
-typedef std::map<unsigned, FieldTraits> GroupMap;
 
 struct MessageSpec
 {
@@ -152,12 +150,6 @@ struct MessageSpec
 
 	MessageSpec(const std::string& name, bool admin=false) : _name(name), _is_admin(admin) {}
 	virtual ~MessageSpec() {}
-};
-
-struct ROT13Compare
-{
-	bool operator()(const f8String& p1, const f8String& p2) const
-		{ return ROT13Hash(p1) < ROT13Hash(p2); }
 };
 
 typedef std::map<const std::string, MessageSpec> MessageSpecMap;

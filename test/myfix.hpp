@@ -59,7 +59,7 @@ class myfix_session_client : public FIX8::Session
 public:
 	myfix_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist,
 		FIX8::Logger *logger, FIX8::Logger *plogger) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
-	bool handle_application(const FIX8::Message *msg);
+	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
 };
 
 //-----------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ class myfix_session_server : public FIX8::Session
 public:
 	myfix_session_server(const FIX8::F8MetaCntx& ctx, FIX8::Persister *persist,
 		FIX8::Logger *logger, FIX8::Logger *plogger) : Session(ctx, persist, logger, plogger), _router(*this) {}
-	bool handle_application(const FIX8::Message *msg);
+	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
 };
 
 //---------------------------------------------------------------------------------------------------

@@ -28,7 +28,7 @@
       <field name="RawDataLength" required="N" />
       <field name="RawData" required="N" />
 		<group name="NoOrderQtyData" required="N">
-			<component name="OrderQtyData" required="N" />
+			<component name="OrderQtyDataEmbed" required="N" />
 		</group>
       <field name="ResetSeqNumFlag" required="N" />
     </message>
@@ -40,6 +40,9 @@
       <field name="OrderPercent" required="N" />
       <field name="RoundingDirection" required="N" />
       <field name="RoundingModulus" required="N" />
+    </component>
+    <component name="OrderQtyDataEmbed">
+		<component name="OrderQtyData" required="N" />
     </component>
   </components>
   <fields>

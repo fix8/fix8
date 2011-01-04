@@ -129,10 +129,8 @@ void Session::atomic_init(States::SessionStates st)
 {
 	_state = st;
 	_next_sender_seq = _next_target_seq = 1;
-	_last_sent = new Tickval;
-	_last_sent->now();
-	_last_received = new Tickval;
-	_last_received->now();
+	_last_sent = new Tickval(true);
+	_last_received = new Tickval(true);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -182,6 +180,21 @@ void Session::stop()
 }
 
 //-------------------------------------------------------------------------------------------------
+bool Session::enforce(const unsigned seqnum, const Message *msg)
+{
+	if (States::is_established(_state))
+	{
+		compid_check(seqnum, msg);
+		gap_fill_flag gff;
+		bool ignore(msg->get_msgtype() == Common_MsgType_SEQUENCE_RESET && msg->Header()->get(gff) && gff());
+		if (!ignore || !sequence_check(seqnum, msg))
+			return false;
+	}
+
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
 bool Session::process(const f8String& from)
 {
 	RegMatch match;
@@ -197,20 +210,23 @@ bool Session::process(const f8String& from)
 		scoped_ptr<Message> msg(Message::factory(_ctx, from));
 		if (_control & print)
 			cout << *msg << endl;
-		if (States::is_established(_state))
-		{
-			sequence_check(seqnum);
-			_next_target_seq = seqnum + 1;
-		}
+		bool result((msg->is_admin() ? handle_admin(seqnum, msg.get()) : true)
+			&& (this->*_handlers.find_value_ref(msg->get_msgtype()))(seqnum, msg.get()));
+		_next_target_seq = seqnum + 1;
+		return result;
 
-		return (msg->is_admin() ? handle_admin(msg.get()) : true)
-			&& (this->*_handlers.find_value_ref(msg->get_msgtype()))(msg.get());
 	}
 	catch (f8Exception& e)
 	{
 		Message *msg(generate_reject(seqnum, e.what()));
 		send(msg);
 		log(e.what());
+		if (e.force_logoff())
+		{
+			send(generate_logout());
+			_state = States::st_logoff_sent;
+			stop();
+		}
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
@@ -221,13 +237,64 @@ bool Session::process(const f8String& from)
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::sequence_check(const unsigned seqnum)
+void Session::compid_check(const unsigned seqnum, const Message *msg)
 {
+	sender_comp_id sci;
+	msg->Header()->get(sci);
+	target_comp_id tci;
+	msg->Header()->get(tci);
+	if (!_sid.same_sender_comp_id(tci))
+		throw BadCompidId(sci());
+	if (!_sid.same_target_comp_id(sci))
+		throw BadCompidId(tci());
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::handle_logon(const Message *msg)
+bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 {
+	if (seqnum > _next_target_seq)
+	{
+		if (_state == States::st_resend_request_sent)
+			log("Resend request already sent");
+		else
+		{
+			Message *rmsg(generate_resend_request(_next_target_seq));
+			_state = States::st_resend_request_sent;
+			send(rmsg);
+		}
+		return false;
+	}
+
+	if (seqnum < _next_target_seq)
+	{
+		poss_dup_flag pdf(false);
+		msg->Header()->get(pdf);
+		if (!pdf())	// poss dup not set so bad
+			throw InvalidMsgSequence(seqnum);
+		orig_sending_time ost;
+		if (!msg->Header()->get(ost))
+			throw MissingMandatoryField(Common_OrigSendingTime);
+		sending_time st;
+		msg->Header()->get(st);
+		if (ost() > st())
+		{
+			ostringstream ostr;
+			ost.print(ostr);
+			throw BadSendingTime(ostr.str());
+		}
+	}
+
+	if (_state == States::st_resend_request_sent)
+		_state = States::st_continuous;
+
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Session::handle_logon(const unsigned seqnum, const Message *msg)
+{
+	enforce(seqnum, msg);
+
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
 		heartbeat_interval hbi;
@@ -272,16 +339,37 @@ bool Session::handle_logon(const Message *msg)
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::handle_logout(const Message *msg)
+bool Session::handle_logout(const unsigned seqnum, const Message *msg)
 {
+	enforce(seqnum, msg);
+
 	log("peer has logged out");
 	stop();
 	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::handle_resend_request(const Message *msg)
+bool Session::handle_sequence_reset(const unsigned seqnum, const Message *msg)
 {
+	enforce(seqnum, msg);
+
+	new_seq_num nsn;
+	if (msg->Header()->get(nsn))
+	{
+		if (nsn() > static_cast<int>(_next_target_seq))
+			_next_target_seq = nsn();
+		else if (nsn() < static_cast<int>(_next_target_seq))
+			throw InvalidMsgSequence(nsn());
+	}
+
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
+{
+	enforce(seqnum, msg);
+
 	begin_seq_num begin;
 	msg->get(begin);
 	end_seq_num end;
@@ -289,15 +377,12 @@ bool Session::handle_resend_request(const Message *msg)
 
 	if (!_persist)
 		send(generate_sequence_reset(_next_sender_seq + 1, true));
-	else if (begin() > end() || begin() == 0)
-	{
-		msg_seq_num seqnum;
-		msg->Header()->get(seqnum);
-		send(generate_reject(seqnum(), "Invalid begin or end resend seqnum"));
-	}
+	else if ((begin() > end() && end()) || begin() == 0)
+		send(generate_reject(seqnum, "Invalid begin or end resend seqnum"));
+
+	send(generate_sequence_reset(_next_sender_seq + 1, true));
 	return true;
 }
-
 
 //-------------------------------------------------------------------------------------------------
 bool Session::retrans_callback(const SequencePair& with)
@@ -306,8 +391,10 @@ bool Session::retrans_callback(const SequencePair& with)
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::handle_test_request(const Message *msg)
+bool Session::handle_test_request(const unsigned seqnum, const Message *msg)
 {
+	enforce(seqnum, msg);
+
 	test_request_id testReqID;
 	msg->get(testReqID);
 	Message *trmsg(generate_heartbeat(testReqID()));
@@ -318,8 +405,7 @@ bool Session::handle_test_request(const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::heartbeat_service()
 {
-	Tickval now;
-	now.now();
+	Tickval now(true);
 	if ((now - *_last_sent).secs() >= _connection->get_hb_interval())
 	{
 		const f8String testReqID;
@@ -353,8 +439,10 @@ bool Session::heartbeat_service()
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::handle_heartbeat(const Message *msg)
+bool Session::handle_heartbeat(const unsigned seqnum, const Message *msg)
 {
+	enforce(seqnum, msg);
+
 	if (_state == States::st_test_request_sent)
 		_state = States::st_continuous;
 	return true;
@@ -484,7 +572,7 @@ bool Session::send_process(Message *msg) // called from the connection thread
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::handle_application(const Message *msg)
+bool Session::handle_application(const unsigned seqnum, const Message *msg)
 {
 	return false;
 }

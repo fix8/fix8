@@ -47,16 +47,20 @@ namespace FIX8 {
 class f8Exception : public std::exception
 {
 	std::string _reason;
+	bool _force_logoff;
 
 public:
-	f8Exception() {}
-	f8Exception(const std::string& msg) : _reason(msg) {}
+	f8Exception(bool force_logoff=false) : _force_logoff(force_logoff) {}
+	f8Exception(const std::string& msg, bool force_logoff=false)
+		: _reason(msg), _force_logoff(force_logoff) {}
 
 	template<typename T>
-	f8Exception(const std::string& msg, const T& val) : _reason(msg) { format(msg, val); }
+	f8Exception(const std::string& msg, const T& val, bool force_logoff=false)
+		: _reason(msg), _force_logoff(force_logoff) { format(msg, val); }
 
 	virtual ~f8Exception() throw() {}
 	virtual const char *what() const throw() { return _reason.c_str(); }
+	const bool force_logoff() const { return _force_logoff; }
 
 protected:
 	template<typename T>
@@ -88,6 +92,12 @@ struct InvalidField : f8Exception
 };
 
 //-------------------------------------------------------------------------------------------------
+struct InvalidMsgSequence : f8Exception
+{
+	InvalidMsgSequence(const unsigned field) : f8Exception(true) { format("Invalid Message Sequence", field); }
+};
+
+//-------------------------------------------------------------------------------------------------
 struct InvalidBodyLength : f8Exception
 {
 	InvalidBodyLength(const unsigned field) { format("Invalid BodyLength", field); }
@@ -108,7 +118,19 @@ struct IllegalMessage : f8Exception
 //-------------------------------------------------------------------------------------------------
 struct InvalidVersion : f8Exception
 {
-	InvalidVersion(const std::string& str) { format("Invalid FIX Version", str); }
+	InvalidVersion(const std::string& str) : f8Exception(true) { format("Invalid FIX Version", str); }
+};
+
+//-------------------------------------------------------------------------------------------------
+struct BadSendingTime : f8Exception
+{
+	BadSendingTime(const std::string& str) : f8Exception(true) { format("Bad Sending Time", str); }
+};
+
+//-------------------------------------------------------------------------------------------------
+struct BadCompidId : f8Exception
+{
+	BadCompidId(const std::string& str) : f8Exception(true) { format("Invalid CompId", str); }
 };
 
 //-------------------------------------------------------------------------------------------------

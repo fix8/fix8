@@ -74,6 +74,8 @@ public:
 	const sender_comp_id& get_senderCompID() const { return _senderCompID; }
 	const target_comp_id& get_targetCompID() const { return _targetCompID; }
 	const f8String& get_id() const { return _id; }
+	bool same_sender_comp_id(const target_comp_id& targetCompID) const { return targetCompID() == _senderCompID(); }
+	bool same_target_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _targetCompID(); }
 
 	friend std::ostream& operator<<(std::ostream& os, const SessionID& what) { return os << what._id; }
 };
@@ -91,10 +93,11 @@ struct States
 		st_continuous, st_session_terminated,
 		st_wait_for_logon, st_not_logged_in, st_logon_sent, st_logon_received, st_logoff_sent, st_logoff_received,
 		st_test_request_sent, st_sequence_reset_sent, st_sequence_reset_received,
+		st_resend_request_sent, st_resend_request_received
 	};
 
 	static bool is_established(const SessionStates& ss)
-		{	return ss != st_wait_for_logon && ss != st_not_logged_in; }
+		{ return ss != st_wait_for_logon && ss != st_not_logged_in && ss != st_logon_sent; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -112,7 +115,7 @@ public:
 	typedef ebitset_r<SessionControl> Control;
 
 private:
-	typedef StaticTable<const f8String, bool (Session::*)(const Message *)> Handlers;
+	typedef StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)> Handlers;
 	Handlers _handlers;
 
 	void atomic_init(States::SessionStates st);
@@ -133,29 +136,29 @@ protected:
 	TimerEvent<Session> _hb_processor;
 	bool heartbeat_service();	// generate heartbeats
 
-	virtual bool handle_logon(const Message *msg);
+	virtual bool handle_logon(const unsigned seqnum, const Message *msg);
 	virtual Message *generate_logon(const unsigned heartbeat_interval);
 
-	virtual bool handle_logout(const Message *msg);
+	virtual bool handle_logout(const unsigned seqnum, const Message *msg);
 	virtual Message *generate_logout();
 
-	virtual bool handle_heartbeat(const Message *msg);
+	virtual bool handle_heartbeat(const unsigned seqnum, const Message *msg);
 	virtual Message *generate_heartbeat(const f8String& testReqID);
 
-	virtual bool handle_resend_request(const Message *msg);
-	virtual Message *generate_resend_request(const unsigned begin, const unsigned end);
+	virtual bool handle_resend_request(const unsigned seqnum, const Message *msg);
+	virtual Message *generate_resend_request(const unsigned begin, const unsigned end=0);
 
-	virtual bool handle_sequence_reset(const Message *msg) { return false; }
+	virtual bool handle_sequence_reset(const unsigned seqnum, const Message *msg);
 	virtual Message *generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag=false);
 
-	virtual bool handle_test_request(const Message *msg);
+	virtual bool handle_test_request(const unsigned seqnum, const Message *msg);
 	virtual Message *generate_test_request(const f8String& testReqID);
 
-	virtual bool handle_reject(const Message *msg) { return false; }
+	virtual bool handle_reject(const unsigned seqnum, const Message *msg) { return false; }
 	virtual Message *generate_reject(const unsigned seqnum, const char *what);
 
-	virtual bool handle_admin(const Message *msg) { return true; }
-	virtual bool handle_application(const Message *msg);
+	virtual bool handle_admin(const unsigned seqnum, const Message *msg) { return true; }
+	virtual bool handle_application(const unsigned seqnum, const Message *msg);
 	virtual void modify_outbound(Message *msg) {}
 	virtual bool authenticate(SessionID& id, const Message *msg) { return true; }
 	virtual void recover_seqnums();
@@ -188,12 +191,14 @@ public:
 	bool plog(const std::string& what) const { return _plogger ? _plogger->send(what) : false; }
 	void update_sent() { _last_sent->now(); }
 	void update_received() { _last_received->now(); }
-	void sequence_check(const unsigned seqnum);
+	void compid_check(const unsigned seqnum, const Message *msg);
+	bool sequence_check(const unsigned seqnum, const Message *msg);
+	bool enforce(const unsigned seqnum, const Message *msg);
 	const SessionID& get_sid() const { return _sid; }
 
 	Control& control() { return _control; }
 
-	friend class StaticTable<const f8String, bool (Session::*)(const Message *)>;
+	friend class StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)>;
 };
 
 //-------------------------------------------------------------------------------------------------

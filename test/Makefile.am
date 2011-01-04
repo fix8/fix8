@@ -32,10 +32,11 @@
 # $URL$
 #
 #############################################################################################
-bin_PROGRAMS = f8test
+bin_PROGRAMS = f8test f8print
 INCLUDES = -I$(top_srcdir)/include
 BUILT_SOURCES = Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp Myfix_router.hpp Myfix_classes.hpp Myfix_classes.cpp
 f8test_SOURCES =  myfix.cpp $(BUILT_SOURCES)
+f8print_SOURCES =  myprint.cpp $(BUILT_SOURCES)
 XML_SCHEMA = FIX44.xml
 CLEANFILES = $(BUILT_SOURCES)
 
@@ -46,7 +47,9 @@ $(BUILT_SOURCES): $(XML_SCHEMA)
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
 
 f8test_LDFLAGS = -rdynamic -ldl -lrt -lf8 $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime -ldb_cxx
+f8print_LDFLAGS = -rdynamic -ldl -lrt -lf8 $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime -ldb_cxx
 
 if USECOMPRESSION
 f8test_LDFLAGS += -lz
+f8print_LDFLAGS += -lz
 endif

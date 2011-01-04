@@ -68,6 +68,7 @@ const BaseTypeMap::TypePair BaseTypeMap::_valueTable[] =
 	BaseTypeMap::TypePair("XMLDATA", FieldTrait::ft_XMLData),
 	BaseTypeMap::TypePair("DATA", FieldTrait::ft_data),
 	BaseTypeMap::TypePair("PATTERN", FieldTrait::ft_pattern),
+	BaseTypeMap::TypePair("LANGUAGE", FieldTrait::ft_Language),
 	BaseTypeMap::TypePair("TENOR", FieldTrait::ft_Tenor),
 	BaseTypeMap::TypePair("RESERVED100PLUS", FieldTrait::ft_Reserved100Plus),
 	BaseTypeMap::TypePair("RESERVED1000PLUS", FieldTrait::ft_Reserved1000Plus),

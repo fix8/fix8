@@ -217,10 +217,13 @@ public:
 		return itr != _fields.end() ? itr->second : 0;
 	}
 
+	Fields::const_iterator fields_begin() const { return _fields.begin(); }
+	Fields::const_iterator fields_end() const { return _fields.end(); }
+
 	BaseField *replace(const unsigned short fnum, BaseField *with);
 
 	template<typename T>
-	GroupBase *find_group() { return find_group(T::get_fnum()); }
+	GroupBase *find_group() { return find_group(T::_fnum); }
 	GroupBase *find_group(const unsigned short fnum) const
 	{
 		Groups::const_iterator gitr(_groups.find(fnum));

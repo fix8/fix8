@@ -60,10 +60,10 @@ private:
 	ticks _value;
 
 public:
-	Tickval() : _value() {}
+	Tickval(bool settonow=false) : _value() { if (settonow) now(); }
 	Tickval(const Tickval& from) : _value(from._value) {}
-	Tickval(const ticks& from) : _value(from) {}
-	Tickval(const timespec& from) : _value(_cvt(from)) {}
+	explicit Tickval(const ticks& from) : _value(from) {}
+	explicit Tickval(const timespec& from) : _value(_cvt(from)) {}
 	Tickval& operator=(const Tickval& that)
 	{
 		if (this != &that)

@@ -1,4 +1,39 @@
 //-----------------------------------------------------------------------------------------
+#if 0
+
+Fix8 is released under the New BSD License.
+
+Copyright (c) 2010, David L. Dight <fix@fix8.org>
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are
+permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this list of
+	 	conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, this list
+	 	of conditions and the following disclaimer in the documentation and/or other
+		materials provided with the distribution.
+    * Neither the name of the author nor the names of its contributors may be used to
+	 	endorse or promote products derived from this software without specific prior
+		written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
+MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
+THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
+SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
+OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
+TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-------------------------------------------------------------------------------------------
+$Date$
+$URL$
+
+#endif
+//-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <memory>
 #include <fstream>
@@ -139,8 +174,7 @@ int main(int argc, char **argv)
 			const string server_conf_file("myfix_server.xml");
 			if (!exist(server_conf_file))
 				throw f8Exception("server config file not found", server_conf_file);
-			Configuration conf(server_conf_file);
-			conf.process();
+			Configuration conf(server_conf_file, true);
 			const XmlEntity *ses(conf.get_session(0));
 			if (!ses)
 				throw f8Exception("could not locate server session in config file", server_conf_file);
@@ -166,8 +200,7 @@ int main(int argc, char **argv)
 			const string client_conf_file("myfix_client.xml");
 			if (!exist(client_conf_file))
 				throw f8Exception("client config file not found", client_conf_file);
-			Configuration conf(client_conf_file);
-			conf.process();
+			Configuration conf(client_conf_file, true);
 			const XmlEntity *ses(conf.get_session(0));
 			if (!ses)
 				throw f8Exception("could not locate client session in config file", client_conf_file);
@@ -210,17 +243,15 @@ int main(int argc, char **argv)
 }
 
 //-----------------------------------------------------------------------------------------
-bool myfix_session_client::handle_application(const Message *msg)
+bool myfix_session_client::handle_application(const unsigned seqnum, const Message *msg)
 {
-	msg->process(_router);
-	return true;
+	return enforce(seqnum, msg) || msg->process(_router);
 }
 
 //-----------------------------------------------------------------------------------------
-bool myfix_session_server::handle_application(const Message *msg)
+bool myfix_session_server::handle_application(const unsigned seqnum, const Message *msg)
 {
-	msg->process(_router);
-	return true;
+	return enforce(seqnum, msg) || msg->process(_router);
 }
 
 //-----------------------------------------------------------------------------------------
@@ -230,11 +261,14 @@ bool MyMenu::new_order_single()
 	*nos += new TEX::TransactTime;
 	*nos += new TEX::OrderQty(1 + RandDev::getrandom(999));
 	*nos += new TEX::Price(RandDev::getrandom(500.));
-	*nos += new TEX::ClOrdID("ord01");
+	static unsigned oid(0);
+	ostringstream oistr;
+	oistr << "ord" << ++oid;
+	*nos += new TEX::ClOrdID(oistr.str());
 	*nos += new TEX::Symbol("BHP");
 	*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
 	*nos += new TEX::Side(TEX::Side_BUY);
-	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILLORKILL);
 
 	*nos += new TEX::NoUnderlyings(2);
 	GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
