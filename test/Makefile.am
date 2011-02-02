@@ -45,9 +45,13 @@ $(BUILT_SOURCES): $(XML_SCHEMA)
 
 .NOTPARALLEL: $(XML_SCHEMA)
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
+GEN_LIBS = -ldl -lrt -lf8
+TBB_LIBS = -ltbb
+BDB_LIBS = -ldb_cxx
+ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) -L$(top_srcdir)/runtime $(BDB_LIBS)
 
-f8test_LDFLAGS = -rdynamic -ldl -lrt -lf8 $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime -ldb_cxx
-f8print_LDFLAGS = -rdynamic -ldl -lrt -lf8 $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime -ldb_cxx
+f8test_LDFLAGS = -rdynamic $(ALL_LIBS)
+f8print_LDFLAGS = -rdynamic $(ALL_LIBS)
 
 if USECOMPRESSION
 f8test_LDFLAGS += -lz

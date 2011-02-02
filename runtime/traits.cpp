@@ -41,7 +41,10 @@ $URL$
 #include <map>
 #include <set>
 #include <iterator>
+#include <memory>
+#include <iomanip>
 #include <algorithm>
+#include <numeric>
 #include <bitset>
 
 #include <strings.h>
@@ -51,6 +54,18 @@ $URL$
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
+using namespace std;
 
 //-------------------------------------------------------------------------------------------------
+ostream& FIX8::operator<<(ostream& os, const FIX8::FieldTrait& what)
+{
+	return os << "Tag: " << what._fnum << " Type: " << what._ftype << " Flags: " << what._field_traits.get();
+}
+
+//-------------------------------------------------------------------------------------------------
+ostream& FIX8::operator<<(ostream& os, const FIX8::FieldTraits& what)
+{
+	copy(what.get_presence().begin(), what.get_presence().end(), ostream_iterator<FieldTrait>(os, "\n"));
+	return os;
+}
 

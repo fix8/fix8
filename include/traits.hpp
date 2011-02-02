@@ -102,6 +102,8 @@ struct FieldTrait
 		bool operator()(const FieldTrait* p1, const FieldTrait* p2) const
 			{ return p1->_pos < p2->_pos || (p1->_pos == p2->_pos && p1->_subpos < p2->_subpos); }
 	};
+
+	friend std::ostream& operator<<(std::ostream& os, const FieldTrait& what);
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -177,6 +179,8 @@ public:
 	}
 
 	const Presence& get_presence() const { return _presence; }
+
+	friend std::ostream& operator<<(std::ostream& os, const FieldTraits& what);
 };
 
 } // FIX8

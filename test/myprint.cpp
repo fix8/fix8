@@ -109,6 +109,19 @@ void sig_handler(int sig)
    }
 }
 
+//----------------------------------------------------------------------------------------
+class filestdin
+{
+   std::istream *ifs_;
+   bool nodel_;
+
+public:
+   filestdin(std::istream *ifs, bool nodel=false) : ifs_(ifs), nodel_(nodel) {}
+   ~filestdin() { if (!nodel_) delete ifs_; }
+
+   std::istream& operator()() { return *ifs_; }
+};
+
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -148,17 +161,24 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	ifstream ifs(inputFile.c_str());
+	bool usestdin(inputFile == "-");
+   filestdin ifs(usestdin ? &cin : new ifstream(inputFile.c_str()), usestdin);
+	if (!ifs())
+	{
+		cerr << "Could not open " << inputFile << endl;
+		return 1;
+	}
+
 	unsigned msgs(0);
 	MessageCount *mc(summary ? new MessageCount : 0);
 
 	try
 	{
-		while (ifs.good() && !term_received)
+		while (!ifs().eof() && !term_received)
 		{
 			const int bufsz(1024);
 			char buffer[bufsz] = {};
-			ifs.getline(buffer, bufsz);
+			ifs().getline(buffer, bufsz);
 			const string result(buffer);
 			if (!result.empty())
 			{
@@ -201,7 +221,7 @@ int main(int argc, char **argv)
 //-----------------------------------------------------------------------------------------
 void print_usage()
 {
-	UsageMan um("f8print", GETARGLIST, "<fix protocol file>");
+	UsageMan um("f8print", GETARGLIST, "<fix protocol file, use '-' for stdin>");
 	um.setdesc("f8print -- f8 protocol printer");
 	um.add('h', "help", "help, this screen");
 	um.add('s', "summary", "summary, generate message summary");

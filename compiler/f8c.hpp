@@ -140,7 +140,6 @@ typedef std::map<std::string, unsigned> FieldToNumMap;
 typedef std::map<unsigned, FieldTraits> GroupMap;
 
 //-------------------------------------------------------------------------------------------------
-
 struct MessageSpec
 {
 	FieldTraits _fields;
@@ -150,6 +149,8 @@ struct MessageSpec
 
 	MessageSpec(const std::string& name, bool admin=false) : _name(name), _is_admin(admin) {}
 	virtual ~MessageSpec() {}
+
+	friend std::ostream& operator<<(std::ostream& os, const MessageSpec& what);
 };
 
 typedef std::map<const std::string, MessageSpec> MessageSpecMap;

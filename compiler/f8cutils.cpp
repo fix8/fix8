@@ -323,6 +323,7 @@ void print_usage()
 	um.add('p', "prefix <file>", "output filename prefix");
 	um.add('d', "dump", "dump parsed source xml file, exit");
 	um.add('h', "help", "help, this screen");
+	um.add('i', "ignore", "ignore errors, attempt to generate code anyhow");
 	um.add('v', "version", "print version, exit");
 	um.add('V', "verbose", "be more verbose when processing");
 	um.add("e.g.");
@@ -353,5 +354,21 @@ void generate_preamble(ostream& to)
 	to << _csMap.find_value_ref(cs_divider) << endl;
 	to << _csMap.find_value_ref(cs_copyright) << endl;
 	to << _csMap.find_value_ref(cs_divider) << endl;
+}
+
+//-------------------------------------------------------------------------------------------------
+ostream& FIX8::operator<<(ostream& os, const FIX8::MessageSpec& what)
+{
+	os << "Name:" << what._name;
+	if (!what._description.empty())
+		os << " Description:" << what._description;
+	if (!what._comment.empty())
+		os << " Comment:" << what._comment;
+	os << " isadmin:" << boolalpha << what._is_admin << endl;
+	os << "Fields:" << endl << what._fields;
+	for (GroupMap::const_iterator itr(what._groups.begin()); itr != what._groups.end(); ++itr)
+		os << "Group (" << itr->first << "): " << endl << itr->second << endl;
+
+	return os;
 }
 

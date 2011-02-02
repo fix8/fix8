@@ -81,9 +81,9 @@ const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8
 
 //-----------------------------------------------------------------------------------------
 string inputFile, odir("./"), prefix;
-bool verbose(false);
+bool verbose(false), error_ignore(false);
 unsigned glob_errors(0);
-extern const string GETARGLIST("hvVo:p:d");
+extern const string GETARGLIST("hvVo:p:di");
 extern const string spacer(3, ' ');
 
 //-----------------------------------------------------------------------------------------
@@ -126,6 +126,7 @@ int main(int argc, char **argv)
 		{ "verbose",		0,	0,	'V' },
 		{ "odir",			0,	0,	'o' },
 		{ "dump",			0,	0,	'd' },
+		{ "ignore",			0,	0,	'i' },
 		{ "prefix",			0,	0,	'p' },
 		{ 0 },
 	};
@@ -147,6 +148,7 @@ int main(int argc, char **argv)
 		case ':': case '?': return 1;
 		case 'o': odir = optarg; break;
 		case 'd': dump = true; break;
+		case 'i': error_ignore = true; break;
 		case 'p': prefix = optarg; break;
 		default: break;
 		}
@@ -204,7 +206,7 @@ int main(int argc, char **argv)
 	for (unsigned ii(0); ii < Ctxt::count; ++ii)
 	{
 		delete ctxt._out[ii].second;
-		if (glob_errors)
+		if (glob_errors && !error_ignore)
 			remove(ctxt._out[ii].first.first.c_str());
 		else
 		{
@@ -300,6 +302,9 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 			string name;
 			if ((*itr)->GetAttr("name", name))
 			{
+				string required;
+				if ((*itr)->GetAttr("required", required)) // ignore nesting declarations
+					continue;
 				pair<MessageSpecMap::iterator, bool> result(
 					mspec.insert(ComponentSpecMap::value_type(name, ComponentSpec(name))));
 				if (!result.second)
@@ -309,13 +314,14 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 					continue;
 				}
 
+				// check for nested group definition
 				XmlEntity::XmlSet grplist;
 				if ((*itr)->find("component/group", grplist))
 				{
 					for(XmlEntity::XmlSet::const_iterator gitr(grplist.begin()); gitr != grplist.end(); ++gitr)
 					{
-						string gname, required;
-						if ((*gitr)->GetAttr("name", gname) && (*gitr)->GetAttr("required", required))
+						string gname, grequired;
+						if ((*gitr)->GetAttr("name", gname) && (*gitr)->GetAttr("required", grequired))
 						{
 							// add group FieldTrait
 							FieldToNumMap::const_iterator ftonItr(ftonSpec.find(gname));
@@ -323,7 +329,7 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 							if (ftonItr != ftonSpec.end() && (fs_itr = fspec.find(ftonItr->second)) != fspec.end())
 							{
 								if (!result.first->second._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
-									required == "Y", true, cnum)))
+									grequired == "Y", true, cnum)))
 								{
 									cerr << "Could not add group trait object " << gname << endl;
 									++glob_errors;
@@ -360,17 +366,25 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 					}
 				}
 
+				// check for nested component definition
 				XmlEntity::XmlSet comlist;
 				if ((*itr)->find("component/component", comlist))
 				{
 					cerr << comlist.size() << " component/component found" << endl;
 					for(XmlEntity::XmlSet::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
-						sofar += loadcomponents("component/component", sofar, **citr, mspec, ftonSpec, fspec);
+					{
+						string comname;
+						(*citr)->GetAttr("name", comname);
+						cerr << comname << endl;
+						sofar += loadcomponents("component/component", sofar, **itr, mspec, ftonSpec, fspec);
+					}
 				}
 
 				(*itr)->GetAttr("comment", result.first->second._comment);
 
-				processMessageFields("component/field", *itr, result.first->second._fields, ftonSpec, fspec, 1);
+				if (!processMessageFields("component/field", *itr, result.first->second._fields, ftonSpec, fspec, 1))
+					cerr << inputFile << '(' << (*itr)->GetLine() << "): No fields found in component "
+					  << name << endl;
 
 				++sofar;
 			}
@@ -683,7 +697,11 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	ComponentSpecMap cspec;
 	int components(loadcomponents("fix/components/component", 0, xf, cspec, ftonSpec, fspec));
 	if (verbose)
+	{
 		cout << components << " components processed" << endl;
+		for (ComponentSpecMap::const_iterator itr(cspec.begin()); itr != cspec.end(); ++itr)
+			cout << itr->second << endl;
+	}
 
 	MessageSpecMap mspec;
 
