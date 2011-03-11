@@ -3,7 +3,7 @@
 
 Fix8 is released under the New BSD License.
 
-Copyright (c) 2010, David L. Dight <fix@fix8.org>
+Copyright (c) 2010-11, David L. Dight <fix@fix8.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -273,7 +273,7 @@ int Timer<T>::operator()()
 	std::ostringstream ostr;
 	ostr << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size()
 		<< " queued).";
-	GlobalLogger::instance().send(ostr.str());
+	GlobalLogger::instance()->send(ostr.str());
 	return 0;
 }
 

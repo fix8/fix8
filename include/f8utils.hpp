@@ -3,7 +3,7 @@
 
 fix8 is released under the New BSD License.
 
-Copyright (c) 2007-2010, David L. Dight <fix@fix8.org>
+Copyright (c) 2007-2010-11, David L. Dight <fix@fix8.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -39,6 +39,7 @@ $URL$
 #define _F8_UTILS_HPP_
 
 #include <tbb/atomic.h>
+#include <tbb/mutex.h>
 
 namespace FIX8 {
 
@@ -372,28 +373,33 @@ struct free_ptr
 
 //----------------------------------------------------------------------------------------
 template <typename T>
-class Singleton
+class Singleton	// lock-free Singleton
 {
 	static tbb::atomic<T*> _instance;
+	static tbb::mutex _mutex;
 
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
 
-protected:
+public:
 	Singleton() {}
-	virtual ~Singleton()
+	virtual ~Singleton() { delete _instance.fetch_and_store(0); }
+
+	static T *instance()
 	{
-		delete _instance;
-		_instance = 0;
+		if ((T *)_instance) // cast operator performs atomic load with acquire
+			return _instance;
+
+		tbb::mutex::scoped_lock guard(_mutex);
+		if ((T *)_instance == 0)
+			_instance = new T;
+		return _instance;
 	}
 
-public:
-	static T& instance()
-	{
-		if (_instance == 0)
-			_instance = new T;
-		return *_instance;
-	}
+	T *operator->() const { return instance(); }
+
+	static T *reset(T *what) { return _instance.fetch_and_store(what); }
+	static T *release() { return _instance.fetch_and_store(0); }
 };
 
 //----------------------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 
 Fix8 is released under the New BSD License.
 
-Copyright (c) 2010, David L. Dight <fix@fix8.org>
+Copyright (c) 2010-11, David L. Dight <fix@fix8.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -180,7 +180,7 @@ int main(int argc, char **argv)
 				throw f8Exception("could not locate server session in config file", server_conf_file);
 			if (conf.get_role(ses) != Connection::cn_acceptor)
 				throw f8Exception("Invalid role");
-			GlobalLogger::instance().send("test fix server starting up...");
+			GlobalLogger::instance()->send("test fix server starting up...");
 
 			FileLogger log(conf.get_logname(ses, logname), logflags, 2);
 			FileLogger plog(conf.get_protocol_logname(ses, prot_logname), plogflags, 2);
@@ -190,7 +190,7 @@ int main(int argc, char **argv)
 			Poco::Net::ServerSocket ss(addr);
 			Poco::Net::SocketAddress claddr;
 			Poco::Net::StreamSocket sock(ss.acceptConnection(claddr));
-			GlobalLogger::instance().send("client connection established...");
+			GlobalLogger::instance()->send("client connection established...");
 			ServerConnection sc(&sock, ms, conf.get_heartbeat_interval(ses));
 			ms.control() |= Session::print;
 			ms.start(&sc);	// will wait
@@ -206,7 +206,7 @@ int main(int argc, char **argv)
 				throw f8Exception("could not locate client session in config file", client_conf_file);
 			if (conf.get_role(ses) != Connection::cn_initiator)
 				throw f8Exception("Invalid role");
-			GlobalLogger::instance().send("test fix client starting up...");
+			GlobalLogger::instance()->send("test fix client starting up...");
 
 			sender_comp_id sci;
 			target_comp_id tci;

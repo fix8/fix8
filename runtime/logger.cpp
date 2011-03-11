@@ -3,7 +3,7 @@
 
 Fix8 is released under the New BSD License.
 
-Copyright (c) 2010, David L. Dight <fix@fix8.org>
+Copyright (c) 2010-11, David L. Dight <fix@fix8.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -64,6 +64,8 @@ char FIX8::glob_log0[max_global_filename_length] = { "global_filename_not_set.lo
 template<>
 tbb::atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
 	= tbb::atomic<SingleLogger<glob_log0> *>();
+template<>
+tbb::mutex Singleton<SingleLogger<glob_log0> >::_mutex = tbb::mutex();
 
 //-------------------------------------------------------------------------------------------------
 int Logger::operator()()
