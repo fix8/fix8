@@ -19,7 +19,7 @@ permitted provided that the following conditions are met:
 		written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
+OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO,   THE  IMPLIED  WARRANTIES  OF
 MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
 THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
 SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
@@ -41,6 +41,10 @@ $URL$
 #include <map>
 #include <vector>
 
+#if defined MSGRECYCLING
+#include <tbb/atomic.h>
+#endif
+
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
@@ -61,7 +65,7 @@ class GroupBase : public f8Base
 
 public:
 	GroupBase(const unsigned short fnum) : _fnum(fnum) {}
-	virtual ~GroupBase() { clear(); }
+	virtual ~GroupBase() { clear(false); }
 
 	virtual MessageBase *create_group() = 0;
 	void add(MessageBase *what) { _msgs.push_back(what); }
@@ -69,7 +73,7 @@ public:
 	size_t size() const { return _msgs.size(); }
 	MessageBase *operator[](unsigned idx) { return idx < _msgs.size() ? _msgs[idx] : 0; }
 
-	void clear(bool reuse=false)
+	void clear(bool reuse=true)
 	{
 		std::for_each (_msgs.begin(), _msgs.end(), free_ptr<>());
 		if (reuse)
@@ -150,9 +154,9 @@ public:
 	MessageBase(const MessageBase& from);
 	MessageBase& operator=(const MessageBase& that);
 
-	virtual ~MessageBase() { clear(); }
+	virtual ~MessageBase() { clear(false); }
 
-	void clear(bool reuse=false)
+	virtual void clear(bool reuse=true)
 	{
 		std::for_each (_fields.begin(), _fields.end(), free_ptr<Delete2ndPairObject<> >());
 		std::for_each (_groups.begin(), _groups.end(), free_ptr<Delete2ndPairObject<> >());
@@ -245,6 +249,10 @@ public:
 //-------------------------------------------------------------------------------------------------
 class Message : public MessageBase
 {
+#if defined MSGRECYCLING
+	tbb::atomic<bool> _in_use;
+#endif
+
 protected:
 	static RegExp _hdr, _tlr;
 	MessageBase *_header, *_trailer;
@@ -252,8 +260,15 @@ protected:
 public:
 	template<typename InputIterator>
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
-		: MessageBase(ctx, msgType, begin, end), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl()) {}
+		: MessageBase(ctx, msgType, begin, end), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl())
+#if defined MSGRECYCLING
+		{ _in_use = true; }
 
+	void set_in_use(bool way=false) { _in_use = way; }
+	bool get_in_use() const { return _in_use; }
+#else
+		{}
+#endif
 	virtual ~Message() { delete _header; delete _trailer; }
 
 	MessageBase *Header() const { return _header; }
@@ -265,6 +280,15 @@ public:
 
 	virtual bool process(Router& rt) const { return (rt)(this); }
 	virtual bool is_admin() const { return false; }
+
+	virtual void clear(bool reuse=true)
+	{
+		if (_header)
+			_header->clear(reuse);
+		if (_trailer)
+			_trailer->clear(reuse);
+		MessageBase::clear(reuse);
+	}
 
 	static unsigned calc_chksum(const f8String& from, const unsigned offset=0, const int len=-1)
 	{

@@ -62,7 +62,7 @@ struct RealmBase	// metadata domain
 	RealmType _dtype;
 	FieldTrait::FieldType _ftype;
 	const size_t _sz;
-	const char **_descriptions;
+	const char * const *_descriptions;
 
 	template<typename T>
 	const bool is_valid(const T& what) const
@@ -632,7 +632,7 @@ const unsigned Common_OrigSendingTime(122);
 const unsigned Common_GapFillFlag(123);
 const unsigned Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
 
-// Common msgtypes
+// Common (administrative) msgtypes
 const f8String Common_MsgType_HEARTBEAT("0");
 const f8String Common_MsgType_TEST_REQUEST("1");
 const f8String Common_MsgType_RESEND_REQUEST("2");

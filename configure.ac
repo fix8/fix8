@@ -278,6 +278,14 @@ AC_ARG_ENABLE([poolalloc],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-poolalloc) ;;
 esac])
 
+AC_ARG_ENABLE([msgrecycle],
+[AC_HELP_STRING([--enable-msgrecycle],[Enable Message Recycling (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(MSGRECYCLING, 1, [Define to 1 for Message Recycling]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-msgrecycle) ;;
+esac])
+
 AC_ARG_ENABLE([debug],
 [AC_HELP_STRING([--enable-debug],[Enable DEBUG support (default=no)])],
 [case "${enableval}" in

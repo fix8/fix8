@@ -108,17 +108,18 @@ ostream *openofile(const string& odir, const string& fname)
 	ostringstream ofs;
 	string odirect(odir);
 	ofs << CheckAddTrailingSlash(odirect) << fname;
-	ofstream *os(new ofstream(ofs.str().c_str()));
+	scoped_ptr<ofstream> os(new ofstream(ofs.str().c_str()));
 	if (!*os)
 	{
 		cerr << "Error opening file \'" << ofs.str() << '\'';
 		if	(errno)
 			cerr << " (" << strerror(errno) << ')';
 		cerr << endl;
+
 		return 0;
 	}
 
-	return os;
+	return os.release();
 }
 
 //-----------------------------------------------------------------------------------------

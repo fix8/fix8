@@ -387,11 +387,11 @@ public:
 
 	static T *instance()
 	{
-		if ((T *)_instance) // cast operator performs atomic load with acquire
+		if (_instance) // cast operator performs atomic load with acquire
 			return _instance;
 
 		tbb::mutex::scoped_lock guard(_mutex);
-		if ((T *)_instance == 0)
+		if (_instance == 0)
 			_instance = new T;
 		return _instance;
 	}

@@ -101,10 +101,7 @@ int Logger::operator()()
 			ThreadCodes::const_iterator itr(thread_codes.find(msg.first));
 			char t_code;
 			if (itr == thread_codes.end())
-			{
-				t_code = _t_code++;
-				thread_codes.insert(ThreadCodes::value_type(msg.first, t_code));
-			}
+				thread_codes.insert(ThreadCodes::value_type(msg.first, t_code = _t_code++));
 			else
 				t_code = itr->second;
 			get_stream() << t_code << ' ';

@@ -383,8 +383,11 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 				(*itr)->GetAttr("comment", result.first->second._comment);
 
 				if (!processMessageFields("component/field", *itr, result.first->second._fields, ftonSpec, fspec, 1))
+				{
 					cerr << inputFile << '(' << (*itr)->GetLine() << "): No fields found in component "
 					  << name << endl;
+					cerr << **itr;
+				}
 
 				++sofar;
 			}
@@ -785,20 +788,14 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 					<< flitr->_pos << ", " << tostr.str() << " }";
 			}
 			osr_cpp << endl << "};" << endl;
-			osr_cpp << "const size_t " << mitr->second._name << "::_fldcnt("
-				<< mitr->second._fields.get_presence().size() << ");" << endl;
-			osr_cpp << "const std::string " << mitr->second._name << "::_msgtype(\""
-				<< mitr->first << "\");" << endl;
-			osc_hpp << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
-			osc_hpp << spacer << "static const size_t _fldcnt;" << endl;
-			osc_hpp << spacer << "static const std::string _msgtype;" << endl << endl;
+			osc_hpp << spacer << "static const FieldTrait::TraitBase _traits[];" << endl << endl;
 		}
 
 		osc_hpp << "public:" << endl;
 		osc_hpp << spacer << mitr->second._name << "()";
 		if (mitr->second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
-				<< "(ctx, _msgtype, _traits, _traits + _fldcnt)";
+				<< "(ctx, \"" << mitr->first << "\", _traits, _traits + " << mitr->second._fields.get_presence().size() << ')';
 		if (isHeader || isTrailer)
 			osc_hpp << " { add_preamble(); }" << endl;
 		else if (!mitr->second._groups.empty())
@@ -825,7 +822,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		}
 
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << " get_msgtype() { return " << fsitr->second._name
-			<< "(_msgtype); }" << endl;
+			<< "(\"" << mitr->first << "\"); }" << endl;
 		if (isHeader)
 			osc_hpp << endl << _csMap.find_value_ref(cs_header_preamble) << endl;
 		else if (isTrailer)
@@ -853,21 +850,16 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 					<< right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", " << tostr.str() << " }";
 			}
 			osr_cpp << endl << "};" << endl;
-			osr_cpp << "const size_t " << mitr->second._name << "::" << gsitr->second._name << "::_fldcnt("
-				<< gitr->second.get_presence().size() << ");" << endl;
-			osr_cpp << "const std::string " << mitr->second._name << "::" << gsitr->second._name << "::_msgtype(\""
-				<< gsitr->second._name << "\");" << endl;
 			osc_hpp << endl << spacer << "class " << gsitr->second._name
 				<< " : public GroupBase" << endl << spacer << '{' << endl;
-			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
-			osc_hpp << spacer << spacer << "static const size_t _fldcnt;" << endl;
-			osc_hpp << spacer << spacer << "static const std::string _msgtype;" << endl << endl;
+			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl << endl;
 			osc_hpp << spacer << "public:" << endl;
 			osc_hpp << spacer << spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
 			osc_hpp << spacer << spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
-			osc_hpp << spacer << spacer << "MessageBase *create_group() { return new MessageBase(ctx, _msgtype, _traits, _traits + _fldcnt); }" << endl;
+			osc_hpp << spacer << spacer << "MessageBase *create_group() { return new MessageBase(ctx, \""
+				<< gsitr->second._name << "\", _traits, _traits + " << gitr->second.get_presence().size() << "); }" << endl;
 			osc_hpp << endl << spacer << spacer << "static const " << fsitr->second._name
-				<< " get_msgtype() { return " << fsitr->second._name << "(_msgtype); }" << endl;
+				<< " get_msgtype() { return " << fsitr->second._name << "(\"" << gsitr->second._name << "\"); }" << endl;
 			osc_hpp << spacer << spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl;
 			osc_hpp << spacer << "};" << endl;
 		}
@@ -915,9 +907,6 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 
 // ==================================== Message router ==================================
 
-	//for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
-	//	osu_hpp << "class " << mitr->second._name << ';' << endl;
-	//osu_hpp << endl << _csMap.find_value_ref(cs_divider) << endl;
 	osu_hpp << "class " << ctxt._clname << "_Router : public Router" << endl
 		<< '{' << endl << "public:" << endl;
 	osu_hpp << spacer << ctxt._clname << "_Router() {}" << endl;
