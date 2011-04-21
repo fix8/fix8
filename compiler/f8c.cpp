@@ -111,6 +111,8 @@ const string flname(const string& from);
 void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
 void generate_preamble(ostream& to);
+bool parseGroups(MessageSpecMap::iterator& ritr, XmlEntity::XmlSet::const_iterator& itr, const string& name,
+	const ComponentSpecMap& cspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, XmlEntity::XmlSet& grplist);
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
@@ -338,7 +340,15 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 								{
 									pair<GroupMap::iterator, bool> gresult(
 										result.first->second._groups.insert(GroupMap::value_type(fs_itr->first, FieldTraits())));
+
 									XmlEntity::XmlSet comlist;
+									if ((*gitr)->find("group/group", comlist))
+									{
+										cout << "recursively calling parseGroups with " << comlist.size() << " els" << endl;
+										parseGroups(result.first, gitr, gname, mspec, ftonSpec, fspec, comlist);
+									}
+
+									comlist.clear();
 									if ((*gitr)->find("group/component", comlist))
 									{
 										cerr << comlist.size() << " group/component found" << endl;
@@ -479,72 +489,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 		string elpart;
 		XmlEntity::XmlSet grplist;
 		if ((*itr)->find(mkel(elname, "group", elpart), grplist))
-		{
-			for(XmlEntity::XmlSet::const_iterator gitr(grplist.begin()); gitr != grplist.end(); ++gitr)
-			{
-				string gname, required;
-				if ((*gitr)->GetAttr("name", gname) && (*gitr)->GetAttr("required", required))
-				{
-					// add group FieldTrait
-					FieldToNumMap::const_iterator ftonItr(ftonSpec.find(gname));
-					FieldSpecMap::const_iterator fs_itr;
-					if (ftonItr != ftonSpec.end() && (fs_itr = fspec.find(ftonItr->second)) != fspec.end())
-					{
-						if (!result.first->second._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
-							required == "Y", true, 0)))
-						{
-							cerr << "Could not add group trait object " << gname << endl;
-							++glob_errors;
-						}
-						else
-						{
-							pair<GroupMap::iterator, bool> gresult(
-								result.first->second._groups.insert(GroupMap::value_type(fs_itr->first, FieldTraits())));
-							processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 0);
-							XmlEntity::XmlSet comlist;
-							if ((*gitr)->find("group/component", comlist))
-							{
-								for(XmlEntity::XmlSet::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
-								{
-									string cname, required;
-									if (!(*citr)->GetAttr("name", cname) || !(*citr)->GetAttr("required", required))
-										continue;
-									ComponentSpecMap::const_iterator csitr(cspec.find(cname));
-									if (csitr == cspec.end())
-									{
-										cerr << inputFile << '(' << (*itr)->GetLine() << "): Component not found " << name << endl;
-										++glob_errors;
-										continue;
-									}
-
-									for (Presence::iterator deitr(csitr->second._fields.get_presence().begin());
-										deitr != csitr->second._fields.get_presence().end(); ++deitr)
-									{
-										deitr->_field_traits.set(FieldTrait::mandatory,
-											(deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y")
-											|| deitr->_pos == 1);
-										if (!gresult.first->second.add(*deitr))
-											cerr << inputFile << '(' << (*itr)->GetLine() << "): group Component failed to add "
-											  << name << endl;
-									}
-								}
-							}
-						}
-					}
-					else
-					{
-						cerr << "Could not locate group Field " << gname << " from known field types in " << inputFile << endl;
-						++glob_errors;
-						continue;
-					}
-				}
-				else
-				{
-					cerr << inputFile << '(' << (*itr)->GetLine() << "): Group element missing required attributes" << endl;
-					++glob_errors;
-				}
-			}
-		}
+			parseGroups(result.first, itr, name, cspec, ftonSpec, fspec, grplist);
 
 		(*itr)->GetAttr("comment", result.first->second._comment);
 
@@ -580,6 +525,84 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 	}
 
 	return msgssLoaded;
+}
+
+//-----------------------------------------------------------------------------------------
+bool parseGroups(MessageSpecMap::iterator& ritr, XmlEntity::XmlSet::const_iterator& itr, const string& name,
+	const ComponentSpecMap& cspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, XmlEntity::XmlSet& grplist)
+{
+	for(XmlEntity::XmlSet::const_iterator gitr(grplist.begin()); gitr != grplist.end(); ++gitr)
+	{
+		string gname, required;
+		if ((*gitr)->GetAttr("name", gname) && (*gitr)->GetAttr("required", required))
+		{
+			// add group FieldTrait
+			FieldToNumMap::const_iterator ftonItr(ftonSpec.find(gname));
+			FieldSpecMap::const_iterator fs_itr;
+			if (ftonItr != ftonSpec.end() && (fs_itr = fspec.find(ftonItr->second)) != fspec.end())
+			{
+				if (!ritr->second._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
+					required == "Y", true, 0)))
+				{
+					cerr << "Could not add group trait object " << gname << endl;
+					++glob_errors;
+				}
+				else
+				{
+					pair<GroupMap::iterator, bool> gresult(
+						ritr->second._groups.insert(GroupMap::value_type(fs_itr->first, FieldTraits())));
+					processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 0);
+					XmlEntity::XmlSet comlist;
+					if ((*gitr)->find("group/component", comlist))
+					{
+						for(XmlEntity::XmlSet::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
+						{
+							string cname, required;
+							if (!(*citr)->GetAttr("name", cname) || !(*citr)->GetAttr("required", required))
+								continue;
+							ComponentSpecMap::const_iterator csitr(cspec.find(cname));
+							if (csitr == cspec.end())
+							{
+								cerr << inputFile << '(' << (*itr)->GetLine() << "): Component not found " << name << endl;
+								++glob_errors;
+								continue;
+							}
+
+							for (Presence::iterator deitr(csitr->second._fields.get_presence().begin());
+								deitr != csitr->second._fields.get_presence().end(); ++deitr)
+							{
+								deitr->_field_traits.set(FieldTrait::mandatory,
+									(deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y")
+									|| deitr->_pos == 1);
+								if (!gresult.first->second.add(*deitr))
+									cerr << inputFile << '(' << (*itr)->GetLine() << "): group Component failed to add "
+									  << name << endl;
+							}
+						}
+					}
+					comlist.clear();
+					if ((*gitr)->find("group/group", comlist))
+					{
+						cout << "recursively calling parseGroups with " << comlist.size() << " els" << endl;
+						parseGroups(ritr, gitr, gname, cspec, ftonSpec, fspec, comlist);
+					}
+				}
+			}
+			else
+			{
+				cerr << "Could not locate group Field " << gname << " from known field types in " << inputFile << endl;
+				++glob_errors;
+				continue;
+			}
+		}
+		else
+		{
+			cerr << inputFile << '(' << (*itr)->GetLine() << "): Group element missing required attributes" << endl;
+			++glob_errors;
+		}
+	}
+
+	return true;
 }
 
 //-----------------------------------------------------------------------------------------
