@@ -815,6 +815,41 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		}
 
 		osc_hpp << "public:" << endl;
+		for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
+		{
+			FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
+			osr_cpp << _csMap.find_value_ref(cs_divider) << endl;
+			osr_cpp << "const FieldTrait::TraitBase " << mitr->second._name << "::" << gsitr->second._name << "::_traits[] ="
+				<< endl << '{' << endl;
+			for (Presence::const_iterator flitr(gitr->second.get_presence().begin());
+				flitr != gitr->second.get_presence().end(); ++flitr)
+			{
+				if (flitr != gitr->second.get_presence().begin())
+				{
+					osr_cpp << ',';
+					if (distance(gitr->second.get_presence().begin(), flitr) % 3 == 0)
+						osr_cpp << endl;
+				}
+
+				ostringstream tostr;
+				tostr << "0x" << setw(3) << setfill('0') << hex << flitr->_field_traits.get();
+				osr_cpp << spacer << "{ " << setw(4) << right << flitr->_fnum << ", " << setw(3)
+					<< right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", " << tostr.str() << " }";
+			}
+			osr_cpp << endl << "};" << endl;
+			osc_hpp << spacer << "class " << gsitr->second._name
+				<< " : public GroupBase" << endl << spacer << '{' << endl;
+			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl << endl;
+			osc_hpp << spacer << "public:" << endl;
+			osc_hpp << spacer << spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
+			osc_hpp << spacer << spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
+			osc_hpp << spacer << spacer << "MessageBase *create_group() { return new MessageBase(ctx, \""
+				<< gsitr->second._name << "\", _traits, _traits + " << gitr->second.get_presence().size() << "); }" << endl;
+			osc_hpp << endl << spacer << spacer << "static const " << fsitr->second._name
+				<< " get_msgtype() { return " << fsitr->second._name << "(\"" << gsitr->second._name << "\"); }" << endl;
+			osc_hpp << spacer << spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl;
+			osc_hpp << spacer << "};" << endl << endl;
+		}
 		osc_hpp << spacer << mitr->second._name << "()";
 		if (mitr->second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
@@ -851,41 +886,6 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		else if (isTrailer)
 			osc_hpp << endl << _csMap.find_value_ref(cs_trailer_preamble) << endl;
 
-		for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
-		{
-			FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
-			osr_cpp << _csMap.find_value_ref(cs_divider) << endl;
-			osr_cpp << "const FieldTrait::TraitBase " << mitr->second._name << "::" << gsitr->second._name << "::_traits[] ="
-				<< endl << '{' << endl;
-			for (Presence::const_iterator flitr(gitr->second.get_presence().begin());
-				flitr != gitr->second.get_presence().end(); ++flitr)
-			{
-				if (flitr != gitr->second.get_presence().begin())
-				{
-					osr_cpp << ',';
-					if (distance(gitr->second.get_presence().begin(), flitr) % 3 == 0)
-						osr_cpp << endl;
-				}
-
-				ostringstream tostr;
-				tostr << "0x" << setw(3) << setfill('0') << hex << flitr->_field_traits.get();
-				osr_cpp << spacer << "{ " << setw(4) << right << flitr->_fnum << ", " << setw(3)
-					<< right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", " << tostr.str() << " }";
-			}
-			osr_cpp << endl << "};" << endl;
-			osc_hpp << endl << spacer << "class " << gsitr->second._name
-				<< " : public GroupBase" << endl << spacer << '{' << endl;
-			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl << endl;
-			osc_hpp << spacer << "public:" << endl;
-			osc_hpp << spacer << spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
-			osc_hpp << spacer << spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
-			osc_hpp << spacer << spacer << "MessageBase *create_group() { return new MessageBase(ctx, \""
-				<< gsitr->second._name << "\", _traits, _traits + " << gitr->second.get_presence().size() << "); }" << endl;
-			osc_hpp << endl << spacer << spacer << "static const " << fsitr->second._name
-				<< " get_msgtype() { return " << fsitr->second._name << "(\"" << gsitr->second._name << "\"); }" << endl;
-			osc_hpp << spacer << spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl;
-			osc_hpp << spacer << "};" << endl;
-		}
 		osc_hpp << "};" << endl << endl;
 		osc_hpp << _csMap.find_value_ref(cs_divider) << endl;
 	}
