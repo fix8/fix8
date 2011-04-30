@@ -841,7 +841,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 				<< " : public GroupBase" << endl << spacer << '{' << endl;
 			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl << endl;
 			osc_hpp << spacer << "public:" << endl;
-			osc_hpp << spacer << spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
+			osc_hpp << spacer << spacer << gsitr->second._name << "() : GroupBase(" << gsitr->first << ") {}" << endl;
 			osc_hpp << spacer << spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
 			osc_hpp << spacer << spacer << "MessageBase *create_group() { return new MessageBase(ctx, \""
 				<< gsitr->second._name << "\", _traits, _traits + " << gitr->second.get_presence().size() << "); }" << endl;
@@ -862,7 +862,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 			for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
 			{
 				FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
-				osc_hpp << spacer << spacer << "_groups[" << gsitr->second._name << "::_fnum] = new " << gsitr->second._name << ';' << endl;
+				osc_hpp << spacer << spacer << "_groups[" << gsitr->first << "] = new " << gsitr->second._name << ';' << endl;
 			}
 			osc_hpp << spacer << '}' << endl;
 
