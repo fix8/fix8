@@ -38,6 +38,7 @@ BUILT_SOURCES = Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp Myfix_router.hp
 f8test_SOURCES =  myfix.cpp $(BUILT_SOURCES)
 f8print_SOURCES =  myprint.cpp $(BUILT_SOURCES)
 XML_SCHEMA = FIX44.xml
+#XML_SCHEMA = FIX44TEST.xml
 CLEANFILES = $(BUILT_SOURCES)
 
 $(BUILT_SOURCES): $(XML_SCHEMA)

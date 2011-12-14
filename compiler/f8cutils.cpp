@@ -64,27 +64,15 @@ using namespace FIX8;
 //-----------------------------------------------------------------------------------------
 static const std::string rcsid("$Id$");
 
+//----------------------------------------------------------------------------------------
+const std::string TRANSLATIONUNIT(__FILE__);
+
 //-----------------------------------------------------------------------------------------
 extern string inputFile, odir, prefix;
 extern bool verbose;
 extern const string spacer, GETARGLIST;
 extern const CSMap _csMap;
 extern unsigned glob_errors;
-
-//-------------------------------------------------------------------------------------------------
-#if defined POOLALLOC
-Region BaseAllocator::_rpairs[] =
-{
-	Region(4000000, 8),
-	Region(4000000, 16),
-	Region(1000000, 48),
-	Region(1000000, 64),
-	Region(500000, 128)
-};
-
-RegionManager BaseAllocator::_mmgr(RegionList(BaseAllocator::_rpairs, BaseAllocator::_rpairs
-	+ sizeof(BaseAllocator::_rpairs)/sizeof(Region)));
-#endif
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
@@ -325,6 +313,7 @@ void print_usage()
 	um.add('d', "dump", "dump parsed source xml file, exit");
 	um.add('h', "help", "help, this screen");
 	um.add('i', "ignore", "ignore errors, attempt to generate code anyhow");
+	um.add('k', "keep", "retain generated temporaries even if there are errors (.*.tmp)");
 	um.add('v', "version", "print version, exit");
 	um.add('V', "verbose", "be more verbose when processing");
 	um.add("e.g.");

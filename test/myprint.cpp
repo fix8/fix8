@@ -79,21 +79,6 @@ void print_usage();
 const string GETARGLIST("hs");
 bool term_received(false), summary(false);
 
-//-----------------------------------------------------------------------------------------
-#if defined POOLALLOC
-Region BaseAllocator::_rpairs[] =
-{
-	Region(4000000, 8),
-	Region(4000000, 16),
-	Region(1000000, 48),
-	Region(1000000, 64),
-	Region(500000, 128)
-};
-
-RegionManager BaseAllocator::_mmgr(RegionList(BaseAllocator::_rpairs, BaseAllocator::_rpairs
-	+ sizeof(BaseAllocator::_rpairs)/sizeof(Region)));
-#endif
-
 typedef map<string, unsigned> MessageCount;
 
 //-----------------------------------------------------------------------------------------
@@ -174,15 +159,15 @@ int main(int argc, char **argv)
 
 	try
 	{
+		const int bufsz(1024);
+		char buffer[bufsz];
+
 		while (!ifs().eof() && !term_received)
 		{
-			const int bufsz(1024);
-			char buffer[bufsz] = {};
 			ifs().getline(buffer, bufsz);
-			const string result(buffer);
-			if (!result.empty())
+			if (buffer[0])
 			{
-				scoped_ptr<Message> msg(Message::factory(TEX::ctx, result));
+				scoped_ptr<Message> msg(Message::factory(TEX::ctx, buffer));
 				if (summary)
 				{
 					MessageCount::iterator mitr(mc->find(msg->get_msgtype()));

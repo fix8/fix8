@@ -84,7 +84,7 @@ struct RealmBase	// metadata domain
 };
 
 //-------------------------------------------------------------------------------------------------
-class BaseField : public f8Base
+class BaseField
 {
 	unsigned short _fnum;
 

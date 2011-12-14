@@ -11,7 +11,6 @@ AC_REVISION([$Rev$])
 AC_PREREQ(2.61)
 AC_INIT([fix8], [m4_esyscmd([./version.sh | tr -d '\n'])],fix@fix8.org)
 AM_INIT_AUTOMAKE
-AC_CONFIG_HEADER(include/f8config.h)
 AH_TOP([//-----------------------------------------------------------------------------------------
 #if 0
 fix8 is released under the New BSD License.
@@ -113,14 +112,13 @@ AC_FUNC_STRCOLL
 AC_CHECK_TOOL([STRIP],[strip])
 
 AC_CHECK_FUNCS([scandir getopt_long sysconf getaddrinfo getnameinfo \
-	madvise posix_fadvise writev daemon popen waitpid setlogmask alarm dup2 ftruncate \
-	getcwd gettimeofday localtime_r munmap pow regcomp socket strcasecmp strchr strdup strerror \
+	daemon popen waitpid setlogmask alarm dup2 ftruncate \
+	getcwd gettimeofday localtime_r pow regcomp socket strcasecmp strchr strdup strerror \
 	strncasecmp strspn strtol strtoul random srandom
 	])
 
 AC_CHECK_HEADERS([getopt.h fcntl.h netdb.h regex.h signal.h string.h sys/time.h \
-	arpa/inet.h sys/stat.h sys/types.h select.h sys/event.h h \
-	netinet/tcp.h \
+	arpa/inet.h sys/stat.h sys/types.h select.h sys/event.h h netinet/tcp.h \
 	sys/wait.h netinet/in.h getopt.h limits.h sys/ioctl.h unistd.h \
 	sys/socket.h time.h syslog.h termios.h alloca.h
 	])
@@ -148,6 +146,46 @@ AC_CHECK_FILE("$DEVURANDOM",
 	[
 		AC_DEFINE(HAVE_DEV_URANDOM, 1, [Define to 1 if the /dev/urandom device is available])
 	])
+
+AC_MSG_CHECKING(for TBB)
+	AC_TRY_COMPILE([
+		#include <tbb/atomic.h>
+		#include <tbb/mutex.h>
+		#include <tbb/concurrent_queue.h>
+		],[;],
+		have_tbb=yes, have_tbb=no)
+	if test "$have_tbb" = yes; then
+	    AC_MSG_RESULT(yes)
+	    AC_DEFINE(HAS_TBB, 1, [Define to 1 if TBB available])
+	else
+	    AC_MSG_RESULT(no)
+		 echo
+		 echo "ERROR: TBB development libraries are required. Install and try again."
+		 echo
+		 exit 1
+	fi
+
+AC_MSG_CHECKING(for Poco)
+	AC_TRY_COMPILE([
+		#include <Poco/Net/ServerSocket.h>
+		#include <Poco/Net/StreamSocket.h>
+		#include <Poco/Timestamp.h>
+		#include <Poco/DateTime.h>
+		#include <Poco/DateTimeParser.h>
+		#include <Poco/DateTimeFormatter.h>
+		#include <Poco/Net/NetException.h>
+		],[;],
+		have_poco=yes, have_poco=no)
+	if test "$have_poco" = yes; then
+	    AC_MSG_RESULT(yes)
+	    AC_DEFINE(HAS_POCO, 1, [Define to 1 if Poco available])
+	else
+	    AC_MSG_RESULT(no)
+		 echo
+		 echo "ERROR: Poco development libraries are required. Install and try again."
+		 echo
+		 exit 1
+	fi
 
 AC_MSG_CHECKING(for tr1/unordered_map)
 	AC_TRY_COMPILE([
@@ -206,7 +244,7 @@ AC_DEFINE(HAVE_BDB, 1, [Define to 1 if you have berkeley DB])
 
 if test "$have_bdb" = "no"; then
 		echo
-		echo "ERROR: Berkeley DB. Install and try again."
+		echo "ERROR: Berkeley DB development libraries are required. Install and try again."
 		echo
 		exit 1
 fi
@@ -253,6 +291,12 @@ AC_CHECK_LIB(z, deflate, [
 ])
 AM_CONDITIONAL(USECOMPRESSION, [test x$havecompression = xyes])
 AC_SUBST(Z_LIB)
+if test "$havecompression" != "yes"; then
+		echo
+		echo "ERROR: zlib (libz) delevelopment libraries are required. Install and try again."
+		echo
+		exit 1
+fi
 
 if test x"$GCC" != x"yes"; then
 	case x"$build" in
@@ -404,10 +448,13 @@ AC_SUBST(BRAND_COMPANY_SHORTNAME)
 AC_SUBST(BRAND_COMPANY_LONGNAME)
 
 AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile])
+AC_CONFIG_HEADERS(include/f8config.h)
 AC_OUTPUT
+
 #AC_OUTPUT([orbweb.spec base/orbweb.sh base/orbweb.xml \
 #	doc/man/b64pw.8.xml doc/man/procmon.8.xml doc/man/md5pw.8.xml \
 #	doc/man/orbweb.xml.8.xml doc/man/orbweb.8.xml doc/man/txt2db.8.xml])
+
 AC_SUBST(CONFIG_SHELL)
 AM_CONDITIONAL(HAVE_OPENSSL, test "x$openssl" = "xyes")
 

@@ -154,7 +154,7 @@
    <field name='CrossID' required='N' />
    <field name='OrigCrossID' required='N' />
    <field name='CrossType' required='N' />
-   <field name='ExecID' required='Y' />
+   <field name='ExecID' required='N' />
    <field name='ExecRefID' required='N' />
    <field name='ExecType' required='Y' />
    <field name='OrdStatus' required='Y' />

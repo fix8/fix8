@@ -76,7 +76,7 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
    try
    {
       _db->set_bt_compare(bt_compare_fcn);
-      _db->open(0, _dbFname.c_str(), 0, DB_BTREE, 0, 0); // try and open existing if possible
+      _db->open(0, _dbFname.c_str(), 0, DB_BTREE, DB_THREAD, 0); // try and open existing if possible
 		unsigned last;
       if (get_last_seqnum(last))
 		{
@@ -107,7 +107,7 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
    {
       try
       {
-         _db->open(0, _dbFname.c_str(), 0, DB_BTREE, DB_CREATE, 0);
+         _db->open(0, _dbFname.c_str(), 0, DB_BTREE, DB_CREATE | DB_THREAD, 0);
       }
       catch(DbException& dbe)
       {

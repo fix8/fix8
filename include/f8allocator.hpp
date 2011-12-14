@@ -54,13 +54,6 @@ struct BaseAllocator
 
 }
 
-#if defined POOLALLOC
-inline void *operator new(size_t sz, const bool type) { return type ? FIX8::BaseAllocator::_mmgr.alloc(sz) : std::malloc(sz); }
-inline void *operator new[](size_t sz, const bool type) { return type ? FIX8::BaseAllocator::_mmgr.alloc(sz) : std::malloc(sz); }
-inline void operator delete(void *what, const bool type) { type ? FIX8::BaseAllocator::_mmgr.release(what) : std::free(what); }
-inline void operator delete[](void *what, const bool type) { type ? FIX8::BaseAllocator::_mmgr.release(what) : std::free(what); }
-#endif
-
 namespace FIX8 {
 
 template <typename T>
@@ -101,18 +94,6 @@ template <typename T1, typename T2>
 inline bool operator== (const f8Allocator<T1>&, const f8Allocator<T2>&) throw() { return true; }
 template <typename T1, typename T2>
 inline bool operator!= (const f8Allocator<T1>&, const f8Allocator<T2>&) throw() { return false; }
-
-//-------------------------------------------------------------------------------------------------
-struct f8Base
-{
-#if defined POOLALLOC
-	void *operator new(size_t sz) { return BaseAllocator::_mmgr.alloc(sz); }
-	void *operator new[](size_t sz) { return BaseAllocator::_mmgr.alloc(sz); }
-
-	void operator delete(void *what) { BaseAllocator::_mmgr.release(what); }
-	void operator delete[](void *what) { BaseAllocator::_mmgr.release(what); }
-#endif
-};
 
 }
 

@@ -98,21 +98,6 @@ template<>
 const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
 	MyMenu::Handlers::get_table_end());
 
-//-------------------------------------------------------------------------------------------------
-#if defined POOLALLOC
-Region BaseAllocator::_rpairs[] =
-{
-	Region(4000000, 8),
-	Region(4000000, 16),
-	Region(1000000, 48),
-	Region(1000000, 64),
-	Region(500000, 128)
-};
-
-RegionManager BaseAllocator::_mmgr(RegionList(BaseAllocator::_rpairs, BaseAllocator::_rpairs
-	+ sizeof(BaseAllocator::_rpairs)/sizeof(Region)));
-#endif
-
 //-----------------------------------------------------------------------------------------
 void sig_handler(int sig)
 {
@@ -343,13 +328,22 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	TEX::ExecutionReport *er(new TEX::ExecutionReport);
 	msg->copy_legal(er);
 	*er += new TEX::OrderID("ord01");
-	*er += new TEX::ExecID("exec01");
 	*er += new TEX::ExecType(TEX::ExecType_NEW);
 	*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
+	*er += new TEX::LeavesQty(qty());
+	*er += new TEX::CumQty(0);
+	*er += new TEX::AvgPx(0);
+	_session.send(er);
+
+	er = new TEX::ExecutionReport;
+	msg->copy_legal(er);
+	*er += new TEX::OrderID("ord01");
+	*er += new TEX::ExecID("exec01");
+	*er += new TEX::ExecType(TEX::ExecType_NEW);
+	*er += new TEX::OrdStatus(qty() == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIAL);
 	*er += new TEX::LeavesQty(qty() - trdqty);
 	*er += new TEX::CumQty(trdqty);
 	*er += new TEX::AvgPx(price());
-
 	_session.send(er);
 
 	return true;

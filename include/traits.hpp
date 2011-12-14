@@ -107,12 +107,7 @@ struct FieldTrait
 };
 
 //-------------------------------------------------------------------------------------------------
-#if defined POOLALLOC
-typedef std::set<FieldTrait, FieldTrait::Compare, f8Allocator<FieldTrait> > Presence;
-#else
 typedef std::set<FieldTrait, FieldTrait::Compare> Presence;
-#endif
-
 
 // which fields are required, which are present
 class FieldTraits

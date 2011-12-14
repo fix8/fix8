@@ -67,6 +67,9 @@ using namespace FIX8;
 //-----------------------------------------------------------------------------------------
 static const std::string rcsid("$Id$");
 
+//----------------------------------------------------------------------------------------
+const std::string TRANSLATIONUNIT(__FILE__);
+
 //-----------------------------------------------------------------------------------------
 const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp",
 	"_classes.hpp", "_router.hpp" };
@@ -80,10 +83,10 @@ template<>
 const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8String, BaseMsgEntry>::_pairs[] = {};
 
 //-----------------------------------------------------------------------------------------
-string inputFile, odir("./"), prefix;
+string inputFile, odir("./"), prefix("Myfix");
 bool verbose(false), error_ignore(false);
 unsigned glob_errors(0);
-extern const string GETARGLIST("hvVo:p:di");
+extern const string GETARGLIST("hvVo:p:dik");
 extern const string spacer(3, ' ');
 
 //-----------------------------------------------------------------------------------------
@@ -118,7 +121,7 @@ bool parseGroups(MessageSpecMap::iterator& ritr, XmlEntity::XmlSet::const_iterat
 int main(int argc, char **argv)
 {
 	int val;
-	bool dump(false);
+	bool dump(false), keep_failed(false);
 
 #ifdef HAVE_GETOPT_LONG
 	option long_options[] =
@@ -129,6 +132,7 @@ int main(int argc, char **argv)
 		{ "odir",			0,	0,	'o' },
 		{ "dump",			0,	0,	'd' },
 		{ "ignore",			0,	0,	'i' },
+		{ "keep",			0,	0,	'k' },
 		{ "prefix",			0,	0,	'p' },
 		{ 0 },
 	};
@@ -151,6 +155,7 @@ int main(int argc, char **argv)
 		case 'o': odir = optarg; break;
 		case 'd': dump = true; break;
 		case 'i': error_ignore = true; break;
+		case 'k': keep_failed = true; break;
 		case 'p': prefix = optarg; break;
 		default: break;
 		}
@@ -164,9 +169,6 @@ int main(int argc, char **argv)
 		print_usage();
 		return 1;
 	}
-
-	if (prefix.empty())
-		prefix = "Myfix";
 
 	scoped_ptr<XmlEntity> cfr(XmlEntity::Factory(inputFile));
 	if (!cfr.get())
@@ -209,7 +211,10 @@ int main(int argc, char **argv)
 	{
 		delete ctxt._out[ii].second;
 		if (glob_errors && !error_ignore)
-			remove(ctxt._out[ii].first.first.c_str());
+		{
+			if (!keep_failed)
+				remove(ctxt._out[ii].first.first.c_str());
+		}
 		else
 		{
 			remove(ctxt._out[ii].first.second.c_str());
@@ -344,17 +349,21 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 									XmlEntity::XmlSet comlist;
 									if ((*gitr)->find("group/group", comlist))
 									{
-										cout << "recursively calling parseGroups with " << comlist.size() << " els" << endl;
+										//cout << "loadcomponents; recursively calling parseGroups with " << comlist.size() << " els" << endl;
 										parseGroups(result.first, gitr, gname, mspec, ftonSpec, fspec, comlist);
 									}
+									else
+										cerr << "loadcomponents: no group/group in " << gname << endl;
 
 									comlist.clear();
 									if ((*gitr)->find("group/component", comlist))
 									{
-										cerr << comlist.size() << " group/component found" << endl;
+										//cerr << comlist.size() << " group/component found" << endl;
 										for(XmlEntity::XmlSet::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
 											sofar += loadcomponents("group/component", sofar, **citr, mspec, ftonSpec, fspec);
 									}
+									else
+										cerr << "loadcomponents: no group/component in " << gname << endl;
 
 									if (!processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 1))
 										cerr << inputFile << '(' << (*itr)->GetLine() << "): No fields found in component group "
@@ -363,7 +372,8 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 							}
 							else
 							{
-								cerr << "Could not locate group Field " << gname << " from known field types in " << inputFile << endl;
+								cerr << "Could not locate group Field " << gname << " from known field types in "
+									<< inputFile << '(' << (*gitr)->GetLine() << ')' << endl;
 								++glob_errors;
 								continue;
 							}
@@ -380,7 +390,7 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 				XmlEntity::XmlSet comlist;
 				if ((*itr)->find("component/component", comlist))
 				{
-					cerr << comlist.size() << " component/component found" << endl;
+					//cerr << comlist.size() << " component/component found" << endl;
 					for(XmlEntity::XmlSet::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
 					{
 						string comname;
@@ -396,7 +406,7 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 				{
 					cerr << inputFile << '(' << (*itr)->GetLine() << "): No fields found in component "
 					  << name << endl;
-					cerr << **itr;
+					//cerr << **itr;
 				}
 
 				++sofar;
@@ -531,6 +541,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 bool parseGroups(MessageSpecMap::iterator& ritr, XmlEntity::XmlSet::const_iterator& itr, const string& name,
 	const ComponentSpecMap& cspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, XmlEntity::XmlSet& grplist)
 {
+	//cout << "parseGroups: " << name << endl;
 	for(XmlEntity::XmlSet::const_iterator gitr(grplist.begin()); gitr != grplist.end(); ++gitr)
 	{
 		string gname, required;
@@ -583,7 +594,7 @@ bool parseGroups(MessageSpecMap::iterator& ritr, XmlEntity::XmlSet::const_iterat
 					comlist.clear();
 					if ((*gitr)->find("group/group", comlist))
 					{
-						cout << "recursively calling parseGroups with " << comlist.size() << " els" << endl;
+						//cout << "parseGroups: recursively calling parseGroups with " << comlist.size() << " els" << endl;
 						parseGroups(ritr, gitr, gname, cspec, ftonSpec, fspec, comlist);
 					}
 				}
@@ -811,14 +822,16 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 					<< flitr->_pos << ", " << tostr.str() << " }";
 			}
 			osr_cpp << endl << "};" << endl;
-			osc_hpp << spacer << "static const FieldTrait::TraitBase _traits[];" << endl << endl;
+			osr_cpp << "const f8String " << mitr->second._name << "::_msgtype(\"" << mitr->first << "\");" << endl;
+			osc_hpp << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
+			osc_hpp << spacer << "static const f8String _msgtype;" << endl << endl;
 		}
 
 		osc_hpp << "public:" << endl;
 		osc_hpp << spacer << mitr->second._name << "()";
 		if (mitr->second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
-				<< "(ctx, \"" << mitr->first << "\", _traits, _traits + " << mitr->second._fields.get_presence().size() << ')';
+				<< "(ctx, _msgtype, _traits, _traits + " << mitr->second._fields.get_presence().size() << ')';
 		if (isHeader || isTrailer)
 			osc_hpp << " { add_preamble(); }" << endl;
 		else if (!mitr->second._groups.empty())
@@ -844,8 +857,8 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 				osc_hpp << spacer << "virtual bool is_admin() const { return true; }" << endl;
 		}
 
-		osc_hpp << endl << spacer << "static const " << fsitr->second._name << " get_msgtype() { return " << fsitr->second._name
-			<< "(\"" << mitr->first << "\"); }" << endl;
+		osc_hpp << endl << spacer << "static const " << fsitr->second._name << " get_msgtype() { return "
+			<< fsitr->second._name << "(_msgtype); }" << endl;
 		if (isHeader)
 			osc_hpp << endl << _csMap.find_value_ref(cs_header_preamble) << endl;
 		else if (isTrailer)
@@ -873,16 +886,18 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 					<< right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", " << tostr.str() << " }";
 			}
 			osr_cpp << endl << "};" << endl;
+			osr_cpp << "const f8String " << mitr->second._name << "::" << gsitr->second._name << "::_msgtype(\""
+				<< gsitr->second._name << "\");" << endl;
 			osc_hpp << endl << spacer << "class " << gsitr->second._name
 				<< " : public GroupBase" << endl << spacer << '{' << endl;
-			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl << endl;
+			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
+			osc_hpp << spacer << spacer << "static const f8String _msgtype;" << endl << endl;
 			osc_hpp << spacer << "public:" << endl;
 			osc_hpp << spacer << spacer << gsitr->second._name << "() : GroupBase(" << gsitr->first << ") {}" << endl;
 			osc_hpp << spacer << spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
-			osc_hpp << spacer << spacer << "MessageBase *create_group() { return new MessageBase(ctx, \""
-				<< gsitr->second._name << "\", _traits, _traits + " << gitr->second.get_presence().size() << "); }" << endl;
+			osc_hpp << spacer << spacer << "MessageBase *create_group() { return new MessageBase(ctx, _msgtype, _traits, _traits + " << gitr->second.get_presence().size() << "); }" << endl;
 			osc_hpp << endl << spacer << spacer << "static const " << fsitr->second._name
-				<< " get_msgtype() { return " << fsitr->second._name << "(\"" << gsitr->second._name << "\"); }" << endl;
+				<< " get_msgtype() { return " << fsitr->second._name << "(_msgtype); }" << endl;
 			osc_hpp << spacer << spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl;
 			osc_hpp << spacer << "};" << endl;
 		}

@@ -43,6 +43,19 @@
       <field name="OrderPercent" required="N" />
       <field name="RoundingDirection" required="N" />
       <field name="RoundingModulus" required="N" />
+		<group name='NoUnderlyings' required='N'>
+			<component name='UnderlyingInstrument' required='N' />
+		</group>
+    </component>
+	 <component name='UnderlyingInstrument'>
+		<field name='UnderlyingSymbol' required='N' />
+		<field name='UnderlyingSymbolSfx' required='N' />
+		<field name='UnderlyingSecurityID' required='N' />
+		<field name='UnderlyingSecurityIDSource' required='N' />
+		<group name='NoUnderlyingSecurityAltID' required='N'>
+			<field name='UnderlyingSecurityAltID' required='N' />
+			<field name='UnderlyingSecurityAltIDSource' required='N' />
+		</group>
     </component>
     <component name="SettleOrderQtyData">
       <field name="CashOrderQty" required="N" />
@@ -199,5 +212,11 @@
       <value description="NewCustomOrder" enum="U19"/>
       <value description="CustomOrderExecutionReport" enum="U20"/>
     </field>
+	 <field number='311' name='UnderlyingSymbol' type='STRING' />
+	 <field number='312' name='UnderlyingSymbolSfx' type='STRING' />
+	 <field number='309' name='UnderlyingSecurityID' type='STRING' />
+	 <field number='305' name='UnderlyingSecurityIDSource' type='STRING' />
+	 <field number='458' name='UnderlyingSecurityAltID' type='STRING' />
+	 <field number='459' name='UnderlyingSecurityAltIDSource' type='STRING' />
   </fields>
 </fix>

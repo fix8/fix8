@@ -127,7 +127,7 @@ class MyMenu
 
 		MenuItem(const char key, const std::string& help) : _key(key), _help(help) {}
 		MenuItem() : _key(), _help() {}
-		bool operator()(const MenuItem& a, const MenuItem& b) const { return a._key < b._key; }
+		bool operator() (const MenuItem& a, const MenuItem& b) const { return a._key < b._key; }
 	};
 
 	myfix_session_client& _session;

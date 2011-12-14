@@ -98,7 +98,7 @@ ostream& operator<<(ostream& os, const XmlEntity& en)
 	}
 
 	if (en.txtline_)
-		os << " (" << en.txtline_ << ')';
+		os << " #" << en.txtline_;
 	os	<< endl;
 
 	if (en.children_)
