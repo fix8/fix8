@@ -3,7 +3,7 @@
 
 Fix8 is released under the New BSD License.
 
-Copyright (c) 2010-11, David L. Dight <fix@fix8.org>
+Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -29,8 +29,8 @@ TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF TH
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---------------------------------------------------------------------------------------------------
-$Id: configuration.hpp 542 2010-11-13 02:17:47Z davidd $
-$Date: 2010-11-13 13:17:47 +1100 (Sat, 13 Nov 2010) $
+$Id: configuration.hpp 542 2010-12-13 02:17:47Z davidd $
+$Date: 2010-12-13 13:17:47 +1100 (Sat, 13 Nov 2010) $
 $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/configuration.hpp $
 
 #endif

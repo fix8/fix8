@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_COPYRIGHT([Orbweb is released under the New BSD License.
-Copyright (c) 2010-11, David L. Dight <fix@fix8.org>
+Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
 All rights reserved.])
 
 # $Id$
@@ -15,7 +15,7 @@ AH_TOP([//----------------------------------------------------------------------
 #if 0
 fix8 is released under the New BSD License.
 
-Copyright (c) 2010-11, David L. Dight <fix@fix8.org>
+Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are

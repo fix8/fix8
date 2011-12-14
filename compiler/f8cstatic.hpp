@@ -3,7 +3,7 @@
 
 fix8 is released under the New BSD License.
 
-Copyright (c) 2010-11, David L. Dight <fix@fix8.org>
+Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -169,7 +169,7 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "\n"
 "Fix8 is released under the New BSD License.\n"
 "\n"
-"Copyright (c) 2010-11, David L. Dight <fix@fix8.org>\n"
+"Copyright (c) 2010-12, David L. Dight <fix@fix8.org>\n"
 "All rights reserved.\n"
 "\n"
 "Redistribution and use in source and binary forms, with or without modification, are\n"
@@ -196,7 +196,7 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "\n"
 "#endif\n"),
 	CSMap::TypePair(cs_copyright_short,
-	"Copyright (c) 2010-11, David L. Dight <fix@fix8.org>, All rights reserved."),
+	"Copyright (c) 2010-12, David L. Dight <fix@fix8.org>, All rights reserved."),
 	CSMap::TypePair(cs_header_preamble,
 "	void add_preamble()\n"
 "	{\n"

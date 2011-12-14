@@ -3,7 +3,7 @@
 
 Orbweb is released under the New BSD License.
 
-Copyright (c) 2010-11, David L. Dight <www@orbweb.org>
+Copyright (c) 2010-12, David L. Dight <www@orbweb.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
