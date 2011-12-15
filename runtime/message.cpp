@@ -194,8 +194,12 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 		const BaseMsgEntry *bme(ctx._bme.find_ptr(mtype));
 		if (!bme)
 			throw InvalidMessage(mtype);
+		//ostringstream gerr;
 		msg = bme->_create();
+		//IntervalTimer itm;
 		msg->decode(from);
+		//gerr << "decode:" << itm.Calculate();
+		//GlobalLogger::instance()->send(gerr.str());
 
 		Fields::const_iterator fitr(msg->_header->_fields.find(Common_BodyLength));
 		static_cast<body_length *>(fitr->second)->set(mlen);

@@ -38,7 +38,9 @@ $URL$
 #ifndef _FIX8_MESSAGE_HPP_
 #define _FIX8_MESSAGE_HPP_
 
-#include <map>
+#if defined HAS_TR1_UNORDERED_MAP
+#include <tr1/unordered_map>
+#endif
 #include <vector>
 
 #if defined MSGRECYCLING
@@ -79,7 +81,11 @@ public:
 	friend class MessageBase;
 };
 
+#if defined HAS_TR1_UNORDERED_MAP
+typedef std::tr1::unordered_map<unsigned short, GroupBase *> Groups;
+#else
 typedef std::map<unsigned short, GroupBase *> Groups;
+#endif
 
 //-------------------------------------------------------------------------------------------------
 class Router
@@ -115,7 +121,11 @@ struct F8MetaCntx
 };
 
 //-------------------------------------------------------------------------------------------------
+#if defined HAS_TR1_UNORDERED_MAP
+typedef std::tr1::unordered_map<unsigned short, BaseField *> Fields;
+#else
 typedef std::map<unsigned short, BaseField *> Fields;
+#endif
 typedef std::multimap<unsigned short, BaseField *> Positions;
 
 class MessageBase

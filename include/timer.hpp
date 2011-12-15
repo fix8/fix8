@@ -222,7 +222,7 @@ public:
    Timer(T& monitor, int granularity=1) : _monitor(monitor), _thread(ref(*this)), _granularity(granularity) {}
    virtual ~Timer() {}
 
-   bool schedule(const TimerEvent<T>& what, const unsigned timeToWaitMS);
+   bool schedule(const TimerEvent<T>& what, const unsigned timeToWaitMS, const bool hi_res=false);
    void join() { _thread.Join(); }
 	void start() { _thread.Start(); }
    int operator()();
@@ -279,15 +279,15 @@ int Timer<T>::operator()()
 
 //-------------------------------------------------------------------------------------------------
 template<typename T>
-bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWaitMS)
+bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWait, const bool hi_res)
 {
 	Tickval tofire;
 
-   if (timeToWaitMS)
+   if (timeToWait)
    {
-      // Calculate time to fire (secs, nsecs)
+      // Calculate time to fire; hi_res = usecs, lo_res = msecs
 		Tickval::get_tickval(tofire);
-		tofire += timeToWaitMS * Tickval::million;
+		tofire += timeToWait * (hi_res ? Tickval::thousand : Tickval::million);
    }
 
 	what.set(tofire);
@@ -296,6 +296,41 @@ bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWaitMS)
 
    return true;
 }
+
+//---------------------------------------------------------------------------------------------------
+class IntervalTimer
+{
+   Tickval startTime_, delta_;
+
+public:
+   IntervalTimer() : startTime_(true) {}
+   virtual ~IntervalTimer() {}
+
+   const IntervalTimer& Calculate()
+   {
+      Tickval now(true);
+      delta_ = now - startTime_;
+      return *this;
+   }
+
+   double AsDouble() const { return delta_.todouble(); }
+
+   double Reset()
+   {
+      double curr(AsDouble());
+		startTime_.now();
+      return curr;
+   }
+
+   friend std::ostream& operator<<(std::ostream& os, const IntervalTimer& what)
+   {
+      std::ostringstream ostr;
+      ostr.setf(std::ios::showpoint);
+      ostr.setf(std::ios::fixed);
+      ostr << std::setprecision(9) << what.AsDouble();
+      return os << ostr.str();
+   }
+};
 
 } // FIX8
 

@@ -244,7 +244,7 @@ bool MyMenu::new_order_single()
 {
 	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
 	*nos += new TEX::TransactTime;
-	*nos += new TEX::OrderQty(1 + RandDev::getrandom(999));
+	*nos += new TEX::OrderQty(1 + RandDev::getrandom(9999));
 	*nos += new TEX::Price(RandDev::getrandom(500.));
 	static unsigned oid(0);
 	ostringstream oistr;
@@ -317,17 +317,24 @@ void print_usage()
 //-----------------------------------------------------------------------------------------
 bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
+	static unsigned oid(0), eoid(0);
 	TEX::OrderQty qty;
 	msg->get(qty);
-	unsigned trdqty(1 + RandDev::getrandom(qty() - 1));
 	cout << "Order qty:" << qty() << endl;
 	TEX::Price price;
 	msg->get(price);
 	cout << "price:" << price() << endl;
 
+	//ostringstream gerr;
+	//IntervalTimer itm;
 	TEX::ExecutionReport *er(new TEX::ExecutionReport);
+	//gerr << "encode:" << itm.Calculate();
+	//GlobalLogger::instance()->send(gerr.str());
+
 	msg->copy_legal(er);
-	*er += new TEX::OrderID("ord01");
+	ostringstream oistr;
+	oistr << "ord" << ++oid;
+	*er += new TEX::OrderID(oistr.str());
 	*er += new TEX::ExecType(TEX::ExecType_NEW);
 	*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
 	*er += new TEX::LeavesQty(qty());
@@ -335,16 +342,28 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	*er += new TEX::AvgPx(0);
 	_session.send(er);
 
-	er = new TEX::ExecutionReport;
-	msg->copy_legal(er);
-	*er += new TEX::OrderID("ord01");
-	*er += new TEX::ExecID("exec01");
-	*er += new TEX::ExecType(TEX::ExecType_NEW);
-	*er += new TEX::OrdStatus(qty() == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIAL);
-	*er += new TEX::LeavesQty(qty() - trdqty);
-	*er += new TEX::CumQty(trdqty);
-	*er += new TEX::AvgPx(price());
-	_session.send(er);
+	unsigned remaining_qty(qty()), cum_qty(0);
+	while (remaining_qty > 0)
+	{
+		unsigned trdqty(RandDev::getrandom(remaining_qty));
+		if (!trdqty)
+			trdqty = 1;
+		er = new TEX::ExecutionReport;
+		msg->copy_legal(er);
+		*er += new TEX::OrderID(oistr.str());
+		ostringstream eistr;
+		eistr << "exec" << ++eoid;
+		*er += new TEX::ExecID(eistr.str());
+		*er += new TEX::ExecType(TEX::ExecType_NEW);
+		*er += new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIAL);
+		remaining_qty -= trdqty;
+		cum_qty += trdqty;
+		*er += new TEX::LeavesQty(remaining_qty);
+		*er += new TEX::CumQty(cum_qty);
+		*er += new TEX::LastQty(trdqty);
+		*er += new TEX::AvgPx(price());
+		_session.send(er);
+	}
 
 	return true;
 }

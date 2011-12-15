@@ -36,6 +36,7 @@ $URL$
 #endif
 //-----------------------------------------------------------------------------------------
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <vector>
 #include <map>
