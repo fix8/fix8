@@ -105,7 +105,6 @@ public:
 
 	virtual std::ostream& print(std::ostream& os) const = 0;
 	virtual BaseField *copy() = 0;
-	virtual bool is_valid() const { return true; }
 	virtual int get_rlm_idx() const { return -1; }
 
 	template<typename T>
@@ -117,6 +116,8 @@ public:
 		os << _fnum << '=' << *this << default_field_separator;
 		return os.tellp() - where;
 	}
+
+	const RealmBase *get_realm() const { return _rlm; }
 
 	friend std::ostream& operator<<(std::ostream& os, const BaseField& what) { return what.print(os); }
 	friend class MessageBase;
@@ -206,7 +207,7 @@ protected:
 
 public:
 	Field () : BaseField(field), _value() {}
-	Field (const Field& from) : BaseField(field), _value(from._value) {}
+	Field (const Field& from) : BaseField(field, from._rlm), _value(from._value) {}
 	Field (const double& val) : BaseField(field), _value(val) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(GetValue<double>(from)) {}
 	Field& operator=(const Field& that)
@@ -235,7 +236,7 @@ class Field<char, field> : public BaseField
 
 public:
 	Field () : BaseField(field), _value() {}
-	Field (const Field& from) : BaseField(field), _value(from._value) {}
+	Field (const Field& from) : BaseField(field, from._rlm), _value(from._value) {}
 	Field (const char& val) : BaseField(field), _value(val) {}
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from[0]) {}
 	Field& operator=(const Field& that)

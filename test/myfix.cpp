@@ -340,6 +340,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	*er += new TEX::LeavesQty(qty());
 	*er += new TEX::CumQty(0);
 	*er += new TEX::AvgPx(0);
+	*er += new TEX::LastCapacity('5');
 	_session.send(er);
 
 	unsigned remaining_qty(qty()), cum_qty(0);
@@ -373,6 +374,12 @@ bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 {
 	//scoped_ptr<Message> cp(msg->copy());
 	//cp->print(cout);
+	TEX::LastCapacity lastCap;
+	if (msg->get(lastCap))
+	{
+		if (!lastCap.is_valid())
+			cout << "TEX::LastCapacity(" << lastCap << ") is not a valid value" << endl;
+	}
 	return true;
 }
 

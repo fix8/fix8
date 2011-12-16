@@ -169,7 +169,15 @@ public:
 	unsigned encode_group(const unsigned short fnum, std::ostream& to);
 	unsigned check_positions();
 	unsigned copy_legal(MessageBase *to, bool force=false) const;
-	void check_set_rlm(BaseField *where);
+	void check_set_rlm(BaseField *where)
+	{
+		if (!where->_rlm)
+		{
+			const BaseEntry *tbe(_ctx._be.find_ptr(where->_fnum));
+			if (tbe && tbe->_rlm)
+				where->_rlm = tbe->_rlm;	// populate realm;
+		}
+	}
 
 	const f8String& get_msgtype() const { return _msgType; }
 
@@ -202,6 +210,8 @@ public:
 		if (fitr == _fields.end())
 			return false;
 		to.set(fitr->second->from<T>().get());
+		if (fitr->second->_rlm)
+			to._rlm = fitr->second->_rlm;
 		return true;
 	}
 

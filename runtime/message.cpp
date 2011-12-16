@@ -261,17 +261,6 @@ unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 }
 
 //-------------------------------------------------------------------------------------------------
-void MessageBase::check_set_rlm(BaseField *where)
-{
-	if (!where->_rlm)
-	{
-		const BaseEntry *tbe(_ctx._be.find_ptr(where->_fnum));
-		if (tbe && tbe->_rlm)
-			where->_rlm = tbe->_rlm;	// populate realm;
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
 unsigned MessageBase::encode(ostream& to)
 {
 	const std::ios::pos_type where(to.tellp());
