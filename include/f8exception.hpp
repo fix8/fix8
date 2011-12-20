@@ -86,6 +86,13 @@ struct DuplicateField : f8Exception
 };
 
 //-------------------------------------------------------------------------------------------------
+template<typename T>
+struct InvalidDomainValue : f8Exception
+{
+	InvalidDomainValue(const T what) { format("Invalid Domain Value", what); }
+};
+
+//-------------------------------------------------------------------------------------------------
 struct InvalidField : f8Exception
 {
 	InvalidField(const unsigned field) { format("Invalid Field", field); }

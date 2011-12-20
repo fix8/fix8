@@ -76,7 +76,7 @@ static const std::string rcsid("$Id: myfix.cpp 558 2010-12-24 03:11:22Z davidd $
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hs");
+const string GETARGLIST("hsv");
 bool term_received(false), summary(false);
 
 typedef map<string, unsigned> MessageCount;
@@ -116,6 +116,7 @@ int main(int argc, char **argv)
 	option long_options[] =
 	{
 		{ "help",			0,	0,	'h' },
+		{ "version",		0,	0,	'v' },
 		{ "summary",		0,	0,	's' },
 		{ 0 },
 	};
@@ -127,6 +128,10 @@ int main(int argc, char **argv)
 	{
       switch (val)
 		{
+		case 'v':
+			cout << argv[0] << " for "PACKAGE" version "VERSION << endl;
+			cout << rcsid << endl;
+			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
 		case 's': summary = true; break;

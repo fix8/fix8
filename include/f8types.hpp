@@ -66,13 +66,14 @@ class GeneratedTable
 
 	typedef Val NotFoundType;
 	static const NotFoundType _noval;
+	typedef typename std::pair<const Pair *, const Pair *> PResult;
 
 public:
 	static const Val& find_ref(const Key& key)
 	{
 		static const std::string error_str("Invalid metadata or entry not found");
 		const Pair what = { key };
-		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
+		PResult res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
 		if (res.first != res.second)
 			return res.first->_value;
 		throw InvalidMetadata(error_str);
@@ -80,13 +81,13 @@ public:
 	static const Val find_val(const Key& key)
 	{
 		const Pair what = { key };
-		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
+		PResult res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
 		return res.first != res.second ? res.first->_value : _noval;
 	}
 	static const Val *find_ptr(const Key& key)
 	{
 		const Pair what = { key };
-		std::pair<const Pair *, const Pair *> res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
+		PResult res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
 		return res.first != res.second ? &res.first->_value : 0;
 	}
 

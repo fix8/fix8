@@ -310,18 +310,27 @@ unsigned Message::encode(f8String& to)
 	static_cast<check_sum *>(fitr->second)->set(fmt_chksum(calc_chksum(msg.str())));
 	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
 	fitr->second->encode(msg);
+#if defined MSGRECYCLING
+	_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress); // in case we want to reuse
+#endif
 
 	f8ostrstream hmsg;
 	if ((fitr = _header->_fields.find(Common_BeginString)) == _header->_fields.end())
 		throw MissingMandatoryField(Common_BeginString);
 	_header->_fp.clear(Common_BeginString, FieldTrait::suppress);
 	fitr->second->encode(hmsg);
+#if defined MSGRECYCLING
+	_header->_fp.set(Common_BeginString, FieldTrait::suppress); // in case we want to reuse
+#endif
 
 	if ((fitr = _header->_fields.find(Common_BodyLength)) == _header->_fields.end())
 		throw MissingMandatoryField(Common_BodyLength);
 	_header->_fp.clear(Common_BodyLength, FieldTrait::suppress);
 	static_cast<body_length *>(fitr->second)->set(msgLen);
 	fitr->second->encode(hmsg);
+#if defined MSGRECYCLING
+	_header->_fp.set(Common_BodyLength, FieldTrait::suppress); // in case we want to reuse
+#endif
 
 	hmsg << msg.str();
 	to = hmsg.str();
@@ -390,7 +399,30 @@ BaseField *MessageBase::replace(const unsigned short fnum, BaseField *with)
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *Message::copy() const
+BaseField *MessageBase::remove(const unsigned short fnum)
+{
+	BaseField *old(0);
+	Fields::iterator itr(_fields.find(fnum));
+	if (itr != _fields.end())
+	{
+		old = itr->second;
+		const unsigned pos(_fp.getPos(fnum));
+		for (Positions::iterator pitr(_pos.lower_bound(pos)); pitr != _pos.upper_bound(pos); ++pitr)
+		{
+			if (pitr->second == old)
+			{
+				_pos.erase(pitr);
+				break;
+			}
+		}
+		_fp.clear(fnum, FieldTrait::present);
+		_fields.erase(itr);
+	}
+	return old;
+}
+
+//-------------------------------------------------------------------------------------------------
+Message *Message::clone() const
 {
 	const BaseMsgEntry& bme(_ctx._bme.find_ref(_msgType));
 	Message *msg(bme._create());

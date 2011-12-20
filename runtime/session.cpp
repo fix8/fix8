@@ -527,8 +527,7 @@ bool Session::send_process(Message *msg) // called from the connection thread
 {
 	*msg->Header() += new sender_comp_id(_sid.get_senderCompID());
 	*msg->Header() += new target_comp_id(_sid.get_targetCompID());
-	msg_seq_num seqnum;
-	if (msg->Header()->get(seqnum))	// is a resend
+	if (msg->Header()->have(Common_MsgSeqNum))
 	{
 		*msg->Header() += new poss_dup_flag(true);
 		sending_time sendtime;

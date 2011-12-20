@@ -79,7 +79,7 @@ static const std::string rcsid("$Id$");
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:s");
+const string GETARGLIST("hl:sv");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
@@ -120,9 +120,10 @@ int main(int argc, char **argv)
 #ifdef HAVE_GETOPT_LONG
 	option long_options[] =
 	{
-		{ "help",			0,	0,	'h' },
-		{ "log",				0,	0,	'l' },
-		{ "server",			0,	0,	's' },
+		{ "help",		0,	0,	'h' },
+		{ "version",	0,	0,	'v' },
+		{ "log",			0,	0,	'l' },
+		{ "server",		0,	0,	's' },
 		{ 0 },
 	};
 
@@ -133,6 +134,10 @@ int main(int argc, char **argv)
 	{
       switch (val)
 		{
+		case 'v':
+			cout << argv[0] << " for "PACKAGE" version "VERSION << endl;
+			cout << rcsid << endl;
+			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
 		case 'l': strcpy(glob_log0, optarg); break;
@@ -327,11 +332,16 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 
 	//ostringstream gerr;
 	//IntervalTimer itm;
+#if defined MSGRECYCLING
+	scoped_ptr<TEX::ExecutionReport> er(new TEX::ExecutionReport);
+	msg->copy_legal(er.get());
+#else
 	TEX::ExecutionReport *er(new TEX::ExecutionReport);
+	msg->copy_legal(er);
+#endif
 	//gerr << "encode:" << itm.Calculate();
 	//GlobalLogger::instance()->send(gerr.str());
 
-	msg->copy_legal(er);
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
 	*er += new TEX::OrderID(oistr.str());
@@ -341,7 +351,19 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	*er += new TEX::CumQty(0);
 	*er += new TEX::AvgPx(0);
 	*er += new TEX::LastCapacity('5');
+#if defined MSGRECYCLING
+	_session.send(er.get());
+	while(er->get_in_use())
+		microsleep(10);
+	er->set_in_use(true);
+	delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
+	*er += new TEX::AvgPx(9999);
+	_session.send(er.get());
+	while(er->get_in_use())
+		microsleep(10);
+#else
 	_session.send(er);
+#endif
 
 	unsigned remaining_qty(qty()), cum_qty(0);
 	while (remaining_qty > 0)
@@ -349,8 +371,15 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		unsigned trdqty(RandDev::getrandom(remaining_qty));
 		if (!trdqty)
 			trdqty = 1;
+#if defined MSGRECYCLING
+		while(er->get_in_use())
+			microsleep(10);
+		er.reset(new TEX::ExecutionReport);
+		msg->copy_legal(er.get());
+#else
 		er = new TEX::ExecutionReport;
 		msg->copy_legal(er);
+#endif
 		*er += new TEX::OrderID(oistr.str());
 		ostringstream eistr;
 		eistr << "exec" << ++eoid;
@@ -363,7 +392,13 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		*er += new TEX::CumQty(cum_qty);
 		*er += new TEX::LastQty(trdqty);
 		*er += new TEX::AvgPx(price());
+#if defined MSGRECYCLING
+		_session.send(er.get());
+		while(er->get_in_use())
+			microsleep(10);
+#else
 		_session.send(er);
+#endif
 	}
 
 	return true;
@@ -372,7 +407,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 //-----------------------------------------------------------------------------------------
 bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 {
-	//scoped_ptr<Message> cp(msg->copy());
+	//scoped_ptr<Message> cp(msg->clone());
 	//cp->print(cout);
 	TEX::LastCapacity lastCap;
 	if (msg->get(lastCap))

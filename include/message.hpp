@@ -183,6 +183,12 @@ public:
 
 	void add_field(const unsigned short fnum, const unsigned pos, BaseField *what)
 	{
+		if (_fp.get(fnum, FieldTrait::present)) // for now, silently replace duplicate
+		{
+			delete replace(fnum, what);
+			return;
+		}
+
 		_fields.insert(Fields::value_type(fnum, what));
 		_pos.insert(Positions::value_type(pos, what));
 		_fp.set(fnum, FieldTrait::present);
@@ -218,6 +224,8 @@ public:
 	template<typename T>
 	bool operator()(T& to) const { return get(to); }
 
+	bool have(const unsigned short fnum) const { return _fp.get(fnum, FieldTrait::present); }
+
 	Fields::const_iterator find_field(const unsigned short fnum) const { return _fields.find(fnum); }
 	BaseField *get_field(const unsigned short fnum) const
 	{
@@ -229,6 +237,7 @@ public:
 	Fields::const_iterator fields_end() const { return _fields.end(); }
 
 	BaseField *replace(const unsigned short fnum, BaseField *with);
+	BaseField *remove(const unsigned short fnum);
 
 	template<typename T>
 	GroupBase *find_group() { return find_group(T::_fnum); }
@@ -280,7 +289,7 @@ public:
 
 	unsigned decode(const f8String& from);
 	unsigned encode(f8String& to);
-	Message *copy() const;
+	Message *clone() const;
 
 	virtual bool process(Router& rt) const { return (rt)(this); }
 	virtual bool is_admin() const { return false; }

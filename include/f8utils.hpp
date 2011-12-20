@@ -338,6 +338,13 @@ inline int millisleep (const int ms)
 }
 
 //----------------------------------------------------------------------------------------
+inline int microsleep (const int us)
+{
+	struct timespec tspec = { us / (1000 * 1000), 1000 * (us % (1000 * 1000)) };
+	return nanosleep(&tspec, 0);
+}
+
+//----------------------------------------------------------------------------------------
 struct DeleteObject
 {
 	template<typename T>
