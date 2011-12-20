@@ -52,6 +52,7 @@ class Tickval
 {
 public:
 	typedef unsigned long long ticks;
+	static const ticks noticks = 0ULL;
 	static const ticks thousand = 1000ULL;
 	static const ticks million = thousand * thousand;
 	static const ticks billion = thousand * million;
@@ -81,7 +82,8 @@ public:
 	Tickval& now() { return get_tickval(*this); }
 
 	unsigned secs() const { return static_cast<unsigned>(_value / billion); }
-	unsigned msecs() const { return static_cast<unsigned>(_value % million); }
+	unsigned msecs() const { return static_cast<unsigned>(_value % thousand); }
+	unsigned usecs() const { return static_cast<unsigned>(_value % million); }
 	unsigned nsecs() const { return static_cast<unsigned>(_value % billion); }
 	double todouble() const { return static_cast<double>(_value) / billion; }
 
@@ -99,8 +101,8 @@ public:
 		return to = ts;
 	}
 
-	bool operator!() const { return _value == 0ULL; }
-	operator void*() { return _value == 0ULL ? 0 : this; }
+	bool operator!() const { return _value == noticks; }
+	operator void*() { return _value == noticks ? 0 : this; }
 	operator unsigned long long() { return _value; }
 	operator double() { return todouble(); }
 
@@ -199,7 +201,7 @@ class TimerEvent
 	mutable Tickval _t;
 
 public:
-	TimerEvent(bool (T::*callback)()) : _callback(callback), _t() {}
+	explicit TimerEvent(bool (T::*callback)()) : _callback(callback), _t() {}
 	~TimerEvent() {}
 	void set(const Tickval& t) const { _t = t; }
 	bool operator<(const TimerEvent<T>& right) const { return _t > right._t; };
@@ -219,7 +221,7 @@ class Timer
    std::priority_queue<TimerEvent<T> > _event_queue;
 
 public:
-   Timer(T& monitor, int granularity=1) : _monitor(monitor), _thread(ref(*this)), _granularity(granularity) {}
+   explicit Timer(T& monitor, int granularity=1) : _monitor(monitor), _thread(ref(*this)), _granularity(granularity) {}
    virtual ~Timer() {}
 
    bool schedule(const TimerEvent<T>& what, const unsigned timeToWaitMS, const bool hi_res=false);
@@ -317,7 +319,7 @@ public:
 
    double Reset()
    {
-      double curr(AsDouble());
+      const double curr(AsDouble());
 		startTime_.now();
       return curr;
    }

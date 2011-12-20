@@ -269,12 +269,6 @@ bool MyMenu::new_order_single()
 	*gr2 += new TEX::UnderlyingSymbol("FOO");
 	*noul += gr2;
 
-#if 0
-	cout << "sizeof(TEX::NewOrderSingle): " << sizeof(TEX::NewOrderSingle) << endl;
-	cout << "sizeof(TEX::ExecutionReport): " << sizeof(TEX::ExecutionReport) << endl;
-	cout << "sizeof(TEX::header): " << sizeof(TEX::header) << endl;
-	cout << "sizeof(TEX::trailer): " << sizeof(TEX::trailer) << endl;
-#endif
 	_session.send(nos);
 
 	return true;
@@ -407,8 +401,6 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 //-----------------------------------------------------------------------------------------
 bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 {
-	//scoped_ptr<Message> cp(msg->clone());
-	//cp->print(cout);
 	TEX::LastCapacity lastCap;
 	if (msg->get(lastCap))
 	{
