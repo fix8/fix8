@@ -2,7 +2,7 @@
 #############################################################################################
 # Fix8 is released under the New BSD License.
 #
-# Copyright (c) 2010-11, David L. Dight <fix@fix8.org>
+# Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are
@@ -39,7 +39,7 @@
 #
 #############################################################################################
 MAJOR_VERSION_NUM=0
-MINOR_VERSION_NUM=1
+MINOR_VERSION_NUM=3
 
 # we would expect svnversion to return a string like 123:126
 BUILD_VERSION_NUM=0
