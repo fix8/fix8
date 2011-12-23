@@ -51,7 +51,6 @@ public:
 	virtual bool operator() (const FIX8::TEX::ExecutionReport *msg) const;
 };
 
-//-----------------------------------------------------------------------------------------
 class myfix_session_client : public FIX8::Session
 {
 	tex_router_client _router;
@@ -75,7 +74,6 @@ public:
 	virtual bool operator() (const FIX8::TEX::NewOrderSingle *msg) const;
 };
 
-//-----------------------------------------------------------------------------------------
 class myfix_session_server : public FIX8::Session
 {
 	tex_router_server _router;

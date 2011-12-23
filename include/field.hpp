@@ -132,7 +132,7 @@ public:
 	Field(const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 	virtual ~Field() {}
 
-	virtual const T& get() = 0;
+	virtual const T& get() const = 0;
 	virtual const T& operator()() const = 0;
 	virtual const T& set(const T& from) = 0;
 	virtual const T& set_from_raw(const f8String& from) = 0;
@@ -161,7 +161,7 @@ public:
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
-	const int& get() { return _value; }
+	const int& get() const { return _value; }
 	const int& operator()() const { return _value; }
 	const int& set(const int& from) { return _value = from; }
 	const int& set_from_raw(const f8String& from) { return _value = GetValue<int>(from); }
@@ -190,7 +190,7 @@ public:
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
-	const f8String& get() { return _value; }
+	const f8String& get() const { return _value; }
 	const f8String& operator()() const { return _value; }
 	const f8String& set(const f8String& from) { return _value = from; }
 	const f8String& set_from_raw(const f8String& from) { return _value = from; }
@@ -220,7 +220,7 @@ public:
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
-	virtual const double& get() { return _value; }
+	virtual const double& get() const { return _value; }
 	virtual const double& operator()() const { return _value; }
 	virtual const double& set(const double& from) { return _value = from; }
 	virtual const double& set_from_raw(const f8String& from) { return _value = GetValue<double>(from); }
@@ -249,7 +249,7 @@ public:
 	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
-	const char& get() { return _value; }
+	const char& get() const { return _value; }
 	const char& operator()() const { return _value; }
 	const char& set(const char& from) { return _value = from; }
 	const char& set_from_raw(const f8String& from) { return _value = from[0]; }
@@ -317,7 +317,7 @@ public:
 
 	virtual ~Field() {}
 
-	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& get() const { return _value; }
 	const Poco::DateTime& operator()() const { return _value; }
 	const f8String& set(const f8String& from) { return _value = from; }
 	void set(const Poco::DateTime& from) { _value = from; }
@@ -352,7 +352,7 @@ public:
 	}
 	virtual ~Field() {}
 
-	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& get() const { return _value; }
 	const Poco::DateTime& operator()() const { return _value; }
 	const f8String& set(const f8String& from) { return _value = from; }
 	virtual Field *copy() { return new Field(*this); }
@@ -379,7 +379,7 @@ public:
 	}
 	virtual ~Field() {}
 
-	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& get() const { return _value; }
 	const Poco::DateTime& operator()() const { return _value; }
 	const f8String& set(const f8String& from) { return _value = from; }
 	virtual Field *copy() { return new Field(*this); }
@@ -406,7 +406,7 @@ public:
 	}
 	virtual ~Field() {}
 
-	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& get() const { return _value; }
 	const Poco::DateTime& operator()() const { return _value; }
 	const f8String& set(const f8String& from) { return _value = from; }
 	virtual Field *copy() { return new Field(*this); }
@@ -433,7 +433,7 @@ public:
 	}
 	virtual ~Field() {}
 
-	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& get() const { return _value; }
 	const Poco::DateTime& operator()() const { return _value; }
 	const f8String& set(const f8String& from) { return _value = from; }
 	virtual Field *copy() { return new Field(*this); }
@@ -460,7 +460,7 @@ public:
 	}
 	virtual ~Field() {}
 
-	const Poco::DateTime& get() { return _value; }
+	const Poco::DateTime& get() const { return _value; }
 	const Poco::DateTime& operator()() const { return _value; }
 	const f8String& set(const f8String& from) { return _value = from; }
 	virtual Field *copy() { return new Field(*this); }
@@ -558,7 +558,7 @@ public:
 	}
 	virtual ~Field() {}
 
-	const bool get() { return _value; }
+	const bool get() const { return _value; }
 	const bool operator()() const { return _value; }
 	const bool set(const bool from) { return _value = from; }
 	const bool set_from_raw(const f8String& from) { return toupper(from[0]) == 'Y'; }

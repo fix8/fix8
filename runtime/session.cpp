@@ -522,6 +522,20 @@ bool Session::send(Message *tosend)
 	return _connection->write(tosend);
 }
 
+#if defined MSGRECYCLING
+bool Session::send_wait(Message *msg, const int waitval)
+{
+	if (send(msg))
+	{
+		while(msg->get_in_use())
+			microsleep(waitval);
+		return true;
+	}
+	return false;
+}
+
+#endif
+
 //-------------------------------------------------------------------------------------------------
 bool Session::send_process(Message *msg) // called from the connection thread
 {

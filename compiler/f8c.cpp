@@ -822,28 +822,45 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 					<< flitr->_pos << ", " << tostr.str() << " }";
 			}
 			osr_cpp << endl << "};" << endl;
-			osr_cpp << "const f8String " << mitr->second._name << "::_msgtype(\"" << mitr->first << "\");" << endl;
+			osr_cpp << "const MsgType " << mitr->second._name << "::_msgtype(\"" << mitr->first << "\");" << endl;
 			osc_hpp << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
-			osc_hpp << spacer << "static const f8String _msgtype;" << endl << endl;
+			osc_hpp << spacer << "static const MsgType _msgtype;" << endl << endl;
 		}
 
 		osc_hpp << "public:" << endl;
+		osc_hpp << spacer << "static const unsigned short _fnum = " << mitr->second._fields.get_presence().size() << ';' << endl << endl;
 		osc_hpp << spacer << mitr->second._name << "()";
 		if (mitr->second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
-				<< "(ctx, _msgtype, _traits, _traits + " << mitr->second._fields.get_presence().size() << ')';
+				<< "(ctx, _msgtype(), _traits, _traits + _fnum)";
 		if (isHeader || isTrailer)
 			osc_hpp << " { add_preamble(); }" << endl;
 		else if (!mitr->second._groups.empty())
 		{
 			osc_hpp << endl << spacer << '{' << endl;
+			GroupMap::const_iterator last_gitr(mitr->second._groups.end());
+			--last_gitr;
 			for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
 			{
 				FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
-				osc_hpp << spacer << spacer << "_groups[" << gsitr->first << "] = new " << gsitr->second._name << ';' << endl;
+				osc_hpp << spacer << spacer;
+				if (gitr == mitr->second._groups.begin())
+				{
+					if (mitr->second._groups.size() > 1)
+						osc_hpp << "Groups::iterator itr(_groups.insert(_groups.begin(), Groups::value_type("
+							<< gsitr->first << ", new " << gsitr->second._name << ")));" << endl;
+					else
+						osc_hpp << "_groups.insert(_groups.begin(), Groups::value_type("
+							<< gsitr->first << ", new " << gsitr->second._name << "));" << endl;
+				}
+				else
+				{
+					if (gitr != last_gitr)
+						osc_hpp << "itr = ";
+					osc_hpp << "_groups.insert(itr, Groups::value_type(" << gsitr->first << ", new " << gsitr->second._name << "));" << endl;
+				}
 			}
 			osc_hpp << spacer << '}' << endl;
-
 		}
 		else
 			osc_hpp << " {}" << endl;
@@ -857,8 +874,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 				osc_hpp << spacer << "virtual bool is_admin() const { return true; }" << endl;
 		}
 
-		osc_hpp << endl << spacer << "static const " << fsitr->second._name << " get_msgtype() { return "
-			<< fsitr->second._name << "(_msgtype); }" << endl;
+		osc_hpp << endl << spacer << "static const " << fsitr->second._name << "& get_msgtype() { return _msgtype; }" << endl;
 		if (isHeader)
 			osc_hpp << endl << _csMap.find_value_ref(cs_header_preamble) << endl;
 		else if (isTrailer)
@@ -886,19 +902,20 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 					<< right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", " << tostr.str() << " }";
 			}
 			osr_cpp << endl << "};" << endl;
-			osr_cpp << "const f8String " << mitr->second._name << "::" << gsitr->second._name << "::_msgtype(\""
+			osr_cpp << "const MsgType " << mitr->second._name << "::" << gsitr->second._name << "::_msgtype(\""
 				<< gsitr->second._name << "\");" << endl;
 			osc_hpp << endl << spacer << "class " << gsitr->second._name
 				<< " : public GroupBase" << endl << spacer << '{' << endl;
 			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
-			osc_hpp << spacer << spacer << "static const f8String _msgtype;" << endl << endl;
+			osc_hpp << spacer << spacer << "static const MsgType _msgtype;" << endl << endl;
 			osc_hpp << spacer << "public:" << endl;
-			osc_hpp << spacer << spacer << gsitr->second._name << "() : GroupBase(" << gsitr->first << ") {}" << endl;
+			osc_hpp << spacer << spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl << endl;
+			osc_hpp << spacer << spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
 			osc_hpp << spacer << spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
-			osc_hpp << spacer << spacer << "MessageBase *create_group() { return new MessageBase(ctx, _msgtype, _traits, _traits + " << gitr->second.get_presence().size() << "); }" << endl;
+			osc_hpp << spacer << spacer << "MessageBase *create_group() { return new MessageBase(ctx, _msgtype(), _traits, _traits + "
+				<< gitr->second.get_presence().size() << "); }" << endl;
 			osc_hpp << endl << spacer << spacer << "static const " << fsitr->second._name
-				<< " get_msgtype() { return " << fsitr->second._name << "(_msgtype); }" << endl;
-			osc_hpp << spacer << spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl;
+				<< "& get_msgtype() { return _msgtype; }" << endl;
 			osc_hpp << spacer << "};" << endl;
 		}
 		osc_hpp << "};" << endl << endl;

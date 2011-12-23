@@ -105,6 +105,7 @@ void sig_handler(int sig)
    {
    case SIGTERM:
    case SIGINT:
+   case SIGQUIT:
       term_received = true;
       signal(sig, sig_handler);
       break;
@@ -150,6 +151,7 @@ int main(int argc, char **argv)
 
 	signal(SIGTERM, sig_handler);
 	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 
 	Logger::LogFlags logflags, plogflags;
 	logflags << Logger::timestamp << Logger::sequence << Logger::thread;
@@ -183,7 +185,10 @@ int main(int argc, char **argv)
 			GlobalLogger::instance()->send("client connection established...");
 			ServerConnection sc(&sock, ms, conf.get_heartbeat_interval(ses));
 			ms.control() |= Session::print;
-			ms.start(&sc);	// will wait
+			ms.start(&sc, false);
+			while (!term_received)
+				sleep(1);
+			ms.stop();
 		}
 		else
 		{
@@ -346,15 +351,11 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	*er += new TEX::AvgPx(0);
 	*er += new TEX::LastCapacity('5');
 #if defined MSGRECYCLING
-	_session.send(er.get());
-	while(er->get_in_use())
-		microsleep(10);
+	_session.send_wait(er.get());
 	er->set_in_use(true);
 	delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
 	*er += new TEX::AvgPx(9999);
-	_session.send(er.get());
-	while(er->get_in_use())
-		microsleep(10);
+	_session.send_wait(er.get());
 #else
 	_session.send(er);
 #endif
@@ -387,9 +388,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		*er += new TEX::LastQty(trdqty);
 		*er += new TEX::AvgPx(price());
 #if defined MSGRECYCLING
-		_session.send(er.get());
-		while(er->get_in_use())
-			microsleep(10);
+		_session.send_wait(er.get());
 #else
 		_session.send(er);
 #endif

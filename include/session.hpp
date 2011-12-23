@@ -183,6 +183,9 @@ public:
 	virtual bool retrans_callback(const SequencePair& with);
 
 	virtual bool send(Message *msg);
+#if defined MSGRECYCLING
+	virtual bool send_wait(Message *msg, const int waitval=10);
+#endif
 	bool send_process(Message *msg);
 	void stop();
 	Connection *get_connection() { return _connection; }
