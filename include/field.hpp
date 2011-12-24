@@ -108,7 +108,7 @@ public:
 	virtual int get_rlm_idx() const { return -1; }
 
 	template<typename T>
-	T& from() { return *static_cast<const T*>(this); }
+	T& from() { return *static_cast<T*>(this); }
 
 	size_t encode(std::ostream& os)
 	{
