@@ -128,7 +128,7 @@ int loadFixVersion (XmlEntity& xf, Ctxt& ctxt)
 		return -1;
 	}
 
-	string major, minor, revision("0");
+	string major, minor, revision("0"), type("FIX");
 
 	if (!fix->GetAttr("major", major) || !fix->GetAttr("minor", minor))
 	{
@@ -137,28 +137,27 @@ int loadFixVersion (XmlEntity& xf, Ctxt& ctxt)
 	}
 
 	fix->GetAttr("revision", revision);
-	fix->GetAttr("ns", ctxt._fixns);
+	if (!fix->GetAttr("ns", ctxt._fixns))
+		ctxt._fixns = "UNKNOWN";
+	fix->GetAttr("type", type);
 
 	// fix version: <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	ctxt._version = GetValue<int>(major) * 1000 + GetValue<int>(minor) * 100 + GetValue<int>(revision);
-	if (ctxt._version < 4000 || ctxt._version > 6000)
+	if (type == "FIX" && ctxt._version < 4000)
 	{
 		cerr << "Invalid FIX version " << ctxt._version << " from fix header in " << inputFile << endl;
 		return -1;
 	}
 
 	ostringstream ostr;
-	ostr << "FIX" << ctxt._version;
+	ostr << type << ctxt._version;
 	ctxt._systemns = ostr.str();
 	if (ctxt._fixns.empty())
 		ctxt._fixns = ctxt._systemns;
 	ctxt._clname = prefix;
 
 	ostr.str("");
-	if (GetValue<int>(major) > 4)
-		ostr << "FIXT.1.1";
-	else
-		ostr << "FIX." << major << '.' << minor;
+	ostr << type << '.' << major << '.' << minor;
 	ctxt._beginstr = ostr.str();
 
 	return 0;

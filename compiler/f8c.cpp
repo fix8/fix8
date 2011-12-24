@@ -828,11 +828,11 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 		}
 
 		osc_hpp << "public:" << endl;
-		osc_hpp << spacer << "static const unsigned short _fnum = " << mitr->second._fields.get_presence().size() << ';' << endl << endl;
+		osc_hpp << spacer << "static const unsigned short _fcnt = " << mitr->second._fields.get_presence().size() << ';' << endl << endl;
 		osc_hpp << spacer << mitr->second._name << "()";
 		if (mitr->second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
-				<< "(ctx, _msgtype(), _traits, _traits + _fnum)";
+				<< "(ctx, _msgtype(), _traits, _traits + _fcnt)";
 		if (isHeader || isTrailer)
 			osc_hpp << " { add_preamble(); }" << endl;
 		else if (!mitr->second._groups.empty())
