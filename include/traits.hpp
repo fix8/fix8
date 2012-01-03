@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -160,6 +162,9 @@ public:
 	}
 
 	bool add(const FieldTrait& what) { return _presence.insert(Presence::value_type(what)).second; }
+	template<typename InputIterator>
+	void add(const InputIterator begin, const InputIterator end) { _presence.insert(begin, end); }
+
 	void clear_flag(FieldTrait::TraitTypes type=FieldTrait::present)
 		{ for (Presence::const_iterator itr(_presence.begin()); itr != _presence.end(); itr++->_field_traits.clear(type)); }
 

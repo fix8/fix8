@@ -9,7 +9,7 @@ AC_REVISION([$Rev$])
 # $URL$
 
 AC_PREREQ(2.61)
-AC_INIT([fix8], [m4_esyscmd([./version.sh | tr -d '\n'])],fix@fix8.org)
+AC_INIT([fix8], [m4_esyscmd([./version.sh|tr -d '\n'])],fix@fix8.org)
 AM_INIT_AUTOMAKE
 AH_TOP([//-----------------------------------------------------------------------------------------
 #if 0
@@ -29,6 +29,8 @@ permitted provided that the following conditions are met:
  * Neither the name of the author nor the names of its contributors may be used to
 	endorse or promote products derived from this software without specific prior
 	written permission.
+ * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -110,6 +112,13 @@ AC_FUNC_REALLOC
 AC_FUNC_STRCOLL
 
 AC_CHECK_TOOL([STRIP],[strip])
+AC_CHECK_TOOL([DOXYGEN],[doxygen])
+
+if test -z "$DOXYGEN";
+	then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
+fi
+AM_CONDITIONAL([USEDOXYGEN],
+	[test -n "$DOXYGEN"])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
 
 AC_CHECK_FUNCS([scandir getopt_long sysconf getaddrinfo getnameinfo \
 	daemon popen waitpid setlogmask alarm dup2 ftruncate \
@@ -328,6 +337,14 @@ AC_ARG_ENABLE([msgrecycle],
 	yes) AC_DEFINE(MSGRECYCLING, 1, [Define to 1 for Message Recycling]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-msgrecycle) ;;
+esac])
+
+AC_ARG_ENABLE([customfields],
+[AC_HELP_STRING([--enable-customfields],[Enable User defined fields (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(PERMIT_CUSTOM_FIELDS, 1, [Define to 1 for User Defined Fields]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-customfields) ;;
 esac])
 
 AC_ARG_ENABLE([debug],

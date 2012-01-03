@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -80,29 +82,6 @@ namespace FIX8 {
 //----------------------------------------------------------------------------------------
 const std::string TRANSLATIONUNIT(__FILE__);
 
-//-----------------------------------------------------------------------------------------
-int Hex2Dec(const char src)
-{
-	const char sr(toupper(src));
-	return sr >= '0' && sr <= '9' ? sr - '0' : sr >= 'A' && sr <= 'F' ? sr - '7' : -1;
-}
-
-//-----------------------------------------------------------------------------------------
-const int GetGMTOffsetInSecs()
-{
-	tm tim;
-	time_t now;
-	time(&now);
-	localtime_r(&now, &tim);
-	return
-#ifdef HAVE_GMTOFF
-	tim.tm_gmtoff
-#else
-	-(timezone - (tim.tm_isdst > 0 ? 60 * 60 : 0))
-#endif
-	;
-}
-
 //-------------------------------------------------------------------------------------------------
 const string& GetTimeAsStringMS(string& result, Tickval *tv, const unsigned dplaces)
 {
@@ -134,21 +113,6 @@ const string& GetTimeAsStringMS(string& result, Tickval *tv, const unsigned dpla
    return result = oss.str();
 }
 
-//----------------------------------------------------------------------------------------
-// No multiplication, algorithm by Serge Vakulenko. See http://vak.ru/doku.php/proj/hash/sources
-unsigned ROT13Hash (const string& str)
-{
-	unsigned int hash(0);
-
-	for (string::const_iterator itr(str.begin()); itr != str.end(); ++itr)
-	{
-		hash += *itr;
-		hash -= rotl<unsigned>(hash, 13);
-	}
-
-	return hash;
-}
-
 //-----------------------------------------------------------------------------------------
 string& CheckAddTrailingSlash(string& src)
 {
@@ -157,22 +121,7 @@ string& CheckAddTrailingSlash(string& src)
 	return src;
 }
 
-string& CheckRemoveTrailingSlash(string& src)
-{
-	if (!src.empty() && *src.rbegin() == '/')
-		src.resize(src.size() - 1);
-	return src;
-}
-
 //-----------------------------------------------------------------------------------------
-string& InPlaceChrReplace(const char sch, const char rch, string& src)
-{
-	for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
-		if (*itr == sch)
-			*itr = rch;
-	return src;
-}
-
 string& InPlaceStrToUpper(string& src)
 {
 	for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
@@ -190,12 +139,6 @@ string& InPlaceStrToLower(string& src)
 	return src;
 }
 
-const string& StrToLower(const string& src, string& target)
-{
-	target.assign (src);
-	return InPlaceStrToLower(target);
-}
-
 //----------------------------------------------------------------------------------------
 string Str_error(const int err, const char *str)
 {
@@ -209,53 +152,6 @@ string Str_error(const int err, const char *str)
 		return ostr.str();
 	}
 	return string(buf);
-}
-
-//----------------------------------------------------------------------------------------
-RegExp::RegExp(const char *pattern, const int flags) : pattern_(pattern)
-{
-	if ((errCode_ = regcomp(&reg_, pattern_.c_str(), REG_EXTENDED|flags)) != 0)
-	{
-		char rbuf[MaxErrLen_];
-		regerror(errCode_, &reg_, rbuf, MaxErrLen_);
-		errString = rbuf;
-	}
-}
-
-//----------------------------------------------------------------------------------------
-int RegExp::SearchString(RegMatch& match, const string& source, const int subExpr, const int offset)
-{
-	match.subCnt_ = 0;
-	if (regexec(&reg_, source.c_str() + offset, subExpr <= RegMatch::SubLimit_ ? subExpr : RegMatch::SubLimit_, match.subexprs_, 0) == 0)
-		while (match.subCnt_ < subExpr && match.subexprs_[match.subCnt_].rm_so != -1)
-			++match.subCnt_;
-	return match.subCnt_;
-}
-
-//----------------------------------------------------------------------------------------
-string& RegExp::SubExpr(RegMatch& match, const string& source, string& target, const int offset, const int num)
-{
-	if (num < match.subCnt_)
-		target = source.substr(offset + match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
-	else
-		target.empty();
-	return target;
-}
-
-//----------------------------------------------------------------------------------------
-string& RegExp::Erase(RegMatch& match, string& source, const int num)
-{
-	if (num < match.subCnt_)
-		source.erase(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
-	return source;
-}
-
-//----------------------------------------------------------------------------------------
-string& RegExp::Replace(RegMatch& match, string& source, const string& with, const int num)
-{
-	if (num < match.subCnt_)
-		source.replace(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so, with);
-	return source;
 }
 
 } // namespace FIX8

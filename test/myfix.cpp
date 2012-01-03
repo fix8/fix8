@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -79,7 +81,7 @@ static const std::string rcsid("$Id$");
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:sv");
+const string GETARGLIST("hl:svq");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
@@ -97,6 +99,66 @@ const MyMenu::Handlers::NotFoundType MyMenu::Handlers::_noval = &MyMenu::nothing
 template<>
 const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
 	MyMenu::Handlers::get_table_end());
+bool quiet(false);
+
+//-----------------------------------------------------------------------------------------
+#if defined PERMIT_CUSTOM_FIELDS
+
+namespace FIX8 {
+namespace TEX {
+
+typedef Field<char, 6666> Orderbook;
+typedef Field<Boolean, 6951> BrokerInitiated;
+typedef Field<int, 7009> ExecOption;
+
+namespace {
+
+const char Orderbook_realm[] =	// the realms must be std::less sorted
+   { 'A', 'C', 'I', 'P', 'X' };
+const char *Orderbook_descriptions[] = // descriptions must be in the same order for the relevant realm
+   { "AXCLOB", "AXCP", "CHIX", "AXPM", "CROSS" };
+const char BrokerInitiated_realm[] =
+   { 'N', 'Y' };
+const char *BrokerInitiated_descriptions[] =
+   { "NO", "YES" };
+const int ExecOption_realm[] =
+   { 0, 1, 2, 3, 4 };
+const char *ExecOption_descriptions[] =
+   { "NORMAL", "EXPEDITE", "URGENT", "REPLACEALL", "STOPALL" };
+
+const RealmBase extra_realmbases[] =
+{
+   { reinterpret_cast<const void *>(Orderbook_realm), static_cast<RealmBase::RealmType>(1),
+      static_cast<FieldTrait::FieldType>(7), sizeof(Orderbook_realm)/sizeof(char), Orderbook_descriptions },
+   { reinterpret_cast<const void *>(BrokerInitiated_realm), static_cast<RealmBase::RealmType>(1),
+      static_cast<FieldTrait::FieldType>(8), sizeof(BrokerInitiated_realm)/sizeof(char), BrokerInitiated_descriptions },
+   { reinterpret_cast<const void *>(ExecOption_realm), static_cast<RealmBase::RealmType>(1),
+      static_cast<FieldTrait::FieldType>(1), sizeof(ExecOption_realm)/sizeof(int), ExecOption_descriptions },
+};
+
+BaseField *Create_Orderbook(const f8String& from, const RealmBase *db) { return new Orderbook(from, db); }
+BaseField *Create_BrokerInitiated(const f8String& from, const RealmBase *db) { return new BrokerInitiated(from, db); }
+BaseField *Create_ExecOption(const f8String& from, const RealmBase *db) { return new ExecOption(from, db); }
+
+} // namespace
+} // namespace TEX
+
+bool common_post_msg_ctor(Message *msg)
+{
+	if (msg->get_msgtype() == TEX::ExecutionReport::get_msgtype()())
+	{
+		const FieldTrait::TraitBase trt[] =
+		{
+			{ 6666, 7, 1000, 0x004 }, { 6951,  8, 5, 0x004 }, { 7009,  1, 6, 0x004 },
+		};
+		msg->add_trait(trt, trt + sizeof(trt)/sizeof(FieldTrait::TraitBase));
+	}
+
+	return true;
+}
+
+} // namespace FIX8
+#endif
 
 //-----------------------------------------------------------------------------------------
 void sig_handler(int sig)
@@ -125,6 +187,7 @@ int main(int argc, char **argv)
 		{ "version",	0,	0,	'v' },
 		{ "log",			0,	0,	'l' },
 		{ "server",		0,	0,	's' },
+		{ "quiet",		0,	0,	'q' },
 		{ 0 },
 	};
 
@@ -143,6 +206,7 @@ int main(int argc, char **argv)
 		case 'h': print_usage(); return 0;
 		case 'l': strcpy(glob_log0, optarg); break;
 		case 's': server = true; break;
+		case 'q': quiet = true; break;
 		default: break;
 		}
 	}
@@ -158,6 +222,17 @@ int main(int argc, char **argv)
 	plogflags << Logger::append;
 	string logname, prot_logname;
 	Poco::Net::SocketAddress addr;
+
+#if defined PERMIT_CUSTOM_FIELDS
+	CustomFields custfields(true);	// will cleanup
+	custfields.add(6666, BaseEntry_ctor(new BaseEntry, &TEX::Create_Orderbook,
+		&TEX::extra_realmbases[0], "Orderbook", "Select downstream execution venue"));
+	custfields.add(6951, BaseEntry_ctor(new BaseEntry, &TEX::Create_BrokerInitiated,
+		&TEX::extra_realmbases[1], "BrokerInitiated", "Indicate if order was broker initiated"));
+	custfields.add(7009, BaseEntry_ctor(new BaseEntry, &TEX::Create_ExecOption,
+		&TEX::extra_realmbases[2], "ExecOption", "Broker specific option"));
+	TEX::ctx.set_ube(&custfields);
+#endif
 
 	try
 	{
@@ -184,7 +259,8 @@ int main(int argc, char **argv)
 			Poco::Net::StreamSocket sock(ss.acceptConnection(claddr));
 			GlobalLogger::instance()->send("client connection established...");
 			ServerConnection sc(&sock, ms, conf.get_heartbeat_interval(ses));
-			ms.control() |= Session::print;
+			if (!quiet)
+				ms.control() |= Session::print;
 			ms.start(&sc, false);
 			while (!term_received)
 				sleep(1);
@@ -213,7 +289,8 @@ int main(int argc, char **argv)
 			conf.get_address(ses, addr);
 			Poco::Net::StreamSocket sock;
 			ClientConnection cc(&sock, addr, ms);
-			ms.control() |= Session::print;
+			if (!quiet)
+				ms.control() |= Session::print;
 			ms.start(&cc, false);
 
 			MyMenu mymenu(ms, 0, cout);
@@ -244,10 +321,26 @@ bool myfix_session_client::handle_application(const unsigned seqnum, const Messa
 }
 
 //-----------------------------------------------------------------------------------------
+#if defined PERMIT_CUSTOM_FIELDS
+bool myfix_session_client::post_msg_ctor(Message *msg)
+{
+	return common_post_msg_ctor(msg);
+}
+#endif
+
+//-----------------------------------------------------------------------------------------
 bool myfix_session_server::handle_application(const unsigned seqnum, const Message *msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
 }
+
+//-----------------------------------------------------------------------------------------
+#if defined PERMIT_CUSTOM_FIELDS
+bool myfix_session_server::post_msg_ctor(Message *msg)
+{
+	return common_post_msg_ctor(msg);
+}
+#endif
 
 //-----------------------------------------------------------------------------------------
 bool MyMenu::new_order_single()
@@ -315,6 +408,7 @@ void print_usage()
 	um.add('s', "server", "run in server mode (default client mode)");
 	um.add('h', "help", "help, this screen");
 	um.add('l', "log", "global log filename");
+	um.add('q', "quiet", "do not print fix output");
 	um.print(cerr);
 }
 
@@ -324,20 +418,30 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	static unsigned oid(0), eoid(0);
 	TEX::OrderQty qty;
 	msg->get(qty);
-	cout << "Order qty:" << qty() << endl;
+	if (!quiet)
+		cout << "Order qty:" << qty() << endl;
 	TEX::Price price;
 	msg->get(price);
-	cout << "price:" << price() << endl;
+	if (!quiet)
+		cout << "price:" << price() << endl;
 
 	//ostringstream gerr;
 	//IntervalTimer itm;
 #if defined MSGRECYCLING
 	scoped_ptr<TEX::ExecutionReport> er(new TEX::ExecutionReport);
+#if defined PERMIT_CUSTOM_FIELDS
+	_session.post_msg_ctor(er.get());
+#endif
 	msg->copy_legal(er.get());
 #else
 	TEX::ExecutionReport *er(new TEX::ExecutionReport);
+#if defined PERMIT_CUSTOM_FIELDS
+	_session.post_msg_ctor(er);
+#endif
 	msg->copy_legal(er);
 #endif
+	if (!quiet)
+		cout << endl;
 	//gerr << "encode:" << itm.Calculate();
 	//GlobalLogger::instance()->send(gerr.str());
 
@@ -350,11 +454,17 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	*er += new TEX::CumQty(0);
 	*er += new TEX::AvgPx(0);
 	*er += new TEX::LastCapacity('5');
+	*er += new TEX::ReportToExch('Y');
+#if defined PERMIT_CUSTOM_FIELDS
+	*er += new TEX::Orderbook('X');
+	*er += new TEX::BrokerInitiated(true);
+	*er += new TEX::ExecOption(3);
+#endif
 #if defined MSGRECYCLING
 	_session.send_wait(er.get());
-	er->set_in_use(true);
+	er->set_in_use(true);	// indicate this message is in use again
 	delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
-	*er += new TEX::AvgPx(9999);
+	*er += new TEX::AvgPx(9999); // will replace and delete original
 	_session.send_wait(er.get());
 #else
 	_session.send(er);
@@ -369,10 +479,13 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 #if defined MSGRECYCLING
 		while(er->get_in_use())
 			microsleep(10);
-		er.reset(new TEX::ExecutionReport);
-		msg->copy_legal(er.get());
+		er->set_in_use(true);	// indicate this message is in use again
+		delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
 #else
 		er = new TEX::ExecutionReport;
+#if defined PERMIT_CUSTOM_FIELDS
+		_session.post_msg_ctor(er);
+#endif
 		msg->copy_legal(er);
 #endif
 		*er += new TEX::OrderID(oistr.str());
@@ -403,7 +516,7 @@ bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 	TEX::LastCapacity lastCap;
 	if (msg->get(lastCap))
 	{
-		if (!lastCap.is_valid())
+		if (!quiet && !lastCap.is_valid())
 			cout << "TEX::LastCapacity(" << lastCap << ") is not a valid value" << endl;
 	}
 	return true;

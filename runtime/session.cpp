@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -207,7 +209,11 @@ bool Session::process(const f8String& from)
 	try
 	{
 		plog(from);
-		scoped_ptr<Message> msg(Message::factory(_ctx, from));
+		scoped_ptr<Message> msg(Message::factory(_ctx, from
+#if defined PERMIT_CUSTOM_FIELDS
+			, this, &Session::post_msg_ctor
+#endif
+		));
 		if (_control & print)
 			cout << *msg << endl;
 		bool result((msg->is_admin() ? handle_admin(seqnum, msg.get()) : true)
@@ -387,7 +393,11 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::retrans_callback(const SequencePair& with)
 {
-	return send(Message::factory(_ctx, with.second));
+	return send(Message::factory(_ctx, with.second
+#if defined PERMIT_CUSTOM_FIELDS
+		, this, &Session::post_msg_ctor
+#endif
+		));
 }
 
 //-------------------------------------------------------------------------------------------------

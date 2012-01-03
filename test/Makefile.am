@@ -15,6 +15,8 @@
 #   * Neither the name of the author nor the names of its contributors may be used to
 #	 	endorse or promote products derived from this software without specific prior
 #		written permission.
+#   * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+#	   in their name without written permission from fix8.org
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 # OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -34,19 +36,20 @@
 #############################################################################################
 bin_PROGRAMS = f8test f8print
 INCLUDES = -I$(top_srcdir)/include
-BUILT_SOURCES = Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp Myfix_router.hpp Myfix_classes.hpp Myfix_classes.cpp
-f8test_SOURCES =  myfix.cpp $(BUILT_SOURCES)
-f8print_SOURCES =  myprint.cpp $(BUILT_SOURCES)
-XML_SCHEMA = FIX44.xml
+BUILT_SOURCES = Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
+					 Myfix_router.hpp Myfix_classes.hpp Myfix_classes.cpp
+f8test_SOURCES = myfix.cpp $(BUILT_SOURCES)
+f8print_SOURCES = myprint.cpp $(BUILT_SOURCES)
+XML_SCHEMA = $(top_srcdir)/schema/FIX44.xml
 #XML_SCHEMA = FIX44TEST.xml
 CLEANFILES = $(BUILT_SOURCES)
 
 $(BUILT_SOURCES): $(XML_SCHEMA)
-	$(top_srcdir)/compiler/f8c $(XML_SCHEMA)
+	$(top_srcdir)/compiler/f8c -n TEX $(XML_SCHEMA)
 
 .NOTPARALLEL: $(XML_SCHEMA)
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
-GEN_LIBS = -ldl -lrt -lf8
+GEN_LIBS = -ldl -lrt -lfix8
 TBB_LIBS = -ltbb
 BDB_LIBS = -ldb_cxx
 ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) -L$(top_srcdir)/runtime $(BDB_LIBS)

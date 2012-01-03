@@ -15,8 +15,6 @@
 #   * Neither the name of the author nor the names of its contributors may be used to
 #	 	endorse or promote products derived from this software without specific prior
 #		written permission.
-#   * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-#	   in their name without written permission from fix8.org
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 # OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -35,22 +33,16 @@
 #
 #############################################################################################
 
-lib_LTLIBRARIES = libfix8.la
-INCLUDES = -I$(top_srcdir)/include
+if USEDOXYGEN
+doxyfile.stamp:
+	$(DOXYGEN) fix8.doxygen
+	echo Timestamp > doxyfile.stamp
 
-libfix8_la_SOURCES = popen.c \
-							xml.cpp f8utils.cpp message.cpp traits.cpp \
-							field.cpp session.cpp logger.cpp persist.cpp \
-							connection.cpp configuration.cpp memory.cpp
+CLEANFILES = doxyfile.stamp
 
-AM_LDFLAGS = -ggdb -rdynamic -shared
+all-local: doxyfile.stamp
+clean-local:
+	rm -rf $(top_srcdir)/doc/html $(top_srcdir)/doc/fix8.tag
 
-if USECOMPRESSION
-libfix8_la_SOURCES += gzstream.cpp
-AM_LDFLAGS += -lz
-endif
-
-if USECCRYPT
-AM_LDFLAGS += -lcrypt
 endif
 

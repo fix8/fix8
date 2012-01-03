@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -59,6 +61,9 @@ public:
 	myfix_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist,
 		FIX8::Logger *logger, FIX8::Logger *plogger) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
 	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
+#if defined PERMIT_CUSTOM_FIELDS
+	bool post_msg_ctor(FIX8::Message *msg);
+#endif
 };
 
 //-----------------------------------------------------------------------------------------
@@ -82,6 +87,9 @@ public:
 	myfix_session_server(const FIX8::F8MetaCntx& ctx, FIX8::Persister *persist,
 		FIX8::Logger *logger, FIX8::Logger *plogger) : Session(ctx, persist, logger, plogger), _router(*this) {}
 	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
+#if defined PERMIT_CUSTOM_FIELDS
+	bool post_msg_ctor(FIX8::Message *msg);
+#endif
 };
 
 //---------------------------------------------------------------------------------------------------

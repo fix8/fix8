@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -80,7 +82,11 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 		_elmnt.SubExpr(match, from, val, s_offset, 2);
 		const unsigned tv(GetValue<unsigned>(tag));
 		const BaseEntry *be(_ctx._be.find_ptr(tv));
+#if defined PERMIT_CUSTOM_FIELDS
+		if (!be && (!_ctx._ube || (be = _ctx._ube->find_ptr(tv)) == 0))
+#else
 		if (!be)
+#endif
 			throw InvalidField(tv);
 		if (!_fp.has(tv))
 			break;
@@ -178,7 +184,11 @@ unsigned Message::decode(const f8String& from)
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
+Message *Message::factory(const F8MetaCntx& ctx, const f8String& from
+#if defined PERMIT_CUSTOM_FIELDS
+	, Session *sess, bool (Session::*post_ctor)(Message *msg)
+#endif
+	)
 {
 	RegMatch match;
 	Message *msg(0);
@@ -196,6 +206,11 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 			throw InvalidMessage(mtype);
 		//ostringstream gerr;
 		msg = bme->_create();
+#if defined PERMIT_CUSTOM_FIELDS
+		if (sess && post_ctor)
+			(sess->*post_ctor)(msg);
+#endif
+//#if defined PERMIT_CUSTOM_FIELDS
 		//IntervalTimer itm;
 		msg->decode(from);
 		//gerr << "decode:" << itm.Calculate();
@@ -345,8 +360,13 @@ void MessageBase::print(ostream& os) const
 		os << tbme->_name << " (\"" << _msgType << "\")" << endl;
 	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
 	{
-		const BaseEntry& tbe(_ctx._be.find_ref(itr->second->_fnum));
-		os << spacer << tbe._name << " (" << itr->second->_fnum << "): ";
+		const BaseEntry *tbe(_ctx._be.find_ptr(itr->second->_fnum));
+		if (!tbe)
+#if defined PERMIT_CUSTOM_FIELDS
+			if (!_ctx._ube || (tbe = _ctx._ube->find_ptr(itr->second->_fnum)) == 0)
+#endif
+				throw InvalidField(itr->second->_fnum);
+		os << spacer << tbe->_name << " (" << itr->second->_fnum << "): ";
 		int idx;
 		if (itr->second->_rlm && (idx = (itr->second->get_rlm_idx())) >= 0)
 			os << itr->second->_rlm->_descriptions[idx] << " (" << *itr->second << ')' << endl;

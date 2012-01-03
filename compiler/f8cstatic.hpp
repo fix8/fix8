@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -128,7 +130,7 @@ const TypeToCPP::NotFoundType TypeToCPP::_noval("Unknown");
 template<>
 const CSMap::TypePair CSMap::_valueTable[] =
 {
-	CSMap::TypePair(cs_do_not_edit, "// *** f8c generated file: Do Not Edit! Created: "),
+	CSMap::TypePair(cs_do_not_edit, "// *** f8c generated file: DO NOT EDIT! Created: "),
 	CSMap::TypePair(cs_start_namespace, "namespace FIX8 {"),
 	CSMap::TypePair(cs_end_namespace, "} // namespace FIX8"),
 	CSMap::TypePair(cs_start_anon_namespace, "namespace {"),
@@ -169,7 +171,9 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "\n"
 "Fix8 is released under the New BSD License.\n"
 "\n"
-"Copyright (c) 2010-12, David L. Dight <fix@fix8.org>\n"
+"Copyright (c) 2010-"),
+	CSMap::TypePair(cs_copyright2,
+", David L. Dight <fix@fix8.org>\n"
 "All rights reserved.\n"
 "\n"
 "Redistribution and use in source and binary forms, with or without modification, are\n"
@@ -183,6 +187,8 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "    * Neither the name of the author nor the names of its contributors may be used to\n"
 "	 	endorse or promote products derived from this software without specific prior\n"
 "		written permission.\n"
+"    * Products derived from this software may not be called \"Fix8\", nor can \"Fix8\" appear\n"
+"	   in their name without written permission from fix8.org\n"
 "\n"
 "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND ANY EXPRESS\n"
 "OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF\n"
@@ -195,8 +201,8 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n"
 "\n"
 "#endif\n"),
-	CSMap::TypePair(cs_copyright_short,
-	"Copyright (c) 2010-12, David L. Dight <fix@fix8.org>, All rights reserved."),
+	CSMap::TypePair(cs_copyright_short, "Copyright (c) 2010-"),
+	CSMap::TypePair(cs_copyright_short2, ", David L. Dight <fix@fix8.org>, All rights reserved."),
 	CSMap::TypePair(cs_header_preamble,
 "	void add_preamble()\n"
 "	{\n"

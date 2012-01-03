@@ -15,6 +15,8 @@
 #   * Neither the name of the author nor the names of its contributors may be used to
 #	 	endorse or promote products derived from this software without specific prior
 #		written permission.
+#   * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+#	   in their name without written permission from fix8.org
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 # OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -33,10 +35,12 @@
 #
 #############################################################################################
 
-SUBDIRS = runtime compiler test
+SUBDIRS = runtime compiler test doc
 
 #############################################################################################
 ACLOCAL_AMFLAGS = -I m4
+
+EXTRA_DIST = doc/fix8.doxygen schema/*.xml schema/QUICKFIX-LICENCE
 
 $(distdir).tar.gz:
 	make dist

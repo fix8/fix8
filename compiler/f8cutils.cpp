@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -68,7 +70,7 @@ static const std::string rcsid("$Id$");
 const std::string TRANSLATIONUNIT(__FILE__);
 
 //-----------------------------------------------------------------------------------------
-extern string inputFile, odir, prefix;
+extern string inputFile, shortName, odir, prefix;
 extern bool verbose;
 extern const string spacer, GETARGLIST;
 extern const CSMap _csMap;
@@ -119,12 +121,19 @@ const string& mkel(const string& base, const string& compon, string& where)
 }
 
 //-----------------------------------------------------------------------------------------
+const string& filepart(const string& source, string& where)
+{
+	string::size_type pos(source.find_last_of('/'));
+	return pos == string::npos ? where = source : where = source.substr(pos + 1);
+}
+
+//-----------------------------------------------------------------------------------------
 int loadFixVersion (XmlEntity& xf, Ctxt& ctxt)
 {
 	XmlEntity *fix(xf.find("fix"));
 	if (!fix)
 	{
-		cerr << "No fix header element found in " << inputFile << endl;
+		cerr << "No fix header element found in " << shortName << endl;
 		return -1;
 	}
 
@@ -132,20 +141,19 @@ int loadFixVersion (XmlEntity& xf, Ctxt& ctxt)
 
 	if (!fix->GetAttr("major", major) || !fix->GetAttr("minor", minor))
 	{
-		cerr << "Missing required attributes (major/minor) from fix header in " << inputFile << endl;
+		cerr << "Missing required attributes (major/minor) from fix header in " << shortName << endl;
 		return -1;
 	}
 
-	fix->GetAttr("revision", revision);
-	if (!fix->GetAttr("ns", ctxt._fixns))
-		ctxt._fixns = "UNKNOWN";
+	if (!fix->GetAttr("revision", revision))
+		fix->GetAttr("servicepack", revision);
 	fix->GetAttr("type", type);
 
 	// fix version: <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	ctxt._version = GetValue<int>(major) * 1000 + GetValue<int>(minor) * 100 + GetValue<int>(revision);
 	if (type == "FIX" && ctxt._version < 4000)
 	{
-		cerr << "Invalid FIX version " << ctxt._version << " from fix header in " << inputFile << endl;
+		cerr << "Invalid FIX version " << ctxt._version << " from fix header in " << shortName << endl;
 		return -1;
 	}
 
@@ -173,7 +181,8 @@ void processSpecialTraits(const unsigned short field, FieldTraits& fts)
 	case Common_CheckSum:
 		fts.set(field, FieldTrait::suppress);	// drop through
 	case Common_MsgType:
-		fts.set(field, FieldTrait::automatic);
+		fts.set(field, FieldTrait::automatic);  // drop through
+	default:
 		break;
 	}
 }
@@ -243,14 +252,14 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 				FieldSpecMap::const_iterator fs_itr;
 				if (ftonItr == ftonSpec.end() || (fs_itr = fspec.find(ftonItr->second)) == fspec.end())
 				{
-					cerr << inputFile << '(' << (*fitr)->GetLine() << "): Field element missing required attributes" << endl;
+					cerr << shortName << ':' << (*fitr)->GetLine() << ": error: Field element missing required attributes" << endl;
 					++glob_errors;
 					continue;
 				}
 
 				// add FieldTrait
 				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, subpos)))
-					cerr << inputFile << '(' << (*fitr)->GetLine() << "): Could not add trait object " << fname << endl;
+					cerr << shortName << ':' << (*fitr)->GetLine() << ": error: Could not add trait object " << fname << endl;
 				else
 				{
 					processSpecialTraits(fs_itr->first, fts);
@@ -259,7 +268,7 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 			}
 			else
 			{
-				cerr << inputFile << '(' << (*fitr)->GetLine() << "): Field element missing required attributes" << endl;
+				cerr << shortName << ':' << (*fitr)->GetLine() << ": error: Field element missing required attributes" << endl;
 				++glob_errors;
 			}
 		}
@@ -308,15 +317,16 @@ void print_usage()
 	UsageMan um("f8c", GETARGLIST, "<input xml schema>");
 	um.setdesc("f8c -- compile FIX xml schema");
 	um.add('o', "odir <file>", "output target directory");
-	um.add('p', "prefix <file>", "output filename prefix");
+	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
 	um.add('d', "dump", "dump parsed source xml file, exit");
 	um.add('h', "help", "help, this screen");
 	um.add('i', "ignore", "ignore errors, attempt to generate code anyhow");
 	um.add('k', "keep", "retain generated temporaries even if there are errors (.*.tmp)");
 	um.add('v', "version", "print version, exit");
 	um.add('V', "verbose", "be more verbose when processing");
+	um.add('n', "namespace <ns>", "namespace to place generated code in (default FIXMmvv e.g. FIX4400)");
 	um.add("e.g.");
-	um.add("@f8c -p myfix myfix.xml");
+	um.add("@f8c -p Texfix -n TEX myfix.xml");
 	um.print(cerr);
 }
 
@@ -335,13 +345,24 @@ RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype
 }
 
 //-------------------------------------------------------------------------------------------------
+string insert_year()
+{
+   struct tm tim;
+	time_t now(time(0));
+   localtime_r(&now, &tim);
+	ostringstream ostr;
+	ostr << setw(2) << (tim.tm_year - 100);
+	return ostr.str();
+}
+
+//-------------------------------------------------------------------------------------------------
 void generate_preamble(ostream& to)
 {
 	to << _csMap.find_value_ref(cs_divider) << endl;
 	string result;
 	to << _csMap.find_value_ref(cs_do_not_edit) << GetTimeAsStringMS(result, 0, 0) << " ***" << endl;
 	to << _csMap.find_value_ref(cs_divider) << endl;
-	to << _csMap.find_value_ref(cs_copyright) << endl;
+	to << _csMap.find_value_ref(cs_copyright) << insert_year() << _csMap.find_value_ref(cs_copyright2) << endl;
 	to << _csMap.find_value_ref(cs_divider) << endl;
 }
 

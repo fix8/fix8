@@ -15,6 +15,8 @@
 #   * Neither the name of the author nor the names of its contributors may be used to
 #	 	endorse or promote products derived from this software without specific prior
 #		written permission.
+#   * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+#	   in their name without written permission from fix8.org
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 # OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -40,7 +42,7 @@ f8c_SOURCES = 	f8c.cpp f8cutils.cpp f8cstatic.hpp f8c.hpp
 
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
 
-f8c_LDFLAGS = -rdynamic -ldl -lrt -lf8 $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime -ldb_cxx
+f8c_LDFLAGS = -rdynamic -ldl -lrt -lfix8 $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime -ldb_cxx
 
 if USECOMPRESSION
 f8c_LDFLAGS += -lz

@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -83,10 +85,10 @@ template<>
 const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8String, BaseMsgEntry>::_pairs[] = {};
 
 //-----------------------------------------------------------------------------------------
-string inputFile, odir("./"), prefix("Myfix");
+string inputFile, shortName, odir("./"), prefix("Myfix");
 bool verbose(false), error_ignore(false);
-unsigned glob_errors(0);
-extern const string GETARGLIST("hvVo:p:dik");
+unsigned glob_errors(0), glob_warnings(0);
+extern const string GETARGLIST("hvVo:p:dikn:");
 extern const string spacer(3, ' ');
 
 //-----------------------------------------------------------------------------------------
@@ -98,6 +100,7 @@ const CSMap _csMap;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
+string insert_year();
 int process(XmlEntity& xf, Ctxt& ctxt);
 int loadFixVersion (XmlEntity& xf, Ctxt& ctxt);
 int loadfields(XmlEntity& xf, FieldSpecMap& fspec);
@@ -113,6 +116,7 @@ ostream *openofile(const string& odir, const string& fname);
 const string flname(const string& from);
 void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
+const string& filepart(const string& source, string& where);
 void generate_preamble(ostream& to);
 bool parseGroups(MessageSpecMap::iterator& ritr, XmlEntity::XmlSet::const_iterator& itr, const string& name,
 	const ComponentSpecMap& cspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, XmlEntity::XmlSet& grplist);
@@ -122,6 +126,7 @@ int main(int argc, char **argv)
 {
 	int val;
 	bool dump(false), keep_failed(false);
+	Ctxt ctxt;
 
 #ifdef HAVE_GETOPT_LONG
 	option long_options[] =
@@ -134,6 +139,7 @@ int main(int argc, char **argv)
 		{ "ignore",			0,	0,	'i' },
 		{ "keep",			0,	0,	'k' },
 		{ "prefix",			0,	0,	'p' },
+		{ "namespace",		0,	0,	'n' },
 		{ 0 },
 	};
 
@@ -146,7 +152,8 @@ int main(int argc, char **argv)
 		{
 		case 'v':
 			cout << "f8c for "PACKAGE" version "VERSION << endl;
-			cout << _csMap.find_value_ref(cs_copyright_short) << endl;
+			cout << _csMap.find_value_ref(cs_copyright_short) << insert_year()
+				  << _csMap.find_value_ref(cs_copyright_short2) << endl;
 			cout << rcsid << endl;
 			return 0;
 		case 'V': verbose = true; break;
@@ -157,12 +164,16 @@ int main(int argc, char **argv)
 		case 'i': error_ignore = true; break;
 		case 'k': keep_failed = true; break;
 		case 'p': prefix = optarg; break;
+		case 'n': ctxt._fixns = optarg; break;
 		default: break;
 		}
 	}
 
 	if (optind < argc)
+	{
 		inputFile = argv[optind];
+		filepart(inputFile, shortName);
+	}
 	else
 	{
 		cerr << "no input xml file specified" << endl;
@@ -183,7 +194,7 @@ int main(int argc, char **argv)
 	if (cfr->GetErrorCnt())
 	{
 		cerr << cfr->GetErrorCnt() << " error"
-			<< (cfr->GetErrorCnt() == 1 ? " " : "s ") << "found in \'" << inputFile << '\'' << endl;
+			<< (cfr->GetErrorCnt() == 1 ? " " : "s ") << "found in \'" << shortName << '\'' << endl;
 		return 1;
 	}
 
@@ -193,7 +204,6 @@ int main(int argc, char **argv)
 		return 0;
 	}
 
-	Ctxt ctxt;
 	if (loadFixVersion (*cfr, ctxt) < 0)
 		return 1;
 	for (unsigned ii(0); ii < Ctxt::count; ++ii)
@@ -205,7 +215,7 @@ int main(int argc, char **argv)
 			return 1;
 	}
 
-	cout << "Compiling fix version " << ctxt._version <<  " (" << ctxt._fixns << ") from " << inputFile << endl;
+	cout << "Compiling fix version " << ctxt._version <<  " (" << ctxt._fixns << ") from " << shortName << endl;
 	int result(process(*cfr, ctxt));
 	for (unsigned ii(0); ii < Ctxt::count; ++ii)
 	{
@@ -223,6 +233,8 @@ int main(int argc, char **argv)
 	}
 	if (glob_errors)
 		cerr << glob_errors << " error" << (glob_errors == 1 ? "." : "s.") << endl;
+	if (glob_warnings)
+		cerr << glob_warnings << " warning" << (glob_warnings == 1 ? "." : "s.") << endl;
 	return result;
 }
 
@@ -234,7 +246,7 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 	XmlEntity::XmlSet flist;
 	if (!xf.find("fix/fields/field", flist))
 	{
-		cerr << "No fields found in " << inputFile << endl;
+		cerr << "error: No fields found in " << shortName << endl;
 		return 0;
 	}
 
@@ -250,8 +262,8 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 				result = fspec.insert(FieldSpecMap::value_type(GetValue<unsigned>(number), FieldSpec(name, ft)));
 			else
 			{
-				cerr << inputFile << '(' << (*itr)->GetLine() << "): Unknown field type: " << type << " in " << name << endl;
-				++glob_errors;
+				cerr << shortName << ':' << (*itr)->GetLine() << ": warning: Unknown field type: " << type << " in " << name << endl;
+				++glob_warnings;
 				continue;
 			}
 
@@ -280,7 +292,7 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 					}
 					else
 					{
-						cerr << inputFile << '(' << (*itr)->GetLine() << "): Value element missing required attributes." << endl;
+						cerr << shortName << ':' << (*itr)->GetLine() << ": error: Value element missing required attributes." << endl;
 						++glob_errors;
 					}
 				}
@@ -288,7 +300,7 @@ int loadfields(XmlEntity& xf, FieldSpecMap& fspec)
 		}
 		else
 		{
-			cerr << inputFile << '(' << (*itr)->GetLine() << "): Field element missing required attributes" << endl;
+			cerr << shortName << ':' << (*itr)->GetLine() << ": error: Field element missing required attributes" << endl;
 			++glob_errors;
 		}
 	}
@@ -316,7 +328,7 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 					mspec.insert(ComponentSpecMap::value_type(name, ComponentSpec(name))));
 				if (!result.second)
 				{
-					cerr << inputFile << '(' << (*itr)->GetLine() << "): Could not add component " << name << endl;
+					cerr << shortName << ':' << (*itr)->GetLine() << ": Could not add component " << name << endl;
 					++glob_errors;
 					continue;
 				}
@@ -338,7 +350,7 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 								if (!result.first->second._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
 									grequired == "Y", true, cnum)))
 								{
-									cerr << "Could not add group trait object " << gname << endl;
+									cerr << "error: Could not add group trait object " << gname << endl;
 									++glob_errors;
 								}
 								else
@@ -352,8 +364,8 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 										//cout << "loadcomponents; recursively calling parseGroups with " << comlist.size() << " els" << endl;
 										parseGroups(result.first, gitr, gname, mspec, ftonSpec, fspec, comlist);
 									}
-									else
-										cerr << "loadcomponents: no group/group in " << gname << endl;
+									//else
+									//	cerr << "loadcomponents: no group/group in " << gname << endl;
 
 									comlist.clear();
 									if ((*gitr)->find("group/component", comlist))
@@ -362,25 +374,28 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 										for(XmlEntity::XmlSet::const_iterator citr(comlist.begin()); citr != comlist.end(); ++citr)
 											sofar += loadcomponents("group/component", sofar, **citr, mspec, ftonSpec, fspec);
 									}
-									else
-										cerr << "loadcomponents: no group/component in " << gname << endl;
+									//else
+									//	cerr << "loadcomponents: no group/component in " << gname << endl;
 
 									if (!processMessageFields("group/field", *gitr, gresult.first->second, ftonSpec, fspec, 1))
-										cerr << inputFile << '(' << (*itr)->GetLine() << "): No fields found in component group "
+									{
+										cerr << shortName << ':' << (*itr)->GetLine() << ": warning: No fields found in component group "
 										  << gname << endl;
+										++glob_warnings;
+									}
 								}
 							}
 							else
 							{
-								cerr << "Could not locate group Field " << gname << " from known field types in "
-									<< inputFile << '(' << (*gitr)->GetLine() << ')' << endl;
+								cerr << "error: Could not locate group Field " << gname << " from known field types in "
+									<< shortName << ':' << (*gitr)->GetLine() << endl;
 								++glob_errors;
 								continue;
 							}
 						}
 						else
 						{
-							cerr << inputFile << '(' << (*itr)->GetLine() << "): Group element missing required attributes" << endl;
+							cerr << shortName << ':' << (*itr)->GetLine() << ": error: Group element missing required attributes" << endl;
 							++glob_errors;
 						}
 					}
@@ -395,7 +410,7 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 					{
 						string comname;
 						(*citr)->GetAttr("name", comname);
-						cerr << comname << endl;
+						//cerr << comname << endl;
 						sofar += loadcomponents("component/component", sofar, **itr, mspec, ftonSpec, fspec);
 					}
 				}
@@ -404,8 +419,9 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 
 				if (!processMessageFields("component/field", *itr, result.first->second._fields, ftonSpec, fspec, 1))
 				{
-					cerr << inputFile << '(' << (*itr)->GetLine() << "): No fields found in component "
+					cerr << shortName << ':' << (*itr)->GetLine() << ": warning: No fields found in component "
 					  << name << endl;
+					++glob_warnings;
 					//cerr << **itr;
 				}
 
@@ -413,7 +429,7 @@ int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMa
 			}
 			else
 			{
-				cerr << inputFile << '(' << (*itr)->GetLine() << "): Component element missing required attributes" << endl;
+				cerr << shortName << ':' << (*itr)->GetLine() << ": error: Component element missing required attributes" << endl;
 				++glob_errors;
 			}
 		}
@@ -431,21 +447,21 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 	XmlEntity::XmlSet mlist;
 	if (!xf.find("fix/messages/message", mlist))
 	{
-		cerr << "No messages found in " << inputFile << endl;
+		cerr << "error: No messages found in " << shortName << endl;
 		++glob_errors;
 		return 0;
 	}
 
 	if (!xf.find("fix/header", mlist))
 	{
-		cerr << "No header element found in " << inputFile << endl;
+		cerr << "error: No header element found in " << shortName << endl;
 		++glob_errors;
 		return 0;
 	}
 
 	if (!xf.find("fix/trailer", mlist))
 	{
-		cerr << "No trailer element found in " << inputFile << endl;
+		cerr << "error: No trailer element found in " << shortName << endl;
 		++glob_errors;
 		return 0;
 	}
@@ -454,7 +470,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
 	if (fsitr == fspec.end())
 	{
-		cerr << "Could not locate MsgType realm defintions in " << inputFile << endl;
+		cerr << "error: Could not locate MsgType realm defintions in " << shortName << endl;
 		++glob_errors;
 		return 0;
 	}
@@ -472,7 +488,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 			RealmMap::const_iterator ditr(fsitr->second._dvals->find(&srealm));
 			if (ditr == fsitr->second._dvals->end())
 			{
-				cerr << inputFile << '(' << (*itr)->GetLine() << "): Message "
+				cerr << shortName << ':' << (*itr)->GetLine() << ": error: Message "
 				  << name << " does not have corrresponding entry in MsgType field realm" << endl;
 				++glob_errors;
 				continue;
@@ -482,7 +498,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 		}
 		else
 		{
-			cerr << inputFile << '(' << (*itr)->GetLine() << "): Message element missing required attributes" << endl;
+			cerr << shortName << ':' << (*itr)->GetLine() << ": error: Message element missing required attributes" << endl;
 			++glob_errors;
 			continue;
 		}
@@ -491,7 +507,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 			mspec.insert(MessageSpecMap::value_type(msgtype, MessageSpec(name, msgcat % "admin"))));
 		if (!result.second)
 		{
-			cerr << inputFile << '(' << (*itr)->GetLine() << "): Could not add message " << name << " (" << msgtype << ")" << endl;
+			cerr << shortName << ':' << (*itr)->GetLine() << ": error: Could not add message " << name << " (" << msgtype << ")" << endl;
 			++glob_errors;
 			continue;
 		}
@@ -516,7 +532,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 				ComponentSpecMap::const_iterator csitr(cspec.find(cname));
 				if (csitr == cspec.end())
 				{
-					cerr << inputFile << '(' << (*itr)->GetLine() << "): Component not found " << name << endl;
+					cerr << shortName << ':' << (*itr)->GetLine() << ": error: Component not found " << name << endl;
 					++glob_errors;
 					continue;
 				}
@@ -555,7 +571,7 @@ bool parseGroups(MessageSpecMap::iterator& ritr, XmlEntity::XmlSet::const_iterat
 				if (!ritr->second._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
 					required == "Y", true, 0)))
 				{
-					cerr << "Could not add group trait object " << gname << endl;
+					cerr << "error: Could not add group trait object " << gname << endl;
 					++glob_errors;
 				}
 				else
@@ -574,7 +590,7 @@ bool parseGroups(MessageSpecMap::iterator& ritr, XmlEntity::XmlSet::const_iterat
 							ComponentSpecMap::const_iterator csitr(cspec.find(cname));
 							if (csitr == cspec.end())
 							{
-								cerr << inputFile << '(' << (*itr)->GetLine() << "): Component not found " << name << endl;
+								cerr << shortName << '(' << (*itr)->GetLine() << "): error: Component not found " << name << endl;
 								++glob_errors;
 								continue;
 							}
@@ -586,8 +602,11 @@ bool parseGroups(MessageSpecMap::iterator& ritr, XmlEntity::XmlSet::const_iterat
 									(deitr->_field_traits.has(FieldTrait::mandatory) && required == "Y")
 									|| deitr->_pos == 1);
 								if (!gresult.first->second.add(*deitr))
-									cerr << inputFile << '(' << (*itr)->GetLine() << "): group Component failed to add "
+								{
+									cerr << shortName << ':' << (*itr)->GetLine() << ": error: group Component failed to add "
 									  << name << endl;
+									++glob_errors;
+								}
 							}
 						}
 					}
@@ -601,14 +620,14 @@ bool parseGroups(MessageSpecMap::iterator& ritr, XmlEntity::XmlSet::const_iterat
 			}
 			else
 			{
-				cerr << "Could not locate group Field " << gname << " from known field types in " << inputFile << endl;
+				cerr << "error: Could not locate group Field " << gname << " from known field types in " << shortName << endl;
 				++glob_errors;
 				continue;
 			}
 		}
 		else
 		{
-			cerr << inputFile << '(' << (*itr)->GetLine() << "): Group element missing required attributes" << endl;
+			cerr << shortName << ':' << (*itr)->GetLine() << ": error: Group element missing required attributes" << endl;
 			++glob_errors;
 		}
 	}

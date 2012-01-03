@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -547,9 +549,10 @@ class Field<Boolean, field> : public BaseField
 
 public:
 	Field () : BaseField(field) {}
-	Field (const bool& val) : BaseField(field), _value(val) {}
+	Field (const char val) : BaseField(field), _value(toupper(val) == 'Y') {}
+	explicit Field (const bool val) : BaseField(field), _value(val) {}
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(toupper(from[0]) == 'Y') {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(toupper(from[0]) == 'Y') {}
 	Field& operator=(const Field& that)
 	{
 		if (this != &that)
@@ -558,6 +561,7 @@ public:
 	}
 	virtual ~Field() {}
 
+	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value ? 'Y' : 'N') : -1; }
 	const bool get() const { return _value; }
 	const bool operator()() const { return _value; }
 	const bool set(const bool from) { return _value = from; }
@@ -608,6 +612,9 @@ struct BaseEntry
 	const RealmBase *_rlm;
 	const char *_name, *_comment;
 };
+
+BaseEntry *BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String&, const RealmBase*),
+	const RealmBase *rlm, const char *name, const char *comment);
 
 //-------------------------------------------------------------------------------------------------
 // Common FIX field numbers

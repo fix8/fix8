@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -44,13 +46,9 @@ $URL$
 namespace FIX8 {
 
 //----------------------------------------------------------------------------------------
-std::string& InPlaceChrReplace(const char sch, const char rch, std::string& source);
 std::string& InPlaceStrToUpper(std::string& src);
 std::string& InPlaceStrToLower(std::string& src);
-const std::string& StrToLower(const std::string& src, std::string& target);
-unsigned ROT13Hash (const std::string& str);
 std::string& CheckAddTrailingSlash(std::string& source);
-std::string& CheckRemoveTrailingSlash(std::string& src);
 std::string Str_error(const int err, const char *str=0);
 const std::string& GetTimeAsStringMS(std::string& result, class Tickval *tv=0, const unsigned dplaces=6);
 
@@ -125,13 +123,9 @@ public:
 
 	const unsigned SubCnt() const { return subCnt_; }
 	const size_t SubSize(const int which=0) const
-	{
-		return which < subCnt_ ? subexprs_[which].rm_eo - subexprs_[which].rm_so : -1;
-	}
+		{ return which < subCnt_ ? subexprs_[which].rm_eo - subexprs_[which].rm_so : -1; }
 	const unsigned SubPos(const int which=0) const
-	{
-		return which < subCnt_ ? subexprs_[which].rm_so : -1;
-	}
+		{ return which < subCnt_ ? subexprs_[which].rm_so : -1; }
 
 	friend class RegExp;
 };
@@ -147,13 +141,46 @@ class RegExp
 	int errCode_;
 
 public:
-	RegExp(const char *pattern, const int flags=0);
+	RegExp(const char *pattern, const int flags=0) : pattern_(pattern)
+	{
+		if ((errCode_ = regcomp(&reg_, pattern_.c_str(), REG_EXTENDED|flags)) != 0)
+		{
+			char rbuf[MaxErrLen_];
+			regerror(errCode_, &reg_, rbuf, MaxErrLen_);
+			errString = rbuf;
+		}
+	}
 	virtual ~RegExp() { if (errCode_ == 0) regfree(&reg_); }
 
-	int SearchString(RegMatch& match, const std::string& source, const int subExpr, const int offset=0);
-	std::string& SubExpr(RegMatch& match, const std::string& source, std::string& target, const int offset=0, const int num=0);
-	std::string& Erase(RegMatch& match, std::string& source, const int num=0);
-	std::string& Replace(RegMatch& match, std::string& source, const std::string& with, const int num=0);
+	int SearchString(RegMatch& match, const std::string& source, const int subExpr, const int offset=0) const
+	{
+		match.subCnt_ = 0;
+		if (regexec(&reg_, source.c_str() + offset, subExpr <= RegMatch::SubLimit_ ? subExpr : RegMatch::SubLimit_, match.subexprs_, 0) == 0)
+			while (match.subCnt_ < subExpr && match.subexprs_[match.subCnt_].rm_so != -1)
+				++match.subCnt_;
+		return match.subCnt_;
+	}
+	std::string& SubExpr(RegMatch& match, const std::string& source, std::string& target, const int offset=0, const int num=0) const
+	{
+		if (num < match.subCnt_)
+			target = source.substr(offset + match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
+		else
+			target.empty();
+		return target;
+	}
+	std::string& Erase(RegMatch& match, std::string& source, const int num=0) const
+	{
+		if (num < match.subCnt_)
+			source.erase(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
+		return source;
+	}
+
+	std::string& Replace(RegMatch& match, std::string& source, const std::string& with, const int num=0) const
+	{
+		if (num < match.subCnt_)
+			source.replace(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so, with);
+		return source;
+	}
 
 	const std::string& GetPattern() const { return pattern_; }
 	const std::string& ErrString() const { return errString; }
@@ -266,7 +293,9 @@ public:
 	//friend ebitset operator|(const T lbit, const T rbit) { return ebitset(lbit) |= 1 << rbit; }
 };
 
-// atomic bitset for enums
+/// Atomic bitset for enums.
+/*! \tparam T the enum type
+    \tparam B the integral type of the enumeration */
 template<typename T, typename B=unsigned int>
 class ebitset_r
 {
@@ -274,11 +303,24 @@ class ebitset_r
 	tbb::atomic<integral_type> a_;
 
 public:
+	/// Ctor.
 	ebitset_r() { a_ = 0; }
+
+	/// Ctor.
+	/*! \param from ebitset_r to copy */
 	ebitset_r(const ebitset_r<T, B>& from) { a_ = from.a_; }
+
+	/// Ctor.
+	/*! \param a integral type to construct from */
 	explicit ebitset_r(const integral_type a) { a_ = a; }
+
+	/// Ctor.
+	/*! \param sbit enum to construct from */
 	explicit ebitset_r(const T sbit) { a_ = (1 << sbit) - 1; }
 
+	/// Assignment operator.
+	/*! \param that ebitset_r to assign from
+	    \return  this */
 	ebitset_r<T, B>& operator=(const ebitset_r<T, B>& that)
 	{
 		if (this != &that)
@@ -286,51 +328,67 @@ public:
 		return *this;
 	}
 
+	/// Check if an enum is in the set.
+	/*! \param sbit enum to check
+	    \return integral_type of bits if found */
 	integral_type has(const T sbit) { return a_ & 1 << sbit; }
+
+	/// Check if an enum is in the set.
+	/*! \param sbit enum to check
+	    \return integral_type of bits if found */
 	integral_type operator&(const T sbit) { return a_ & 1 << sbit; }
+
+	/// Set a bit on or off.
+	/*! \param sbit enum to set
+	    \param on set on or off */
 	void set(const T sbit, bool on=true) { if (on) a_ |= 1 << sbit; else a_ &= ~(1 << sbit); }
+
+	/// Set a bit on or off.
+	/*! \param bset integral_type to set */
 	void set(const integral_type bset) { a_ = bset; }
+
+	/// Clear a bit on or off.
+	/*! \param sbit enum to set */
 	void clear(const T sbit) { integral_type a = a_; a &= ~(1 << sbit); a_ = a; }
+
+	/// Clear all bits.
 	void clearall() { a_ = 0; }
+
+	/// Set all bits to a value.
+	/*! \param sbit value to set to */
 	void setall(const T sbit) { a_ = (1 << sbit) - 1; }
+
+	/// Get the enum integral_type.
+	/*! \return integral_type of enum */
 	integral_type get() const { return a_; }
 
+	/// Or a bit value with the current set.
+	/*! \param sbit to set */
 	void operator|=(const T sbit) { integral_type a = a_; a |= 1 << sbit; a_ = a; }
+
+	/// And a bit value with the current set.
+	/*! \param sbit to set */
 	void operator&=(const T sbit) { integral_type a = a_; a &= 1 << sbit; a_ = a; }
+
+	/// Or a bit value with the current set.
+	/*! \param sbit to set
+	    \return ebitset_r */
 	ebitset_r& operator<<(const T sbit) { a_ |= 1 << sbit; return *this; }
 };
 
 //----------------------------------------------------------------------------------------
-inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
-{
-	if (!target)
-		return 0;
-	unsigned sz(limit && src.size() > limit ? limit : src.size() + 1);
-	src.copy(target, sz - 1);
-	target[sz - 1] = 0;
-	return target;
-}
-
-//-----------------------------------------------------------------------------------------
-inline char *CopyAlloc (const std::string& what)
-{
-	return what.empty() ? 0 : CopyString(what, new char[what.size() + 1]);
-}
-
-//----------------------------------------------------------------------------------------
-template<typename T>
-inline T rotl(const T val, const int bits)
-{
-	return val << bits | val >> (sizeof(T) * 8 - bits);
-}
-
-//----------------------------------------------------------------------------------------
+/// Check for file existance.
+/*! \param fname filename to check
+    \return true if file exists */
 inline bool exist(const std::string& fname)
 {
 	return access(fname.c_str(), F_OK) == 0;
 }
 
 //----------------------------------------------------------------------------------------
+/// Sleep the specified number of milliseconds.
+/*! \param ms time to sleep in milliseconds
+    \return 0 on success */
 inline int millisleep (const int ms)
 {
 	struct timespec tspec = { ms / 1000, 1000 * 1000 * (ms % 1000) };
@@ -338,6 +396,9 @@ inline int millisleep (const int ms)
 }
 
 //----------------------------------------------------------------------------------------
+/// Sleep the specified number of microseconds.
+/*! \param us time to sleep in microseconds
+    \return 0 on success */
 inline int microsleep (const int us)
 {
 	struct timespec tspec = { us / (1000 * 1000), 1000 * (us % (1000 * 1000)) };
@@ -379,8 +440,10 @@ struct free_ptr
 };
 
 //----------------------------------------------------------------------------------------
+/// A lockfree Singleton.
+/*! \tparam T the instance object type */
 template <typename T>
-class Singleton	// lock-free Singleton
+class Singleton
 {
 	static tbb::atomic<T*> _instance;
 	static tbb::mutex _mutex;
@@ -389,9 +452,14 @@ class Singleton	// lock-free Singleton
 	Singleton& operator=(const Singleton&);
 
 public:
+	/// Ctor.
 	Singleton() {}
+
+	/// Dtor.
 	virtual ~Singleton() { delete _instance.fetch_and_store(0); }
 
+	/// Get the instance of the underlying object. If not created, create.
+	/*! \return the instance */
 	static T *instance()
 	{
 		if (_instance) // cast operator performs atomic load with acquire
@@ -403,9 +471,18 @@ public:
 		return _instance;
 	}
 
+
+	/// Get the instance of the underlying object. If not created, create.
+	/*! \return the instance */
 	T *operator->() const { return instance(); }
 
+	/// Replace the instance object with a new instance.
+	/*! \param what the new instance
+	    \return the original instance */
 	static T *reset(T *what) { return _instance.fetch_and_store(what); }
+
+	/// Get the instance of the underlying object removing it from the singleton.
+	/*! \return the instance */
 	static T *release() { return _instance.fetch_and_store(0); }
 };
 

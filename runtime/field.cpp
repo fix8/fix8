@@ -17,6 +17,8 @@ permitted provided that the following conditions are met:
     * Neither the name of the author nor the names of its contributors may be used to
 	 	endorse or promote products derived from this software without specific prior
 		written permission.
+    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
+	   in their name without written permission from fix8.org
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
 OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
@@ -54,6 +56,15 @@ $URL$
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
+BaseEntry *BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String&, const RealmBase*),
+		const RealmBase *rlm, const char *name, const char *comment)
+{
+	be->_create = create;
+	be->_rlm = rlm;
+	be->_name = name;
+	be->_comment = comment;
+	return be;
+}
 
 } // namespace FIX8
 
