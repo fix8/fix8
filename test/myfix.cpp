@@ -239,12 +239,8 @@ int main(int argc, char **argv)
 		if (server)
 		{
 			const string server_conf_file("myfix_server.xml");
-			if (!exist(server_conf_file))
-				throw f8Exception("server config file not found", server_conf_file);
 			Configuration conf(server_conf_file, true);
 			const XmlEntity *ses(conf.get_session(0));
-			if (!ses)
-				throw f8Exception("could not locate server session in config file", server_conf_file);
 			if (conf.get_role(ses) != Connection::cn_acceptor)
 				throw f8Exception("Invalid role");
 			GlobalLogger::instance()->send("test fix server starting up...");
@@ -269,12 +265,8 @@ int main(int argc, char **argv)
 		else
 		{
 			const string client_conf_file("myfix_client.xml");
-			if (!exist(client_conf_file))
-				throw f8Exception("client config file not found", client_conf_file);
 			Configuration conf(client_conf_file, true);
 			const XmlEntity *ses(conf.get_session(0));
-			if (!ses)
-				throw f8Exception("could not locate client session in config file", client_conf_file);
 			if (conf.get_role(ses) != Connection::cn_initiator)
 				throw f8Exception("Invalid role");
 			GlobalLogger::instance()->send("test fix client starting up...");

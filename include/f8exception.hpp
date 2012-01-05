@@ -53,18 +53,18 @@ class f8Exception : public std::exception
 	bool _force_logoff;
 
 public:
-	/// Ctor.
-	/*! \param force_logoff if true, logoff when thrown */
+	/*! Ctor.
+	    \param force_logoff if true, logoff when thrown */
 	f8Exception(bool force_logoff=false) : _force_logoff(force_logoff) {}
 
-	/// Ctor.
-	/*! \param msg message associated with this exception
+	/*! Ctor.
+	    \param msg message associated with this exception
 	    \param force_logoff if true, logoff when thrown */
 	f8Exception(const std::string& msg, bool force_logoff=false)
 		: _reason(msg), _force_logoff(force_logoff) {}
 
-	/// Ctor.
-	/*! \tparam T type of value to format
+	/*! Ctor.
+	    \tparam T type of value to format
 	    \param msg message associated with this exception
 	    \param val value to display with this exception
 	    \param force_logoff if true, logoff when thrown */
@@ -75,17 +75,17 @@ public:
 	/// Dtor.
 	virtual ~f8Exception() throw() {}
 
-	/// Get message associated with this exception.
-	/*! \return text message */
+	/*! Get message associated with this exception.
+	    \return text message */
 	virtual const char *what() const throw() { return _reason.c_str(); }
 
-	/// Get the force logoff setting.
-	/*! \return true if force logoff is set */
+	/*! Get the force logoff setting.
+	    \return true if force logoff is set */
 	const bool force_logoff() const { return _force_logoff; }
 
 protected:
-	/// Format a message to associate with this exception.
-	/*! \tparam T type of value to format
+	/*! Format a message to associate with this exception.
+	    \tparam T type of value to format
 	    \param msg message associated with this exception
 	    \param what to display with this exception */
 	template<typename T>
@@ -113,8 +113,8 @@ struct DuplicateField : f8Exception
 };
 
 //-------------------------------------------------------------------------------------------------
-/// For field types with a specified domain (realm), a value was decoded that was not in the domain set/range.
-/*! \tparam T the value type */
+/*! For field types with a specified domain (realm), a value was decoded that was not in the domain set/range.
+    \tparam T the value type */
 template<typename T>
 struct InvalidDomainValue : f8Exception
 {

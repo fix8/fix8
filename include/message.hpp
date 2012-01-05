@@ -69,8 +69,8 @@ class GroupBase
 	GroupElement _msgs;
 
 public:
-	/// ctor
-	/*! \param fnum number of fields in this group */
+	/*! ctor
+	    \param fnum number of fields in this group */
 	GroupBase(const unsigned short fnum) : _fnum(fnum) {}
 	/// dtor
 	virtual ~GroupBase() { clear(false); }
@@ -85,8 +85,8 @@ public:
 	/// Provide array style index access to repeating groups
 	MessageBase *operator[](unsigned idx) { return idx < _msgs.size() ? _msgs[idx] : 0; }
 
-	/// Empty messages from container
-	/*! \param reuse if true clear vector */
+	/*! Empty messages from container
+	    \param reuse if true clear vector */
 	void clear(bool reuse=true)
 	{
 		std::for_each (_msgs.begin(), _msgs.end(), free_ptr<>());
@@ -213,8 +213,8 @@ protected:
 	const class F8MetaCntx& _ctx;
 
 public:
-	/// Ctor.
-	/*! \tparam InputIterator input iterator type
+	/*! Ctor.
+	    \tparam InputIterator input iterator type
 	    \param ctx reference to generated metadata
 	    \param msgType - reference to Fix message type
 	    \param begin - InputIterator pointing to begining of field trait table
@@ -231,8 +231,8 @@ public:
 	/// Dtor.
 	virtual ~MessageBase() { clear(false); }
 
-	/// Empty messages from container.
-	/*! \param reuse if true clear vector */
+	/*! Empty messages from container.
+	    \param reuse if true clear vector */
 	virtual void clear(bool reuse=true)
 	{
 		std::for_each (_fields.begin(), _fields.end(), free_ptr<Delete2ndPairObject<> >());
@@ -246,40 +246,40 @@ public:
 		}
 	}
 
-	/// Decode from string.
-	/*! \param from source string
+	/*! Decode from string.
+	    \param from source string
 	    \param offset in bytes to decode from
 	    \return number of bytes consumed */
 	unsigned decode(const f8String& from, const unsigned offset);
 
-	/// Decode repeating group from string.
-	/*! \param fnum repeating group fix field num (no...)
+	/*! Decode repeating group from string.
+	    \param fnum repeating group fix field num (no...)
 	    \param from source string
 	    \param offset in bytes to decode from
 	    \return number of bytes consumed */
 	unsigned decode_group(const unsigned short fnum, const f8String& from, const unsigned offset);
 
-	/// Encode message to stream.
-	/*! \param to stream to encode to
+	/*! Encode message to stream.
+	    \param to stream to encode to
 	    \return number of bytes encoded */
 	unsigned encode(std::ostream& to);
 
-	/// Encode message to stream.
-	/*! \param fnum repeating group fix field num (no...)
+	/*! Encode message to stream.
+	    \param fnum repeating group fix field num (no...)
 	    \param to stream to encode to
 	    \return number of fields encoded */
 	unsigned encode_group(const unsigned short fnum, std::ostream& to);
 
 	unsigned check_positions();
 
-	/// Copy all fields from this message to 'to' where the field is legal for 'to' and it is not already present in 'to'; includes repeating groups.
-	/*! \param to target message
+	/*! Copy all fields from this message to 'to' where the field is legal for 'to' and it is not already present in 'to'; includes repeating groups.
+	    \param to target message
 	    \param force if true copy all fields regardless, replacing any existing, adding any new
 	    \return number of fields copied */
 	unsigned copy_legal(MessageBase *to, bool force=false) const;
 
-	/// Check that this field has the realm (domain) pointer set; if not then set.
-	/*! \param where field to check */
+	/*! Check that this field has the realm (domain) pointer set; if not then set.
+	    \param where field to check */
 	void check_set_rlm(BaseField *where)
 	{
 		if (!where->_rlm)
@@ -290,11 +290,12 @@ public:
 		}
 	}
 
-	/// \return the Fix message type as a string
+	/*! Get the message type as a string.
+	    \return the Fix message type as a string */
 	const f8String& get_msgtype() const { return _msgType; }
 
-	/// Add fix field to this message.
-	/*! \param fnum field tag
+	/*! Add fix field to this message.
+	    \param fnum field tag
 	    \param pos position of field in message
 	    \param what pointer to field */
 	void add_field(const unsigned short fnum, const unsigned pos, BaseField *what)
@@ -310,13 +311,13 @@ public:
 		_fp.set(fnum, FieldTrait::present);
 	}
 
-	/// Set field attribute to given value.
-	/*! \param field tag number
+	/*! Set field attribute to given value.
+	    \param field tag number
 	    \param type fieldtrait type */
 	void set(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present) { _fp.set(field, type); }
 
-	/// Add fix field to this message.
-	/*! \param what pointer to field
+	/*! Add fix field to this message.
+	    \param what pointer to field
 		 \return true on success; throws InvalidField if not valid */
 	bool add_field(BaseField *what)
 	{
@@ -330,13 +331,13 @@ public:
 		return false;
 	}
 
-	/// Add fix field to this message.
-	/*! \param what pointer to field
+	/*! Add fix field to this message.
+	    \param what pointer to field
 	    \return true on success; throws InvalidField if not valid */
 	bool operator+=(BaseField *what) { return add_field(what); }
 
-	/// Populate supplied field with value from message.
-	/*! \tparam T type of field to get
+	/*! Populate supplied field with value from message.
+	    \tparam T type of field to get
 	    \param to field to populate
 	    \return true on success */
 	template<typename T>
@@ -351,25 +352,25 @@ public:
 		return true;
 	}
 
-	/// Populate supplied field with value from message.
-	/*! \tparam T type of field to get
+	/*! Populate supplied field with value from message.
+	    \tparam T type of field to get
 	    \param to field to populate
 	    \return true on success */
 	template<typename T>
 	bool operator()(T& to) const { return get(to); }
 
-	/// Check if a field is present in this message.
-	/*! \param fnum field number
+	/*! Check if a field is present in this message.
+	    \param fnum field number
 	    \return true is present */
 	bool have(const unsigned short fnum) const { return _fp.get(fnum, FieldTrait::present); }
 
-	/// Check if a field is present in this message.
-	/*! \param fnum field number
+	/*! Check if a field is present in this message.
+	    \param fnum field number
 	    \return iterator to field or Fields::const_iterator::end */
 	Fields::const_iterator find_field(const unsigned short fnum) const { return _fields.find(fnum); }
 
-	/// Check if a field is present in this message.
-	/*! \param fnum field number
+	/*! Check if a field is present in this message.
+	    \param fnum field number
 	    \return pointer to field or 0 if not found */
 	BaseField *get_field(const unsigned short fnum) const
 	{
@@ -377,33 +378,33 @@ public:
 		return itr != _fields.end() ? itr->second : 0;
 	}
 
-	/// Get an iterator to fields present in this message.
-	/*! \return iterator to the first field or Fields::const_iterator::end */
+	/*! Get an iterator to fields present in this message.
+	    \return iterator to the first field or Fields::const_iterator::end */
 	Fields::const_iterator fields_begin() const { return _fields.begin(); }
 
-	/// Get an iterator to fields present in this message.
-	/*! \return iterator to the last field + 1 */
+	/*! Get an iterator to fields present in this message.
+	    \return iterator to the last field + 1 */
 	Fields::const_iterator fields_end() const { return _fields.end(); }
 
-	/// Replace a field value with another field value.
-	/*! \param fnum field number
+	/*! Replace a field value with another field value.
+	    \param fnum field number
 	    \param with field to replace with
 	    \return pointer to original field or 0 if not found */
 	BaseField *replace(const unsigned short fnum, BaseField *with);
 
-	/// Remove a field from this message.
-	/*! \param fnum field number
+	/*! Remove a field from this message.
+	    \param fnum field number
 	    \return pointer to original field or 0 if not found */
 	BaseField *remove(const unsigned short fnum);
 
-	/// Find a group of a specified type.
-	/*! \tparam T type of group to get
+	/*! Find a group of a specified type.
+	    \tparam T type of group to get
 	    \return pointer to found group or 0 if not found */
 	template<typename T>
 	GroupBase *find_group() { return find_group(T::_fnum); }
 
-	/// Find a group of a specified type.
-	/*! \param fnum field number
+	/*! Find a group of a specified type.
+	    \param fnum field number
 	    \return pointer to found group or 0 if not found */
 	GroupBase *find_group(const unsigned short fnum) const
 	{
@@ -411,43 +412,43 @@ public:
 		return gitr != _groups.end() ? gitr->second : 0;
 	}
 
-	/// Add a repeating group to a message.
-	/*! \param what pointer to group to add */
+	/*! Add a repeating group to a message.
+	    \param what pointer to group to add */
 	void add_group(GroupBase *what)
 		{ _groups.insert(Groups::value_type(what->_fnum, what)); }
 
-	/// Add a repeating group to a message.
-	/*! \param what pointer to group to add */
+	/*! Add a repeating group to a message.
+	    \param what pointer to group to add */
 	void operator+=(GroupBase *what) { add_group(what); }
 
-	/// Find the position of a field in a message.
-	/*! \param field field number
+	/*! Find the position of a field in a message.
+	    \param field field number
 	    \return position of field */
 	unsigned short getPos(const unsigned short field) const { return _fp.getPos(field); }
 
-	/// Add a fieldtrait to the message.
-	/*! \param what FieldTrait to add
+	/*! Add a fieldtrait to the message.
+	    \param what FieldTrait to add
 	    \return true on success */
 	bool add_trait(const FieldTrait& what) { return _fp.add(what); }
 
-	/// Add a range of fieldtraits to the message.
-	/*! \tparam InputIterator input iterator type
+	/*! Add a range of fieldtraits to the message.
+	    \tparam InputIterator input iterator type
 	    \param begin first FieldTrait to add
 	    \param end last + 1 fieldtrait to add */
 	template<typename InputIterator>
 	void add_trait(const InputIterator begin, const InputIterator end) { _fp.add(begin, end); }
 
-	/// Print the message to the specified stream.
-	/*! \param os refererence to stream to print to */
+	/*! Print the message to the specified stream.
+	    \param os refererence to stream to print to */
 	virtual void print(std::ostream& os) const;
 
-	/// Print the repeating group to the specified stream.
-	/*! \param fnum field number
+	/*! Print the repeating group to the specified stream.
+	    \param fnum field number
 	    \param os refererence to stream to print to */
 	virtual void print_group(const unsigned short fnum, std::ostream& os) const;
 
-	/// Sendto friend.
-	/*! \param os stream to send to
+	/*! Inserter friend.
+	    \param os stream to send to
 	    \param what messagebase
 	    \return stream */
 	friend std::ostream& operator<<(std::ostream& os, const MessageBase& what) { what.print(os); return os; }
@@ -469,8 +470,8 @@ protected:
 	MessageBase *_header, *_trailer;
 
 public:
-	/// Ctor.
-	/*! \tparam InputIterator input iterator type
+	/*! Ctor.
+	    \tparam InputIterator input iterator type
 	    \param ctx - reference to generated metadata
 	    \param msgType - reference to Fix message type
 	    \param begin - InputIterator pointing to begining of field trait table
@@ -481,12 +482,12 @@ public:
 #if defined MSGRECYCLING
 		{ _in_use = true; }
 
-	/// Indicate that this message is currently being used.
-	/*! \param way if true, set inuse as true */
+	/*! Indicate that this message is currently being used.
+	    \param way if true, set inuse as true */
 	void set_in_use(bool way=false) { _in_use = way; }
 
-	/// Indicate that this message is currently unused.
-	/*! \return true if message is in use */
+	/*! Indicate that this message is currently unused.
+	    \return true if message is in use */
 	bool get_in_use() const { return _in_use; }
 #else
 		{}
@@ -494,39 +495,39 @@ public:
 	/// Dtor.
 	virtual ~Message() { delete _header; delete _trailer; }
 
-	/// Get a pointer to the message header.
-	/*! \return pointer to header */
+	/*! Get a pointer to the message header.
+	    \return pointer to header */
 	MessageBase *Header() const { return _header; }
 
-	/// Get a pointer to the message trailer.
-	/*! \return pointer to trailer */
+	/*! Get a pointer to the message trailer.
+	    \return pointer to trailer */
 	MessageBase *Trailer() const { return _trailer; }
 
-	/// Decode from string.
-	/*! \param from source string
+	/*! Decode from string.
+	    \param from source string
 	    \return number of bytes consumed */
 	unsigned decode(const f8String& from);
 
-	/// Encode message to stream.
-	/*! \param to stream to encode to
+	/*! Encode message to stream.
+	    \param to stream to encode to
 	    \return number of bytes encoded */
 	unsigned encode(f8String& to);
 
-	/// Clone this message.
-	/*! \return pointer to copy of this message */
+	/*! Clone this message.
+	    \return pointer to copy of this message */
 	Message *clone() const;
 
-	/// Initiate callback to appropriate process method from metadata.
-	/*! \param rt reference to router instance
+	/*! Initiate callback to appropriate process method from metadata.
+	    \param rt reference to router instance
 	    \return true if correctly processed */
 	virtual bool process(Router& rt) const { return (rt)(this); }
 
-	/// Test whether this message is administrative.
-	/*! \return true if administrative */
+	/*! Test whether this message is administrative.
+	    \return true if administrative */
 	virtual bool is_admin() const { return false; }
 
-	/// Empty messages from container
-	/*! \param reuse if true clear vector */
+	/*! Empty messages from container
+	    \param reuse if true clear vector */
 	virtual void clear(bool reuse=true)
 	{
 		if (_header)
@@ -536,8 +537,8 @@ public:
 		MessageBase::clear(reuse);
 	}
 
-	/// Generate a checksum from a encoded buffer.
-	/*! \param from source buffer encoded Fix message
+	/*! Generate a checksum from an encoded buffer.
+	    \param from source buffer encoded Fix message
 	    \param offset starting offset
 	    \param len maximum length
 	    \return calculated checknum */
@@ -550,13 +551,13 @@ public:
 		return val % 256;
 	}
 
-	/// Format a checksum into the required 3 digit, 0 padded string.
-	/*! \param val checksum value
+	/*! Format a checksum into the required 3 digit, 0 padded string.
+	    \param val checksum value
 	    \return string containing formatted value */
 	static const f8String fmt_chksum(const unsigned val);
 
-	/// Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
-	/*! \param ctx reference to metadata object
+	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
+	    \param ctx reference to metadata object
 	    \param from pointer to raw buffer containing Fix message
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
 	static Message *factory(const F8MetaCntx& ctx, const char *from
@@ -573,8 +574,8 @@ public:
 		);
 	}
 
-	/// Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
-	/*! \param ctx reference to metadata object
+	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
+	    \param ctx reference to metadata object
 	    \param from reference to string raw buffer containing Fix message
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
 	static Message *factory(const F8MetaCntx& ctx, const f8String& from
@@ -583,12 +584,12 @@ public:
 #endif
 		);
 
-	/// Print the message to the specified stream.
-	/*! \param os refererence to stream to print to */
+	/*! Print the message to the specified stream.
+	    \param os refererence to stream to print to */
 	virtual void print(std::ostream& os) const;
 
-	/// Sendto friend.
-	/*! \param os stream to send to
+	/*! Inserter friend.
+	    \param os stream to send to
 	    \param what message
 	    \return stream */
 	friend std::ostream& operator<<(std::ostream& os, const Message& what) { what.print(os); return os; }

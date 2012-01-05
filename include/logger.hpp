@@ -46,6 +46,7 @@ $URL$
 namespace FIX8 {
 
 //------------------------------------------------------------------------------
+/// File descriptor streambuf
 class fdoutbuf : public std::streambuf // inspiration from Josuttis N.M.
 {
 protected:
@@ -78,6 +79,7 @@ extern "C"
 	int cfpclose(FILE *pp);
 }
 
+/// File pointer stream
 class fptrostream : public std::ostream
 {
    FILE *fptr_;
@@ -87,7 +89,12 @@ protected:
    fdoutbuf buf_;
 
 public:
+	/*! Ctor.
+	    \param fptr FILE*
+	    \param cf if true, us cfpopen instead of popen */
    fptrostream (FILE *fptr, bool cf=true) : std::ostream(&buf_), fptr_(fptr), cf_(cf), buf_(fileno(fptr)) {}
+
+	/// Dtor.
    virtual ~fptrostream ()
 	{
 		if (cf_)
@@ -96,12 +103,15 @@ public:
 			pclose(fptr_);
 	}
 
+	/*! Get the filno (fd)
+	    \return fd */
    int getfileno() { return fileno(fptr_); }
 };
 
 //-------------------------------------------------------------------------------------------------
 class Tickval;
 
+/// Thread delegated async logging class
 class Logger
 {
 	Thread<Logger> _thread;
@@ -121,30 +131,56 @@ protected:
 	typedef std::map<pthread_t, char> ThreadCodes;
 
 public:
+	/*! Ctor.
+	    \param flags ebitset flags */
 	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _sequence(), _t_code('A') { _thread.Start(); }
+
+	/// Dtor.
 	virtual ~Logger() {}
 
+	/*! Get the underlying stream object.
+	    \return the stream */
 	virtual std::ostream& get_stream() const { return std::cout; }
+
+	/*! Log a string.
+	    \param what the string to log
+	    \return true on success */
 	bool send(const std::string& what) { return _msg_queue.try_push (LogElement(pthread_self(), what)) == 0; }
+
+	/// Stop the logging thread.
 	void stop() { send(std::string()); _thread.Join(); }
+
+	/*! Perform logfile rotation. Only relevant for file-type loggers.
+	    \return true on success */
 	virtual bool rotate() { return true; }
 
+	/*! The logging thread entry point.
+	    \return 0 on success */
 	int operator()();
 };
 
 //-------------------------------------------------------------------------------------------------
+/// A generic logging class that will log to any supplied stream
 class GenericLogger : public Logger
 {
 	std::ostream& _os;
 
 public:
+	/*! Ctor.
+	    \param os the stream to log to
+	    \param flags ebitset flags */
 	GenericLogger(std::ostream& os, const LogFlags flags) : Logger(flags), _os(os) {}
+
+	/// Dtor.
 	virtual ~GenericLogger() {}
 
+	/*! Get the underlying stream object.
+	    \return the stream */
 	virtual std::ostream& get_stream() const { return _os; }
 };
 
 //-------------------------------------------------------------------------------------------------
+/// A file logger.
 class FileLogger : public Logger
 {
 	std::ostream *_ofs;
@@ -152,20 +188,36 @@ class FileLogger : public Logger
 	unsigned _rotnum;
 
 public:
+	/*! Ctor.
+	    \param pathname pathname to log to
+	    \param flags ebitset flags
+	    \param rotnum number of logfile rotations to retain (default=5) */
 	FileLogger(const std::string& pathname, const LogFlags flags, const unsigned rotnum=rotation_default);
+
+	/// Dtor.
 	virtual ~FileLogger() { delete _ofs; }
 
+	/*! Get the underlying stream object.
+	    \return the stream */
 	virtual std::ostream& get_stream() const { return _ofs ? *_ofs : std::cerr; }
+
+	/*! Perform logfile rotation
+	    \return true on success */
 	virtual bool rotate();
 };
 
 //-------------------------------------------------------------------------------------------------
 const size_t max_global_filename_length(128);
 
+/*! A global singleton logger
+    \tparam fn actual pathname of logfile
+    \details Create a static instance of this template and set the template parameter to the desired
+	 logfile pathname */
 template<char *fn>
 class SingleLogger : public Singleton<SingleLogger<fn> >, public FileLogger
 {
 public:
+	/// Ctor.
 	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << thread) {}
 };
 

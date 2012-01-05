@@ -43,25 +43,56 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/message.hpp $
 //-----------------------------------------------------------------------------------------
 class myfix_session_client;
 
+/*! Example client message router. Derives from fix8 generated router class.
+    Your application must define a class similar to this in order to receive
+    the appropriate callback when Message::process is called. */
 class tex_router_client : public FIX8::TEX::Myfix_Router
 {
 	myfix_session_client& _session;
 
 public:
+	/*! Ctor.
+	    \param session client session */
 	tex_router_client(myfix_session_client& session) : _session(session) {}
 
+	/*! Execution report handler. Here is where you provide your own methods for the messages you wish to
+		 handle. Only those messages that are of interest to you need to be implemented.
+	    \param msg Execution report message session */
 	virtual bool operator() (const FIX8::TEX::ExecutionReport *msg) const;
 };
 
+/*! Example client session. Derives from FIX8::Session.
+    Your application must define a class similar to this in order to create and connect a client.
+    You must also implement handle_application in order to receive application messages from the framework. */
 class myfix_session_client : public FIX8::Session
 {
 	tex_router_client _router;
 
 public:
+	/*! Ctor. Initiator.
+	    \param ctx reference to generated metadata
+	    \param sid sessionid of connecting session
+		 \param persist persister for this session
+		 \param logger logger for this session
+		 \param plogger protocol logger for this session */
 	myfix_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist,
 		FIX8::Logger *logger, FIX8::Logger *plogger) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
+
+	/*! Application message callback.
+	    This method is called by the framework when an application message has been received and decoded. You
+	  	 should implement this method and call the supplied Message::process.
+	    \param seqnum Fix sequence number of the message
+		 \param msg Mesage decoded (base ptr)
+		 \return true on success */
 	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
+
 #if defined PERMIT_CUSTOM_FIELDS
+	/*! Post message constructor.
+	    If you have enabled custom field capability then you need to provde an implementation for this method.
+	    It is called immediately after the framework has constructed a message from the metadata. You should then add your
+		 custom field traits.
+		 \param msg Mesage decoded (base ptr)
+		 \return true on success */
 	bool post_msg_ctor(FIX8::Message *msg);
 #endif
 };
@@ -69,13 +100,21 @@ public:
 //-----------------------------------------------------------------------------------------
 class myfix_session_server;
 
+/*! Example server message router. Derives from fix8 generated router class.
+    Your application must define a class similar to this in order to receive
+    the appropriate callback when Message::process is called. */
 class tex_router_server : public FIX8::TEX::Myfix_Router
 {
 	myfix_session_server& _session;
 
 public:
+	/*! Ctor.
+	    \param session server session */
 	tex_router_server(myfix_session_server& session) : _session(session) {}
 
+	/*! NewOrderSingle message handler. Here is where you provide your own methods for the messages you wish to
+		 handle. Only those messages that are of interest to you need to be implemented.
+	    \param msg NewOrderSingle report message session */
 	virtual bool operator() (const FIX8::TEX::NewOrderSingle *msg) const;
 };
 
@@ -84,14 +123,33 @@ class myfix_session_server : public FIX8::Session
 	tex_router_server _router;
 
 public:
+	/*! Ctor. Acceptor.
+	    \param ctx reference to generated metadata
+		 \param persist persister for this session
+		 \param logger logger for this session
+		 \param plogger protocol logger for this session */
 	myfix_session_server(const FIX8::F8MetaCntx& ctx, FIX8::Persister *persist,
 		FIX8::Logger *logger, FIX8::Logger *plogger) : Session(ctx, persist, logger, plogger), _router(*this) {}
+
+	/*! Application message callback. This method is called by the framework when an application message has been received and decoded.
+	    You should implement this method and call the supplied Message::process.
+	    \param seqnum Fix sequence number of the message
+		 \param msg Mesage decoded (base ptr)
+		 \return true on success */
 	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
+
 #if defined PERMIT_CUSTOM_FIELDS
+	/*! Post message constructor. If you have enabled custom field capability then you need to provde an implementation for this method.
+	    It is called immediately after the framework has constructed a message from the metadata. You should then add your
+		 custom field traits.
+		 \param msg Mesage decoded (base ptr)
+		 \return true on success */
 	bool post_msg_ctor(FIX8::Message *msg);
 #endif
 };
 
+//---------------------------------------------------------------------------------------------------
+// The following classes are not part of FIX8.
 //---------------------------------------------------------------------------------------------------
 class fdinbuf : public std::streambuf
 {

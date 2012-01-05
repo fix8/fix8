@@ -64,8 +64,8 @@ protected:
 	Session& _session;
 
 public:
-	/// Ctor.
-	/*! \param sock connected socket
+	/*! Ctor.
+	    \param sock connected socket
 	    \param session session */
 	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session)
 		: _thread(ref(*this)), _sock(sock), _session(session) {}
@@ -73,12 +73,12 @@ public:
 	/// Dtor.
 	virtual ~AsyncSocket() {}
 
-	/// Get the number of messages queued on this socket.
-	/*! \return number of queued messages */
+	/*! Get the number of messages queued on this socket.
+	    \return number of queued messages */
 	size_t queued() const { return _msg_queue.size(); }
 
-	/// Pure virtual Function operator. Called by thread to process message on queue.
-	/*! \return 0 on success */
+	/*! Pure virtual Function operator. Called by thread to process message on queue.
+	    \return 0 on success */
 	virtual int operator()() = 0;
 
 	/// Start the processing thread.
@@ -87,12 +87,12 @@ public:
 	/// Stop the processing thread and quit.
 	virtual void quit() { _thread.Kill(1); }
 
-	/// Get the underlying socket object.
-	/*! \return the socket */
+	/*! Get the underlying socket object.
+	    \return the socket */
 	Poco::Net::StreamSocket *socket() { return _sock; }
 
-	/// Wait till processing thead has finished.
-	/*! \return 0 on success */
+	/*! Wait till processing thead has finished.
+	    \return 0 on success */
 	int join() { return _thread.Join(); }
 };
 
@@ -105,31 +105,31 @@ class FIXReader : public AsyncSocket<f8String>
 
 	Thread<FIXReader> _callback_thread;
 
-	/// Process messages from inbound queue, calls session process method.
-	/*! \return number of messages processed */
+	/*! Process messages from inbound queue, calls session process method.
+	    \return number of messages processed */
 	int callback_processor();
 
 	size_t _bg_sz; // 8=FIXx.x^A9=x
 
-	/// Read a Fix message. Throws InvalidBodyLength, IllegalMessage.
-	/*! \param to string to place message in
+	/*! Read a Fix message. Throws InvalidBodyLength, IllegalMessage.
+	    \param to string to place message in
 	    \return true on success */
 	bool read(f8String& to);
 
-	/// Read bytes from the socket layer, throws PeerResetConnection.
-	/*! \param where buffer to place bytes in
+	/*! Read bytes from the socket layer, throws PeerResetConnection.
+	    \param where buffer to place bytes in
 	    \param sz number of bytes to read
 	    \return number of bytes read */
 	int sockRead(char *where, size_t sz);
 
 protected:
-	/// Reader thread method. Reads messages and places them on the queue for processing.
-	/*! \return 0 on success */
+	/*! Reader thread method. Reads messages and places them on the queue for processing.
+	    \return 0 on success */
 	int operator()();
 
 public:
-	/// Ctor.
-	/*! \param sock connected socket
+	/*! Ctor.
+	    \param sock connected socket
 	    \param session session */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session)
 		: AsyncSocket<f8String>(sock, session), _callback_thread(ref(*this), &FIXReader::callback_processor), _bg_sz()
@@ -162,26 +162,26 @@ public:
 class FIXWriter : public AsyncSocket<Message *>
 {
 protected:
-	/// Writer thread method. Reads messages from the queue and sends them over the socket.
-	/*! \return 0 on success */
+	/*! Writer thread method. Reads messages from the queue and sends them over the socket.
+	    \return 0 on success */
 	int operator()();
 
 public:
-	/// Ctor.
-	/*! \param sock connected socket
+	/*! Ctor.
+	    \param sock connected socket
 	    \param session session */
 	FIXWriter(Poco::Net::StreamSocket *sock, Session& session) : AsyncSocket<Message *>(sock, session) {}
 
 	/// Dtor.
 	virtual ~FIXWriter() {}
 
-	/// Place Fix message on outbound message queue.
-	/*! \param from message to send
+	/*! Place Fix message on outbound message queue.
+	    \param from message to send
 	    \return true in success */
 	bool write(Message *from) { return _msg_queue.try_push(from); }
 
-	/// Send message over socket.
-	/*! \param msg message string to send
+	/*! Send message over socket.
+	    \param msg message string to send
 	    \return number of bytes sent */
 	int send(const f8String& msg) { return _sock->sendBytes(msg.data(), msg.size()); }
 
@@ -208,15 +208,15 @@ protected:
 	FIXWriter _writer;
 
 public:
-	/// Ctor. Initiator.
-	/*! \param sock connected socket
+	/*! Ctor. Initiator.
+	    \param sock connected socket
 	    \param session session */
 	Connection(Poco::Net::StreamSocket *sock, Session &session)	// client
 		: _sock(sock), _connected(), _session(session), _role(cn_initiator),
 		_hb_interval(10), _reader(sock, session), _writer(sock, session) {}
 
-	/// Ctor. Acceptor.
-	/*! \param sock connected socket
+	/*! Ctor. Acceptor.
+	    \param sock connected socket
 	    \param session session
 	    \param hb_interval heartbeat interval */
 	Connection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval) // server
@@ -227,8 +227,8 @@ public:
 	/// Dtor.
 	virtual ~Connection() {}
 
-	/// Get the role for this connection.
-	/*! \return the role */
+	/*! Get the role for this connection.
+	    \return the role */
 	const Role get_role() const { return _role; }
 
 	/// Start the reader and writer threads.
@@ -237,39 +237,39 @@ public:
 	/// Stop the reader and writer threads.
 	void stop();
 
-	/// Get the connection state.
-	/*! \return true if connected */
+	/*! Get the connection state.
+	    \return true if connected */
 	virtual bool connect() { return _connected; }
 
-	/// Write a message to the underlying socket.
-	/*! \param from Message to write
+	/*! Write a message to the underlying socket.
+	    \param from Message to write
 	    \return true on success */
 	virtual bool write(Message *from) { return _writer.write(from); }
 
-	/// Write a string message to the underlying socket.
-	/*! \param from Message (string) to write
+	/*! Write a string message to the underlying socket.
+	    \param from Message (string) to write
 	    \return number of bytes written */
 	int send(const f8String& from) { return _writer.send(from); }
 
-	/// Set the heartbeat interval for this connection.
-	/*! \param hb_interval heartbeat interval */
+	/*! Set the heartbeat interval for this connection.
+	    \param hb_interval heartbeat interval */
 	void set_hb_interval(const unsigned hb_interval)
 		{ _hb_interval = hb_interval; _hb_interval20pc = hb_interval + hb_interval / 5; }
 
-	/// Get the heartbeat interval for this connection.
-	/*! \return the heartbeat interval */
+	/*! Get the heartbeat interval for this connection.
+	    \return the heartbeat interval */
 	unsigned get_hb_interval() const { return _hb_interval; }
 
-	/// Get the heartbeat interval + %20 for this connection.
-	/*! \return the heartbeat interval + %20 */
+	/*! Get the heartbeat interval + %20 for this connection.
+	    \return the heartbeat interval + %20 */
 	unsigned get_hb_interval20pc() const { return _hb_interval20pc; }
 
-	/// Wait till reader thead has finished.
-	/*! \return 0 on success */
+	/*! Wait till reader thead has finished.
+	    \return 0 on success */
 	int join() { return _reader.join(); }
 
-	/// Get the session associated with this connection.
-	/*! \return the session */
+	/*! Get the session associated with this connection.
+	    \return the session */
 	Session& get_session() { return _session; }
 };
 
@@ -280,8 +280,8 @@ class ClientConnection : public Connection
 	Poco::Net::SocketAddress _addr;
 
 public:
-	/// Ctor. Initiator.
-	/*! \param sock connected socket
+	/*! Ctor. Initiator.
+	    \param sock connected socket
 	    \param addr sock address structure
 	    \param session session */
 	ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session)
@@ -290,8 +290,8 @@ public:
 	/// Dtor.
 	virtual ~ClientConnection() {}
 
-	/// Establish connection.
-	/*! \return true on success */
+	/*! Establish connection.
+	    \return true on success */
 	bool connect();
 };
 
@@ -301,8 +301,8 @@ class ServerConnection : public Connection
 {
 
 public:
-	/// Ctor. Initiator.
-	/*! \param sock connected socket
+	/*! Ctor. Initiator.
+	    \param sock connected socket
 	    \param session session
 	    \param hb_interval heartbeat interval */
 	ServerConnection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval) :

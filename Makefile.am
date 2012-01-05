@@ -40,7 +40,8 @@ SUBDIRS = runtime compiler test doc
 #############################################################################################
 ACLOCAL_AMFLAGS = -I m4
 
-EXTRA_DIST = doc/fix8.doxygen schema/*.xml schema/QUICKFIX-LICENCE
+EXTRA_DIST = doc/fix8.doxygen doc/mainpage.doxygen \
+				 schema/*.xml schema/QUICKFIX-LICENCE
 
 $(distdir).tar.gz:
 	make dist

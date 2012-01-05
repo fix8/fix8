@@ -293,8 +293,8 @@ public:
 	//friend ebitset operator|(const T lbit, const T rbit) { return ebitset(lbit) |= 1 << rbit; }
 };
 
-/// Atomic bitset for enums.
-/*! \tparam T the enum type
+/*! Atomic bitset for enums.
+    \tparam T the enum type
     \tparam B the integral type of the enumeration */
 template<typename T, typename B=unsigned int>
 class ebitset_r
@@ -306,20 +306,20 @@ public:
 	/// Ctor.
 	ebitset_r() { a_ = 0; }
 
-	/// Ctor.
-	/*! \param from ebitset_r to copy */
+	/*! Ctor.
+	    \param from ebitset_r to copy */
 	ebitset_r(const ebitset_r<T, B>& from) { a_ = from.a_; }
 
-	/// Ctor.
-	/*! \param a integral type to construct from */
+	/*! Ctor.
+	    \param a integral type to construct from */
 	explicit ebitset_r(const integral_type a) { a_ = a; }
 
-	/// Ctor.
-	/*! \param sbit enum to construct from */
+	/*! Ctor.
+	    \param sbit enum to construct from */
 	explicit ebitset_r(const T sbit) { a_ = (1 << sbit) - 1; }
 
-	/// Assignment operator.
-	/*! \param that ebitset_r to assign from
+	/*! Assignment operator.
+	    \param that ebitset_r to assign from
 	    \return  this */
 	ebitset_r<T, B>& operator=(const ebitset_r<T, B>& that)
 	{
@@ -328,57 +328,57 @@ public:
 		return *this;
 	}
 
-	/// Check if an enum is in the set.
-	/*! \param sbit enum to check
+	/*! Check if an enum is in the set.
+	    \param sbit enum to check
 	    \return integral_type of bits if found */
 	integral_type has(const T sbit) { return a_ & 1 << sbit; }
 
-	/// Check if an enum is in the set.
-	/*! \param sbit enum to check
+	/*! Check if an enum is in the set.
+	    \param sbit enum to check
 	    \return integral_type of bits if found */
 	integral_type operator&(const T sbit) { return a_ & 1 << sbit; }
 
-	/// Set a bit on or off.
-	/*! \param sbit enum to set
+	/*! Set a bit on or off.
+	    \param sbit enum to set
 	    \param on set on or off */
 	void set(const T sbit, bool on=true) { if (on) a_ |= 1 << sbit; else a_ &= ~(1 << sbit); }
 
-	/// Set a bit on or off.
-	/*! \param bset integral_type to set */
+	/*! Set a bit on or off.
+	    \param bset integral_type to set */
 	void set(const integral_type bset) { a_ = bset; }
 
-	/// Clear a bit on or off.
-	/*! \param sbit enum to set */
+	/*! Clear a bit on or off.
+	    \param sbit enum to set */
 	void clear(const T sbit) { integral_type a = a_; a &= ~(1 << sbit); a_ = a; }
 
 	/// Clear all bits.
 	void clearall() { a_ = 0; }
 
-	/// Set all bits to a value.
-	/*! \param sbit value to set to */
+	/*! Set all bits to a value.
+	    \param sbit value to set to */
 	void setall(const T sbit) { a_ = (1 << sbit) - 1; }
 
-	/// Get the enum integral_type.
-	/*! \return integral_type of enum */
+	/*! Get the enum integral_type.
+	    \return integral_type of enum */
 	integral_type get() const { return a_; }
 
-	/// Or a bit value with the current set.
-	/*! \param sbit to set */
+	/*! Or a bit value with the current set.
+	    \param sbit to set */
 	void operator|=(const T sbit) { integral_type a = a_; a |= 1 << sbit; a_ = a; }
 
-	/// And a bit value with the current set.
-	/*! \param sbit to set */
+	/*! And a bit value with the current set.
+	    \param sbit to set */
 	void operator&=(const T sbit) { integral_type a = a_; a &= 1 << sbit; a_ = a; }
 
-	/// Or a bit value with the current set.
-	/*! \param sbit to set
+	/*! Or a bit value with the current set.
+	    \param sbit to set
 	    \return ebitset_r */
 	ebitset_r& operator<<(const T sbit) { a_ |= 1 << sbit; return *this; }
 };
 
 //----------------------------------------------------------------------------------------
-/// Check for file existance.
-/*! \param fname filename to check
+/*! Check for file existance.
+    \param fname filename to check
     \return true if file exists */
 inline bool exist(const std::string& fname)
 {
@@ -386,8 +386,8 @@ inline bool exist(const std::string& fname)
 }
 
 //----------------------------------------------------------------------------------------
-/// Sleep the specified number of milliseconds.
-/*! \param ms time to sleep in milliseconds
+/*! Sleep the specified number of milliseconds.
+    \param ms time to sleep in milliseconds
     \return 0 on success */
 inline int millisleep (const int ms)
 {
@@ -396,8 +396,8 @@ inline int millisleep (const int ms)
 }
 
 //----------------------------------------------------------------------------------------
-/// Sleep the specified number of microseconds.
-/*! \param us time to sleep in microseconds
+/*! Sleep the specified number of microseconds.
+    \param us time to sleep in microseconds
     \return 0 on success */
 inline int microsleep (const int us)
 {
@@ -440,8 +440,8 @@ struct free_ptr
 };
 
 //----------------------------------------------------------------------------------------
-/// A lockfree Singleton.
-/*! \tparam T the instance object type */
+/*! A lockfree Singleton.
+    \tparam T the instance object type */
 template <typename T>
 class Singleton
 {
@@ -458,8 +458,8 @@ public:
 	/// Dtor.
 	virtual ~Singleton() { delete _instance.fetch_and_store(0); }
 
-	/// Get the instance of the underlying object. If not created, create.
-	/*! \return the instance */
+	/*! Get the instance of the underlying object. If not created, create.
+	    \return the instance */
 	static T *instance()
 	{
 		if (_instance) // cast operator performs atomic load with acquire
@@ -472,17 +472,17 @@ public:
 	}
 
 
-	/// Get the instance of the underlying object. If not created, create.
-	/*! \return the instance */
+	/*! Get the instance of the underlying object. If not created, create.
+	    \return the instance */
 	T *operator->() const { return instance(); }
 
-	/// Replace the instance object with a new instance.
-	/*! \param what the new instance
+	/*! Replace the instance object with a new instance.
+	    \param what the new instance
 	    \return the original instance */
 	static T *reset(T *what) { return _instance.fetch_and_store(what); }
 
-	/// Get the instance of the underlying object removing it from the singleton.
-	/*! \return the instance */
+	/*! Get the instance of the underlying object removing it from the singleton.
+	    \return the instance */
 	static T *release() { return _instance.fetch_and_store(0); }
 };
 

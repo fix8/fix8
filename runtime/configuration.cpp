@@ -62,12 +62,15 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 int Configuration::process()
 {
+	if (!exist(_xmlfile))
+		throw f8Exception("server config file not found", _xmlfile);
 	if (!_root)
-		return -1;
+		throw f8Exception("could not create root xml entity");
 
 	XmlEntity::XmlSet slist;
 	if (!_root->find("fix8/session", slist))
-		return 0;
+		throw f8Exception("could not locate server session in config file", _xmlfile);
+
 	for(XmlEntity::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
 	{
 		string name;
