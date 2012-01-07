@@ -358,12 +358,12 @@ string insert_year()
 //-------------------------------------------------------------------------------------------------
 void generate_preamble(ostream& to)
 {
-	to << _csMap.find_value_ref(cs_divider) << endl;
+	to << _csMap.find_ref(cs_divider) << endl;
 	string result;
-	to << _csMap.find_value_ref(cs_do_not_edit) << GetTimeAsStringMS(result, 0, 0) << " ***" << endl;
-	to << _csMap.find_value_ref(cs_divider) << endl;
-	to << _csMap.find_value_ref(cs_copyright) << insert_year() << _csMap.find_value_ref(cs_copyright2) << endl;
-	to << _csMap.find_value_ref(cs_divider) << endl;
+	to << _csMap.find_ref(cs_do_not_edit) << GetTimeAsStringMS(result, 0, 0) << " ***" << endl;
+	to << _csMap.find_ref(cs_divider) << endl;
+	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
+	to << _csMap.find_ref(cs_divider) << endl;
 }
 
 //-------------------------------------------------------------------------------------------------

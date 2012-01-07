@@ -41,8 +41,10 @@ $URL$
 #define _XML_ENTITY_HPP_
 
 //----------------------------------------------------------------------------------------
+/// A simple xml parser with Xpath style lookup.
 class XmlEntity
 {
+	/// Maximum depth levels supported.
 	static const int MaxDepth = 128;
 	static int errors_, line_, maxdepth_, seq_;
 	static FIX8::RegExp rCE_, rCX_;
@@ -51,7 +53,8 @@ class XmlEntity
 	int depth_, sequence_, txtline_, chldcnt_, subidx_;
 
 	typedef std::multimap<std::string, XmlEntity *> XmlSubEls;
-	XmlSubEls *children_;   // simple n-ary tree
+	/// simple n-ary tree
+	XmlSubEls *children_;
 
 #ifdef HAS_TR1_UNORDERED_MAP
 	typedef std::tr1::unordered_map<std::string, std::string> XmlAttrs;
@@ -60,62 +63,159 @@ class XmlEntity
 #endif
 	XmlAttrs *attrs_;
 
+	/// Comparitor.
 	struct EntityOrderComp
 	{
 		bool operator()(const XmlEntity *a, const XmlEntity *b) const
 			{ return a->GetSequence() < b->GetSequence(); }
 	};
 
+	/// Copy Ctor. Non-copyable.
 	XmlEntity(const XmlEntity&);
+
+	/// Assignment operator. Non-copyable.
 	XmlEntity& operator=(const XmlEntity&);
 
 public:
+	/*! Ctor.
+	  \param ifs input file stream
+	  \param subidx the subindex for this child
+	  \param txtline xml sourcefile line number
+	  \param depth depth nesting level
+	  \param rootAttr root attribute string */
 	XmlEntity(std::istream& ifs, int subidx, int txtline=0, int depth=0, const char *rootAttr=0);
+
+	/// Dtor.
 	virtual ~XmlEntity();
 
+	/*! Parse the xml attributes from an element.
+	  \param attlst string of attributes
+	  \return number of attributes extracted */
 	int ParseAttrs(const std::string& attlst);
 
 	typedef std::set<XmlEntity *, EntityOrderComp> XmlSet;
 
+	/*! Find an element with a given entity name, attribute name and attribute value.
+	  \param what the entity name to search for
+	  \param ignorecase if true ignore case of entity name
+	  \param atag the attribute name
+	  \param aval the attribute value
+	  \param delim the Xpath delimiter
+	  \return the found entity or 0 if not found */
 	XmlEntity *find(const std::string& what, bool ignorecase=false,
 		const std::string *atag=0, const std::string *aval=0, const char delim='/');
+
+	/*! Recursively find all elements with a given entity name, attribute name and attribute value.
+	  \param what the entity name to search for
+	  \param eset target XmlSet to place results
+	  \param ignorecase if true ignore case of entity name
+	  \param atag the attribute name
+	  \param aval the attribute value
+	  \param delim the Xpath delimiter
+	  \return the number of found entities */
 	int find(const std::string& what, XmlSet& eset, bool ignorecase=false,
 		const std::string *atag=0, const std::string *aval=0, const char delim='/');
 
+	/*! Find an attribute's with the given name.
+	  \param what attribute to find
+	  \param target where to place value
+	  \return true if found */
 	bool GetAttr(const std::string& what, std::string& target) const;
+
+	/*! Find an attribute's value with the name "value".
+	  \param target where to place value
+	  \return true if found */
 	bool GetAttrValue(std::string& target) const
 	{
 		static const std::string valstr("value");
 		return GetAttr(valstr, target);
 	}
 
+	/*! Find an element and obtain the attribute's value with the name "value".
+	  \param what entity name to find
+	  \param target where to place value
+	  \return true if found */
 	bool FindAttrGetValue(const std::string& what, std::string& target)
 	{
 		 XmlEntity *inst(find(what));
 		 return inst ? inst->GetAttrValue(target) : false;
 	}
 
-	bool findAttrByValue(const std::string& what, const std::string& target);
+	/*! Find an attribute with the given name and value.
+	  \param what attribute to find
+	  \param value attribute value
+	  \return true if found */
+	bool findAttrByValue(const std::string& what, const std::string& value);
+
+	/*! Find an attribute with the given name and return its typed value.
+	  \param what attribute to find
+	  \param defValue value to return if attribute was not found
+	  \return the value of the found attribute */
 	template<typename T> T FindAttr(const std::string& what, const T defValue);
 
+	/*! Perform xml translation on the supplied string inplace.
+	  Translate predefined entities and numeric character references.
+	  \param what source string to translate
+	  \return the translated string */
 	const std::string& InplaceXlate (std::string& what);
 
+	/*! Get the depth of this element
+	  \return the depth */
 	const int GetDepth() const { return depth_; }
+
+	/*! Get the global error count.
+	  \return the error count */
 	const int GetErrorCnt() const { return errors_; }
+
+	/*! Get the actual current source line.
+	  \return the source line */
 	const int GetLineCnt() const { return line_; }
+
+	/*! Get the count of children this element has.
+	  \return the number of children */
 	const int GetChildCnt() const { return chldcnt_; }
-	const int GetSubIdx() const { return subidx_; }
+
+	/*! Get the source line of this element (element order).
+	  \return the line */
 	const int GetLine() const { return txtline_; }
+
+	/*! Get the subindex.
+	  \return the subindex */
+	const int GetSubIdx() const { return subidx_; }
+
+	/*! Get the sequence number for this element (incremented for each new element).
+	  \return the sequence number */
 	const int GetSequence() const { return sequence_; }
+
+	/*! Get the maximum depth supported.
+	  \return the maximum depth */
 	const int GetMaxDepth() const { return maxdepth_; }
 
+
+	/*! Get the element tag name.
+	  \return the tag */
 	const std::string& GetTag() const { return tag_; }
+
+	/*! Get the element value.
+	  \return the value */
 	const std::string *GetVal() const { return value_; }
+
+	/*! Get the declaration if available.
+	  \return the depth */
 	const std::string *GetDecl() const { return decl_; }
 
+	/// Reset all counters, errors and sequences.
 	static void Reset() { errors_ = maxdepth_ = seq_ = 0; line_ = 1; }
+
+	/*! Create a new root element (and recursively parse) from a given xml filename.
+	  \param fname the xml filename
+	  \return the depth */
 	static XmlEntity *Factory(const std::string& fname);
 
+	/*! Inserter friend.
+	    \param os stream to send to
+	    \param en XmlEntity REFErence
+	    \return stream */
 	friend std::ostream& operator<<(std::ostream& os, const XmlEntity& en);
 };
 

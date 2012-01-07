@@ -35,6 +35,54 @@ $Date$
 $URL$
 
 #endif
+
+//-----------------------------------------------------------------------------------------
+/** \file myfix.cpp
+
+  This is a complete working example of a FIX client/server using FIX8.\n
+\n
+<tt>
+	Usage: f8test [-hlqsv]\n
+		-h,--help               help, this screen\n
+		-l,--log                global log filename\n
+		-q,--quiet              do not print fix output\n
+		-s,--server             run in server mode (default client mode)\n
+</tt>
+\n
+\n
+  To use start the server:\n
+\n
+<tt>
+	  % f8test -sl server\n
+</tt>
+\n
+  In another terminal session, start the client:\n
+\n
+<tt>
+	  % f8test -l client\n
+</tt>
+
+  \b Notes \n
+\n
+  1. If you have configured with \c --enable-msgrecycle, the example will reuse allocated messages.\n
+  2. If you have configured with \c --enable-customfields, the example will add custom fields\n
+     defined below.\n
+  3. The client has a simple menu. Press ? to see options.\n
+  4. The server will wait for the client to logout before exiting.\n
+  5. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
+  6. The example uses the file \c FIX44.xml in ./schema\n
+\n
+*/
+
+/*! \namespace FIX8
+	All FIX8 classes and functions reside inside this namespace.
+*/
+
+/*! \namespace FIX8::TEX
+	This namespace is used by the generated classes and types, and was specified as a namespace
+	to the \c f8c compiler.
+*/
+
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <memory>
@@ -280,6 +328,7 @@ int main(int argc, char **argv)
 			myfix_session_client ms(TEX::ctx, id, bdp.get(), &log, &plog);
 			conf.get_address(ses, addr);
 			Poco::Net::StreamSocket sock;
+			GlobalLogger::instance()->send("established connection with server...");
 			ClientConnection cc(&sock, addr, ms);
 			if (!quiet)
 				ms.control() |= Session::print;
@@ -395,7 +444,7 @@ bool MyMenu::do_logout()
 //-----------------------------------------------------------------------------------------
 void print_usage()
 {
-	UsageMan um("f8test", GETARGLIST, "<input xml schema>");
+	UsageMan um("f8test", GETARGLIST, "");
 	um.setdesc("f8test -- f8 test client/server");
 	um.add('s', "server", "run in server mode (default client mode)");
 	um.add('h', "help", "help, this screen");

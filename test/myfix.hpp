@@ -209,7 +209,7 @@ public:
 
 	std::istream& get_istr() { return _istr; }
 	std::ostream& get_ostr() { return _ostr; }
-	bool process(const char ch) { return (this->*_handlers.find_value_ref(MenuItem(ch, std::string())))(); }
+	bool process(const char ch) { return (this->*_handlers.find_ref(MenuItem(ch, std::string())))(); }
 
 	bool new_order_single();
 	bool new_order_single_50();

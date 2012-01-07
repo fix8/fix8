@@ -53,77 +53,165 @@ std::string Str_error(const int err, const char *str=0);
 const std::string& GetTimeAsStringMS(std::string& result, class Tickval *tv=0, const unsigned dplaces=6);
 
 //----------------------------------------------------------------------------------------
-// case insensitive ==
+/*! case insensitive std::string == std::string operator
+  \tparam _CharT char type
+  \tparam _Traits char traits
+  \tparam _Alloc allocator
+  \param __lhs left hand value
+  \param __rhs right hand value
+  \return true if strings are equivalent */
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator% (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 		const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
 			{ return strcasecmp(__lhs.c_str(), __rhs.c_str()) == 0; }
 
+/*! case insensitive char* == std::string operator
+  \tparam _CharT char type
+  \tparam _Traits char traits
+  \tparam _Alloc allocator
+  \param __lhs left hand value
+  \param __rhs right hand value
+  \return true if strings are equivalent */
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator% (const _CharT* __lhs, const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
 		{ return strcasecmp(__lhs, __rhs.c_str()) == 0; }
 
+/*! case insensitive std::string == char* operator
+  \tparam _CharT char type
+  \tparam _Traits char traits
+  \tparam _Alloc allocator
+  \param __lhs left hand value
+  \param __rhs right hand value
+  \return true if strings are equivalent */
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator% (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs, const _CharT* __rhs)
 		{ return strcasecmp(__lhs.c_str(), __rhs) == 0; }
 
-// case insensitive <
+/*! case insensitive std::string < std::string operator
+  \tparam _CharT char type
+  \tparam _Traits char traits
+  \tparam _Alloc allocator
+  \param __lhs left hand value
+  \param __rhs right hand value
+  \return true if lhs < rhs */
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 		const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
 			{ return strcasecmp(__lhs.c_str(), __rhs.c_str()) < 0; }
 
 //----------------------------------------------------------------------------------------
+/*! C++11 inspired scoped pointer.
+  \tparam T typename */
 template <typename T>
 class scoped_ptr
 {
 	T *ptr_;
 
+	/// Copy Ctor. Non-copyable.
 	scoped_ptr(const scoped_ptr&);
+
+	/// Assignment operator. Non-copyable.
 	void operator=(const scoped_ptr&);
 
 public:
+	/*! Ctor.
+	  \param p pointer to T */
 	explicit scoped_ptr(T *p=0) : ptr_(p) {}
+
+	/// Dtor. Destroys object.
 	~scoped_ptr() { delete ptr_; }
 
+	/*! Equivalence operator (other is scoped_ptr)
+	  \tparam U type of that object
+	  \return true if objects are equivalent */
 	template <typename U>
 	bool operator==(const scoped_ptr<U>& that) const { return ptr_ == that.get(); }
+
+	/*! Equivalence operator (other is ptr)
+	  \tparam U type of that object
+	  \return true if objects are equivalent */
 	template <typename U>
 	bool operator==(const scoped_ptr<U> *that) const { return ptr_ == that; }
 
+	/*! Non-equivalence operator (other is scoped_ptr)
+	  \tparam U type of that object
+	  \return true if objects are not equal */
 	template <typename U>
 	bool operator!=(const scoped_ptr<U>& that) const { return ptr_ != that.get(); }
+
+	/*! Non-equivalence operator (other is scoped_ptr)
+	  \tparam U type of that object
+	  \return true if objects are not equal */
 	template <typename U>
 	bool operator!=(const scoped_ptr<U> *that) const { return ptr_ != that; }
 
+	/*! Equivalence operator (other is scoped_ptr)
+	  \return true if objects are equivalent */
 	bool operator==(const scoped_ptr<T>& that) const { return ptr_ == that.get(); }
+
+	/*! Equivalence operator (other is ptr)
+	  \return true if objects are equivalent */
 	bool operator==(const T *that) const { return (ptr_ == that); }
 
+	/*! Non-equivalence operator (other is scoped_ptr)
+	  \return true if objects are not equal */
 	bool operator!=(const scoped_ptr<T>& that) const { return ptr_ != that.get(); }
+
+	/*! Non-equivalence operator (other is ptr)
+	  \return true if objects are not equal */
 	bool operator!=(const T *that) const { return ptr_ != that; }
 
+	/*! Member selection operator.
+	  \return pointer to object */
 	T *operator->() const { return ptr_; }
+
+	/*! Member dereference operator.
+	  \return object */
 	T& operator*() const { return *ptr_; }
+
+	/*! Member dereference operator.
+	  \return object */
 	T *release() { T *tmp(ptr_); ptr_ = 0; return tmp; }
-	T *reset(T *p=0) { delete ptr_; return ptr_ = p; }
+
+	/*! Replace the pointer with the supplied pointer.
+	  \return the original pointer */
+	T *Reset(T *p=0) { delete ptr_; return ptr_ = p; }
+
+	/*! Get the object pointer.
+	  \return object */
 	T *get() const { return ptr_; }
 };
 
 //----------------------------------------------------------------------------------------
+/// A class to contain regex matches using RegExp.
 class RegMatch
 {
+	/// Maximum number of sub-expressions.
 	static const int SubLimit_ = 32;
 
 	regmatch_t subexprs_[SubLimit_];
 	int subCnt_;
 
 public:
+	/// Ctor.
 	RegMatch() : subexprs_(), subCnt_() {}
+
+	/// Ctor.
 	virtual ~RegMatch() {}
 
+	/*! Get the number of sub-expressions found.
+	  \return number of sub-expression */
 	const unsigned SubCnt() const { return subCnt_; }
+
+	/*! Get the size (length) of the specified sub-expression.
+	  \param which sub-expression index (0 based)
+	  \return size of sub-expression, -1 if not found */
 	const size_t SubSize(const int which=0) const
 		{ return which < subCnt_ ? subexprs_[which].rm_eo - subexprs_[which].rm_so : -1; }
+
+	/*! Get the starting offset of the specified sub-expression.
+	  \param which sub-expression index (0 based)
+	  \return offset of the sub-expression, -1 if not found */
 	const unsigned SubPos(const int which=0) const
 		{ return which < subCnt_ ? subexprs_[which].rm_so : -1; }
 
@@ -131,8 +219,10 @@ public:
 };
 
 //----------------------------------------------------------------------------------------
+/// POSIX regex wrapper class.
 class RegExp
 {
+	/// Maximum length of an error message.
 	static const int MaxErrLen_ = 256;
 
 	regex_t reg_;
@@ -141,6 +231,9 @@ class RegExp
 	int errCode_;
 
 public:
+	/*! Ctor.
+	  \param pattern regular expression to compile. errCode and errString set on error.
+	  \param flags POSIX regcomp flags */
 	RegExp(const char *pattern, const int flags=0) : pattern_(pattern)
 	{
 		if ((errCode_ = regcomp(&reg_, pattern_.c_str(), REG_EXTENDED|flags)) != 0)
@@ -150,8 +243,16 @@ public:
 			errString = rbuf;
 		}
 	}
+
+	/// Dtor. Destroys internal compiled expression.
 	virtual ~RegExp() { if (errCode_ == 0) regfree(&reg_); }
 
+	/*! Search a string.
+	  \param match reference to a RegMatch object
+	  \param source string to search
+	  \param subExpr number of sub-expression
+	  \param offset to start searching
+	  \return number of sub-expressions found (0=none) */
 	int SearchString(RegMatch& match, const std::string& source, const int subExpr, const int offset=0) const
 	{
 		match.subCnt_ = 0;
@@ -160,6 +261,14 @@ public:
 				++match.subCnt_;
 		return match.subCnt_;
 	}
+
+	/*! Extract a sub-expression.
+	  \param match reference to a RegMatch object
+	  \param source source string
+	  \param target location to place sub-experssion
+	  \param offset to start searching
+	  \param num desired sub-expression
+	  \return the target string */
 	std::string& SubExpr(RegMatch& match, const std::string& source, std::string& target, const int offset=0, const int num=0) const
 	{
 		if (num < match.subCnt_)
@@ -168,6 +277,12 @@ public:
 			target.empty();
 		return target;
 	}
+
+	/*! Erase a sub-expression from a string.
+	  \param match reference to a RegMatch object
+	  \param source source string
+	  \param num desired sub-expression
+	  \return the source string */
 	std::string& Erase(RegMatch& match, std::string& source, const int num=0) const
 	{
 		if (num < match.subCnt_)
@@ -175,6 +290,12 @@ public:
 		return source;
 	}
 
+	/*! Replace a sub-expression with a string.
+	  \param match reference to a RegMatch object
+	  \param source source string
+	  \param with replacement string
+	  \param num desired sub-expression
+	  \return the source string */
 	std::string& Replace(RegMatch& match, std::string& source, const std::string& with, const int num=0) const
 	{
 		if (num < match.subCnt_)
@@ -182,25 +303,39 @@ public:
 		return source;
 	}
 
+	/*! Get the regular expression pattern.
+	  \return the pattern string */
 	const std::string& GetPattern() const { return pattern_; }
+
+	/*! Get the error string (set when Ctor fails to compile).
+	  \return the error string */
 	const std::string& ErrString() const { return errString; }
+
+	/*! Check if a pattern did not compile ok.
+	  \return true on failure */
 	bool operator!() const { return errCode_; }
+
+	/*! Check if a pattern compiled ok.
+	  \return true onsuccess */
 	operator void*() { return errCode_ ? 0 : this; }
 };
 
 //----------------------------------------------------------------------------------------
+/// Case-insensitive string comparison, pointer version.
 struct StringPtrLessThanNoCase
 {
 	bool operator()(const std::string *a, const std::string *b) const
 		{ return *a ^ *b; }
 };
 
+/// Case-sensitive string comparison, pointer version.
 struct StringPtrLessThan
 {
 	bool operator()(const std::string *a, const std::string *b) const
 		{ return *a < *b; }
 };
 
+/// Case-insensitive string comparison.
 struct StringLessThanNoCase
 {
 	bool operator()(const std::string& a, const std::string& b) const
@@ -208,6 +343,11 @@ struct StringLessThanNoCase
 };
 
 //----------------------------------------------------------------------------------------
+/*! Extract a typed value from a string.
+  \tparam typename
+  \param source source string
+  \param defval value to return if source string is empty
+  \return the extracted value. */
 template<typename T>
 inline T GetValue(const std::string& source, T defval)
 {
@@ -219,6 +359,10 @@ inline T GetValue(const std::string& source, T defval)
 	return result;
 }
 
+/*! Extract a typed value from a string.
+  \tparam typename
+  \param source source string
+  \return the extracted value. */
 template<typename T>
 inline T GetValue(const std::string& source)
 {
@@ -228,6 +372,10 @@ inline T GetValue(const std::string& source)
 	return result;
 }
 
+/*! Extract a bool value from a string.
+  \tparam typename
+  \param source source string
+  \return the extracted value. */
 template<>
 inline bool GetValue(const std::string& source)
 {
@@ -243,6 +391,11 @@ inline bool GetValue(const std::string& source)
 #endif
 }
 
+/*! Insert a typed value into a string.
+  \tparam typename
+  \param a source value
+  \param target string to place result
+  \return the inserted string */
 template<typename T>
 inline const std::string& PutValue(const T& a, std::string& target)
 {
@@ -252,14 +405,9 @@ inline const std::string& PutValue(const T& a, std::string& target)
 }
 
 //----------------------------------------------------------------------------------------
-template<typename T>
-inline T *Alloca(const size_t sz)
-{
-	return static_cast<T *>(alloca(sz * sizeof(T)));
-}
-
-//----------------------------------------------------------------------------------------
-// bitset for enums
+/*! Bitset for enums.
+    \tparam T the enum type
+    \tparam B the integral type of the enumeration */
 template<typename T, typename B=unsigned int>
 class ebitset
 {
@@ -267,11 +415,24 @@ class ebitset
 	integral_type a_;
 
 public:
+	/// Ctor.
 	ebitset() : a_() {}
+
+	/*! Ctor.
+	    \param from ebitset_r to copy */
 	ebitset(const ebitset<T, B>& from) : a_(from.a_) {}
+
+	/*! Ctor.
+	    \param a integral type to construct from */
 	explicit ebitset(const integral_type a) : a_(a) {}
+
+	/*! Ctor.
+	    \param sbit enum to construct from */
 	explicit ebitset(const T sbit) : a_((1 << sbit) - 1) {}
 
+	/*! Assignment operator.
+	    \param that ebitset_r to assign from
+	    \return  this */
 	ebitset<T, B>& operator=(const ebitset<T, B>& that)
 	{
 		if (this != &that)
@@ -279,16 +440,47 @@ public:
 		return *this;
 	}
 
+	/*! Check if an enum is in the set.
+	    \param sbit enum to check
+	    \return integral_type of bits if found */
 	integral_type has(const T sbit) { return a_ & 1 << sbit; }
+
+	/*! Check if an enum is in the set.
+	    \param sbit enum to check
+	    \return integral_type of bits if found */
 	integral_type operator&(const T sbit) { return a_ & 1 << sbit; }
+
+	/*! Set a bit on or off.
+	    \param sbit enum to set
+	    \param on set on or off */
 	void set(const T sbit, bool on=true) { if (on) a_ |= 1 << sbit; else a_ &= ~(1 << sbit); }
+
+	/*! Set a bit on or off.
+	    \param bset integral_type to set */
 	void set(const integral_type bset) { a_ = bset; }
+
+	/*! Clear a bit on or off.
+	    \param sbit enum to set */
 	void clear(const T sbit) { a_ &= ~(1 << sbit); }
+
+	/// Clear all bits.
 	void clearall() { a_ = 0; }
+
+	/*! Set all bits to a value.
+	    \param sbit value to set to */
 	void setall(const T sbit) { a_ = (1 << sbit) - 1; }
+
+	/*! Get the enum integral_type.
+	    \return integral_type of enum */
 	integral_type get() const { return a_; }
 
+	/*! Or a bit value with the current set.
+	    \param sbit to set */
 	void operator|=(const T sbit) { a_ |= 1 << sbit; }
+
+	/*! Or a bit value with the current set.
+	    \param sbit to set
+	    \return ebitset_r */
 	ebitset& operator<<(const T sbit) { a_ |= 1 << sbit; return *this; }
 	//friend ebitset operator|(const T lbit, const T rbit) { return ebitset(lbit) |= 1 << rbit; }
 };
@@ -406,35 +598,56 @@ inline int microsleep (const int us)
 }
 
 //----------------------------------------------------------------------------------------
+/// Delete ptr.
 struct DeleteObject
 {
+	/*! delete ptr operator
+		 \tparam T typename
+		 \param m object to delete */
 	template<typename T>
 	void operator()(const T& m) const { delete m; }
 };
 
+/// Delete array.
 struct DeleteArrayObject
 {
+	/*! delete array operator
+		 \tparam T typename
+		 \param m object to delete */
 	template<typename T>
 	void operator()(const T& m) const { delete[] m; }
 };
 
-template <class Deleter = DeleteObject>
+/// Delete 1st of pair.
+template <typename Deleter = DeleteObject>
 struct Delete1stPairObject
 {
+	/*! delete 1st of a std::pair operator
+		 \tparam T typename
+		 \param m object to delete */
 	template<typename A, typename B>
 	void operator()(const std::pair<A, B>& m) const { Deleter()(m.first); }
 };
 
-template <class Deleter = DeleteObject>
+/// Delete 2nd of pair.
+template <typename Deleter = DeleteObject>
 struct Delete2ndPairObject
 {
+	/*! delete 2nd of a std::pair operator
+		 \tparam T typename
+		 \param m object to delete */
 	template<typename A, typename B>
 	void operator()(const std::pair<A, B>& m) const { Deleter()(m.second); }
 };
 
-template <class Deleter = DeleteObject>
+/*! Parameterisable deleter functor.
+    \tparam Deleter the desired deleter (see above) */
+template <typename Deleter = DeleteObject>
 struct free_ptr
 {
+	/*! function operator
+		 \tparam T typename
+		 \param ptr object to delete */
 	template<typename T>
 	void operator()(const T& ptr) const { Deleter()(ptr); }
 };

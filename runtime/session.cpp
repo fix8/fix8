@@ -217,7 +217,7 @@ bool Session::process(const f8String& from)
 		if (_control & print)
 			cout << *msg << endl;
 		bool result((msg->is_admin() ? handle_admin(seqnum, msg.get()) : true)
-			&& (this->*_handlers.find_value_ref(msg->get_msgtype()))(seqnum, msg.get()));
+			&& (this->*_handlers.find_ref(msg->get_msgtype()))(seqnum, msg.get()));
 		_next_target_seq = seqnum + 1;
 		return result;
 

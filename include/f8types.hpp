@@ -49,43 +49,65 @@ typedef std::ostringstream f8ostrstream;
 const unsigned char default_field_separator(0x1);
 
 //-------------------------------------------------------------------------------------------------
+/*! Fast map for statically generated data types. Assumes table is sorted. O(logN).
+  \tparam Key the key
+  \tparam Val the value */
 template<typename Key, typename Val>
 class GeneratedTable
 {
+	/// A pair structure to statically declare the data set
 	struct Pair
 	{
 		Key _key;
 		Val _value;
 
+		/// Sort functor
 		struct Less
 		{
 			bool operator()(const Pair &p1, const Pair &p2) const { return p1._key < p2._key; }
 		};
 	};
 
+	/// The actual data set
 	static const Pair _pairs[];
+
+	/// The number of elements in the data set
 	static const size_t _pairsz;
 
 	typedef Val NotFoundType;
+	/// The value to return when the key is not found
 	static const NotFoundType _noval;
+
 	typedef typename std::pair<const Pair *, const Pair *> PResult;
 
 public:
+	/*! Find a key (reference). If not found, throw InvalidMetadata.
+	  Ye Olde Binary Chop
+	  \param key the key to find
+	  \return value found (reference) */
 	static const Val& find_ref(const Key& key)
 	{
-		static const std::string error_str("Invalid metadata or entry not found");
 		const Pair what = { key };
 		PResult res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
 		if (res.first != res.second)
 			return res.first->_value;
+		static const std::string error_str("Invalid metadata or entry not found");
 		throw InvalidMetadata(error_str);
 	}
+
+	/*! Find a key (value).
+	  \param key the key to find
+	  \return value found (value) or _noval if not found */
 	static const Val find_val(const Key& key)
 	{
 		const Pair what = { key };
 		PResult res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
 		return res.first != res.second ? res.first->_value : _noval;
 	}
+
+	/*! Find a key (pointer).
+	  \param key the key to find
+	  \return value found (pointer) or 0 if not found */
 	static const Val *find_ptr(const Key& key)
 	{
 		const Pair what = { key };
@@ -93,11 +115,19 @@ public:
 		return res.first != res.second ? &res.first->_value : 0;
 	}
 
+	///Ctor.
 	GeneratedTable() {}
+
+	/*! Get the number of elements in the data set.
+	  \return number of elements */
 	static const size_t size() { return _pairsz; }
 };
 
 //-------------------------------------------------------------------------------------------------
+/*! A specialised map to enable native static initalisation.
+  \tparam Key the key
+  \tparam Val the value
+  \tparam Compare the comparitor */
 template<typename Key, typename Val, typename Compare=std::less<Key> >
 struct StaticTable
 {
@@ -105,29 +135,51 @@ struct StaticTable
 	typedef typename TypeMap::value_type TypePair;
 	typedef Val NotFoundType;
 
+	/// The actual data set
 	static const TypePair _valueTable[];
+
+	/// The container
 	static const TypeMap _valuemap;
+
+	/// The value to return when the key is not found
 	static const NotFoundType _noval;
 
+	/// Ctor.
 	StaticTable() {}
 
+	/*! Find a key (value).
+	  \param key the key to find
+	  \return value found (value) or _noval if not found */
 	static const Val find_value(const Key& key)
 	{
 		typename TypeMap::const_iterator itr(_valuemap.find(key));
 		return itr != _valuemap.end() ? itr->second : _noval;
 	}
-	static const Val& find_value_ref(const Key& key)
+
+	/*! Find a key (reference).
+	  \param key the key to find
+	  \return value found (reference) or _noval if not found */
+	static const Val& find_ref(const Key& key)
 	{
 		typename TypeMap::const_iterator itr(_valuemap.find(key));
 		return itr != _valuemap.end() ? itr->second : _noval;
 	}
+
+	/*! Find a key (pointer).
+	  \param key the key to find
+	  \return value found (pointer) or 0 if not found */
 	static const Val *find_ptr(const Key& key)
 	{
 		typename TypeMap::const_iterator itr(_valuemap.find(key));
 		return itr != _valuemap.end() ? &itr->second : 0;
 	}
 
+	/*! Get the number of elements in the data set.
+	  \return number of elements */
 	static const size_t get_count() { return _valuemap.size(); }
+
+	/*! Get a pointer to the end of the data set. Used as an end inputiterator for initialisation.
+	  \return pointer to end of table */
 	static const TypePair *get_table_end() { return _valueTable + sizeof(_valueTable)/sizeof(TypePair); }
 };
 
