@@ -10,8 +10,7 @@
 				target_comp_id="TEX_DLD"
 				logname="./run/myfix_client.log"
 				protocol_logname="./run/myfix_client_protocol.log"
-				persist="bdb0"
-				logdir="./run" />
+				persist="bdb0" />
 
 	<persist name="bdb0"
 				type="bdb" dir="./run"

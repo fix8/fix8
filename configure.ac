@@ -156,6 +156,20 @@ AC_CHECK_FILE("$DEVURANDOM",
 		AC_DEFINE(HAVE_DEV_URANDOM, 1, [Define to 1 if the /dev/urandom device is available])
 	])
 
+AC_ARG_WITH(poco,
+  AC_HELP_STRING([--with-poco=DIR],[location of Poco]),
+[
+	CPPFLAGS="$CPPFLAGS -I${withval}"
+	LDFLAGS="$LDFLAGS -L${withval}"
+],[])
+
+AC_ARG_WITH(tbb,
+  AC_HELP_STRING([--with-tbb=DIR],[location of TBB]),
+[
+	CPPFLAGS="$CPPFLAGS -I${withval}"
+	LDFLAGS="$LDFLAGS -L${withval}"
+],[])
+
 AC_MSG_CHECKING(for TBB)
 	AC_TRY_COMPILE([
 		#include <tbb/atomic.h>
@@ -209,28 +223,6 @@ AC_MSG_CHECKING(for tr1/unordered_map)
 	    AC_MSG_RESULT(no)
 	fi
 
-AC_MSG_CHECKING(for valgrind)
-AC_ARG_WITH(valgrind, AC_HELP_STRING([--with-valgrind],
-	[enable internal support for valgrind (default=no)]), [HAVE_VALGRIND=$withval],[HAVE_VALGRIND=no])
-AC_MSG_RESULT([$HAVE_VALGRIND])
-if test "$HAVE_VALGRIND" != "no"; then
-	AC_CHECK_HEADERS([valgrind/valgrind.h])
-fi
-
-AC_MSG_CHECKING(for gprof)
-AC_ARG_WITH(gprof, AC_HELP_STRING([--with-gprof],[enable internal support for gprof (default=no)]),
-	[HAVE_GPROF=$withval],[HAVE_GPROF=no])
-AC_MSG_RESULT([$HAVE_GPROF])
-if test "$HAVE_GPROF" != "no"; then
-	AC_CHECK_HEADERS([sys/gmon.h],[ have_gprof_headers=yes ])
-	if test "$have_gprof_headers" = yes; then
-	    AC_DEFINE(PROFILING_BUILD, 1,
-			[Define to 1 if your os supports gprof and you wish to enable profiling])
-	else
-	    AC_MSG_RESULT(no)
-	fi
-fi
-
 AC_CHECK_LIB(crypt, crypt, [
 	AC_CHECK_HEADERS([crypt.h],
 	[
@@ -276,18 +268,6 @@ if test "$have_dlopen" = "no"; then
 		exit 1
 fi
 
-AC_MSG_CHECKING(for XMLENTITY_STRICT_BOOL specification)
-AC_ARG_WITH(xmlstrictbool, AC_HELP_STRING([--with-xmlstrictbool],
-	[enable XMLENTITY_STRICT_BOOL (default=no)]),
-	[have_xmlstrictbool=$withval],[have_xmlstrictbool=no])
-if test "$have_xmlstrictbool" != "no"; then
-	 AC_DEFINE(XMLENTITY_STRICT_BOOL, 1,
-		[Define to 1 if you wish to enforce XMLENTITY_STRICT_BOOL (default=no)])
-	 AC_MSG_RESULT(yes)
-else
-	 AC_MSG_RESULT(no)
-fi
-
 AC_CHECK_LIB(z, deflate, [
 	AC_CHECK_HEADERS([zlib.h],
 	[
@@ -323,8 +303,37 @@ else
 	CXXFLAGS="$CXXFLAGS -Wall"
 fi
 
+AC_ARG_ENABLE([xmlstrictbool],
+[AC_HELP_STRING([--enable-xmlstrictbool],[enable xml strict bool behaviour (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(XMLENTITY_STRICT_BOOL, 1, [Define to 1 if you wish to enforce strict bool ]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-xmlstrictbool) ;;
+esac])
+
+AC_ARG_ENABLE([valgrind],
+[AC_HELP_STRING([--enable-valgrind],[enable internal support for valgrind (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(HAVE_VALGRIND, 1, [Define to 1 for valgrind support ])
+		  AC_CHECK_HEADERS([valgrind/valgrind.h]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-valgrind) ;;
+esac])
+
+AC_ARG_ENABLE([gprof],
+[AC_HELP_STRING([--enable-gprof],[enable internal support for gprof (default=no)])],
+[case "${enableval}" in
+	yes) AC_CHECK_HEADERS([sys/gmon.h],[ have_gprof_headers=yes ])
+			if test "$have_gprof_headers" = yes; then
+				 AC_DEFINE(PROFILING_BUILD, 1,
+					[Define to 1 if your os supports gprof and you wish to enable profiling])
+			fi ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-gprof) ;;
+esac])
+
 AC_ARG_ENABLE([poolalloc],
-[AC_HELP_STRING([--enable-poolalloc],[Enable Memory Pool Allocator (default=no)])],
+[AC_HELP_STRING([--enable-poolalloc],[enable Memory Pool Allocator (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(POOLALLOC, 1, [Define to 1 for Memory Pool Allocator]) ;;
 	no)  ;;
@@ -332,7 +341,7 @@ AC_ARG_ENABLE([poolalloc],
 esac])
 
 AC_ARG_ENABLE([msgrecycle],
-[AC_HELP_STRING([--enable-msgrecycle],[Enable Message Recycling (default=no)])],
+[AC_HELP_STRING([--enable-msgrecycle],[enable Message Recycling (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(MSGRECYCLING, 1, [Define to 1 for Message Recycling]) ;;
 	no)  ;;
@@ -340,7 +349,7 @@ AC_ARG_ENABLE([msgrecycle],
 esac])
 
 AC_ARG_ENABLE([customfields],
-[AC_HELP_STRING([--enable-customfields],[Enable User defined fields (default=no)])],
+[AC_HELP_STRING([--enable-customfields],[enable User defined fields (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(PERMIT_CUSTOM_FIELDS, 1, [Define to 1 for User Defined Fields]) ;;
 	no)  ;;
@@ -348,7 +357,7 @@ AC_ARG_ENABLE([customfields],
 esac])
 
 AC_ARG_ENABLE([debug],
-[AC_HELP_STRING([--enable-debug],[Enable DEBUG support (default=no)])],
+[AC_HELP_STRING([--enable-debug],[enable DEBUG support (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(DEBUG, 1, [Define to 1 for debugging extensions]) ;;
 	no)  ;;
@@ -356,7 +365,7 @@ AC_ARG_ENABLE([debug],
 esac])
 
 AC_ARG_ENABLE([ssl],
-[AC_HELP_STRING([--enable-ssl],[Enable SSL support (through OpenSSL, default=no)])],
+[AC_HELP_STRING([--enable-ssl],[enable SSL support (through OpenSSL, default=no)])],
 [case "${enableval}" in
 	yes) openssl=yes ;;
 	no)  openssl=no ;;
@@ -467,10 +476,6 @@ AC_SUBST(BRAND_COMPANY_LONGNAME)
 AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile])
 AC_CONFIG_HEADERS(include/f8config.h)
 AC_OUTPUT
-
-#AC_OUTPUT([orbweb.spec base/orbweb.sh base/orbweb.xml \
-#	doc/man/b64pw.8.xml doc/man/procmon.8.xml doc/man/md5pw.8.xml \
-#	doc/man/orbweb.xml.8.xml doc/man/orbweb.8.xml doc/man/txt2db.8.xml])
 
 AC_SUBST(CONFIG_SHELL)
 AM_CONDITIONAL(HAVE_OPENSSL, test "x$openssl" = "xyes")
