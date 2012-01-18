@@ -11,7 +11,7 @@
   * <li> \link Myfix_classes.hpp \endlink example generated FIX Message types.
   * </ul>
   *
-  * The most commonly used classes are:
+  * Some of the more commonly used classes include:
   * <ul>
   * <li> \link FIX8::BDBPersister \endlink is a BerkeleyDB backed FIX message persister.
   * <li> \link FIX8::Configuration \endlink manages session configurations.
