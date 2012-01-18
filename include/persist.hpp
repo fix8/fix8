@@ -256,20 +256,21 @@ public:
 	/// Dtor.
 	virtual ~MemoryPersister() {}
 
-	/*! Open existing database or create new database.
-	    \param dbDir database environment directory
-	    \param dbFname database name
-	    \return true on success */
-	virtual bool put(const unsigned seqnum, const f8String& what);
-
-	/*! Retrieve sequence number of last peristed message.
-	    \param to target sequence number
-	    \return sequence number of last peristed message on success */
-	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
-
 	/*! Persist a message.
 	    \param seqnum sequence number of message
 	    \param what message string
+	    \return true on success */
+	virtual bool put(const unsigned seqnum, const f8String& what);
+
+	/*! Persist a sequence control record.
+	    \param sender_seqnum sequence number of last sent message
+	    \param target_seqnum sequence number of last received message
+	    \return true on success */
+	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
+
+	/*! Retrieve a persisted message.
+	    \param seqnum sequence number of message
+	    \param to target message string
 	    \return true on success */
 	virtual bool get(const unsigned seqnum, f8String& to) const;
 

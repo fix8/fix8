@@ -570,6 +570,8 @@ public:
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object
 	    \param from pointer to raw buffer containing Fix message
+	    \param sess pointer to session
+	    \param post_ctor post_ctor member of session
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
 	static Message *factory(const F8MetaCntx& ctx, const char *from
 #if defined PERMIT_CUSTOM_FIELDS
@@ -588,6 +590,8 @@ public:
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object
 	    \param from reference to string raw buffer containing Fix message
+	    \param sess pointer to session
+	    \param post_ctor post_ctor member of session
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
 	static Message *factory(const F8MetaCntx& ctx, const f8String& from
 #if defined PERMIT_CUSTOM_FIELDS
