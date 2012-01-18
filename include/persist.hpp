@@ -47,27 +47,69 @@ $URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/session.hpp $
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
+/// Base (ABC) Persister class
 class Persister
 {
 	Persister(const Persister&);
 	Persister& operator=(const Persister&);
 
 protected:
+	/// Maximum length of persisted FIX message.
 	static const size_t MaxMsgLen = 1024;
 	bool _opened;
 
 public:
+	/// Ctor.
 	Persister() : _opened() {}
+
+	/// Dtor.
 	virtual ~Persister() {}
 
+	/*! Persist a message.
+	    \param seqnum sequence number of message
+	    \param what message string
+	    \return true on success */
 	virtual bool put(const unsigned seqnum, const f8String& what) = 0;
+
+	/*! Persist a sequence control record.
+	    \param sender_seqnum sequence number of last sent message
+	    \param target_seqnum sequence number of last received message
+	    \return true on success */
 	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum) = 0;
+
+	/*! Retrieve a persisted message.
+	    \param seqnum sequence number of message
+	    \param to target message string
+	    \return true on success */
 	virtual bool get(const unsigned seqnum, f8String& to) const = 0;
+
+	/*! Retrieve a range of persisted messages.
+	    \param from start at sequence number
+	    \param to end sequence number
+	    \param session session containing callback method
+	    \param callback method it call with each retrieved message
+	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
-		bool (Session::*)(const Session::SequencePair& with)) const = 0;
+		bool (Session::*callback)(const Session::SequencePair& with)) const = 0;
+
+	/*! Retrieve sequence number of last peristed message.
+	    \param to target sequence number
+	    \return sequence number of last peristed message on success */
 	virtual unsigned get_last_seqnum(unsigned& to) const = 0;
+
+	/*! Retrieve a sequence control record.
+	    \param sender_seqnum sequence number of last sent message
+	    \param target_seqnum sequence number of last received message
+	    \return true on success */
 	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const = 0;
+
+	/*! Find the nearest highest sequence number from the sequence to last provided.
+	    \param requested sequence number to start
+	    \param last highest sequence
+	    \return the nearest sequence number or 0 if not found */
 	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const = 0;
+
+	/// Stop the persister thread.
 	virtual void stop() {}
 };
 
@@ -139,21 +181,66 @@ class BDBPersister : public Persister
 	bool write(const KeyDataBuffer& what) { return _persist_queue.try_push (what) == 0; }
 
 public:
+	/// Ctor.
 	BDBPersister() : _thread(ref(*this)), _dbEnv(0), _db(new Db(&_dbEnv, 0)), _wasCreated() {}
+	/// Dtor.
 	virtual ~BDBPersister();
 
+	/*! Open existing database or create new database.
+	    \param dbDir database environment directory
+	    \param dbFname database name
+	    \return true on success */
 	virtual bool initialise(const f8String& dbDir, const f8String& dbFname);
+
+	/*! Find the nearest highest sequence number from the sequence to last provided.
+	    \param requested sequence number to start
+	    \param last highest sequence
+	    \return the nearest sequence number or 0 if not found */
 	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
 
+	/*! Persist a message.
+	    \param seqnum sequence number of message
+	    \param what message string
+	    \return true on success */
 	virtual bool put(const unsigned seqnum, const f8String& what);
+
+	/*! Persist a sequence control record.
+	    \param sender_seqnum sequence number of last sent message
+	    \param target_seqnum sequence number of last received message
+	    \return true on success */
 	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
+
+	/*! Retrieve a persisted message.
+	    \param seqnum sequence number of message
+	    \param to target message string
+	    \return true on success */
 	virtual bool get(const unsigned seqnum, f8String& to) const;
+
+	/*! Retrieve a range of persisted messages.
+	    \param from start at sequence number
+	    \param to end sequence number
+	    \param session session containing callback method
+	    \param callback method it call with each retrieved message
+	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with)) const;
+
+	/*! Retrieve sequence number of last peristed message.
+	    \param to target sequence number
+	    \return sequence number of last peristed message on success */
 	virtual unsigned get_last_seqnum(unsigned& to) const;
+
+	/*! Retrieve a sequence control record.
+	    \param sender_seqnum sequence number of last sent message
+	    \param target_seqnum sequence number of last received message
+	    \return true on success */
 	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
 
+	/// Stop the persister thread.
 	void stop() { write(KeyDataBuffer()); _thread.Join(); }
+
+	/*! Persister thread entry point.
+	  \return 0 on success */
 	int operator()();	// write thread
 };
 
@@ -164,16 +251,52 @@ class MemoryPersister : public Persister
 	Store _store;
 
 public:
+	/// Ctor.
 	MemoryPersister() {}
+	/// Dtor.
 	virtual ~MemoryPersister() {}
 
+	/*! Open existing database or create new database.
+	    \param dbDir database environment directory
+	    \param dbFname database name
+	    \return true on success */
 	virtual bool put(const unsigned seqnum, const f8String& what);
+
+	/*! Retrieve sequence number of last peristed message.
+	    \param to target sequence number
+	    \return sequence number of last peristed message on success */
 	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
+
+	/*! Persist a message.
+	    \param seqnum sequence number of message
+	    \param what message string
+	    \return true on success */
 	virtual bool get(const unsigned seqnum, f8String& to) const;
+
+	/*! Retrieve a range of persisted messages.
+	    \param from start at sequence number
+	    \param to end sequence number
+	    \param session session containing callback method
+	    \param callback method it call with each retrieved message
+	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with)) const;
+
+	/*! Retrieve sequence number of last peristed message.
+	    \param to target sequence number
+	    \return sequence number of last peristed message on success */
 	virtual unsigned get_last_seqnum(unsigned& to) const;
+
+	/*! Retrieve a sequence control record.
+	    \param sender_seqnum sequence number of last sent message
+	    \param target_seqnum sequence number of last received message
+	    \return true on success */
 	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
+
+	/*! Find the nearest highest sequence number from the sequence to last provided.
+	    \param requested sequence number to start
+	    \param last highest sequence
+	    \return the nearest sequence number or 0 if not found */
 	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
 };
 
