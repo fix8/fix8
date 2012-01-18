@@ -8,8 +8,7 @@
 				logname="./run/myfix_server.log" protocol_logname="./run/myfix_server_protocol.log"
 				ip="127.0.0.1" port="11001"
 				sender_comp_id="TEX_DLD"
-				persist="bdb0"
-				logdir="./run"/>
+				persist="bdb0" />
 
 	<persist name="bdb0"
 				type="bdb"

@@ -124,6 +124,7 @@ struct BaseMsgEntry
 
 //-------------------------------------------------------------------------------------------------
 #if defined PERMIT_CUSTOM_FIELDS
+/// Custom field wrapper
 class CustomFields
 {
 	typedef
@@ -137,16 +138,26 @@ class CustomFields
 	bool _cleanup;
 
 public:
+	/*! Ctor.
+	    \param cleanup if true, delete BAseEntries on destruction */
 	explicit CustomFields(bool cleanup=true) : _cleanup(cleanup) {}
+	/// Dtor.
 	virtual ~CustomFields()
 	{
 		if (_cleanup)
 			std::for_each(_custFields.begin(), _custFields.end(), free_ptr<Delete2ndPairObject<> >());
 	}
 
+	/*! Add a new field.
+	    \param fnum field number (tag)
+	    \param be BaseEntry of field
+	    \return true on success */
 	bool add(unsigned fnum, BaseEntry *be)
 		{ return _custFields.insert(CustFields::value_type(fnum, be)).second; }
 
+	/*! Find a field.
+	    \param fnum field number (tag)
+	    \return pointer to BaseEntry or 0 if not found */
 	BaseEntry *find_ptr(unsigned fnum)
 	{
 		CustFields::const_iterator itr(_custFields.find(fnum));

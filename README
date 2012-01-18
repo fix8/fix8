@@ -1,1 +1,59 @@
+This is the README file for the fix8 framework.
+
+In this document you will find a brief description of the directory layout,
+as well as a description necessary steps to build fix8.
+
+The system is comprised of a compiler for generating C++ message and field encoders,
+decoders and instantiation tables; a runtime library to support the generated code
+and framework; and a complete client/server test application.
+
+The basic directory layout is as follows:
+
+./ 								root directory with configure
+compiler/                  the f8c compiler source
+doc/                       doxygen documentation (generated when built)
+include/  						header files for the runtime library and compiler
+runtime/ 						runtime library source
+schema/ 							quickfix FIX xml schemas
+test/ 							test client/server source
+
+
+DOCUMENTATION
+=============
+
+Documentation is available at <http://www.fix8.org/>.
+All the source code is self-documenting using doxygen.
+
+
+EXTERNAL DEPENDENCIES
+=====================
+
+Fix8 requires the followin third-party software (header files and
+libraries) being installed to build properly:
+
+- Poco C++ Libraries basic edition
+- Intel Threading Building Blocks
+- Berkeley DB C++
+
+
+BUILDING ON UNIX/LINUX/MAC OS X
+===============================
+
+The build system is based on automake/autoconf/libtool.
+
+% tar xvzf fix8-0.3.69.tar.gz
+% cd fix8-0.3.69
+% ./configure
+% make
+% make install
+
+MORE INFORMATION
+================
+
+For more information, see the fix8 website <http://www.fix8.org>.
+
+---
 $Id$
+$Date$
+$URL$
+

@@ -49,27 +49,43 @@ namespace FIX8
 {
 
 //----------------------------------------------------------------------------------------
-// this is a modified and stripped down version of 0x reference_wrapper
+/*! This is a modified and stripped down version of 0x reference_wrapper.
+  \tparam T class to reference wrap */
 template<typename T>
 class reference_wrapper
 {
 	T *_data;
 
 public:
+	/*! Ctor.
+	  \param _indata instance of object to wrapper */
 	reference_wrapper(T& _indata) : _data(&_indata) {}
+
+	/*! Cast operator
+	  \return reference to object */
 	operator T&() const { return this->get(); }
+
+	/*! Accessor.
+	  \return reference to object */
 	T& get() const { return *_data; }
 };
 
-// Denotes a reference should be taken to a variable.
+/*! Denotes a reference should be taken to a variable.
+  \tparam T class to wrapper
+  \param _t instance of class
+  \return reference_wrappered object */
 template<typename T>
 inline reference_wrapper<T> ref(T& _t) { return reference_wrapper<T>(_t); }
 
-// Denotes a const reference should be taken to a variable.
+/*! Denotes a const reference should be taken to a variable.
+  \tparam T class to wrapper
+  \param _t instance of class
+  \return const reference_wrappered object */
 template<typename T>
 inline reference_wrapper<const T> cref(T& _t) { return reference_wrapper<const T>(_t); }
 
 //----------------------------------------------------------------------------------------
+/// Modern POSIX pthread wrapper ABC.
 class _threadbase
 {
 	pthread_attr_t _attr;
@@ -89,6 +105,9 @@ protected:
 		{ return pthread_create(&_tid, &_attr, _Run<T>, sub); }
 
 public:
+	/*! Ctor.
+	  \param detach detach thread if true
+	  \param stacksize default thread stacksize */
 	_threadbase(const bool detach, const size_t stacksize) throw(ThreadException) : _attr(), _tid(), _exitval()
 	{
 		if (pthread_attr_init(&_attr))
@@ -99,10 +118,15 @@ public:
 			throw ThreadException("pthread_attr_setdetachstate failure");
 	}
 
+	/// Dtor.
 	virtual ~_threadbase() { pthread_attr_destroy(&_attr); }
 
+	/*! Start thread.
+	  \return function result */
 	virtual int Start() = 0;	// ABC
 
+	/*! Join the thread.
+	  \return result of join */
 	int Join()
 		{ return pthread_join(_tid, reinterpret_cast<void **>(&_exitval)) ? -1 : _exitval; }
 
@@ -128,9 +152,10 @@ public:
 };
 
 //----------------------------------------------------------------------------------------
-// thread by pointer to member
-// ctor provides T instance and specifies ptr to member to call or defaults to operator()
-//----------------------------------------------------------------------------------------
+/*! Modern POSIX pthread wrapper.
+  thread by pointer to member function
+  ctor provides T instance and specifies ptr to member to call or defaults to operator()
+  \tparam T class call thread entry functor */
 template<typename T=void *>
 class Thread : public _threadbase
 {
@@ -146,19 +171,33 @@ class Thread : public _threadbase
 	_sub;
 
 public:
+	/*! Ctor. Pointer to object, functor version.
+	  \param what instance of class with entry point
+	  \param method pointer to entry point method
+	  \param detach detach thread if true
+	  \param stacksize default thread stacksize */
 	Thread(T what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
 		throw(ThreadException) : _threadbase(detach, stacksize), _sub(what, method) {}
+
+	/*! Ctor. Reference to object, functor version.
+	  \param what reference wrapper of class with entry point
+	  \param method reference to entry point method
+	  \param detach detach thread if true
+	  \param stacksize default thread stacksize */
 	Thread(reference_wrapper<T> what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
 		throw(ThreadException) : _threadbase(detach, stacksize), _sub(what, method) {}
 
+	/// Dtor.
 	virtual ~Thread() {}
 
+	/*! Start thread.
+	  \return function result */
 	int Start() { return _Start<_helper>(static_cast<void *>(&_sub)); }
 };
 
 //----------------------------------------------------------------------------------------
-// conventional thread started by ptr to non class function with void * args
-//----------------------------------------------------------------------------------------
+/*! Modern POSIX pthread wrapper.
+  conventional thread started by ptr to non member function with void * args */
 template<>
 class Thread<> : public _threadbase
 {
@@ -174,11 +213,19 @@ class Thread<> : public _threadbase
 	_sub;
 
 public:
+	/*! Ctor.
+	  \param func pointer to thread function entry point
+	  \param args pointer to function arguments
+	  \param detach detach thread if true
+	  \param stacksize default thread stacksize */
 	Thread(int (*func)(void *), void *args, const bool detach=false, const size_t stacksize=0)
 		throw(ThreadException) : _threadbase(detach, stacksize), _sub(func, args) {}
 
+	/// Dtor.
 	virtual ~Thread() {}
 
+	/*! Start thread.
+	  \return function result */
 	int Start() { return _Start<_helper>(static_cast<void *>(&_sub)); }
 };
 
