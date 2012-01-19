@@ -30,10 +30,6 @@ HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LI
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
--------------------------------------------------------------------------------------------
-$Date: 2010-12-09 11:24:40 +1100 (Thu, 09 Dec 2010) $
-$URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/runtime/logger.cpp $
-
 #endif
 //-----------------------------------------------------------------------------------------
 #include <iostream>

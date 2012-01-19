@@ -1,4 +1,6 @@
 *.o
+*.lo
+*.la
 Makefile
 Makefile.in
 aclocal.m4
@@ -35,20 +37,7 @@ runtime/.deps/
 runtime/.libs/
 runtime/Makefile
 runtime/Makefile.in
-runtime/configuration.lo
-runtime/connection.lo
-runtime/f8utils.lo
-runtime/field.lo
-runtime/gzstream.lo
 runtime/libfix8.la
-runtime/logger.lo
-runtime/memory.lo
-runtime/message.lo
-runtime/persist.lo
-runtime/popen.lo
-runtime/session.lo
-runtime/traits.lo
-runtime/xml.lo
 test/.deps/
 test/.libs/
 test/Makefile

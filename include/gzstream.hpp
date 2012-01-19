@@ -26,11 +26,6 @@
 // Standard C++ Library".
 // ============================================================================
 
-// $Id$
-// $LastChangedDate$
-// $Rev$
-// $URL$
-
 #ifndef GZSTREAM_H
 #define GZSTREAM_H 1
 

@@ -30,11 +30,6 @@ HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LI
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
----------------------------------------------------------------------------------------------------
-$Id: configuration.hpp 542 2010-12-13 02:17:47Z davidd $
-$Date: 2010-12-13 13:17:47 +1100 (Sat, 13 Nov 2010) $
-$URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/configuration.hpp $
-
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_ALLOCATOR_HPP_

@@ -3,11 +3,6 @@ AC_COPYRIGHT([Orbweb is released under the New BSD License.
 Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
 All rights reserved.])
 
-# $Id$
-# $LastChangedDate$
-AC_REVISION([$Rev$])
-# $URL$
-
 AC_PREREQ(2.61)
 AC_INIT([fix8], [m4_esyscmd([./version.sh|tr -d '\n'])],fix@fix8.org)
 AM_INIT_AUTOMAKE

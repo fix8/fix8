@@ -30,11 +30,6 @@ HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LI
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
--------------------------------------------------------------------------------------------
-$Id: f8cutils.cpp 540 2010-12-05 21:25:33Z davidd $
-$Date: 2010-12-06 08:25:33 +1100 (Sat, 06 Nov 2010) $
-$URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/compiler/f8cutils.cpp $
-
 #endif
 //-----------------------------------------------------------------------------------------
 #include <iostream>

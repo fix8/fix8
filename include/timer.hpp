@@ -30,11 +30,6 @@ HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LI
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
----------------------------------------------------------------------------------------------------
-$Id: message.hpp 549 2010-12-14 11:09:12Z davidd $
-$Date: 2010-12-14 22:09:12 +1100 (Sun, 14 Nov 2010) $
-$URL: svn://catfarm.electro.mine.nu/usr/local/repos/fix8/include/message.hpp $
-
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_TIMER_HPP_

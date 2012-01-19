@@ -26,11 +26,6 @@
 // Standard C++ Library".
 // ============================================================================
 
-// $Id$
-// $LastChangedDate$
-// $Rev$
-// $URL$
-
 #include <gzstream.hpp>
 #include <iostream>
 #include <string.h>  // for memcpy

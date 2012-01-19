@@ -23,9 +23,7 @@
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 
 */
-/* $Id$
-	$URL$
-	modified by DD - we only need basic cfpopen, no cfengine error handling
+/* modified by DD - we only need basic cfpopen, no cfengine error handling
 	see http://www.cfengine.org/
 */
 
