@@ -578,6 +578,23 @@ inline bool exist(const std::string& fname)
 }
 
 //----------------------------------------------------------------------------------------
+/*! Copy a string safely to a target.
+    \param src source string
+    \param target target location
+    \param limit maximum bytes to copy, 0 for no limit
+    \return pointer to target */
+inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
+{
+   if (!target)
+      return 0;
+   unsigned sz(limit && src.size() > limit ? limit : src.size() + 1);
+   src.copy(target, sz - 1);
+   target[sz - 1] = 0;
+   return target;
+}
+
+
+//----------------------------------------------------------------------------------------
 /*! Sleep the specified number of milliseconds.
     \param ms time to sleep in milliseconds
     \return 0 on success */

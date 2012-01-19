@@ -219,6 +219,13 @@ class SingleLogger : public Singleton<SingleLogger<fn> >, public FileLogger
 public:
 	/// Ctor.
 	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << thread) {}
+
+	/*! Set the global logfile name.
+	    \param from name to set to */
+	static void set_global_filename(const std::string& from)
+	{
+		CopyString(from, fn, max_global_filename_length);
+	}
 };
 
 //-----------------------------------------------------------------------------------------

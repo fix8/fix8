@@ -252,7 +252,7 @@ int main(int argc, char **argv)
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
-		case 'l': strcpy(glob_log0, optarg); break;
+		case 'l': GlobalLogger::set_global_filename(optarg); break;
 		case 's': server = true; break;
 		case 'q': quiet = true; break;
 		default: break;
