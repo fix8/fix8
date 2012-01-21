@@ -70,8 +70,8 @@ public:
 		 \param persist persister for this session
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
-	myfix_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist,
-		FIX8::Logger *logger, FIX8::Logger *plogger) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
+	myfix_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist=0,
+		FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
 
 	/*! Application message callback.
 	    This method is called by the framework when an application message has been received and decoded. You
@@ -123,8 +123,8 @@ public:
 		 \param persist persister for this session
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
-	myfix_session_server(const FIX8::F8MetaCntx& ctx, FIX8::Persister *persist,
-		FIX8::Logger *logger, FIX8::Logger *plogger) : Session(ctx, persist, logger, plogger), _router(*this) {}
+	myfix_session_server(const FIX8::F8MetaCntx& ctx, FIX8::Persister *persist=0,
+		FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, persist, logger, plogger), _router(*this) {}
 
 	/*! Application message callback. This method is called by the framework when an application message has been received and decoded.
 	    You should implement this method and call the supplied Message::process.

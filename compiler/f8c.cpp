@@ -61,9 +61,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 using namespace std;
 using namespace FIX8;
 
-//-----------------------------------------------------------------------------------------
-static const std::string rcsid("$Id$");
-
 //----------------------------------------------------------------------------------------
 const std::string TRANSLATIONUNIT(__FILE__);
 
@@ -149,7 +146,6 @@ int main(int argc, char **argv)
 			cout << "f8c for "PACKAGE" version "VERSION << endl;
 			cout << _csMap.find_ref(cs_copyright_short) << insert_year()
 				  << _csMap.find_ref(cs_copyright_short2) << endl;
-			cout << rcsid << endl;
 			return 0;
 		case 'V': verbose = true; break;
 		case 'h': print_usage(); return 0;

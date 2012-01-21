@@ -38,14 +38,6 @@
 #
 #############################################################################################
 MAJOR_VERSION_NUM=0
-MINOR_VERSION_NUM=3
-
-# we would expect svnversion to return a string like 123:126
-BUILD_VERSION_NUM=0
-if test "`type -t svnversion`" = file; then
-	BUILD_VERSION_NUM=`svnversion | sed 's/[^0-9]/ /g' | awk '{printf "%d",$1}'`
-fi
-if test $BUILD_VERSION_NUM = 0; then
-	BUILD_VERSION_NUM=`echo "$Revision$" | sed 's/[^0-9]/ /g' | awk '{printf "%d",$1}'`
-fi
+MINOR_VERSION_NUM=4
+BUILD_VERSION_NUM=02
 echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$BUILD_VERSION_NUM

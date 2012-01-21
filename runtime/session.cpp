@@ -133,8 +133,12 @@ void Session::atomic_init(States::SessionStates st)
 //-------------------------------------------------------------------------------------------------
 Session::~Session()
 {
-	log("Session terminating");
-	_logger->stop();
+	if (_logger)
+	{
+		log("Session terminating");
+		_logger->stop();
+	}
+
 	delete _last_sent;
 	delete _last_received;
 }

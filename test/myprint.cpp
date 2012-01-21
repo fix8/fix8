@@ -64,13 +64,11 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
+#include "myfix.hpp"
 
 //-----------------------------------------------------------------------------------------
 using namespace std;
 using namespace FIX8;
-
-//-----------------------------------------------------------------------------------------
-static const std::string rcsid("$Id: myfix.cpp 558 2010-12-24 03:11:22Z davidd $");
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
@@ -106,6 +104,11 @@ public:
 };
 
 //-----------------------------------------------------------------------------------------
+#if defined PERMIT_CUSTOM_FIELDS
+#include "myfix_custom.hpp"
+#endif
+
+//-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
 	int val;
@@ -128,7 +131,6 @@ int main(int argc, char **argv)
 		{
 		case 'v':
 			cout << argv[0] << " for "PACKAGE" version "VERSION << endl;
-			cout << rcsid << endl;
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
@@ -160,6 +162,19 @@ int main(int argc, char **argv)
 	unsigned msgs(0);
 	MessageCount *mc(summary ? new MessageCount : 0);
 
+#if defined PERMIT_CUSTOM_FIELDS
+	CustomFields custfields(true);	// will cleanup
+	custfields.add(6666, BaseEntry_ctor(new BaseEntry, &TEX::Create_Orderbook,
+		&TEX::extra_realmbases[0], "Orderbook", "Select downstream execution venue"));
+	custfields.add(6951, BaseEntry_ctor(new BaseEntry, &TEX::Create_BrokerInitiated,
+		&TEX::extra_realmbases[1], "BrokerInitiated", "Indicate if order was broker initiated"));
+	custfields.add(7009, BaseEntry_ctor(new BaseEntry, &TEX::Create_ExecOption,
+		&TEX::extra_realmbases[2], "ExecOption", "Broker specific option"));
+	TEX::ctx.set_ube(&custfields);
+
+	myfix_session_server ses(TEX::ctx);
+#endif
+
 	try
 	{
 		const int bufsz(1024);
@@ -170,7 +185,11 @@ int main(int argc, char **argv)
 			ifs().getline(buffer, bufsz);
 			if (buffer[0])
 			{
-				scoped_ptr<Message> msg(Message::factory(TEX::ctx, buffer));
+				scoped_ptr<Message> msg(Message::factory(TEX::ctx, buffer
+#if defined PERMIT_CUSTOM_FIELDS
+					, &ses, &Session::post_msg_ctor
+#endif
+				));
 				if (summary)
 				{
 					MessageCount::iterator mitr(mc->find(msg->get_msgtype()));
@@ -207,12 +226,36 @@ int main(int argc, char **argv)
 }
 
 //-----------------------------------------------------------------------------------------
+#if defined PERMIT_CUSTOM_FIELDS
+bool myfix_session_server::post_msg_ctor(Message *msg)
+{
+	return common_post_msg_ctor(msg);
+}
+
+//-----------------------------------------------------------------------------------------
+bool myfix_session_server::handle_application(const unsigned seqnum, const Message *msg)
+{
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
+{
+	return true;
+}
+
+#endif
+
+//-----------------------------------------------------------------------------------------
 void print_usage()
 {
 	UsageMan um("f8print", GETARGLIST, "<fix protocol file, use '-' for stdin>");
-	um.setdesc("f8print -- f8 protocol printer");
+	um.setdesc("f8print -- f8 protocol log printer");
 	um.add('h', "help", "help, this screen");
 	um.add('s', "summary", "summary, generate message summary");
+	um.add("e.g.");
+	um.add("@f8print myfix_server_protocol.log");
+	um.add("@cat myfix_client_protocol.log | f8print -");
 	um.print(cerr);
 }
 

@@ -78,7 +78,7 @@ public:
 	/// Return number of repeating groups
 	size_t size() const { return _msgs.size(); }
 	/// Provide array style index access to repeating groups
-	MessageBase *operator[](unsigned idx) { return idx < _msgs.size() ? _msgs[idx] : 0; }
+	MessageBase *operator[](unsigned idx) const { return idx < _msgs.size() ? _msgs[idx] : 0; }
 
 	/*! Empty messages from container
 	    \param reuse if true clear vector */
@@ -407,7 +407,7 @@ public:
 	    \tparam T type of group to get
 	    \return pointer to found group or 0 if not found */
 	template<typename T>
-	GroupBase *find_group() { return find_group(T::_fnum); }
+	GroupBase *find_group() const { return find_group(T::_fnum); }
 
 	/*! Find a group of a specified type.
 	    \param fnum field number

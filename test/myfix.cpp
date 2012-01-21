@@ -121,9 +121,6 @@ using namespace std;
 using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
-static const std::string rcsid("$Id$");
-
-//-----------------------------------------------------------------------------------------
 void print_usage();
 const string GETARGLIST("hl:svq");
 bool term_received(false);
@@ -147,61 +144,7 @@ bool quiet(false);
 
 //-----------------------------------------------------------------------------------------
 #if defined PERMIT_CUSTOM_FIELDS
-
-namespace FIX8 {
-namespace TEX {
-
-typedef Field<char, 6666> Orderbook;
-typedef Field<Boolean, 6951> BrokerInitiated;
-typedef Field<int, 7009> ExecOption;
-
-namespace {
-
-const char Orderbook_realm[] =	// the realms must be std::less sorted
-   { 'A', 'C', 'I', 'P', 'X' };
-const char *Orderbook_descriptions[] = // descriptions must be in the same order for the relevant realm
-   { "AXCLOB", "AXCP", "CHIX", "AXPM", "CROSS" };
-const char BrokerInitiated_realm[] =
-   { 'N', 'Y' };
-const char *BrokerInitiated_descriptions[] =
-   { "NO", "YES" };
-const int ExecOption_realm[] =
-   { 0, 1, 2, 3, 4 };
-const char *ExecOption_descriptions[] =
-   { "NORMAL", "EXPEDITE", "URGENT", "REPLACEALL", "STOPALL" };
-
-const RealmBase extra_realmbases[] =
-{
-   { reinterpret_cast<const void *>(Orderbook_realm), static_cast<RealmBase::RealmType>(1),
-      static_cast<FieldTrait::FieldType>(7), sizeof(Orderbook_realm)/sizeof(char), Orderbook_descriptions },
-   { reinterpret_cast<const void *>(BrokerInitiated_realm), static_cast<RealmBase::RealmType>(1),
-      static_cast<FieldTrait::FieldType>(8), sizeof(BrokerInitiated_realm)/sizeof(char), BrokerInitiated_descriptions },
-   { reinterpret_cast<const void *>(ExecOption_realm), static_cast<RealmBase::RealmType>(1),
-      static_cast<FieldTrait::FieldType>(1), sizeof(ExecOption_realm)/sizeof(int), ExecOption_descriptions },
-};
-
-BaseField *Create_Orderbook(const f8String& from, const RealmBase *db) { return new Orderbook(from, db); }
-BaseField *Create_BrokerInitiated(const f8String& from, const RealmBase *db) { return new BrokerInitiated(from, db); }
-BaseField *Create_ExecOption(const f8String& from, const RealmBase *db) { return new ExecOption(from, db); }
-
-} // namespace
-} // namespace TEX
-
-bool common_post_msg_ctor(Message *msg)
-{
-	if (msg->get_msgtype() == TEX::ExecutionReport::get_msgtype()())
-	{
-		const FieldTrait::TraitBase trt[] =
-		{
-			{ 6666, 7, 1000, 0x004 }, { 6951,  8, 5, 0x004 }, { 7009,  1, 6, 0x004 },
-		};
-		msg->add_trait(trt, trt + sizeof(trt)/sizeof(FieldTrait::TraitBase));
-	}
-
-	return true;
-}
-
-} // namespace FIX8
+#include "myfix_custom.hpp"
 #endif
 
 //-----------------------------------------------------------------------------------------
@@ -244,7 +187,6 @@ int main(int argc, char **argv)
 		{
 		case 'v':
 			cout << argv[0] << " for "PACKAGE" version "VERSION << endl;
-			cout << rcsid << endl;
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
@@ -453,6 +395,8 @@ void print_usage()
 bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
 	static unsigned oid(0), eoid(0);
+
+	// This is how you extract a field value
 	TEX::OrderQty qty;
 	msg->get(qty);
 	if (!quiet)
@@ -461,6 +405,19 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	msg->get(price);
 	if (!quiet)
 		cout << "price:" << price() << endl;
+
+	// this is how you extract values from a repeating group
+	const GroupBase *grnoul(msg->find_group<TEX::NewOrderSingle::NoUnderlyings>());
+	if (grnoul)
+	{
+		for (size_t cnt(0); cnt < grnoul->size(); ++cnt)
+		{
+			TEX::UnderlyingSymbol unsym;
+			(*grnoul)[cnt]->get(unsym);
+			if (!quiet)
+				cout << "Underlying symbol:" << unsym << endl;
+		}
+	}
 
 	//ostringstream gerr;
 	//IntervalTimer itm;
