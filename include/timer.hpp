@@ -303,8 +303,8 @@ inline bool operator<=(const Tickval& a, const Tickval& b)
 template<typename T>
 class Timer;
 
-/*! Timer event object to provide callback context with Timer.
-  \tparam T Callback class */
+/// Timer event object to provide callback context with Timer.
+/*! \tparam T Callback class */
 template<typename T>
 class TimerEvent
 {
@@ -333,8 +333,8 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/*! High resolution timer.
-  \tparam T callback context class */
+/// High resolution timer.
+/*! \tparam T callback context class */
 template<typename T>
 class Timer
 {

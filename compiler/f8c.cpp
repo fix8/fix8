@@ -805,8 +805,10 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	{
 		bool isTrailer(mitr->second._name == "trailer");
 		bool isHeader(mitr->second._name == "header");
+		osc_hpp << "/// " << mitr->second._name << " (" << mitr->first << ')';
 		if (!mitr->second._comment.empty())
-			osc_hpp << "// " << mitr->second._comment << endl;
+			osc_hpp << ' ' << mitr->second._comment;
+		osc_hpp << endl;
 		osc_hpp << "class " << mitr->second._name << " : public "
 			<< (isTrailer || isHeader ? "MessageBase" : "Message") << endl << '{' << endl;
 

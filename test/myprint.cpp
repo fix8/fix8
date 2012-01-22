@@ -91,6 +91,7 @@ void sig_handler(int sig)
 }
 
 //----------------------------------------------------------------------------------------
+/// Abstract file or stdin input.
 class filestdin
 {
    std::istream *ifs_;

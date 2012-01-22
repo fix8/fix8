@@ -108,8 +108,8 @@ struct DuplicateField : f8Exception
 };
 
 //-------------------------------------------------------------------------------------------------
-/*! For field types with a specified domain (realm), a value was decoded that was not in the domain set/range.
-    \tparam T the value type */
+/// For field types with a specified domain (realm), a value was decoded that was not in the domain set/range.
+/*! \tparam T the value type */
 template<typename T>
 struct InvalidDomainValue : f8Exception
 {

@@ -41,7 +41,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace FIX8 {
 
 //------------------------------------------------------------------------------
-/// File descriptor streambuf
+/// File descriptor output streambuf
 class fdoutbuf : public std::streambuf // inspiration from Josuttis N.M.
 {
 protected:
@@ -204,10 +204,9 @@ public:
 //-------------------------------------------------------------------------------------------------
 const size_t max_global_filename_length(128);
 
-/*! A global singleton logger
-    \tparam fn actual pathname of logfile
-    \details Create a static instance of this template and set the template parameter to the desired
-	 logfile pathname */
+/// A global singleton logger
+/*! \tparam fn actual pathname of logfile
+    \details Create a static instance of this template and set the template parameter to the desired logfile pathname */
 template<char *fn>
 class SingleLogger : public Singleton<SingleLogger<fn> >, public FileLogger
 {

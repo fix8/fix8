@@ -44,9 +44,9 @@ typedef std::ostringstream f8ostrstream;
 const unsigned char default_field_separator(0x1);
 
 //-------------------------------------------------------------------------------------------------
-/*! Fast map for statically generated data types. Assumes table is sorted. Complexity is O(logN).
-  \tparam Key the key
-  \tparam Val the value */
+/// Fast map for statically generated data types. Assumes table is sorted. Complexity is O(logN).
+/*! \tparam Key the key
+    \tparam Val the value */
 template<typename Key, typename Val>
 class GeneratedTable
 {
@@ -119,10 +119,10 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/*! A specialised map to enable native static initalisation.
-  \tparam Key the key
-  \tparam Val the value
-  \tparam Compare the comparitor */
+/// A specialised map to enable native static initalisation.
+/*! \tparam Key the key
+   \tparam Val the value
+   \tparam Compare the comparitor */
 template<typename Key, typename Val, typename Compare=std::less<Key> >
 struct StaticTable
 {

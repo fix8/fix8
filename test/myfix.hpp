@@ -144,8 +144,7 @@ public:
 };
 
 //---------------------------------------------------------------------------------------------------
-// The following classes are not part of FIX8.
-//---------------------------------------------------------------------------------------------------
+/// Create a streambuf from an open file descriptor.
 class fdinbuf : public std::streambuf
 {
    static const int _buffer_size = 16;
@@ -174,6 +173,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+/// Simple menu system that will work with most term types.
 class MyMenu
 {
 	bool _raw_mode;
@@ -248,6 +248,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------------------
+/// A random number generator wrapper.
 struct RandDev
 {
 	static void init()

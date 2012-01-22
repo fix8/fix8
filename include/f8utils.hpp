@@ -117,8 +117,8 @@ template<typename _CharT, typename _Traits, typename _Alloc>
 			{ return strcasecmp(__lhs.c_str(), __rhs.c_str()) < 0; }
 
 //----------------------------------------------------------------------------------------
-/*! C++11 inspired scoped pointer.
-  \tparam T typename */
+/// C++11 inspired scoped pointer.
+/*! \tparam T typename */
 template <typename T>
 class scoped_ptr
 {
@@ -422,8 +422,8 @@ inline const std::string& PutValue(const T& a, std::string& target)
 }
 
 //----------------------------------------------------------------------------------------
-/*! Bitset for enums.
-    \tparam T the enum type
+/// Bitset for enums.
+/*! \tparam T the enum type
     \tparam B the integral type of the enumeration */
 template<typename T, typename B=unsigned int>
 class ebitset
@@ -502,8 +502,8 @@ public:
 	//friend ebitset operator|(const T lbit, const T rbit) { return ebitset(lbit) |= 1 << rbit; }
 };
 
-/*! Atomic bitset for enums.
-    \tparam T the enum type
+/// Atomic bitset for enums.
+/*! \tparam T the enum type
     \tparam B the integral type of the enumeration */
 template<typename T, typename B=unsigned int>
 class ebitset_r
@@ -674,8 +674,8 @@ struct Delete2ndPairObject
 	void operator()(const std::pair<A, B>& m) const { Deleter()(m.second); }
 };
 
-/*! Parameterisable deleter functor.
-    \tparam Deleter the desired deleter (see above) */
+/// Parameterisable deleter functor.
+/*! \tparam Deleter the desired deleter (see above) */
 template <typename Deleter = DeleteObject>
 struct free_ptr
 {
@@ -687,8 +687,8 @@ struct free_ptr
 };
 
 //----------------------------------------------------------------------------------------
-/*! A lockfree Singleton.
-    \tparam T the instance object type */
+/// A lockfree Singleton.
+/*! \tparam T the instance object type */
 template <typename T>
 class Singleton
 {

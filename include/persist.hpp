@@ -109,6 +109,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+/// BerkeleyDB backed message persister.
 class BDBPersister : public Persister
 {
 	Thread<BDBPersister> _thread;
@@ -240,6 +241,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+/// Memory based message persister.
 class MemoryPersister : public Persister
 {
 	typedef std::map<unsigned, const f8String> Store;

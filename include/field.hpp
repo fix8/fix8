@@ -44,7 +44,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-/*! Int2Type idiom. Kudos to Andrei Alexandrescu */
+/// Int2Type idiom. Kudos to Andrei Alexandrescu
+/*! \tparam field integer value to make type from */
 template<unsigned field>
 struct EnumType
 {
@@ -163,9 +164,9 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/*! ABC field template. Partial specialisations of this class use Int2Type idiom.
-  \tparam T field type
-  \tparam field field number (fix tag) */
+/// ABC field template. Partial specialisations of this class use Int2Type idiom.
+/*! \tparam T field type
+    \tparam field field number (fix tag) */
 template<typename T, const unsigned short field>
 class Field : public BaseField
 {
@@ -205,8 +206,8 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/*! Partial specialisation for int field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for int field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<int, field> : public BaseField
 {
@@ -280,8 +281,8 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/*! Partial specialisation for f8String field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for f8String field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<f8String, field> : public BaseField
 {
@@ -351,8 +352,8 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/*! Partial specialisation for double field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for double field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<double, field> : public BaseField
 {
@@ -426,8 +427,8 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/*! Partial specialisation for unsigned short field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for unsigned short field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<char, field> : public BaseField
 {
@@ -502,8 +503,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_MonthYear> MonthYear;
 
-/*! Partial specialisation for MonthYear field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for MonthYear field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<MonthYear, field> : public Field<f8String, field>
 {
@@ -527,8 +528,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_data> data;
 
-/*! Partial specialisation for data field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for data field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<data, field> : public Field<f8String, field>
 {
@@ -552,8 +553,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_UTCTimestamp> UTCTimestamp;
 
-/*! Partial specialisation for UTCTimestamp field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for UTCTimestamp field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<UTCTimestamp, field> : public BaseField
 {
@@ -638,8 +639,8 @@ const std::string Field<UTCTimestamp, field>::_fmt_ms("%Y%m%d-%H:%M:%S.%i");
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_UTCTimeOnly> UTCTimeOnly;
 
-/*! Partial specialisation for UTCTimeOnly field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for UTCTimeOnly field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<UTCTimeOnly, field> : public BaseField
 {
@@ -697,8 +698,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_UTCDateOnly> UTCDateOnly;
 
-/*! Partial specialisation for UTCDateOnly field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for UTCDateOnly field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<UTCDateOnly, field> : public BaseField
 {
@@ -756,8 +757,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_LocalMktDate> LocalMktDate;
 
-/*! Partial specialisation for LocalMktDate field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for LocalMktDate field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<LocalMktDate, field> : public BaseField
 {
@@ -815,8 +816,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_TZTimeOnly> TZTimeOnly;
 
-/*! Partial specialisation for TZTimeOnly field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for TZTimeOnly field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<TZTimeOnly, field> : public BaseField
 {
@@ -873,8 +874,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_TZTimestamp> TZTimestamp;
 
-/*! Partial specialisation for TZTimestamp field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for TZTimestamp field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<TZTimestamp, field> : public BaseField
 {
@@ -932,8 +933,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_Length> Length;
 
-/*! Partial specialisation for Length field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for Length field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<Length, field> : public Field<int, field>
 {
@@ -961,8 +962,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_TagNum> TagNum;
 
-/*! Partial specialisation for TagNum field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for TagNum field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<TagNum, field> : public Field<int, field>
 {
@@ -990,8 +991,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_SeqNum> SeqNum;
 
-/*! Partial specialisation for SeqNum field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for SeqNum field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<SeqNum, field> : public Field<int, field>
 {
@@ -1019,8 +1020,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_NumInGroup> NumInGroup;
 
-/*! Partial specialisation for NumInGroup field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for NumInGroup field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<NumInGroup, field> : public Field<int, field>
 {
@@ -1048,8 +1049,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_DayOfMonth> DayOfMonth;
 
-/*! Partial specialisation for DayOfMonth field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for DayOfMonth field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<DayOfMonth, field> : public Field<int, field>
 {
@@ -1077,8 +1078,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_Boolean> Boolean;
 
-/*! Partial specialisation for Boolean field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for Boolean field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<Boolean, field> : public BaseField
 {
@@ -1157,8 +1158,8 @@ typedef EnumType<FieldTrait::ft_float> price;
 typedef EnumType<FieldTrait::ft_float> PriceOffset;
 typedef EnumType<FieldTrait::ft_float> Percentage;
 
-/*! Partial specialisation for Qty field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for Qty field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<Qty, field> : public Field<double, field>
 {
@@ -1188,8 +1189,8 @@ typedef EnumType<FieldTrait::ft_string> Exchange;
 typedef EnumType<FieldTrait::ft_string> Language;
 typedef EnumType<FieldTrait::ft_string> XMLData;
 
-/*! Partial specialisation for MultipleCharValue field type.
-  \tparam field field number (fix tag) */
+/// Partial specialisation for MultipleCharValue field type.
+/*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<MultipleCharValue, field> : public Field<f8String, field>
 {

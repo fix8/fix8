@@ -44,8 +44,8 @@ namespace FIX8
 {
 
 //----------------------------------------------------------------------------------------
-/*! This is a modified and stripped down version of 0x reference_wrapper.
-  \tparam T class to reference wrap */
+/// This is a modified and stripped down version of 0x reference_wrapper.
+/*!  \tparam T class to reference wrap */
 template<typename T>
 class reference_wrapper
 {
@@ -65,17 +65,17 @@ public:
 	T& get() const { return *_data; }
 };
 
-/*! Denotes a reference should be taken to a variable.
-  \tparam T class to wrapper
-  \param _t instance of class
-  \return reference_wrappered object */
+/// Denotes a reference should be taken to a variable.
+/*! \tparam T class to wrapper
+   \param _t instance of class
+   \return reference_wrappered object */
 template<typename T>
 inline reference_wrapper<T> ref(T& _t) { return reference_wrapper<T>(_t); }
 
-/*! Denotes a const reference should be taken to a variable.
-  \tparam T class to wrapper
-  \param _t instance of class
-  \return const reference_wrappered object */
+/// Denotes a const reference should be taken to a variable.
+/*! \tparam T class to wrapper
+    \param _t instance of class
+    \return const reference_wrappered object */
 template<typename T>
 inline reference_wrapper<const T> cref(T& _t) { return reference_wrapper<const T>(_t); }
 
@@ -179,10 +179,8 @@ public:
 };
 
 //----------------------------------------------------------------------------------------
-/*! Modern POSIX pthread wrapper.
-  thread by pointer to member function
-  ctor provides T instance and specifies ptr to member to call or defaults to operator()
-  \tparam T class call thread entry functor */
+/// Modern POSIX pthread wrapper. Thread by pointer to member function.  Ctor provides T instance and specifies ptr to member to call or defaults to operator()
+/*! \tparam T class call thread entry functor */
 template<typename T=void *>
 class Thread : public _threadbase
 {
@@ -223,8 +221,7 @@ public:
 };
 
 //----------------------------------------------------------------------------------------
-/*! Modern POSIX pthread wrapper.
-  conventional thread started by ptr to non member function with void * args */
+/// Modern POSIX pthread wrapper. Conventional thread started by ptr to non member function with void * args
 template<>
 class Thread<> : public _threadbase
 {
