@@ -67,18 +67,35 @@ public:
 	/*! ctor
 	    \param fnum number of fields in this group */
 	GroupBase(const unsigned short fnum) : _fnum(fnum) {}
+
 	/// dtor
 	virtual ~GroupBase() { clear(false); }
 
+	/*! Create a new group element.
+	  \return new message */
 	virtual MessageBase *create_group() = 0;
-	/// Add a group
+
+	/*! Add a message to a repeating group
+	  \param what message to add */
 	void add(MessageBase *what) { _msgs.push_back(what); }
-	/// Add a group
+
+	/*! Add a message to a repeating group
+	  \param what message to add */
 	void operator+=(MessageBase *what) { add(what); }
-	/// Return number of repeating groups
+
+	/*! Return number of elements in a repeating group.
+	  \return number of elements */
 	size_t size() const { return _msgs.size(); }
-	/// Provide array style index access to repeating groups
-	MessageBase *operator[](unsigned idx) const { return idx < _msgs.size() ? _msgs[idx] : 0; }
+
+	/*! Provide array style index access to repeating groups
+	  \param idx index of element to get
+	  \return pointer to element or 0 if index out of range */
+	MessageBase *operator[](const unsigned idx) const { return get_element(idx); }
+
+	/*! Get an element from a group
+	  \param idx index of element to get
+	  \return pointer to element or 0 if index out of range */
+	MessageBase *get_element(const unsigned idx) const { return idx < _msgs.size() ? _msgs[idx] : 0; }
 
 	/*! Empty messages from container
 	    \param reuse if true clear vector */
@@ -105,7 +122,8 @@ typedef
 class Router
 {
 public:
-	/// Function operator; overloaded with each generated Fix message type
+	/*! Function operator; overloaded with each generated Fix message type.
+	  \return true on success */
 	virtual bool operator()(const Message *msg) const { return false; }
 };
 
@@ -136,6 +154,7 @@ public:
 	/*! Ctor.
 	    \param cleanup if true, delete BAseEntries on destruction */
 	explicit CustomFields(bool cleanup=true) : _cleanup(cleanup) {}
+
 	/// Dtor.
 	virtual ~CustomFields()
 	{

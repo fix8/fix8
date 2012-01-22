@@ -36,6 +36,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _USAGE_HPP_
 
 //-----------------------------------------------------------------------------------------
+/// Convenient program help/usage wrapper. Generates a standardised usage message.
 class UsageMan
 {
 	const std::string prognm_, params_;
@@ -46,6 +47,12 @@ class UsageMan
 	const int splen_, argoptlen_;
 
 public:
+	/*! Ctor.
+	  \param prognm program name
+	  \param argstr program arguments string
+	  \param params program non-switched arguments string
+	  \param splen tab width
+	  \param argoptlen option argument width */
 	UsageMan(const std::string& prognm, const std::string& argstr, const std::string& params,
 		int splen=3, int argoptlen=23)
 		: prognm_(prognm), params_(params), argstr_(argstr), splen_(splen), argoptlen_(argoptlen)
@@ -53,14 +60,21 @@ public:
 		std::sort(argstr_.begin(), argstr_.end());
 	}
 
+	/// Dtor.
 	virtual ~UsageMan() {}
 
+	/*! Add a command line option.
+	  \param sw the single character switch
+	  \param lsw the string switch (long version)
+	  \param help the associated help string
+	  \return true on success */
 	bool add(const char sw, const std::string& lsw, const std::string& help)
 	{
 		return optels_.insert(OPTEL::value_type(sw,
 			std::pair<const std::string, const std::string>(lsw, help))).second;
 	}
 
+	/// Add an extra help line. Lines prefixed with '@' are indented one tabstop.
 	void add(const std::string& xtr)
 	{
 		std::string topush(xtr);
@@ -70,8 +84,12 @@ public:
 		xtrlines_.push_back(topush);
 	}
 
+	/*! Set the usage description string.
+	  \param desc the description string */
 	void setdesc(const std::string& desc) { description_ = desc; }
 
+	/*! Insert the formatted usage into the given stream.
+	  \param os the stream to insert to */
 	void print(std::ostream& os)
 	{
 		if (!description_.empty())

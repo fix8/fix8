@@ -39,5 +39,5 @@
 #############################################################################################
 MAJOR_VERSION_NUM=0
 MINOR_VERSION_NUM=4
-BUILD_VERSION_NUM=02
-echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$BUILD_VERSION_NUM
+PATCH_VERSION_NUM=02
+echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$PATCH_VERSION_NUM

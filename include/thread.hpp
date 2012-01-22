@@ -56,7 +56,7 @@ public:
 	  \param _indata instance of object to wrapper */
 	reference_wrapper(T& _indata) : _data(&_indata) {}
 
-	/*! Cast operator
+	/*! Cast to enclosed type operator
 	  \return reference to object */
 	operator T&() const { return this->get(); }
 
@@ -125,23 +125,55 @@ public:
 	int Join()
 		{ return pthread_join(_tid, reinterpret_cast<void **>(&_exitval)) ? -1 : _exitval; }
 
+	/*! Cause the thread to exit.
+	  \param exitvalue value to return to calling process */
 	void Exit(int exitvalue) const { pthread_exit(reinterpret_cast<void *>(exitvalue)); }
+
+	/*! Recover the thread's exit value.
+	  \return exit value from to calling process */
 	const int GetExitVal() const { return _exitval; }
 
+	/*! Kill the thread.
+	  \param signum signal number to send */
 	void Kill(int signum) const { pthread_kill(_tid, signum); }
 
-	const pthread_t GetThreadID() const { return _tid; }
-	static const pthread_t GetID() { return pthread_self(); }
-
-	bool operator==(const _threadbase& that) const { return pthread_equal(_tid, that._tid); }
-	bool operator!=(const _threadbase& that) const { return !pthread_equal(_tid, that._tid); }
-
+	/*! Kill the thread. Static version.
+	  \param ctxt thread context to kill
+	  \param signal signal number to send
+	  \return true on success */
 	static bool Kill(_threadbase& ctxt, const int signal=SIGTERM)
 		{ return pthread_kill(ctxt._tid, signal) == 0; }
 
+	/*! Get the thread's thread ID.
+	  \return the thread id */
+	const pthread_t GetThreadID() const { return _tid; }
+
+	/*! Get the thread's thread ID. Static version.
+	  \return the thread id */
+	static const pthread_t GetID() { return pthread_self(); }
+
+	/*! Thread equivalence operator.
+	  \param that the other thread id
+	  \return true if the threads are equal */
+	bool operator==(const _threadbase& that) const { return pthread_equal(_tid, that._tid); }
+
+	/*! Thread inequivalence operator.
+	  \param that the other thread id
+	  \return true if the threads are unequal */
+	bool operator!=(const _threadbase& that) const { return !pthread_equal(_tid, that._tid); }
+
+	/*! Set the thread signal mask.
+	  \param how block, unblock or mask
+	  \param newmask new mask
+	  \param oldmask old mask
+	  \return true on success */
 	static bool SetSignalMask(const int how, const sigset_t *newmask, sigset_t *oldmask)
 		{ return pthread_sigmask(how, newmask, oldmask)  == 0; }
 
+	/*! Wait for a specified signal.
+	  \param set signal set
+	  \param sig new mask
+	  \return true on success */
 	static bool SignalWait(const sigset_t *set, int *sig)
 		{ return sigwait(set, sig) == 0; }
 };

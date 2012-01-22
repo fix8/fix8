@@ -44,7 +44,7 @@ $(BUILT_SOURCES): $(XML_SCHEMA)
 
 .NOTPARALLEL: $(XML_SCHEMA)
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
-GEN_LIBS = -ldl -lrt -lfix8
+GEN_LIBS = -lrt -lfix8
 TBB_LIBS = -ltbb
 BDB_LIBS = -ldb_cxx
 ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) -L$(top_srcdir)/runtime $(BDB_LIBS)

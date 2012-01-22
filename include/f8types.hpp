@@ -44,7 +44,7 @@ typedef std::ostringstream f8ostrstream;
 const unsigned char default_field_separator(0x1);
 
 //-------------------------------------------------------------------------------------------------
-/*! Fast map for statically generated data types. Assumes table is sorted. O(logN).
+/*! Fast map for statically generated data types. Assumes table is sorted. Complexity is O(logN).
   \tparam Key the key
   \tparam Val the value */
 template<typename Key, typename Val>

@@ -51,9 +51,9 @@ MAJOR_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$1}']
 AC_DEFINE_UNQUOTED([MAJOR_VERSION_NUM], [$MAJOR_VERSION_NUM], [Major version number])
 MINOR_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$2}']`
 AC_DEFINE_UNQUOTED([MINOR_VERSION_NUM], [$MINOR_VERSION_NUM], [Minor version number])
-BUILD_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$4}']`
-AC_DEFINE_UNQUOTED([BUILD_VERSION_NUM], [$BUILD_VERSION_NUM], [Build number])
-AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 29 | MINOR_VERSION_NUM << 23 | BUILD_VERSION_NUM)], [Encoded Version])
+PATCH_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$4}']`
+AC_DEFINE_UNQUOTED([PATCH_VERSION_NUM], [$PATCH_VERSION_NUM], [Patch number])
+AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 29 | MINOR_VERSION_NUM << 23 | PATCH_VERSION_NUM)], [Encoded Version])
 AC_DEFINE_UNQUOTED([CONFIGURE_OPTIONS], ["$ac_configure_args"], [configure options])
 
 BRAND_SUMMARY='Fix8 FIX Framework Server'
@@ -254,15 +254,6 @@ if test "$timersubmacro" = "yes"; then
     AC_DEFINE(HAVE_TIMERSUB, 1, [Define to 1 if timersub macro is in sys/time.h])
 fi
 
-have_dlopen=no
-AC_CHECK_LIB(dl,dlopen,have_dlopen=yes)
-if test "$have_dlopen" = "no"; then
-		echo
-		echo "ERROR: dlopen (libdl) not found. Install and try again."
-		echo
-		exit 1
-fi
-
 AC_CHECK_LIB(z, deflate, [
 	AC_CHECK_HEADERS([zlib.h],
 	[
@@ -277,7 +268,7 @@ AM_CONDITIONAL(USECOMPRESSION, [test x$havecompression = xyes])
 AC_SUBST(Z_LIB)
 if test "$havecompression" != "yes"; then
 		echo
-		echo "ERROR: zlib (libz) delevelopment libraries are required. Install and try again."
+		echo "ERROR: zlib (libz) development libraries are required. Install and try again."
 		echo
 		exit 1
 fi
@@ -462,7 +453,7 @@ AC_SUBST(PROJ_RELEASE_VERSION)
 AC_SUBST(CONFIGURE_OPTIONS)
 AC_SUBST(MAJOR_VERSION_NUM)
 AC_SUBST(MINOR_VERSION_NUM)
-AC_SUBST(BUILD_VERSION_NUM)
+AC_SUBST(PATCH_VERSION_NUM)
 AC_SUBST(BRAND_SUMMARY)
 AC_SUBST(BRAND_DESCRIPTION)
 AC_SUBST(BRAND_COMPANY_SHORTNAME)

@@ -41,10 +41,32 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace FIX8 {
 
 //----------------------------------------------------------------------------------------
+/*! In place string to upper case.
+  \param src source string
+  \return reference to modified string */
 std::string& InPlaceStrToUpper(std::string& src);
+
+/*! In place string to lower case.
+  \param src source string
+  \return reference to modified string */
 std::string& InPlaceStrToLower(std::string& src);
+
+/*! Check if string has trailing slash, if not add.
+  \param source source string
+  \return reference to modified string */
 std::string& CheckAddTrailingSlash(std::string& source);
+
+/*! Find standard error string for given errno.
+  \param err errno value
+  \param str if not 0, prepend string to error string
+  \return error string */
 std::string Str_error(const int err, const char *str=0);
+
+/*! Format Tickval into string.
+  \param result target string
+  \param tv tickval to use or 0 for current time
+  \param dplaces number of decimal places to report seconds (default 6)
+  \return reference to target string */
 const std::string& GetTimeAsStringMS(std::string& result, class Tickval *tv=0, const unsigned dplaces=6);
 
 //----------------------------------------------------------------------------------------

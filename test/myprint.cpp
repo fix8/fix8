@@ -178,10 +178,11 @@ int main(int argc, char **argv)
 	try
 	{
 		const int bufsz(1024);
-		char buffer[bufsz];
 
 		while (!ifs().eof() && !term_received)
 		{
+			char buffer[bufsz] = {};
+
 			ifs().getline(buffer, bufsz);
 			if (buffer[0])
 			{

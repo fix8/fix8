@@ -413,7 +413,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		for (size_t cnt(0); cnt < grnoul->size(); ++cnt)
 		{
 			TEX::UnderlyingSymbol unsym;
-			(*grnoul)[cnt]->get(unsym);
+			grnoul->get_element(cnt)->get(unsym);
 			if (!quiet)
 				cout << "Underlying symbol:" << unsym << endl;
 		}

@@ -41,6 +41,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
+/// FIX field traits - hold specific traits for each field.
 struct FieldTrait
 {
 	unsigned short _fnum;
@@ -63,77 +64,137 @@ struct FieldTrait
 	}
 	_ftype;
 
+	/// This structure is used by the static instantiation tables.
 	struct TraitBase
 	{
 		const unsigned short _field, _ftype, _pos;
 		const unsigned _field_traits;
 	};
 
+	/*! Check if this FieldType is an int.
+	  \param ftype field to check
+	  \return true if an int */
 	static bool is_int(const FieldType ftype) { return ft_int <= ftype && ftype <= ft_end_int; }
+
+	/*! Check if this FieldType is a char.
+	  \param ftype field to check
+	  \return true if a char */
 	static bool is_char(const FieldType ftype) { return ft_char <= ftype && ftype <= ft_end_char; }
+
+	/*! Check if this FieldType is a string.
+	  \param ftype field to check
+	  \return true if a string */
 	static bool is_string(const FieldType ftype) { return ft_string <= ftype && ftype <= ft_end_string; }
+
+	/*! Check if this FieldType is a float.
+	  \param ftype field to check
+	  \return true if a float */
 	static bool is_float(const FieldType ftype) { return ft_float <= ftype && ftype <= ft_end_float; }
 
-	mutable unsigned short _pos;	// is ordinal, ie 0=n/a, 1=1st, 2=2nd
+	/// is ordinal, ie 0=n/a, 1=1st, 2=2nd
+	mutable unsigned short _pos;
 	mutable unsigned short _subpos;
 
 	enum TraitTypes { mandatory, present, position, group, component, suppress, automatic, count };
 	mutable ebitset<TraitTypes, unsigned short> _field_traits;
 
+	/*! Ctor.
+	  \param field field num (tag number)
+	  \param ftype field type
+	  \param pos field position (in FIX message)
+	  \param ismandatory true if mandatory
+	  \param isgroup true if this is a group
+	  \param subpos field sub-position (in FIX message)
+	  \param ispresent true if field is present (should be false until set). */
 	FieldTrait(const unsigned short field, const FieldType ftype=ft_untyped, const unsigned short pos=0,
 		bool ismandatory=false, bool isgroup=false, const unsigned subpos=0, bool ispresent=false) :
 		_fnum(field), _ftype(ftype), _pos(pos), _subpos(subpos),
 		_field_traits(ismandatory ? 1 : 0 | (ispresent ? 1 : 0) << present
 		| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group | (subpos ? 1 : 0) << component) {}
 
+	/*! Ctor. Construct from TraitBase object.
+	  \param tb TraitBase object to construct from */
 	FieldTrait(const TraitBase& tb) : _fnum(tb._field), _ftype(static_cast<FieldTrait::FieldType>(tb._ftype)),
 		_pos(tb._pos), _subpos(), _field_traits(tb._field_traits | (tb._pos ? 1 : 0) << position) {}
 
+	/// Binary comparitor functor.
 	struct Compare : public std::binary_function<FieldTrait, FieldTrait, bool>
 	{
+		/*! Comparitor operator.
+		  \param p1 lhs to compare
+		  \param p2 rhs to compare
+		  \return true if p1 == p2 */
 		bool operator()(const FieldTrait& p1, const FieldTrait& p2) const { return p1._fnum < p2._fnum; }
 	};
 
+	/// Binary position comparitor functor.
 	struct PosCompare : public std::binary_function<FieldTrait, FieldTrait, bool>
 	{
+		/*! Comparitor operator.
+		  \param p1 lhs to compare
+		  \param p2 rhs to compare
+		  \return true if p1 position not equal to p2 position; will use subpos if necessary */
 		bool operator()(const FieldTrait* p1, const FieldTrait* p2) const
 			{ return p1->_pos < p2->_pos || (p1->_pos == p2->_pos && p1->_subpos < p2->_subpos); }
 	};
 
+	/*! Inserter friend.
+	    \param os stream to send to
+	    \param what FieldTrait
+	    \return stream */
 	friend std::ostream& operator<<(std::ostream& os, const FieldTrait& what);
 };
 
 //-------------------------------------------------------------------------------------------------
 typedef std::set<FieldTrait, FieldTrait::Compare> Presence;
 
-// which fields are required, which are present
+/// A collection of FieldTraits for a message. Which fields are required, which are present.
 class FieldTraits
 {
 	Presence _presence;
 
 public:
+	/*! Ctor.
+	  \tparam InputIterator input iterator to construct from
+	  \param begin start iterator to input
+	  \param end start iterator to input */
 	template<typename InputIterator>
 	FieldTraits(const InputIterator begin, const InputIterator end) : _presence(begin, end) {}
+
+	/// Ctor.
 	FieldTraits() {}
 
+	/*! Check if a field is present
+	  \param field to check
+	  \return true if present */
 	bool has(const unsigned short field) const
 	{
 		Presence::const_iterator itr(_presence.find(field));
 		return itr != _presence.end();
 	}
 
+	/*! Get the traits for a field.
+	  \param field to get
+	  \return traits as an unsigned short */
 	unsigned getval(const unsigned short field)
 	{
 		Presence::const_iterator itr(_presence.find(field));
 		return itr != _presence.end() ? itr->_field_traits.get() : 0;
 	}
 
+	/*! Check if a field has a specified trait.
+	  \param field to check
+	  \param type TraitType to check (default present)
+	  \return true if field has trait */
 	bool get(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present) const
 	{
 		Presence::const_iterator itr(_presence.find(field));
 		return itr != _presence.end() ? itr->_field_traits.has(type) : false;
 	}
 
+	/*! Find the first field that does not have the specified trait.
+	  \param type TraitType to check (default mandatory)
+	  \return field number of field, 0 if none */
 	unsigned short find_missing(FieldTrait::TraitTypes type=FieldTrait::mandatory) const
 	{
 		for (Presence::const_iterator itr(_presence.begin()); itr != _presence.end(); ++itr)
@@ -142,6 +203,9 @@ public:
 		return 0;
 	}
 
+	/*! Set a trait for a specified field.
+	  \param field to set
+	  \param type TraitType to set (default present) */
 	void set(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present)
 	{
 		Presence::iterator itr(_presence.find(field));
@@ -149,6 +213,9 @@ public:
 			itr->_field_traits.set(type);
 	}
 
+	/*! Clear a trait for a specified field.
+	  \param field to set
+	  \param type TraitType to set (default present) */
 	void clear(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present)
 	{
 		Presence::iterator itr(_presence.find(field));
@@ -156,25 +223,59 @@ public:
 			itr->_field_traits.clear(type);
 	}
 
+	/*! Add a FieldTrait.
+	  \param what TraitType to add
+	  \return true on success (false already present) */
 	bool add(const FieldTrait& what) { return _presence.insert(Presence::value_type(what)).second; }
+
+	/*! Add from a range of traits.
+	  \param begin start iterator to input
+	  \param end start iterator to input */
 	template<typename InputIterator>
 	void add(const InputIterator begin, const InputIterator end) { _presence.insert(begin, end); }
 
+	/*! Clear a trait from all traits.
+	  \param type TraitType to clear */
 	void clear_flag(FieldTrait::TraitTypes type=FieldTrait::present)
 		{ for (Presence::const_iterator itr(_presence.begin()); itr != _presence.end(); itr++->_field_traits.clear(type)); }
 
+	/*! Check if a specified field has the present bit set (is present).
+	  \param field field to check
+	  \return true if present */
 	bool is_present(const unsigned short field) const { return get(field, FieldTrait::present); }
+
+	/*! Check if a specified field has the mandator bit set.
+	  \param field field to check
+	  \return true if mandatory set */
 	bool is_mandatory(const unsigned short field) const { return get(field, FieldTrait::mandatory); }
+
+	/*! Check if a specified field has the group bit set (is a group).
+	  \param field field to check
+	  \return true if a group */
 	bool is_group(const unsigned short field) const { return get(field, FieldTrait::group); }
+
+	/*! Check if a specified field has the component bit set (is a component).
+	  \param field field to check
+	  \return true if a component */
 	bool is_component(const unsigned short field) const { return get(field, FieldTrait::component); }
+
+	/*! Get the field position of a specified field.
+	  \param field field to get
+	  \return position of field, 0 if no pos or not found */
 	unsigned short getPos(const unsigned short field) const
 	{
 		std::set<FieldTrait, FieldTrait::Compare>::const_iterator itr(_presence.find(field));
 		return itr != _presence.end() && itr->_field_traits.has(FieldTrait::position) ? itr->_pos : 0;
 	}
 
+	/*! Get the Presence set
+	  \return the Presence set */
 	const Presence& get_presence() const { return _presence; }
 
+	/*! Inserter friend.
+	    \param os stream to send to
+	    \param what FieldTraits
+	    \return stream */
 	friend std::ostream& operator<<(std::ostream& os, const FieldTraits& what);
 };
 
