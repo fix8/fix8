@@ -805,7 +805,9 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	{
 		bool isTrailer(mitr->second._name == "trailer");
 		bool isHeader(mitr->second._name == "header");
-		osc_hpp << "/// " << mitr->second._name << " (" << mitr->first << ')';
+		osc_hpp << "/// " << mitr->second._name << " (" << mitr->first << "), " << (mitr->second._is_admin ? "admin" : "application")
+				  << ", " <<  mitr->second._fields.get_presence().size() << " fiel" << (mitr->second._fields.get_presence().size() == 1 ? "d, " : "ds, ")
+				  << mitr->second._groups.size() << " grou" << (mitr->second._groups.size() == 1 ? "p." : "ps.");
 		if (!mitr->second._comment.empty())
 			osc_hpp << ' ' << mitr->second._comment;
 		osc_hpp << endl;

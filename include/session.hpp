@@ -42,7 +42,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-/// Quickfix style sessionid
+/// Quickfix style sessionid.
 class SessionID
 {
 	static RegExp _sid;
@@ -121,6 +121,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+/// Session states and semantics.
 struct States
 {
 	enum Tests

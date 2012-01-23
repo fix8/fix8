@@ -38,8 +38,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------------------
 class myfix_session_client;
 
-/*! Example client message router. Derives from fix8 generated router class.
-    Your application must define a class similar to this in order to receive
+/// Example client message router. Derives from fix8 generated router class.
+/*! Your application must define a class similar to this in order to receive
     the appropriate callback when Message::process is called. */
 class tex_router_client : public FIX8::TEX::Myfix_Router
 {
@@ -56,8 +56,8 @@ public:
 	virtual bool operator() (const FIX8::TEX::ExecutionReport *msg) const;
 };
 
-/*! Example client session. Derives from FIX8::Session.
-    Your application must define a class similar to this in order to create and connect a client.
+/// Example client session. Derives from FIX8::Session.
+/*! Your application must define a class similar to this in order to create and connect a client.
     You must also implement handle_application in order to receive application messages from the framework. */
 class myfix_session_client : public FIX8::Session
 {
@@ -95,8 +95,8 @@ public:
 //-----------------------------------------------------------------------------------------
 class myfix_session_server;
 
-/*! Example server message router. Derives from fix8 generated router class.
-    Your application must define a class similar to this in order to receive
+/// Example server message router. Derives from fix8 generated router class.
+/*! Your application must define a class similar to this in order to receive
     the appropriate callback when Message::process is called. */
 class tex_router_server : public FIX8::TEX::Myfix_Router
 {
@@ -113,6 +113,9 @@ public:
 	virtual bool operator() (const FIX8::TEX::NewOrderSingle *msg) const;
 };
 
+/// Example server session. Derives from FIX8::Session.
+/*! Your application must define a class similar to this in order to receive client connections.
+    You must also implement handle_application in order to receive application messages from the framework. */
 class myfix_session_server : public FIX8::Session
 {
 	tex_router_server _router;
@@ -179,6 +182,7 @@ class MyMenu
 	bool _raw_mode;
 	termio _tty_state;
 
+	/// Individual menu item.
 	struct MenuItem
 	{
 		const char _key;

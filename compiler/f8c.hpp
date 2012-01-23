@@ -39,6 +39,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
+/// f8c compilation context.
 struct Ctxt
 {
 	enum OutputFile { types_cpp, types_hpp, traits_cpp, classes_cpp, classes_hpp, router_hpp, count };
@@ -50,6 +51,7 @@ struct Ctxt
 };
 
 //-------------------------------------------------------------------------------------------------
+/// f8c range or set domain realm.
 class RealmObject
 {
 	bool _isRange;
@@ -78,6 +80,8 @@ public:
 	};
 };
 
+/// f8c typed realm.
+/*! \tparam T underlying realm type */
 template <typename T>
 class TypedRealm : public RealmObject
 {
@@ -91,12 +95,14 @@ public:
 		{ return (static_cast<const TypedRealm<T>*>(p1))->_obj < static_cast<const TypedRealm<T>*>(p2)->_obj; }
 };
 
+/// f8c string realm type.
 struct StringRealm : public TypedRealm<std::string>
 {
 	StringRealm(const std::string& from, bool isRange) : TypedRealm<std::string>(from, isRange) {}
 	void print(std::ostream& os) { os << '"' << _obj << '"'; }
 };
 
+/// f8c character realm type.
 struct CharRealm : public TypedRealm<char>
 {
 	CharRealm(const char& from, bool isRange) : TypedRealm<char>(from, isRange) {}
@@ -109,6 +115,7 @@ typedef std::map<RealmObject *, std::string, RealmObject::less> RealmMap;
 typedef StaticTable<std::string, FieldTrait::FieldType> BaseTypeMap;
 typedef StaticTable<FieldTrait::FieldType, std::string> TypeToCPP;
 
+/// f8c internal field representation.
 struct FieldSpec
 {
 	static const BaseTypeMap _baseTypeMap;
@@ -137,6 +144,7 @@ typedef std::map<std::string, unsigned> FieldToNumMap;
 typedef std::map<unsigned, FieldTraits> GroupMap;
 
 //-------------------------------------------------------------------------------------------------
+/// f8c internal message representation.
 struct MessageSpec
 {
 	FieldTraits _fields;
