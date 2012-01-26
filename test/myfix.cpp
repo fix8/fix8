@@ -229,7 +229,7 @@ int main(int argc, char **argv)
 			const XmlEntity *ses(conf.get_session(0));
 			if (conf.get_role(ses) != Connection::cn_acceptor)
 				throw f8Exception("Invalid role");
-			GlobalLogger::instance()->send("test fix server starting up...");
+			GlobalLogger::log("test fix server starting up...");
 
 			FileLogger log(conf.get_logname(ses, logname), logflags, 2);
 			FileLogger plog(conf.get_protocol_logname(ses, prot_logname), plogflags, 2);
@@ -239,7 +239,7 @@ int main(int argc, char **argv)
 			Poco::Net::ServerSocket ss(addr);
 			Poco::Net::SocketAddress claddr;
 			Poco::Net::StreamSocket sock(ss.acceptConnection(claddr));
-			GlobalLogger::instance()->send("client connection established...");
+			GlobalLogger::log("client connection established...");
 			ServerConnection sc(&sock, ms, conf.get_heartbeat_interval(ses));
 			if (!quiet)
 				ms.control() |= Session::print;
@@ -255,7 +255,7 @@ int main(int argc, char **argv)
 			const XmlEntity *ses(conf.get_session(0));
 			if (conf.get_role(ses) != Connection::cn_initiator)
 				throw f8Exception("Invalid role");
-			GlobalLogger::instance()->send("test fix client starting up...");
+			GlobalLogger::log("test fix client starting up...");
 
 			sender_comp_id sci;
 			target_comp_id tci;
@@ -266,7 +266,7 @@ int main(int argc, char **argv)
 			myfix_session_client ms(TEX::ctx, id, bdp.get(), &log, &plog);
 			conf.get_address(ses, addr);
 			Poco::Net::StreamSocket sock;
-			GlobalLogger::instance()->send("established connection with server...");
+			GlobalLogger::log("established connection with server...");
 			ClientConnection cc(&sock, addr, ms);
 			if (!quiet)
 				ms.control() |= Session::print;
@@ -396,26 +396,33 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
 	static unsigned oid(0), eoid(0);
 
-	// This is how you extract a field value
 	TEX::OrderQty qty;
-	msg->get(qty);
-	if (!quiet)
-		cout << "Order qty:" << qty() << endl;
 	TEX::Price price;
-	msg->get(price);
-	if (!quiet)
-		cout << "price:" << price() << endl;
 
-	// this is how you extract values from a repeating group
-	const GroupBase *grnoul(msg->find_group<TEX::NewOrderSingle::NoUnderlyings>());
-	if (grnoul)
+	if (!quiet)
 	{
-		for (size_t cnt(0); cnt < grnoul->size(); ++cnt)
+		// This is how you extract a copy of a field value
+		if (msg->get(qty))
+			cout << "Order qty (copy):" << qty() << endl;
+
+		// This is how you get a field value in place
+		if (msg->has<TEX::OrderQty>())
+			cout << "Order qty (in place):" << msg->get<TEX::OrderQty>()->get() << endl;
+
+		if (msg->get(price))
+			cout << "price:" << price() << endl;
+
+		// This is how you extract values from a repeating group
+		const GroupBase *grnoul(msg->find_group<TEX::NewOrderSingle::NoUnderlyings>());
+		if (grnoul)
 		{
-			TEX::UnderlyingSymbol unsym;
-			grnoul->get_element(cnt)->get(unsym);
-			if (!quiet)
-				cout << "Underlying symbol:" << unsym << endl;
+			for (size_t cnt(0); cnt < grnoul->size(); ++cnt)
+			{
+				TEX::UnderlyingSymbol unsym;
+				MessageBase *me(grnoul->get_element(cnt));
+				me->get(unsym);
+				cout << "Underlying symbol:" << unsym() << endl;
+			}
 		}
 	}
 
@@ -437,7 +444,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	if (!quiet)
 		cout << endl;
 	//gerr << "encode:" << itm.Calculate();
-	//GlobalLogger::instance()->send(gerr.str());
+	//GlobalLogger::log(gerr.str());
 
 	ostringstream oistr;
 	oistr << "ord" << ++oid;

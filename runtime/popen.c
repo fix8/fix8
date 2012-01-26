@@ -231,44 +231,6 @@ if (fclose(pp) == EOF)
 
 return 0;
 
-#if 0
-#ifdef HAVE_WAITPID
-
-while(waitpid(pid,&status,0) < 0)
-   {
-   if (errno != EINTR)
-      {
-      return -1;
-      }
-   }
-
-return status;
-
-#else
-
-while ((wait_result = wait(&status)) != pid)
-   {
-   if (wait_result <= 0)
-      {
-      //snprintf(OUTPUT,CF_BUFSIZE,"Wait for child failed\n");
-      //CfLog(cfinform,OUTPUT,"wait");
-      return -1;
-      }
-   }
-
-if (WIFSIGNALED(status))
-   {
-   return -1;
-   }
-
-if (! WIFEXITED(status))
-   {
-   return -1;
-   }
-
-return (WEXITSTATUS(status));
-#endif
-#endif
 }
 
 /*******************************************************************/

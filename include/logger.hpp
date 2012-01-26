@@ -155,7 +155,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// A generic logging class that will log to any supplied stream
+/// A generic logging class that will log to any supplied ostream
 class GenericLogger : public Logger
 {
 	std::ostream& _os;
@@ -219,6 +219,14 @@ public:
 	static void set_global_filename(const std::string& from)
 	{
 		CopyString(from, fn, max_global_filename_length);
+	}
+
+	/*! Send a message to the logger.
+	  \param what message to log
+	  \return true on success */
+	static bool log(const std::string& what)
+	{
+		return Singleton<SingleLogger<fn> >::instance()->send(what);
 	}
 };
 

@@ -137,7 +137,7 @@ public:
 
 	/*! Cast this field to the supplied type.
 	  \tparam T target type
-	  \return refernce to the cast field */
+	  \return reference to the cast field */
 	template<typename T>
 	T& from() { return *static_cast<T*>(this); }
 
@@ -168,9 +168,11 @@ public:
 /*! \tparam T field type
     \tparam field field number (fix tag) */
 template<typename T, const unsigned short field>
-class Field : public BaseField
+struct Field : public BaseField
 {
-public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	///Ctor.
 	Field () : BaseField(field) {}
 
@@ -215,6 +217,9 @@ protected:
 	int _value;
 
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
 
@@ -290,6 +295,9 @@ protected:
 	f8String _value;
 
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : BaseField(field) {}
 
@@ -361,6 +369,9 @@ protected:
 	double _value;
 
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
 
@@ -435,6 +446,9 @@ class Field<char, field> : public BaseField
 	char _value;
 
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
 
@@ -564,6 +578,9 @@ class Field<UTCTimestamp, field> : public BaseField
 	int _tzdiff;
 
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : BaseField(field), _tzdiff() {}
 
@@ -647,6 +664,9 @@ class Field<UTCTimeOnly, field> : public BaseField
 	Poco::DateTime _value;
 
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : BaseField(field) {}
 
@@ -706,6 +726,9 @@ class Field<UTCDateOnly, field> : public BaseField
 	Poco::DateTime _value;
 
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : BaseField(field) {}
 
@@ -765,6 +788,9 @@ class Field<LocalMktDate, field> : public BaseField
 	Poco::DateTime _value;
 
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : BaseField(field) {}
 
@@ -824,6 +850,9 @@ class Field<TZTimeOnly, field> : public BaseField
 	Poco::DateTime _value;
 
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : BaseField(field) {}
 
@@ -882,6 +911,9 @@ class Field<TZTimestamp, field> : public BaseField
 	Poco::DateTime _value;
 
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : BaseField(field) {}
 
@@ -1086,6 +1118,9 @@ class Field<Boolean, field> : public BaseField
 	bool _value;
 
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : BaseField(field) {}
 
@@ -1164,6 +1199,9 @@ template<const unsigned short field>
 class Field<Qty, field> : public Field<double, field>
 {
 public:
+	/// The FIX fieldID (tag number).
+	static const unsigned short get_field() { return field; }
+
 	/// Ctor.
 	Field () : Field<double, field>() {}
 

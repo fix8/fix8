@@ -497,7 +497,7 @@ public:
 
 	/*! Or a bit value with the current set.
 	    \param sbit to set
-	    \return ebitset_r */
+	    \return ebitset */
 	ebitset& operator<<(const T sbit) { a_ |= 1 << sbit; return *this; }
 	//friend ebitset operator|(const T lbit, const T rbit) { return ebitset(lbit) |= 1 << rbit; }
 };

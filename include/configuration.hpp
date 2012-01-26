@@ -39,7 +39,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-/// Class to encapsulate a Fix8 session.
+/// Class to encapsulate a Fix8 configuration.
 class Configuration
 {
 	std::string _xmlfile;

@@ -82,13 +82,13 @@ int Logger::operator()()
 		else
 			_msg_queue.pop (msg); // will block
 
+		++received;
+
       if (msg.second.empty())  // means exit
 		{
          stopping = true;
 			continue;
 		}
-
-		++received;
 
 		if (_flags & sequence)
 			get_stream() << setw(7) << right << setfill('0') << ++_sequence << ' ';

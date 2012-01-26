@@ -205,7 +205,6 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from
 		if (sess && post_ctor)
 			(sess->*post_ctor)(msg);
 #endif
-//#if defined PERMIT_CUSTOM_FIELDS
 		//IntervalTimer itm;
 		msg->decode(from);
 		//gerr << "decode:" << itm.Calculate();
@@ -229,7 +228,6 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from
 			if (chkval != calc_chksum(from, mtpos, chkpos - mtpos))
 				throw BadCheckSum(mtype);
 		}
-
 	}
 
 	return msg;

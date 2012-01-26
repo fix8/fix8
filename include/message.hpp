@@ -377,12 +377,37 @@ public:
 		return true;
 	}
 
+	/*! Check if a field is present.
+	    \tparam T type of field to get
+	    \return true if present */
+	template<typename T>
+	bool has() const
+	{
+		return _fp.get(T::get_field());
+	}
+
+	/*! Get a pointer to a field. Inplace, 0 copy.
+	    \tparam T type of field to get
+	    \return pointer to field or 0 if not present */
+	template<typename T>
+	const T *get() const
+	{
+		Fields::const_iterator fitr(_fields.find(T::get_field()));
+		return fitr == _fields.end() ? 0 : &fitr->second->from<T>();
+	}
+
 	/*! Populate supplied field with value from message.
 	    \tparam T type of field to get
 	    \param to field to populate
 	    \return true on success */
 	template<typename T>
 	bool operator()(T& to) const { return get(to); }
+
+	/*! Get a pointer to a field. Inplace, 0 copy.
+	    \tparam T type of field to get
+	    \return pointer to field or 0 if not present */
+	template<typename T>
+	const T *operator()() const { return get<T>(); }
 
 	/*! Check if a field is present in this message.
 	    \param fnum field number
