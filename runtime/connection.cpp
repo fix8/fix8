@@ -54,9 +54,6 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-extern char glob_log0[max_global_filename_length];
-
-//-------------------------------------------------------------------------------------------------
 RegExp FIXReader::_hdr("8=([^\x01]+)\x01{1}9=([^\x01]+)\x01");
 
 //-------------------------------------------------------------------------------------------------
@@ -144,7 +141,7 @@ int FIXReader::callback_processor()
    }
 
 	ostringstream ostr;
-	ostr << "FIXCallback: " << processed << " messages processed, " << ignored << " ignored";
+	ostr << "FIXReaderCallback: " << processed << " messages processed, " << ignored << " ignored";
 	_session.log(ostr.str());
 
 	return 0;
@@ -267,10 +264,16 @@ void Connection::start()
 //-------------------------------------------------------------------------------------------------
 void Connection::stop()
 {
+#if 0
 	//_reader.stop();
 	//_writer.stop();
 	_reader.quit();
 	_writer.quit();
+#endif
+	_writer.stop();
+	_writer.join();
+	_reader.stop();
+	_reader.socket()->shutdownReceive();
 }
 
 //-------------------------------------------------------------------------------------------------

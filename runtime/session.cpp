@@ -198,15 +198,17 @@ bool Session::enforce(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::process(const f8String& from)
 {
-	RegMatch match;
-	if (_seq.SearchString(match, from, 2, 0) != 2)
-		throw InvalidMessage(from);
-	f8String seqstr;
-	_seq.SubExpr(match, from, seqstr, 0, 1);
-	const unsigned seqnum(GetValue<unsigned>(seqstr));
+	unsigned seqnum(0);
 
 	try
 	{
+		RegMatch match;
+		if (_seq.SearchString(match, from, 2, 0) != 2)
+			throw InvalidMessage(from);
+		f8String seqstr;
+		_seq.SubExpr(match, from, seqstr, 0, 1);
+		seqnum = GetValue<unsigned>(seqstr);
+
 		plog(from);
 		scoped_ptr<Message> msg(Message::factory(_ctx, from
 #if defined PERMIT_CUSTOM_FIELDS
@@ -348,6 +350,8 @@ bool Session::handle_logout(const unsigned seqnum, const Message *msg)
 {
 	enforce(seqnum, msg);
 
+	if (_state != States::st_logoff_sent)
+		send(generate_logout());
 	log("peer has logged out");
 	stop();
 	return true;
@@ -426,7 +430,6 @@ bool Session::heartbeat_service()
 	now.now();
 	if ((now - *_last_received).secs() > _connection->get_hb_interval20pc())
 	{
-		cout << _connection->get_hb_interval20pc() << endl;
 		if (_state == States::st_test_request_sent)	// already sent
 		{
 			send(generate_logout());

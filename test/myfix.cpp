@@ -122,7 +122,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svq");
+const string GETARGLIST("hl:svqc:");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
@@ -166,6 +166,7 @@ int main(int argc, char **argv)
 {
 	int val;
 	bool server(false);
+	string conf_file;
 
 #ifdef HAVE_GETOPT_LONG
 	option long_options[] =
@@ -173,6 +174,7 @@ int main(int argc, char **argv)
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },
 		{ "log",			0,	0,	'l' },
+		{ "config",		0,	0,	'c' },
 		{ "server",		0,	0,	's' },
 		{ "quiet",		0,	0,	'q' },
 		{ 0 },
@@ -191,6 +193,7 @@ int main(int argc, char **argv)
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
+		case 'c': conf_file = optarg; break;
 		case 's': server = true; break;
 		case 'q': quiet = true; break;
 		default: break;
@@ -224,33 +227,38 @@ int main(int argc, char **argv)
 	{
 		if (server)
 		{
-			const string server_conf_file("myfix_server.xml");
+			const string server_conf_file(conf_file.empty() ? "myfix_server.xml" : conf_file);
 			Configuration conf(server_conf_file, true);
 			const XmlEntity *ses(conf.get_session(0));
 			if (conf.get_role(ses) != Connection::cn_acceptor)
 				throw f8Exception("Invalid role");
 			GlobalLogger::log("test fix server starting up...");
 
-			FileLogger log(conf.get_logname(ses, logname), logflags, 2);
-			FileLogger plog(conf.get_protocol_logname(ses, prot_logname), plogflags, 2);
-			scoped_ptr<Persister> bdp(conf.create_persister(ses));
-			myfix_session_server ms(TEX::ctx, bdp.get(), &log, &plog);
 			conf.get_address(ses, addr);
 			Poco::Net::ServerSocket ss(addr);
-			Poco::Net::SocketAddress claddr;
-			Poco::Net::StreamSocket sock(ss.acceptConnection(claddr));
-			GlobalLogger::log("client connection established...");
-			ServerConnection sc(&sock, ms, conf.get_heartbeat_interval(ses));
-			if (!quiet)
-				ms.control() |= Session::print;
-			ms.start(&sc, false);
-			while (!term_received)
-				sleep(1);
-			ms.stop();
+
+			for (unsigned scnt(1); !term_received; ++scnt)
+			{
+				FileLogger log(conf.get_logname(ses, logname), logflags, 2);
+				FileLogger plog(conf.get_protocol_logname(ses, prot_logname), plogflags, 2);
+				scoped_ptr<Persister> bdp(conf.create_persister(ses));
+				Poco::Net::SocketAddress claddr;
+				Poco::Net::StreamSocket sock(ss.acceptConnection(claddr));
+				myfix_session_server ms(TEX::ctx, bdp.get(), &log, &plog);
+				ostringstream sostr;
+				sostr << "client(" << scnt << ") connection established.";
+				GlobalLogger::log(sostr.str());
+				ServerConnection sc(&sock, ms, conf.get_heartbeat_interval(ses));
+				if (!quiet)
+					ms.control() |= Session::print;
+				ms.start(&sc, false);
+				while (!term_received && !ms.is_logged_out())
+					sleep(1);
+			}
 		}
 		else
 		{
-			const string client_conf_file("myfix_client.xml");
+			const string client_conf_file(conf_file.empty() ? "myfix_client.xml" : conf_file);
 			Configuration conf(client_conf_file, true);
 			const XmlEntity *ses(conf.get_session(0));
 			if (conf.get_role(ses) != Connection::cn_initiator)
@@ -276,13 +284,9 @@ int main(int argc, char **argv)
 			char ch;
 			mymenu.set_raw_mode();
 			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3)
-			{
 				if (!mymenu.process(ch))
 					break;
-			}
 			mymenu.unset_raw_mode();
-
-			ms.stop();
 		}
 	}
 	catch (f8Exception& e)
@@ -311,6 +315,11 @@ bool myfix_session_client::post_msg_ctor(Message *msg)
 bool myfix_session_server::handle_application(const unsigned seqnum, const Message *msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
+}
+
+bool myfix_session_server::handle_admin(const unsigned seqnum, const Message *msg)
+{
+	return msg->process(_router);
 }
 
 //-----------------------------------------------------------------------------------------
@@ -376,7 +385,8 @@ bool MyMenu::help()
 bool MyMenu::do_logout()
 {
 	_session.send(new TEX::Logout);
-	return true;
+	sleep(1);
+	return false; // will exit
 }
 
 //-----------------------------------------------------------------------------------------
@@ -387,6 +397,7 @@ void print_usage()
 	um.add('s', "server", "run in server mode (default client mode)");
 	um.add('h', "help", "help, this screen");
 	um.add('l', "log", "global log filename");
+	um.add('c', "config", "xml config (default: myfix_client.xml or myfix_server.xml)");
 	um.add('q', "quiet", "do not print fix output");
 	um.print(cerr);
 }
@@ -509,6 +520,12 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	}
 
 	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool tex_router_server::operator() (const TEX::Logout *msg) const
+{
+	return _session.set_is_logged_out();
 }
 
 //-----------------------------------------------------------------------------------------

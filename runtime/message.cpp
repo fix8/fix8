@@ -193,7 +193,6 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from
 		_hdr.SubExpr(match, from, ver, 0, 1);
 		_hdr.SubExpr(match, from, len, 0, 2);
 		_hdr.SubExpr(match, from, mtype, 0, 4);
-		const int mtpos(match.SubPos(3));
 		const unsigned mlen(GetValue<unsigned>(len));
 
 		const BaseMsgEntry *bme(ctx._bme.find_ptr(mtype));
@@ -224,9 +223,10 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from
 
 			Fields::const_iterator fitr(msg->_trailer->_fields.find(Common_CheckSum));
 			static_cast<check_sum *>(fitr->second)->set(chksum);
-			unsigned chkval(GetValue<unsigned>(chksum));
-			if (chkval != calc_chksum(from, mtpos, chkpos - mtpos))
-				throw BadCheckSum(mtype);
+			const unsigned chkval(GetValue<unsigned>(chksum)),
+				mchkval(calc_chksum(from, 0, chkpos));
+			if (chkval != mchkval)
+				throw BadCheckSum(mchkval);
 		}
 	}
 
@@ -313,15 +313,6 @@ unsigned Message::encode(f8String& to)
 	_trailer->encode(msg);
 	const unsigned msgLen(msg.str().size());	// checksummable msglength
 
-	if ((fitr = _trailer->_fields.find(Common_CheckSum)) == _trailer->_fields.end())
-		throw MissingMandatoryField(Common_CheckSum);
-	static_cast<check_sum *>(fitr->second)->set(fmt_chksum(calc_chksum(msg.str())));
-	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
-	fitr->second->encode(msg);
-#if defined MSGRECYCLING
-	_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress); // in case we want to reuse
-#endif
-
 	f8ostrstream hmsg;
 	if ((fitr = _header->_fields.find(Common_BeginString)) == _header->_fields.end())
 		throw MissingMandatoryField(Common_BeginString);
@@ -341,6 +332,16 @@ unsigned Message::encode(f8String& to)
 #endif
 
 	hmsg << msg.str();
+
+	if ((fitr = _trailer->_fields.find(Common_CheckSum)) == _trailer->_fields.end())
+		throw MissingMandatoryField(Common_CheckSum);
+	static_cast<check_sum *>(fitr->second)->set(fmt_chksum(calc_chksum(hmsg.str())));
+	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
+	fitr->second->encode(hmsg);
+#if defined MSGRECYCLING
+	_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress); // in case we want to reuse
+#endif
+
 	to = hmsg.str();
 	return to.size();
 }

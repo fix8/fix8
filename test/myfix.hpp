@@ -109,8 +109,13 @@ public:
 
 	/*! NewOrderSingle message handler. Here is where you provide your own methods for the messages you wish to
 		 handle. Only those messages that are of interest to you need to be implemented.
-	    \param msg NewOrderSingle report message session */
+	    \param msg NewOrderSingle message */
 	virtual bool operator() (const FIX8::TEX::NewOrderSingle *msg) const;
+
+	/*! Logout message handler. Here is where you provide your own methods for the messages you wish to
+		 handle. Only those messages that are of interest to you need to be implemented.
+	    \param msg Logout message */
+	virtual bool operator() (const FIX8::TEX::Logout *msg) const;
 };
 
 /// Example server session. Derives from FIX8::Session.
@@ -119,6 +124,7 @@ public:
 class myfix_session_server : public FIX8::Session
 {
 	tex_router_server _router;
+	bool _logged_out;
 
 public:
 	/*! Ctor. Acceptor.
@@ -127,7 +133,8 @@ public:
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
 	myfix_session_server(const FIX8::F8MetaCntx& ctx, FIX8::Persister *persist=0,
-		FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, persist, logger, plogger), _router(*this) {}
+		FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, persist, logger, plogger),
+		_router(*this), _logged_out() {}
 
 	/*! Application message callback. This method is called by the framework when an application message has been received and decoded.
 	    You should implement this method and call the supplied Message::process.
@@ -135,6 +142,13 @@ public:
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
 	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
+
+	/*! Admin message callback. This method is called by the framework when an admin message has been received and decoded.
+	    You should implement this method and call the supplied Message::process.
+	    \param seqnum Fix sequence number of the message
+		 \param msg Mesage decoded (base ptr)
+		 \return true on success */
+	bool handle_admin(const unsigned seqnum, const FIX8::Message *msg);
 
 #if defined PERMIT_CUSTOM_FIELDS
 	/*! Post message constructor. If you have enabled custom field capability then you need to provde an implementation for this method.
@@ -144,6 +158,9 @@ public:
 		 \return true on success */
 	bool post_msg_ctor(FIX8::Message *msg);
 #endif
+
+	bool set_is_logged_out() { return _logged_out = true; }
+	bool is_logged_out() const { return _logged_out; }
 };
 
 //---------------------------------------------------------------------------------------------------

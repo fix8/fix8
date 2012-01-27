@@ -1,3 +1,6 @@
+0.4.04 	27/01/2012  Fixed checksum and bodylength calculation bugs on encode and decode;
+							Test server permits reconnects and detects logout;
+							Connection classes shutdown properly, gracefully;
 0.4.02 	23/01/2012  Moved to github; numerous fixes; documentation and wiki;
 0.3.580 	07/01/2012  Initial release on sourceforge
 

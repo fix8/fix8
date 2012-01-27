@@ -240,8 +240,18 @@ bool myfix_session_server::handle_application(const unsigned seqnum, const Messa
 	return true;
 }
 
+bool myfix_session_server::handle_admin(const unsigned seqnum, const Message *msg)
+{
+	return true;
+}
+
 //-----------------------------------------------------------------------------------------
 bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
+{
+	return true;
+}
+
+bool tex_router_server::operator() (const TEX::Logout *msg) const
 {
 	return true;
 }

@@ -984,7 +984,8 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 	{
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
 			continue;
-		osu_hpp << spacer << "virtual bool operator() (const class " << mitr->second._name << " *msg) const { return false; }" << endl;
+		osu_hpp << spacer << "virtual bool operator() (const class " << mitr->second._name
+			<< " *msg) const { return " << (mitr->second._is_admin ? "true" : "false") << "; }" << endl;
 	}
 	osu_hpp << "};" << endl;
 

@@ -205,7 +205,7 @@ struct MissingMandatoryField : f8Exception
 /// An inbound message had an invalid (incorrect) checksum.
 struct BadCheckSum : f8Exception
 {
-	BadCheckSum(const std::string& msgtype) { format("Checksum failure", msgtype); }
+	BadCheckSum(const unsigned int chkval) { format("Checksum failure", chkval); }
 };
 
 //-------------------------------------------------------------------------------------------------
