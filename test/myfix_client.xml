@@ -10,6 +10,9 @@
 				target_comp_id="TEX_DLD"
 				logname="./run/myfix_client.log"
 				protocol_logname="./run/myfix_client_protocol.log"
+				logfile_rotation="5"
+				login_retry_interval="4000"
+				login_retries="100"
 				persist="bdb0" />
 
 	<persist name="bdb0"

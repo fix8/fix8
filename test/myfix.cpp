@@ -113,7 +113,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
 
-#include <Poco/Net/ServerSocket.h>
 #include "myfix.hpp"
 
 //-----------------------------------------------------------------------------------------
@@ -166,7 +165,7 @@ int main(int argc, char **argv)
 {
 	int val;
 	bool server(false);
-	string conf_file;
+	string clcf;
 
 #ifdef HAVE_GETOPT_LONG
 	option long_options[] =
@@ -193,7 +192,7 @@ int main(int argc, char **argv)
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
-		case 'c': conf_file = optarg; break;
+		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
 		case 'q': quiet = true; break;
 		default: break;
@@ -205,12 +204,6 @@ int main(int argc, char **argv)
 	signal(SIGTERM, sig_handler);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
-
-	Logger::LogFlags logflags, plogflags;
-	logflags << Logger::timestamp << Logger::sequence << Logger::thread;
-	plogflags << Logger::append;
-	string logname, prot_logname;
-	Poco::Net::SocketAddress addr;
 
 #if defined PERMIT_CUSTOM_FIELDS
 	CustomFields custfields(true);	// will cleanup
@@ -225,67 +218,41 @@ int main(int argc, char **argv)
 
 	try
 	{
+		const string conf_file(server ? clcf.empty() ? "myfix_server.xml" : clcf : clcf.empty() ? "myfix_client.xml" : clcf);
+
 		if (server)
 		{
-			const string server_conf_file(conf_file.empty() ? "myfix_server.xml" : conf_file);
-			Configuration conf(server_conf_file, true);
-			const XmlEntity *ses(conf.get_session(0));
-			if (conf.get_role(ses) != Connection::cn_acceptor)
-				throw f8Exception("Invalid role");
-			GlobalLogger::log("test fix server starting up...");
+			ServerSession<myfix_session_server>::Server_ptr
+				ms(new ServerSession<myfix_session_server>(TEX::ctx, conf_file, "TEX1"));
 
-			conf.get_address(ses, addr);
-			Poco::Net::ServerSocket ss(addr);
-
-			for (unsigned scnt(1); !term_received; ++scnt)
+			for (unsigned scnt(0); !term_received; )
 			{
-				FileLogger log(conf.get_logname(ses, logname), logflags, 2);
-				FileLogger plog(conf.get_protocol_logname(ses, prot_logname), plogflags, 2);
-				scoped_ptr<Persister> bdp(conf.create_persister(ses));
-				Poco::Net::SocketAddress claddr;
-				Poco::Net::StreamSocket sock(ss.acceptConnection(claddr));
-				myfix_session_server ms(TEX::ctx, bdp.get(), &log, &plog);
-				ostringstream sostr;
-				sostr << "client(" << scnt << ") connection established.";
-				GlobalLogger::log(sostr.str());
-				ServerConnection sc(&sock, ms, conf.get_heartbeat_interval(ses));
+				if (!ms->poll())
+					continue;
+				SessionInstance<myfix_session_server>::Instance_ptr
+					inst(new SessionInstance<myfix_session_server>(*ms));
 				if (!quiet)
-					ms.control() |= Session::print;
-				ms.start(&sc, false);
-				while (!term_received && !ms.is_logged_out())
-					sleep(1);
+					inst->session_ptr()->control() |= Session::print;
+				ostringstream sostr;
+				sostr << "client(" << ++scnt << ") connection established.";
+				GlobalLogger::log(sostr.str());
+				inst->start(true);
+				cout << "Session(" << scnt << ") finished." << endl;
+				inst->stop();
 			}
 		}
 		else
 		{
-			const string client_conf_file(conf_file.empty() ? "myfix_client.xml" : conf_file);
-			Configuration conf(client_conf_file, true);
-			const XmlEntity *ses(conf.get_session(0));
-			if (conf.get_role(ses) != Connection::cn_initiator)
-				throw f8Exception("Invalid role");
-			GlobalLogger::log("test fix client starting up...");
-
-			sender_comp_id sci;
-			target_comp_id tci;
-			const SessionID id(TEX::ctx._beginStr, conf.get_sender_comp_id(ses, sci), conf.get_target_comp_id(ses, tci));
-			FileLogger log(conf.get_logname(ses, logname), logflags, 2);
-			FileLogger plog(conf.get_protocol_logname(ses, prot_logname), plogflags, 2);
-			scoped_ptr<Persister> bdp(conf.create_persister(ses));
-			myfix_session_client ms(TEX::ctx, id, bdp.get(), &log, &plog);
-			conf.get_address(ses, addr);
-			Poco::Net::StreamSocket sock;
-			GlobalLogger::log("established connection with server...");
-			ClientConnection cc(&sock, addr, ms);
+			ClientSession<myfix_session_client>::Client_ptr
+				mc(new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
-				ms.control() |= Session::print;
-			ms.start(&cc, false);
-
-			MyMenu mymenu(ms, 0, cout);
+				mc->session_ptr()->control() |= Session::print;
+			mc->start(false);
+			MyMenu mymenu(*mc->session_ptr(), 0, cout);
 			char ch;
 			mymenu.set_raw_mode();
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3)
-				if (!mymenu.process(ch))
-					break;
+			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
+				;
 			mymenu.unset_raw_mode();
 		}
 	}
@@ -294,6 +261,8 @@ int main(int argc, char **argv)
 		cerr << "exception: " << e.what() << endl;
 	}
 
+	if (term_received)
+		cout << "terminated." << endl;
 	return 0;
 }
 
@@ -471,9 +440,9 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	*er += new TEX::Orderbook('X');
 	*er += new TEX::BrokerInitiated(true);
 	*er += new TEX::ExecOption(3);
+
 #endif
 #if defined MSGRECYCLING
-	_session.send_wait(er.get());
 	er->set_in_use(true);	// indicate this message is in use again
 	delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
 	*er += new TEX::AvgPx(9999); // will replace and delete original

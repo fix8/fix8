@@ -280,20 +280,34 @@ void Connection::stop()
 //-------------------------------------------------------------------------------------------------
 bool ClientConnection::connect()
 {
+	unsigned login_retry_interval, login_retries, attempts(0);;
+	_session.get_login_parameters(login_retry_interval, login_retries);
+
 	Poco::Timespan timeout(1000000);
-   try
-   {
-      _sock->connect(_addr, timeout);
-   }
-	catch (exception& e)	// also catches Poco::Net::NetException
+
+	while (attempts < login_retries)
 	{
 		ostringstream ostr;
-		ostr << "exception: " << e.what();
-		_session.log(ostr.str());
-		return false;
+
+		try
+		{
+			ostr.str("");
+			ostr << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')';
+			_session.log(ostr.str());
+			_sock->connect(_addr, timeout);
+			_session.log("Connection successful");
+			return _connected = true;
+		}
+		catch (exception& e)	// also catches Poco::Net::NetException
+		{
+			ostr.str("");
+			ostr << "exception: " << e.what();
+			_session.log(ostr.str());
+			millisleep(login_retry_interval);
+		}
 	}
 
-	_session.log("Connection successful");
-	return _connected = true;
+	_session.log("Connection failed");
+	return false;
 }
 

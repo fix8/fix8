@@ -160,23 +160,30 @@ private:
 	typedef StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)> Handlers;
 	Handlers _handlers;
 
+	/*! Initialise atomic members.
+	  \param st the initial session state */
 	void atomic_init(States::SessionStates st);
 
 protected:
 	Control _control;
-	tbb::atomic<unsigned> _next_sender_seq, _next_target_seq;
+	tbb::atomic<unsigned> _next_send_seq, _next_receive_seq;
 	tbb::atomic<States::SessionStates> _state;
 	tbb::atomic<Tickval *> _last_sent, _last_received;
 	const F8MetaCntx& _ctx;
 	Connection *_connection;
 	SessionID _sid;
 
+	static const unsigned default_retry_interval=5000, default_login_retries=100;
+	unsigned _login_retry_interval, _login_retries;
+
 	Persister *_persist;
 	Logger *_logger, *_plogger;
 
 	Timer<Session> _timer;
 	TimerEvent<Session> _hb_processor;
-	bool heartbeat_service();	// generate heartbeats
+
+	/// Heartbeat generation service thread.
+	bool heartbeat_service();
 
 	/*! Logon callback.
 	    \param seqnum message sequence number
@@ -330,24 +337,36 @@ public:
 	virtual bool post_msg_ctor(Message *msg) { return true; }
 #endif
 
+	/// Provides context to your retrans handler.
+	struct RetransmissionContext
+	{
+		const unsigned _begin, _end, _interrupted_seqnum;
+		unsigned _last;
+		bool _no_more_records;
+
+		RetransmissionContext(const unsigned begin, const unsigned end, const unsigned interrupted_seqnum)
+			: _begin(begin), _end(end), _interrupted_seqnum(interrupted_seqnum), _last(), _no_more_records() {}
+	};
+
 	typedef std::pair<const unsigned, const f8String> SequencePair;
 
 	/*! Retransmission callback. Called by framework with each message to be resent.
 	    \param with pair of sequence number and raw fix message
+	    \param rctx retransmission context
 	    \return true on success */
-	virtual bool retrans_callback(const SequencePair& with);
+	virtual bool retrans_callback(const SequencePair& with, RetransmissionContext& rctx);
 
 	/*! Send message.
 	    \param msg Message
 	    \return true on success */
-	virtual bool send(Message *msg);
+	virtual bool send(Message *msg, const unsigned custom_seqnum=0);
 #if defined MSGRECYCLING
 
 	/*! Send message and wait till no longer in use.
 	    \param msg Message
 	    \param waitval time to sleep(ms) before rechecking inuse
 	    \return true on success */
-	virtual bool send_wait(Message *msg, const int waitval=10);
+	virtual bool send_wait(Message *msg, const unsigned custom_seqnum=0, const int waitval=10);
 #endif
 
 	/*! Process message (encode) and send.
@@ -396,12 +415,34 @@ public:
 	/*! Enforce session semantics. Checks compids, sequence numbers.
 	    \param seqnum message sequence number
 	    \param msg Message
-	    \return true on success */
+	    \return true if message FAILS enforce ruless */
 	bool enforce(const unsigned seqnum, const Message *msg);
 
 	/*! Get the session id for this session.
 	    \return the session id */
 	const SessionID& get_sid() const { return _sid; }
+
+	/*! Get the next sender sequence number
+	    \return next sender sequence number */
+	unsigned get_next_send_seq() const { return _next_send_seq; }
+
+	/*! Set the login_retry_interval and login_retries settings.
+	    \param login_retry_interval time in ms to wait before retrying login
+	    \param login_retries max login retries to attempt */
+	void set_login_parameters(const unsigned login_retry_interval, const unsigned login_retries)
+	{
+		_login_retry_interval = login_retry_interval;
+		_login_retries = login_retries;
+	}
+
+	/*! Get the login_retry_interval and login_retries settings.
+	    \param login_retry_interval time in ms to wait before retrying login
+	    \param login_retries max login retries to attempt */
+	void get_login_parameters(unsigned& login_retry_interval, unsigned& login_retries)
+	{
+		login_retry_interval = _login_retry_interval;
+		login_retries = _login_retries;
+	}
 
 	/*! Get the control object for this session.
 	    \return the control object */

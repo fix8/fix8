@@ -219,12 +219,11 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from
 		{
 			f8String chksum;
 			_hdr.SubExpr(match, from, chksum, 0, 2);
-			const unsigned chkpos(match.SubPos(1));
 
 			Fields::const_iterator fitr(msg->_trailer->_fields.find(Common_CheckSum));
 			static_cast<check_sum *>(fitr->second)->set(chksum);
-			const unsigned chkval(GetValue<unsigned>(chksum)),
-				mchkval(calc_chksum(from, 0, chkpos));
+			const unsigned chkval(GetValue<unsigned>(chksum)), // chksum value
+				mchkval(calc_chksum(from, 0, match.SubPos(1))); // chksum pos
 			if (chkval != mchkval)
 				throw BadCheckSum(mchkval);
 		}
@@ -370,13 +369,6 @@ void MessageBase::print(ostream& os) const
 			print_group(itr->second->_fnum, os);
 	}
 }
-//-------------------------------------------------------------------------------------------------
-const f8String Message::fmt_chksum(const unsigned val)
-{
-	f8ostrstream ostr;
-	ostr << std::setfill('0') << std::setw(3) << val;
-	return ostr.str();
-}
 
 //-------------------------------------------------------------------------------------------------
 void MessageBase::print_group(const unsigned short fnum, ostream& os) const
@@ -397,17 +389,19 @@ BaseField *MessageBase::replace(const unsigned short fnum, BaseField *with)
 	if (itr != _fields.end())
 	{
 		old = itr->second;
-		const unsigned pos(_fp.getPos(fnum));
-		for (Positions::iterator pitr(_pos.lower_bound(pos)); pitr != _pos.upper_bound(pos); ++pitr)
+		unsigned pos(_fp.getPos(fnum));
+		for (Positions::iterator pitr(_pos.begin()); pitr != _pos.end(); ++pitr)
 		{
 			if (pitr->second == old)
 			{
+				pos = pitr->first;
 				_pos.erase(pitr);
 				break;
 			}
 		}
 		_pos.insert(Positions::value_type(pos, with));
 		itr->second = with;
+		_fp.set(fnum, FieldTrait::present);
 	}
 	return old;
 }
@@ -420,8 +414,7 @@ BaseField *MessageBase::remove(const unsigned short fnum)
 	if (itr != _fields.end())
 	{
 		old = itr->second;
-		const unsigned pos(_fp.getPos(fnum));
-		for (Positions::iterator pitr(_pos.lower_bound(pos)); pitr != _pos.upper_bound(pos); ++pitr)
+		for (Positions::iterator pitr(_pos.begin()); pitr != _pos.end(); ++pitr)
 		{
 			if (pitr->second == old)
 			{

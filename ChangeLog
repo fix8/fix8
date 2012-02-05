@@ -1,3 +1,7 @@
+0.4.10 	05/02/2012  Added custom seqnum support; Fixed retransmission behaviour; Added SessionWrapper classes
+							to simplify client/server session setup; client connect will retry configurable number of times with interval;
+							fixed message field replace, remove and copy_legal; myfix.cpp uses new session wrappers;
+							added new config extract methods;
 0.4.04 	27/01/2012  Fixed checksum and bodylength calculation bugs on encode and decode;
 							Test server permits reconnects and detects logout;
 							Connection classes shutdown properly, gracefully;

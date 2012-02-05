@@ -154,7 +154,7 @@ unsigned BDBPersister::get_last_seqnum(unsigned& sequence) const
 
 //-------------------------------------------------------------------------------------------------
 unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& session,
-	bool (Session::*callback)(const Session::SequencePair& with)) const
+	bool (Session::*callback)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const
 {
 	unsigned last_seq(0);
 	get_last_seqnum(last_seq);
@@ -174,6 +174,8 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 
 	if ((retval = cursorp->get(&keyPair._key, &keyPair._data, DB_SET)) == 0)
 	{
+		Session::RetransmissionContext rctx(from, to, session.get_next_send_seq() - 1);
+
 		do
 		{
 			const unsigned seqnum(buffer.keyBuf_.int_);
@@ -181,10 +183,14 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 				break;
 			Session::SequencePair result(seqnum, buffer.dataBuf_);
 			++recs_sent;
-			if (!(session.*callback)(result))
+			if (!(session.*callback)(result, rctx))
 				break;
 		}
 		while(cursorp->get(&keyPair._key, &keyPair._data, DB_NEXT) == 0);
+
+		Session::SequencePair result(0, "");
+		rctx._no_more_records = true;
+		(session.*callback)(result, rctx);
 	}
 	else
 	{
@@ -319,7 +325,7 @@ int BDBPersister::operator()()
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& session,
-	bool (Session::*callback)(const Session::SequencePair& with)) const
+	bool (Session::*callback)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const
 {
 	unsigned last_seq(0);
 	get_last_seqnum(last_seq);
@@ -334,16 +340,22 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 	Store::const_iterator itr(_store.find(startSeqNum));
 	if (itr != _store.end())
 	{
+		Session::RetransmissionContext rctx(from, to, session.get_next_send_seq());
+
 		do
 		{
 			if (!itr->first || itr->first > finish)
 				break;
 			Session::SequencePair result(itr->first, itr->second);
 			++recs_sent;
-			if (!(session.*callback)(result))
+			if (!(session.*callback)(result, rctx))
 				break;
 		}
 		while(++itr != _store.end());
+
+		Session::SequencePair result(0, "");
+		rctx._no_more_records = true;
+		(session.*callback)(result, rctx);
 	}
 	else
 	{

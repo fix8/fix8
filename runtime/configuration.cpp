@@ -94,28 +94,26 @@ int Configuration::process()
 const Connection::Role Configuration::get_role(const XmlEntity *from) const
 {
 	std::string role;
-	return from->GetAttr("role", role) ? role % "initiator" ? Connection::cn_initiator
+	return from && from->GetAttr("role", role) ? role % "initiator" ? Connection::cn_initiator
 		: role % "acceptor" ? Connection::cn_acceptor : Connection::cn_unknown : Connection::cn_unknown;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Configuration::get_address(const XmlEntity *from, Poco::Net::SocketAddress& to) const
+Poco::Net::SocketAddress Configuration::get_address(const XmlEntity *from) const
 {
+	Poco::Net::SocketAddress to;
 	std::string ip, port;
-	if (from->GetAttr("ip", ip) && from->GetAttr("port", port))
-	{
+	if (from && from->GetAttr("ip", ip) && from->GetAttr("port", port))
 		to = Poco::Net::SocketAddress(ip, port);
-		return true;
-	}
 
-	return false;
+	return to;
 }
 
 //-------------------------------------------------------------------------------------------------
 Persister *Configuration::create_persister(const XmlEntity *from) const
 {
 	string name;
-	if (!from->GetAttr("persist", name))
+	if (!from || !from->GetAttr("persist", name))
 		return 0;
 	const XmlEntity *which(find_persister(name));
 	if (!which)
@@ -136,5 +134,14 @@ Persister *Configuration::create_persister(const XmlEntity *from) const
 	else if (type % "mem")
 		return new MemoryPersister;
 	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+unsigned Configuration::get_all_sessions(vector<XmlEntity *>& target, Connection::Role role) const
+{
+	for (vector<XmlEntity *>::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)
+		if (role == Connection::cn_unknown || get_role(*itr) == role)
+			target.push_back(*itr);
+	return target.size();
 }
 

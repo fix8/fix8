@@ -85,7 +85,7 @@ public:
 	    \param callback method it call with each retrieved message
 	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
-		bool (Session::*callback)(const Session::SequencePair& with)) const = 0;
+		bool (Session::*callback)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const = 0;
 
 	/*! Retrieve sequence number of last peristed message.
 	    \param to target sequence number
@@ -219,7 +219,7 @@ public:
 	    \param callback method it call with each retrieved message
 	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
-		bool (Session::*)(const Session::SequencePair& with)) const;
+		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
 
 	/*! Retrieve sequence number of last peristed message.
 	    \param to target sequence number
@@ -278,7 +278,7 @@ public:
 	    \param callback method it call with each retrieved message
 	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
-		bool (Session::*)(const Session::SequencePair& with)) const;
+		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
 
 	/*! Retrieve sequence number of last peristed message.
 	    \param to target sequence number

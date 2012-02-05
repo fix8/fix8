@@ -228,6 +228,7 @@ typedef std::multimap<unsigned short, BaseField *> Positions;
 class MessageBase
 {
 protected:
+
 	static RegExp _elmnt;
 
 	Fields _fields;
@@ -383,7 +384,7 @@ public:
 	template<typename T>
 	bool has() const
 	{
-		return _fp.get(T::get_field());
+		return _fp.get(T::get_field_id());
 	}
 
 	/*! Get a pointer to a field. Inplace, 0 copy.
@@ -392,7 +393,7 @@ public:
 	template<typename T>
 	const T *get() const
 	{
-		Fields::const_iterator fitr(_fields.find(T::get_field()));
+		Fields::const_iterator fitr(_fields.find(T::get_field_id()));
 		return fitr == _fields.end() ? 0 : &fitr->second->from<T>();
 	}
 
@@ -518,6 +519,7 @@ class Message : public MessageBase
 protected:
 	static RegExp _hdr, _tlr;
 	MessageBase *_header, *_trailer;
+	unsigned _custom_seqnum;
 
 public:
 	/*! Ctor.
@@ -528,7 +530,7 @@ public:
 	    \param end - InputIterator pointing to end of field trait table */
 	template<typename InputIterator>
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
-		: MessageBase(ctx, msgType, begin, end), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl())
+		: MessageBase(ctx, msgType, begin, end), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl()), _custom_seqnum()
 #if defined MSGRECYCLING
 		{ _in_use = true; }
 
@@ -604,7 +606,12 @@ public:
 	/*! Format a checksum into the required 3 digit, 0 padded string.
 	    \param val checksum value
 	    \return string containing formatted value */
-	static const f8String fmt_chksum(const unsigned val);
+	static const f8String fmt_chksum(const unsigned val)
+	{
+		f8ostrstream ostr;
+		ostr << std::setfill('0') << std::setw(3) << val;
+		return ostr.str();
+	}
 
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object
@@ -637,6 +644,14 @@ public:
 			, Session *sess=0, bool (Session::*post_ctor)(Message *msg)=0
 #endif
 		);
+
+	/*! Set the custom sequence number. Used to override and suppress automatic seqnum assignment.
+	    \param seqnum the outbound sequence number to use for this message. */
+	virtual void set_custom_seqnum(const unsigned seqnum) { _custom_seqnum = seqnum; }
+
+	/*! Get the custom sequence number.
+	    \return seqnum the outbound sequence number to use for this message. */
+	unsigned get_custom_seqnum() const { return _custom_seqnum; }
 
 	/*! Print the message to the specified stream.
 	    \param os refererence to stream to print to */

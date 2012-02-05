@@ -144,7 +144,7 @@ public:
 	/*! Encode this field to the supplied stream.
 	  \param os stream to print to
 	  \return the number of bytes encoded */
-	size_t encode(std::ostream& os)
+	size_t encode(std::ostream& os) const
 	{
 		const std::ios::pos_type where(os.tellp());
 		os << _fnum << '=' << *this << default_field_separator;
@@ -171,7 +171,7 @@ template<typename T, const unsigned short field>
 struct Field : public BaseField
 {
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	///Ctor.
 	Field () : BaseField(field) {}
@@ -218,7 +218,7 @@ protected:
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
@@ -296,7 +296,7 @@ protected:
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -370,7 +370,7 @@ protected:
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
@@ -447,7 +447,7 @@ class Field<char, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
@@ -579,7 +579,7 @@ class Field<UTCTimestamp, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field), _tzdiff() {}
@@ -665,7 +665,7 @@ class Field<UTCTimeOnly, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -727,7 +727,7 @@ class Field<UTCDateOnly, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -789,7 +789,7 @@ class Field<LocalMktDate, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -851,7 +851,7 @@ class Field<TZTimeOnly, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -912,7 +912,7 @@ class Field<TZTimestamp, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -1119,7 +1119,7 @@ class Field<Boolean, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -1200,7 +1200,7 @@ class Field<Qty, field> : public Field<double, field>
 {
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field() { return field; }
+	static const unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : Field<double, field>() {}

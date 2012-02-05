@@ -58,5 +58,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <connection.hpp>
 #include <configuration.hpp>
 #include <persist.hpp>
+#include <sessionwrapper.hpp>
 
 #endif // _FIX8_INCLUDES_HPP_
