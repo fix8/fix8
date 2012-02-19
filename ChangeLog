@@ -1,3 +1,7 @@
+0.4.12 	19/02/2012  Config updated - separate out log files into their own entity; added addiitonal log flags;
+							retransmission improved; socket conditioning; sequence number enforcement on login; sequence
+							number control at message level; session wrappers; reliable client wrapper; improved multithreading;
+							updated myfix to use session wrapper; myfix supports seqnum cmd line args;
 0.4.10 	05/02/2012  Added custom seqnum support; Fixed retransmission behaviour; Added SessionWrapper classes
 							to simplify client/server session setup; client connect will retry configurable number of times with interval;
 							fixed message field replace, remove and copy_legal; myfix.cpp uses new session wrappers;

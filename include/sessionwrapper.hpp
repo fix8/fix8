@@ -141,7 +141,9 @@ public:
 	virtual ~ReliableClientSession () {}
 
 	/*! Start the session - initiate the connection, logon and start heartbeating.
-	  \param wait if true wait till session finishes before returning */
+	  \param wait if true wait till session finishes before returning
+	  \param send_seqnum next send seqnum (not used here)
+	  \param recv_seqnum next recv seqnum (not used here) */
 	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0)
 	{
 		if (!wait)

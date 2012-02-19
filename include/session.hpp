@@ -400,11 +400,13 @@ public:
 
 	/*! Log a message to the session logger.
 	    \param what string to log
+	    \param value optional value for the logger to use
 	    \return true on success */
 	bool log(const std::string& what, const unsigned value=0) const { return _logger ? _logger->send(what, value) : false; }
 
 	/*! Log a message to the protocol logger.
 	    \param what Fix message (string) to log
+	    \param direction 0=out, 1=in
 	    \return true on success */
 	bool plog(const std::string& what, const unsigned direction=0) const { return _plogger ? _plogger->send(what, direction) : false; }
 

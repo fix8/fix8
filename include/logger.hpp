@@ -161,6 +161,7 @@ public:
 
 	/*! Log a string.
 	    \param what the string to log
+	    \param val optional value for the logger to use
 	    \return true on success */
 	bool send(const std::string& what, const unsigned val=0) { return _msg_queue.try_push (LogElement(pthread_self(), what, val)) == 0; }
 
