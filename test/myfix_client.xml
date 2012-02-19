@@ -8,10 +8,9 @@
 				port="11001"
 				sender_comp_id="DLD_TEX"
 				target_comp_id="TEX_DLD"
-				logname="./run/myfix_client.log"
-				protocol_logname="./run/myfix_client_protocol.log"
-				logfile_rotation="5"
-				login_retry_interval="4000"
+				session_log="session_log"
+				protocol_log="protocol_log"
+				login_retry_interval="15000"
 				login_retries="100"
 				persist="bdb0" />
 
@@ -21,4 +20,16 @@
 
 	<persist name="mem0"
 				type="mem" />
+
+	<log 		name="session_log"
+				type="session"
+				filename="|/bin/cat"
+				rotation="5"
+				flags="timestamp|sequence|compress|thread"/>
+
+	<log 		name="protocol_log"
+				type="protocol"
+				filename="./run/myfix_client_protocol.log"
+				rotation="5"
+				flags="sequence|append|direction"/>
 </fix8>

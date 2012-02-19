@@ -60,8 +60,9 @@ RegExp FIXReader::_hdr("8=([^\x01]+)\x01{1}9=([^\x01]+)\x01");
 int FIXReader::operator()()
 {
    unsigned processed(0), dropped(0), invalid(0);
+	int retval(0);
 
-   for (;;)
+   for (; !_session.is_shutdown();)
    {
 		try
 		{
@@ -83,11 +84,13 @@ int FIXReader::operator()()
 		catch (Poco::Net::NetException& e)
 		{
 			_session.log(e.what());
+			retval = -1;
 			break;
 		}
 		catch (PeerResetConnection& e)
 		{
 			_session.log(e.what());
+			retval = -1;
 			break;
 		}
 		catch (exception& e)	// also catches Poco::Net::NetException
@@ -100,9 +103,11 @@ int FIXReader::operator()()
 	ostringstream ostr;
 	ostr << "FIXReader: " << processed << " messages processed, " << dropped << " dropped, "
 		<< invalid << " invalid";
+	if (retval)
+		ostr << " (socket error=" << errno << ')';
 	_session.log(ostr.str());
 
-	return 0;
+	return retval;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -111,7 +116,7 @@ int FIXReader::callback_processor()
 	bool stopping(false);
 	int processed(0), ignored(0);
 
-   for (;;)
+   for (; !_session.is_shutdown();)
    {
       f8String msg;
 
@@ -126,14 +131,15 @@ int FIXReader::callback_processor()
       if (msg.empty())  // means exit
 		{
          stopping = true;
-			continue;
+			//continue;
+			break;
 		}
 
       if (!_session.process(msg))
 		{
 			ostringstream ostr;
 			ostr << "Unhandled message: " << msg;
-			_session.log(ostr.str());
+			//_session.log(ostr.str());
 			++ignored;
 		}
 		else
@@ -222,7 +228,7 @@ int FIXWriter::operator()()
 {
 	int result(0), processed(0), invalid(0);
 
-   for (;;)
+   for (; !_session.is_shutdown();)
    {
 		try
 		{
@@ -243,6 +249,7 @@ int FIXWriter::operator()()
 		{
 			_session.log(e.what());
 			++invalid;
+			break; //?
 		}
 	}
 
@@ -273,6 +280,7 @@ void Connection::stop()
 	_writer.stop();
 	_writer.join();
 	_reader.stop();
+	_reader.join();
 	_reader.socket()->shutdownReceive();
 }
 
@@ -295,13 +303,19 @@ bool ClientConnection::connect()
 			ostr << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')';
 			_session.log(ostr.str());
 			_sock->connect(_addr, timeout);
+			_sock->setLinger(false, 0);
+			_sock->setNoDelay(true);
 			_session.log("Connection successful");
 			return _connected = true;
 		}
 		catch (exception& e)	// also catches Poco::Net::NetException
 		{
 			ostr.str("");
-			ostr << "exception: " << e.what();
+			ostr << "exception: ";
+			if (dynamic_cast<Poco::Exception*>(&e))
+				ostr << (static_cast<Poco::Exception&>(e)).displayText();
+			else
+				ostr << e.what();
 			_session.log(ostr.str());
 			millisleep(login_retry_interval);
 		}

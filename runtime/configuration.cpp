@@ -62,30 +62,11 @@ int Configuration::process()
 	if (!_root)
 		throw f8Exception("could not create root xml entity");
 
-	XmlEntity::XmlSet slist;
-	if (!_root->find("fix8/session", slist))
+	if (!load_map("fix8/session", _sessions, true))
 		throw f8Exception("could not locate server session in config file", _xmlfile);
 
-	for(XmlEntity::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
-	{
-		string name;
-		if ((*itr)->GetAttr("name", name) && (*itr)->FindAttr("active", false))
-		{
-			_sessions.insert(ConfigMap::value_type(name, *itr));
-			_allsessions.push_back(*itr);
-		}
-	}
-
-	slist.clear();
-	if (_root->find("fix8/persist", slist))
-	{
-		for(XmlEntity::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
-		{
-			string name;
-			if ((*itr)->GetAttr("name", name))
-				_persisters.insert(ConfigMap::value_type(name, *itr));
-		}
-	}
+	load_map("fix8/persist", _persisters);
+	load_map("fix8/log", _loggers);
 
 	return _sessions.size();
 }
@@ -134,6 +115,42 @@ Persister *Configuration::create_persister(const XmlEntity *from) const
 	else if (type % "mem")
 		return new MemoryPersister;
 	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+Logger *Configuration::create_logger(const XmlEntity *from, const Logtype ltype) const
+{
+	string name;
+	if (!from || !from->GetAttr(ltype == session_log ? "session_log" : "protocol_log", name))
+		return 0;
+	const XmlEntity *which(find_logger(name));
+	if (!which)
+		return 0;
+	string type;
+	if (!which->GetAttr("type", type))
+		return 0;
+	if ((type % "session" && ltype == session_log) || (type % "protocol" && ltype == protocol_log))
+	{
+		string logname("logname_not_set.log");
+		return new FileLogger(get_logname(which, logname), get_logflags(which), get_logfile_rotation(which));
+	}
+
+	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+Logger::LogFlags Configuration::get_logflags(const XmlEntity *from) const
+{
+	Logger::LogFlags flags;
+	string flags_str;
+	if (from && from->GetAttr("flags", flags_str))
+	{
+		istringstream istr(flags_str);
+		for(char extr[32]; !istr.get(extr, sizeof(extr), '|').eof() || extr[0]; istr.ignore(1))
+			flags.set(Logger::num_flags, Logger::_bit_names, extr);
+	}
+
+	return flags;
 }
 
 //-------------------------------------------------------------------------------------------------

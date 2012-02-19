@@ -121,7 +121,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:");
+const string GETARGLIST("hl:svqc:R:S:r");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
@@ -164,8 +164,9 @@ void sig_handler(int sig)
 int main(int argc, char **argv)
 {
 	int val;
-	bool server(false);
+	bool server(false), reliable(false);
 	string clcf;
+	unsigned next_send(0), next_receive(0);
 
 #ifdef HAVE_GETOPT_LONG
 	option long_options[] =
@@ -175,7 +176,10 @@ int main(int argc, char **argv)
 		{ "log",			0,	0,	'l' },
 		{ "config",		0,	0,	'c' },
 		{ "server",		0,	0,	's' },
+		{ "send",		0,	0,	'S' },
+		{ "receive",	0,	0,	'R' },
 		{ "quiet",		0,	0,	'q' },
+		{ "reliable",	0,	0,	'r' },
 		{ 0 },
 	};
 
@@ -194,7 +198,10 @@ int main(int argc, char **argv)
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
+		case 'S': next_send = GetValue<unsigned>(optarg); break;
+		case 'R': next_receive = GetValue<unsigned>(optarg); break;
 		case 'q': quiet = true; break;
+		case 'r': reliable = true; break;
 		default: break;
 		}
 	}
@@ -236,10 +243,24 @@ int main(int argc, char **argv)
 				ostringstream sostr;
 				sostr << "client(" << ++scnt << ") connection established.";
 				GlobalLogger::log(sostr.str());
-				inst->start(true);
+				inst->start(true, next_send, next_receive);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
 			}
+		}
+		else if (reliable)
+		{
+			ReliableClientSession<myfix_session_client>::Client_ptr
+				mc(new ReliableClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
+			if (!quiet)
+				mc->session_ptr()->control() |= Session::print;
+			mc->start(false);
+			MyMenu mymenu(*mc->session_ptr(), 0, cout);
+			char ch;
+			mymenu.set_raw_mode();
+			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
+				;
+			mymenu.unset_raw_mode();
 		}
 		else
 		{
@@ -247,7 +268,7 @@ int main(int argc, char **argv)
 				mc(new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
-			mc->start(false);
+			mc->start(false, next_send, next_receive);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
 			char ch;
 			mymenu.set_raw_mode();
@@ -368,6 +389,8 @@ void print_usage()
 	um.add('l', "log", "global log filename");
 	um.add('c', "config", "xml config (default: myfix_client.xml or myfix_server.xml)");
 	um.add('q', "quiet", "do not print fix output");
+	um.add('R', "receive", "set next expected receive sequence number");
+	um.add('S', "send", "set next send sequence number");
 	um.print(cerr);
 }
 

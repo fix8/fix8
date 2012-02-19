@@ -5,7 +5,8 @@
 				fix_version="4400"
 				active="true"
 				heartbeat_interval="5"
-				logname="./run/myfix_server.log" protocol_logname="./run/myfix_server_protocol.log"
+				session_log="session_log"
+				protocol_log="protocol_log"
 				ip="127.0.0.1" port="11001"
 				sender_comp_id="TEX_DLD"
 				persist="bdb0" />
@@ -17,4 +18,16 @@
 
 	<persist name="mem0"
 				type="mem"/>
+
+	<log 		name="session_log"
+				type="session"
+				filename="|/bin/cat"
+				rotation="5"
+				flags="timestamp|sequence|compress|thread"/>
+
+	<log 		name="protocol_log"
+				type="protocol"
+				filename="./run/myfix_server_protocol.log"
+				rotation="5"
+				flags="sequence|append|direction"/>
 </fix8>

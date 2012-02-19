@@ -171,6 +171,7 @@ protected:
 	tbb::atomic<Tickval *> _last_sent, _last_received;
 	const F8MetaCntx& _ctx;
 	Connection *_connection;
+	unsigned _req_next_send_seq, _req_next_receive_seq;
 	SessionID _sid;
 
 	static const unsigned default_retry_interval=5000, default_login_retries=100;
@@ -322,8 +323,10 @@ public:
 	/*! Start the session.
 	    \param connection established connection
 	    \param wait if true, thread will wait till session ends before returning
+	    \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
+	    \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1
 	    \return -1 on error, 0 on success */
-	int start(Connection *connection, bool wait=true);
+	int start(Connection *connection, bool wait=true, const unsigned send_seqnum=0, const unsigned recv_seqnum=0);
 
 	/*! Process inbound messages. Called by connection object.
 	    \param from raw fix message
@@ -346,6 +349,13 @@ public:
 
 		RetransmissionContext(const unsigned begin, const unsigned end, const unsigned interrupted_seqnum)
 			: _begin(begin), _end(end), _interrupted_seqnum(interrupted_seqnum), _last(), _no_more_records() {}
+
+		friend std::ostream& operator<<(std::ostream& os, const RetransmissionContext& what)
+		{
+			os << "end:" << what._end << " last:" << what._last << " interupted seqnum:"
+				<< what._interrupted_seqnum << " no_more_records:" << std::boolalpha << what._no_more_records;
+			return os;
+		}
 	};
 
 	typedef std::pair<const unsigned, const f8String> SequencePair;
@@ -358,12 +368,15 @@ public:
 
 	/*! Send message.
 	    \param msg Message
+	    \param custom_seqnum override sequence number with this value
+	    \param no_increment if true, don't increment the seqnum after sending
 	    \return true on success */
-	virtual bool send(Message *msg, const unsigned custom_seqnum=0);
+	virtual bool send(Message *msg, const unsigned custom_seqnum=0, const bool no_increment=false);
 #if defined MSGRECYCLING
 
 	/*! Send message and wait till no longer in use.
 	    \param msg Message
+	    \param custom_seqnum override sequence number with this value
 	    \param waitval time to sleep(ms) before rechecking inuse
 	    \return true on success */
 	virtual bool send_wait(Message *msg, const unsigned custom_seqnum=0, const int waitval=10);
@@ -388,12 +401,12 @@ public:
 	/*! Log a message to the session logger.
 	    \param what string to log
 	    \return true on success */
-	bool log(const std::string& what) const { return _logger ? _logger->send(what) : false; }
+	bool log(const std::string& what, const unsigned value=0) const { return _logger ? _logger->send(what, value) : false; }
 
 	/*! Log a message to the protocol logger.
 	    \param what Fix message (string) to log
 	    \return true on success */
-	bool plog(const std::string& what) const { return _plogger ? _plogger->send(what) : false; }
+	bool plog(const std::string& what, const unsigned direction=0) const { return _plogger ? _plogger->send(what, direction) : false; }
 
 	/// Update the last sent time.
 	void update_sent() { _last_sent->now(); }
@@ -444,9 +457,17 @@ public:
 		login_retries = _login_retries;
 	}
 
+	/*! Set the persister.
+	    \param pst pointer to persister object  */
+	void set_persister(Persister *pst) { _persist = pst; }
+
 	/*! Get the control object for this session.
 	    \return the control object */
 	Control& control() { return _control; }
+
+	/*! See if this session is being shutdown.
+	    \return true if shutdown is underway */
+	bool is_shutdown() { return _control.has(shutdown); }
 
 	friend class StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)>;
 };

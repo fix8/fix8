@@ -90,6 +90,21 @@ protected:
 		ostr << msg << ": " << what;
 		_reason = ostr.str();
 	}
+
+	/*! Format a message to associate with this exception.
+	    \tparam T type of value to format
+	    \tparam S type of 2nd value to format
+	    \param msg message associated with this exception
+	    \param what to display with this exception
+	    \param msg2 message associated with this exception
+	    \param what2 to display with this exception */
+	template<typename T, typename S>
+	void format(const std::string& msg, const T what, const std::string& msg2, const S what2)
+	{
+		std::ostringstream ostr;
+		ostr << msg << ": " << what << msg2 << ": " << what2;
+		_reason = ostr.str();
+	}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -127,7 +142,16 @@ struct InvalidField : f8Exception
 /// A message was received with an out of sequence sequence number.
 struct InvalidMsgSequence : f8Exception
 {
-	InvalidMsgSequence(const unsigned field) : f8Exception(true) { format("Invalid Message Sequence", field); }
+	InvalidMsgSequence(const unsigned rseqnum, const unsigned eseqnum) : f8Exception(true)
+		{ format("Invalid Sequence number, received", rseqnum, " expected", eseqnum); }
+};
+
+//-------------------------------------------------------------------------------------------------
+/// A message was received with an out of sequence sequence number.
+struct MsgSequenceTooLow : f8Exception
+{
+	MsgSequenceTooLow(const unsigned rseqnum, const unsigned eseqnum) : f8Exception(true)
+		{ format("Message Sequence too low, received", rseqnum, " expected", eseqnum); }
 };
 
 //-------------------------------------------------------------------------------------------------

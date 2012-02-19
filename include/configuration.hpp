@@ -45,7 +45,7 @@ class Configuration
 	std::string _xmlfile;
 	XmlEntity *_root;
 	typedef std::map<const std::string, XmlEntity *> ConfigMap;
-	ConfigMap _sessions, _persisters;
+	ConfigMap _sessions, _persisters, _loggers;
 	std::vector<XmlEntity *> _allsessions;
 
 	/*! Find an xml entity by tag in the supplied map.
@@ -54,6 +54,11 @@ class Configuration
 	  \return the found entity or 0 if not found */
 	const XmlEntity *find_element(const std::string& tag, const ConfigMap& from) const
 		{ ConfigMap::const_iterator itr(from.find(tag)); return itr != from.end() ? itr->second : 0; }
+
+	/*! Find a logger by tag.
+	  \param tag the tag to find
+	  \return the found entity or 0 if not found */
+	const XmlEntity *find_logger(const std::string& tag) const { return find_element(tag, _loggers); }
 
 	/*! Find a persister by tag.
 	  \param tag the tag to find
@@ -84,6 +89,7 @@ class Configuration
 	}
 
 	/*! Find a typed value by tag from an xml entity.
+	  \tparam location type
 	  \param tag the tag to find
 	  \param from the xml entity to search
 	  \param to location to store target
@@ -97,7 +103,34 @@ class Configuration
 		return to;
 	}
 
+	/*! Load a repeating group into a supplied map.
+	  \param tag the tag to find
+	  \param map_name the target map
+	  \param is_session if true, special case for session map
+	  \return the number of elements inserted */
+	unsigned load_map(const std::string& tag, ConfigMap& map_name, const bool is_session=false)
+	{
+		XmlEntity::XmlSet slist;
+		if (_root->find(tag, slist))
+		{
+			for(XmlEntity::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
+			{
+				std::string name;
+				if ((*itr)->GetAttr("name", name) && is_session ? (*itr)->FindAttr("active", false) : true)
+				{
+					map_name.insert(ConfigMap::value_type(name, *itr));
+					if (is_session)
+						_allsessions.push_back(*itr);
+				}
+			}
+		}
+
+		return map_name.size();
+	}
+
 public:
+	enum Logtype { session_log, protocol_log };
+
 	/*! Ctor.
 	  \param xmlfile xml config filename.
 	  \param do_process if true, process the file on construction */
@@ -129,23 +162,19 @@ public:
 
 	/*! Extract the ip address from a session entity.
 	  \param from xml entity to search
-	  \param to target socket address
 	  \return Poco::Net::SocketAddress */
 	Poco::Net::SocketAddress get_address(const XmlEntity *from) const;
+
+	/*! Extract the logflags from the flags attribute in a log entity.
+	  \param from xml entity to search
+	  \return LogFLags object */
+	Logger::LogFlags get_logflags(const XmlEntity *from) const;
 
 	/*! Extract the session log filename address from a session entity.
 	  \param from xml entity to search
 	  \param to target logfile string
 	  \return target string */
-	const std::string& get_logname(const XmlEntity *from, std::string& to) const
-		{ return get_string("logname", from, to); }
-
-	/*! Extract the protocol log filename address from a session entity.
-	  \param from xml entity to search
-	  \param to target logfile string
-	  \return target string */
-	const std::string& get_protocol_logname(const XmlEntity *from, std::string& to) const
-		{ return get_string("protocol_logname", from, to); }
+	const std::string& get_logname(const XmlEntity *from, std::string& to) const { return get_string("filename", from, to); }
 
 	/*! Extract the login retry wait interval (ms) from a session entity.
 	  \param from xml entity to search
@@ -165,7 +194,7 @@ public:
 	/*! Extract the logfile rotation count.
 	  \param from xml entity to search
 	  \return the logfile rotation value or 5 if not found */
-	unsigned get_logfile_rotation(const XmlEntity *from) const { return get_unsigned("logfile_rotation", from, 5); }
+	unsigned get_logfile_rotation(const XmlEntity *from) const { return get_unsigned("rotation", from, 5); }
 
 	/*! Extract the heartbeat interval from a session entity.
 	  \param from xml entity to search
@@ -184,9 +213,13 @@ public:
 	target_comp_id get_target_comp_id(const XmlEntity *from) const
 		{ target_comp_id to; return get_string_field(from, "target_comp_id", to); }
 
-	/*! Create a new persister object a session entity.
+	/*! Create a new persister object from a session entity.
 	  \return new persister or 0 if unable to create */
 	Persister *create_persister(const XmlEntity *from) const;
+
+	/*! Create a new logger object from a session entity.
+	  \return new logger or 0 if unable to create */
+	Logger *create_logger(const XmlEntity *from, const Logtype ltype) const;
 
 	/*! Get all active sessions that have been read; filter by role if desired.
 	  \param target vector to place results

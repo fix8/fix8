@@ -476,6 +476,20 @@ public:
 	    \param bset integral_type to set */
 	void set(const integral_type bset) { a_ = bset; }
 
+	/*! From a set of strings representing the names of each bit in order, set the named bit on.
+	    \param els number of elements in set
+	    \param sset the set of strings
+	    \param what the string to find and set
+	    \return true if found and set */
+	bool set(const unsigned els, const std::string *sset, const std::string& what)
+	{
+		const std::string *last(sset + els), *result(std::find(sset, last, what));
+		if (result == last)
+			return false;
+		set(static_cast<T>(std::distance(sset, result)));
+		return true;
+	}
+
 	/*! Clear a bit on or off.
 	    \param sbit enum to set */
 	void clear(const T sbit) { a_ &= ~(1 << sbit); }
@@ -551,6 +565,20 @@ public:
 	    \param sbit enum to set
 	    \param on set on or off */
 	void set(const T sbit, bool on=true) { if (on) a_ |= 1 << sbit; else a_ &= ~(1 << sbit); }
+
+	/*! From a set of strings representing the names of each bit in order, set the named bit on.
+	    \param els number of elements in set
+	    \param sset the set of strings
+	    \param what the string to find and set
+	    \return true if found and set */
+	bool set(const unsigned els, const std::string *sset, const std::string& what)
+	{
+		const std::string *last(sset + els), *result(std::find(sset, last, what));
+		if (result == last)
+			return false;
+		set(static_cast<T>(std::distance(sset, result)));
+		return true;
+	}
 
 	/*! Set a bit on or off.
 	    \param bset integral_type to set */

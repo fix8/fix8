@@ -105,21 +105,21 @@ void SessionID::from_string(const f8String& from)
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
-	_ctx(ctx), _connection(), _sid(sid), _login_retry_interval(default_retry_interval),
+	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
+	_sid(sid), _login_retry_interval(default_retry_interval),
 	_login_retries(default_login_retries),_persist(persist), _logger(logger), _plogger(plogger),	// initiator
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
-	atomic_init(States::st_not_logged_in);
 	_timer.start();
 }
 
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
-	_ctx(ctx), _connection(), _login_retry_interval(default_retry_interval),
+	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
+	_login_retry_interval(default_retry_interval),
 	_login_retries(default_login_retries), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
-	atomic_init(States::st_wait_for_logon);
 	_timer.start();
 }
 
@@ -146,8 +146,9 @@ Session::~Session()
 }
 
 //-------------------------------------------------------------------------------------------------
-int Session::start(Connection *connection, bool wait)
+int Session::start(Connection *connection, bool wait, const unsigned send_seqnum, const unsigned recv_seqnum)
 {
+	_control.clear(shutdown);
 	log("Starting session");
 	_connection = connection; // takes owership
 	if (!_connection->connect()) // if already connected returns true
@@ -157,11 +158,24 @@ int Session::start(Connection *connection, bool wait)
 
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
+		atomic_init(States::st_not_logged_in);
 		recover_seqnums();
+		if (send_seqnum)
+			_next_send_seq = send_seqnum;
+		if (recv_seqnum)
+			_next_receive_seq = recv_seqnum;
 
 		Message *msg(generate_logon(_connection->get_hb_interval()));
 		send(msg);
 		_state = States::st_logon_sent;
+	}
+	else
+	{
+		atomic_init(States::st_wait_for_logon);
+		if (send_seqnum)
+			_req_next_send_seq = send_seqnum;
+		if (recv_seqnum)
+			_req_next_receive_seq = recv_seqnum;
 	}
 
 	if (wait)	// wait for
@@ -191,8 +205,7 @@ bool Session::enforce(const unsigned seqnum, const Message *msg)
 		if (_state != States::st_logon_received)
 			compid_check(seqnum, msg);
 		gap_fill_flag gff;
-		bool ignore(msg->get_msgtype() == Common_MsgType_SEQUENCE_RESET && msg->Header()->get(gff) && gff());
-		if (ignore || sequence_check(seqnum, msg))
+		if (msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET && sequence_check(seqnum, msg))
 			return false;
 	}
 
@@ -213,7 +226,7 @@ bool Session::process(const f8String& from)
 		_seq.SubExpr(match, from, seqstr, 0, 1);
 		seqnum = GetValue<unsigned>(seqstr);
 
-		plog(from);
+		plog(from, 1);
 		scoped_ptr<Message> msg(Message::factory(_ctx, from
 #if defined PERMIT_CUSTOM_FIELDS
 			, this, &Session::post_msg_ctor
@@ -223,26 +236,39 @@ bool Session::process(const f8String& from)
 			cout << *msg << endl;
 		bool result((msg->is_admin() ? handle_admin(seqnum, msg.get()) : true)
 			&& (this->*_handlers.find_ref(msg->get_msgtype()))(seqnum, msg.get()));
-		_next_receive_seq = seqnum + 1;
+		++_next_receive_seq;
 		if (_persist)
+		{
 			_persist->put(_next_send_seq, _next_receive_seq);
+			//cout << "Persisted:" << _next_send_seq << " and " << _next_receive_seq << endl;
+		}
 		return result;
 
 	}
 	catch (f8Exception& e)
 	{
-		Message *msg(generate_reject(seqnum, e.what()));
-		send(msg);
+		//cout << "process:: f8exception" << ' ' << seqnum << ' ' << e.what() << endl;
+
 		log(e.what());
-		if (e.force_logoff())
+		if (!e.force_logoff())
 		{
-			send(generate_logout());
-			_state = States::st_logoff_sent;
+			Message *msg(generate_reject(seqnum, e.what()));
+			send(msg);
+		}
+		else
+		{
+			if (_state != States::st_logon_received)
+			{
+				send(generate_logout(), 0, true); // so it won't increment
+				_state = States::st_logoff_sent;
+			}
 			stop();
 		}
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
+		//cout << "process:: std::exception" << endl;
+
 		log(e.what());
 	}
 
@@ -265,21 +291,21 @@ void Session::compid_check(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 {
-	cout << "seqnum:" << seqnum << " next_target_seq:" << _next_receive_seq
-		<< " next_sender_seq:" << _next_send_seq << " state:" << _state << endl;
+	//cout << "seqnum:" << seqnum << " next_target_seq:" << _next_receive_seq
+		//<< " next_sender_seq:" << _next_send_seq << " state:" << _state << " next_receive_seq:" <<  _next_receive_seq << endl;
 
 	if (seqnum > _next_receive_seq)
 	{
-		if (_state == States::st_resend_request_sent)
-			log("Resend request already sent");
-		else if (_state == States::st_continuous)
+		//if (_state == States::st_resend_request_sent)
+//			log("Resend request already sent");
+		if (_state == States::st_continuous)
 		{
 			Message *rmsg(generate_resend_request(_next_receive_seq));
 			_state = States::st_resend_request_sent;
 			send(rmsg);
 		}
-		else
-			throw InvalidMsgSequence(seqnum);
+	//	else
+	//		throw InvalidMsgSequence(seqnum, _next_receive_seq);
 		return false;
 	}
 
@@ -288,7 +314,7 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 		poss_dup_flag pdf(false);
 		msg->Header()->get(pdf);
 		if (!pdf())	// poss dup not set so bad
-			throw InvalidMsgSequence(seqnum);
+			throw MsgSequenceTooLow(seqnum, _next_receive_seq);
 		sending_time st;
 		msg->Header()->get(st);
 		orig_sending_time ost;
@@ -299,9 +325,6 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 			throw BadSendingTime(ostr.str());
 		}
 	}
-
-	if (_state == States::st_resend_request_sent)
-		_state = States::st_continuous;
 
 	return true;
 }
@@ -322,7 +345,10 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 	else // acceptor
 	{
 		recover_seqnums();
-		enforce(seqnum, msg);
+		if (_req_next_send_seq)
+			_next_send_seq = _req_next_send_seq;
+		if (_req_next_receive_seq)
+			_next_receive_seq = _req_next_receive_seq;
 
 		sender_comp_id sci;
 		msg->Header()->get(sci);
@@ -332,6 +358,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		if (authenticate(id, msg))
 		{
 			_sid = id;
+			enforce(seqnum, msg);
 			Message *msg(generate_logon(_connection->get_hb_interval()));
 			send(msg);
 			_state = States::st_continuous;
@@ -361,8 +388,8 @@ bool Session::handle_logout(const unsigned seqnum, const Message *msg)
 {
 	enforce(seqnum, msg);
 
-	if (_state != States::st_logoff_sent)
-		send(generate_logout());
+	//if (_state != States::st_logoff_sent)
+	//	send(generate_logout());
 	log("peer has logged out");
 	stop();
 	return true;
@@ -379,8 +406,11 @@ bool Session::handle_sequence_reset(const unsigned seqnum, const Message *msg)
 		if (nsn() > static_cast<int>(_next_send_seq))
 			_next_send_seq = nsn();
 		else if (nsn() < static_cast<int>(_next_send_seq))
-			throw InvalidMsgSequence(nsn());
+			throw MsgSequenceTooLow(nsn(), _next_send_seq);
 	}
+
+	if (_state == States::st_resend_request_sent)
+		_state = States::st_continuous;
 
 	return true;
 }
@@ -417,14 +447,22 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 #endif
 		));
 
+	//cout << "first:" << with.first << ' ' << rctx << endl;
+
 	if (rctx._no_more_records)
 	{
 		if (rctx._end)
 		{
+			_next_send_seq = rctx._interrupted_seqnum - 1;
 			send(generate_sequence_reset(rctx._interrupted_seqnum, true), rctx._last + 1);
-			cout << "#1" << endl;
+			//cout << "#1" << endl;
 		}
-		_next_send_seq = rctx._interrupted_seqnum - 1;
+		else if (!rctx._last)
+		{
+			_next_send_seq = rctx._interrupted_seqnum;
+			send(generate_sequence_reset(rctx._interrupted_seqnum, true));
+			//cout << "#4" << endl;
+		}
 		_state = States::st_continuous;
 		return true;
 	}
@@ -434,7 +472,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 		if (rctx._last + 1 < with.first)
 		{
 			send(generate_sequence_reset(with.first, true), _next_send_seq);
-			cout << "#2" << endl;
+			//cout << "#2" << endl;
 		}
 	}
 	else
@@ -442,7 +480,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 		if (with.first > rctx._begin)
 		{
 			send(generate_sequence_reset(with.first, true));
-			cout << "#3" << endl;
+			//cout << "#3" << endl;
 		}
 	}
 
@@ -480,7 +518,7 @@ bool Session::heartbeat_service()
 	{
 		if (_state == States::st_test_request_sent)	// already sent
 		{
-			send(generate_logout());
+			send(generate_logout(), 0, true); // so it won't increment
 			_state = States::st_logoff_sent;
 			stop();
 			return true;
@@ -577,10 +615,12 @@ Message *Session::generate_sequence_reset(const unsigned newseqnum, const bool g
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::send(Message *tosend, const unsigned custom_seqnum)
+bool Session::send(Message *tosend, const unsigned custom_seqnum, const bool no_increment)
 {
 	if (custom_seqnum)
 		tosend->set_custom_seqnum(custom_seqnum);
+	if (no_increment)
+		tosend->set_no_increment(no_increment);
 	return _connection->write(tosend);
 }
 
@@ -601,7 +641,7 @@ bool Session::send_wait(Message *msg, const unsigned custom_seqnum, const int wa
 //-------------------------------------------------------------------------------------------------
 bool Session::send_process(Message *msg) // called from the connection thread
 {
-	const bool is_dup(msg->Header()->have(Common_PossDupFlag));
+	bool is_dup(msg->Header()->have(Common_PossDupFlag));
 
 	if (!msg->Header()->have(Common_SenderCompID))
 		*msg->Header() += new sender_comp_id(_sid.get_senderCompID());
@@ -611,7 +651,11 @@ bool Session::send_process(Message *msg) // called from the connection thread
 	if (msg->Header()->have(Common_MsgSeqNum))
 	{
 		if (!is_dup)
+		{
 			*msg->Header() += new poss_dup_flag(true);
+			is_dup = true;
+		}
+
 		sending_time sendtime;
 		msg->Header()->get(sendtime);
 		*msg->Header() += new orig_sending_time(sendtime());
@@ -622,6 +666,7 @@ bool Session::send_process(Message *msg) // called from the connection thread
 
 	try
 	{
+		//cout << "Sending:" << *msg;
 		modify_outbound(msg);
 		f8String output;
 		const unsigned enclen(msg->encode(output));
@@ -635,6 +680,8 @@ bool Session::send_process(Message *msg) // called from the connection thread
 		_last_sent->now();
 		plog(output);
 
+		//cout << "send_process" << endl;
+
 		if (!is_dup)
 		{
 			if (_persist)
@@ -642,10 +689,14 @@ bool Session::send_process(Message *msg) // called from the connection thread
 				if (!msg->is_admin())
 					_persist->put(_next_send_seq, output);
 				_persist->put(_next_send_seq + 1, _next_receive_seq);
+				//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
 			}
 
-			if (!msg->get_custom_seqnum())
+			if (!msg->get_custom_seqnum() && !msg->get_no_increment())
+			{
 				++_next_send_seq;
+				//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
+			}
 		}
 	}
 	catch (f8Exception& e)
@@ -673,8 +724,8 @@ void Session::recover_seqnums()
 			ostringstream ostr;
 			ostr << "Last sent: " << send_seqnum << ", last received: " << receive_seqnum;
 			log(ostr.str());
-			_next_send_seq = send_seqnum + 1;
-			_next_receive_seq = receive_seqnum + 1;
+			_next_send_seq = send_seqnum ;// + 1;
+			_next_receive_seq = receive_seqnum ;// + 1;
 		}
 	}
 }

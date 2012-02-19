@@ -113,22 +113,44 @@ class Logger
 	std::ostringstream _buf;
 
 public:
-	enum Flags { append, timestamp, sequence, compress, pipe, thread };
+	enum Flags { append, timestamp, sequence, compress, pipe, thread, direction, num_flags };
 	static const unsigned rotation_default = 5, max_rotation = 64;
 	typedef ebitset<Flags> LogFlags;
 
 protected:
+	tbb::mutex _mutex;
 	LogFlags _flags;
-	typedef std::pair<pthread_t, std::string> LogElement;
+
+	struct LogElement
+	{
+		pthread_t _tid;
+		std::string _str;
+		unsigned _val;
+
+		LogElement(const pthread_t tid, const std::string& str, const unsigned val=0) : _tid(tid), _str(str), _val(val) {}
+		LogElement() : _tid(), _val() {}
+		LogElement& operator=(LogElement& that)
+		{
+			if (this != &that)
+			{
+				_tid = that._tid;
+				_str = that._str;
+				_val = that._val;
+			}
+			return *this;
+		}
+	};
+
 	tbb::concurrent_bounded_queue<LogElement> _msg_queue;
-	unsigned _sequence;
+	unsigned _sequence, _osequence;
 	char _t_code;
 	typedef std::map<pthread_t, char> ThreadCodes;
+	ThreadCodes _thread_codes;
 
 public:
 	/*! Ctor.
 	    \param flags ebitset flags */
-	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _sequence(), _t_code('A') { _thread.Start(); }
+	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _sequence(), _osequence(), _t_code('A') { _thread.Start(); }
 
 	/// Dtor.
 	virtual ~Logger() {}
@@ -140,18 +162,22 @@ public:
 	/*! Log a string.
 	    \param what the string to log
 	    \return true on success */
-	bool send(const std::string& what) { return _msg_queue.try_push (LogElement(pthread_self(), what)) == 0; }
+	bool send(const std::string& what, const unsigned val=0) { return _msg_queue.try_push (LogElement(pthread_self(), what, val)) == 0; }
 
 	/// Stop the logging thread.
 	void stop() { send(std::string()); _thread.Join(); }
 
 	/*! Perform logfile rotation. Only relevant for file-type loggers.
-	    \return true on success */
-	virtual bool rotate() { return true; }
+		\param force the rotation (even if the file is set ti append)
+	   \return true on success */
+	virtual bool rotate(bool force=false) { return true; }
 
 	/*! The logging thread entry point.
 	    \return 0 on success */
 	int operator()();
+
+	/// string representation of logflags
+	static const std::string _bit_names[];
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -197,8 +223,9 @@ public:
 	virtual std::ostream& get_stream() const { return _ofs ? *_ofs : std::cerr; }
 
 	/*! Perform logfile rotation
+	    \param force force the rotation (even if the file is set ti append)
 	    \return true on success */
-	virtual bool rotate();
+	virtual bool rotate(bool force=false);
 };
 
 //-------------------------------------------------------------------------------------------------

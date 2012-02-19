@@ -41,21 +41,16 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-// Base session wrapper.
+/// Base session wrapper.
 struct SessionConfig : public Configuration
 {
 	const F8MetaCntx& _ctx;
-	Logger::LogFlags _logflags, _plogflags;
-	std::string _logname, _prot_logname;
 	const XmlEntity *_ses;
 
 	/// Ctor. Loads configuration, obtains session details, sets up logfile flags.
 	SessionConfig (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
 		Configuration(conf_file, true),
 		_ctx(ctx),
-		_logflags(Logger::LogFlags() << Logger::timestamp << Logger::sequence << Logger::thread),
-		_plogflags (Logger::LogFlags() << Logger::append),
-		_logname("logname_not_set"), _prot_logname("prot_logname_not_set"),
 		_ses(find_session(session_name))
 	{
 		if (!_ses)
@@ -67,34 +62,36 @@ struct SessionConfig : public Configuration
 };
 
 //-------------------------------------------------------------------------------------------------
-/*! Client wrapper.
-  \tparam T your derived session class */
+/// Client wrapper.
+/*!  \tparam T your derived session class */
 template<typename T>
 class ClientSession : public SessionConfig
 {
 protected:
-	FileLogger _log, _plog;
+	Logger *_log, *_plog;
 	sender_comp_id _sci;
 	target_comp_id _tci;
 	const SessionID _id;
 	Persister *_persist;
 	T *_session;
-	Poco::Net::StreamSocket _sock;
+	Poco::Net::StreamSocket *_sock;
 	Poco::Net::SocketAddress _addr;
-	ClientConnection _cc;
+	ClientConnection *_cc;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
-	ClientSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
+	ClientSession (const F8MetaCntx& ctx, const std::string& conf_file,
+		const std::string& session_name, bool init_con_later=false) :
 		SessionConfig(ctx, conf_file, session_name),
-		_log(get_logname(_ses, _logname), _logflags, get_logfile_rotation(_ses)),
-		_plog(get_protocol_logname(_ses, _prot_logname), _plogflags, get_logfile_rotation(_ses)),
+		_log(create_logger(_ses, session_log)),
+		_plog(create_logger(_ses, protocol_log)),
 		_sci(get_sender_comp_id(_ses)), _tci(get_target_comp_id(_ses)),
 		_id(_ctx._beginStr, _sci, _tci),
 		_persist(create_persister(_ses)),
-		_session(new T(_ctx, _id, _persist, &_log, &_plog)),
+		_session(new T(_ctx, _id, _persist, _log, _plog)),
+		_sock(init_con_later ? 0 : new Poco::Net::StreamSocket),
 		_addr(get_address(_ses)),
-		_cc(&_sock, _addr, *_session)
+		_cc(init_con_later ? 0 : new ClientConnection(_sock, _addr, *_session))
 	{
 		_session->set_login_parameters(get_retry_interval(_ses), get_retry_count(_ses));
 	}
@@ -104,47 +101,92 @@ public:
 	{
 		delete _persist;
 		delete _session;
+		delete _log;
+		delete _plog;
 	}
 
 	/*! Get a pointer to the session
 	  \return the session pointer */
 	T *session_ptr() { return _session; }
 
-	/*! Start the session - initiate the conection, logon and start heartbeating.
-	  \param wait if true wait till session finishes before returning */
-	void start(bool wait) { _session->start(&_cc, wait); }
+	/*! Start the session - initiate the connection, logon and start heartbeating.
+	  \param wait if true wait till session finishes before returning
+	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
+	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0)
+		{ _session->start(_cc, wait, send_seqnum, recv_seqnum); }
 
 	/// Convenient scoped pointer for your session
 	typedef scoped_ptr<ClientSession<T> > Client_ptr;
 };
 
 //-------------------------------------------------------------------------------------------------
-/*! Reliable Client wrapper. This client attempts to recover from disconnects and login rejects.
-  \tparam T your derived session class */
+/// Reliable Client wrapper. This client attempts to recover from disconnects and login rejects.
+/*! \tparam T your derived session class */
 template<typename T>
-class ReliableClientSession
+class ReliableClientSession : public ClientSession<T>
 {
+	Thread<ReliableClientSession<T> > _thread;
+	unsigned _login_retry_interval, _login_retries;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
 	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
+		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this))
 	{
+		this->_session->get_login_parameters(_login_retry_interval, _login_retries);
 	}
 
 	/// Dtor.
 	virtual ~ReliableClientSession () {}
 
-	/*! Start the session - initiate the conection, logon and start heartbeating.
+	/*! Start the session - initiate the connection, logon and start heartbeating.
 	  \param wait if true wait till session finishes before returning */
-	void start(bool wait);
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0)
+	{
+		if (!wait)
+			_thread.Start();
+		else
+			(*this)();
+	}
+
+	/*! The reliability thread entry point.
+	    \return 0 on success */
+	int operator()()
+	{
+		unsigned attempts(0);
+
+		for (; ++attempts < _login_retries; )
+		{
+			try
+			{
+				//std::cout << "operator()():try" << std::endl;
+
+				this->_sock = new Poco::Net::StreamSocket,
+				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session);
+				this->_session->start(this->_cc, true);
+			}
+			catch(f8Exception& e)
+			{
+				//std::cout << "ReliableClientSession: f8exception" << std::endl;
+			}
+
+			//std::cout << "operator()():out of try" << std::endl;
+			delete this->_cc;
+			delete this->_sock;
+			millisleep(_login_retry_interval);
+		}
+
+		return 0;
+	}
 
 	/// Convenient scoped pointer for your session
 	typedef scoped_ptr<ReliableClientSession<T> > ReliableClient_ptr;
 };
 
 //-------------------------------------------------------------------------------------------------
-/*! Server wrapper.
-  \tparam T your derived session class */
+/// Server wrapper.
+/*! \tparam T your derived session class */
 template<typename T>
 class ServerSession : public SessionConfig
 {
@@ -176,27 +218,27 @@ public:
 	typedef scoped_ptr<ServerSession<T> > Server_ptr;
 };
 
-/*! Server session instance.
-  \tparam T your derived session class */
+/// Server session instance.
+/*! \tparam T your derived session class */
 template<typename T>
 class SessionInstance
 {
-	FileLogger _log, _plog;
+	Logger *_log, *_plog;
 	Persister *_persist;
 	Poco::Net::SocketAddress _claddr;
-	Poco::Net::StreamSocket _sock;
+	Poco::Net::StreamSocket *_sock;
 	T *_session;
 	ServerConnection _sc;
 
 public:
 	/// Ctor. Prepares session instance with inbound connection.
 	SessionInstance (ServerSession<T>& sf) :
-		_log(sf.get_logname(sf._ses, sf._logname), sf._logflags, sf.get_logfile_rotation(sf._ses)),
-		_plog(sf.get_protocol_logname(sf._ses, sf._prot_logname), sf._plogflags, sf.get_logfile_rotation(sf._ses)),
+		_log(sf.create_logger(sf._ses, Configuration::session_log)),
+		_plog(sf.create_logger(sf._ses, Configuration::protocol_log)),
 		_persist(sf.create_persister(sf._ses)),
-		_sock(sf.accept(_claddr)),
-		_session(new T(sf._ctx, _persist, &_log, &_plog)),
-		_sc(&_sock, *_session, sf.get_heartbeat_interval(sf._ses))
+		_sock(new Poco::Net::StreamSocket(sf.accept(_claddr))),
+		_session(new T(sf._ctx, _persist, _log, _plog)),
+		_sc(_sock, *_session, sf.get_heartbeat_interval(sf._ses))
 	{}
 
 	/// Dtor.
@@ -204,15 +246,21 @@ public:
 	{
 		delete _persist;
 		delete _session;
+		delete _sock;
+		delete _log;
+		delete _plog;
 	}
 
 	/*! Get a pointer to the session
 	  \return the session pointer */
 	T *session_ptr() { return _session; }
 
-	/*! Start the session - initiate the conection, logon and start heartbeating.
-	  \param wait if true wait till session finishes before returning */
-	void start(bool wait) { _session->start(&_sc, wait); }
+	/*! Start the session - accept the connection, logon and start heartbeating.
+	  \param wait if true wait till session finishes before returning
+	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
+	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
+	void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0)
+		{ _session->start(&_sc, wait, send_seqnum, recv_seqnum); }
 
 	/// Stop the session. Cleanup.
 	void stop() { _session->stop(); }

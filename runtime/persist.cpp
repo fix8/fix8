@@ -160,9 +160,13 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 	get_last_seqnum(last_seq);
 	unsigned recs_sent(0), startSeqNum(find_nearest_highest_seqnum (from, last_seq));
 	const unsigned finish(to == 0 ? last_seq : to);
+	Session::RetransmissionContext rctx(from, to, session.get_next_send_seq());
+
 	if (!startSeqNum || from > finish)
 	{
 		GlobalLogger::log("No records found");
+		rctx._no_more_records = true;
+		(session.*callback)(Session::SequencePair(0, ""), rctx);
 		return 0;
 	}
 
@@ -174,8 +178,6 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 
 	if ((retval = cursorp->get(&keyPair._key, &keyPair._data, DB_SET)) == 0)
 	{
-		Session::RetransmissionContext rctx(from, to, session.get_next_send_seq() - 1);
-
 		do
 		{
 			const unsigned seqnum(buffer.keyBuf_.int_);
@@ -188,9 +190,8 @@ unsigned BDBPersister::get(const unsigned from, const unsigned to, Session& sess
 		}
 		while(cursorp->get(&keyPair._key, &keyPair._data, DB_NEXT) == 0);
 
-		Session::SequencePair result(0, "");
 		rctx._no_more_records = true;
-		(session.*callback)(result, rctx);
+		(session.*callback)(Session::SequencePair(0, ""), rctx);
 	}
 	else
 	{

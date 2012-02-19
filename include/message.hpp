@@ -520,6 +520,7 @@ protected:
 	static RegExp _hdr, _tlr;
 	MessageBase *_header, *_trailer;
 	unsigned _custom_seqnum;
+	bool _no_increment;
 
 public:
 	/*! Ctor.
@@ -530,7 +531,8 @@ public:
 	    \param end - InputIterator pointing to end of field trait table */
 	template<typename InputIterator>
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
-		: MessageBase(ctx, msgType, begin, end), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl()), _custom_seqnum()
+		: MessageBase(ctx, msgType, begin, end), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl()),
+		_custom_seqnum(), _no_increment()
 #if defined MSGRECYCLING
 		{ _in_use = true; }
 
@@ -652,6 +654,14 @@ public:
 	/*! Get the custom sequence number.
 	    \return seqnum the outbound sequence number to use for this message. */
 	unsigned get_custom_seqnum() const { return _custom_seqnum; }
+
+	/*! Set the no increment flag.
+	    \param flag true means don't increment the seqnum after sending */
+	virtual void set_no_increment(const bool flag=true) { _no_increment = flag; }
+
+	/*! Get the no increment flag.
+	    \return value of _no_increment flag */
+	virtual bool get_no_increment() const { return _no_increment; }
 
 	/*! Print the message to the specified stream.
 	    \param os refererence to stream to print to */

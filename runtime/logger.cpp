@@ -64,12 +64,13 @@ tbb::atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_ins
 template<>
 tbb::mutex Singleton<SingleLogger<glob_log0> >::_mutex = tbb::mutex();
 
+const string Logger::_bit_names[] = { "append", "timestamp", "sequence", "compress", "pipe", "thread", "direction" };
+
 //-------------------------------------------------------------------------------------------------
 int Logger::operator()()
 {
    unsigned received(0);
 	bool stopping(false);
-	ThreadCodes thread_codes;
 
    for (;;)
    {
@@ -84,33 +85,45 @@ int Logger::operator()()
 
 		++received;
 
-      if (msg.second.empty())  // means exit
+      if (msg._str.empty())  // means exit
 		{
          stopping = true;
 			continue;
 		}
 
+		ostringstream ostr;
+
 		if (_flags & sequence)
-			get_stream() << setw(7) << right << setfill('0') << ++_sequence << ' ';
+		{
+			ostr << setw(7) << right << setfill('0');
+			if (_flags & direction)
+				ostr << (msg._val ? ++_sequence  : ++_osequence) << ' ';
+			else
+				ostr << ++_sequence << ' ';
+		}
 
 		if (_flags & thread)
 		{
-			ThreadCodes::const_iterator itr(thread_codes.find(msg.first));
+			ThreadCodes::const_iterator itr(_thread_codes.find(msg._tid));
 			char t_code;
-			if (itr == thread_codes.end())
-				thread_codes.insert(ThreadCodes::value_type(msg.first, t_code = _t_code++));
+			if (itr == _thread_codes.end())
+				_thread_codes.insert(ThreadCodes::value_type(msg._tid, t_code = _t_code++));
 			else
 				t_code = itr->second;
-			get_stream() << t_code << ' ';
+			ostr << t_code << ' ';
 		}
+
+		if (_flags & direction)
+			ostr << (msg._val ? " in" : "out") << ' ' ;
 
 		if (_flags & timestamp)
 		{
 			string ts;
-			get_stream() << GetTimeAsStringMS(ts, 0, 9) << ' ';
+			ostr << GetTimeAsStringMS(ts, 0, 9) << ' ';
 		}
 
-		get_stream() << msg.second << std::endl;
+		tbb::mutex::scoped_lock guard(_mutex);
+		get_stream() << ostr.str() << msg._str << std::endl;
    }
 
    return 0;
@@ -155,18 +168,20 @@ FileLogger::FileLogger(const std::string& fname, const ebitset<Flags> flags, con
 }
 
 //-------------------------------------------------------------------------------------------------
-bool FileLogger::rotate()
+bool FileLogger::rotate(bool force)
 {
    if (!(_flags & pipe))
    {
+		tbb::mutex::scoped_lock guard(_mutex);
+
       string thislFile(_pathname);
 #ifdef HAVE_COMPRESSION
       if (_flags & compress)
          thislFile += ".gz";
 #endif
-      if (_rotnum > 0 && !(_flags & append))
+      if (_rotnum > 0 && (!(_flags & append) || force))
       {
-         vector<string> rlst;
+         vector<string> rlst(_rotnum);
          rlst.push_back(thislFile);
 
          for (unsigned ii(0); ii < _rotnum && ii < max_rotation; ++ii)
@@ -178,19 +193,19 @@ bool FileLogger::rotate()
             rlst.push_back(ostr.str());
          }
 
-         for (int ii(_rotnum); ii; --ii)
+         for (unsigned ii(_rotnum); ii; --ii)
             rename (rlst[ii - 1].c_str(), rlst[ii].c_str());   // ignore errors
       }
 
       delete _ofs;
 
+		const ios_base::openmode mode (ios_base::out | (_flags & append) ? ios_base::app : ios_base::trunc);
 #ifdef HAVE_COMPRESSION
       if (_flags & compress)
-         _ofs = new ogzstream(thislFile.c_str());
+         _ofs = new ogzstream(thislFile.c_str(), mode);
       else
 #endif
-         _ofs = new ofstream(thislFile.c_str(),
-				std::ios_base::out|(_flags & append) ? std::ios_base::app : std::ios_base::trunc);
+         _ofs = new ofstream(thislFile.c_str(), mode);
    }
 
    return true;

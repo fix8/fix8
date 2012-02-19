@@ -63,7 +63,9 @@ public:
 	    \param sock connected socket
 	    \param session session */
 	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session)
-		: _thread(ref(*this)), _sock(sock), _session(session) {}
+		: _thread(ref(*this)), _sock(sock), _session(session)
+	{
+	}
 
 	/// Dtor.
 	virtual ~AsyncSocket() {}
@@ -97,6 +99,7 @@ class FIXReader : public AsyncSocket<f8String>
 {
 	static RegExp _hdr;
 	static const size_t _max_msg_len = 1024, _chksum_sz = 7;
+	tbb::atomic<bool> _socket_error;
 
 	Thread<FIXReader> _callback_thread;
 
@@ -138,8 +141,10 @@ public:
 	/// Start the processing threads.
 	virtual void start()
 	{
+		_socket_error = false;
 		AsyncSocket<f8String>::start();
-		_callback_thread.Start();
+		if (_callback_thread.Start())
+			_socket_error = true;
 	}
 
 	/// Stop the processing threads and quit.
@@ -150,6 +155,10 @@ public:
 
 	/// Calculate the length of the Fix message preamble, e.g. "8=FIX.4.4^A9=".
 	void set_preamble_sz();
+
+	/*! Check to see if the socket is in error
+	    \return true if there was a socket error */
+	bool is_socket_error() const { return _socket_error; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -263,6 +272,10 @@ public:
 	    \return 0 on success */
 	int join() { return _reader.join(); }
 
+	/*! Check to see if the socket is in error
+	    \return true if there was a socket error */
+	bool is_socket_error() const { return _reader.is_socket_error(); }
+
 	/*! Get the session associated with this connection.
 	    \return the session */
 	Session& get_session() { return _session; }
@@ -301,7 +314,11 @@ public:
 	    \param session session
 	    \param hb_interval heartbeat interval */
 	ServerConnection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval) :
-		Connection(sock, session, hb_interval) {}
+		Connection(sock, session, hb_interval)
+	{
+		_sock->setLinger(false, 0);
+		_sock->setNoDelay(true);
+	}
 
 	/// Dtor.
 	virtual ~ServerConnection() {}

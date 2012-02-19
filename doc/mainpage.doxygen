@@ -13,6 +13,10 @@
   *
   * Some of the more commonly used classes include:
   * <ul>
+  * <li> \link FIX8::Session \endlink encapsulates a FIX session. Your client or server session must inherit from this class.
+  * <li> \link FIX8::ClientSession \endlink a wrapper class for FIX session. Provides a simple client connection.
+  * <li> \link FIX8::ServerSession \endlink a wrapper class for FIX session. Provides a simple listening server.
+  * <li> \link FIX8::SessionInstance \endlink a wrapper class for FIX server session instance.
   * <li> \link FIX8::BDBPersister \endlink is a BerkeleyDB backed FIX message persister.
   * <li> \link FIX8::Configuration \endlink manages session configurations.
   * <li> \link FIX8::Connection \endlink provides a complete FIX connection.
@@ -21,7 +25,6 @@
   * <li> \link FIX8::FileLogger \endlink is an asynchronous logger.
   * <li> \link FIX8::Message \endlink is a complete Fix message with header, body and trailer.
   * <li> \link FIX8::Thread \endlink is a modern pthread wrapper.
-  * <li> \link FIX8::Session \endlink encapsulates a FIX session. Your client or server session must inherit from this class.
   * <li> \link FIX8::SessionID \endlink a <A HREF="http://www.quickfixengine.org">Quickfix</A> style session id.
   * </ul>
   *
