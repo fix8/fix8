@@ -264,6 +264,7 @@ void print_usage()
 	UsageMan um("f8print", GETARGLIST, "<fix protocol file, use '-' for stdin>");
 	um.setdesc("f8print -- f8 protocol log printer");
 	um.add('h', "help", "help, this screen");
+	um.add('v', "version", "print version then exit");
 	um.add('s', "summary", "summary, generate message summary");
 	um.add("e.g.");
 	um.add("@f8print myfix_server_protocol.log");

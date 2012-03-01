@@ -61,9 +61,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 using namespace std;
 using namespace FIX8;
 
-//----------------------------------------------------------------------------------------
-const std::string TRANSLATIONUNIT(__FILE__);
-
 //-----------------------------------------------------------------------------------------
 const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp",
 	"_classes.hpp", "_router.hpp" };
@@ -837,6 +834,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 			}
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const MsgType " << mitr->second._name << "::_msgtype(\"" << mitr->first << "\");" << endl;
+			osr_cpp << "const unsigned short " << mitr->second._name << "::_fcnt;" << endl;
 			osc_hpp << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
 			osc_hpp << spacer << "static const MsgType _msgtype;" << endl << endl;
 		}
@@ -918,6 +916,7 @@ int process(XmlEntity& xf, Ctxt& ctxt)
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const MsgType " << mitr->second._name << "::" << gsitr->second._name << "::_msgtype(\""
 				<< gsitr->second._name << "\");" << endl;
+			osr_cpp << "const unsigned short " << mitr->second._name << "::" << gsitr->second._name << "::_fnum;" << endl;
 			osc_hpp << endl << spacer << "class " << gsitr->second._name
 				<< " : public GroupBase" << endl << spacer << '{' << endl;
 			osc_hpp << spacer << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;

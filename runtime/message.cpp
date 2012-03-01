@@ -189,8 +189,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from
 	Message *msg(0);
 	if (_hdr.SearchString(match, from, 5, 0) == 5)
 	{
-		f8String ver, len, mtype;
-		_hdr.SubExpr(match, from, ver, 0, 1);
+		f8String len, mtype;
 		_hdr.SubExpr(match, from, len, 0, 2);
 		_hdr.SubExpr(match, from, mtype, 0, 4);
 		const unsigned mlen(GetValue<unsigned>(len));
@@ -198,7 +197,6 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from
 		const BaseMsgEntry *bme(ctx._bme.find_ptr(mtype));
 		if (!bme)
 			throw InvalidMessage(mtype);
-		//ostringstream gerr;
 		msg = bme->_create();
 #if defined PERMIT_CUSTOM_FIELDS
 		if (sess && post_ctor)
@@ -206,8 +204,9 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from
 #endif
 		//IntervalTimer itm;
 		msg->decode(from);
+		//ostringstream gerr;
 		//gerr << "decode:" << itm.Calculate();
-		//GlobalLogger::instance()->send(gerr.str());
+		//GlobalLogger::log(gerr.str());
 
 		Fields::const_iterator fitr(msg->_header->_fields.find(Common_BodyLength));
 		static_cast<body_length *>(fitr->second)->set(mlen);

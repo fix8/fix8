@@ -1,14 +1,28 @@
-0.4.12 	19/02/2012  Config updated - separate out log files into their own entity; added addiitonal log flags;
-							retransmission improved; socket conditioning; sequence number enforcement on login; sequence
-							number control at message level; session wrappers; reliable client wrapper; improved multithreading;
-							updated myfix to use session wrapper; myfix supports seqnum cmd line args;
-0.4.10 	05/02/2012  Added custom seqnum support; Fixed retransmission behaviour; Added SessionWrapper classes
-							to simplify client/server session setup; client connect will retry configurable number of times with interval;
-							fixed message field replace, remove and copy_legal; myfix.cpp uses new session wrappers;
-							added new config extract methods;
-0.4.04 	27/01/2012  Fixed checksum and bodylength calculation bugs on encode and decode;
-							Test server permits reconnects and detects logout;
-							Connection classes shutdown properly, gracefully;
-0.4.02 	23/01/2012  Moved to github; numerous fixes; documentation and wiki;
-0.3.580 	07/01/2012  Initial release on sourceforge
+0.4.15 	01/03/2012		<fix@fix8.org>
+Fixed static const in class definition storage linker error; fixed superfluous const laval return warnings on functions;
+sequence reset flag support; log entries timestamped at creation; threadcode purging; seqnum seeding;
+numerous bugfixes;
+
+0.4.12 	19/02/2012		<fix@fix8.org>
+Config updated - separate out log files into their own entity; added addiitonal log flags;
+retransmission improved; socket conditioning; sequence number enforcement on login; sequence
+number control at message level; session wrappers; reliable client wrapper; improved multithreading;
+updated myfix to use session wrapper; myfix supports seqnum cmd line args;
+
+0.4.10 	05/02/2012     <fix@fix8.org>
+Added custom seqnum support; Fixed retransmission behaviour; Added SessionWrapper classes
+to simplify client/server session setup; client connect will retry configurable number of times with interval;
+fixed message field replace, remove and copy_legal; myfix.cpp uses new session wrappers;
+added new config extract methods;
+
+0.4.04 	27/01/2012     <fix@fix8.org>
+Fixed checksum and bodylength calculation bugs on encode and decode;
+Test server permits reconnects and detects logout;
+Connection classes shutdown properly, gracefully;
+
+0.4.02 	23/01/2012     <fix@fix8.org>
+Moved to github; numerous fixes; documentation and wiki;
+
+0.3.580 	07/01/2012     <fix@fix8.org>
+Initial release on sourceforge
 

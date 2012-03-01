@@ -126,16 +126,19 @@ protected:
 		pthread_t _tid;
 		std::string _str;
 		unsigned _val;
+		Tickval _when;
 
-		LogElement(const pthread_t tid, const std::string& str, const unsigned val=0) : _tid(tid), _str(str), _val(val) {}
-		LogElement() : _tid(), _val() {}
-		LogElement& operator=(LogElement& that)
+		LogElement(const pthread_t tid, const std::string& str, const unsigned val=0)
+			: _tid(tid), _str(str), _val(val), _when(true) {}
+		LogElement() : _tid(), _val(), _when(true) {}
+		LogElement& operator=(const LogElement& that)
 		{
 			if (this != &that)
 			{
 				_tid = that._tid;
 				_str = that._str;
 				_val = that._val;
+				_when = that._when;
 			}
 			return *this;
 		}
@@ -143,14 +146,23 @@ protected:
 
 	tbb::concurrent_bounded_queue<LogElement> _msg_queue;
 	unsigned _sequence, _osequence;
-	char _t_code;
-	typedef std::map<pthread_t, char> ThreadCodes;
+
+	typedef std::
+#if defined HAS_TR1_UNORDERED_MAP
+		tr1::unordered_map
+#else
+		map
+#endif
+		<pthread_t, char> ThreadCodes;
 	ThreadCodes _thread_codes;
+
+	typedef std::map<char, pthread_t> RevThreadCodes;
+	RevThreadCodes _rev_thread_codes;
 
 public:
 	/*! Ctor.
 	    \param flags ebitset flags */
-	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _sequence(), _osequence(), _t_code('A') { _thread.Start(); }
+	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _sequence(), _osequence() { _thread.Start(); }
 
 	/// Dtor.
 	virtual ~Logger() {}
@@ -163,13 +175,14 @@ public:
 	    \param what the string to log
 	    \param val optional value for the logger to use
 	    \return true on success */
-	bool send(const std::string& what, const unsigned val=0) { return _msg_queue.try_push (LogElement(pthread_self(), what, val)) == 0; }
+	bool send(const std::string& what, const unsigned val=0)
+		{ return _msg_queue.try_push (LogElement(pthread_self(), what, val)) == 0; }
 
 	/// Stop the logging thread.
 	void stop() { send(std::string()); _thread.Join(); }
 
 	/*! Perform logfile rotation. Only relevant for file-type loggers.
-		\param force the rotation (even if the file is set ti append)
+		\param force the rotation (even if the file is set to append)
 	   \return true on success */
 	virtual bool rotate(bool force=false) { return true; }
 
@@ -179,6 +192,13 @@ public:
 
 	/// string representation of logflags
 	static const std::string _bit_names[];
+
+	/*! Get the thread code for this thread or allocate a new code if not found.
+		\param tid the thread id of the thread to get a code for */
+	char get_thread_code(pthread_t tid);
+
+	/// Remove dead threads from the thread code cache.
+	void purge_thread_codes();
 };
 
 //-------------------------------------------------------------------------------------------------

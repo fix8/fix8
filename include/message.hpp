@@ -109,11 +109,11 @@ public:
 	friend class MessageBase;
 };
 
-typedef
+typedef std::
 #if defined HAS_TR1_UNORDERED_MAP
-	std::tr1::unordered_map
+	tr1::unordered_map
 #else
-	std::map
+	map
 #endif
 	<unsigned short, GroupBase *> Groups;
 
@@ -140,11 +140,11 @@ struct BaseMsgEntry
 /// Custom field wrapper
 class CustomFields
 {
-	typedef
+	typedef std::
 #if defined HAS_TR1_UNORDERED_MAP
-		std::tr1::unordered_map
+		tr1::unordered_map
 #else
-		std::map
+		map
 #endif
 		<unsigned, BaseEntry *> CustFields;
 	CustFields _custFields;
@@ -210,15 +210,15 @@ struct F8MetaCntx
 			_mk_trl(_bme.find_ptr("trailer")->_create), _beginStr(bg) {}
 
 	/// 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
-	const unsigned version() const { return _version; }
+	unsigned version() const { return _version; }
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef
+typedef std::
 #if defined HAS_TR1_UNORDERED_MAP
-	std::tr1::unordered_map
+	tr1::unordered_map
 #else
-	std::map
+	map
 #endif
 	<unsigned short, BaseField *> Fields;
 

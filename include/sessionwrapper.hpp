@@ -93,7 +93,7 @@ public:
 		_addr(get_address(_ses)),
 		_cc(init_con_later ? 0 : new ClientConnection(_sock, _addr, *_session))
 	{
-		_session->set_login_parameters(get_retry_interval(_ses), get_retry_count(_ses));
+		_session->set_login_parameters(get_retry_interval(_ses), get_retry_count(_ses), get_reset_sequence_number_flag(_ses));
 	}
 
 	/// Dtor.
@@ -127,14 +127,12 @@ template<typename T>
 class ReliableClientSession : public ClientSession<T>
 {
 	Thread<ReliableClientSession<T> > _thread;
-	unsigned _login_retry_interval, _login_retries;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
 	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
 		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this))
 	{
-		this->_session->get_login_parameters(_login_retry_interval, _login_retries);
 	}
 
 	/// Dtor.
@@ -156,9 +154,11 @@ public:
 	    \return 0 on success */
 	int operator()()
 	{
-		unsigned attempts(0);
+		bool reset_sequence_numbers;
+		unsigned attempts(0), login_retry_interval, login_retries;
+		this->_session->get_login_parameters(login_retry_interval, login_retries, reset_sequence_numbers);
 
-		for (; ++attempts < _login_retries; )
+		for (; ++attempts < login_retries; )
 		{
 			try
 			{
@@ -171,12 +171,13 @@ public:
 			catch(f8Exception& e)
 			{
 				//std::cout << "ReliableClientSession: f8exception" << std::endl;
+				this->_session->log(e.what());
 			}
 
 			//std::cout << "operator()():out of try" << std::endl;
 			delete this->_cc;
 			delete this->_sock;
-			millisleep(_login_retry_interval);
+			millisleep(login_retry_interval);
 		}
 
 		return 0;
@@ -240,7 +241,7 @@ public:
 		_persist(sf.create_persister(sf._ses)),
 		_sock(new Poco::Net::StreamSocket(sf.accept(_claddr))),
 		_session(new T(sf._ctx, _persist, _log, _plog)),
-		_sc(_sock, *_session, sf.get_heartbeat_interval(sf._ses))
+		_sc(_sock, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_tcp_nodelay(sf._ses))
 	{}
 
 	/// Dtor.

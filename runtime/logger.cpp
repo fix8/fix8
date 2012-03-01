@@ -51,7 +51,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
-const std::string TRANSLATIONUNIT(__FILE__);
 using namespace FIX8;
 using namespace std;
 
@@ -103,15 +102,7 @@ int Logger::operator()()
 		}
 
 		if (_flags & thread)
-		{
-			ThreadCodes::const_iterator itr(_thread_codes.find(msg._tid));
-			char t_code;
-			if (itr == _thread_codes.end())
-				_thread_codes.insert(ThreadCodes::value_type(msg._tid, t_code = _t_code++));
-			else
-				t_code = itr->second;
-			ostr << t_code << ' ';
-		}
+			ostr << get_thread_code(msg._tid) << ' ';
 
 		if (_flags & direction)
 			ostr << (msg._val ? " in" : "out") << ' ' ;
@@ -119,18 +110,60 @@ int Logger::operator()()
 		if (_flags & timestamp)
 		{
 			string ts;
-			ostr << GetTimeAsStringMS(ts, 0, 9) << ' ';
+			ostr << GetTimeAsStringMS(ts, &msg._when, 9) << ' ';
 		}
 
 		tbb::mutex::scoped_lock guard(_mutex);
-		get_stream() << ostr.str() << msg._str << std::endl;
+		get_stream() << ostr.str() << msg._str << endl;
    }
 
    return 0;
 }
 
 //-------------------------------------------------------------------------------------------------
-FileLogger::FileLogger(const std::string& fname, const ebitset<Flags> flags, const unsigned rotnum)
+void Logger::purge_thread_codes()
+{
+	tbb::mutex::scoped_lock guard(_mutex);
+
+	for (ThreadCodes::iterator itr(_thread_codes.begin()); itr != _thread_codes.end();)
+	{
+		// a little trick to see if a thread is still alive
+		clockid_t clock_id;
+		if (pthread_getcpuclockid(itr->first, &clock_id) == ESRCH)
+		{
+			_rev_thread_codes.erase(itr->second);
+			_thread_codes.erase(itr++); // post inc, takes copy before incr;
+		}
+		else
+			++itr;
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+char Logger::get_thread_code(pthread_t tid)
+{
+	tbb::mutex::scoped_lock guard(_mutex);
+
+	ThreadCodes::const_iterator itr(_thread_codes.find(tid));
+	if (itr != _thread_codes.end())
+		return itr->second;
+
+	for (char acode('A'); acode < 127; ++acode) 	// A-~ will allow for 86 threads
+	{
+		RevThreadCodes::const_iterator itr(_rev_thread_codes.find(acode));
+		if (itr == _rev_thread_codes.end())
+		{
+			_thread_codes.insert(ThreadCodes::value_type(tid, acode));
+			_rev_thread_codes.insert(ThreadCodes::value_type(acode, tid));
+			return acode;
+		}
+	}
+
+	return '?';
+}
+
+//-------------------------------------------------------------------------------------------------
+FileLogger::FileLogger(const string& fname, const ebitset<Flags> flags, const unsigned rotnum)
 	: Logger(flags), _ofs(), _rotnum(rotnum)
 {
    // | uses IFS safe cfpopen; ! uses old popen if available
@@ -144,7 +177,6 @@ FileLogger::FileLogger(const std::string& fname, const ebitset<Flags> flags, con
                         cfpopen(const_cast<char*>(_pathname.c_str()), const_cast<char*>("w")));
       if (pcmd == 0)
       {
-         //SimpleLogError(TRANSLATIONUNIT, __LINE__, _pathname);
 #ifdef DEBUG
          *errofs << _pathname << " failed to execute" << endl;
 #endif
@@ -170,7 +202,7 @@ FileLogger::FileLogger(const std::string& fname, const ebitset<Flags> flags, con
 //-------------------------------------------------------------------------------------------------
 bool FileLogger::rotate(bool force)
 {
-   if (!(_flags & pipe))
+   if (!_flags.has(pipe))
    {
 		tbb::mutex::scoped_lock guard(_mutex);
 
@@ -179,7 +211,7 @@ bool FileLogger::rotate(bool force)
       if (_flags & compress)
          thislFile += ".gz";
 #endif
-      if (_rotnum > 0 && (!(_flags & append) || force))
+      if (_rotnum > 0 && (!_flags.has(append) || force))
       {
          vector<string> rlst(_rotnum);
          rlst.push_back(thislFile);

@@ -106,8 +106,8 @@ void SessionID::from_string(const f8String& from)
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
-	_sid(sid), _login_retry_interval(default_retry_interval),
-	_login_retries(default_login_retries),_persist(persist), _logger(logger), _plogger(plogger),	// initiator
+	_sid(sid), _login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
+	_reset_sequence_numbers(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
@@ -116,8 +116,8 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
-	_login_retry_interval(default_retry_interval),
-	_login_retries(default_login_retries), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
+	_login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
+	_reset_sequence_numbers(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
@@ -148,6 +148,10 @@ Session::~Session()
 //-------------------------------------------------------------------------------------------------
 int Session::start(Connection *connection, bool wait, const unsigned send_seqnum, const unsigned recv_seqnum)
 {
+	if (_logger)
+		_logger->purge_thread_codes();
+	if (_plogger)
+		_plogger->purge_thread_codes();
 	_control.clear(shutdown);
 	log("Starting session");
 	_connection = connection; // takes owership
@@ -159,11 +163,16 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
 		atomic_init(States::st_not_logged_in);
-		recover_seqnums();
-		if (send_seqnum)
-			_next_send_seq = send_seqnum;
-		if (recv_seqnum)
-			_next_receive_seq = recv_seqnum;
+		if (_reset_sequence_numbers)
+			_next_send_seq = _next_receive_seq = 1;
+		else
+		{
+			recover_seqnums();
+			if (send_seqnum)
+				_next_send_seq = send_seqnum;
+			if (recv_seqnum)
+				_next_receive_seq = recv_seqnum;
+		}
 
 		Message *msg(generate_logon(_connection->get_hb_interval()));
 		send(msg);
@@ -344,11 +353,19 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 	}
 	else // acceptor
 	{
-		recover_seqnums();
-		if (_req_next_send_seq)
-			_next_send_seq = _req_next_send_seq;
-		if (_req_next_receive_seq)
-			_next_receive_seq = _req_next_receive_seq;
+		if (_ctx.version() >= 4100 && msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get())
+		{
+			log("Resetting sequence numbers");
+			_next_send_seq = _next_receive_seq = 1;
+		}
+		else
+		{
+			recover_seqnums();
+			if (_req_next_send_seq)
+				_next_send_seq = _req_next_send_seq;
+			if (_req_next_receive_seq)
+				_next_receive_seq = _req_next_receive_seq;
+		}
 
 		sender_comp_id sci;
 		msg->Header()->get(sci);
@@ -581,6 +598,8 @@ Message *Session::generate_logon(const unsigned heartbtint)
 	Message *msg(create_msg(Common_MsgType_LOGON));
 	*msg += new heartbeat_interval(heartbtint);
 	*msg += new encrypt_method(0); // FIXME
+	if (_reset_sequence_numbers)
+		*msg += new reset_seqnum_flag(true);
 
 	return msg;
 }

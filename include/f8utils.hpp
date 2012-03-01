@@ -69,6 +69,37 @@ std::string Str_error(const int err, const char *str=0);
   \return reference to target string */
 const std::string& GetTimeAsStringMS(std::string& result, class Tickval *tv=0, const unsigned dplaces=6);
 
+/*! Trim leading and trailing whitespace from a string, inplace.
+  \param source source string
+  \param ws string containing whitespace characters to trim out
+  \return trimmed string */
+const std::string& trim(std::string& source, const std::string& ws = " \t");
+
+//----------------------------------------------------------------------------------------
+/*! Rotate a value by the specified number of bits
+  \tparam T type
+  \param val source value
+  \param bits number of bits to rotate by
+  \return the rotated value */
+template<typename T>
+inline T rotl(const T val, const int bits) { return val << bits | val >> (sizeof(T) * 8 - bits); }
+
+/*! Generate a rot13 hash. No multiplication, algorithm by Serge Vakulenko. See http://vak.ru/doku.php/proj/hash/sources.
+  \param str source string
+  \return hash value */
+inline unsigned ROT13Hash (const std::string& str)
+{
+	unsigned int hash(0);
+
+	for (std::string::const_iterator itr(str.begin()); itr != str.end(); ++itr)
+	{
+		hash += *itr;
+		hash -= rotl(hash, 13);
+	}
+
+	return hash;
+}
+
 //----------------------------------------------------------------------------------------
 /*! case insensitive std::string == std::string operator
   \tparam _CharT char type
@@ -218,18 +249,18 @@ public:
 
 	/*! Get the number of sub-expressions found.
 	  \return number of sub-expression */
-	const unsigned SubCnt() const { return subCnt_; }
+	unsigned SubCnt() const { return subCnt_; }
 
 	/*! Get the size (length) of the specified sub-expression.
 	  \param which sub-expression index (0 based)
 	  \return size of sub-expression, -1 if not found */
-	const size_t SubSize(const int which=0) const
+	size_t SubSize(const int which=0) const
 		{ return which < subCnt_ ? subexprs_[which].rm_eo - subexprs_[which].rm_so : -1; }
 
 	/*! Get the starting offset of the specified sub-expression.
 	  \param which sub-expression index (0 based)
 	  \return offset of the sub-expression, -1 if not found */
-	const unsigned SubPos(const int which=0) const
+	unsigned SubPos(const int which=0) const
 		{ return which < subCnt_ ? subexprs_[which].rm_so : -1; }
 
 	friend class RegExp;
@@ -643,7 +674,7 @@ inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
 /*! Sleep the specified number of milliseconds.
     \param ms time to sleep in milliseconds
     \return 0 on success */
-inline int millisleep (const int ms)
+inline int millisleep (const unsigned ms)
 {
 	struct timespec tspec = { ms / 1000, 1000 * 1000 * (ms % 1000) };
 	return nanosleep(&tspec, 0);
@@ -653,7 +684,7 @@ inline int millisleep (const int ms)
 /*! Sleep the specified number of microseconds.
     \param us time to sleep in microseconds
     \return 0 on success */
-inline int microsleep (const int us)
+inline int microsleep (const unsigned us)
 {
 	struct timespec tspec = { us / (1000 * 1000), 1000 * (us % (1000 * 1000)) };
 	return nanosleep(&tspec, 0);

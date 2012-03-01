@@ -51,11 +51,13 @@ class XmlEntity
 	/// simple n-ary tree
 	XmlSubEls *children_;
 
+	typedef std::
 #ifdef HAS_TR1_UNORDERED_MAP
-	typedef std::tr1::unordered_map<std::string, std::string> XmlAttrs;
+		tr1::unordered_map
 #else
-	typedef std::map<std::string, std::string> XmlAttrs;
+		map
 #endif
+		<std::string, std::string> XmlAttrs;
 	XmlAttrs *attrs_;
 
 	/// Comparitor.
@@ -143,10 +145,40 @@ public:
 	bool findAttrByValue(const std::string& what, const std::string& value);
 
 	/*! Find an attribute with the given name and return its typed value.
+	  \tparam type of target attribute
 	  \param what attribute to find
 	  \param defValue value to return if attribute was not found
 	  \return the value of the found attribute */
-	template<typename T> T FindAttr(const std::string& what, const T defValue);
+	template<typename T>
+	T FindAttr(const std::string& what, const T defValue) const
+	{
+		if (attrs_)
+		{
+			XmlAttrs::iterator itr(attrs_->find(what));
+			if (itr != attrs_->end())
+				return FIX8::GetValue<T>(itr->second);
+		}
+
+		return defValue;
+	}
+
+	/*! Find an attribute with the given name and populate supplied target with its typed value.
+	  \tparam type of target attribute
+	  \param what attribute to find
+	  \param target location to return value
+	  \return reference to value of the found attribute */
+	template<typename T>
+	T& FindAttrRef(const std::string& what, T& target) const
+	{
+		if (attrs_)
+		{
+			XmlAttrs::iterator itr(attrs_->find(what));
+			if (itr != attrs_->end())
+				target = FIX8::GetValue<T>(itr->second);
+		}
+
+		return target;
+	}
 
 	/*! Perform xml translation on the supplied string inplace.
 	  Translate predefined entities and numeric character references.
@@ -156,35 +188,35 @@ public:
 
 	/*! Get the depth of this element
 	  \return the depth */
-	const int GetDepth() const { return depth_; }
+	int GetDepth() const { return depth_; }
 
 	/*! Get the global error count.
 	  \return the error count */
-	const int GetErrorCnt() const { return errors_; }
+	int GetErrorCnt() const { return errors_; }
 
 	/*! Get the actual current source line.
 	  \return the source line */
-	const int GetLineCnt() const { return line_; }
+	int GetLineCnt() const { return line_; }
 
 	/*! Get the count of children this element has.
 	  \return the number of children */
-	const int GetChildCnt() const { return chldcnt_; }
+	int GetChildCnt() const { return chldcnt_; }
 
 	/*! Get the source line of this element (element order).
 	  \return the line */
-	const int GetLine() const { return txtline_; }
+	int GetLine() const { return txtline_; }
 
 	/*! Get the subindex.
 	  \return the subindex */
-	const int GetSubIdx() const { return subidx_; }
+	int GetSubIdx() const { return subidx_; }
 
 	/*! Get the sequence number for this element (incremented for each new element).
 	  \return the sequence number */
-	const int GetSequence() const { return sequence_; }
+	int GetSequence() const { return sequence_; }
 
 	/*! Get the maximum depth supported.
 	  \return the maximum depth */
-	const int GetMaxDepth() const { return maxdepth_; }
+	int GetMaxDepth() const { return maxdepth_; }
 
 
 	/*! Get the element tag name.

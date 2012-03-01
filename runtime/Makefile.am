@@ -34,7 +34,7 @@ lib_LTLIBRARIES = libfix8.la
 INCLUDES = -I$(top_srcdir)/include
 
 libfix8_la_SOURCES = popen.c \
-							xml.cpp f8utils.cpp message.cpp traits.cpp \
+							statconst.cpp xml.cpp f8utils.cpp message.cpp traits.cpp \
 							field.cpp session.cpp logger.cpp persist.cpp \
 							connection.cpp configuration.cpp memory.cpp
 

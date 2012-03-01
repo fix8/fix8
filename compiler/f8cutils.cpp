@@ -59,12 +59,6 @@ using namespace std;
 using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
-static const std::string rcsid("$Id$");
-
-//----------------------------------------------------------------------------------------
-const std::string TRANSLATIONUNIT(__FILE__);
-
-//-----------------------------------------------------------------------------------------
 extern string inputFile, shortName, odir, prefix;
 extern bool verbose;
 extern const string spacer, GETARGLIST;

@@ -69,7 +69,7 @@ struct RealmBase
 	  \param what the value to check
 	  \return true if in the set or no domain available */
 	template<typename T>
-	const bool is_valid(const T& what) const
+	bool is_valid(const T& what) const
 	{
 		const T *rng(static_cast<const T*>(_range));
 		return _dtype == dt_set ? std::binary_search(rng, rng + _sz, what) : *rng <= what && what <= *(rng + 1);
@@ -80,7 +80,7 @@ struct RealmBase
 	  \param what the value to check
 	  \return the index in the domain set of this value */
 	template<typename T>
-	const int get_rlm_idx(const T& what) const
+	int get_rlm_idx(const T& what) const
 	{
 		if (_dtype == dt_set)
 		{
@@ -111,7 +111,7 @@ public:
 
 	/*! Get the fix tag id of this field.
 	  \return fix tag id (field num) */
-	const unsigned short get_tag() const { return _fnum; }
+	unsigned short get_tag() const { return _fnum; }
 
 	/*! Get the raw value as a string.
 	  \return the field value as a string */
@@ -171,7 +171,7 @@ template<typename T, const unsigned short field>
 struct Field : public BaseField
 {
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	///Ctor.
 	Field () : BaseField(field) {}
@@ -218,7 +218,7 @@ protected:
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
@@ -296,7 +296,7 @@ protected:
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -370,7 +370,7 @@ protected:
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
@@ -447,7 +447,7 @@ class Field<char, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
@@ -579,7 +579,7 @@ class Field<UTCTimestamp, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field), _tzdiff() {}
@@ -665,7 +665,7 @@ class Field<UTCTimeOnly, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -727,7 +727,7 @@ class Field<UTCDateOnly, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -789,7 +789,7 @@ class Field<LocalMktDate, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -851,7 +851,7 @@ class Field<TZTimeOnly, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -912,7 +912,7 @@ class Field<TZTimestamp, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -1119,7 +1119,7 @@ class Field<Boolean, field> : public BaseField
 
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : BaseField(field) {}
@@ -1156,11 +1156,11 @@ public:
 
 	/*! Get field value.
 	  \return value (bool) */
-	const bool get() const { return _value; }
+	bool get() const { return _value; }
 
 	/*! Get field value.
 	  \return value (bool) */
-	const bool operator()() const { return _value; }
+	bool operator()() const { return _value; }
 
 	/*! Get the realm index of this value in the domain set.
 	  \return the index in the domain set of this value */
@@ -1169,12 +1169,12 @@ public:
 	/*! Get field value.
 	  \param from value to set
 	  \return original value (bool) */
-	const bool set(const bool from) { return _value = from; }
+	bool set(const bool from) { return _value = from; }
 
 	/*! Set the value from a string.
 	  \param from value to set
 	  \return original value (bool) */
-	const bool set_from_raw(const f8String& from) { return toupper(from[0]) == 'Y'; }
+	bool set_from_raw(const f8String& from) { return toupper(from[0]) == 'Y'; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
@@ -1200,7 +1200,7 @@ class Field<Qty, field> : public Field<double, field>
 {
 public:
 	/// The FIX fieldID (tag number).
-	static const unsigned short get_field_id() { return field; }
+	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
 	Field () : Field<double, field>() {}
@@ -1297,6 +1297,7 @@ const unsigned Common_HeartBtInt(108);
 const unsigned Common_TestReqID(112);
 const unsigned Common_OrigSendingTime(122);
 const unsigned Common_GapFillFlag(123);
+const unsigned Common_ResetSeqNumFlag(141);
 const unsigned Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
 
 //-------------------------------------------------------------------------------------------------
@@ -1323,6 +1324,7 @@ typedef Field<UTCTimestamp, Common_OrigSendingTime> orig_sending_time;
 
 typedef Field<Boolean, Common_GapFillFlag> gap_fill_flag;
 typedef Field<Boolean, Common_PossDupFlag> poss_dup_flag;
+typedef Field<Boolean, Common_ResetSeqNumFlag> reset_seqnum_flag;
 
 typedef Field<int, Common_HeartBtInt> heartbeat_interval;
 typedef Field<int, Common_EncryptMethod> encrypt_method;

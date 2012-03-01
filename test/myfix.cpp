@@ -38,11 +38,16 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   This is a complete working example of a FIX client/server using FIX8.\n
 \n
 <tt>
-	Usage: f8test [-hlqsv]\n
+	Usage: f8test [-RSchlqrsv]\n
+		-R,--receive            set next expected receive sequence number\n
+		-S,--send               set next send sequence number\n
+		-c,--config             xml config (default: myfix_client.xml or myfix_server.xml)\n
 		-h,--help               help, this screen\n
 		-l,--log                global log filename\n
 		-q,--quiet              do not print fix output\n
+		-r,--reliable           start in reliable mode
 		-s,--server             run in server mode (default client mode)\n
+		-v,--version            print version then exit
 </tt>
 \n
 \n
@@ -123,6 +128,9 @@ using namespace FIX8;
 void print_usage();
 const string GETARGLIST("hl:svqc:R:S:r");
 bool term_received(false);
+
+//-----------------------------------------------------------------------------------------
+const int fdinbuf::_buffer_size;
 
 //-----------------------------------------------------------------------------------------
 template<>
@@ -386,11 +394,13 @@ void print_usage()
 	um.setdesc("f8test -- f8 test client/server");
 	um.add('s', "server", "run in server mode (default client mode)");
 	um.add('h', "help", "help, this screen");
+	um.add('v', "version", "print version then exit");
 	um.add('l', "log", "global log filename");
 	um.add('c', "config", "xml config (default: myfix_client.xml or myfix_server.xml)");
 	um.add('q', "quiet", "do not print fix output");
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
+	um.add('r', "reliable", "start in reliable mode");
 	um.print(cerr);
 }
 

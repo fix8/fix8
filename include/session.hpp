@@ -176,6 +176,7 @@ protected:
 
 	static const unsigned default_retry_interval=5000, default_login_retries=100;
 	unsigned _login_retry_interval, _login_retries;
+	bool _reset_sequence_numbers;
 
 	Persister *_persist;
 	Logger *_logger, *_plogger;
@@ -444,19 +445,21 @@ public:
 	/*! Set the login_retry_interval and login_retries settings.
 	    \param login_retry_interval time in ms to wait before retrying login
 	    \param login_retries max login retries to attempt */
-	void set_login_parameters(const unsigned login_retry_interval, const unsigned login_retries)
+	void set_login_parameters(const unsigned login_retry_interval, const unsigned login_retries, const bool reset_seqnum=false)
 	{
 		_login_retry_interval = login_retry_interval;
 		_login_retries = login_retries;
+		_reset_sequence_numbers = reset_seqnum;
 	}
 
 	/*! Get the login_retry_interval and login_retries settings.
 	    \param login_retry_interval time in ms to wait before retrying login
 	    \param login_retries max login retries to attempt */
-	void get_login_parameters(unsigned& login_retry_interval, unsigned& login_retries)
+	void get_login_parameters(unsigned& login_retry_interval, unsigned& login_retries, bool& reset_seqnum_flag)
 	{
 		login_retry_interval = _login_retry_interval;
 		login_retries = _login_retries;
+		reset_seqnum_flag = _reset_sequence_numbers;
 	}
 
 	/*! Set the persister.

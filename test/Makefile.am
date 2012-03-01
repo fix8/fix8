@@ -30,24 +30,25 @@
 #
 #############################################################################################
 bin_PROGRAMS = f8test f8print
+lib_LTLIBRARIES = libmyfix.la
 INCLUDES = -I$(top_srcdir)/include
-BUILT_SOURCES = Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
-					 Myfix_router.hpp Myfix_classes.hpp Myfix_classes.cpp
-f8test_SOURCES = myfix.cpp $(BUILT_SOURCES)
-f8print_SOURCES = myprint.cpp $(BUILT_SOURCES)
+libmyfix_la_SOURCES = Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
+					 		 Myfix_router.hpp Myfix_classes.hpp Myfix_classes.cpp
+f8test_SOURCES = myfix.cpp
+f8print_SOURCES = myprint.cpp
 XML_SCHEMA = $(top_srcdir)/schema/FIX44.xml
 #XML_SCHEMA = FIX44TEST.xml
-CLEANFILES = $(BUILT_SOURCES)
+CLEANFILES = $(libmyfix_la_SOURCES)
 
-$(BUILT_SOURCES): $(XML_SCHEMA)
+$(libmyfix_la_SOURCES): $(XML_SCHEMA)
 	$(top_srcdir)/compiler/f8c -n TEX $(XML_SCHEMA)
 
 .NOTPARALLEL: $(XML_SCHEMA)
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
-GEN_LIBS = -lrt -lfix8
+GEN_LIBS = -lrt -lfix8 -lmyfix
 TBB_LIBS = -ltbb
 BDB_LIBS = -ldb_cxx
-ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) -L$(top_srcdir)/runtime $(BDB_LIBS)
+ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) $(BDB_LIBS) -L$(top_srcdir)/runtime
 
 f8test_LDFLAGS = -rdynamic $(ALL_LIBS)
 f8print_LDFLAGS = -rdynamic $(ALL_LIBS)

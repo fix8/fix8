@@ -115,7 +115,7 @@ public:
 
 	/*! Get the number of elements in the data set.
 	  \return number of elements */
-	static const size_t size() { return _pairsz; }
+	static size_t size() { return _pairsz; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -171,7 +171,7 @@ struct StaticTable
 
 	/*! Get the number of elements in the data set.
 	  \return number of elements */
-	static const size_t get_count() { return _valuemap.size(); }
+	static size_t get_count() { return _valuemap.size(); }
 
 	/*! Get a pointer to the end of the data set. Used as an end inputiterator for initialisation.
 	  \return pointer to end of table */

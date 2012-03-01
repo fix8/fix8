@@ -74,9 +74,6 @@ using namespace std;
 
 namespace FIX8 {
 
-//----------------------------------------------------------------------------------------
-const std::string TRANSLATIONUNIT(__FILE__);
-
 //-------------------------------------------------------------------------------------------------
 const string& GetTimeAsStringMS(string& result, Tickval *tv, const unsigned dplaces)
 {
@@ -147,6 +144,14 @@ string Str_error(const int err, const char *str)
 		return ostr.str();
 	}
 	return string(buf);
+}
+
+//----------------------------------------------------------------------------------------
+const string& trim(string& source, const string& ws)
+{
+    const size_t bgstr(source.find_first_not_of(ws));
+    return bgstr == string::npos
+		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
 }
 
 } // namespace FIX8

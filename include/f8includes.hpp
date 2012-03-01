@@ -49,6 +49,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <xml.hpp>
 #include <thread.hpp>
 #include <gzstream.hpp>
+#include <tickval.hpp>
 #include <logger.hpp>
 #include <traits.hpp>
 #include <timer.hpp>

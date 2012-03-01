@@ -11,6 +11,8 @@
 				session_log="session_log"
 				protocol_log="protocol_log"
 				login_retry_interval="15000"
+				reset_sequence_numbers="false"
+				tcp_nodelay="true"
 				login_retries="100"
 				persist="bdb0" />
 

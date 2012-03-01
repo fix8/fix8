@@ -118,7 +118,13 @@ class FIXReader : public AsyncSocket<f8String>
 	    \param where buffer to place bytes in
 	    \param sz number of bytes to read
 	    \return number of bytes read */
-	int sockRead(char *where, size_t sz);
+	int sockRead(char *where, size_t sz)
+	{
+		const int result(_sock->receiveBytes(where, sz));
+		if (result == 0)
+			throw PeerResetConnection("connection gone");
+		return result;
+	}
 
 protected:
 	/*! Reader thread method. Reads messages and places them on the queue for processing.
@@ -233,7 +239,7 @@ public:
 
 	/*! Get the role for this connection.
 	    \return the role */
-	const Role get_role() const { return _role; }
+	Role get_role() const { return _role; }
 
 	/// Start the reader and writer threads.
 	void start();
@@ -286,14 +292,15 @@ public:
 class ClientConnection : public Connection
 {
 	Poco::Net::SocketAddress _addr;
+	const bool _no_delay;
 
 public:
 	/*! Ctor. Initiator.
 	    \param sock connected socket
 	    \param addr sock address structure
 	    \param session session */
-	ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session)
-		: Connection(sock, session), _addr(addr) {}
+	ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, const bool no_delay=true)
+		: Connection(sock, session), _addr(addr), _no_delay(no_delay) {}
 
 	/// Dtor.
 	virtual ~ClientConnection() {}
@@ -313,11 +320,11 @@ public:
 	    \param sock connected socket
 	    \param session session
 	    \param hb_interval heartbeat interval */
-	ServerConnection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval) :
+	ServerConnection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval, const bool no_delay=true) :
 		Connection(sock, session, hb_interval)
 	{
 		_sock->setLinger(false, 0);
-		_sock->setNoDelay(true);
+		_sock->setNoDelay(no_delay);
 	}
 
 	/// Dtor.

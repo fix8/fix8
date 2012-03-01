@@ -457,24 +457,6 @@ bool XmlEntity::GetAttr(const string& what, string& target) const
 }
 
 //-----------------------------------------------------------------------------------------
-template<typename T>
-T XmlEntity::FindAttr(const string& what, const T defValue)
-{
-	if (attrs_)
-	{
-		XmlAttrs::iterator itr(attrs_->find(what));
-		if (itr != attrs_->end())
-			return GetValue<T>(itr->second);
-	}
-
-	return defValue;
-}
-
-template int XmlEntity::FindAttr<int>(const string& tag, const int defValue);
-template bool XmlEntity::FindAttr<bool>(const string& tag, const bool defValue);
-template string XmlEntity::FindAttr<string>(const string& tag, const string defValue);
-
-//-----------------------------------------------------------------------------------------
 const string& XmlEntity::InplaceXlate (string& what)
 {
 	RegMatch match;

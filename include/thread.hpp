@@ -131,7 +131,7 @@ public:
 
 	/*! Recover the thread's exit value.
 	  \return exit value from to calling process */
-	const int GetExitVal() const { return _exitval; }
+	int GetExitVal() const { return _exitval; }
 
 	/*! Kill the thread.
 	  \param signum signal number to send */
@@ -146,11 +146,11 @@ public:
 
 	/*! Get the thread's thread ID.
 	  \return the thread id */
-	const pthread_t GetThreadID() const { return _tid; }
+	pthread_t GetThreadID() const { return _tid; }
 
 	/*! Get the thread's thread ID. Static version.
 	  \return the thread id */
-	static const pthread_t GetID() { return pthread_self(); }
+	static pthread_t GetID() { return pthread_self(); }
 
 	/*! Thread equivalence operator.
 	  \param that the other thread id

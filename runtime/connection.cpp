@@ -160,15 +160,6 @@ void FIXReader::set_preamble_sz()
 }
 
 //-------------------------------------------------------------------------------------------------
-int FIXReader::sockRead(char *where, size_t sz)
-{
-	int result(_sock->receiveBytes(where, sz));
-	if (result == 0)
-		throw PeerResetConnection("connection gone");
-	return result;
-}
-
-//-------------------------------------------------------------------------------------------------
 bool FIXReader::read(f8String& to)	// read a complete FIX message
 {
 	char msg_buf[_max_msg_len] = {};
@@ -196,7 +187,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			_hdr.SubExpr(match, to, bgstr, 0, 1);
 			_hdr.SubExpr(match, to, len, 0, 2);
 
-			if (bgstr != _session.get_ctx()._beginStr)	// invalid begin string
+			if (bgstr != _session.get_ctx()._beginStr)	// invalid FIX version
 				throw InvalidVersion(bgstr);
 
 			const unsigned mlen(GetValue<unsigned>(len));
@@ -211,7 +202,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			if ((result = sockRead(msg_buf + mlen, _chksum_sz) != static_cast<int>(_chksum_sz)))
 				return false;
 
-			to += string(msg_buf, mlen + _chksum_sz);
+			to.append(msg_buf, mlen + _chksum_sz);
 			_session.update_received();
 			return true;
 		}
@@ -289,7 +280,8 @@ void Connection::stop()
 bool ClientConnection::connect()
 {
 	unsigned login_retry_interval, login_retries, attempts(0);;
-	_session.get_login_parameters(login_retry_interval, login_retries);
+	bool reset_sequence_numbers;
+	_session.get_login_parameters(login_retry_interval, login_retries, reset_sequence_numbers);
 
 	Poco::Timespan timeout(1000000);
 
@@ -304,7 +296,7 @@ bool ClientConnection::connect()
 			_session.log(ostr.str());
 			_sock->connect(_addr, timeout);
 			_sock->setLinger(false, 0);
-			_sock->setNoDelay(true);
+			_sock->setNoDelay(_no_delay);
 			_session.log("Connection successful");
 			return _connected = true;
 		}

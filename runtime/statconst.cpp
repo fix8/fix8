@@ -33,7 +33,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 //-----------------------------------------------------------------------------------------
 #include <iostream>
-#include <fstream>
 #include <sstream>
 #include <vector>
 #include <map>
@@ -55,118 +54,34 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-int Configuration::process()
-{
-	if (!exist(_xmlfile))
-		throw f8Exception("server config file not found", _xmlfile);
-	if (!_root)
-		throw f8Exception("could not create root xml entity");
-
-	if (!load_map("fix8/session", _sessions, true))
-		throw f8Exception("could not locate server session in config file", _xmlfile);
-
-	load_map("fix8/persist", _persisters);
-	load_map("fix8/log", _loggers);
-
-	return _sessions.size();
-}
+const Tickval::ticks Tickval::noticks;
+const Tickval::ticks Tickval::thousand;
+const Tickval::ticks Tickval::million;
+const Tickval::ticks Tickval::billion;
 
 //-------------------------------------------------------------------------------------------------
-Connection::Role Configuration::get_role(const XmlEntity *from) const
-{
-	string role;
-	return from && from->GetAttr("role", role) ? role % "initiator" ? Connection::cn_initiator
-		: role % "acceptor" ? Connection::cn_acceptor : Connection::cn_unknown : Connection::cn_unknown;
-}
+const int RegExp::MaxErrLen_;
+const int RegMatch::SubLimit_;
 
 //-------------------------------------------------------------------------------------------------
-Poco::Net::SocketAddress Configuration::get_address(const XmlEntity *from) const
-{
-	Poco::Net::SocketAddress to;
-	string ip, port;
-	if (from && from->GetAttr("ip", ip) && from->GetAttr("port", port))
-		to = Poco::Net::SocketAddress(ip, port);
-
-	return to;
-}
+const int XmlEntity::MaxDepth;
 
 //-------------------------------------------------------------------------------------------------
-Persister *Configuration::create_persister(const XmlEntity *from) const
-{
-	string name;
-	if (from && from->GetAttr("persist", name))
-	{
-		const XmlEntity *which(find_persister(name));
-		if (which)
-		{
-			string type;
-			if (which->GetAttr("type", type))
-			{
-				if (type % "bdb")
-				{
-					string dir, db;
-					if (which->GetAttr("dir", dir) && which->GetAttr("db", db))
-					{
-						scoped_ptr<BDBPersister> result(new BDBPersister);
-						if (result->initialise(dir, db))
-							return result.release();
-					}
-				}
-				else if (type % "mem")
-					return new MemoryPersister;
-			}
-		}
-	}
-
-	return 0;
-}
+const unsigned Logger::rotation_default, Logger::max_rotation;
 
 //-------------------------------------------------------------------------------------------------
-Logger *Configuration::create_logger(const XmlEntity *from, const Logtype ltype) const
-{
-	string name;
-	if (from && from->GetAttr(ltype == session_log ? "session_log" : "protocol_log", name))
-	{
-		const XmlEntity *which(find_logger(name));
-		if (which)
-		{
-			string type;
-			if (which->GetAttr("type", type)
-				&& ((type % "session" && ltype == session_log) || (type % "protocol" && ltype == protocol_log)))
-			{
-				string logname("logname_not_set.log");
-				return new FileLogger(get_logname(which, logname), get_logflags(which), get_logfile_rotation(which));
-			}
-		}
-	}
-
-	return 0;
-}
+const unsigned Session::default_retry_interval, Session::default_login_retries;
 
 //-------------------------------------------------------------------------------------------------
-Logger::LogFlags Configuration::get_logflags(const XmlEntity *from) const
-{
-	Logger::LogFlags flags;
-	string flags_str;
-	if (from && from->GetAttr("flags", flags_str))
-	{
-		istringstream istr(flags_str);
-		for(char extr[32]; !istr.get(extr, sizeof(extr), '|').eof() || extr[0]; istr.ignore(1))
-		{
-			string result(extr);
-			flags.set(Logger::num_flags, Logger::_bit_names, trim(result));
-		}
-	}
-
-	return flags;
-}
+const unsigned MemoryPool::default_page_sz;
 
 //-------------------------------------------------------------------------------------------------
-unsigned Configuration::get_all_sessions(vector<XmlEntity *>& target, const Connection::Role role) const
-{
-	for (vector<XmlEntity *>::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)
-		if (role == Connection::cn_unknown || get_role(*itr) == role)
-			target.push_back(*itr);
-	return target.size();
-}
+template<const unsigned short field> const size_t Field<UTCTimestamp, field>::_sec_only;
+template<const unsigned short field> const size_t Field<UTCTimestamp, field>::_with_ms;
+
+//-------------------------------------------------------------------------------------------------
+const size_t FIXReader::_max_msg_len, FIXReader::_chksum_sz;
+
+//-------------------------------------------------------------------------------------------------
+const size_t Persister::MaxMsgLen;
 
