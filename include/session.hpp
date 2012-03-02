@@ -174,7 +174,7 @@ protected:
 	unsigned _req_next_send_seq, _req_next_receive_seq;
 	SessionID _sid;
 
-	static const unsigned default_retry_interval=5000, default_login_retries=100;
+	enum { default_retry_interval=5000, default_login_retries=100 };
 	unsigned _login_retry_interval, _login_retries;
 	bool _reset_sequence_numbers;
 
@@ -444,7 +444,8 @@ public:
 
 	/*! Set the login_retry_interval and login_retries settings.
 	    \param login_retry_interval time in ms to wait before retrying login
-	    \param login_retries max login retries to attempt */
+	    \param login_retries max login retries to attempt
+	    \param reset_seqnum reset the session sequence numbers on login */
 	void set_login_parameters(const unsigned login_retry_interval, const unsigned login_retries, const bool reset_seqnum=false)
 	{
 		_login_retry_interval = login_retry_interval;
@@ -454,7 +455,8 @@ public:
 
 	/*! Get the login_retry_interval and login_retries settings.
 	    \param login_retry_interval time in ms to wait before retrying login
-	    \param login_retries max login retries to attempt */
+	    \param login_retries max login retries to attempt
+	    \param reset_seqnum_flag get the reset sequence number flag */
 	void get_login_parameters(unsigned& login_retry_interval, unsigned& login_retries, bool& reset_seqnum_flag)
 	{
 		login_retry_interval = _login_retry_interval;

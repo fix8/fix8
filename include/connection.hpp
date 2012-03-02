@@ -98,7 +98,7 @@ public:
 class FIXReader : public AsyncSocket<f8String>
 {
 	static RegExp _hdr;
-	static const size_t _max_msg_len = 1024, _chksum_sz = 7;
+	enum { _max_msg_len = 1024, _chksum_sz = 7 };
 	tbb::atomic<bool> _socket_error;
 
 	Thread<FIXReader> _callback_thread;
@@ -298,7 +298,8 @@ public:
 	/*! Ctor. Initiator.
 	    \param sock connected socket
 	    \param addr sock address structure
-	    \param session session */
+	    \param session session
+	    \param no_delay set or clear the tcp no delay flag on the socket */
 	ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, const bool no_delay=true)
 		: Connection(sock, session), _addr(addr), _no_delay(no_delay) {}
 
@@ -319,7 +320,8 @@ public:
 	/*! Ctor. Initiator.
 	    \param sock connected socket
 	    \param session session
-	    \param hb_interval heartbeat interval */
+	    \param hb_interval heartbeat interval
+	    \param no_delay set or clear the tcp no delay flag on the socket */
 	ServerConnection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval, const bool no_delay=true) :
 		Connection(sock, session, hb_interval)
 	{

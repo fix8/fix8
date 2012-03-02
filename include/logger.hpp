@@ -114,7 +114,7 @@ class Logger
 
 public:
 	enum Flags { append, timestamp, sequence, compress, pipe, thread, direction, num_flags };
-	static const unsigned rotation_default = 5, max_rotation = 64;
+	enum { rotation_default = 5, max_rotation = 64} ;
 	typedef ebitset<Flags> LogFlags;
 
 protected:

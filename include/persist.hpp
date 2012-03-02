@@ -50,7 +50,7 @@ class Persister
 
 protected:
 	/// Maximum length of persisted FIX message.
-	static const size_t MaxMsgLen = 1024;
+	enum { MaxMsgLen = 1024 };
 	bool _opened;
 
 public:

@@ -59,6 +59,12 @@ RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 RegExp Session::_seq("34=([^\x01]+)\x01");
 
 //-------------------------------------------------------------------------------------------------
+const Tickval::ticks Tickval::noticks;
+const Tickval::ticks Tickval::thousand;
+const Tickval::ticks Tickval::million;
+const Tickval::ticks Tickval::billion;
+
+//-------------------------------------------------------------------------------------------------
 template<>
 const Session::Handlers::TypePair Session::Handlers::_valueTable[] =
 {

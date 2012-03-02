@@ -1,5 +1,5 @@
 0.4.15 	01/03/2012		<fix@fix8.org>
-Fixed static const in class definition storage linker error; fixed superfluous const laval return warnings on functions;
+Fixed static const in class definition storage linker error; fixed superfluous const level return warnings on functions;
 sequence reset flag support; log entries timestamped at creation; threadcode purging; seqnum seeding;
 numerous bugfixes;
 

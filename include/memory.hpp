@@ -46,7 +46,7 @@ namespace FIX8 {
 //-------------------------------------------------------------------------------------------------
 class MemoryPool  // lock free, fixed memory pool
 {
-   static const unsigned default_page_sz = 4096;
+   enum { default_page_sz = 4096 };
 
 	tbb::concurrent_bounded_queue<void *> _free_list;
    void *_store, *_store_end;

@@ -573,7 +573,7 @@ template<const unsigned short field>
 class Field<UTCTimestamp, field> : public BaseField
 {
 	static const std::string _fmt_sec, _fmt_ms;
-	static const size_t _sec_only = 17, _with_ms = 21;
+	enum { _sec_only = 17, _with_ms = 21 };
 	Poco::DateTime _value;
 	int _tzdiff;
 

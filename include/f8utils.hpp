@@ -235,7 +235,7 @@ public:
 class RegMatch
 {
 	/// Maximum number of sub-expressions.
-	static const int SubLimit_ = 32;
+	enum { SubLimit_ = 32 };
 
 	regmatch_t subexprs_[SubLimit_];
 	int subCnt_;
@@ -271,7 +271,7 @@ public:
 class RegExp
 {
 	/// Maximum length of an error message.
-	static const int MaxErrLen_ = 256;
+	enum { MaxErrLen_ = 256 };
 
 	regex_t reg_;
 	const std::string pattern_;

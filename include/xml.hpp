@@ -40,7 +40,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 class XmlEntity
 {
 	/// Maximum depth levels supported.
-	static const int MaxDepth = 128;
+	enum { MaxDepth = 128 };
 	static int errors_, line_, maxdepth_, seq_;
 	static FIX8::RegExp rCE_, rCX_;
 
