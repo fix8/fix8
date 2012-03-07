@@ -141,8 +141,7 @@ protected:
 
 public:
 	/*! Ctor.
-	    \param fptr FILE*
-	    \param cf if true, us cfpopen instead of popen */
+	    \param sock datagram socket */
    bcostream(Poco::Net::DatagramSocket *sock) : std::ostream(&buf_), buf_(sock) {}
 
 	/// Dtor.
