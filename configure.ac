@@ -121,8 +121,11 @@ AC_CHECK_FUNCS([scandir getopt_long sysconf getaddrinfo getnameinfo \
 	strncasecmp strspn strtol strtoul random srandom
 	])
 
+AC_CHECK_LIB(rt, clock_gettime, [AC_DEFINE(HAVE_CLOCK_GETTIME, 1, [Define if you have clock_gettime()])])
+AC_CHECK_LIB(rt, clock_nanosleep, [AC_DEFINE(HAVE_CLOCK_NANOSLEEP, 1, [Define if you have clock_nanosleep()])])
+
 AC_CHECK_HEADERS([getopt.h fcntl.h netdb.h regex.h signal.h string.h sys/time.h \
-	arpa/inet.h sys/stat.h sys/types.h select.h sys/event.h h netinet/tcp.h \
+	arpa/inet.h sys/stat.h sys/types.h select.h sys/event.h netinet/tcp.h \
 	sys/wait.h netinet/in.h getopt.h limits.h sys/ioctl.h unistd.h \
 	sys/socket.h time.h syslog.h termios.h alloca.h
 	])
@@ -240,7 +243,7 @@ AC_DEFINE(HAVE_BDB, 1, [Define to 1 if you have berkeley DB])
 
 if test "$have_bdb" = "no"; then
 		echo
-		echo "ERROR: Berkeley DB development libraries are required. Install and try again."
+		echo "ERROR: Oracle Berkeley DB development libraries are required. Install and try again."
 		echo
 		exit 1
 fi

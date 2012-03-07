@@ -167,7 +167,7 @@ public:
 /// Create a streambuf from an open file descriptor.
 class fdinbuf : public std::streambuf
 {
-   static const int _buffer_size = 16;
+   enum { _buffer_size = 16 };
 
 protected:
    char _buffer[_buffer_size];

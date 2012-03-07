@@ -32,6 +32,24 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #endif
 //-----------------------------------------------------------------------------------------
+/** \file myprint.cpp
+
+  This is a simple logfile/logstream printer using the metadata generated for myfix.cpp.\n
+\n
+<tt>
+	f8print -- f8 protocol log printer
+
+	Usage: f8print [-hosv] <fix protocol file, use '-' for stdin>
+		-h,--help               help, this screen
+		-o,--offset             bytes to skip on each line before parsing FIX message
+		-s,--summary            summary, generate message summary
+		-v,--version            print version then exit
+	e.g.
+		f8print myfix_server_protocol.log
+		cat myfix_client_protocol.log | f8print -
+</tt>
+*/
+//-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <memory>
 #include <fstream>
@@ -72,7 +90,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hsv");
+const string GETARGLIST("hsvo:");
 bool term_received(false), summary(false);
 
 typedef map<string, unsigned> MessageCount;
@@ -112,12 +130,13 @@ public:
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	int val;
+	int val, offset(0);
 
 #ifdef HAVE_GETOPT_LONG
 	option long_options[] =
 	{
 		{ "help",			0,	0,	'h' },
+		{ "offset",			0,	0,	'o' },
 		{ "version",		0,	0,	'v' },
 		{ "summary",		0,	0,	's' },
 		{ 0 },
@@ -135,6 +154,7 @@ int main(int argc, char **argv)
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
+		case 'o': offset = GetValue<int>(optarg); break;
 		case 's': summary = true; break;
 		default: break;
 		}
@@ -164,30 +184,21 @@ int main(int argc, char **argv)
 	MessageCount *mc(summary ? new MessageCount : 0);
 
 #if defined PERMIT_CUSTOM_FIELDS
-	CustomFields custfields(true);	// will cleanup
-	custfields.add(6666, BaseEntry_ctor(new BaseEntry, &TEX::Create_Orderbook,
-		&TEX::extra_realmbases[0], "Orderbook", "Select downstream execution venue"));
-	custfields.add(6951, BaseEntry_ctor(new BaseEntry, &TEX::Create_BrokerInitiated,
-		&TEX::extra_realmbases[1], "BrokerInitiated", "Indicate if order was broker initiated"));
-	custfields.add(7009, BaseEntry_ctor(new BaseEntry, &TEX::Create_ExecOption,
-		&TEX::extra_realmbases[2], "ExecOption", "Broker specific option"));
-	TEX::ctx.set_ube(&custfields);
-
+	TEX::myfix_custom custfields(true); // will cleanup; modifies ctx
 	myfix_session_server ses(TEX::ctx);
 #endif
 
+	const int bufsz(1024);
+	char buffer[bufsz];
+
 	try
 	{
-		const int bufsz(1024);
-
 		while (!ifs().eof() && !term_received)
 		{
-			char buffer[bufsz] = {};
-
 			ifs().getline(buffer, bufsz);
 			if (buffer[0])
 			{
-				scoped_ptr<Message> msg(Message::factory(TEX::ctx, buffer
+				scoped_ptr<Message> msg(Message::factory(TEX::ctx, buffer + offset
 #if defined PERMIT_CUSTOM_FIELDS
 					, &ses, &Session::post_msg_ctor
 #endif
@@ -200,8 +211,7 @@ int main(int argc, char **argv)
 					else
 						mitr->second++;
 				}
-				msg->print(cout);
-				cout << endl;
+				cout << *msg << endl;
 				++msgs;
 			}
 		}
@@ -231,7 +241,7 @@ int main(int argc, char **argv)
 #if defined PERMIT_CUSTOM_FIELDS
 bool myfix_session_server::post_msg_ctor(Message *msg)
 {
-	return common_post_msg_ctor(msg);
+	return TEX::common_post_msg_ctor(msg);
 }
 
 //-----------------------------------------------------------------------------------------
@@ -265,9 +275,11 @@ void print_usage()
 	um.setdesc("f8print -- f8 protocol log printer");
 	um.add('h', "help", "help, this screen");
 	um.add('v', "version", "print version then exit");
+	um.add('o', "offset", "bytes to skip on each line before parsing FIX message");
 	um.add('s', "summary", "summary, generate message summary");
 	um.add("e.g.");
 	um.add("@f8print myfix_server_protocol.log");
+	um.add("@f8print f8print -s -o 12 myfix_client_protocol.log");
 	um.add("@cat myfix_client_protocol.log | f8print -");
 	um.print(cerr);
 }

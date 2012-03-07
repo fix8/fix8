@@ -90,7 +90,7 @@ public:
 
 	/*! Insert the formatted usage into the given stream.
 	  \param os the stream to insert to */
-	void print(std::ostream& os)
+	void print(std::ostream& os) const
 	{
 		if (!description_.empty())
 			os << description_ << std::endl << std::endl;

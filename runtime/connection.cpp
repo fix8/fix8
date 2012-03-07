@@ -279,7 +279,7 @@ void Connection::stop()
 //-------------------------------------------------------------------------------------------------
 bool ClientConnection::connect()
 {
-	unsigned login_retry_interval, login_retries, attempts(0);;
+	unsigned login_retry_interval, login_retries, attempts(0);
 	bool reset_sequence_numbers;
 	_session.get_login_parameters(login_retry_interval, login_retries, reset_sequence_numbers);
 

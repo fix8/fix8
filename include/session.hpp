@@ -51,7 +51,7 @@ class SessionID
 	sender_comp_id _senderCompID;
 	target_comp_id _targetCompID;
 
-	f8String _id;
+	f8String _id, _rid;
 
 public:
 	/*! Ctor.
@@ -82,35 +82,34 @@ public:
 	/// Dtor.
 	virtual ~SessionID() {}
 
-	/*! Create a sessionid string.
-	    \return sessionid string */
-	const f8String& make_id();
+	/*! Create a sessionid and reverse sessionid strings. */
+	void make_id();
 
 	/// Create a sessionid string.
 	void from_string(const f8String& from);
 
 	/*! Get the beginstring field.
-	    return beginstring */
+	    \return beginstring */
 	const begin_string& get_beginString() const { return _beginString; }
 
 	/*! Get the sender_comp_id field.
-	    return sender_comp_id */
+	    \return sender_comp_id */
 	const sender_comp_id& get_senderCompID() const { return _senderCompID; }
 
 	/*! Get the target_comp_id field.
-	    return target_comp_id */
+	    \return target_comp_id */
 	const target_comp_id& get_targetCompID() const { return _targetCompID; }
 
 	/*! Get the target_comp_id field.
-	    return target_comp_id */
+	    \return target_comp_id */
 	const f8String& get_id() const { return _id; }
 
 	/*! Targetcompid equivalence operator.
-	    return true if both Targetcompids are the same */
+	    \return true if both Targetcompids are the same */
 	bool same_sender_comp_id(const target_comp_id& targetCompID) const { return targetCompID() == _senderCompID(); }
 
 	/*! Sendercompid equivalence operator.
-	    return true if both Sendercompids are the same */
+	    \return true if both Sendercompids are the same */
 	bool same_target_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _targetCompID(); }
 
 	/*! Inserter friend.
@@ -353,7 +352,7 @@ public:
 
 		friend std::ostream& operator<<(std::ostream& os, const RetransmissionContext& what)
 		{
-			os << "end:" << what._end << " last:" << what._last << " interupted seqnum:"
+			os << "end:" << what._end << " last:" << what._last << " interrupted seqnum:"
 				<< what._interrupted_seqnum << " no_more_records:" << std::boolalpha << what._no_more_records;
 			return os;
 		}

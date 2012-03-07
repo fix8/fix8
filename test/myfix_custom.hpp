@@ -73,7 +73,6 @@ BaseField *Create_BrokerInitiated(const f8String& from, const RealmBase *db) { r
 BaseField *Create_ExecOption(const f8String& from, const RealmBase *db) { return new ExecOption(from, db); }
 
 } // namespace
-} // namespace TEX
 
 bool common_post_msg_ctor(Message *msg)
 {
@@ -89,6 +88,24 @@ bool common_post_msg_ctor(Message *msg)
 	return true;
 }
 
+class myfix_custom : public CustomFields
+{
+public:
+	myfix_custom(bool cleanup=true) : CustomFields(cleanup)
+	{
+		add(6666, BaseEntry_ctor(new BaseEntry, &Create_Orderbook,
+			&extra_realmbases[0], "Orderbook", "Select downstream execution venue"));
+		add(6951, BaseEntry_ctor(new BaseEntry, &Create_BrokerInitiated,
+			&extra_realmbases[1], "BrokerInitiated", "Indicate if order was broker initiated"));
+		add(7009, BaseEntry_ctor(new BaseEntry, &Create_ExecOption,
+			&extra_realmbases[2], "ExecOption", "Broker specific option"));
+		ctx.set_ube(this);
+	}
+
+	virtual ~myfix_custom() {}
+};
+
+} // namespace TEX
 } // namespace FIX8
 
 #endif // _FIX8_MYFIX_CUSTOM_HPP_

@@ -152,7 +152,7 @@ class CustomFields
 
 public:
 	/*! Ctor.
-	    \param cleanup if true, delete BAseEntries on destruction */
+	    \param cleanup if true, delete BaseEntries on destruction */
 	explicit CustomFields(bool cleanup=true) : _cleanup(cleanup) {}
 
 	/// Dtor.

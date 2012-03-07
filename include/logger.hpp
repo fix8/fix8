@@ -36,35 +36,37 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _FIX8_LOGGER_HPP_
 
 #include <tbb/concurrent_queue.h>
+#include <Poco/Net/IPAddress.h>
+#include <Poco/Net/DatagramSocket.h>
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 /// File descriptor output streambuf
 class fdoutbuf : public std::streambuf // inspiration from Josuttis N.M.
 {
 protected:
    int fd;
 
-   virtual int_type overflow (int_type c)
+   virtual int_type overflow(int_type c)
    {
-      if (c != EOF)
+      if (c != traits_type::eof())
       {
          char z(c);
          if (write(fd, &z, 1) != 1)
-            return EOF;
+            return traits_type::eof();
       }
       return c;
    }
 
-   virtual std::streamsize xsputn (const char *s, std::streamsize num)
+   virtual std::streamsize xsputn(const char *s, std::streamsize num)
    {
       return write (fd, s, num);
    }
 
 public:
-   fdoutbuf (int _fd) : fd(_fd) {}
+   fdoutbuf(int _fd) : fd(_fd) {}
    virtual ~fdoutbuf () {}
 };
 
@@ -87,7 +89,7 @@ public:
 	/*! Ctor.
 	    \param fptr FILE*
 	    \param cf if true, us cfpopen instead of popen */
-   fptrostream (FILE *fptr, bool cf=true) : std::ostream(&buf_), fptr_(fptr), cf_(cf), buf_(fileno(fptr)) {}
+   fptrostream(FILE *fptr, bool cf=true) : std::ostream(&buf_), fptr_(fptr), cf_(cf), buf_(fileno(fptr)) {}
 
 	/// Dtor.
    virtual ~fptrostream ()
@@ -104,6 +106,50 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+/// Socket output streambuf
+class bcoutbuf : public std::streambuf // inspiration from Josuttis N.M.
+{
+protected:
+	Poco::Net::DatagramSocket *_sock;
+
+   virtual int_type overflow(int_type c)
+   {
+      if (c != traits_type::eof())
+      {
+         char z(c);
+         _sock->sendBytes(&z, 1);
+      }
+      return c;
+   }
+
+   virtual std::streamsize xsputn(const char *s, std::streamsize num)
+   {
+      _sock->sendBytes(s, num);
+      return num;
+   }
+
+public:
+   bcoutbuf(Poco::Net::DatagramSocket *sock) : _sock(sock) {}
+   virtual ~bcoutbuf() { _sock->close(); delete _sock; }
+};
+
+/// udp stream
+class bcostream : public std::ostream
+{
+protected:
+   bcoutbuf buf_;
+
+public:
+	/*! Ctor.
+	    \param fptr FILE*
+	    \param cf if true, us cfpopen instead of popen */
+   bcostream(Poco::Net::DatagramSocket *sock) : std::ostream(&buf_), buf_(sock) {}
+
+	/// Dtor.
+   virtual ~bcostream() {}
+};
+
+//-------------------------------------------------------------------------------------------------
 class Tickval;
 
 /// Thread delegated async logging class
@@ -113,13 +159,14 @@ class Logger
 	std::ostringstream _buf;
 
 public:
-	enum Flags { append, timestamp, sequence, compress, pipe, thread, direction, num_flags };
+	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, num_flags };
 	enum { rotation_default = 5, max_rotation = 64} ;
 	typedef ebitset<Flags> LogFlags;
 
 protected:
 	tbb::mutex _mutex;
 	LogFlags _flags;
+	std::ostream *_ofs;
 
 	struct LogElement
 	{
@@ -162,14 +209,14 @@ protected:
 public:
 	/*! Ctor.
 	    \param flags ebitset flags */
-	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _sequence(), _osequence() { _thread.Start(); }
+	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _ofs(), _sequence(), _osequence() { _thread.Start(); }
 
 	/// Dtor.
-	virtual ~Logger() {}
+	virtual ~Logger() { delete _ofs; }
 
 	/*! Get the underlying stream object.
 	    \return the stream */
-	virtual std::ostream& get_stream() const { return std::cout; }
+	virtual std::ostream& get_stream() const { return _ofs ? *_ofs : std::cout; }
 
 	/*! Log a string.
 	    \param what the string to log
@@ -202,30 +249,9 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// A generic logging class that will log to any supplied ostream
-class GenericLogger : public Logger
-{
-	std::ostream& _os;
-
-public:
-	/*! Ctor.
-	    \param os the stream to log to
-	    \param flags ebitset flags */
-	GenericLogger(std::ostream& os, const LogFlags flags) : Logger(flags), _os(os) {}
-
-	/// Dtor.
-	virtual ~GenericLogger() {}
-
-	/*! Get the underlying stream object.
-	    \return the stream */
-	virtual std::ostream& get_stream() const { return _os; }
-};
-
-//-------------------------------------------------------------------------------------------------
 /// A file logger.
 class FileLogger : public Logger
 {
-	std::ostream *_ofs;
 	std::string _pathname;
 	unsigned _rotnum;
 
@@ -237,16 +263,52 @@ public:
 	FileLogger(const std::string& pathname, const LogFlags flags, const unsigned rotnum=rotation_default);
 
 	/// Dtor.
-	virtual ~FileLogger() { delete _ofs; }
-
-	/*! Get the underlying stream object.
-	    \return the stream */
-	virtual std::ostream& get_stream() const { return _ofs ? *_ofs : std::cerr; }
+	virtual ~FileLogger() {}
 
 	/*! Perform logfile rotation
 	    \param force force the rotation (even if the file is set ti append)
 	    \return true on success */
 	virtual bool rotate(bool force=false);
+};
+
+//-------------------------------------------------------------------------------------------------
+/// A pipe logger.
+class PipeLogger : public Logger
+{
+public:
+	/*! Ctor.
+	    \param command pipe command
+	    \param flags ebitset flags */
+	PipeLogger(const std::string& command, const LogFlags flags);
+
+	/// Dtor.
+	virtual ~PipeLogger() {}
+};
+
+//-------------------------------------------------------------------------------------------------
+/// A broadcast logger.
+class BCLogger : public Logger
+{
+	bool _init_ok;
+
+public:
+	/*! Ctor.
+	    \param sock udp socket
+	    \param flags ebitset flags */
+	BCLogger(Poco::Net::DatagramSocket *sock, const LogFlags flags);
+
+	/*! Ctor.
+	    \param ip ip string
+	    \param port port to use
+	    \param flags ebitset flags */
+	BCLogger(const std::string& ip, const unsigned port, const LogFlags flags);
+
+	/*! Check to see if a socket was successfully created.
+	  \return non-zero if ok, 0 if not ok */
+	operator void*() { return _init_ok ? this : 0; }
+
+	/// Dtor.
+	virtual ~BCLogger() {}
 };
 
 //-------------------------------------------------------------------------------------------------

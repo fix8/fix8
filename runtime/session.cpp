@@ -84,11 +84,14 @@ const Session::Handlers::TypeMap Session::Handlers::_valuemap(Session::Handlers:
 	Session::Handlers::get_table_end());
 
 //-------------------------------------------------------------------------------------------------
-const f8String& SessionID::make_id()
+void SessionID::make_id()
 {
 	f8ostrstream ostr;
+	ostr << _beginString << ':' << _targetCompID << "->" << _senderCompID;
+	_rid = ostr.str();
+	ostr.str("");
 	ostr << _beginString << ':' << _senderCompID << "->" << _targetCompID;
-	return _id = ostr.str();
+	_id = ostr.str();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -111,6 +114,7 @@ void SessionID::from_string(const f8String& from)
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
+	_last_sent(), _last_received(),
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
 	_reset_sequence_numbers(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
@@ -121,6 +125,7 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
+	_last_sent(), _last_received(),
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
 	_reset_sequence_numbers(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor

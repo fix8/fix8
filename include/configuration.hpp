@@ -42,6 +42,8 @@ namespace FIX8 {
 /// Class to encapsulate a Fix8 configuration.
 class Configuration
 {
+	static RegExp _ipexp;
+
 	std::string _xmlfile;
 	XmlEntity *_root;
 	typedef std::map<const std::string, XmlEntity *> ConfigMap;
@@ -151,7 +153,7 @@ public:
 	  \param from xml entity to search
 	  \param to target logfile string
 	  \return target string */
-	const std::string& get_logname(const XmlEntity *from, std::string& to) const
+	std::string& get_logname(const XmlEntity *from, std::string& to) const
 		{ if (from) return from->FindAttrRef("filename", to); return to; }
 
 	/*! Extract the login retry wait interval (ms) from a session entity.

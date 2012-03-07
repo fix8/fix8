@@ -55,6 +55,9 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
+RegExp Configuration::_ipexp("^([^:]+):([0-9]+)$");
+
+//-------------------------------------------------------------------------------------------------
 int Configuration::process()
 {
 	if (!exist(_xmlfile))
@@ -135,7 +138,23 @@ Logger *Configuration::create_logger(const XmlEntity *from, const Logtype ltype)
 				&& ((type % "session" && ltype == session_log) || (type % "protocol" && ltype == protocol_log)))
 			{
 				string logname("logname_not_set.log");
-				return new FileLogger(get_logname(which, logname), get_logflags(which), get_logfile_rotation(which));
+				trim(get_logname(which, logname));
+
+				if (logname[0] == '|' || logname[0] == '!')
+					return new PipeLogger(logname, get_logflags(which));
+
+				RegMatch match;
+				if (_ipexp.SearchString(match, logname, 3) == 3)
+				{
+					f8String ip, port;
+					_ipexp.SubExpr(match, logname, ip, 0, 1);
+					_ipexp.SubExpr(match, logname, port, 0, 2);
+					BCLogger *bcl(new BCLogger(ip, GetValue<unsigned>(port), get_logflags(which)));
+					if (*bcl)
+						return bcl;
+				}
+
+				return new FileLogger(logname, get_logflags(which), get_logfile_rotation(which));
 			}
 		}
 	}

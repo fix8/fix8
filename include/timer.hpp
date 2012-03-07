@@ -156,12 +156,11 @@ int Timer<T>::operator()()
       }	// we want the lock to go out of scope before we sleep
 
       if (shouldsleep)
-         nanosleep(&tspec, 0);
+			rnanosleep(tspec);
    }
 
 	std::ostringstream ostr;
-	ostr << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size()
-		<< " queued).";
+	ostr << "Terminating Timer thread (" << elapsed << " elapsed, " << _event_queue.size() << " queued).";
 	GlobalLogger::instance()->send(ostr.str());
 	return 0;
 }

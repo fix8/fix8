@@ -63,7 +63,9 @@ tbb::atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_ins
 template<>
 tbb::mutex Singleton<SingleLogger<glob_log0> >::_mutex = tbb::mutex();
 
-const string Logger::_bit_names[] = { "append", "timestamp", "sequence", "compress", "pipe", "thread", "direction" };
+const string Logger::_bit_names[] = { "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction" };
+
+//RegExp Logger::_elmnt("([0-9]+)=([^\x01]+)\x01");
 
 //-------------------------------------------------------------------------------------------------
 int Logger::operator()()
@@ -164,35 +166,9 @@ char Logger::get_thread_code(pthread_t tid)
 
 //-------------------------------------------------------------------------------------------------
 FileLogger::FileLogger(const string& fname, const ebitset<Flags> flags, const unsigned rotnum)
-	: Logger(flags), _ofs(), _rotnum(rotnum)
+	: Logger(flags), _rotnum(rotnum)
 {
-   // | uses IFS safe cfpopen; ! uses old popen if available
-   if (fname[0] == '|' || fname[0] == '!')
-   {
-      _pathname = fname.substr(1);
-      FILE *pcmd(
-#ifdef HAVE_POPEN
-         fname[0] == '!' ? popen(_pathname.c_str(), "w") :
-#endif
-                        cfpopen(const_cast<char*>(_pathname.c_str()), const_cast<char*>("w")));
-      if (pcmd == 0)
-      {
-#ifdef DEBUG
-         *errofs << _pathname << " failed to execute" << endl;
-#endif
-      }
-      else if (ferror(pcmd))
-#ifdef DEBUG
-         *errofs << _pathname << " shows ferror" << endl
-#endif
-         ;
-      else
-      {
-         _ofs = new fptrostream(pcmd, fname[0] == '|');
-         _flags |= pipe;
-      }
-   }
-   else if (!fname.empty())
+   if (!fname.empty())
    {
       _pathname = fname;
       rotate();
@@ -202,44 +178,96 @@ FileLogger::FileLogger(const string& fname, const ebitset<Flags> flags, const un
 //-------------------------------------------------------------------------------------------------
 bool FileLogger::rotate(bool force)
 {
-   if (!_flags.has(pipe))
-   {
-		tbb::mutex::scoped_lock guard(_mutex);
+	tbb::mutex::scoped_lock guard(_mutex);
 
-      string thislFile(_pathname);
+	string thislFile(_pathname);
 #ifdef HAVE_COMPRESSION
-      if (_flags & compress)
-         thislFile += ".gz";
+	if (_flags & compress)
+		thislFile += ".gz";
 #endif
-      if (_rotnum > 0 && (!_flags.has(append) || force))
-      {
-         vector<string> rlst(_rotnum);
-         rlst.push_back(thislFile);
+	if (_rotnum > 0 && (!_flags.has(append) || force))
+	{
+		vector<string> rlst(_rotnum);
+		rlst.push_back(thislFile);
 
-         for (unsigned ii(0); ii < _rotnum && ii < max_rotation; ++ii)
-         {
-            ostringstream ostr;
-            ostr << _pathname << '.' << (ii + 1);
-            if (_flags & compress)
-               ostr << ".gz";
-            rlst.push_back(ostr.str());
-         }
+		for (unsigned ii(0); ii < _rotnum && ii < max_rotation; ++ii)
+		{
+			ostringstream ostr;
+			ostr << _pathname << '.' << (ii + 1);
+			if (_flags & compress)
+				ostr << ".gz";
+			rlst.push_back(ostr.str());
+		}
 
-         for (unsigned ii(_rotnum); ii; --ii)
-            rename (rlst[ii - 1].c_str(), rlst[ii].c_str());   // ignore errors
-      }
+		for (unsigned ii(_rotnum); ii; --ii)
+			rename (rlst[ii - 1].c_str(), rlst[ii].c_str());   // ignore errors
+	}
 
-      delete _ofs;
+	delete _ofs;
 
-		const ios_base::openmode mode (ios_base::out | (_flags & append) ? ios_base::app : ios_base::trunc);
+	const ios_base::openmode mode (_flags & append ? ios_base::out | ios_base::app : ios_base::out);
 #ifdef HAVE_COMPRESSION
-      if (_flags & compress)
-         _ofs = new ogzstream(thislFile.c_str(), mode);
-      else
+	if (_flags & compress)
+		_ofs = new ogzstream(thislFile.c_str(), mode);
+	else
 #endif
-         _ofs = new ofstream(thislFile.c_str(), mode);
-   }
+		_ofs = new ofstream(thislFile.c_str(), mode);
 
-   return true;
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+PipeLogger::PipeLogger(const string& fname, const ebitset<Flags> flags) : Logger(flags)
+{
+	const string pathname(fname.substr(1));
+
+   // | uses IFS safe cfpopen; ! uses old popen if available
+	FILE *pcmd(
+#ifdef HAVE_POPEN
+		fname[0] == '!' ? popen(pathname.c_str(), "w") :
+#endif
+								cfpopen(const_cast<char*>(pathname.c_str()), const_cast<char*>("w")));
+	if (pcmd == 0)
+#ifdef DEBUG
+		*errofs << pathname << " failed to execute" << endl
+#endif
+		;
+	else if (ferror(pcmd))
+#ifdef DEBUG
+		*errofs << pathname << " shows ferror" << endl
+#endif
+		;
+	else
+	{
+		_ofs = new fptrostream(pcmd, fname[0] == '|');
+		_flags |= pipe;
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+// nc -lu 127.0.0.1 -p 51000
+BCLogger::BCLogger(Poco::Net::DatagramSocket *sock, const ebitset<Flags> flags) : Logger(flags), _init_ok(true)
+{
+	_ofs = new bcostream(sock);
+	_flags |= broadcast;
+}
+
+BCLogger::BCLogger(const string& ip, const unsigned port, const LogFlags flags) : Logger(flags), _init_ok()
+{
+	Poco::Net::IPAddress ipaddr;
+	if (Poco::Net::IPAddress::tryParse(ip, ipaddr)
+		&& (ipaddr.isGlobalMC() || ipaddr.isMulticast() || ipaddr.isBroadcast()
+		|| ipaddr.isLinkLocalMC() || ipaddr.isUnicast() || ipaddr.isWellKnownMC()
+		|| ipaddr.isSiteLocalMC() || ipaddr.isOrgLocalMC()))
+	{
+		Poco::Net::SocketAddress saddr(ipaddr, port);
+		Poco::Net::DatagramSocket *dgs(new Poco::Net::DatagramSocket);
+		if (ipaddr.isBroadcast())
+			dgs->setBroadcast(true);
+		dgs->connect(saddr);
+		_ofs = new bcostream(dgs);
+		_flags |= broadcast;
+		_init_ok = true;
+	}
 }
 

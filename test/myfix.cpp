@@ -130,9 +130,6 @@ const string GETARGLIST("hl:svqc:R:S:r");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
-const int fdinbuf::_buffer_size;
-
-//-----------------------------------------------------------------------------------------
 template<>
 const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
 {
@@ -221,14 +218,7 @@ int main(int argc, char **argv)
 	signal(SIGQUIT, sig_handler);
 
 #if defined PERMIT_CUSTOM_FIELDS
-	CustomFields custfields(true);	// will cleanup
-	custfields.add(6666, BaseEntry_ctor(new BaseEntry, &TEX::Create_Orderbook,
-		&TEX::extra_realmbases[0], "Orderbook", "Select downstream execution venue"));
-	custfields.add(6951, BaseEntry_ctor(new BaseEntry, &TEX::Create_BrokerInitiated,
-		&TEX::extra_realmbases[1], "BrokerInitiated", "Indicate if order was broker initiated"));
-	custfields.add(7009, BaseEntry_ctor(new BaseEntry, &TEX::Create_ExecOption,
-		&TEX::extra_realmbases[2], "ExecOption", "Broker specific option"));
-	TEX::ctx.set_ube(&custfields);
+	TEX::myfix_custom custfields(true); // will cleanup; modifies ctx
 #endif
 
 	try
@@ -305,7 +295,7 @@ bool myfix_session_client::handle_application(const unsigned seqnum, const Messa
 #if defined PERMIT_CUSTOM_FIELDS
 bool myfix_session_client::post_msg_ctor(Message *msg)
 {
-	return common_post_msg_ctor(msg);
+	return TEX::common_post_msg_ctor(msg);
 }
 #endif
 
@@ -324,7 +314,7 @@ bool myfix_session_server::handle_admin(const unsigned seqnum, const Message *ms
 #if defined PERMIT_CUSTOM_FIELDS
 bool myfix_session_server::post_msg_ctor(Message *msg)
 {
-	return common_post_msg_ctor(msg);
+	return TEX::common_post_msg_ctor(msg);
 }
 #endif
 

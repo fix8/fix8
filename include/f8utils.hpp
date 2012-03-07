@@ -669,6 +669,27 @@ inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
    return target;
 }
 
+//----------------------------------------------------------------------------------------
+/*! A more reliable nanosleep.
+    \param tspec timespec to sleep
+    \return 0 on success */
+inline int rnanosleep (const timespec& tspec)
+{
+#if defined HAVE_CLOCK_NANOSLEEP
+   timespec ts;
+   clock_gettime(CLOCK_REALTIME, &ts);
+   ts.tv_sec += tspec.tv_sec;
+   ts.tv_nsec += tspec.tv_nsec;
+   if (ts.tv_nsec >= 1000000000)
+   {
+      ++ts.tv_sec;
+      ts.tv_nsec -= 1000000000;
+   }
+	return clock_nanosleep(CLOCK_REALTIME, TIMER_ABSTIME, &ts, 0);
+#else
+	return nanosleep(&tspec, 0);
+#endif
+}
 
 //----------------------------------------------------------------------------------------
 /*! Sleep the specified number of milliseconds.
@@ -676,8 +697,8 @@ inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
     \return 0 on success */
 inline int millisleep (const unsigned ms)
 {
-	struct timespec tspec = { ms / 1000, 1000 * 1000 * (ms % 1000) };
-	return nanosleep(&tspec, 0);
+	const timespec tspec = { ms / 1000, 1000 * 1000 * (ms % 1000) };
+	return rnanosleep(tspec);
 }
 
 //----------------------------------------------------------------------------------------
@@ -686,8 +707,8 @@ inline int millisleep (const unsigned ms)
     \return 0 on success */
 inline int microsleep (const unsigned us)
 {
-	struct timespec tspec = { us / (1000 * 1000), 1000 * (us % (1000 * 1000)) };
-	return nanosleep(&tspec, 0);
+	const timespec tspec = { us / (1000 * 1000), 1000 * (us % (1000 * 1000)) };
+	return rnanosleep(tspec);
 }
 
 //----------------------------------------------------------------------------------------
