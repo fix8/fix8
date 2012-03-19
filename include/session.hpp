@@ -333,13 +333,6 @@ public:
 	    \return true on success */
 	virtual bool process(const f8String& from);
 
-#if defined PERMIT_CUSTOM_FIELDS
-	/*! Post message ctor. Called by framework when a message has been constructed, permitting addition of custom fields.
-	    \param msg Message
-	    \return true on success */
-	virtual bool post_msg_ctor(Message *msg) { return true; }
-#endif
-
 	/// Provides context to your retrans handler.
 	struct RetransmissionContext
 	{

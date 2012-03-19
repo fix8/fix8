@@ -247,11 +247,7 @@ bool Session::process(const f8String& from)
 		seqnum = GetValue<unsigned>(seqstr);
 
 		plog(from, 1);
-		scoped_ptr<Message> msg(Message::factory(_ctx, from
-#if defined PERMIT_CUSTOM_FIELDS
-			, this, &Session::post_msg_ctor
-#endif
-		));
+		scoped_ptr<Message> msg(Message::factory(_ctx, from));
 		if (_control & print)
 			cout << *msg << endl;
 		bool result((msg->is_admin() ? handle_admin(seqnum, msg.get()) : true)
@@ -469,11 +465,7 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& rctx)
 {
-	Message *msg(Message::factory(_ctx, with.second
-#if defined PERMIT_CUSTOM_FIELDS
-		, this, &Session::post_msg_ctor
-#endif
-		));
+	Message *msg(Message::factory(_ctx, with.second));
 
 	//cout << "first:" << with.first << ' ' << rctx << endl;
 

@@ -177,6 +177,11 @@ public:
 		CustFields::const_iterator itr(_custFields.find(fnum));
 		return itr == _custFields.end() ? 0 : itr->second;
 	}
+
+	/*! Post message ctor. Called by framework when a message has been constructed, permitting addition of custom fields.
+	    \param msg Message
+	    \return true on success */
+	virtual bool post_msg_ctor(Message *msg) { return true; }
 };
 #endif
 
@@ -202,12 +207,12 @@ struct F8MetaCntx
 
 	F8MetaCntx(const unsigned version, const GeneratedTable<const f8String, BaseMsgEntry>& bme,
 		const GeneratedTable<unsigned, BaseEntry>& be, const f8String& bg) :
-			 _version(version), _bme(bme), _be(be),
+			_version(version), _bme(bme), _be(be),
 #if defined PERMIT_CUSTOM_FIELDS
-			 _ube(),
+			_ube(),
 #endif
-			_mk_hdr(_bme.find_ptr("header")->_create),
-			_mk_trl(_bme.find_ptr("trailer")->_create), _beginStr(bg) {}
+			_mk_hdr(_bme.find_ptr("header")->_create), _mk_trl(_bme.find_ptr("trailer")->_create),
+			_beginStr(bg) {}
 
 	/// 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	unsigned version() const { return _version; }
@@ -534,7 +539,13 @@ public:
 		: MessageBase(ctx, msgType, begin, end), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl()),
 		_custom_seqnum(), _no_increment()
 #if defined MSGRECYCLING
-		{ _in_use = true; }
+		{
+			_in_use = true;
+#if defined PERMIT_CUSTOM_FIELDS
+			if (ctx._ube)
+				ctx._ube->post_msg_ctor(this);
+#endif
+		}
 
 	/*! Indicate that this message is currently being used.
 	    \param way if true, set inuse as true */
@@ -544,7 +555,12 @@ public:
 	    \return true if message is in use */
 	bool get_in_use() const { return _in_use; }
 #else
-		{}
+		{
+#if defined PERMIT_CUSTOM_FIELDS
+			if (ctx._ube)
+				ctx._ube->post_msg_ctor(this);
+#endif
+		}
 #endif
 	/// Dtor.
 	virtual ~Message() { delete _header; delete _trailer; }
@@ -618,34 +634,18 @@ public:
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object
 	    \param from pointer to raw buffer containing Fix message
-	    \param sess pointer to session
-	    \param post_ctor post_ctor member of session
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
-	static Message *factory(const F8MetaCntx& ctx, const char *from
-#if defined PERMIT_CUSTOM_FIELDS
-			, Session *sess=0, bool (Session::*post_ctor)(Message *msg)=0
-#endif
-		)
+	static Message *factory(const F8MetaCntx& ctx, const char *from)
 	{
 		const f8String to(from);
-		return factory(ctx, to
-#if defined PERMIT_CUSTOM_FIELDS
-			, sess, post_ctor
-#endif
-		);
+		return factory(ctx, to);
 	}
 
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object
 	    \param from reference to string raw buffer containing Fix message
-	    \param sess pointer to session
-	    \param post_ctor post_ctor member of session
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
-	static Message *factory(const F8MetaCntx& ctx, const f8String& from
-#if defined PERMIT_CUSTOM_FIELDS
-			, Session *sess=0, bool (Session::*post_ctor)(Message *msg)=0
-#endif
-		);
+	static Message *factory(const F8MetaCntx& ctx, const f8String& from);
 
 	/*! Set the custom sequence number. Used to override and suppress automatic seqnum assignment.
 	    \param seqnum the outbound sequence number to use for this message. */

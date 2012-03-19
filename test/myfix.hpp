@@ -80,16 +80,6 @@ public:
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
 	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
-
-#if defined PERMIT_CUSTOM_FIELDS
-	/*! Post message constructor.
-	    If you have enabled custom field capability then you need to provde an implementation for this method.
-	    It is called immediately after the framework has constructed a message from the metadata. You should then add your
-		 custom field traits.
-		 \param msg Mesage decoded (base ptr)
-		 \return true on success */
-	bool post_msg_ctor(FIX8::Message *msg);
-#endif
 };
 
 //-----------------------------------------------------------------------------------------
@@ -149,15 +139,6 @@ public:
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
 	bool handle_admin(const unsigned seqnum, const FIX8::Message *msg);
-
-#if defined PERMIT_CUSTOM_FIELDS
-	/*! Post message constructor. If you have enabled custom field capability then you need to provde an implementation for this method.
-	    It is called immediately after the framework has constructed a message from the metadata. You should then add your
-		 custom field traits.
-		 \param msg Mesage decoded (base ptr)
-		 \return true on success */
-	bool post_msg_ctor(FIX8::Message *msg);
-#endif
 
 	bool set_is_logged_out() { return _logged_out = true; }
 	bool is_logged_out() const { return _logged_out; }

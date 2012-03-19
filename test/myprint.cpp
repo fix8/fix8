@@ -185,7 +185,7 @@ int main(int argc, char **argv)
 
 #if defined PERMIT_CUSTOM_FIELDS
 	TEX::myfix_custom custfields(true); // will cleanup; modifies ctx
-	myfix_session_server ses(TEX::ctx);
+	TEX::ctx.set_ube(&custfields);
 #endif
 
 	const int bufsz(1024);
@@ -198,11 +198,7 @@ int main(int argc, char **argv)
 			ifs().getline(buffer, bufsz);
 			if (buffer[0])
 			{
-				scoped_ptr<Message> msg(Message::factory(TEX::ctx, buffer + offset
-#if defined PERMIT_CUSTOM_FIELDS
-					, &ses, &Session::post_msg_ctor
-#endif
-				));
+				scoped_ptr<Message> msg(Message::factory(TEX::ctx, buffer + offset));
 				if (summary)
 				{
 					MessageCount::iterator mitr(mc->find(msg->get_msgtype()));
@@ -236,37 +232,6 @@ int main(int argc, char **argv)
 
 	return 0;
 }
-
-//-----------------------------------------------------------------------------------------
-#if defined PERMIT_CUSTOM_FIELDS
-bool myfix_session_server::post_msg_ctor(Message *msg)
-{
-	return TEX::common_post_msg_ctor(msg);
-}
-
-//-----------------------------------------------------------------------------------------
-bool myfix_session_server::handle_application(const unsigned seqnum, const Message *msg)
-{
-	return true;
-}
-
-bool myfix_session_server::handle_admin(const unsigned seqnum, const Message *msg)
-{
-	return true;
-}
-
-//-----------------------------------------------------------------------------------------
-bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
-{
-	return true;
-}
-
-bool tex_router_server::operator() (const TEX::Logout *msg) const
-{
-	return true;
-}
-
-#endif
 
 //-----------------------------------------------------------------------------------------
 void print_usage()

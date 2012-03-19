@@ -33,6 +33,13 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 //-----------------------------------------------------------------------------------------
+/** \file myfix_custom.hpp
+
+  This file is an example of all the necessary data structures and classes needed to
+  add custom fields to a client or server.
+*/
+
+//-----------------------------------------------------------------------------------------
 #ifndef _FIX8_MYFIX_CUSTOM_HPP_
 #define _FIX8_MYFIX_CUSTOM_HPP_
 
@@ -45,7 +52,7 @@ typedef Field<int, 7009> ExecOption;
 
 namespace {
 
-const char Orderbook_realm[] =	// the realms must be std::less sorted
+const char Orderbook_realm[] =	// the realms must be alphanumerically sorted(e.g. std::less)
    { 'A', 'C', 'I', 'P', 'X' };
 const char *Orderbook_descriptions[] = // descriptions must be in the same order for the relevant realm
    { "AXCLOB", "AXCP", "CHIX", "AXPM", "CROSS" };
@@ -74,20 +81,6 @@ BaseField *Create_ExecOption(const f8String& from, const RealmBase *db) { return
 
 } // namespace
 
-bool common_post_msg_ctor(Message *msg)
-{
-	if (msg->get_msgtype() == TEX::ExecutionReport::get_msgtype()())
-	{
-		const FieldTrait::TraitBase trt[] =
-		{
-			{ 6666, 7, 1000, 0x004 }, { 6951,  8, 5, 0x004 }, { 7009,  1, 6, 0x004 },
-		};
-		msg->add_trait(trt, trt + sizeof(trt)/sizeof(FieldTrait::TraitBase));
-	}
-
-	return true;
-}
-
 class myfix_custom : public CustomFields
 {
 public:
@@ -99,10 +92,23 @@ public:
 			&extra_realmbases[1], "BrokerInitiated", "Indicate if order was broker initiated"));
 		add(7009, BaseEntry_ctor(new BaseEntry, &Create_ExecOption,
 			&extra_realmbases[2], "ExecOption", "Broker specific option"));
-		ctx.set_ube(this);
 	}
 
 	virtual ~myfix_custom() {}
+
+	virtual bool post_msg_ctor(Message *msg)
+	{
+		if (msg->get_msgtype() == TEX::ExecutionReport::get_msgtype()())
+		{
+			static const FieldTrait::TraitBase trt[] =
+			{
+				{ 6666, 7, 1000, 0x004 }, { 6951,  8, 5, 0x004 }, { 7009,  1, 6, 0x004 },
+			};
+			msg->add_trait(trt, trt + sizeof(trt)/sizeof(FieldTrait::TraitBase));
+		}
+
+		return true;
+	}
 };
 
 } // namespace TEX

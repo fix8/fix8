@@ -179,11 +179,7 @@ unsigned Message::decode(const f8String& from)
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *Message::factory(const F8MetaCntx& ctx, const f8String& from
-#if defined PERMIT_CUSTOM_FIELDS
-	, Session *sess, bool (Session::*post_ctor)(Message *msg)
-#endif
-	)
+Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 {
 	RegMatch match;
 	Message *msg(0);
@@ -199,8 +195,8 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from
 			throw InvalidMessage(mtype);
 		msg = bme->_create();
 #if defined PERMIT_CUSTOM_FIELDS
-		if (sess && post_ctor)
-			(sess->*post_ctor)(msg);
+		if (ctx._ube)
+			ctx._ube->post_msg_ctor(msg);
 #endif
 		//IntervalTimer itm;
 		msg->decode(from);

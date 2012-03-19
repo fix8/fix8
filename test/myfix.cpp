@@ -219,6 +219,7 @@ int main(int argc, char **argv)
 
 #if defined PERMIT_CUSTOM_FIELDS
 	TEX::myfix_custom custfields(true); // will cleanup; modifies ctx
+	TEX::ctx.set_ube(&custfields);
 #endif
 
 	try
@@ -292,14 +293,6 @@ bool myfix_session_client::handle_application(const unsigned seqnum, const Messa
 }
 
 //-----------------------------------------------------------------------------------------
-#if defined PERMIT_CUSTOM_FIELDS
-bool myfix_session_client::post_msg_ctor(Message *msg)
-{
-	return TEX::common_post_msg_ctor(msg);
-}
-#endif
-
-//-----------------------------------------------------------------------------------------
 bool myfix_session_server::handle_application(const unsigned seqnum, const Message *msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
@@ -309,14 +302,6 @@ bool myfix_session_server::handle_admin(const unsigned seqnum, const Message *ms
 {
 	return msg->process(_router);
 }
-
-//-----------------------------------------------------------------------------------------
-#if defined PERMIT_CUSTOM_FIELDS
-bool myfix_session_server::post_msg_ctor(Message *msg)
-{
-	return TEX::common_post_msg_ctor(msg);
-}
-#endif
 
 //-----------------------------------------------------------------------------------------
 bool MyMenu::new_order_single()
@@ -433,15 +418,9 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	//IntervalTimer itm;
 #if defined MSGRECYCLING
 	scoped_ptr<TEX::ExecutionReport> er(new TEX::ExecutionReport);
-#if defined PERMIT_CUSTOM_FIELDS
-	_session.post_msg_ctor(er.get());
-#endif
 	msg->copy_legal(er.get());
 #else
 	TEX::ExecutionReport *er(new TEX::ExecutionReport);
-#if defined PERMIT_CUSTOM_FIELDS
-	_session.post_msg_ctor(er);
-#endif
 	msg->copy_legal(er);
 #endif
 	if (!quiet)
@@ -487,9 +466,6 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
 #else
 		er = new TEX::ExecutionReport;
-#if defined PERMIT_CUSTOM_FIELDS
-		_session.post_msg_ctor(er);
-#endif
 		msg->copy_legal(er);
 #endif
 		*er += new TEX::OrderID(oistr.str());

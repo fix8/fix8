@@ -1,3 +1,6 @@
+0.4.17 	20/03/2012		<fix@fix8.org>
+Postmessage ctor automatically called;
+
 0.4.16 	08/03/2012		<fix@fix8.org>
 reliable nanosleep;pipelogger,bclogger;gzstream append;bug fixes
 
