@@ -66,6 +66,8 @@ using namespace std;
 
 //----------------------------------------------------------------------------------------
 int XmlEntity::errors_(0), XmlEntity::line_(1), XmlEntity::maxdepth_(0), XmlEntity::seq_(0);
+XmlEntity::XmlSet XmlEntity::emptyset_;
+XmlEntity::XmlAttrs XmlEntity::emptyattrs_;
 RegExp XmlEntity::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlEntity::rCX_("&(amp|lt|gt|apos|quot);");
 
 //-----------------------------------------------------------------------------------------
@@ -101,8 +103,8 @@ ostream& operator<<(ostream& os, const XmlEntity& en)
 	if (en.children_)
 	{
 		os << spacer << '{' << endl;
-		for (XmlEntity::XmlSubEls::iterator itr(en.children_->begin()); itr != en.children_->end(); ++itr)
-			os << *itr->second;
+		for (XmlEntity::XmlSet::iterator itr(en.ordchildren_->begin()); itr != en.ordchildren_->end(); ++itr)
+			os << **itr;
 		os << spacer << '}' << endl;
 	}
 
@@ -114,7 +116,7 @@ ostream& operator<<(ostream& os, const XmlEntity& en)
 //-----------------------------------------------------------------------------------------
 XmlEntity::XmlEntity(istream& ifs, int subidx, int txtline, int depth, const char *rootAttr)
 	: value_(), decl_(), depth_(depth), sequence_(++seq_), txtline_(txtline),
-	chldcnt_(), subidx_(subidx), children_(), attrs_()
+	chldcnt_(), subidx_(subidx), children_(), ordchildren_(), attrs_()
 {
 	enum
   	{
@@ -250,10 +252,14 @@ XmlEntity::XmlEntity(istream& ifs, int subidx, int txtline, int depth, const cha
 						else
 						{
 							if (!children_)
+							{
 								children_ = new XmlSubEls;
+								ordchildren_ = new XmlSet;
+							}
 							XmlEntity *chld(child.release());
 							++chldcnt_;
 							children_->insert(XmlSubEls::value_type(chld->GetTag(), chld));
+							ordchildren_->insert(chld);
 						}
 					}
 				}
@@ -336,13 +342,16 @@ int XmlEntity::ParseAttrs(const string& attlst)
 				tmpval += c;
 			else
 			{
-				if (!attrs_)
-					attrs_ = new XmlAttrs;
-				if (!attrs_->insert(XmlAttrs::value_type(tmptag, InplaceXlate(tmpval))).second)
+				if (tmptag != "docpath")
 				{
-					++errors_;
-					cerr << "Error (" << line_ << ") attribute \'" << tmptag
-						<< "\' already defined; ignoring" << endl;
+					if (!attrs_)
+						attrs_ = new XmlAttrs;
+					if (!attrs_->insert(XmlAttrs::value_type(tmptag, InplaceXlate(tmpval))).second)
+					{
+						++errors_;
+						cerr << "Error (" << line_ << ") attribute \'" << tmptag
+							<< "\' already defined; ignoring" << endl;
+					}
 				}
 				tmptag.clear();
 				tmpval.clear();
@@ -368,6 +377,7 @@ XmlEntity::~XmlEntity()
 	if (children_)
 		for_each (children_->begin(), children_->end(), free_ptr<Delete2ndPairObject<> >());
 	delete children_;
+	delete ordchildren_;
 }
 
 //-----------------------------------------------------------------------------------------

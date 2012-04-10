@@ -47,25 +47,30 @@ class XmlEntity
 	std::string tag_, *value_, *decl_;
 	int depth_, sequence_, txtline_, chldcnt_, subidx_;
 
-	typedef std::multimap<std::string, XmlEntity *> XmlSubEls;
-	/// simple n-ary tree
-	XmlSubEls *children_;
-
-	typedef std::
-#ifdef HAS_TR1_UNORDERED_MAP
-		tr1::unordered_map
-#else
-		map
-#endif
-		<std::string, std::string> XmlAttrs;
-	XmlAttrs *attrs_;
-
 	/// Comparitor.
 	struct EntityOrderComp
 	{
 		bool operator()(const XmlEntity *a, const XmlEntity *b) const
 			{ return a->GetSequence() < b->GetSequence(); }
 	};
+
+public:
+	/*! XmlSet ordering preserved from source file */
+	typedef std::set<XmlEntity *, EntityOrderComp> XmlSet;
+
+private:
+	typedef std::multimap<std::string, XmlEntity *> XmlSubEls;
+	/// simple n-ary tree
+	XmlSubEls *children_;
+
+	/// Set of all child entities in file order
+	XmlSet *ordchildren_;
+	static XmlSet emptyset_;
+
+public:
+	typedef std::map<std::string, std::string> XmlAttrs;
+	XmlAttrs *attrs_;
+	static XmlAttrs emptyattrs_;
 
 	/// Copy Ctor. Non-copyable.
 	XmlEntity(const XmlEntity&);
@@ -89,8 +94,6 @@ public:
 	  \param attlst string of attributes
 	  \return number of attributes extracted */
 	int ParseAttrs(const std::string& attlst);
-
-	typedef std::set<XmlEntity *, EntityOrderComp> XmlSet;
 
 	/*! Find an element with a given entity name, attribute name and attribute value.
 	  \param what the entity name to search for
@@ -238,6 +241,22 @@ public:
 	  \param fname the xml filename
 	  \return the depth */
 	static XmlEntity *Factory(const std::string& fname);
+
+	/*! Get an iterator to the first child attribute.
+	  \return const_iterator to first attribute */
+	XmlAttrs::const_iterator abegin() const { return attrs_ ? attrs_->begin() : emptyattrs_.end(); }
+
+	/*! Get an iterator to the last+1 child attribute.
+	  \return const_iterator to last+1 attribute */
+	XmlAttrs::const_iterator aend() const { return attrs_ ? attrs_->end() : emptyattrs_.end(); }
+
+	/*! Get an iterator to the first child element.
+	  \return const_iterator to first element */
+	XmlSet::const_iterator begin() const { return ordchildren_ ? ordchildren_->begin() : emptyset_.end(); }
+
+	/*! Get an iterator to the last+1 child element.
+	  \return const_iterator to last+1 element */
+	XmlSet::const_iterator end() const { return ordchildren_ ? ordchildren_->end() : emptyset_.end(); }
 
 	/*! Inserter friend.
 	    \param os stream to send to

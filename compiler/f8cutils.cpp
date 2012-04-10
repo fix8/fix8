@@ -59,7 +59,7 @@ using namespace std;
 using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
-extern string inputFile, shortName, odir, prefix;
+extern string shortName, odir, prefix;
 extern bool verbose;
 extern const string spacer, GETARGLIST;
 extern const CSMap _csMap;
@@ -82,15 +82,16 @@ void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostre
 const string& mkel(const string& base, const string& compon, string& where);
 
 //-----------------------------------------------------------------------------------------
-ostream *openofile(const string& odir, const string& fname)
+ostream *openofile(const string& odir, const string& fname, string& target)
 {
 	ostringstream ofs;
 	string odirect(odir);
 	ofs << CheckAddTrailingSlash(odirect) << fname;
-	scoped_ptr<ofstream> os(new ofstream(ofs.str().c_str()));
+	target = ofs.str();
+	scoped_ptr<ofstream> os(new ofstream(target.c_str()));
 	if (!*os)
 	{
-		cerr << "Error opening file \'" << ofs.str() << '\'';
+		cerr << "Error opening file \'" << target << '\'';
 		if	(errno)
 			cerr << " (" << strerror(errno) << ')';
 		cerr << endl;

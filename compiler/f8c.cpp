@@ -74,10 +74,10 @@ template<>
 const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8String, BaseMsgEntry>::_pairs[] = {};
 
 //-----------------------------------------------------------------------------------------
-string inputFile, shortName, odir("./"), prefix("Myfix");
+string precompFile, inputFile, shortName, odir("./"), prefix("Myfix");
 bool verbose(false), error_ignore(false);
 unsigned glob_errors(0), glob_warnings(0);
-extern const string GETARGLIST("hvVo:p:dikn:");
+extern const string GETARGLIST("hvVo:p:dikn:rs");
 extern const string spacer(3, ' ');
 
 //-----------------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& c
 void processOrdering(MessageSpecMap& mspec);
 int loadcomponents(const string& from, int sofar, XmlEntity& xf, ComponentSpecMap& mspec,
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
-ostream *openofile(const string& odir, const string& fname);
+ostream *openofile(const string& odir, const string& fname, string& target);
 const string flname(const string& from);
 void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
@@ -109,12 +109,13 @@ const string& filepart(const string& source, string& where);
 void generate_preamble(ostream& to);
 bool parseGroups(MessageSpecMap::iterator& ritr, XmlEntity::XmlSet::const_iterator& itr, const string& name,
 	const ComponentSpecMap& cspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, XmlEntity::XmlSet& grplist);
+int precomp(const XmlEntity& xf, ostream& outf);
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
 	int val;
-	bool dump(false), keep_failed(false);
+	bool dump(false), keep_failed(false), retain_precomp(false), second_only(false);
 	Ctxt ctxt;
 
 #ifdef HAVE_GETOPT_LONG
@@ -127,6 +128,8 @@ int main(int argc, char **argv)
 		{ "dump",			0,	0,	'd' },
 		{ "ignore",			0,	0,	'i' },
 		{ "keep",			0,	0,	'k' },
+		{ "retain",			0,	0,	'r' },
+		{ "second",			0,	0,	's' },
 		{ "prefix",			0,	0,	'p' },
 		{ "namespace",		0,	0,	'n' },
 		{ 0 },
@@ -151,6 +154,8 @@ int main(int argc, char **argv)
 		case 'd': dump = true; break;
 		case 'i': error_ignore = true; break;
 		case 'k': keep_failed = true; break;
+		case 'r': retain_precomp = true; break;
+		case 's': second_only = true; break;
 		case 'p': prefix = optarg; break;
 		case 'n': ctxt._fixns = optarg; break;
 		default: break;
@@ -168,6 +173,8 @@ int main(int argc, char **argv)
 		print_usage();
 		return 1;
 	}
+
+	scoped_ptr<ostream> pre_out(openofile(odir, shortName + ".expand", precompFile));
 
 	scoped_ptr<XmlEntity> cfr(XmlEntity::Factory(inputFile));
 	if (!cfr.get())
@@ -199,7 +206,8 @@ int main(int argc, char **argv)
 		ctxt._out[ii].first.second = prefix + ctxt._exts[ii];
 		ctxt._out[ii].first.first = '.' + ctxt._out[ii].first.second + ".tmp";
 		remove(ctxt._out[ii].first.first.c_str());
-		if ((ctxt._out[ii].second = openofile(odir, ctxt._out[ii].first.first)) == 0)
+		string target;
+		if ((ctxt._out[ii].second = openofile(odir, ctxt._out[ii].first.first, target)) == 0)
 			return 1;
 	}
 

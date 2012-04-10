@@ -47,6 +47,7 @@ pkg: $(distdir).tar.gz $(PACKAGE).spec
 src-release:
 	make dist
 	md5sum $(distdir).tar.gz > $(distdir).md5sum
+	cat $(distdir).md5sum
 
 check-release:
 	md5sum -c $(distdir).md5sum
