@@ -1,0 +1,10 @@
+var classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoSecurityAltID =
+[
+    [ "NoSecurityAltID", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoSecurityAltID.html#aa87f75c788f5c56bea101be30a615afd", null ],
+    [ "~NoSecurityAltID", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoSecurityAltID.html#aa05fa9fb4e2f75970121e5cbbec903a8", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoSecurityAltID.html#afc775ee5467198563d700d2d9c249d8c", null ],
+    [ "get_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoSecurityAltID.html#ab9d9833ed69a489202ff5d00601ca63c", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoSecurityAltID.html#a02514fd1563c6887e1219c370b612d3f", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoSecurityAltID.html#a308c1ad19bee4d42b751444db104b1ba", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoSecurityAltID.html#ad32a03e4a7578b2c392ff0bc20191217", null ]
+];

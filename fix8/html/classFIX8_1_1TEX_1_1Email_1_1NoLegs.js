@@ -1,0 +1,10 @@
+var classFIX8_1_1TEX_1_1Email_1_1NoLegs =
+[
+    [ "NoLegs", "classFIX8_1_1TEX_1_1Email_1_1NoLegs.html#a11cb55f407dc36afae3f879db67cc1c1", null ],
+    [ "~NoLegs", "classFIX8_1_1TEX_1_1Email_1_1NoLegs.html#a77aa120eec01eb8c09ba3e6a3f51fba8", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1Email_1_1NoLegs.html#a12f9c1619e0474c58714a60f18385628", null ],
+    [ "get_msgtype", "classFIX8_1_1TEX_1_1Email_1_1NoLegs.html#a7530369bc6d185b48e9bb11b4e336e99", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1Email_1_1NoLegs.html#a5895116cd43e08ccd3f2ee3cf950308f", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1Email_1_1NoLegs.html#a06700ec734d36ffc5a13adeaf47f72e0", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1Email_1_1NoLegs.html#a8408f0497ca2955582988b5ed011f81e", null ]
+];

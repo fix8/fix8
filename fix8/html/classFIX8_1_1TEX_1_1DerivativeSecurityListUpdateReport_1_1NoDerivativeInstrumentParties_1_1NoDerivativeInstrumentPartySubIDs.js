@@ -1,0 +1,10 @@
+var classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs =
+[
+    [ "NoDerivativeInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#a3f95087777d3e9ff75ec804fbfee55f7", null ],
+    [ "~NoDerivativeInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#afa416b3cbda544856266997bacf3e485", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#a5f403894cd5de063449132896fa374d0", null ],
+    [ "get_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#ae7221af480db5db196b7b32930f12ba3", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#aee8ec0cc556b8d51e3cc4a8073fa1443", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#ad702a483a07f499980c40d45aa9da895", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#ae1e2bacf1df30614cc31f7ca4d708b14", null ]
+];

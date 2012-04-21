@@ -1,0 +1,10 @@
+var classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes =
+[
+    [ "NoComplexEventTimes", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a09a121c1048a9e6457d0fd2511433df2", null ],
+    [ "~NoComplexEventTimes", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a20ce0369319d347734a7bc8025ef2150", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#ae6d267a79611a7fff54e903459991e00", null ],
+    [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#ab943d1be7801f6ef71058fb52713ee3f", null ],
+    [ "_fnum", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#ac454d25b946718e4435e74f155a6fb3f", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a8d1406c153397d583beb6499868d360c", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a3f93343761047cf02fe117971b48dac3", null ]
+];

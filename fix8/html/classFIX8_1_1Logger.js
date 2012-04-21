@@ -1,0 +1,27 @@
+var classFIX8_1_1Logger =
+[
+    [ "LogFlags", "classFIX8_1_1Logger.html#a478225c58aaf0244c2b1ada179d61eb4", null ],
+    [ "RevThreadCodes", "classFIX8_1_1Logger.html#a288d6d01354fe848f48150f3e656076e", null ],
+    [ "ThreadCodes", "classFIX8_1_1Logger.html#aba11dcf2790930d9868d3ea025fc1802", null ],
+    [ "Flags", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736c", null ],
+    [ "Logger", "classFIX8_1_1Logger.html#a6898b6f924a43a1bcec5ea0a1ae8fcde", null ],
+    [ "~Logger", "classFIX8_1_1Logger.html#ad970bc9c6ab4a80b42bda329eb4376c6", null ],
+    [ "get_stream", "classFIX8_1_1Logger.html#a8aee5d01bebcad62a5eae8f613233369", null ],
+    [ "get_thread_code", "classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81", null ],
+    [ "operator()", "classFIX8_1_1Logger.html#aa11f47142886e4dd38230ad63ce0377f", null ],
+    [ "purge_thread_codes", "classFIX8_1_1Logger.html#a8175e14a66ef836973ac504cf04170ef", null ],
+    [ "rotate", "classFIX8_1_1Logger.html#a96598126c3eb87a72b3581a223b7b489", null ],
+    [ "send", "classFIX8_1_1Logger.html#a41aff49ccaf67b09eee5e2991949b98b", null ],
+    [ "stop", "classFIX8_1_1Logger.html#a858c1ea1f37e54d330c5ab05b4fb80a3", null ],
+    [ "_bit_names", "classFIX8_1_1Logger.html#a2aead0799d1095aca012e6bf6e6470c8", null ],
+    [ "_buf", "classFIX8_1_1Logger.html#a16c633385a6d715c09fe8f1f9052ea87", null ],
+    [ "_flags", "classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387", null ],
+    [ "_msg_queue", "classFIX8_1_1Logger.html#a1856cdc07cfd20899f5ccc6f39c3016e", null ],
+    [ "_mutex", "classFIX8_1_1Logger.html#a638053a7d2ef91150b1d84f50793796e", null ],
+    [ "_ofs", "classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa", null ],
+    [ "_osequence", "classFIX8_1_1Logger.html#ac82651d126acdac512113beee695bb11", null ],
+    [ "_rev_thread_codes", "classFIX8_1_1Logger.html#a1a7b69255874cb0e2ae4629858c93a02", null ],
+    [ "_sequence", "classFIX8_1_1Logger.html#ab8da984b4ce7f89a11653dcff6222b6b", null ],
+    [ "_thread", "classFIX8_1_1Logger.html#ad2e5a1a8e15fa4af8174eb9819a41519", null ],
+    [ "_thread_codes", "classFIX8_1_1Logger.html#a476ab5cc45fc17d77fcf89b94c296970", null ]
+];
