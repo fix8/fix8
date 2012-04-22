@@ -1,88 +1,171 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset='utf-8'>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Fix8 Open Source FIX Engine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <title>dakka/fix8 @ GitHub</title>
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #10e1a7;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #ef1e58; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #ef1e58; }
-    h3 { text-align: center; color: #ef1e58; }
-    a { color: #ef1e58; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-<body>
-  <a href="https://github.com/dakka/fix8"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+  </head>
 
-  <div id="container">
-
-    <div class="download">
-      <a href="https://github.com/dakka/fix8/zipball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
-      <a href="https://github.com/dakka/fix8/tarball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#"><img src="fix8/fix8_Logo_RGB.png" width="28" height="28" /></a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="https://github.com/dakka/fix8/wiki">Wiki</a></li>
+              <li><a href="fix8/html">API Documentation</a></li>
+              <li><a href="support.html">Support</a></li>
+              <li><a href="mailto:fix@fix8.org">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+		 <a href="https://github.com/dakka/fix8"><img style="position: absolute; top: 20; right: 0; border: 0;"
+			 src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+      </div>
     </div>
 
-    <h1><a href="https://github.com/dakka/fix8">fix8</a>
-      <span class="small">by <a href="https://github.com/dakka">dakka</a></span></h1>
+		<div class="container">
 
-    <div class="description">
-      A fresh approach to FIX. Statically compile your FIX xml schema and quickly build your FIX application on top.      With low latency performance in mind, this framework is designed to streamline the development of custom FIX interfaces. Using one of the standard FIX schemas you can have a FIX client or server up and running very quickly. If you need to add customised messages or fields, simply update the schema and recompile.  Fix8 is a complete framework with a compiler and run-time library. Includes client/server session and connection classes; support for the standard FIX field types; FIX printer and async logger. Fix8 is a complete framework with a compiler and run-time library. Includes client/server session and connection classes; support for the standard FIX field types; FIX printer, async logger and async message persister. Fix8 offers run-time custom fields and message recycling. Incorporates lock free queues, atomics and many other modern techniques.  Since all the FIX message and field metatdata is statically compiled (with the exception of run-time custom fields), Fix8 may be suitable for embedded FIX applications.  Fix8 currently supports FIX 4.0 to FIX 4.4. FIX 5.X support work is underway. This is a beta release. Released under the new BSD license.
-    </div>
+		<div class="container">
+			<div class="row">
+				<div class="span6 offset5">
+					<img src="fix8/fix8_Logo_RGB.png"/>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
 
-    
+      <!-- Main hero unit for a primary marketing message or call to action -->
+		<div class="hero-unit">
+			<div class="container">
+				<div class="row">
+					<div class="span11">
+						<h1>Create FIX protocol apps like never before...</h1>
+						<br>
+						<br>
+					</div>
+					<div class="span11">
+						<p>...with the Fix8 open source C++ framework. We've done most of the hard work leaving you to focus on the business logic.</p>
+						<br>
+						<br>
+					</div>
+				</div>
+			</div>
+			<div class="pager">
+				<a class="btn btn-primary btn-large" href="https://github.com/dakka/fix8/zipball/master"><h2>Download Zip &raquo;</h2></a>
+				<a class="btn btn-primary btn-large" href="https://github.com/dakka/fix8/tarball/master"><h2>Download Tar &raquo;</h2></a>
+			</div>
+      </div>
 
-    
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4 centered">
+          <h2>Speedy development</h2>
+           <p>Fix8 helps you get your <a href="http://www.fixprotocol.org">FIX</a> client or server up and running quickly. Using one of the standard FIX schemas you can have a FIX client or server up and running in next to no time.</p>
+        </div>
+        <div class="span4 centered">
+          <h2>Static compilation</h2>
+           <p>Statically compile your <a href="http://www.fixprotocol.org">FIX</a> xml schema and quickly build your FIX application on top. If you need to add customised messages or fields, simply update the schema and recompile. </p>
+       </div>
+        <div class="span4 centered">
+          <h2>Supports all FIX protocols</h2>
+           <p>Fix8 supports FIX4.X to FIX5.X and FIXT1.X. New <a href="http://www.fixprotocol.org">FIX</a> versions will be supported.</p>
+		  <br>
+		  <br>
+       </div>
+        <div class="span4 centered">
+          <h2>Cool features</h2>
+           <p>Fix8 offers run-time custom fields and message recycling. Incorporates lock free queues, atomics and many other modern techniques.</p>
+        </div>
+        <div class="span4 centered">
+          <h2>A complete framework</h2>
+          <p>Fix8 is a complete <code>C++</code> <a href="http://www.fixprotocol.org">FIX</a> framework, including client/server session and connection classes; support for the standard FIX field types; FIX printer, async logger and async message persister.</p>
+        </div>
+        <div class="span4 centered">
+          <h2>Components and groups</h2>
+          <p>Fix8 statically supports nested components and groups. The Fix8 compiler and runtime library takes the pain out of using repeating groups.</p>
+		  <br>
+		  <br>
+        </div>
+        <div class="span4 centered">
+          <h2>Fast performance</h2>
+           <p>The code generated by Fix8 is statically compiled by your compiler offering the best opportunites for optimisation. Fix8 applications are fast.</p>
+        </div>
+        <div class="span4 centered">
+          <h2>Extensible</h2>
+           <p>Fix8 has been designed to be extended, customised or enhanced. If you have special requirements, Fix8 will facilitate your development.</p>
+        </div>
+        <div class="span4 centered">
+          <h2>Runs on Linux</h2>
+           <p>Fix8 runs on industry standard Linux. Other *NIX variants may work too.</p>
+        </div>
+      </div>
+      <!--div class="pager">
+		 <img src="fix8/beta2.gif" alt="beta" />
+	  </div-->
+		<br>
+		<hr>
+      <div class="pager">
+		  <a href="http://www.github.com"><img src="fix8/octocat.png" alt="Github" width="100" height="103" /></a>
+		  <a href="http://www.opensource.org"><img src="fix8/OSI-logo.png" alt="Open Source Initiative" width="100" height="105"/></a>
+		  <a href="http://en.wikipedia.org/wiki/Linux"><img src="fix8/linux-logo.jpg" alt="Open Source Initiative" width="100" height="105"/></a>
+		  <a href="http://www.fixprotocol.org"><img src="fix8/fpl_logo.png" alt="Fix Protocol" width="185" height="114" /></a>
+	  </div>
+      <div class="modal-footer">
+        <p>&copy; <a href="mailto:fix@fix8.org">David L. Dight. </a>2010-12</p>
+      </div>
 
-    
+    </div> <!-- /container -->
 
-    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-transition.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-button.js"></script>
+    <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
 
-    
-      <h2>Authors</h2>
-      <p>dakka@fix8.org (dakk@orbweb.org)<br/>David Dight (fix@fix8.org)<br/>      </p>
-    
-
-    
-      <h2>Contact</h2>
-      <p>David Dight (www@orbweb.org)<br/>      </p>
-    
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="https://github.com/dakka/fix8/zipball/master">zip</a> or
-      <a href="https://github.com/dakka/fix8/tarball/master">tar formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/dakka/fix8</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="https://github.com/dakka/fix8">dakka/fix8</a>
-    </div>
-
-  </div>
-
-</body>
+  </body>
 </html>
