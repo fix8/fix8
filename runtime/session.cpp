@@ -157,7 +157,8 @@ Session::~Session()
 }
 
 //-------------------------------------------------------------------------------------------------
-int Session::start(Connection *connection, bool wait, const unsigned send_seqnum, const unsigned recv_seqnum)
+int Session::start(Connection *connection, bool wait, const unsigned send_seqnum,
+	const unsigned recv_seqnum, const f8String davi)
 {
 	if (_logger)
 		_logger->purge_thread_codes();
@@ -185,7 +186,7 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 				_next_receive_seq = recv_seqnum;
 		}
 
-		Message *msg(generate_logon(_connection->get_hb_interval()));
+		Message *msg(generate_logon(_connection->get_hb_interval(), davi));
 		send(msg);
 		_state = States::st_logon_sent;
 	}
@@ -379,11 +380,13 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		target_comp_id tci;
 		msg->Header()->get(tci);
 		SessionID id(_ctx._beginStr, tci(), sci());
+		default_appl_ver_id davi;
+		msg->get(davi);
 		if (authenticate(id, msg))
 		{
 			_sid = id;
 			enforce(seqnum, msg);
-			Message *msg(generate_logon(_connection->get_hb_interval()));
+			Message *msg(generate_logon(_connection->get_hb_interval(), davi()));
 			send(msg);
 			_state = States::st_continuous;
 		}
@@ -596,11 +599,13 @@ Message *Session::generate_test_request(const f8String& testReqID)
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *Session::generate_logon(const unsigned heartbtint)
+Message *Session::generate_logon(const unsigned heartbtint, const f8String davi)
 {
 	Message *msg(create_msg(Common_MsgType_LOGON));
 	*msg += new heartbeat_interval(heartbtint);
 	*msg += new encrypt_method(0); // FIXME
+	if (!davi.empty())
+		*msg += new default_appl_ver_id(davi);
 	if (_reset_sequence_numbers)
 		*msg += new reset_seqnum_flag(true);
 

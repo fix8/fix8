@@ -36,12 +36,13 @@ libmyfix_la_SOURCES = Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
 					 		 Myfix_router.hpp Myfix_classes.hpp Myfix_classes.cpp
 f8test_SOURCES = myfix.cpp
 f8print_SOURCES = myprint.cpp
-XML_SCHEMA = $(top_srcdir)/schema/FIX44.xml
+XML_SCHEMA = $(top_srcdir)/schema/FIX50SP2.xml
+#XML_SCHEMA = $(top_srcdir)/schema/FIX44.xml
 #XML_SCHEMA = FIX44TEST.xml
 CLEANFILES = $(libmyfix_la_SOURCES)
 
 $(libmyfix_la_SOURCES): $(XML_SCHEMA)
-	$(top_srcdir)/compiler/f8c -n TEX $(XML_SCHEMA)
+	$(top_srcdir)/compiler/f8c -rn TEX $(XML_SCHEMA) -x $(top_srcdir)/schema/FIXT11.xml
 
 .NOTPARALLEL: $(XML_SCHEMA)
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil

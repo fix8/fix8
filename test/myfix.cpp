@@ -178,11 +178,11 @@ int main(int argc, char **argv)
 	{
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },
-		{ "log",			0,	0,	'l' },
-		{ "config",		0,	0,	'c' },
+		{ "log",			1,	0,	'l' },
+		{ "config",		1,	0,	'c' },
 		{ "server",		0,	0,	's' },
-		{ "send",		0,	0,	'S' },
-		{ "receive",	0,	0,	'R' },
+		{ "send",		1,	0,	'S' },
+		{ "receive",	1,	0,	'R' },
 		{ "quiet",		0,	0,	'q' },
 		{ "reliable",	0,	0,	'r' },
 		{ 0 },
@@ -317,16 +317,60 @@ bool MyMenu::new_order_single()
 	*nos += new TEX::Symbol("BHP");
 	*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
 	*nos += new TEX::Side(TEX::Side_BUY);
-	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILLORKILL);
+	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
 
-	*nos += new TEX::NoUnderlyings(2);
+	*nos += new TEX::NoUnderlyings(3);
 	GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
+
+	// repeating groups
 	MessageBase *gr1(noul->create_group());
 	*gr1 += new TEX::UnderlyingSymbol("BLAH");
+	*gr1 += new TEX::UnderlyingQty(1 + RandDev::getrandom(999));
 	*noul += gr1;
+
 	MessageBase *gr2(noul->create_group());
 	*gr2 += new TEX::UnderlyingSymbol("FOO");
+	// nested repeating groups
+	*gr2 += new TEX::NoUnderlyingSecurityAltID(2);
 	*noul += gr2;
+	GroupBase *nosai(gr2->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingSecurityAltID>());
+	MessageBase *gr3(nosai->create_group());
+	*gr3 += new TEX::UnderlyingSecurityAltID("UnderBlah");
+	*nosai += gr3;
+	MessageBase *gr4(nosai->create_group());
+	*gr4 += new TEX::UnderlyingSecurityAltID("OverFoo");
+	*nosai += gr4;
+
+	MessageBase *gr5(noul->create_group());
+	*gr5 += new TEX::UnderlyingSymbol("BOOM");
+	// nested repeating groups
+	GroupBase *nus(gr5->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>());
+	static const char *secIDs[] = { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
+	*gr5 += new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
+	for (size_t ii(0); ii < sizeof(secIDs)/sizeof(char *); ++ii)
+	{
+		MessageBase *gr(nus->create_group());
+		*gr += new TEX::UnderlyingStipType(secIDs[ii]);
+		*nus += gr;
+	}
+	*noul += gr5;
+
+	// multiply nested repeating groups
+	*nos += new TEX::NoAllocs(1);
+	GroupBase *noall(nos->find_group<TEX::NewOrderSingle::NoAllocs>());
+	MessageBase *gr9(noall->create_group());
+	*gr9 += new TEX::AllocAccount("Account1");
+	*gr9 += new TEX::NoNestedPartyIDs(1);
+	*noall += gr9;
+	GroupBase *nonp(gr9->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs>());
+	MessageBase *gr10(nonp->create_group());
+	*gr10 += new TEX::NestedPartyID("nestedpartyID1");
+	*gr10 += new TEX::NoNestedPartySubIDs(1);
+	*nonp += gr10;
+	GroupBase *nonpsid(gr10->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs>());
+	MessageBase *gr11(nonpsid->create_group());
+	*gr11 += new TEX::NestedPartySubID("subnestedpartyID1");
+	*nonpsid += gr11;
 
 	_session.send(nos);
 
@@ -410,6 +454,54 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 				MessageBase *me(grnoul->get_element(cnt));
 				me->get(unsym);
 				cout << "Underlying symbol:" << unsym() << endl;
+				// This is how you extract values from a nested repeating group
+				GroupBase *nus(me->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>());
+				if (nus)
+				{
+					for (size_t cnt(0); cnt < nus->size(); ++cnt)
+					{
+						TEX::UnderlyingStipType stipType;
+						MessageBase *me(nus->get_element(cnt));
+						me->get(stipType);
+						cout << "Underlying StipType:" << stipType() << endl;
+					}
+				}
+			}
+		}
+
+		const GroupBase *grallocs(msg->find_group<TEX::NewOrderSingle::NoAllocs>());
+		if (grnoul)
+		{
+			for (size_t cnt(0); cnt < grallocs->size(); ++cnt)
+			{
+				TEX::AllocAccount acc;
+				MessageBase *me(grallocs->get_element(cnt));
+				me->get(acc);
+				cout << "TEX::NewOrderSingle::NoAllocs Account:" << acc() << endl;
+				// This is how you extract values from a nested repeating group
+				GroupBase *nnpi(me->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs>());
+				if (nnpi)
+				{
+					for (size_t cnt(0); cnt < nnpi->size(); ++cnt)
+					{
+						TEX::NestedPartyID npi;
+						MessageBase *me(nnpi->get_element(cnt));
+						me->get(npi);
+						cout << "TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs NestedPartyID:" << npi() << endl;
+						// This is how you extract values from a nested nested repeating group
+						GroupBase *nnpsi(me->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs>());
+						if (nnpsi)
+						{
+							for (size_t cnt(0); cnt < nnpsi->size(); ++cnt)
+							{
+								TEX::NestedPartySubID npsi;
+								MessageBase *me(nnpsi->get_element(cnt));
+								me->get(npsi);
+								cout << "TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs NestedPartySubID:" << npsi() << endl;
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -442,6 +534,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	*er += new TEX::Orderbook('X');
 	*er += new TEX::BrokerInitiated(true);
 	*er += new TEX::ExecOption(3);
+	*er += new TEX::ExecID(oistr.str());
 
 #endif
 #if defined MSGRECYCLING
@@ -473,7 +566,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		eistr << "exec" << ++eoid;
 		*er += new TEX::ExecID(eistr.str());
 		*er += new TEX::ExecType(TEX::ExecType_NEW);
-		*er += new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIAL);
+		*er += new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED);
 		remaining_qty -= trdqty;
 		cum_qty += trdqty;
 		*er += new TEX::LeavesQty(remaining_qty);

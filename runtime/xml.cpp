@@ -65,13 +65,13 @@ using namespace FIX8;
 using namespace std;
 
 //----------------------------------------------------------------------------------------
-int XmlEntity::errors_(0), XmlEntity::line_(1), XmlEntity::maxdepth_(0), XmlEntity::seq_(0);
-XmlEntity::XmlSet XmlEntity::emptyset_;
-XmlEntity::XmlAttrs XmlEntity::emptyattrs_;
-RegExp XmlEntity::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlEntity::rCX_("&(amp|lt|gt|apos|quot);");
+int XmlElement::errors_(0), XmlElement::line_(1), XmlElement::maxdepth_(0), XmlElement::seq_(0);
+XmlElement::XmlSet XmlElement::emptyset_;
+XmlElement::XmlAttrs XmlElement::emptyattrs_;
+RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&(amp|lt|gt|apos|quot);");
 
 //-----------------------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const XmlEntity& en)
+ostream& operator<<(ostream& os, const XmlElement& en)
 {
 	const string spacer(en.depth_ * 3, ' ');
 	if (en.decl_)
@@ -85,7 +85,7 @@ ostream& operator<<(ostream& os, const XmlEntity& en)
 	{
 		os << " [";
 		bool first(true);
-		for (XmlEntity::XmlAttrs::iterator itr(en.attrs_->begin()); itr != en.attrs_->end(); ++itr)
+		for (XmlElement::XmlAttrs::iterator itr(en.attrs_->begin()); itr != en.attrs_->end(); ++itr)
 		{
 			if (first)
 				first = false;
@@ -103,7 +103,7 @@ ostream& operator<<(ostream& os, const XmlEntity& en)
 	if (en.children_)
 	{
 		os << spacer << '{' << endl;
-		for (XmlEntity::XmlSet::iterator itr(en.ordchildren_->begin()); itr != en.ordchildren_->end(); ++itr)
+		for (XmlElement::XmlSet::iterator itr(en.ordchildren_->begin()); itr != en.ordchildren_->end(); ++itr)
 			os << **itr;
 		os << spacer << '}' << endl;
 	}
@@ -114,7 +114,7 @@ ostream& operator<<(ostream& os, const XmlEntity& en)
 //-----------------------------------------------------------------------------------------
 // finite state machine with simple recursive descent parser
 //-----------------------------------------------------------------------------------------
-XmlEntity::XmlEntity(istream& ifs, int subidx, int txtline, int depth, const char *rootAttr)
+XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const char *rootAttr)
 	: value_(), decl_(), depth_(depth), sequence_(++seq_), txtline_(txtline),
 	chldcnt_(), subidx_(subidx), children_(), ordchildren_(), attrs_()
 {
@@ -246,7 +246,7 @@ XmlEntity::XmlEntity(istream& ifs, int subidx, int txtline, int depth, const cha
 					}
 					else
 					{
-						scoped_ptr<XmlEntity> child(new XmlEntity(ifs, chldcnt_ + 1, line_, depth_ + 1));
+						scoped_ptr<XmlElement> child(new XmlElement(ifs, chldcnt_ + 1, line_, depth_ + 1));
 						if (child->GetTag().empty())
 							--seq_;
 						else
@@ -256,7 +256,7 @@ XmlEntity::XmlEntity(istream& ifs, int subidx, int txtline, int depth, const cha
 								children_ = new XmlSubEls;
 								ordchildren_ = new XmlSet;
 							}
-							XmlEntity *chld(child.release());
+							XmlElement *chld(child.release());
 							++chldcnt_;
 							children_->insert(XmlSubEls::value_type(chld->GetTag(), chld));
 							ordchildren_->insert(chld);
@@ -303,7 +303,7 @@ XmlEntity::XmlEntity(istream& ifs, int subidx, int txtline, int depth, const cha
 }
 
 //-----------------------------------------------------------------------------------------
-int XmlEntity::ParseAttrs(const string& attlst)
+int XmlElement::ParseAttrs(const string& attlst)
 {
 	istringstream istr(attlst);
 	enum { ews, tag, oq, value } state(ews);
@@ -368,7 +368,7 @@ int XmlEntity::ParseAttrs(const string& attlst)
 }
 
 //-----------------------------------------------------------------------------------------
-XmlEntity::~XmlEntity()
+XmlElement::~XmlElement()
 {
 	delete value_;
 	delete attrs_;
@@ -381,7 +381,7 @@ XmlEntity::~XmlEntity()
 }
 
 //-----------------------------------------------------------------------------------------
-XmlEntity *XmlEntity::find(const string& what, bool ignorecase, const string *atag,
+XmlElement *XmlElement::find(const string& what, bool ignorecase, const string *atag,
 	const string *aval, const char delim)	// find 1st matching entity
 {
 	if (ignorecase ? what % tag_ : what == tag_)
@@ -407,7 +407,7 @@ XmlEntity *XmlEntity::find(const string& what, bool ignorecase, const string *at
 }
 
 //-----------------------------------------------------------------------------------------
-int XmlEntity::find(const string& what, XmlSet& eset, bool ignorecase,
+int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 	const string *atag, const string *aval, const char delim) 	// find all matching entities
 {
 	if (ignorecase ? what % tag_ : what == tag_)
@@ -439,7 +439,7 @@ int XmlEntity::find(const string& what, XmlSet& eset, bool ignorecase,
 }
 
 //-----------------------------------------------------------------------------------------
-bool XmlEntity::findAttrByValue(const string& what, const string& val)
+bool XmlElement::findAttrByValue(const string& what, const string& val)
 {
 	if (attrs_)
 	{
@@ -451,7 +451,7 @@ bool XmlEntity::findAttrByValue(const string& what, const string& val)
 }
 
 //-----------------------------------------------------------------------------------------
-bool XmlEntity::GetAttr(const string& what, string& target) const
+bool XmlElement::GetAttr(const string& what, string& target) const
 {
 	if (attrs_)
 	{
@@ -467,7 +467,7 @@ bool XmlEntity::GetAttr(const string& what, string& target) const
 }
 
 //-----------------------------------------------------------------------------------------
-const string& XmlEntity::InplaceXlate (string& what)
+const string& XmlElement::InplaceXlate (string& what)
 {
 	RegMatch match;
 	while (rCX_.SearchString(match, what, 2) == 2)
@@ -514,11 +514,11 @@ const string& XmlEntity::InplaceXlate (string& what)
 }
 
 //-----------------------------------------------------------------------------------------
-XmlEntity *XmlEntity::Factory(const string& fname)
+XmlElement *XmlElement::Factory(const string& fname)
 {
 	Reset();
 	ifstream ifs(fname.c_str());
-	return ifs ? new XmlEntity(ifs, 0, 0, 0, fname.c_str()) : 0;
+	return ifs ? new XmlElement(ifs, 0, 0, 0, fname.c_str()) : 0;
 }
 
 //-----------------------------------------------------------------------------------------

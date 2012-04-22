@@ -37,7 +37,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 //----------------------------------------------------------------------------------------
 /// A simple xml parser with Xpath style lookup.
-class XmlEntity
+class XmlElement
 {
 	/// Maximum depth levels supported.
 	enum { MaxDepth = 128 };
@@ -50,16 +50,16 @@ class XmlEntity
 	/// Comparitor.
 	struct EntityOrderComp
 	{
-		bool operator()(const XmlEntity *a, const XmlEntity *b) const
+		bool operator()(const XmlElement *a, const XmlElement *b) const
 			{ return a->GetSequence() < b->GetSequence(); }
 	};
 
 public:
 	/*! XmlSet ordering preserved from source file */
-	typedef std::set<XmlEntity *, EntityOrderComp> XmlSet;
+	typedef std::set<XmlElement *, EntityOrderComp> XmlSet;
 
 private:
-	typedef std::multimap<std::string, XmlEntity *> XmlSubEls;
+	typedef std::multimap<std::string, XmlElement *> XmlSubEls;
 	/// simple n-ary tree
 	XmlSubEls *children_;
 
@@ -73,10 +73,10 @@ public:
 	static XmlAttrs emptyattrs_;
 
 	/// Copy Ctor. Non-copyable.
-	XmlEntity(const XmlEntity&);
+	XmlElement(const XmlElement&);
 
 	/// Assignment operator. Non-copyable.
-	XmlEntity& operator=(const XmlEntity&);
+	XmlElement& operator=(const XmlElement&);
 
 public:
 	/*! Ctor.
@@ -85,10 +85,10 @@ public:
 	  \param txtline xml sourcefile line number
 	  \param depth depth nesting level
 	  \param rootAttr root attribute string */
-	XmlEntity(std::istream& ifs, int subidx, int txtline=0, int depth=0, const char *rootAttr=0);
+	XmlElement(std::istream& ifs, int subidx, int txtline=0, int depth=0, const char *rootAttr=0);
 
 	/// Dtor.
-	virtual ~XmlEntity();
+	virtual ~XmlElement();
 
 	/*! Parse the xml attributes from an element.
 	  \param attlst string of attributes
@@ -102,7 +102,7 @@ public:
 	  \param aval the attribute value
 	  \param delim the Xpath delimiter
 	  \return the found entity or 0 if not found */
-	XmlEntity *find(const std::string& what, bool ignorecase=false,
+	XmlElement *find(const std::string& what, bool ignorecase=false,
 		const std::string *atag=0, const std::string *aval=0, const char delim='/');
 
 	/*! Recursively find all elements with a given entity name, attribute name and attribute value.
@@ -137,7 +137,7 @@ public:
 	  \return true if found */
 	bool FindAttrGetValue(const std::string& what, std::string& target)
 	{
-		 XmlEntity *inst(find(what));
+		 XmlElement *inst(find(what));
 		 return inst ? inst->GetAttrValue(target) : false;
 	}
 
@@ -240,7 +240,7 @@ public:
 	/*! Create a new root element (and recursively parse) from a given xml filename.
 	  \param fname the xml filename
 	  \return the depth */
-	static XmlEntity *Factory(const std::string& fname);
+	static XmlElement *Factory(const std::string& fname);
 
 	/*! Get an iterator to the first child attribute.
 	  \return const_iterator to first attribute */
@@ -260,9 +260,9 @@ public:
 
 	/*! Inserter friend.
 	    \param os stream to send to
-	    \param en XmlEntity REFErence
+	    \param en XmlElement REFErence
 	    \return stream */
-	friend std::ostream& operator<<(std::ostream& os, const XmlEntity& en);
+	friend std::ostream& operator<<(std::ostream& os, const XmlElement& en);
 };
 
 #endif // _XML_ENTITY_HPP_

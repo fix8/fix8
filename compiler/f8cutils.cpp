@@ -61,28 +61,28 @@ using namespace FIX8;
 //-----------------------------------------------------------------------------------------
 extern string shortName, odir, prefix;
 extern bool verbose;
-extern const string spacer, GETARGLIST;
+extern string spacer;
+extern const string GETARGLIST;
 extern const CSMap _csMap;
 extern unsigned glob_errors;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-int process(XmlEntity& xf, Ctxt& ctxt);
-int loadFixVersion (XmlEntity& xf, Ctxt& ctxt);
-int loadfields(XmlEntity& xf, FieldSpecMap& fspec);
-void processSpecialTraits(const unsigned short field, FieldTraits& fts);
-int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& fts,
+int process(XmlElement& xf, Ctxt& ctxt);
+int load_fix_version (XmlElement& xf, Ctxt& ctxt);
+int load_fields(XmlElement& xf, FieldSpecMap& fspec);
+void process_special_traits(const unsigned short field, FieldTraits& fts);
+int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits& fts,
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, const unsigned component);
-int loadmessages(XmlEntity& xf, MessageSpecMap& mspec, const ComponentSpecMap& cspec,
-	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
-void processOrdering(MessageSpecMap& mspec);
-int loadcomponents(XmlEntity& xf, ComponentSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
+int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
+void process_ordering(MessageSpecMap& mspec);
 const string flname(const string& from);
-void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
+void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
+void process_group_ordering(const MessageSpec& ms);
 
 //-----------------------------------------------------------------------------------------
-ostream *openofile(const string& odir, const string& fname, string& target)
+ostream *open_ofile(const string& odir, const string& fname, string& target)
 {
 	ostringstream ofs;
 	string odirect(odir);
@@ -118,9 +118,9 @@ const string& filepart(const string& source, string& where)
 }
 
 //-----------------------------------------------------------------------------------------
-int loadFixVersion (XmlEntity& xf, Ctxt& ctxt)
+int load_fix_version (XmlElement& xf, Ctxt& ctxt)
 {
-	XmlEntity *fix(xf.find("fix"));
+	XmlElement *fix(xf.find("fix"));
 	if (!fix)
 	{
 		cerr << "No fix header element found in " << shortName << endl;
@@ -162,7 +162,7 @@ int loadFixVersion (XmlEntity& xf, Ctxt& ctxt)
 }
 
 //-----------------------------------------------------------------------------------------
-void processSpecialTraits(const unsigned short field, FieldTraits& fts)
+void process_special_traits(const unsigned short field, FieldTraits& fts)
 {
 	switch(field)
 	{
@@ -178,7 +178,7 @@ void processSpecialTraits(const unsigned short field, FieldTraits& fts)
 }
 
 //-----------------------------------------------------------------------------------------
-void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp)
+void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp)
 {
 	string typestr("const ");
 	if (FieldTrait::is_int(itr->second._ftype))
@@ -226,14 +226,14 @@ void processValueEnums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostre
 }
 
 //-----------------------------------------------------------------------------------------
-int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
+int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
 	const FieldSpecMap& fspec, const unsigned subpos)
 {
 	unsigned processed(0);
-	XmlEntity::XmlSet flist;
+	XmlElement::XmlSet flist;
 	if (xt->find(where, flist))
 	{
-		for(XmlEntity::XmlSet::const_iterator fitr(flist.begin()); fitr != flist.end(); ++fitr)
+		for(XmlElement::XmlSet::const_iterator fitr(flist.begin()); fitr != flist.end(); ++fitr)
 		{
 			string fname, required;
 			if ((*fitr)->GetAttr("name", fname) && (*fitr)->GetAttr("required", required))
@@ -242,23 +242,23 @@ int processMessageFields(const std::string& where, XmlEntity *xt, FieldTraits& f
 				FieldSpecMap::const_iterator fs_itr;
 				if (ftonItr == ftonSpec.end() || (fs_itr = fspec.find(ftonItr->second)) == fspec.end())
 				{
-					cerr << shortName << ':' << (*fitr)->GetLine() << ": error: Field element missing required attributes" << endl;
+					cerr << shortName << ':' << recover_line(**fitr) << ": error: Field element missing required attributes" << endl;
 					++glob_errors;
 					continue;
 				}
 
 				// add FieldTrait
 				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, subpos)))
-					cerr << shortName << ':' << (*fitr)->GetLine() << ": error: Could not add trait object " << fname << endl;
+					cerr << shortName << ':' << recover_line(**fitr) << ": error: Could not add trait object " << fname << endl;
 				else
 				{
-					processSpecialTraits(fs_itr->first, fts);
+					process_special_traits(fs_itr->first, fts);
 					++processed;
 				}
 			}
 			else
 			{
-				cerr << shortName << ':' << (*fitr)->GetLine() << ": error: Field element missing required attributes" << endl;
+				cerr << shortName << ':' << recover_line(**fitr) << ": error: Field element missing required attributes" << endl;
 				++glob_errors;
 			}
 		}
@@ -274,7 +274,7 @@ const string flname(const string& from)
 }
 
 //-----------------------------------------------------------------------------------------
-void processOrdering(MessageSpecMap& mspec)
+void process_ordering(MessageSpecMap& mspec)
 {
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 	{
@@ -287,17 +287,26 @@ void processOrdering(MessageSpecMap& mspec)
 		for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
 			(*fto)->_pos = ++cnt;
 
-		for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
-		{
-			FieldTraitOrder go;
-			for (Presence::const_iterator flitr(gitr->second.get_presence().begin());
-				flitr != gitr->second.get_presence().end(); ++flitr)
-					go.insert(FieldTraitOrder::value_type(&*flitr));
+		process_group_ordering(mitr->second);
+	}
+}
 
-			unsigned gcnt(0);
-			for (FieldTraitOrder::iterator fto(go.begin()); fto != go.end(); ++fto)
-				(*fto)->_pos = ++gcnt;
-		}
+//-----------------------------------------------------------------------------------------
+void process_group_ordering(const MessageSpec& ms)
+{
+	for (GroupMap::const_iterator gitr(ms._groups.begin()); gitr != ms._groups.end(); ++gitr)
+	{
+		FieldTraitOrder go;
+		for (Presence::const_iterator flitr(gitr->second._fields.get_presence().begin());
+			flitr != gitr->second._fields.get_presence().end(); ++flitr)
+				go.insert(FieldTraitOrder::value_type(&*flitr));
+
+		unsigned gcnt(0);
+		for (FieldTraitOrder::iterator fto(go.begin()); fto != go.end(); ++fto)
+			(*fto)->_pos = ++gcnt;
+
+		if (!gitr->second._groups.empty())
+			process_group_ordering(gitr->second);
 	}
 }
 
@@ -306,17 +315,22 @@ void print_usage()
 {
 	UsageMan um("f8c", GETARGLIST, "<input xml schema>");
 	um.setdesc("f8c -- compile FIX xml schema");
-	um.add('o', "odir <file>", "output target directory");
+	um.add('o', "odir <file>", "output target directory (default ./)");
 	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
-	um.add('d', "dump", "dump parsed source xml file, exit");
+	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
 	um.add('h', "help", "help, this screen");
-	um.add('i', "ignore", "ignore errors, attempt to generate code anyhow");
+	um.add('i', "ignore", "ignore errors, attempt to generate code anyhow (default no)");
 	um.add('k', "keep", "retain generated temporaries even if there are errors (.*.tmp)");
 	um.add('v', "version", "print version, exit");
+	um.add('s', "second", "2nd pass only, no precompile (default both)");
+	um.add('r', "retain", "retain 1st pass code (default delete)");
+	um.add('t', "tabwidth", "tabwidth for generated code (default 3 spaces)");
+	um.add('x', "fixt <file>", "For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file");
 	um.add('V', "verbose", "be more verbose when processing");
 	um.add('n', "namespace <ns>", "namespace to place generated code in (default FIXMmvv e.g. FIX4400)");
 	um.add("e.g.");
 	um.add("@f8c -p Texfix -n TEX myfix.xml");
+	um.add("@f8c -rp Texfix -n TEX -x ../schema/FIXT11.xml myfix.xml");
 	um.print(cerr);
 }
 

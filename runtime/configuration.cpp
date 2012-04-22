@@ -75,7 +75,7 @@ int Configuration::process()
 }
 
 //-------------------------------------------------------------------------------------------------
-Connection::Role Configuration::get_role(const XmlEntity *from) const
+Connection::Role Configuration::get_role(const XmlElement *from) const
 {
 	string role;
 	return from && from->GetAttr("role", role) ? role % "initiator" ? Connection::cn_initiator
@@ -83,7 +83,7 @@ Connection::Role Configuration::get_role(const XmlEntity *from) const
 }
 
 //-------------------------------------------------------------------------------------------------
-Poco::Net::SocketAddress Configuration::get_address(const XmlEntity *from) const
+Poco::Net::SocketAddress Configuration::get_address(const XmlElement *from) const
 {
 	Poco::Net::SocketAddress to;
 	string ip, port;
@@ -94,12 +94,12 @@ Poco::Net::SocketAddress Configuration::get_address(const XmlEntity *from) const
 }
 
 //-------------------------------------------------------------------------------------------------
-Persister *Configuration::create_persister(const XmlEntity *from) const
+Persister *Configuration::create_persister(const XmlElement *from) const
 {
 	string name;
 	if (from && from->GetAttr("persist", name))
 	{
-		const XmlEntity *which(find_persister(name));
+		const XmlElement *which(find_persister(name));
 		if (which)
 		{
 			string type;
@@ -125,12 +125,12 @@ Persister *Configuration::create_persister(const XmlEntity *from) const
 }
 
 //-------------------------------------------------------------------------------------------------
-Logger *Configuration::create_logger(const XmlEntity *from, const Logtype ltype) const
+Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype) const
 {
 	string name;
 	if (from && from->GetAttr(ltype == session_log ? "session_log" : "protocol_log", name))
 	{
-		const XmlEntity *which(find_logger(name));
+		const XmlElement *which(find_logger(name));
 		if (which)
 		{
 			string type;
@@ -163,7 +163,7 @@ Logger *Configuration::create_logger(const XmlEntity *from, const Logtype ltype)
 }
 
 //-------------------------------------------------------------------------------------------------
-Logger::LogFlags Configuration::get_logflags(const XmlEntity *from) const
+Logger::LogFlags Configuration::get_logflags(const XmlElement *from) const
 {
 	Logger::LogFlags flags;
 	string flags_str;
@@ -181,9 +181,9 @@ Logger::LogFlags Configuration::get_logflags(const XmlEntity *from) const
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned Configuration::get_all_sessions(vector<XmlEntity *>& target, const Connection::Role role) const
+unsigned Configuration::get_all_sessions(vector<XmlElement *>& target, const Connection::Role role) const
 {
-	for (vector<XmlEntity *>::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)
+	for (vector<XmlElement *>::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)
 		if (role == Connection::cn_unknown || get_role(*itr) == role)
 			target.push_back(*itr);
 	return target.size();

@@ -136,7 +136,7 @@ int main(int argc, char **argv)
 	option long_options[] =
 	{
 		{ "help",			0,	0,	'h' },
-		{ "offset",			0,	0,	'o' },
+		{ "offset",			1,	0,	'o' },
 		{ "version",		0,	0,	'v' },
 		{ "summary",		0,	0,	's' },
 		{ 0 },
@@ -188,7 +188,7 @@ int main(int argc, char **argv)
 	TEX::ctx.set_ube(&custfields);
 #endif
 
-	const int bufsz(1024);
+	const int bufsz(4096);
 	char buffer[bufsz];
 
 	try

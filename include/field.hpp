@@ -1317,7 +1317,8 @@ typedef Field<f8String, Common_MsgType> msg_type;
 typedef Field<f8String, Common_CheckSum> check_sum;
 typedef Field<f8String, Common_BeginString> begin_string;
 typedef Field<f8String, Common_TestReqID> test_request_id;
-typedef Field<f8String, Common_Text> text;;
+typedef Field<f8String, Common_Text> text;
+typedef Field<f8String, Common_DefaultApplVerID> default_appl_ver_id;
 
 typedef Field<UTCTimestamp, Common_SendingTime> sending_time;
 typedef Field<UTCTimestamp, Common_OrigSendingTime> orig_sending_time;

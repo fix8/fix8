@@ -55,6 +55,14 @@ class Session;
 typedef std::vector<MessageBase *> GroupElement;
 
 //-------------------------------------------------------------------------------------------------
+typedef std::
+#if defined HAS_TR1_UNORDERED_MAP
+	tr1::unordered_map
+#else
+	map
+#endif
+	<unsigned short, class GroupBase *> Groups;
+
 /// Abstract base class for all repeating groups
 class GroupBase
 {
@@ -73,7 +81,7 @@ public:
 
 	/*! Create a new group element.
 	  \return new message */
-	virtual MessageBase *create_group() = 0;
+	virtual MessageBase *create_group() const = 0;
 
 	/*! Add a message to a repeating group
 	  \param what message to add */
@@ -108,14 +116,6 @@ public:
 
 	friend class MessageBase;
 };
-
-typedef std::
-#if defined HAS_TR1_UNORDERED_MAP
-	tr1::unordered_map
-#else
-	map
-#endif
-	<unsigned short, GroupBase *> Groups;
 
 //-------------------------------------------------------------------------------------------------
 /// Base class for inbound message routing
@@ -271,7 +271,7 @@ public:
 		if (reuse)
 		{
 			_fields.clear();
-			_groups.clear();
+			//_groups.clear();
 			_fp.clear_flag(FieldTrait::present);
 			_pos.clear();
 		}
@@ -303,7 +303,7 @@ public:
 
 	unsigned check_positions();
 
-	/*! Copy all fields from this message to 'to' where the field is legal for 'to' and it is not already present in 'to'; includes repeating groups.
+	/*! Copy all fields from this message to 'to' where the field is legal for 'to' and it is not already present in 'to'; includes nested repeating groups.
 	    \param to target message
 	    \param force if true copy all fields regardless, replacing any existing, adding any new
 	    \return number of fields copied */
@@ -387,10 +387,7 @@ public:
 	    \tparam T type of field to get
 	    \return true if present */
 	template<typename T>
-	bool has() const
-	{
-		return _fp.get(T::get_field_id());
-	}
+	bool has() const { return _fp.get(T::get_field_id()); }
 
 	/*! Get a pointer to a field. Inplace, 0 copy.
 	    \tparam T type of field to get
@@ -468,6 +465,11 @@ public:
 		return gitr != _groups.end() ? gitr->second : 0;
 	}
 
+	/*! Add a repeating group at the end of a message group.
+	    \param what pointer to group to add */
+	void append_group(GroupBase *what)
+		{ _groups.insert(_groups.end(), Groups::value_type(what->_fnum, what)); }
+
 	/*! Add a repeating group to a message.
 	    \param what pointer to group to add */
 	void add_group(GroupBase *what)
@@ -495,13 +497,15 @@ public:
 	void add_trait(const InputIterator begin, const InputIterator end) { _fp.add(begin, end); }
 
 	/*! Print the message to the specified stream.
-	    \param os refererence to stream to print to */
-	virtual void print(std::ostream& os) const;
+	    \param os refererence to stream to print to
+	    \param depth nesting depth */
+	virtual void print(std::ostream& os, int depth=0) const;
 
 	/*! Print the repeating group to the specified stream.
 	    \param fnum field number
-	    \param os refererence to stream to print to */
-	virtual void print_group(const unsigned short fnum, std::ostream& os) const;
+	    \param os refererence to stream to print to
+	    \param depth nesting depth */
+	virtual void print_group(const unsigned short fnum, std::ostream& os, int depth=0) const;
 
 	/*! Inserter friend.
 	    \param os stream to send to
@@ -583,7 +587,7 @@ public:
 	    \return number of bytes encoded */
 	unsigned encode(f8String& to);
 
-	/*! Clone this message.
+	/*! Clone this message. Performs a deep copy.
 	    \return pointer to copy of this message */
 	Message *clone() const;
 
@@ -616,8 +620,7 @@ public:
 	{
 		unsigned val(0);
 		const char *eptr(from.c_str() + (len != -1 ? len + offset : from.size() - offset));
-		for (const char *ptr(from.c_str() + offset); ptr < eptr; ++ptr)
-			val += *ptr;
+		for (const char *ptr(from.c_str() + offset); ptr < eptr; val += *ptr++);
 		return val % 256;
 	}
 

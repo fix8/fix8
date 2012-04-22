@@ -176,6 +176,7 @@ protected:
 	enum { default_retry_interval=5000, default_login_retries=100 };
 	unsigned _login_retry_interval, _login_retries;
 	bool _reset_sequence_numbers;
+	default_appl_ver_id _davi;
 
 	Persister *_persist;
 	Logger *_logger, *_plogger;
@@ -194,8 +195,9 @@ protected:
 
 	/*! Generate a logon message.
 	    \param heartbeat_interval heartbeat interval
+	    \param davi default appl version id (FIXT)
 	    \return new Message */
-	virtual Message *generate_logon(const unsigned heartbeat_interval);
+	virtual Message *generate_logon(const unsigned heartbeat_interval, const f8String davi=f8String());
 
 	/*! Logout callback.
 	    \param seqnum message sequence number
@@ -325,8 +327,10 @@ public:
 	    \param wait if true, thread will wait till session ends before returning
 	    \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
 	    \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1
+	    \param davi default appl version id (FIXT)
 	    \return -1 on error, 0 on success */
-	int start(Connection *connection, bool wait=true, const unsigned send_seqnum=0, const unsigned recv_seqnum=0);
+	int start(Connection *connection, bool wait=true, const unsigned send_seqnum=0,
+		const unsigned recv_seqnum=0, const f8String davi=f8String());
 
 	/*! Process inbound messages. Called by connection object.
 	    \param from raw fix message
@@ -437,22 +441,28 @@ public:
 	/*! Set the login_retry_interval and login_retries settings.
 	    \param login_retry_interval time in ms to wait before retrying login
 	    \param login_retries max login retries to attempt
+	    \param davi default appl version id (FIXT)
 	    \param reset_seqnum reset the session sequence numbers on login */
-	void set_login_parameters(const unsigned login_retry_interval, const unsigned login_retries, const bool reset_seqnum=false)
+	void set_login_parameters(const unsigned login_retry_interval, const unsigned login_retries,
+		const default_appl_ver_id& davi, const bool reset_seqnum=false)
 	{
 		_login_retry_interval = login_retry_interval;
 		_login_retries = login_retries;
 		_reset_sequence_numbers = reset_seqnum;
+		_davi = davi;
 	}
 
 	/*! Get the login_retry_interval and login_retries settings.
 	    \param login_retry_interval time in ms to wait before retrying login
 	    \param login_retries max login retries to attempt
+	    \param davi default appl version id (FIXT)
 	    \param reset_seqnum_flag get the reset sequence number flag */
-	void get_login_parameters(unsigned& login_retry_interval, unsigned& login_retries, bool& reset_seqnum_flag)
+	void get_login_parameters(unsigned& login_retry_interval, unsigned& login_retries,
+		default_appl_ver_id& davi, bool& reset_seqnum_flag)
 	{
 		login_retry_interval = _login_retry_interval;
 		login_retries = _login_retries;
+		davi = _davi;
 		reset_seqnum_flag = _reset_sequence_numbers;
 	}
 

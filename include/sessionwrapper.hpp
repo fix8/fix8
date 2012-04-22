@@ -45,7 +45,7 @@ namespace FIX8 {
 struct SessionConfig : public Configuration
 {
 	const F8MetaCntx& _ctx;
-	const XmlEntity *_ses;
+	const XmlElement *_ses;
 
 	/// Ctor. Loads configuration, obtains session details, sets up logfile flags.
 	SessionConfig (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
@@ -93,7 +93,8 @@ public:
 		_addr(get_address(_ses)),
 		_cc(init_con_later ? 0 : new ClientConnection(_sock, _addr, *_session))
 	{
-		_session->set_login_parameters(get_retry_interval(_ses), get_retry_count(_ses), get_reset_sequence_number_flag(_ses));
+		_session->set_login_parameters(get_retry_interval(_ses), get_retry_count(_ses),
+			get_default_appl_ver_id(_ses), get_reset_sequence_number_flag(_ses));
 	}
 
 	/// Dtor.
@@ -156,7 +157,8 @@ public:
 	{
 		bool reset_sequence_numbers;
 		unsigned attempts(0), login_retry_interval, login_retries;
-		this->_session->get_login_parameters(login_retry_interval, login_retries, reset_sequence_numbers);
+		default_appl_ver_id davi;
+		this->_session->get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);
 
 		for (; ++attempts < login_retries; )
 		{
@@ -166,7 +168,7 @@ public:
 
 				this->_sock = new Poco::Net::StreamSocket,
 				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session);
-				this->_session->start(this->_cc, true);
+				this->_session->start(this->_cc, true, 0, 0, davi());
 			}
 			catch(f8Exception& e)
 			{

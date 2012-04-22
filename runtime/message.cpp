@@ -119,8 +119,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 	if (!grpbase)
 		throw InvalidRepeatingGroup(fnum);
 
-	bool ok(true);
-	for (; ok && s_offset < from.size(); )
+	for (bool ok(true); ok && s_offset < from.size(); )
 	{
 		RegMatch match;
 		scoped_ptr<MessageBase> grp(grpbase->create_group());
@@ -146,7 +145,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 			s_offset += match.SubSize();
 			grp->add_field(tv, ++pos, be->_create(val, be->_rlm));
 			grp->_fp.set(tv);	// is present
-			if (grp->_fp.is_group(tv))
+			if (grp->_fp.is_group(tv)) // nested group
 				s_offset = grp->decode_group(tv, from, s_offset);
 		}
 
@@ -241,6 +240,7 @@ unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 			if (itr->_field_traits & FieldTrait::group)
 			{
 				GroupBase *gb(find_group(itr->_fnum)), *gb1(to->find_group(itr->_fnum));
+
 				for (GroupElement::const_iterator gitr(gb->_msgs.begin()); gitr != gb->_msgs.end(); ++gitr)
 				{
 					MessageBase *grc(gb1->create_group());
@@ -341,8 +341,9 @@ unsigned Message::encode(f8String& to)
 }
 
 //-------------------------------------------------------------------------------------------------
-void MessageBase::print(ostream& os) const
+void MessageBase::print(ostream& os, int depth) const
 {
+	const string dspacer((depth + 1) * 3, ' ');
 	const BaseMsgEntry *tbme(_ctx._bme.find_ptr(_msgType));
 	if (tbme)
 		os << tbme->_name << " (\"" << _msgType << "\")" << endl;
@@ -354,26 +355,31 @@ void MessageBase::print(ostream& os) const
 			if (!_ctx._ube || (tbe = _ctx._ube->find_ptr(itr->second->_fnum)) == 0)
 #endif
 				throw InvalidField(itr->second->_fnum);
-		os << spacer << tbe->_name << " (" << itr->second->_fnum << "): ";
+		os << dspacer << tbe->_name << " (" << itr->second->_fnum << "): ";
 		int idx;
 		if (itr->second->_rlm && (idx = (itr->second->get_rlm_idx())) >= 0)
 			os << itr->second->_rlm->_descriptions[idx] << " (" << *itr->second << ')' << endl;
 		else
 			os << *itr->second << endl;
 		if (_fp.is_group(itr->second->_fnum))
-			print_group(itr->second->_fnum, os);
+			print_group(itr->second->_fnum, os, depth);
 	}
 }
 
 //-------------------------------------------------------------------------------------------------
-void MessageBase::print_group(const unsigned short fnum, ostream& os) const
+void MessageBase::print_group(const unsigned short fnum, ostream& os, int depth) const
 {
 	const GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
 		throw InvalidRepeatingGroup(fnum);
-	for (GroupElement::const_iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr)
-		os << spacer << spacer << "Repeating group (\"" << (*itr)->_msgType << "\")" << endl
-			<< spacer << spacer << **itr;
+
+	const string dspacer((depth + 1) * 3, ' ');
+	size_t cnt(1);
+	for (GroupElement::const_iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr, ++cnt)
+	{
+		os << dspacer << (*itr)->_msgType << " (Repeating group " << cnt << '/' << grpbase->_msgs.size() << ')' << endl;
+		(*itr)->print(os, depth + 1);
+	}
 }
 
 //-------------------------------------------------------------------------------------------------

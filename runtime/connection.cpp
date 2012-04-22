@@ -281,7 +281,8 @@ bool ClientConnection::connect()
 {
 	unsigned login_retry_interval, login_retries, attempts(0);
 	bool reset_sequence_numbers;
-	_session.get_login_parameters(login_retry_interval, login_retries, reset_sequence_numbers);
+	default_appl_ver_id davi;
+	_session.get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);
 
 	Poco::Timespan timeout(1000000);
 

@@ -3695,7 +3695,7 @@
    <component name='EvntGrp' required='N' />
    <field name='DatedDate' required='N' />
    <field name='InterestAccrualDate' required='N' />
-   <field name='SecurityStatus' required='N' />
+   <field name='SecurityStatusID' required='N' />
    <field name='SettleOnOpenFlag' required='N' />
    <field name='InstrmtAssignmentMethod' required='N' />
    <field name='StrikeMultiplier' required='N' />
@@ -9246,7 +9246,7 @@
   <field number='962' name='SideTimeInForce' type='UTCTIMESTAMP' />
   <field number='963' name='MDReportID' type='INT' />
   <field number='964' name='SecurityReportID' type='INT' />
-  <field number='965' name='SecurityStatus' type='STRING'>
+  <field number='965' name='SecurityStatusID' type='STRING'>
    <value enum='1' description='ACTIVE' />
    <value enum='2' description='INACTIVE' />
   </field>
@@ -9660,7 +9660,18 @@
   <field number='1134' name='ReportedPxDiff' type='BOOLEAN' />
   <field number='1135' name='RptSys' type='STRING' />
   <field number='1136' name='AllocClearingFeeIndicator' type='STRING' />
-  <field number='1137' name='DefaultApplVerID' type='STRING' />
+  <field number='1137' name='DefaultApplVerID' type='STRING'>
+   <value enum='0' description='FIX27' />
+   <value enum='1' description='FIX30' />
+   <value enum='2' description='FIX40' />
+   <value enum='3' description='FIX41' />
+   <value enum='4' description='FIX42' />
+   <value enum='5' description='FIX43' />
+   <value enum='6' description='FIX44' />
+   <value enum='7' description='FIX50' />
+   <value enum='8' description='FIX50SP1' />
+   <value enum='9' description='FIX50SP2' />
+  </field>
   <field number='1138' name='DisplayQty' type='QTY' />
   <field number='1139' name='ExchangeSpecialInstructions' type='STRING' />
   <field number='1140' name='MaxTradeVol' type='QTY' />

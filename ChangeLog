@@ -1,3 +1,7 @@
+0.5.00 	22/04/2012		<fix@fix8.org>
+Support for FIX5.X and FIXT1.1; Support for nested components and repeating groups; Numerous bug fixes;
+Myfix.cpp now uses FIX5.0SP2.
+
 0.4.17 	20/03/2012		<fix@fix8.org>
 Postmessage ctor automatically called;
 

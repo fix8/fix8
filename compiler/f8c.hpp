@@ -112,6 +112,11 @@ struct CharRealm : public TypedRealm<char>
 typedef std::map<RealmObject *, std::string, RealmObject::less> RealmMap;
 
 //-------------------------------------------------------------------------------------------------
+typedef std::map<unsigned, class FieldSpec> FieldSpecMap;
+typedef std::map<std::string, unsigned> FieldToNumMap;
+typedef std::map<unsigned, class MessageSpec> GroupMap;
+
+//-------------------------------------------------------------------------------------------------
 typedef StaticTable<std::string, FieldTrait::FieldType> BaseTypeMap;
 typedef StaticTable<FieldTrait::FieldType, std::string> TypeToCPP;
 
@@ -139,11 +144,6 @@ struct FieldSpec
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef std::map<unsigned, FieldSpec> FieldSpecMap;
-typedef std::map<std::string, unsigned> FieldToNumMap;
-typedef std::map<unsigned, FieldTraits> GroupMap;
-
-//-------------------------------------------------------------------------------------------------
 /// f8c internal message representation.
 struct MessageSpec
 {
@@ -160,10 +160,6 @@ struct MessageSpec
 
 typedef std::map<const std::string, MessageSpec> MessageSpecMap;
 typedef std::multiset<const FieldTrait *, FieldTrait::PosCompare> FieldTraitOrder;
-
-//-------------------------------------------------------------------------------------------------
-typedef MessageSpec ComponentSpec;
-typedef MessageSpecMap ComponentSpecMap;
 
 //-------------------------------------------------------------------------------------------------
 enum comp_str
@@ -184,6 +180,9 @@ enum comp_str
 };
 
 typedef StaticTable<comp_str, std::string> CSMap;
+
+//-----------------------------------------------------------------------------------------
+inline int recover_line(const XmlElement& xf) { return xf.FindAttr("line", xf.GetLine()); }
 
 } // FIX8
 

@@ -2,7 +2,7 @@
 <fix8>
 	<session name="TEX1"
 				role="acceptor"
-				fix_version="4400"
+				fix_version="1100"
 				active="true"
 				heartbeat_interval="5"
 				session_log="session_log"

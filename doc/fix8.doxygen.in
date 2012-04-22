@@ -879,6 +879,7 @@ HTML_FILE_EXTENSION    = .html
 # changing the value of configuration settings such as GENERATE_TREEVIEW!
 
 #HTML_HEADER            = fix8.header.html
+# using the custom header seems to mess up the layout so for now leaving it out.
 HTML_HEADER            =
 
 # The HTML_FOOTER tag can be used to specify a personal HTML footer for

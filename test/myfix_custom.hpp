@@ -102,7 +102,7 @@ public:
 		{
 			static const FieldTrait::TraitBase trt[] =
 			{
-				{ 6666, 7, 1000, 0x004 }, { 6951,  8, 5, 0x004 }, { 7009,  1, 6, 0x004 },
+				{ 6666, 7, 4, 0x004 }, { 6951,  8, 5, 0x004 }, { 7009,  1, 6, 0x004 },
 			};
 			msg->add_trait(trt, trt + sizeof(trt)/sizeof(FieldTrait::TraitBase));
 		}

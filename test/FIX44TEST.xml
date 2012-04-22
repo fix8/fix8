@@ -12,20 +12,7 @@
     <field name="CheckSum" required="Y" />
   </trailer>
   <messages>
-    <message name="Heartbeat" msgtype="0" msgcat="admin">
-      <field name="TestReqID" required="N" />
-    </message>
-    <message name="Logon" msgtype="A" msgcat="admin">
-      <field name="EncryptMethod" required="Y" />
-      <field name="HeartBtInt" required="Y" />
-      <field name="RawDataLength" required="N" />
-      <field name="RawData" required="N" />
-      <component name="OrderQtyDataEmbed" required="N" />
-      <field name="ResetSeqNumFlag" required="N" />
-    </message>
-    <message name="Order" msgtype="D" msgcat="admin">
-      <field name="HeartBtInt" required="Y" />
-      <field name="RawDataLength" required="N" />
+    <message name="NewOrderSingle" msgtype="D" msgcat="app">
       <field name="RawData" required="N" />
 		<group name="NoOrderQtyData" required="N">
 			<component name="OrderQtyDataEmbed" required="N" />
@@ -56,11 +43,6 @@
 			<field name='UnderlyingSecurityAltID' required='N' />
 			<field name='UnderlyingSecurityAltIDSource' required='N' />
 		</group>
-    </component>
-    <component name="SettleOrderQtyData">
-      <field name="CashOrderQty" required="N" />
-      <field name="OrderPercent" required="N" />
-      <field name="RoundingDirection" required="N" />
     </component>
   </components>
   <fields>
@@ -216,7 +198,9 @@
 	 <field number='312' name='UnderlyingSymbolSfx' type='STRING' />
 	 <field number='309' name='UnderlyingSecurityID' type='STRING' />
 	 <field number='305' name='UnderlyingSecurityIDSource' type='STRING' />
+	 <field number='457' name='NoUnderlyingSecurityAltID' type='NUMINGROUP' />
 	 <field number='458' name='UnderlyingSecurityAltID' type='STRING' />
 	 <field number='459' name='UnderlyingSecurityAltIDSource' type='STRING' />
+    <field number='711' name='NoUnderlyings' type='NUMINGROUP' />
   </fields>
 </fix>
