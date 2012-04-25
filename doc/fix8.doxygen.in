@@ -878,8 +878,6 @@ HTML_FILE_EXTENSION    = .html
 # have to redo this when upgrading to a newer version of doxygen or when
 # changing the value of configuration settings such as GENERATE_TREEVIEW!
 
-#HTML_HEADER            = fix8.header.html
-# using the custom header seems to mess up the layout so for now leaving it out.
 HTML_HEADER            =
 
 # The HTML_FOOTER tag can be used to specify a personal HTML footer for
@@ -1549,7 +1547,7 @@ TAGFILES               =
 # When a file name is specified after GENERATE_TAGFILE, doxygen will create
 # a tag file that is based on the input files it reads.
 
-GENERATE_TAGFILE       = fix8.tag
+GENERATE_TAGFILE       =
 
 # If the ALLEXTERNALS tag is set to YES all external classes will be listed
 # in the class index. If set to NO only the inherited external classes

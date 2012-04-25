@@ -31,13 +31,13 @@
 if USEDOXYGEN
 doxyfile.stamp:
 	$(DOXYGEN) fix8.doxygen
-	echo Timestamp > doxyfile.stamp
+	echo `date` > doxyfile.stamp
 
 CLEANFILES = doxyfile.stamp
 
 all-local: doxyfile.stamp
 clean-local:
-	rm -rf $(top_srcdir)/doc/html $(top_srcdir)/doc/fix8.tag
+	rm -rf $(top_srcdir)/doc/html
 
 endif
 

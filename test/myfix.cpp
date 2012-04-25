@@ -71,7 +71,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   3. The client has a simple menu. Press ? to see options.\n
   4. The server will wait for the client to logout before exiting.\n
   5. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
-  6. The example uses the file \c FIX44.xml in ./schema\n
+  6. The example uses the files \c FIX50SP2.xml and \c FIXT11.xml in ./schema\n
 \n
 */
 
