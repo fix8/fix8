@@ -1,9 +1,9 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Orbweb is released under the New BSD License.
+Fix8 is released under the New BSD License.
 
-Copyright (c) 2010-12, David L. Dight <www@orbweb.org>
+Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are

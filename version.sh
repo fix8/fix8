@@ -33,11 +33,10 @@
 #
 # This is the master version file, called by configure
 #
-# If building from a source tarball, the embedded revision will be used
-# otherwise svn is queried.
+# If building from a source tarball, the embedded revision will be used.
 #
 #############################################################################################
 MAJOR_VERSION_NUM=0
 MINOR_VERSION_NUM=5
-PATCH_VERSION_NUM=0
+PATCH_VERSION_NUM=1
 echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$PATCH_VERSION_NUM

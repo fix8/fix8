@@ -9,13 +9,13 @@ and framework; and a complete client/server test application.
 
 The basic directory layout is as follows:
 
-./ 								root directory with configure
-compiler/                  the f8c compiler source
-doc/                       doxygen documentation (generated when built)
-include/  						header files for the runtime library and compiler
-runtime/ 						runtime library source
-schema/ 							quickfix FIX xml schemas
-test/ 							test client/server source
+./          root directory with configure
+compiler/   the f8c compiler source
+doc/        doxygen documentation (generated when built)
+include/    header files for the runtime library and compiler
+runtime/    runtime library source
+schema/     quickfix FIX xml schemas
+test/       test client/server source
 
 
 DOCUMENTATION
@@ -41,8 +41,8 @@ BUILDING ON UNIX/LINUX/MAC OS X
 
 The build system is based on automake/autoconf/libtool.
 
-% tar xvzf fix8-0.3.69.tar.gz
-% cd fix8-0.3.69
+% tar xvzf fix8-0.5.0.tar.gz
+% cd fix8-0.5.0
 % ./configure
 % make
 % make install

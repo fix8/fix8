@@ -1,10 +1,10 @@
 # Process this file with autoconf to produce a configure script.
-AC_COPYRIGHT([Orbweb is released under the New BSD License.
+AC_COPYRIGHT([fix8 is released under the New BSD License.
 Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
 All rights reserved.])
 
 AC_PREREQ(2.61)
-AC_INIT([fix8], m4_esyscmd([./version.sh|tr -d '\n']),fix@fix8.org)
+AC_INIT([fix8], m4_esyscmd([./version.sh|tr -d '\n']),fix@fix8.org,fix8,http://www.fix8.org)
 AM_INIT_AUTOMAKE
 AH_TOP([//-----------------------------------------------------------------------------------------
 #if 0

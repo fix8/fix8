@@ -78,7 +78,7 @@ string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"
 bool verbose(false), error_ignore(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:N");
 extern string spacer, shortName;
 
 //-----------------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ void generate_preamble(ostream& to);
 unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr, const string& name,
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, XmlElement::XmlSet& grplist);
 int precomp(XmlElement& xf, ostream& outf);
-int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf);
+int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique);
 void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int depth,
 	const string& msname, ostream& outp, ostream& outh, const string cls_prefix=string());
 
@@ -117,7 +117,7 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 int main(int argc, char **argv)
 {
 	int val;
-	bool dump(false), keep_failed(false), retain_precomp(false), second_only(false);
+	bool dump(false), keep_failed(false), retain_precomp(false), second_only(false), nounique(false);
 	Ctxt ctxt;
 
 #ifdef HAVE_GETOPT_LONG
@@ -126,6 +126,7 @@ int main(int argc, char **argv)
 		{ "help",			0,	0,	'h' },
 		{ "version",		0,	0,	'v' },
 		{ "verbose",		0,	0,	'V' },
+		{ "nounique",		0,	0,	'N' },
 		{ "odir",			1,	0,	'o' },
 		{ "dump",			0,	0,	'd' },
 		{ "ignore",			0,	0,	'i' },
@@ -152,6 +153,7 @@ int main(int argc, char **argv)
 				  << _csMap.find_ref(cs_copyright_short2) << endl;
 			return 0;
 		case 'V': verbose = true; break;
+		case 'N': nounique = true; break;
 		case 'h': print_usage(); return 0;
 		case ':': case '?': return 1;
 		case 'o': odir = optarg; break;
@@ -230,7 +232,7 @@ int main(int argc, char **argv)
 		cout << (fixtsz + xmlsz) << " => ";
 		cout.flush();
 		if (!fixt.empty())
-			precompfixt(*pcmpfixt, *pcmp, *pre_out);
+			precompfixt(*pcmpfixt, *pcmp, *pre_out, nounique);
 		else
 			precomp(*pcmp, *pre_out);
 		pre_out.Reset();
@@ -564,7 +566,8 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 			outh << d2spacer << spacer << "MessageBase *mb(new MessageBase(ctx, _msgtype(), _traits, _traits + "
 				<< gitr->second._fields.get_presence().size() << "));" << endl;
 			for (GroupMap::const_iterator gsitr(gitr->second._groups.begin()); gsitr != gitr->second._groups.end(); ++gsitr)
-				outh << d2spacer << spacer << "mb->append_group(new " << gsitr->second._name << ");" << endl;
+				outh << d2spacer << spacer << "mb->append_group(new " << gsitr->second._name << "); // "
+					<< gsitr->first << endl;
 			outh << d2spacer << spacer << "return mb;" << endl;
 			outh << d2spacer << '}' << endl;
 		}

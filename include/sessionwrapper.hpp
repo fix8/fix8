@@ -59,6 +59,10 @@ struct SessionConfig : public Configuration
 
 	/// Dtor.
 	virtual ~SessionConfig () {}
+
+	/*! Get a pointer to the active session XmlElement to permit extraction of other XML attributes
+	  \return the session element */
+	const XmlElement *get_session_element() const { return _ses; }
 };
 
 //-------------------------------------------------------------------------------------------------

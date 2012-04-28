@@ -77,7 +77,8 @@ void process_elements(XmlElement::XmlSet::const_iterator itr, const Components& 
 void process_fields(const XmlElement::XmlSet& fldlist, const int depth, ostream& outf);
 void load_components(const XmlElement::XmlSet& comlist, Components& components);
 int precomp(XmlElement& xf, ostream& outf);
-int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf);
+int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique);
+void filter_unique(XmlElement::XmlSet& fldlist);
 
 //-----------------------------------------------------------------------------------------
 int precomp(XmlElement& xf, ostream& outf)
@@ -119,12 +120,14 @@ int precomp(XmlElement& xf, ostream& outf)
 }
 
 //-----------------------------------------------------------------------------------------
-int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf)
+int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique)
 {
 	int depth(1);
 	XmlElement::XmlSet fldlist;
 	xft.find("fix/fields/field", fldlist);
-	xf.find("fix/fields/field", fldlist); // will append new and ignore duplicates
+	xf.find("fix/fields/field", fldlist);
+	if (!nounique)
+		filter_unique(fldlist);
 
 	XmlElement::XmlSet comlist, comlistfixt;
 	Components components, componentsfixt;
@@ -163,6 +166,25 @@ int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf)
 	outf << "</" << xft.GetTag() << '>' << endl;
 
 	return 0;
+}
+
+//-----------------------------------------------------------------------------------------
+void filter_unique(XmlElement::XmlSet& fldlist)
+{
+	typedef map<string, XmlElement *> UniqueFieldMap;
+	UniqueFieldMap ufm;
+	unsigned dupls(0);
+	for(XmlElement::XmlSet::const_iterator itr(fldlist.begin()); itr != fldlist.end(); ++itr)
+	{
+		string name;
+		(*itr)->GetAttr("name", name);
+		if (!ufm.insert(UniqueFieldMap::value_type(name, *itr)).second)
+			++dupls; // cerr << "Duplicate field: " << name << endl;
+	}
+
+	fldlist.clear();
+	for(UniqueFieldMap::const_iterator itr(ufm.begin()); itr != ufm.end(); ++itr)
+		fldlist.insert(itr->second);
 }
 
 //-----------------------------------------------------------------------------------------

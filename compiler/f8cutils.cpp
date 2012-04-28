@@ -143,7 +143,7 @@ int load_fix_version (XmlElement& xf, Ctxt& ctxt)
 	ctxt._version = GetValue<int>(major) * 1000 + GetValue<int>(minor) * 100 + GetValue<int>(revision);
 	if (type == "FIX" && ctxt._version < 4000)
 	{
-		cerr << "Invalid FIX version " << ctxt._version << " from fix header in " << shortName << endl;
+		cerr << "Unsupported FIX version " << ctxt._version << " from fix header in " << shortName << endl;
 		return -1;
 	}
 
@@ -171,7 +171,7 @@ void process_special_traits(const unsigned short field, FieldTraits& fts)
 	case Common_CheckSum:
 		fts.set(field, FieldTrait::suppress);	// drop through
 	case Common_MsgType:
-		fts.set(field, FieldTrait::automatic);  // drop through
+		fts.set(field, FieldTrait::automatic);
 	default:
 		break;
 	}
@@ -323,6 +323,7 @@ void print_usage()
 	um.add('k', "keep", "retain generated temporaries even if there are errors (.*.tmp)");
 	um.add('v', "version", "print version, exit");
 	um.add('s', "second", "2nd pass only, no precompile (default both)");
+	um.add('N', "nounique", "do not enforce unique field parsing (default false)");
 	um.add('r', "retain", "retain 1st pass code (default delete)");
 	um.add('t', "tabwidth", "tabwidth for generated code (default 3 spaces)");
 	um.add('x', "fixt <file>", "For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file");
