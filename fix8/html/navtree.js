@@ -1,6 +1,6 @@
 var NAVTREE =
 [
-  [ "Fix8", "index.html", [
+  [ "fix8", "index.html", [
     [ "The FIX8 API Documentation.", "index.html", null ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],

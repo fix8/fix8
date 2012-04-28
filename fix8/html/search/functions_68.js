@@ -22,7 +22,7 @@ var searchData=
   ['handlinst_5frealm_5fels',['HandlInst_realm_els',['../namespaceFIX8_1_1TEX.html#a68e0c463102e5b0ff3b4a32745ea8ff4',1,'FIX8::TEX']]],
   ['has',['has',['../classFIX8_1_1ebitset.html#a057847be416de2837cc543c766b4a4cb',1,'FIX8::ebitset::has()'],['../classFIX8_1_1ebitset__r.html#a0c57fdcc95f979c49b007c26a46f6499',1,'FIX8::ebitset_r::has()'],['../classFIX8_1_1MessageBase.html#a92e5f4ef7aaf54495165ebe3d188270f',1,'FIX8::MessageBase::has()'],['../classFIX8_1_1FieldTraits.html#afecf85a6f8add134423d6c316787cf47',1,'FIX8::FieldTraits::has()']]],
   ['have',['have',['../classFIX8_1_1MessageBase.html#a3552b4cf9b335f3d60ab579c27df12f0',1,'FIX8::MessageBase']]],
-  ['header',['header',['../classFIX8_1_1TEX_1_1header.html#aa646d3f1957a763e3a54dd5e4c720a01',1,'FIX8::TEX::header::header()'],['../classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272',1,'FIX8::Message::Header()']]],
+  ['header',['Header',['../classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272',1,'FIX8::Message::Header()'],['../classFIX8_1_1TEX_1_1header.html#aa646d3f1957a763e3a54dd5e4c720a01',1,'FIX8::TEX::header::header()']]],
   ['heartbeat',['Heartbeat',['../classFIX8_1_1TEX_1_1Heartbeat.html#a14f9ca47606bb74e9057866f69ed153f',1,'FIX8::TEX::Heartbeat']]],
   ['heartbeat_5fservice',['heartbeat_service',['../classFIX8_1_1Session.html#abc077cc755603e29b80291c3072a3165',1,'FIX8::Session']]],
   ['help',['help',['../classMyMenu.html#af92fcc82b1b1f684b2ca6c6ebb8e5b1f',1,'MyMenu']]]

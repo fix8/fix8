@@ -117,7 +117,7 @@ var searchData=
   ['have_5fworking_5ffork',['HAVE_WORKING_FORK',['../f8config_8h.html#ac5b8a9a863350e942e04a4ad13fe905a',1,'f8config.h']]],
   ['have_5fworking_5fvfork',['HAVE_WORKING_VFORK',['../f8config_8h.html#a3f110f0b36f0c6ef25501e5a10e9a0de',1,'f8config.h']]],
   ['have_5fzlib_5fh',['HAVE_ZLIB_H',['../f8config_8h.html#aad5eed50844aa0073171213cb654363d',1,'f8config.h']]],
-  ['header',['header',['../classFIX8_1_1TEX_1_1header.html#aa646d3f1957a763e3a54dd5e4c720a01',1,'FIX8::TEX::header::header()'],['../classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272',1,'FIX8::Message::Header()']]],
+  ['header',['Header',['../classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272',1,'FIX8::Message::Header()'],['../classFIX8_1_1TEX_1_1header.html#aa646d3f1957a763e3a54dd5e4c720a01',1,'FIX8::TEX::header::header()']]],
   ['header',['header',['../classFIX8_1_1TEX_1_1header.html',1,'FIX8::TEX']]],
   ['headline',['Headline',['../namespaceFIX8_1_1TEX.html#ab449e7228897ebd556201a2e0f0ad0e8',1,'FIX8::TEX']]],
   ['heartbeat',['Heartbeat',['../classFIX8_1_1TEX_1_1Heartbeat.html#a14f9ca47606bb74e9057866f69ed153f',1,'FIX8::TEX::Heartbeat']]],

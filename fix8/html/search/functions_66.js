@@ -15,6 +15,7 @@ var searchData=
   ['filelogger',['FileLogger',['../classFIX8_1_1FileLogger.html#a79c39a625f39fdf863850a0289f414c4',1,'FIX8::FileLogger']]],
   ['filepart',['filepart',['../f8c_8cpp.html#aecd3ea6ae0d04dff1f968e6cd187d535',1,'filepart(const string &amp;source, string &amp;where):&#160;f8cutils.cpp'],['../f8cutils_8cpp.html#aecd3ea6ae0d04dff1f968e6cd187d535',1,'filepart(const string &amp;source, string &amp;where):&#160;f8cutils.cpp']]],
   ['filestdin',['filestdin',['../classfilestdin.html#adfe23624dbc5fbfbf97eb801fabdc1bb',1,'filestdin']]],
+  ['filter_5funique',['filter_unique',['../f8precomp_8cpp.html#aa437cee33ac1718a82282129fa8cbc23',1,'f8precomp.cpp']]],
   ['financialstatus_5fbankrupt',['FinancialStatus_BANKRUPT',['../namespaceFIX8_1_1TEX.html#a956c96ca4d63082c3a0c1b4c850f730d',1,'FIX8::TEX']]],
   ['financialstatus_5fpending_5fdelisting',['FinancialStatus_PENDING_DELISTING',['../namespaceFIX8_1_1TEX.html#aee24d318c7f363b04983709b93258f2d',1,'FIX8::TEX']]],
   ['financialstatus_5frealm_5fels',['FinancialStatus_realm_els',['../namespaceFIX8_1_1TEX.html#a10bb01a3ed4828cbd88efe8a6402ccfd',1,'FIX8::TEX']]],
