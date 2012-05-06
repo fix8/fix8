@@ -3980,6 +3980,9 @@ a.thumbnail:hover {
 .hero-unit h2 {
   color: inherit
 }
+.hero-unit h3 {
+  color: #343434
+}
 .hero-unit p {
   font-size: 18px;
   font-weight: 200;

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Fix8 FAQ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Modern open source FIX framework featuring complete schema driven customisation, high performance and fast application development.">
+    <meta name="author" content="David L. Dight">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#"><img src="fix8/fix8_Logo_RGB.png" width="28" height="28" /a></a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="https://github.com/dakka/fix8/wiki">Wiki</a></li>
+              <li><a href="fix8/html">API Documentation</a></li>
+              <li class="active"><a href="#">FAQ</a></li>
+              <li><a href="support.html">Support</a></li>
+              <li><a href="mailto:fix@fix8.org">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+	<div class="container">
+
+		<div class="container">
+			<div class="row">
+				<div class="span6 offset5">
+					<br>
+					<img src="fix8/fix8_Logo_RGB.png"/>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+		<br>
+
+		<div class="container">
+			<div class="span12 columns">
+				<h2>1. General</h2>
+				<div class="accordion" id="accordion2">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleOne">What is fix8?</a>
+						</div>
+						<div id="generaleOne" class="accordion-body collapse">
+							<div class="accordion-inner">
+								Fix8 is C++ development toolkit for providing <a href="http://www.fixprotocol.org">FIX</a> connectivity for userland applications.
+								Fix8 provides an API framework under which you can quickly develop a FIX interface.
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleTwo">What is the FIX protocol?</a>
+						</div>
+						<div id="generaleTwo" class="accordion-body collapse">
+							<div class="accordion-inner">
+								The <a href="http://www.fixprotocol.org">FIX</a> protocol allows market pariticpants to communicate with one another usually for the purposes of trading.
+								Typically this occurs between exchanges and brokers/institutions although many organisations also use FIX internally.
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleThree">Who is the intended audience?</a>
+						</div>
+						<div id="generaleThree" class="accordion-body collapse">
+							<div class="accordion-inner">
+								Fix8 is designed to be used by C++ developers for creating <a href="http://www.fixprotocol.org">FIX</a> protocol applications.
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleFour">What license is fix8 release under?</a>
+						</div>
+						<div id="generaleFour" class="accordion-body collapse">
+							<div class="accordion-inner">
+								Fix8 is open source and is released under the <a href="http://www.opensource.org/licenses/BSD-3-Clause">New BSD License.</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="span12 columns">
+				<h2>2. Requirements</h2>
+				<div class="accordion" id="accordion3">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeOne">What OS is supported?</a>
+						</div>
+						<div id="platformeOne" class="accordion-body collapse">
+							<div class="accordion-inner">
+								Fix8 is currently only supported on <a href="http://en.wikipedia.org/wiki/Linux">Linux.</a> Both 32 and 64 bit builds have been tested.
+								Fix8 uses POSIX system calls and should work on other <a href="http://en.wikipedia.org/wiki/*NIX">*NIX</a> variants too.
+								If you get fix8 working on another *NIX please let us know.
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeTwo">What libraries are required to build fix8?</a>
+						</div>
+						<div id="platformeTwo" class="accordion-body collapse">
+							<div class="accordion-inner">
+								Fix8 requires the standard set of <a href="http://www.gnu.org/gnu/linux-and-gnu.html">GNU/Linux</a> dev tools,
+								including <a href="http://http://gcc.gnu.org">gcc</a>,
+								<a href="http://www.gnu.org/software/libtool">libtool</a>,
+								<a href="http://www.gnu.org/software/autoconf">autoconf</a>,
+								<a href="http://www.gnu.org/s/automake">automake</a>.  Fix8 also requires the
+								<a href="http://pocoproject.org/">Poco</a> library, Intel <a href="http://threadingbuildingblocks.org/">TBB</a> and Oracle <a href="http://www.oracle.com/technetwork/database/berkeleydb/overview/index.html">Berkeley DB</a>. If
+								you want to generate the API documentation you will also need <a href="http://www.doxygen.org">doxygen</a>.
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeThree">What hardware is supported?</a>
+						</div>
+						<div id="platformeThree" class="accordion-body collapse">
+							<div class="accordion-inner">
+								Since fix8 uses Intel <a href="http://threadingbuildingblocks.org/">TBB</a> only Intel IA32, Intel64 and IA64 and compatible
+								hardware is supported. There are however other non-supported patches for different hardware, including SPARC.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="span12 columns">
+				<h2>3. The Fix8 API</h2>
+				<div class="accordion" id="accordion4">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devOne">How do I add additional fields to the login message?</a>
+						</div>
+						<div id="devOne" class="accordion-body collapse">
+							<div class="accordion-inner">
+								What you need to to do is override <code>Session::generate_logon()</code> in your session class.  In that method, the first
+								thing you need to do is call the base class method. Then add your extra fields...
+								<pre>
+Message *my_sess::generate_logon()
+{
+	Message *msg(Session::generate_logon());
+	// now add your raw data
+	string rawstuff("blah");
+	*msg += TEX::RawDataLength(rawstuff.size());
+	*msg += TEX::RawData(rawstuff);
+	return msg;
+}</pre>
+								The same approach applies to all session level messages.
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devTwo">How can I access additional session attributes from the xml config file?</a>
+						</div>
+						<div id="devTwo" class="accordion-body collapse">
+							<div class="accordion-inner">
+								If you are using the session wrapper classes <code>ClientSession</code>, <code>ReliableClientSession</code> or
+								<code>ServerSession</code>, you can call <code>get_session_element()</code>. This returns a pointer to the
+								<code>XmlElement</code> for the active session. With this object you can search for additional attributes parsed
+								from your xml config file, using <code>XmlElement::FindAttr()</code> or <code>XmlElement::GetAttr()</code>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devThree">How do I use nested repeating groups?</a>
+						</div>
+						<div id="devThree" class="accordion-body collapse">
+							<div class="accordion-inner">
+								Nested repeating groups are easy to use. The following example creates multiple nested groups. Using <code>find_group</code>
+								and then <code>create_group</code> you can locate the group you wish to add, create an instance, populate the fields
+								and then add it to the message.
+								<pre>
+*nos += new TEX::NoUnderlyings(3);
+GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
+
+// repeating groups
+MessageBase *gr1(noul->create_group());
+*gr1 += new TEX::UnderlyingSymbol("BLAH");
+*gr1 += new TEX::UnderlyingQty(1 + RandDev::getrandom(999));
+*noul += gr1;
+
+MessageBase *gr2(noul->create_group());
+*gr2 += new TEX::UnderlyingSymbol("FOO");
+// nested repeating groups
+*gr2 += new TEX::NoUnderlyingSecurityAltID(2);
+*noul += gr2;
+GroupBase *nosai(gr2->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingSecurityAltID>());
+MessageBase *gr3(nosai->create_group());
+*gr3 += new TEX::UnderlyingSecurityAltID("UnderBlah");
+*nosai += gr3;
+MessageBase *gr4(nosai->create_group());
+*gr4 += new TEX::UnderlyingSecurityAltID("OverFoo");
+*nosai += gr4;
+
+MessageBase *gr5(noul->create_group());
+*gr5 += new TEX::UnderlyingSymbol("BOOM");
+// nested repeating groups
+GroupBase *nus(gr5->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>());
+static const char *secIDs[] = { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
+*gr5 += new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
+for (size_t ii(0); ii < sizeof(secIDs)/sizeof(char *); ++ii)
+{
+	MessageBase *gr(nus->create_group());
+	*gr += new TEX::UnderlyingStipType(secIDs[ii]);
+	*nus += gr;
+}
+*noul += gr5;
+
+// multiply nested repeating groups
+*nos += new TEX::NoAllocs(1);
+GroupBase *noall(nos->find_group<TEX::NewOrderSingle::NoAllocs>());
+MessageBase *gr9(noall->create_group());
+*gr9 += new TEX::AllocAccount("Account1");
+*gr9 += new TEX::NoNestedPartyIDs(1);
+*noall += gr9;
+GroupBase *nonp(gr9->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs>());
+MessageBase *gr10(nonp->create_group());
+*gr10 += new TEX::NestedPartyID("nestedpartyID1");
+*gr10 += new TEX::NoNestedPartySubIDs(1);
+*nonp += gr10;
+GroupBase *nonpsid(gr10->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs>());
+MessageBase *gr11(nonpsid->create_group());
+*gr11 += new TEX::NestedPartySubID("subnestedpartyID1");
+*nonpsid += gr11; </pre>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="span12 columns">
+			<h2>4. Building</h2>
+				<div class="accordion" id="accordion5">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testThree">When I try and make, I get a automake error.</a>
+						</div>
+						<div id="testThree" class="accordion-body collapse">
+							<div class="accordion-inner">
+							From the <code>fix8</code> directory, do the following...
+								<pre>
+% rm -rf autom4te.cache
+% ./bootstrap
+% ./configure [with your options here]
+% make; make install</pre>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testOne">How can I profile my application?</a>
+						</div>
+						<div id="testOne" class="accordion-body collapse">
+							<div class="accordion-inner">
+								To enable profiling with <code>gprof</code>, add <code>--enable-gprof</code> to your <code>configure</code> command line.
+								When you run your application the file <code>gmon.out</code> will be generated. Run <code>gprof</code> to examine the profile.
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testTwo">Can I profile FIX encoding/decoding?</a>
+						</div>
+						<div id="testTwo" class="accordion-body collapse">
+							<div class="accordion-inner">
+								Yes. To enable CODEC profiling, add <code>--enable-codectiming</code> to your <code>configure</code> command line.
+								Fix8 will out message encode and decode timings to the global logger.
+							</div>
+						</div>
+					</div>
+				</div>
+			<br>
+			<div class="pager">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="https://github.com/dakka/fix8/wiki">Wiki</a></li>
+				<li><a href="fix8/html">API Documentation</a></li>
+				<li class="active"><a href="#">FAQ</a></li>
+				<li><a href="support.html">Support</a></li>
+				<li><a href="mailto:fix@fix8.org">Contact</a></li>
+			</div>
+			<div class="modal-footer">
+			  <p>&copy; <a href="mailto:fix@fix8.org">David L. Dight. </a>2010-12</p>
+			</div>
+
+		 </div> <!-- /container -->
+
+		 <!-- Le javascript
+		 ================================================== -->
+		 <!-- Placed at the end of the document so the pages load faster -->
+		 <script src="js/jquery.js"></script>
+		 <script src="js/bootstrap-transition.js"></script>
+		 <script src="js/bootstrap-alert.js"></script>
+		 <script src="js/bootstrap-modal.js"></script>
+		 <script src="js/bootstrap-dropdown.js"></script>
+		 <script src="js/bootstrap-scrollspy.js"></script>
+		 <script src="js/bootstrap-tab.js"></script>
+		 <script src="js/bootstrap-tooltip.js"></script>
+		 <script src="js/bootstrap-popover.js"></script>
+		 <script src="js/bootstrap-button.js"></script>
+		 <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>
