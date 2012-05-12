@@ -63,7 +63,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp",
-	"_classes.hpp", "_router.hpp" };
+	"_classes.hpp", "_router.hpp", "_session.hpp" };
 template<>
 const size_t GeneratedTable<unsigned int, BaseEntry>::_pairsz(0);
 template<>
@@ -74,11 +74,11 @@ template<>
 const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8String, BaseMsgEntry>::_pairs[] = {};
 
 //-----------------------------------------------------------------------------------------
-string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"), prefix("Myfix");
+string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"), prefix("Myfix"), gen_classes;
 bool verbose(false), error_ignore(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:N");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:Nc:");
 extern string spacer, shortName;
 
 //-----------------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ const string flname(const string& from);
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
 const string& filepart(const string& source, string& where);
-void generate_preamble(ostream& to);
+void generate_preamble(ostream& to, bool donotedit=true);
 unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr, const string& name,
 	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, XmlElement::XmlSet& grplist);
 int precomp(XmlElement& xf, ostream& outf);
@@ -132,6 +132,7 @@ int main(int argc, char **argv)
 		{ "ignore",			0,	0,	'i' },
 		{ "keep",			0,	0,	'k' },
 		{ "retain",			0,	0,	'r' },
+		{ "classes",		1,	0,	'c' },
 		{ "second",			0,	0,	's' },
 		{ "prefix",			1,	0,	'p' },
 		{ "namespace",		1,	0,	'n' },
@@ -154,6 +155,7 @@ int main(int argc, char **argv)
 			return 0;
 		case 'V': verbose = true; break;
 		case 'N': nounique = true; break;
+		case 'c': gen_classes = optarg; break;
 		case 'h': print_usage(); return 0;
 		case ':': case '?': return 1;
 		case 'o': odir = optarg; break;
@@ -182,6 +184,13 @@ int main(int argc, char **argv)
 	else
 	{
 		cerr << "no input xml file specified" << endl;
+		print_usage();
+		return 1;
+	}
+
+	if (!gen_classes.empty() && gen_classes != "server" && gen_classes != "client")
+	{
+		cerr << "Error: " << gen_classes << " not a valid role for class generation. Choose 'server' or 'client'." << endl;
 		print_usage();
 		return 1;
 	}
@@ -282,10 +291,15 @@ int main(int argc, char **argv)
 			}
 			else
 			{
-				remove(ctxt._out[ii].first.second.c_str());
+				string backup(ctxt._out[ii].first.second + ".old");
+				remove(backup.c_str());
+				rename(ctxt._out[ii].first.second.c_str(), backup.c_str());
 				rename(ctxt._out[ii].first.first.c_str(), ctxt._out[ii].first.second.c_str());
 			}
 		}
+
+		if (gen_classes.empty())
+			remove(ctxt._out[Ctxt::session_hpp].first.second.c_str());
 	}
 
 	if (glob_errors)
@@ -521,22 +535,26 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 	{
 		FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
 		outp << _csMap.find_ref(cs_divider) << endl;
-		outp << "const FieldTrait::TraitBase " << prefix << ms._name << "::" << gsitr->second._name << "::_traits[] ="
+		outp << "const FieldTrait " << prefix << ms._name << "::" << gsitr->second._name << "::_traits[] ="
 			<< endl << '{' << endl;
 		for (Presence::const_iterator flitr(gitr->second._fields.get_presence().begin());
 			flitr != gitr->second._fields.get_presence().end(); ++flitr)
 		{
+			bool spaceme(true);
 			if (flitr != gitr->second._fields.get_presence().begin())
 			{
 				outp << ',';
-				if (distance(gitr->second._fields.get_presence().begin(), flitr) % 3 == 0)
+				if (Presence::distance(gitr->second._fields.get_presence().begin(), flitr) % 3 == 0)
 					outp << endl;
+				else
+					spaceme = false;
 			}
 
 			ostringstream tostr;
-			tostr << "0x" << setw(3) << setfill('0') << hex << flitr->_field_traits.get();
-			outp << spacer << "{ " << setw(4) << right << flitr->_fnum << ", " << setw(3)
-				<< right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", " << tostr.str() << " }";
+			tostr << "0x" << setfill('0') << hex << flitr->_field_traits.get();
+			outp << (spaceme ? spacer : " ");
+			outp << "_f(" << setw(4) << right << flitr->_fnum << ", " << setw(3)
+				<< right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", " << tostr.str() << ')';
 		}
 		outp << endl << "};" << endl;
 		outp << "const MsgType " << prefix << ms._name << "::" << gsitr->second._name << "::_msgtype(\""
@@ -551,19 +569,19 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		outh << endl << dspacer << "// " << prefix << ms._name << "::" << gsitr->second._name << endl;
 		outh << dspacer << "class " << gsitr->second._name
 			<< " : public GroupBase // depth: " << depth << endl << dspacer << '{' << endl;
-		outh << d2spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
+		outh << d2spacer << "static const FieldTrait _traits[];" << endl;
 		outh << d2spacer << "static const MsgType _msgtype;" << endl << endl;
 		outh << dspacer << "public:" << endl;
 		outh << d2spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl << endl;
 		outh << d2spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
 		outh << d2spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
 		if (gitr->second._groups.empty())
-			outh << d2spacer << "MessageBase *create_group() const { return new MessageBase(ctx, _msgtype(), _traits, _traits + "
+			outh << d2spacer << "MessageBase *create_group() const { return new MessageBase(ctx, _msgtype(), _traits, "
 				<< gitr->second._fields.get_presence().size() << "); }" << endl;
 		else
 		{
 			outh << d2spacer << "MessageBase *create_group() const" << endl << d2spacer << '{' << endl;
-			outh << d2spacer << spacer << "MessageBase *mb(new MessageBase(ctx, _msgtype(), _traits, _traits + "
+			outh << d2spacer << spacer << "MessageBase *mb(new MessageBase(ctx, _msgtype(), _traits, "
 				<< gitr->second._fields.get_presence().size() << "));" << endl;
 			for (GroupMap::const_iterator gsitr(gitr->second._groups.begin()); gsitr != gitr->second._groups.end(); ++gsitr)
 				outh << d2spacer << spacer << "mb->append_group(new " << gsitr->second._name << "); // "
@@ -590,6 +608,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	ostream& osc_hpp(*ctxt._out[Ctxt::classes_hpp].second);
 	ostream& osc_cpp(*ctxt._out[Ctxt::classes_cpp].second);
 	ostream& osu_hpp(*ctxt._out[Ctxt::router_hpp].second);
+	ostream& oss_hpp(*ctxt._out[Ctxt::session_hpp].second);
 	int result(0);
 
 // ================================= Field processing =====================================
@@ -746,6 +765,9 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osr_cpp << _csMap.find_ref(cs_start_namespace) << endl;
 	osr_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
 
+	osr_cpp << _csMap.find_ref(cs_divider) << endl;
+	osr_cpp << "typedef FieldTrait _f;" << endl << endl;
+
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 	{
@@ -765,38 +787,39 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		if (mitr->second._fields.get_presence().size())
 		{
 			osr_cpp << _csMap.find_ref(cs_divider) << endl;
-			osr_cpp << "const FieldTrait::TraitBase " << mitr->second._name << "::_traits[] ="
+			osr_cpp << "const FieldTrait " << mitr->second._name << "::_traits[] ="
 				<< endl << '{' << endl;
 			for (Presence::const_iterator flitr(mitr->second._fields.get_presence().begin());
 				flitr != mitr->second._fields.get_presence().end(); ++flitr)
 			{
+				bool spaceme(true);
 				if (flitr != mitr->second._fields.get_presence().begin())
 				{
 					osr_cpp << ',';
-					if (distance(mitr->second._fields.get_presence().begin(), flitr) % 3 == 0)
+					if (Presence::distance(mitr->second._fields.get_presence().begin(), flitr) % 3 == 0)
 						osr_cpp << endl;
+					else
+						spaceme = false;
 				}
 
 				ostringstream tostr;
-				tostr << "0x" << setw(3) << setfill('0') << hex << flitr->_field_traits.get();
-				osr_cpp << spacer << "{ " << setw(4) << right << flitr->_fnum << ", "
+				tostr << "0x" << setfill('0') << hex << flitr->_field_traits.get();
+				osr_cpp << (spaceme ? spacer : " ");
+				osr_cpp << "_f(" << setw(4) << right << flitr->_fnum << ", "
 					<< setw(3) << right << flitr->_ftype << ", " << setw(3) << right
-					<< flitr->_pos << ", " << tostr.str() << " }";
+					<< flitr->_pos << ", " << tostr.str() << ')';
 			}
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const MsgType " << mitr->second._name << "::_msgtype(\"" << mitr->first << "\");" << endl;
-			osr_cpp << "const unsigned short " << mitr->second._name << "::_fcnt;" << endl;
-			osc_hpp << spacer << "static const FieldTrait::TraitBase _traits[];" << endl;
+			osc_hpp << spacer << "static const FieldTrait _traits[];" << endl;
 			osc_hpp << spacer << "static const MsgType _msgtype;" << endl << endl;
 		}
 
 		osc_hpp << "public:" << endl;
-		osc_hpp << spacer << "static const unsigned short _fcnt = " << mitr->second._fields.get_presence().size()
-			<< ';' << endl << endl;
 		osc_hpp << spacer << mitr->second._name << "()";
 		if (mitr->second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
-				<< "(ctx, _msgtype(), _traits, _traits + _fcnt)";
+				<< "(ctx, _msgtype(), _traits, " << mitr->second._fields.get_presence().size()<< ')';
 		if (isHeader || isTrailer)
 			osc_hpp << " { add_preamble(); }" << endl;
 		else if (!mitr->second._groups.empty())
@@ -902,6 +925,86 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_cpp << endl << "} // namespace " << ctxt._fixns << endl;
 	osc_cpp << _csMap.find_ref(cs_end_namespace) << endl;
 	osc_cpp << endl;
+
+// =============================== Generate optional user session and router ==============================
+
+	if (!gen_classes.empty())
+	{
+		bool is_server(gen_classes == "server");
+		generate_preamble(oss_hpp, false);
+		oss_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::session_hpp].first.second) << '_' << endl;
+		oss_hpp << "#define _" << flname(ctxt._out[Ctxt::session_hpp].first.second) << '_' << endl;
+		oss_hpp << endl << _csMap.find_ref(cs_divider) << endl;
+
+		oss_hpp << "// " << gen_classes << " session and router classes" << endl;
+		oss_hpp << _csMap.find_ref(cs_divider) << endl;
+
+		oss_hpp << "class " << ctxt._clname << "_session_" << gen_classes << ';' << endl << endl;
+		oss_hpp << "class " << ctxt._clname << "_router_" << gen_classes
+			<< " : public FIX8::" << ctxt._fixns << "::" << ctxt._clname << "_Router" << endl << '{' << endl;
+		oss_hpp << spacer << ctxt._clname << "_session_" << gen_classes << "& _session; " << endl << endl;
+		oss_hpp << "public:" << endl;
+		oss_hpp << spacer << ctxt._clname << "_router_" << gen_classes
+			<< '(' << ctxt._clname << "_session_" << gen_classes << "& session) : _session(session) {}" << endl;
+		oss_hpp << spacer << "virtual ~" << ctxt._clname << "_router_" << gen_classes << "() {}" << endl << endl;
+		oss_hpp << spacer << "// Override these methods to receive specific message callbacks." << endl;
+		for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
+		{
+			if (mitr->second._name == "trailer" || mitr->second._name == "header")
+				continue;
+			oss_hpp << spacer << "// bool operator() (const FIX8::"
+				<< ctxt._fixns << "::" << mitr->second._name << " *msg) const;" << endl;
+		}
+		oss_hpp << "};" << endl;
+
+		oss_hpp << endl << _csMap.find_ref(cs_divider) << endl;
+		oss_hpp << "class " << ctxt._clname << "_session_" << gen_classes
+			<< " : public FIX8::Session" << endl << '{' << endl;
+		oss_hpp << spacer << ctxt._clname << "_router_" << gen_classes << "& _router; " << endl << endl;
+		oss_hpp << "public:" << endl;
+		oss_hpp << spacer << ctxt._clname << "_session_" << gen_classes;
+		if (is_server)
+		{
+			oss_hpp << "(const FIX8::F8MetaCntx& ctx, FIX8::Persister *persist=0," << endl;
+			oss_hpp << spacer << spacer << "FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session"
+				"(ctx, persist, logger, plogger), _router(*this) {} " << endl << endl;
+		}
+		else
+		{
+			oss_hpp << "(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist=0," << endl;
+			oss_hpp << spacer << spacer << "FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session"
+				"(ctx, sid, persist, logger, plogger), _router(*this) {} " << endl << endl;
+		}
+
+		oss_hpp << spacer << "// Override these methods if required but remember to call the base class method first." << endl
+			<< spacer << "// bool handle_logon(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// Message *generate_logon(const unsigned heartbeat_interval, const f8String davi=f8String());" << endl
+			<< spacer << "// bool handle_logout(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// Message *generate_logout();" << endl
+			<< spacer << "// bool handle_heartbeat(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// Message *generate_heartbeat(const f8String& testReqID);" << endl
+			<< spacer << "// bool handle_resend_request(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// Message *generate_resend_request(const unsigned begin, const unsigned end=0);" << endl
+			<< spacer << "// bool handle_sequence_reset(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// Message *generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag=false);" << endl
+			<< spacer << "// bool handle_test_request(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// Message *generate_test_request(const f8String& testReqID);" << endl
+			<< spacer << "// bool handle_reject(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// Message *generate_reject(const unsigned seqnum, const char *what);" << endl
+			<< spacer << "// bool handle_admin(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// void modify_outbound(Message *msg);" << endl
+			<< spacer << "// bool authenticate(SessionID& id, const Message *msg);" << endl << endl;
+
+		oss_hpp << spacer << "// Override these methods to intercept admin and application methods." << endl
+				<< spacer << "// bool handle_admin(const unsigned seqnum, const FIX8::Message *msg);" << endl
+				<< spacer << "bool handle_application(const unsigned seqnum, const FIX8::Message *msg)" << endl
+				<< spacer << '{' << endl << spacer << spacer << "return enforce(seqnum, msg) || msg->process(_router);"
+				<< endl << spacer << '}' << endl;
+
+		oss_hpp << "};" << endl;
+
+		oss_hpp << endl << "#endif // _" << flname(ctxt._out[Ctxt::session_hpp].first.second) << '_' << endl;
+	}
 
 	return result;
 }

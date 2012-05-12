@@ -42,7 +42,8 @@ namespace FIX8 {
 /// f8c compilation context.
 struct Ctxt
 {
-	enum OutputFile { types_cpp, types_hpp, traits_cpp, classes_cpp, classes_hpp, router_hpp, count };
+	enum OutputFile { types_cpp, types_hpp, traits_cpp, classes_cpp,
+		classes_hpp, router_hpp, session_hpp, count };
 	typedef std::pair<std::pair<std::string, std::string>, std::ostream *> Output;
 	Output _out[count];
 	static const std::string _exts[count];

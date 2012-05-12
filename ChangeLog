@@ -1,3 +1,7 @@
+0.5.50 	12/05/2012		<fix@fix8.org>
+Added support to compiler to generate user session class permitting quicker startup development;
+added presorted_set which significantly reduces Message contruction time; added codec and profile compilation switches;
+
 0.5.01 	29/04/2012		<fix@fix8.org>
 Optimsed compiler, enforce unique fields; updated schemas and documentation.
 Myfix.cpp now uses FIX5.0SP2.

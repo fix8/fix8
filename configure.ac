@@ -154,6 +154,13 @@ AC_CHECK_FILE("$DEVURANDOM",
 		AC_DEFINE(HAVE_DEV_URANDOM, 1, [Define to 1 if the /dev/urandom device is available])
 	])
 
+AC_DEFINE(RESERVE_PERCENT, 30, [Percentage of message fields to reserve for additional fields])
+AC_ARG_WITH(reservepercent,
+  AC_HELP_STRING([--with-reservepercent=VALUE],[Percentage of message fields to reserve for additional fields]),
+[
+	AC_DEFINE(RESERVE_PERCENT, ${withval}, [Percentage of message fields to reserve for additional fields])
+],[])
+
 AC_ARG_WITH(poco,
   AC_HELP_STRING([--with-poco=DIR],[location of Poco]),
 [
@@ -316,6 +323,8 @@ AC_ARG_ENABLE([gprof],
 			if test "$have_gprof_headers" = yes; then
 				 AC_DEFINE(PROFILING_BUILD, 1,
 					[Define to 1 if your os supports gprof and you wish to enable profiling])
+				 CFLAGS="$CFLAGS -pg"
+				 CXXFLAGS="$CXXFLAGS -pg"
 			fi ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-gprof) ;;
@@ -335,6 +344,14 @@ AC_ARG_ENABLE([msgrecycle],
 	yes) AC_DEFINE(MSGRECYCLING, 1, [Define to 1 for Message Recycling]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-msgrecycle) ;;
+esac])
+
+AC_ARG_ENABLE([codectiming],
+[AC_HELP_STRING([--enable-codectiming],[enable CODEC timing testing code (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(CODECTIMING, 1, [Define to 1 for CODEC timing testing code]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-codectiming) ;;
 esac])
 
 AC_ARG_ENABLE([customfields],

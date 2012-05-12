@@ -189,6 +189,11 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 		_hdr.SubExpr(match, from, mtype, 0, 4);
 		const unsigned mlen(GetValue<unsigned>(len));
 
+#if defined CODECTIMING
+		ostringstream gerr;
+		gerr << "  ctor(" << mtype << "):";
+		IntervalTimer itm;
+#endif
 		const BaseMsgEntry *bme(ctx._bme.find_ptr(mtype));
 		if (!bme)
 			throw InvalidMessage(mtype);
@@ -197,11 +202,17 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 		if (ctx._ube)
 			ctx._ube->post_msg_ctor(msg);
 #endif
-		//IntervalTimer itm;
+#if defined CODECTIMING
+		gerr << itm.Calculate();
+		GlobalLogger::log(gerr.str());
+		gerr.str("");
+		gerr << "decode(" << mtype << "):";
+#endif
 		msg->decode(from);
-		//ostringstream gerr;
-		//gerr << "decode:" << itm.Calculate();
-		//GlobalLogger::log(gerr.str());
+#if defined CODECTIMING
+		gerr << itm.Calculate();
+		GlobalLogger::log(gerr.str());
+#endif
 
 		Fields::const_iterator fitr(msg->_header->_fields.find(Common_BodyLength));
 		static_cast<body_length *>(fitr->second)->set(mlen);
@@ -222,6 +233,8 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 				throw BadCheckSum(mchkval);
 		}
 	}
+	else
+		throw InvalidMessage(from);
 
 	return msg;
 }
@@ -296,6 +309,13 @@ unsigned MessageBase::encode_group(const unsigned short fnum, std::ostream& to)
 unsigned Message::encode(f8String& to)
 {
 	f8ostrstream msg;
+
+#if defined CODECTIMING
+	ostringstream gerr;
+	gerr << "encode(" << _msgType << "):";
+	IntervalTimer itm;
+#endif
+
 	if (!_header)
 		throw MissingMessageComponent("header");
 	Fields::const_iterator fitr(_header->_fields.find(Common_MsgType));
@@ -334,6 +354,11 @@ unsigned Message::encode(f8String& to)
 	fitr->second->encode(hmsg);
 #if defined MSGRECYCLING
 	_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress); // in case we want to reuse
+#endif
+
+#if defined CODECTIMING
+	gerr << itm.Calculate();
+	GlobalLogger::log(gerr.str());
 #endif
 
 	to = hmsg.str();

@@ -41,6 +41,10 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <tr1/unordered_map>
 #endif
 
+#ifdef PROFILING_BUILD
+#include <sys/gmon.h>
+#endif
+
 #include <f8exception.hpp>
 #include <memory.hpp>
 #include <f8allocator.hpp>

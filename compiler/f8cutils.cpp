@@ -325,6 +325,7 @@ void print_usage()
 	um.add('s', "second", "2nd pass only, no precompile (default both)");
 	um.add('N', "nounique", "do not enforce unique field parsing (default false)");
 	um.add('r', "retain", "retain 1st pass code (default delete)");
+	um.add('c', "classes <server|client>", "generate user session classes (default no)");
 	um.add('t', "tabwidth", "tabwidth for generated code (default 3 spaces)");
 	um.add('x', "fixt <file>", "For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file");
 	um.add('V', "verbose", "be more verbose when processing");
@@ -332,6 +333,7 @@ void print_usage()
 	um.add("e.g.");
 	um.add("@f8c -p Texfix -n TEX myfix.xml");
 	um.add("@f8c -rp Texfix -n TEX -x ../schema/FIXT11.xml myfix.xml");
+	um.add("@f8c -p Texfix -n TEX -c client -x ../schema/FIXT11.xml myfix.xml");
 	um.print(cerr);
 }
 
@@ -361,12 +363,15 @@ string insert_year()
 }
 
 //-------------------------------------------------------------------------------------------------
-void generate_preamble(ostream& to)
+void generate_preamble(ostream& to, bool donotedit)
 {
 	to << _csMap.find_ref(cs_divider) << endl;
 	string result;
-	to << _csMap.find_ref(cs_do_not_edit) << GetTimeAsStringMS(result, 0, 0) << " ***" << endl;
-	to << _csMap.find_ref(cs_divider) << endl;
+	if (donotedit)
+	{
+		to << _csMap.find_ref(cs_do_not_edit) << GetTimeAsStringMS(result, 0, 0) << " ***" << endl;
+		to << _csMap.find_ref(cs_divider) << endl;
+	}
 	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
 	to << _csMap.find_ref(cs_divider) << endl;
 }

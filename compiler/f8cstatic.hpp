@@ -154,8 +154,8 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "#include <memory.hpp>\n"
 "#include <f8allocator.hpp>\n"
 "#include <f8utils.hpp>\n"
-"#include <traits.hpp>\n"
 "#include <f8types.hpp>\n"
+"#include <traits.hpp>\n"
 "#include <field.hpp>\n"
 "#include <message.hpp>"),
 	CSMap::TypePair(cs_divider,

@@ -187,6 +187,8 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 /// Static metadata context class - one per FIX xml schema
+class Recycler;
+
 struct F8MetaCntx
 {
 	const unsigned _version;
@@ -200,14 +202,12 @@ struct F8MetaCntx
 	CustomFields *_ube;
 	void set_ube(CustomFields *ube) { _ube = ube; }
 #endif
-
 	Message *(*_mk_hdr)(), *(*_mk_trl)();
 	/// Fix header beginstring
 	const f8String _beginStr;
 
 	F8MetaCntx(const unsigned version, const GeneratedTable<const f8String, BaseMsgEntry>& bme,
-		const GeneratedTable<unsigned, BaseEntry>& be, const f8String& bg) :
-			_version(version), _bme(bme), _be(be),
+		const GeneratedTable<unsigned, BaseEntry>& be, const f8String& bg) : _version(version), _bme(bme), _be(be),
 #if defined PERMIT_CUSTOM_FIELDS
 			_ube(),
 #endif
@@ -249,10 +249,10 @@ public:
 	    \param ctx reference to generated metadata
 	    \param msgType - reference to Fix message type
 	    \param begin - InputIterator pointing to begining of field trait table
-	    \param end - InputIterator pointing to end of field trait table */
+	    \param cnt - number of elements in field trait table */
 	template<typename InputIterator>
-	MessageBase(const class F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
-		: _fp(begin, end), _msgType(msgType), _ctx(ctx) {}
+	MessageBase(const class F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt)
+		: _fp(begin, cnt), _msgType(msgType), _ctx(ctx) {}
 
 	/// Copy ctor.
 	MessageBase(const MessageBase& from);
@@ -276,6 +276,10 @@ public:
 			_pos.clear();
 		}
 	}
+
+	/*! Get the number of possible fields in this message
+	  \return number of fields */
+	size_t size() const { return _fp.size(); }
 
 	/*! Decode from string.
 	    \param from source string
@@ -333,6 +337,7 @@ public:
 	{
 		if (_fp.get(fnum, FieldTrait::present)) // for now, silently replace duplicate
 		{
+			std::cerr << _msgType << " replacing field:" << fnum << std::endl;
 			delete replace(fnum, what);
 			return;
 		}
@@ -465,15 +470,13 @@ public:
 		return gitr != _groups.end() ? gitr->second : 0;
 	}
 
-	/*! Add a repeating group at the end of a message group.
+	/*! Add a repeating group at the end of a message group. Assume key is not < last.
 	    \param what pointer to group to add */
-	void append_group(GroupBase *what)
-		{ _groups.insert(_groups.end(), Groups::value_type(what->_fnum, what)); }
+	void append_group(GroupBase *what) { _groups.insert(_groups.end(), Groups::value_type(what->_fnum, what)); }
 
 	/*! Add a repeating group to a message.
 	    \param what pointer to group to add */
-	void add_group(GroupBase *what)
-		{ _groups.insert(Groups::value_type(what->_fnum, what)); }
+	void add_group(GroupBase *what) { _groups.insert(Groups::value_type(what->_fnum, what)); }
 
 	/*! Add a repeating group to a message.
 	    \param what pointer to group to add */
@@ -492,9 +495,9 @@ public:
 	/*! Add a range of fieldtraits to the message.
 	    \tparam InputIterator input iterator type
 	    \param begin first FieldTrait to add
-	    \param end last + 1 fieldtrait to add */
+	    \param cnt - number of elements in field trait table */
 	template<typename InputIterator>
-	void add_trait(const InputIterator begin, const InputIterator end) { _fp.add(begin, end); }
+	void add_trait(const InputIterator begin, const size_t cnt) { _fp.add(begin, cnt); }
 
 	/*! Print the message to the specified stream.
 	    \param os refererence to stream to print to
@@ -537,10 +540,10 @@ public:
 	    \param ctx - reference to generated metadata
 	    \param msgType - reference to Fix message type
 	    \param begin - InputIterator pointing to begining of field trait table
-	    \param end - InputIterator pointing to end of field trait table */
+	    \param cnt - number of elements in field trait table */
 	template<typename InputIterator>
-	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const InputIterator end)
-		: MessageBase(ctx, msgType, begin, end), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl()),
+	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt)
+		: MessageBase(ctx, msgType, begin, cnt), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl()),
 		_custom_seqnum(), _no_increment()
 #if defined MSGRECYCLING
 		{

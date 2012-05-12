@@ -233,6 +233,14 @@ int FIXWriter::operator()()
 #else
 			scoped_ptr<Message> msg(inmsg);
 			_session.send_process(msg.get());
+#if defined CODECTIMING
+			ostringstream gerr;
+			gerr << "  dtor(" << inmsg->get_msgtype() << "):";
+			IntervalTimer itm;
+			msg.release();
+			gerr << itm.Calculate();
+			GlobalLogger::log(gerr.str());
+#endif
 #endif
 			++processed;
 		}

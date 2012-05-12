@@ -100,11 +100,11 @@ public:
 	{
 		if (msg->get_msgtype() == TEX::ExecutionReport::get_msgtype()())
 		{
-			static const FieldTrait::TraitBase trt[] =
+			static const FieldTrait trt[] =
 			{
-				{ 6666, 7, 4, 0x004 }, { 6951,  8, 5, 0x004 }, { 7009,  1, 6, 0x004 },
+				FieldTrait(6666, 7, 4, 0x004), FieldTrait(6951,  8, 5, 0x004), FieldTrait(7009,  1, 6, 0x004),
 			};
-			msg->add_trait(trt, trt + sizeof(trt)/sizeof(FieldTrait::TraitBase));
+			msg->add_trait(trt, sizeof(trt)/sizeof(FieldTrait));
 		}
 
 		return true;

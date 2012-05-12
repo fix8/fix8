@@ -135,6 +135,7 @@ const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
 {
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('T', "1000 New Order Singles"), &MyMenu::new_order_single_1000),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
@@ -298,11 +299,6 @@ bool myfix_session_server::handle_application(const unsigned seqnum, const Messa
 	return enforce(seqnum, msg) || msg->process(_router);
 }
 
-bool myfix_session_server::handle_admin(const unsigned seqnum, const Message *msg)
-{
-	return msg->process(_router);
-}
-
 //-----------------------------------------------------------------------------------------
 bool MyMenu::new_order_single()
 {
@@ -319,6 +315,7 @@ bool MyMenu::new_order_single()
 	*nos += new TEX::Side(TEX::Side_BUY);
 	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
 
+//#if 0
 	*nos += new TEX::NoUnderlyings(3);
 	GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
 
@@ -371,6 +368,7 @@ bool MyMenu::new_order_single()
 	MessageBase *gr11(nonpsid->create_group());
 	*gr11 += new TEX::NestedPartySubID("subnestedpartyID1");
 	*nonpsid += gr11;
+//#endif
 
 	_session.send(nos);
 
@@ -381,6 +379,15 @@ bool MyMenu::new_order_single()
 bool MyMenu::new_order_single_50()
 {
 	for (int ii(0); ii < 50; ++ii)
+		new_order_single();
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::new_order_single_1000()
+{
+	for (int ii(0); ii < 1000; ++ii)
 		new_order_single();
 
 	return true;
@@ -506,8 +513,6 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		}
 	}
 
-	//ostringstream gerr;
-	//IntervalTimer itm;
 #if defined MSGRECYCLING
 	scoped_ptr<TEX::ExecutionReport> er(new TEX::ExecutionReport);
 	msg->copy_legal(er.get());
@@ -517,8 +522,6 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 #endif
 	if (!quiet)
 		cout << endl;
-	//gerr << "encode:" << itm.Calculate();
-	//GlobalLogger::log(gerr.str());
 
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
@@ -535,7 +538,8 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	*er += new TEX::BrokerInitiated(true);
 	*er += new TEX::ExecOption(3);
 	*er += new TEX::ExecID(oistr.str());
-
+#else
+	*er += new TEX::ExecID(oistr.str());
 #endif
 #if defined MSGRECYCLING
 	er->set_in_use(true);	// indicate this message is in use again
@@ -581,12 +585,6 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	}
 
 	return true;
-}
-
-//-----------------------------------------------------------------------------------------
-bool tex_router_server::operator() (const TEX::Logout *msg) const
-{
-	return _session.set_is_logged_out();
 }
 
 //-----------------------------------------------------------------------------------------

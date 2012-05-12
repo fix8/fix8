@@ -44,7 +44,6 @@ namespace FIX8 {
 /// FIX field traits - hold specific traits for each field.
 struct FieldTrait
 {
-	unsigned short _fnum;
 	enum FieldType
 	{
 		ft_untyped,
@@ -61,15 +60,9 @@ struct FieldTrait
 		ft_pattern,
 		ft_Tenor, ft_Reserved100Plus, ft_Reserved1000Plus, ft_Reserved4000Plus,
 		ft_Language, ft_end_string=ft_Language
-	}
-	_ftype;
-
-	/// This structure is used by the static instantiation tables.
-	struct TraitBase
-	{
-		const unsigned short _field, _ftype, _pos;
-		const unsigned _field_traits;
 	};
+
+	enum TraitTypes { mandatory, present, position, group, component, suppress, automatic, count };
 
 	/*! Check if this FieldType is an int.
 	  \param ftype field to check
@@ -91,12 +84,10 @@ struct FieldTrait
 	  \return true if a float */
 	static bool is_float(const FieldType ftype) { return ft_float <= ftype && ftype <= ft_end_float; }
 
-	/// is ordinal, ie 0=n/a, 1=1st, 2=2nd
-	mutable unsigned short _pos;
-	mutable unsigned short _subpos;
+	FieldTrait() {}
 
-	enum TraitTypes { mandatory, present, position, group, component, suppress, automatic, count };
-	mutable ebitset<TraitTypes, unsigned short> _field_traits;
+	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, short field_traits)
+		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _subpos(), _field_traits(field_traits | (pos ? 1 : 0) << position)  {}
 
 	/*! Ctor.
 	  \param field field num (tag number)
@@ -112,10 +103,10 @@ struct FieldTrait
 		_field_traits(ismandatory ? 1 : 0 | (ispresent ? 1 : 0) << present
 		| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group | (subpos ? 1 : 0) << component) {}
 
-	/*! Ctor. Construct from TraitBase object.
-	  \param tb TraitBase object to construct from */
-	FieldTrait(const TraitBase& tb) : _fnum(tb._field), _ftype(static_cast<FieldTrait::FieldType>(tb._ftype)),
-		_pos(tb._pos), _subpos(), _field_traits(tb._field_traits | (tb._pos ? 1 : 0) << position) {}
+	unsigned short _fnum;
+	FieldType _ftype;
+	mutable unsigned short _pos, _subpos;
+	mutable ebitset<TraitTypes, unsigned short> _field_traits;
 
 	/// Binary comparitor functor.
 	struct Compare : public std::binary_function<FieldTrait, FieldTrait, bool>
@@ -123,7 +114,7 @@ struct FieldTrait
 		/*! Comparitor operator.
 		  \param p1 lhs to compare
 		  \param p2 rhs to compare
-		  \return true if p1 == p2 */
+		  \return true if p1 < p2 */
 		bool operator()(const FieldTrait& p1, const FieldTrait& p2) const { return p1._fnum < p2._fnum; }
 	};
 
@@ -146,7 +137,7 @@ struct FieldTrait
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef std::set<FieldTrait, FieldTrait::Compare> Presence;
+typedef presorted_set<unsigned short, FieldTrait, FieldTrait::Compare> Presence;
 
 /// A collection of FieldTraits for a message. Which fields are required, which are present.
 class FieldTraits
@@ -157,9 +148,9 @@ public:
 	/*! Ctor.
 	  \tparam InputIterator input iterator to construct from
 	  \param begin start iterator to input
-	  \param end start iterator to input */
+	  \param cnt number of elements to input */
 	template<typename InputIterator>
-	FieldTraits(const InputIterator begin, const InputIterator end) : _presence(begin, end) {}
+	FieldTraits(const InputIterator begin, const size_t cnt) : _presence(begin, cnt) {}
 
 	/// Ctor.
 	FieldTraits() {}
@@ -181,6 +172,10 @@ public:
 		Presence::const_iterator itr(_presence.find(field));
 		return itr != _presence.end() ? itr->_field_traits.get() : 0;
 	}
+
+	/*! Get the number of possible fields
+	  \return number of fields */
+	size_t size() const { return _presence.size(); }
 
 	/*! Check if a field has a specified trait.
 	  \param field to check
@@ -226,13 +221,13 @@ public:
 	/*! Add a FieldTrait.
 	  \param what TraitType to add
 	  \return true on success (false already present) */
-	bool add(const FieldTrait& what) { return _presence.insert(Presence::value_type(what)).second; }
+	bool add(const FieldTrait& what) { return _presence.insert(&what).second; }
 
 	/*! Add from a range of traits.
 	  \param begin start iterator to input
-	  \param end start iterator to input */
+	  \param cnt number of elements to input */
 	template<typename InputIterator>
-	void add(const InputIterator begin, const InputIterator end) { _presence.insert(begin, end); }
+	void add(const InputIterator begin, const size_t cnt) { _presence.insert(begin, begin + cnt); }
 
 	/*! Clear a trait from all traits.
 	  \param type TraitType to clear */
@@ -264,7 +259,7 @@ public:
 	  \return position of field, 0 if no pos or not found */
 	unsigned short getPos(const unsigned short field) const
 	{
-		std::set<FieldTrait, FieldTrait::Compare>::const_iterator itr(_presence.find(field));
+		Presence::const_iterator itr(_presence.find(field));
 		return itr != _presence.end() && itr->_field_traits.has(FieldTrait::position) ? itr->_pos : 0;
 	}
 

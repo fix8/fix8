@@ -90,7 +90,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hsvo:");
+const string GETARGLIST("hsvo:c");
 bool term_received(false), summary(false);
 
 typedef map<string, unsigned> MessageCount;
@@ -139,6 +139,7 @@ int main(int argc, char **argv)
 		{ "offset",			1,	0,	'o' },
 		{ "version",		0,	0,	'v' },
 		{ "summary",		0,	0,	's' },
+		{ "context",		0,	0,	'c' },
 		{ 0 },
 	};
 
@@ -156,6 +157,10 @@ int main(int argc, char **argv)
 		case 'h': print_usage(); return 0;
 		case 'o': offset = GetValue<int>(optarg); break;
 		case 's': summary = true; break;
+		case 'c':
+			 cout << "Context FIX beginstring:" << TEX::ctx._beginStr << endl;
+			 cout << "Context FIX version:" << TEX::ctx.version() << endl;
+			 return 0;
 		default: break;
 		}
 	}

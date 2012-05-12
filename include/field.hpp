@@ -341,7 +341,7 @@ public:
 
 	/*! Get field value.
 	  \param from value to set
-	  \return original value (int) */
+	  \return original value (f8String) */
 	const f8String& set(const f8String& from) { return _value = from; }
 
 	/*! Set the value from a string.

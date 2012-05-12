@@ -249,6 +249,12 @@ bool Session::process(const f8String& from)
 
 		plog(from, 1);
 		scoped_ptr<Message> msg(Message::factory(_ctx, from));
+		if (!msg.get())
+		{
+			GlobalLogger::log("Fatal: factory failed to generate a valid message");
+			return false;
+		}
+
 		if (_control & print)
 			cout << *msg << endl;
 		bool result((msg->is_admin() ? handle_admin(seqnum, msg.get()) : true)
@@ -259,6 +265,14 @@ bool Session::process(const f8String& from)
 			_persist->put(_next_send_seq, _next_receive_seq);
 			//cout << "Persisted:" << _next_send_seq << " and " << _next_receive_seq << endl;
 		}
+#if defined CODECTIMING
+		ostringstream gerr;
+		gerr << "  dtor(" << msg->get_msgtype() << "):";
+		IntervalTimer itm;
+		msg.release();
+		gerr << itm.Calculate();
+		GlobalLogger::log(gerr.str());
+#endif
 		return result;
 
 	}
