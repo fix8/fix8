@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1No
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a2d7bd449c5d2117a50bb4ae8c44650c2", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a7167acedaf7464728a16aeaa90a22543", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a21c7aeb3910cb3a6c996ffeb701ae209", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#aa05cee931fead8fd1068a1e88b899ee3", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a7637938aae33018a0a436809ca9d09a7", null ]
 ];

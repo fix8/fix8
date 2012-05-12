@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs.html#adf318d3ace9e455452ebb4a75ebe59ff", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs.html#abcb468dfc549bfa84bcd5b1744a4debc", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs.html#a0edbb57c77c99f84b947a0cde8af1dc3", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs.html#a428e7fca4a5771beea36593036cdb8f2", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoPartyIDs.html#a417718ea002ac45c8b0293e39a46b331", null ]
 ];

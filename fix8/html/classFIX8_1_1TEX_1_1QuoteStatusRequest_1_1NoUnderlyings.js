@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoUnderlyings =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoUnderlyings.html#a1ea42f062b5f336d285d90eadcd669c2", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoUnderlyings.html#ad468a2ac50bd8ebfd7f5906a1873eac0", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoUnderlyings.html#a046b653cd8c248da4845488a2affdb1d", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoUnderlyings.html#a47e2f282b2910d91dde3fbefb0898151", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoUnderlyings.html#ad381babf36bafbdd1aab6be48e22bb14", null ]
 ];

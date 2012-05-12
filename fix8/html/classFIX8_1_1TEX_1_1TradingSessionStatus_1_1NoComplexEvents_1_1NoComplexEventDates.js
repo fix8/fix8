@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoComplexEvents_1_1NoComplexEven
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoComplexEvents_1_1NoComplexEventDates.html#a90bd4ae1757a44ae7bc30bd917e622c6", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoComplexEvents_1_1NoComplexEventDates.html#a1fe47f7588fc17bc67d95b525262d658", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoComplexEvents_1_1NoComplexEventDates.html#a54005238c40a0932b40291807f50e938", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoComplexEvents_1_1NoComplexEventDates.html#af3a4eca8d80d823bc0944a3ec3c87a3c", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoComplexEvents_1_1NoComplexEventDates.html#a44fb96682860b5365bd6c25f411f63ac", null ]
 ];

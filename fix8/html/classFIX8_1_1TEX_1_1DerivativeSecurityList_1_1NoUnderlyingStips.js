@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoUnderlyingStips =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoUnderlyingStips.html#ae9991a75878a6e83c331214640acada8", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoUnderlyingStips.html#a342837bd4401b47d6bc8c43df8c54fbf", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoUnderlyingStips.html#a974bc4212f740ca585207e063594783b", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoUnderlyingStips.html#abb6b8a3974382cf69e90749d39bdad71", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoUnderlyingStips.html#abd2e9869e2a6b5ce09cc53aecc735967", null ]
 ];

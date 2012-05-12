@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings.html#ab7c20e1255cb65ad7825b4b62ad85ed9", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings.html#a4b7de9cfa1659a17e95dd97bc43c7deb", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings.html#ad535ffcd6cd8608d19e1c43ac78e3a2f", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings.html#ad99c73c2494d288ab898a30f7020372e", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings.html#a3368a7b7db0f68a08a5ac9fe3a752a1a", null ]
 ];

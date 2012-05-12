@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1Confirmation_1_1NoOrders =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Confirmation_1_1NoOrders.html#a570433d6e7472d37c74b93bc3aed1c74", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1Confirmation_1_1NoOrders.html#a5fd33c3ba8943d28005d869545902c44", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1Confirmation_1_1NoOrders.html#ab58bc91881a4dee7597b1a58731cedb6", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1Confirmation_1_1NoOrders.html#abdcd718f651c04f11e74a3342bb887c5", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1Confirmation_1_1NoOrders.html#af45c7def5b4ac5e308cc3d5f8b4b2863", null ]
 ];

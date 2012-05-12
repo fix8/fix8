@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoInstrumentParties =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoInstrumentParties.html#a32c4bc2bdbddb1c292821c43c0c7d52d", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoInstrumentParties.html#a80e71923a429f0022e768957c171db4f", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoInstrumentParties.html#ac07c74f4709c36123e2c7e588dabb7e4", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoInstrumentParties.html#a6ab18491dd6f2b77391f0882fc676f15", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoInstrumentParties.html#af747b0abbc282d68020b511682a3f65f", null ]
 ];

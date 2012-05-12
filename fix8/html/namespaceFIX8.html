@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.1</span>
+   &#160;<span id="projectnumber">version  0.5.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -194,6 +194,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast map for statically generated data types. Assumes table is sorted. Complexity is O(logN).  <a href="classFIX8_1_1GeneratedTable.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html">StaticTable</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A specialised map to enable native static initalisation.  <a href="structFIX8_1_1StaticTable.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1presorted__set.html">presorted_set</a></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1scoped__ptr.html">scoped_ptr</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">C++11 inspired scoped pointer.  <a href="classFIX8_1_1scoped__ptr.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1RegMatch.html">RegMatch</a></td></tr>
@@ -301,7 +302,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1CustomFields.html">CustomFields</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Custom field wrapper.  <a href="classFIX8_1_1CustomFields.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static metadata context class - one per FIX xml schema.  <a href="structFIX8_1_1F8MetaCntx.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html">MessageBase</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for all fix messages.  <a href="classFIX8_1_1MessageBase.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Message.html">Message</a></td></tr>
@@ -472,8 +472,9 @@ short, class <a class="el" href="classFIX8_1_1GroupBase.html">GroupBase</a> * &g
 short, <a class="el" href="classFIX8_1_1BaseField.html">BaseField</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aed213160f811a3c1e51ad579cdc28feb">Fields</a></td></tr>
 <tr class="memitem:ab0c8887a36bd17208f8c3fb08f472149"><td class="memItemLeft" align="right" valign="top">typedef std::multimap<br class="typebreak"/>
 &lt; unsigned short, <a class="el" href="classFIX8_1_1BaseField.html">BaseField</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab0c8887a36bd17208f8c3fb08f472149">Positions</a></td></tr>
-<tr class="memitem:a529728b7d0dafe3a72a14ab4e4c6f699"><td class="memItemLeft" align="right" valign="top">typedef std::set&lt; <a class="el" href="structFIX8_1_1FieldTrait.html">FieldTrait</a>, <br class="typebreak"/>
-<a class="el" href="structFIX8_1_1FieldTrait_1_1Compare.html">FieldTrait::Compare</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a529728b7d0dafe3a72a14ab4e4c6f699">Presence</a></td></tr>
+<tr class="memitem:ac20c8163c641bb0ba62d1e9924d2a8bd"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classFIX8_1_1presorted__set.html">presorted_set</a><br class="typebreak"/>
+&lt; unsigned short, <a class="el" href="structFIX8_1_1FieldTrait.html">FieldTrait</a>, <br class="typebreak"/>
+<a class="el" href="structFIX8_1_1FieldTrait_1_1Compare.html">FieldTrait::Compare</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ac20c8163c641bb0ba62d1e9924d2a8bd">Presence</a></td></tr>
 <tr class="memitem:aaebab02aab2294fd3380fb303f7de7f0"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; <a class="el" href="classFIX8_1_1RealmObject.html">RealmObject</a> <br class="typebreak"/>
 *, std::string, <br class="typebreak"/>
 <a class="el" href="structFIX8_1_1RealmObject_1_1less.html">RealmObject::less</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aaebab02aab2294fd3380fb303f7de7f0">RealmMap</a></td></tr>
@@ -643,7 +644,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00120">120</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00121">121</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -748,7 +749,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00182">182</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00183">183</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -913,7 +914,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00115">115</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00116">116</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -928,7 +929,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00116">116</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00117">117</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -943,7 +944,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00162">162</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00163">163</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -1003,7 +1004,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00117">117</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00118">118</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -1093,7 +1094,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00161">161</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00162">162</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -1262,18 +1263,18 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a529728b7d0dafe3a72a14ab4e4c6f699"></a>
+<a class="anchor" id="ac20c8163c641bb0ba62d1e9924d2a8bd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::set&lt;<a class="el" href="structFIX8_1_1FieldTrait.html">FieldTrait</a>, <a class="el" href="structFIX8_1_1FieldTrait_1_1Compare.html">FieldTrait::Compare</a>&gt; <a class="el" href="namespaceFIX8.html#a529728b7d0dafe3a72a14ab4e4c6f699">FIX8::Presence</a></td>
+          <td class="memname">typedef <a class="el" href="classFIX8_1_1presorted__set.html">presorted_set</a>&lt;unsigned short, <a class="el" href="structFIX8_1_1FieldTrait.html">FieldTrait</a>, <a class="el" href="structFIX8_1_1FieldTrait_1_1Compare.html">FieldTrait::Compare</a>&gt; <a class="el" href="namespaceFIX8.html#ac20c8163c641bb0ba62d1e9924d2a8bd">FIX8::Presence</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00149">149</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00140">140</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
 </div>
 </div>
@@ -1333,7 +1334,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00112">112</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00113">113</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -1513,7 +1514,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00121">121</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00122">122</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -1649,7 +1650,7 @@ Variables</h2></td></tr>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00165">165</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00166">166</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -1851,7 +1852,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l29335">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00296">FIX8::Message::encode()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00165">process_special_traits()</a>.</p>
+<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l29133">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00309">FIX8::Message::encode()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00165">process_special_traits()</a>.</p>
 
 </div>
 </div>
@@ -1870,7 +1871,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l29335">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00296">FIX8::Message::encode()</a>, <a class="el" href="message_8cpp_source.html#l00181">FIX8::Message::factory()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00165">process_special_traits()</a>.</p>
+<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l29133">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00309">FIX8::Message::encode()</a>, <a class="el" href="message_8cpp_source.html#l00181">FIX8::Message::factory()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00165">process_special_traits()</a>.</p>
 
 </div>
 </div>
@@ -1889,7 +1890,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="message_8cpp_source.html#l00296">FIX8::Message::encode()</a>, <a class="el" href="message_8cpp_source.html#l00181">FIX8::Message::factory()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00165">process_special_traits()</a>.</p>
+<p>Referenced by <a class="el" href="message_8cpp_source.html#l00309">FIX8::Message::encode()</a>, <a class="el" href="message_8cpp_source.html#l00181">FIX8::Message::factory()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00165">process_special_traits()</a>.</p>
 
 </div>
 </div>
@@ -1993,7 +1994,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="myfix_8cpp_source.html#l00427">tex_router_server::operator()()</a>, and <a class="el" href="session_8cpp_source.html#l00669">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="myfix_8cpp_source.html#l00434">tex_router_server::operator()()</a>, and <a class="el" href="session_8cpp_source.html#l00683">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -2012,7 +2013,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l29335">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00296">FIX8::Message::encode()</a>, <a class="el" href="message_8cpp_source.html#l00181">FIX8::Message::factory()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00165">process_special_traits()</a>.</p>
+<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l29133">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="message_8cpp_source.html#l00309">FIX8::Message::encode()</a>, <a class="el" href="message_8cpp_source.html#l00181">FIX8::Message::factory()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00165">process_special_traits()</a>.</p>
 
 </div>
 </div>
@@ -2031,7 +2032,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00573">FIX8::Session::generate_heartbeat()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00587">FIX8::Session::generate_heartbeat()</a>.</p>
 
 </div>
 </div>
@@ -2050,7 +2051,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00602">FIX8::Session::generate_logon()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00616">FIX8::Session::generate_logon()</a>.</p>
 
 </div>
 </div>
@@ -2069,7 +2070,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00616">FIX8::Session::generate_logout()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00630">FIX8::Session::generate_logout()</a>.</p>
 
 </div>
 </div>
@@ -2088,7 +2089,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00583">FIX8::Session::generate_reject()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00597">FIX8::Session::generate_reject()</a>.</p>
 
 </div>
 </div>
@@ -2107,7 +2108,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00623">FIX8::Session::generate_resend_request()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00637">FIX8::Session::generate_resend_request()</a>.</p>
 
 </div>
 </div>
@@ -2126,7 +2127,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00222">FIX8::Session::enforce()</a>, and <a class="el" href="session_8cpp_source.html#l00633">FIX8::Session::generate_sequence_reset()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00222">FIX8::Session::enforce()</a>, and <a class="el" href="session_8cpp_source.html#l00647">FIX8::Session::generate_sequence_reset()</a>.</p>
 
 </div>
 </div>
@@ -2145,7 +2146,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00593">FIX8::Session::generate_test_request()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00607">FIX8::Session::generate_test_request()</a>.</p>
 
 </div>
 </div>
@@ -2198,7 +2199,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00669">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00683">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -2234,7 +2235,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00350">FIX8::Session::handle_logon()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00364">FIX8::Session::handle_logon()</a>.</p>
 
 </div>
 </div>
@@ -2253,7 +2254,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00669">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00683">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -2289,7 +2290,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00669">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00683">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -2499,7 +2500,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>reference to target string </dd></dl>
 
-<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00364">generate_preamble()</a>, and <a class="el" href="logger_8cpp_source.html#l00071">FIX8::Logger::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00366">generate_preamble()</a>, and <a class="el" href="logger_8cpp_source.html#l00071">FIX8::Logger::operator()()</a>.</p>
 
 </div>
 </div>
@@ -2723,7 +2724,7 @@ template&lt;&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>reference to modified string </dd></dl>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00299">load_fields()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00313">load_fields()</a>.</p>
 
 </div>
 </div>
@@ -2792,7 +2793,7 @@ template&lt;&gt; </div>
 
 <p>References <a class="el" href="f8utils_8hpp_source.html#l00676">rnanosleep()</a>.</p>
 
-<p>Referenced by <a class="el" href="myfix_8cpp_source.html#l00427">tex_router_server::operator()()</a>, and <a class="el" href="session_8cpp_source.html#l00655">FIX8::Session::send_wait()</a>.</p>
+<p>Referenced by <a class="el" href="myfix_8cpp_source.html#l00434">tex_router_server::operator()()</a>, and <a class="el" href="session_8cpp_source.html#l00669">FIX8::Session::send_wait()</a>.</p>
 
 </div>
 </div>
@@ -2823,7 +2824,7 @@ template&lt;&gt; </div>
 
 <p>References <a class="el" href="f8utils_8hpp_source.html#l00676">rnanosleep()</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8cpp_source.html#l00280">FIX8::ClientConnection::connect()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00160">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, and <a class="el" href="session_8cpp_source.html#l00211">FIX8::Session::stop()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8cpp_source.html#l00288">FIX8::ClientConnection::connect()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00160">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, and <a class="el" href="session_8cpp_source.html#l00211">FIX8::Session::stop()</a>.</p>
 
 </div>
 </div>
@@ -3622,11 +3623,11 @@ template&lt;typename T &gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00185">185</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00186">186</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 <p>References <a class="el" href="xml_8hpp_source.html#l00156">XmlElement::FindAttr()</a>, and <a class="el" href="xml_8hpp_source.html#l00210">XmlElement::GetLine()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00299">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00369">load_messages()</a>, <a class="el" href="f8c_8cpp_source.html#l00460">parse_groups()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00229">process_message_fields()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00313">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00383">load_messages()</a>, <a class="el" href="f8c_8cpp_source.html#l00474">parse_groups()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00229">process_message_fields()</a>.</p>
 
 </div>
 </div>
@@ -3808,7 +3809,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="f8utils_8cpp_source.html#l00135">135</a> of file <a class="el" href="f8utils_8cpp_source.html">f8utils.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="myfix_8hpp_source.html#l00229">MyMenu::set_raw_mode()</a>, and <a class="el" href="myfix_8hpp_source.html#l00218">MyMenu::unset_raw_mode()</a>.</p>
+<p>Referenced by <a class="el" href="myfix_8hpp_source.html#l00214">MyMenu::set_raw_mode()</a>, and <a class="el" href="myfix_8hpp_source.html#l00203">MyMenu::unset_raw_mode()</a>.</p>
 
 </div>
 </div>
@@ -3901,7 +3902,7 @@ template&lt;typename T &gt; </div>
     <ul>
       <li class="navelem"><a class="el" href="namespaceFIX8.html">FIX8</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Apr 28 2012 16:34:02. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:54. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

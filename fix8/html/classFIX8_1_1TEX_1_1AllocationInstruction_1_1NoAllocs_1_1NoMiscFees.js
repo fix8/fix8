@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoAllocs_1_1NoMiscFees =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoAllocs_1_1NoMiscFees.html#a0c3b1590a04ab4d938ec191af110a42c", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoAllocs_1_1NoMiscFees.html#a7eb6e4b5944c19788e715dca3167bd5e", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoAllocs_1_1NoMiscFees.html#a2543988736a0677e9003fa8ab88264fe", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoAllocs_1_1NoMiscFees.html#ad54b4a6d3d87911a3fc4acdf46c5ac85", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoAllocs_1_1NoMiscFees.html#a495e2c778900d729d4eb2d77840af27c", null ]
 ];

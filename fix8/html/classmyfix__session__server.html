@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.1</span>
+   &#160;<span id="projectnumber">version  0.5.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -141,19 +141,15 @@ Inheritance diagram for myfix_session_server:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa561fe2a4a8c1eec11049553c42b984f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmyfix__session__server.html#aa561fe2a4a8c1eec11049553c42b984f">myfix_session_server</a> (const <a class="el" href="structFIX8_1_1F8MetaCntx.html">FIX8::F8MetaCntx</a> &amp;ctx, <a class="el" href="classFIX8_1_1Persister.html">FIX8::Persister</a> *persist=0, <a class="el" href="classFIX8_1_1Logger.html">FIX8::Logger</a> *logger=0, <a class="el" href="classFIX8_1_1Logger.html">FIX8::Logger</a> *plogger=0)</td></tr>
 <tr class="memitem:ac1319edb4d79c5a2d2493d4dfa5f2df1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmyfix__session__server.html#ac1319edb4d79c5a2d2493d4dfa5f2df1">handle_application</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">FIX8::Message</a> *msg)</td></tr>
-<tr class="memitem:a46df596e555cebcdd43fc5ecca74b06b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmyfix__session__server.html#a46df596e555cebcdd43fc5ecca74b06b">handle_admin</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">FIX8::Message</a> *msg)</td></tr>
-<tr class="memitem:a0ec676c60e532f03fa46cbaa0567167e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmyfix__session__server.html#a0ec676c60e532f03fa46cbaa0567167e">set_is_logged_out</a> ()</td></tr>
-<tr class="memitem:ae0d77b1e1139629157e84b4bd2353757"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmyfix__session__server.html#ae0d77b1e1139629157e84b4bd2353757">is_logged_out</a> () const </td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:afdcbf5cb0e753990a5c9c47cd65a4675"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classtex__router__server.html">tex_router_server</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmyfix__session__server.html#afdcbf5cb0e753990a5c9c47cd65a4675">_router</a></td></tr>
-<tr class="memitem:a7a02e8010591adaa29b392e6aa607ace"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmyfix__session__server.html#a7a02e8010591adaa29b392e6aa607ace">_logged_out</a></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Example server session. Derives from <a class="el" href="classFIX8_1_1Session.html" title="Fix8 Base Session. User sessions derive from this class.">FIX8::Session</a>. </p>
 <p>Your application must define a class similar to this in order to receive client connections. You must also implement handle_application in order to receive application messages from the framework. </p>
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00114">114</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00109">109</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aa561fe2a4a8c1eec11049553c42b984f"></a>
 <div class="memitem">
@@ -202,53 +198,11 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00125">125</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00119">119</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a46df596e555cebcdd43fc5ecca74b06b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classmyfix__session__server.html#a46df596e555cebcdd43fc5ecca74b06b">myfix_session_server::handle_admin</a> </td>
-          <td>(</td>
-          <td class="paramtype">const unsigned&#160;</td>
-          <td class="paramname"><em>seqnum</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classFIX8_1_1Message.html">FIX8::Message</a> *&#160;</td>
-          <td class="paramname"><em>msg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>Admin message callback. This method is called by the framework when an admin message has been received and decoded. You should implement this method and call the supplied Message::process. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">seqnum</td><td>Fix sequence number of the message </td></tr>
-    <tr><td class="paramname">msg</td><td>Mesage decoded (base ptr) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns:</dt><dd>true on success </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classFIX8_1_1Session.html#ad5a50d4f7dd946ffa8c55165d56b99e0">FIX8::Session</a>.</p>
-
-<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00301">301</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
-
-<p>References <a class="el" href="message_8hpp_source.html#l00597">FIX8::Message::process()</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="ac1319edb4d79c5a2d2493d4dfa5f2df1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -285,70 +239,13 @@ Private Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classFIX8_1_1Session.html#a5821c2539f58e91fc4b2724a1d04eb5f">FIX8::Session</a>.</p>
 
-<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00296">296</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00297">297</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00597">FIX8::Message::process()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ae0d77b1e1139629157e84b4bd2353757"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classmyfix__session__server.html#ae0d77b1e1139629157e84b4bd2353757">myfix_session_server::is_logged_out</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00144">144</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
-
-<p>References <a class="el" href="myfix_8hpp_source.html#l00117">_logged_out</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0ec676c60e532f03fa46cbaa0567167e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classmyfix__session__server.html#a0ec676c60e532f03fa46cbaa0567167e">myfix_session_server::set_is_logged_out</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00143">143</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
-
-<p>References <a class="el" href="myfix_8hpp_source.html#l00117">_logged_out</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00600">FIX8::Message::process()</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a7a02e8010591adaa29b392e6aa607ace"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classmyfix__session__server.html#a7a02e8010591adaa29b392e6aa607ace">myfix_session_server::_logged_out</a><code> [private]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00117">117</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
-
-<p>Referenced by <a class="el" href="myfix_8hpp_source.html#l00144">is_logged_out()</a>, and <a class="el" href="myfix_8hpp_source.html#l00143">set_is_logged_out()</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="afdcbf5cb0e753990a5c9c47cd65a4675"></a>
 <div class="memitem">
 <div class="memproto">
@@ -360,7 +257,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00116">116</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00111">111</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
 </div>
 </div>
@@ -374,7 +271,7 @@ Private Attributes</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="classmyfix__session__server.html">myfix_session_server</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Apr 28 2012 16:34:02. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:54. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

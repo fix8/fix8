@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.1</span>
+   &#160;<span id="projectnumber">version  0.5.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -142,7 +142,6 @@ Inheritance diagram for tex_router_server:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a5f59f85d3c34fba4ea0c1eb34fd96178"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtex__router__server.html#a5f59f85d3c34fba4ea0c1eb34fd96178">tex_router_server</a> (<a class="el" href="classmyfix__session__server.html">myfix_session_server</a> &amp;session)</td></tr>
 <tr class="memitem:ada3cfebfee12b8fddb5f3ee92f408129"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtex__router__server.html#ada3cfebfee12b8fddb5f3ee92f408129">operator()</a> (const <a class="el" href="classFIX8_1_1TEX_1_1NewOrderSingle.html">FIX8::TEX::NewOrderSingle</a> *msg) const </td></tr>
-<tr class="memitem:a66cead4494410aa887fecdf5c28f53f1"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtex__router__server.html#a66cead4494410aa887fecdf5c28f53f1">operator()</a> (const <a class="el" href="classFIX8_1_1TEX_1_1Logout.html">FIX8::TEX::Logout</a> *msg) const </td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a1639b1beac11a9868dccd18eba02fc37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmyfix__session__server.html">myfix_session_server</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtex__router__server.html#a1639b1beac11a9868dccd18eba02fc37">_session</a></td></tr>
@@ -202,35 +201,9 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00427">427</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00434">434</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
 
-<p>References <a class="el" href="namespaceFIX8.html#a553ab7c89eaaff1d81511fa35c7b0e56">FIX8::Common_MsgSeqNum()</a>, <a class="el" href="message_8cpp_source.html#l00233">FIX8::MessageBase::copy_legal()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#ae9eb8ffd363d42b11b748d14951551c5">FIX8::TEX::ExecType_NEW()</a>, <a class="el" href="message_8hpp_source.html#l00457">FIX8::MessageBase::find_group()</a>, <a class="el" href="structFIX8_1_1Field.html#a51f5fb1a89c23d3d02ca5fb6e79e37ee">FIX8::Field&lt; T, field &gt;::get()</a>, <a class="el" href="f8utils_8hpp_source.html#l00230">FIX8::scoped_ptr&lt; T &gt;::get()</a>, <a class="el" href="message_8hpp_source.html#l00375">FIX8::MessageBase::get()</a>, <a class="el" href="message_8hpp_source.html#l00106">FIX8::GroupBase::get_element()</a>, <a class="el" href="myfix_8hpp_source.html#l00263">RandDev::getrandom()</a>, <a class="el" href="message_8hpp_source.html#l00390">FIX8::MessageBase::has()</a>, <a class="el" href="f8utils_8hpp_source.html#l00708">FIX8::microsleep()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#ac38ed139cc34378b3418f74e044a3934">FIX8::TEX::OrdStatus_FILLED()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a67912a9350ad4141a5037ab391b67985">FIX8::TEX::OrdStatus_NEW()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#aeabc14b6114f38de66eea02e78ebc4c5">FIX8::TEX::OrdStatus_PARTIALLY_FILLED()</a>, <a class="el" href="myfix_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet()</a>, and <a class="el" href="message_8hpp_source.html#l00096">FIX8::GroupBase::size()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a66cead4494410aa887fecdf5c28f53f1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool tex_router_server::operator() </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classFIX8_1_1TEX_1_1Logout.html">FIX8::TEX::Logout</a> *&#160;</td>
-          <td class="paramname"><em>msg</em></td><td>)</td>
-          <td> const<code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>Logout message handler. Here is where you provide your own methods for the messages you wish to handle. Only those messages that are of interest to you need to be implemented. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">msg</td><td>Logout message </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00587">587</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
+<p>References <a class="el" href="namespaceFIX8.html#a553ab7c89eaaff1d81511fa35c7b0e56">FIX8::Common_MsgSeqNum()</a>, <a class="el" href="message_8cpp_source.html#l00246">FIX8::MessageBase::copy_legal()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#ae9eb8ffd363d42b11b748d14951551c5">FIX8::TEX::ExecType_NEW()</a>, <a class="el" href="message_8hpp_source.html#l00462">FIX8::MessageBase::find_group()</a>, <a class="el" href="structFIX8_1_1Field.html#a51f5fb1a89c23d3d02ca5fb6e79e37ee">FIX8::Field&lt; T, field &gt;::get()</a>, <a class="el" href="f8utils_8hpp_source.html#l00230">FIX8::scoped_ptr&lt; T &gt;::get()</a>, <a class="el" href="message_8hpp_source.html#l00380">FIX8::MessageBase::get()</a>, <a class="el" href="message_8hpp_source.html#l00106">FIX8::GroupBase::get_element()</a>, <a class="el" href="myfix_8hpp_source.html#l00248">RandDev::getrandom()</a>, <a class="el" href="message_8hpp_source.html#l00395">FIX8::MessageBase::has()</a>, <a class="el" href="f8utils_8hpp_source.html#l00708">FIX8::microsleep()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#ac38ed139cc34378b3418f74e044a3934">FIX8::TEX::OrdStatus_FILLED()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a67912a9350ad4141a5037ab391b67985">FIX8::TEX::OrdStatus_NEW()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#aeabc14b6114f38de66eea02e78ebc4c5">FIX8::TEX::OrdStatus_PARTIALLY_FILLED()</a>, <a class="el" href="myfix_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet()</a>, and <a class="el" href="message_8hpp_source.html#l00096">FIX8::GroupBase::size()</a>.</p>
 
 </div>
 </div>
@@ -260,7 +233,7 @@ Private Attributes</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="classtex__router__server.html">tex_router_server</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Apr 28 2012 16:34:02. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:54. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

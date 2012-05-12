@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoComplexEvents_1_1NoComplexEv
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#af69f1dc7edb26893c8eb193aeec194b5", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#a900ed2e6353a2a8c3812fa0451133028", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#a737be5011742d4c0aea6ef21db455627", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#ab60933536f4a2befd0e72d4928eb9070", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#a284b92cdaddb33deb311abd782f22355", null ]
 ];

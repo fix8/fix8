@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.1</span>
+   &#160;<span id="projectnumber">version  0.5.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -158,34 +158,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00041"></a>00041 <span class="preprocessor"></span><span class="preprocessor">#include &lt;tr1/unordered_map&gt;</span>
 <a name="l00042"></a>00042 <span class="preprocessor">#endif</span>
 <a name="l00043"></a>00043 <span class="preprocessor"></span>
-<a name="l00044"></a>00044 <span class="preprocessor">#include &lt;<a class="code" href="f8exception_8hpp.html">f8exception.hpp</a>&gt;</span>
-<a name="l00045"></a>00045 <span class="preprocessor">#include &lt;<a class="code" href="memory_8hpp.html">memory.hpp</a>&gt;</span>
-<a name="l00046"></a>00046 <span class="preprocessor">#include &lt;<a class="code" href="f8allocator_8hpp.html">f8allocator.hpp</a>&gt;</span>
-<a name="l00047"></a>00047 <span class="preprocessor">#include &lt;<a class="code" href="f8types_8hpp.html">f8types.hpp</a>&gt;</span>
-<a name="l00048"></a>00048 <span class="preprocessor">#include &lt;<a class="code" href="f8utils_8hpp.html">f8utils.hpp</a>&gt;</span>
-<a name="l00049"></a>00049 <span class="preprocessor">#include &lt;<a class="code" href="xml_8hpp.html">xml.hpp</a>&gt;</span>
-<a name="l00050"></a>00050 <span class="preprocessor">#include &lt;<a class="code" href="thread_8hpp.html">thread.hpp</a>&gt;</span>
-<a name="l00051"></a>00051 <span class="preprocessor">#include &lt;<a class="code" href="gzstream_8hpp.html">gzstream.hpp</a>&gt;</span>
-<a name="l00052"></a>00052 <span class="preprocessor">#include &lt;<a class="code" href="tickval_8hpp.html">tickval.hpp</a>&gt;</span>
-<a name="l00053"></a>00053 <span class="preprocessor">#include &lt;<a class="code" href="logger_8hpp.html">logger.hpp</a>&gt;</span>
-<a name="l00054"></a>00054 <span class="preprocessor">#include &lt;<a class="code" href="traits_8hpp.html">traits.hpp</a>&gt;</span>
-<a name="l00055"></a>00055 <span class="preprocessor">#include &lt;<a class="code" href="timer_8hpp.html">timer.hpp</a>&gt;</span>
-<a name="l00056"></a>00056 <span class="preprocessor">#include &lt;<a class="code" href="field_8hpp.html">field.hpp</a>&gt;</span>
-<a name="l00057"></a>00057 <span class="preprocessor">#include &lt;<a class="code" href="message_8hpp.html">message.hpp</a>&gt;</span>
-<a name="l00058"></a>00058 <span class="preprocessor">#include &lt;<a class="code" href="session_8hpp.html">session.hpp</a>&gt;</span>
-<a name="l00059"></a>00059 <span class="preprocessor">#include &lt;<a class="code" href="connection_8hpp.html">connection.hpp</a>&gt;</span>
-<a name="l00060"></a>00060 <span class="preprocessor">#include &lt;<a class="code" href="configuration_8hpp.html">configuration.hpp</a>&gt;</span>
-<a name="l00061"></a>00061 <span class="preprocessor">#include &lt;<a class="code" href="persist_8hpp.html">persist.hpp</a>&gt;</span>
-<a name="l00062"></a>00062 <span class="preprocessor">#include &lt;<a class="code" href="sessionwrapper_8hpp.html">sessionwrapper.hpp</a>&gt;</span>
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064 <span class="preprocessor">#endif // _FIX8_INCLUDES_HPP_</span>
+<a name="l00044"></a>00044 <span class="preprocessor">#ifdef PROFILING_BUILD</span>
+<a name="l00045"></a>00045 <span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/gmon.h&gt;</span>
+<a name="l00046"></a>00046 <span class="preprocessor">#endif</span>
+<a name="l00047"></a>00047 <span class="preprocessor"></span>
+<a name="l00048"></a>00048 <span class="preprocessor">#include &lt;<a class="code" href="f8exception_8hpp.html">f8exception.hpp</a>&gt;</span>
+<a name="l00049"></a>00049 <span class="preprocessor">#include &lt;<a class="code" href="memory_8hpp.html">memory.hpp</a>&gt;</span>
+<a name="l00050"></a>00050 <span class="preprocessor">#include &lt;<a class="code" href="f8allocator_8hpp.html">f8allocator.hpp</a>&gt;</span>
+<a name="l00051"></a>00051 <span class="preprocessor">#include &lt;<a class="code" href="f8types_8hpp.html">f8types.hpp</a>&gt;</span>
+<a name="l00052"></a>00052 <span class="preprocessor">#include &lt;<a class="code" href="f8utils_8hpp.html">f8utils.hpp</a>&gt;</span>
+<a name="l00053"></a>00053 <span class="preprocessor">#include &lt;<a class="code" href="xml_8hpp.html">xml.hpp</a>&gt;</span>
+<a name="l00054"></a>00054 <span class="preprocessor">#include &lt;<a class="code" href="thread_8hpp.html">thread.hpp</a>&gt;</span>
+<a name="l00055"></a>00055 <span class="preprocessor">#include &lt;<a class="code" href="gzstream_8hpp.html">gzstream.hpp</a>&gt;</span>
+<a name="l00056"></a>00056 <span class="preprocessor">#include &lt;<a class="code" href="tickval_8hpp.html">tickval.hpp</a>&gt;</span>
+<a name="l00057"></a>00057 <span class="preprocessor">#include &lt;<a class="code" href="logger_8hpp.html">logger.hpp</a>&gt;</span>
+<a name="l00058"></a>00058 <span class="preprocessor">#include &lt;<a class="code" href="traits_8hpp.html">traits.hpp</a>&gt;</span>
+<a name="l00059"></a>00059 <span class="preprocessor">#include &lt;<a class="code" href="timer_8hpp.html">timer.hpp</a>&gt;</span>
+<a name="l00060"></a>00060 <span class="preprocessor">#include &lt;<a class="code" href="field_8hpp.html">field.hpp</a>&gt;</span>
+<a name="l00061"></a>00061 <span class="preprocessor">#include &lt;<a class="code" href="message_8hpp.html">message.hpp</a>&gt;</span>
+<a name="l00062"></a>00062 <span class="preprocessor">#include &lt;<a class="code" href="session_8hpp.html">session.hpp</a>&gt;</span>
+<a name="l00063"></a>00063 <span class="preprocessor">#include &lt;<a class="code" href="connection_8hpp.html">connection.hpp</a>&gt;</span>
+<a name="l00064"></a>00064 <span class="preprocessor">#include &lt;<a class="code" href="configuration_8hpp.html">configuration.hpp</a>&gt;</span>
+<a name="l00065"></a>00065 <span class="preprocessor">#include &lt;<a class="code" href="persist_8hpp.html">persist.hpp</a>&gt;</span>
+<a name="l00066"></a>00066 <span class="preprocessor">#include &lt;<a class="code" href="sessionwrapper_8hpp.html">sessionwrapper.hpp</a>&gt;</span>
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068 <span class="preprocessor">#endif // _FIX8_INCLUDES_HPP_</span>
 </pre></div></div><!-- contents -->
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="f8includes_8hpp.html">f8includes.hpp</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Apr 28 2012 16:33:52. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:44. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

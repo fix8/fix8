@@ -1,6 +1,7 @@
 var searchData=
 [
   ['calc_5fchksum',['calc_chksum',['../classFIX8_1_1Message.html#aa16a3a2e631a4eafaa71f7134dd9da76',1,'FIX8::Message']]],
+  ['calc_5freserve',['calc_reserve',['../classFIX8_1_1presorted__set.html#a8f9bcca3bab1083dcf2cd51482e16f5a',1,'FIX8::presorted_set']]],
   ['calculate',['Calculate',['../classFIX8_1_1IntervalTimer.html#a0aa09b40c3fa1d9ebe45cf6e63c8f654',1,'FIX8::IntervalTimer']]],
   ['callback_5fprocessor',['callback_processor',['../classFIX8_1_1FIXReader.html#a544af89074e413078c72ffed9781295a',1,'FIX8::FIXReader']]],
   ['cancellationrights_5fno_5fm',['CancellationRights_NO_M',['../namespaceFIX8_1_1TEX.html#a274240443f4a31019405c6e3e8de57f7',1,'FIX8::TEX']]],
@@ -18,7 +19,7 @@ var searchData=
   ['check_5fpositions',['check_positions',['../classFIX8_1_1MessageBase.html#a26ff1c4d04a88bfe72a0c0010fe3d35d',1,'FIX8::MessageBase']]],
   ['check_5fset_5frlm',['check_set_rlm',['../classFIX8_1_1MessageBase.html#af962372b55a6a418fdff71c0bc06d418',1,'FIX8::MessageBase']]],
   ['checkaddtrailingslash',['CheckAddTrailingSlash',['../namespaceFIX8.html#aa425fec2bfd5904c8599debe9e6adc9c',1,'FIX8::CheckAddTrailingSlash(std::string &amp;source)'],['../namespaceFIX8.html#a91dbcee63f466c2a9b43ad5a1d500bc1',1,'FIX8::CheckAddTrailingSlash(string &amp;src)']]],
-  ['clear',['clear',['../classFIX8_1_1ebitset.html#a146ed9ec394f26357a3a0adc977e01d4',1,'FIX8::ebitset::clear()'],['../classFIX8_1_1ebitset__r.html#a5701de060a6c254cc9e92ae10e34ea0f',1,'FIX8::ebitset_r::clear()'],['../classFIX8_1_1GroupBase.html#ab3b6bdca21795613262035db541cf6ca',1,'FIX8::GroupBase::clear()'],['../classFIX8_1_1MessageBase.html#a3451302a3803372f11f118078a54d789',1,'FIX8::MessageBase::clear()'],['../classFIX8_1_1Message.html#a14bc2ac8a76f8e2e327271dd6a4dde76',1,'FIX8::Message::clear()'],['../classFIX8_1_1FieldTraits.html#aca48882814cd7c3b1ba2cbc43be98bfb',1,'FIX8::FieldTraits::clear()']]],
+  ['clear',['clear',['../classFIX8_1_1presorted__set.html#ad53fc2b34e7994bdbc6b77979d92562c',1,'FIX8::presorted_set::clear()'],['../classFIX8_1_1ebitset.html#a146ed9ec394f26357a3a0adc977e01d4',1,'FIX8::ebitset::clear()'],['../classFIX8_1_1ebitset__r.html#a5701de060a6c254cc9e92ae10e34ea0f',1,'FIX8::ebitset_r::clear()'],['../classFIX8_1_1GroupBase.html#ab3b6bdca21795613262035db541cf6ca',1,'FIX8::GroupBase::clear()'],['../classFIX8_1_1MessageBase.html#a3451302a3803372f11f118078a54d789',1,'FIX8::MessageBase::clear()'],['../classFIX8_1_1Message.html#a14bc2ac8a76f8e2e327271dd6a4dde76',1,'FIX8::Message::clear()'],['../classFIX8_1_1FieldTraits.html#aca48882814cd7c3b1ba2cbc43be98bfb',1,'FIX8::FieldTraits::clear()']]],
   ['clear_5fflag',['clear_flag',['../classFIX8_1_1FieldTraits.html#a921d60984745e19a6ba62bde37142ecc',1,'FIX8::FieldTraits']]],
   ['clearall',['clearall',['../classFIX8_1_1ebitset.html#a6ff59f9e1f7d49e8e50c09191a523348',1,'FIX8::ebitset::clearall()'],['../classFIX8_1_1ebitset__r.html#ae8a562673df34fac973560ee54c0de6e',1,'FIX8::ebitset_r::clearall()']]],
   ['clearingfeeindicator_5f106h_5fand_5f106j_5ffirms',['ClearingFeeIndicator_106H_AND_106J_FIRMS',['../namespaceFIX8_1_1TEX.html#aa91926e1f893847d5d0d7a3d727e0e9f',1,'FIX8::TEX']]],

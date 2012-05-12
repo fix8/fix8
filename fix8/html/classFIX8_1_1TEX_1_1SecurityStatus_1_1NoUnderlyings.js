@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1SecurityStatus_1_1NoUnderlyings =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoUnderlyings.html#af02c707a29a38f93d8acde238c3c558e", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoUnderlyings.html#a4bbf059dfd13d9b75b9f55c37b953c99", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoUnderlyings.html#a49087f68f52f38554bfe7cf65ef5cad8", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoUnderlyings.html#aa929efc2e69d5ce576b43bd14fe18deb", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoUnderlyings.html#a780565337c7c4fd61819e3c4d8dae8f8", null ]
 ];

@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoComplexEvents_1_1NoC
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#afd1a5a89f8dc4ad226b9a505c862ce32", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#a5c4ab0edd56614f2854512891a5f49da", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#addaeeac5a505bc56c953bea54a2c7ab4", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#ac3231654e499cea91883711564ad6284", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#ab0d27a037077993435568af4f590febd", null ]
 ];

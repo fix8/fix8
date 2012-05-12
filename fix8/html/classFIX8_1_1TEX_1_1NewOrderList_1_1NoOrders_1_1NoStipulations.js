@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStipulations =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStipulations.html#a8044e2104edf4b2779bc7dc3bbe6d615", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStipulations.html#ada4eeb21ae082924c97745baff695298", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStipulations.html#a5f265aa000dc68ffac0a774a834ef5e3", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStipulations.html#a6c9b206e6381c4142e849311bd6e203f", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStipulations.html#a20fc04e878e61e1e5abd133375e26f7b", null ]
 ];

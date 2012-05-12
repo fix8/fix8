@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1News_1_1NoLinesOfText =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoLinesOfText.html#ad989c916ccf28cdc3cbb2e01b37988fc", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1News_1_1NoLinesOfText.html#a47996294ddd16fcd5136fa60b30f6aca", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoLinesOfText.html#abcbfbe953bebee23b91b9fa7034a2ffa", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoLinesOfText.html#a6b9b82730e36f4ab1df323b9bcb85b34", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoLinesOfText.html#a7d4637bc955a060c9fdd159196693110", null ]
 ];

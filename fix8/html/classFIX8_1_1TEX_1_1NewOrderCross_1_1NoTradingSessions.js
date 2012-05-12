@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#a5ba75519cbc952f9dd6088ef2bae3297", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#ad1dd4c91ce790864f6f060f2d1e61f39", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#ac43f32a13ccebd448c7cb207c207297a", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#ade13475bfb7ac5c203c1411c30e2b476", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#a9e0c39707473de6bec5b951f7c0437c4", null ]
 ];

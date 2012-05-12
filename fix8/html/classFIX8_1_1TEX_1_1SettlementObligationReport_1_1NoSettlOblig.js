@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#ae8e5c98f7b2417aaa3f0748e97daec7e", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#a3cbdb8ce23092da4c47028b2c95b4c16", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#aa5c15f2ebe669e0e7d9c2537c68ed21c", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#ad8209dbb93e3a3cfd6dc552a9bf485b1", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#ab70d129c89ff2598f44cbae6c94a78d4", null ]
 ];

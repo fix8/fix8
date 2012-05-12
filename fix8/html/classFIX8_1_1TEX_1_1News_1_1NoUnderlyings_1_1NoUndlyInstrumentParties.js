@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1News_1_1NoUnderlyings_1_1NoUndlyInstrumentParties =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a0db1dc841f9c127dc30a9aeb9449bff1", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1News_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#aaa5086af5c3e81368a1b3e8fb404f610", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#ae4202596c86e64e12f6671750306d072", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a7e9481877508b6b534ad1f78f6da20fd", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#ae302ad3147f14a613a80fda0040d3040", null ]
 ];

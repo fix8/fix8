@@ -23,7 +23,7 @@ var searchData=
   ['bcostream',['bcostream',['../classFIX8_1_1bcostream.html#adb771e3fd858e38c3b72798e0e335e36',1,'FIX8::bcostream']]],
   ['bcoutbuf',['bcoutbuf',['../classFIX8_1_1bcoutbuf.html#aba17eda93cc0317a56c811a41c7b20e1',1,'FIX8::bcoutbuf']]],
   ['bdbpersister',['BDBPersister',['../classFIX8_1_1BDBPersister.html#a90158467ccc59fb8021e2c8e7b20b835',1,'FIX8::BDBPersister']]],
-  ['begin',['begin',['../classXmlElement.html#ad15fcd02a4174887f99c59d8c252ae09',1,'XmlElement']]],
+  ['begin',['begin',['../classFIX8_1_1presorted__set.html#a7d0717c238e565e4e5e3140cc02e5d6d',1,'FIX8::presorted_set::begin()'],['../classFIX8_1_1presorted__set.html#ac97af8b093f989d767bcdbccae03d3e4',1,'FIX8::presorted_set::begin() const '],['../classXmlElement.html#ad15fcd02a4174887f99c59d8c252ae09',1,'XmlElement::begin()']]],
   ['benchmark_5f10yr',['Benchmark_10YR',['../namespaceFIX8_1_1TEX.html#ab98a7d226b518d5568e86e09699a16a6',1,'FIX8::TEX']]],
   ['benchmark_5f30yr',['Benchmark_30YR',['../namespaceFIX8_1_1TEX.html#a9b3d4f448ee4721cb4e5b597310d9f28',1,'FIX8::TEX']]],
   ['benchmark_5f3molibor',['Benchmark_3MOLIBOR',['../namespaceFIX8_1_1TEX.html#a5473a81cc6d7bc1e83a64037d98a741b',1,'FIX8::TEX']]],

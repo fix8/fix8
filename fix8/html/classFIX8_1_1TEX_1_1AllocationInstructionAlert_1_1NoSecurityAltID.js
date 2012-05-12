@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoSecurityAltID =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoSecurityAltID.html#ab52bfd5b78ae36ea13f0b12d369a8da9", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoSecurityAltID.html#ae745d64e8432daba0115880cbfd98269", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoSecurityAltID.html#aa2c4e31ea272eb78150c5b46dc240e6b", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoSecurityAltID.html#a86899bed84dded09103862c3e1a29352", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoSecurityAltID.html#a76fefdc5d5ea6b9784ffd90de29c216f", null ]
 ];

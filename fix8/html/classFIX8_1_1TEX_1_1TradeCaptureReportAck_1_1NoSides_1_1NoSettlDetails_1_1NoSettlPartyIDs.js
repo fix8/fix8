@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides_1_1NoSettlDetails_1_1No
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides_1_1NoSettlDetails_1_1NoSettlPartyIDs.html#a886cd0540a82b7bab09a80247752dd4e", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides_1_1NoSettlDetails_1_1NoSettlPartyIDs.html#adc9c87d3930f057770b64696fa867137", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides_1_1NoSettlDetails_1_1NoSettlPartyIDs.html#ac5f2f4595d953764169ce1983f0280cd", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides_1_1NoSettlDetails_1_1NoSettlPartyIDs.html#a1c87052ad5519c04db8443f88cdb7f25", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides_1_1NoSettlDetails_1_1NoSettlPartyIDs.html#a28121ece37fdc5717f2885f3fb5fe203", null ]
 ];

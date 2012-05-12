@@ -78,6 +78,8 @@ var searchData=
   ['confirmstatus',['ConfirmStatus',['../namespaceFIX8_1_1TEX.html#aede29353238789c31578bdd961b643b9',1,'FIX8::TEX']]],
   ['confirmtranstype',['ConfirmTransType',['../namespaceFIX8_1_1TEX.html#a9c97dd0ecfbc5a7e688c77c7f89f24cd',1,'FIX8::TEX']]],
   ['confirmtype',['ConfirmType',['../namespaceFIX8_1_1TEX.html#ac57a3b4910e64b04af9dc069b0788798',1,'FIX8::TEX']]],
+  ['const_5finternal_5fresult',['const_internal_result',['../classFIX8_1_1presorted__set.html#a53798481a3bf4dfc5c29a2aadcce541a',1,'FIX8::presorted_set']]],
+  ['const_5fiterator',['const_iterator',['../classFIX8_1_1presorted__set.html#ab8b071c56f6ed16a1d98a499c01197e1',1,'FIX8::presorted_set']]],
   ['const_5fpointer',['const_pointer',['../classFIX8_1_1f8Allocator.html#a83c7d5e9c1ede550f6bf5ec06c8b74cd',1,'FIX8::f8Allocator']]],
   ['const_5freference',['const_reference',['../classFIX8_1_1f8Allocator.html#a4cc2174958a0b986f39792eb49f09042',1,'FIX8::f8Allocator']]],
   ['contamtcurr',['ContAmtCurr',['../namespaceFIX8_1_1TEX.html#a6c66a5b605d440f6f73719e33e0216ea',1,'FIX8::TEX']]],

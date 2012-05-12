@@ -104,7 +104,6 @@ var hierarchy =
     [ "FIX8::FieldTrait", "structFIX8_1_1FieldTrait.html", null ],
     [ "FIX8::FieldTrait::Compare", "structFIX8_1_1FieldTrait_1_1Compare.html", null ],
     [ "FIX8::FieldTrait::PosCompare", "structFIX8_1_1FieldTrait_1_1PosCompare.html", null ],
-    [ "FIX8::FieldTrait::TraitBase", "structFIX8_1_1FieldTrait_1_1TraitBase.html", null ],
     [ "FIX8::FieldTraits", "classFIX8_1_1FieldTraits.html", null ],
     [ "FIX8::fptrostream", "classFIX8_1_1fptrostream.html", null ],
     [ "FIX8::free_ptr< Deleter >", "structFIX8_1_1free__ptr.html", null ],
@@ -1844,6 +1843,7 @@ var hierarchy =
       [ "FIX8::BDBPersister", "classFIX8_1_1BDBPersister.html", null ],
       [ "FIX8::MemoryPersister", "classFIX8_1_1MemoryPersister.html", null ]
     ] ],
+    [ "FIX8::presorted_set< K, T, Comp >", "classFIX8_1_1presorted__set.html", null ],
     [ "FIX8::RealmBase", "structFIX8_1_1RealmBase.html", null ],
     [ "FIX8::RealmObject", "classFIX8_1_1RealmObject.html", [
       [ "FIX8::TypedRealm< T >", "classFIX8_1_1TypedRealm.html", null ],

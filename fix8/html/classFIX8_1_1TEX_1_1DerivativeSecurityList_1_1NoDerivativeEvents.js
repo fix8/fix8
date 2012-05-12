@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoDerivativeEvents =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoDerivativeEvents.html#a2a00f5a77a505167accf03dae87ab301", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoDerivativeEvents.html#a2f399f84f992f22dae8bc18e58fe7680", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoDerivativeEvents.html#a297eddae4eb443658a1e8b7a8d5e463b", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoDerivativeEvents.html#a5eba3838167cebb1d845ef62612db3a4", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoDerivativeEvents.html#ab024bc9374f7da09a6c8d9f94dc3f4cc", null ]
 ];

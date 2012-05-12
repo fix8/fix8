@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1Quote_1_1NoStipulations =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Quote_1_1NoStipulations.html#a9680b85bbf9d67752d90f4dca8ec77a3", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1Quote_1_1NoStipulations.html#aeeb161891cd86c05b4de510467e1fd16", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1Quote_1_1NoStipulations.html#a80172d358c9d8287b86cb659cc6e52b7", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1Quote_1_1NoStipulations.html#a8081779a2f95ebfb0d62a88b274ac3a9", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1Quote_1_1NoStipulations.html#a1bb79c842e6cf2774e8a1e756118465b", null ]
 ];

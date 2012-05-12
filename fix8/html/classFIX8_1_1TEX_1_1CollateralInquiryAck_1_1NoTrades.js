@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1CollateralInquiryAck_1_1NoTrades =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralInquiryAck_1_1NoTrades.html#a76e81f55bd56cf2a3d990a530ced9a04", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1CollateralInquiryAck_1_1NoTrades.html#aa1b7a38d0eed85f39d0ee2345960ff0c", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralInquiryAck_1_1NoTrades.html#aa9f478fe222b502488c963c21fba3701", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1CollateralInquiryAck_1_1NoTrades.html#afc8325cc0597f67fc170c3415e57dc33", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralInquiryAck_1_1NoTrades.html#a1207bd5ab8cb4ffc7db2d58cade5a8d0", null ]
 ];

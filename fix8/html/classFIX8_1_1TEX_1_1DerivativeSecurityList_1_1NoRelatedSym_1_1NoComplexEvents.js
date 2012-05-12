@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoRelatedSym_1_1NoComplexEvent
     [ "get_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoRelatedSym_1_1NoComplexEvents.html#af79aefcca425d0c9a7d8bc63eafdcd25", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoRelatedSym_1_1NoComplexEvents.html#a44dc5c6bc64115442cf1e441b0f58cf2", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoRelatedSym_1_1NoComplexEvents.html#af1aa475dff8873ad0790e7170da23bcb", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoRelatedSym_1_1NoComplexEvents.html#a868320898e320021a0d1ce7219c2ab15", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoRelatedSym_1_1NoComplexEvents.html#a0c5770975cccdf038c3805961ee2109d", null ]
 ];

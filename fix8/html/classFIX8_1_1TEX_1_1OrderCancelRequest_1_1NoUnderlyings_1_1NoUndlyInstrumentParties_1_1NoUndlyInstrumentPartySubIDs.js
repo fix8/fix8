@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1OrderCancelRequest_1_1NoUnderlyings_1_1NoUndlyInstrument
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderCancelRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac1a5d655003656f7a49efb9a7ae3d67f", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1OrderCancelRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a6cadc889fd513712a6b2a0f7b6f52a45", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderCancelRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a6f8796a6c2ed49b3acd71804360da95f", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1OrderCancelRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#aced35e1002d186e48f07aee61bac40df", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1OrderCancelRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ad7994ddfee59fd2867a16693da0186e1", null ]
 ];

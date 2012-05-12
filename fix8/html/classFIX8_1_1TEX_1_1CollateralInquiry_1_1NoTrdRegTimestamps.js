@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoTrdRegTimestamps =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoTrdRegTimestamps.html#aef12ab392cb59a81a436cdc82719f228", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoTrdRegTimestamps.html#a2106eb2b04bb0a7332663e6fabf4dcb6", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoTrdRegTimestamps.html#ad938c03fd5e9e4a8770edcaf179b0b52", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoTrdRegTimestamps.html#acbc9d0c5088eb4d1169cbe5687fb35f3", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoTrdRegTimestamps.html#a3fe3aebf5c63f3dfd85b45d5428ac020", null ]
 ];

@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoUnderlyings_1_1NoUnd
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a5e79f4bb6e05e154aca8c233f6449f56", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a99448df1c41f95f7d1ba2c2141880032", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a27ef54967d37c631b29ff118cecaf98c", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a250e6643027b82d8a78836d9b0d2edce", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a7f2da89843f8164963489fa3e9f48d9e", null ]
 ];

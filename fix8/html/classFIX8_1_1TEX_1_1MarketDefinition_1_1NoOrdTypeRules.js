@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1MarketDefinition_1_1NoOrdTypeRules =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoOrdTypeRules.html#ab4bd8ff39c1b34e0fa944435ce53f89a", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoOrdTypeRules.html#a727e30e6af7b969b54865efbead05c04", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoOrdTypeRules.html#a0e3143025afca927000873f56913c66d", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoOrdTypeRules.html#a0437946eebacea8c81a75794aa75386b", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoOrdTypeRules.html#a8a7341a7e301cfb36665d2ce4ed8d498", null ]
 ];

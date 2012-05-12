@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1MarketDataRequestReject_1_1NoPartyIDs_1_1NoPartySubIDs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDataRequestReject_1_1NoPartyIDs_1_1NoPartySubIDs.html#a7d4833b111fb7ec291a0fe60d05e3fa0", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDataRequestReject_1_1NoPartyIDs_1_1NoPartySubIDs.html#a75ee24f6782d04e9ab195ed120b63717", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDataRequestReject_1_1NoPartyIDs_1_1NoPartySubIDs.html#a2185bfdc4a9057876b3648bb7b22abce", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataRequestReject_1_1NoPartyIDs_1_1NoPartySubIDs.html#ae724b890b10527a964523eb4fbe2b91b", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataRequestReject_1_1NoPartyIDs_1_1NoPartySubIDs.html#ab19cdc2f66d70143158d290b7856d29f", null ]
 ];

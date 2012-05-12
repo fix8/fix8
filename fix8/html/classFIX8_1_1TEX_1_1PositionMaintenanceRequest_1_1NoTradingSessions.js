@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions.html#a049ec8a38576610a271c2f4eda19f23c", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions.html#a0c2dd8f9fdf9911b2af09bb8ebcc7bd4", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions.html#aa7364fbb81c416be0a925dd11cc06b85", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions.html#aff4b2d12661dde07a4535138fa8347b6", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoTradingSessions.html#ae5c5a5b370462f0c03d39b0e40fdb7de", null ]
 ];

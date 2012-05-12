@@ -238,6 +238,7 @@ var searchData=
   ['_7epositionmaintenancereport',['~PositionMaintenanceReport',['../classFIX8_1_1TEX_1_1PositionMaintenanceReport.html#ad3872f7cc1a9a129667247700b41be15',1,'FIX8::TEX::PositionMaintenanceReport']]],
   ['_7epositionmaintenancerequest',['~PositionMaintenanceRequest',['../classFIX8_1_1TEX_1_1PositionMaintenanceRequest.html#ade8e6e808b39621012a26799f8c26dd1',1,'FIX8::TEX::PositionMaintenanceRequest']]],
   ['_7epositionreport',['~PositionReport',['../classFIX8_1_1TEX_1_1PositionReport.html#a5982cc0c2c4ddd0ad6a2dc616230bbf3',1,'FIX8::TEX::PositionReport']]],
+  ['_7epresorted_5fset',['~presorted_set',['../classFIX8_1_1presorted__set.html#a803f16346b76937f43f2f31f80d7f29a',1,'FIX8::presorted_set']]],
   ['_7equote',['~Quote',['../classFIX8_1_1TEX_1_1Quote.html#a5f29b358200569f4cc5aeda2f5b8d1c8',1,'FIX8::TEX::Quote']]],
   ['_7equotecancel',['~QuoteCancel',['../classFIX8_1_1TEX_1_1QuoteCancel.html#a546eb26605f252ff57ba97d62d3292b3',1,'FIX8::TEX::QuoteCancel']]],
   ['_7equoterequest',['~QuoteRequest',['../classFIX8_1_1TEX_1_1QuoteRequest.html#a8e28952be2d49abab6b802988196bdef',1,'FIX8::TEX::QuoteRequest']]],

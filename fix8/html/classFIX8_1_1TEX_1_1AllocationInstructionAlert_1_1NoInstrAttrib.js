@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoInstrAttrib =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoInstrAttrib.html#af9e0a3b4cc4370c3ac73f4ab7fc65526", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoInstrAttrib.html#ac7e8456314d09b489c9e180b7c039d4c", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoInstrAttrib.html#af50ba33a1a92f1250d4f5309e41ae027", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoInstrAttrib.html#afaa01324dccc42ebd2938271471e4f79", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoInstrAttrib.html#a11dece1e3829d296aca5fbcfb2cbe7ea", null ]
 ];

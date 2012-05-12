@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1CollateralReport_1_1NoInstrumentParties =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoInstrumentParties.html#ae209c85b581675a55c4c2d0a5b7c95be", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoInstrumentParties.html#a7e6e7c2b717718bd7e234d9044d2ee20", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoInstrumentParties.html#ae3bb9dc36f98b8153ea0e16f12f1187a", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoInstrumentParties.html#a4a774bdddabb79a7da2ab8cbcbaece32", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoInstrumentParties.html#a915f66b986893e44a0328c53e3b3083a", null ]
 ];

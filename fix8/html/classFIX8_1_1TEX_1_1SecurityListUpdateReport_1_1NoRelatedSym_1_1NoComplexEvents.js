@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEve
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents.html#a58bb2366f7bcf493c75e028054c35b8d", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents.html#a5c5bd8aa99136ddd1779710e5bf75d04", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents.html#a626fef0f6fd5318d92e96bafafe74fa9", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents.html#a9445287b6fe1ebed84162b45c53ecc75", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents.html#a299c3290b65833e57f7436ff33c01936", null ]
 ];

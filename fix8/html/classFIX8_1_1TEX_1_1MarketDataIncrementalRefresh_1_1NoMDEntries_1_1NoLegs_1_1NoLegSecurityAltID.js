@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs_1_
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs_1_1NoLegSecurityAltID.html#a108be3fb68bc451b57f92d49f455c28a", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs_1_1NoLegSecurityAltID.html#a90423411454be879464032d1fbb216bd", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs_1_1NoLegSecurityAltID.html#a42d435510ce5989588c9918567b85b3d", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs_1_1NoLegSecurityAltID.html#a30ebc74af079dd3bf8ef1ee6e465304d", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs_1_1NoLegSecurityAltID.html#ad37eeeaca3c6d83b7034167e145e38a1", null ]
 ];

@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoUndlyInstrumentP
     [ "get_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoUndlyInstrumentParties.html#ab6f36bd53c501c4441a70d3cc8ce7033", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoUndlyInstrumentParties.html#af57081c1c5e3a033204c62c214f7d549", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoUndlyInstrumentParties.html#accb379781c379eccaa1e61e7d1d794d9", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoUndlyInstrumentParties.html#ac3f3cf19d2a1102cc083ff3b0ef59034", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoUndlyInstrumentParties.html#a5b7e7fff4753b5020026a4d9a956e3f2", null ]
 ];

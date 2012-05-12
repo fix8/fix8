@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoInstrumentParties =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoInstrumentParties.html#ae4c3090be57560f26742ec2ac1b9f8ef", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoInstrumentParties.html#addb568149c08551458c5fe7c08a96967", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoInstrumentParties.html#aea181e631d878ef6ae49ce1ccf242cce", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoInstrumentParties.html#a7d79167ca8d30e02151e31b42ac89907", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoInstrumentParties.html#a801048eda38f294bee4467a4871d9b2d", null ]
 ];

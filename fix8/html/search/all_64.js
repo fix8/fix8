@@ -260,6 +260,7 @@ var searchData=
   ['displaywhen_5fexhaust',['DisplayWhen_EXHAUST',['../namespaceFIX8_1_1TEX.html#a314c67cf71083af5d88377fe1c4b6bf7',1,'FIX8::TEX']]],
   ['displaywhen_5fimmediate',['DisplayWhen_IMMEDIATE',['../namespaceFIX8_1_1TEX.html#a2691eb63a4d1e0147422fcef991feb5f',1,'FIX8::TEX']]],
   ['displaywhen_5frealm_5fels',['DisplayWhen_realm_els',['../namespaceFIX8_1_1TEX.html#a46566dc0bdb7f9f3cb84c9b9023673cd',1,'FIX8::TEX']]],
+  ['distance',['distance',['../classFIX8_1_1presorted__set.html#a84d86451900636bf611bfaf1d283c7e9',1,'FIX8::presorted_set']]],
   ['distribpaymentmethod',['DistribPaymentMethod',['../namespaceFIX8_1_1TEX.html#aec5a5fc6ced7f1069e5fb139be812b46',1,'FIX8::TEX']]],
   ['distribpaymentmethod_5fach_5fcredit',['DistribPaymentMethod_ACH_CREDIT',['../namespaceFIX8_1_1TEX.html#a75cb60ca05de158b7e330d1079f3fea3',1,'FIX8::TEX']]],
   ['distribpaymentmethod_5fbpay',['DistribPaymentMethod_BPAY',['../namespaceFIX8_1_1TEX.html#ab82634b537a2701ecfab2194c69b3c40',1,'FIX8::TEX']]],

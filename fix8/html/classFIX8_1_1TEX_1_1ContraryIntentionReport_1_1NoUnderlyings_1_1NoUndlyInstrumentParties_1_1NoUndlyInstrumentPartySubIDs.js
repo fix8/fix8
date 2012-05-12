@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstr
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ad7c5a4913f58439626da508af640ca83", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a61ba72348035428a78e8226ed3e17c9e", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a81d6139c33e7558582289655809b01b3", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a2248c9d83745e7368d8ee7c65b6d2d06", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac9c175387d7abab4f1512893b057019a", null ]
 ];

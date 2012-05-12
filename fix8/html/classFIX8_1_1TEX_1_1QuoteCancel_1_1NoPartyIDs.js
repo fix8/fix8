@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs.html#a4e333df87cb3cbd29dc989bbc1e91d2a", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs.html#a30eb40d0a97e6d072919cf201aace033", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs.html#a95411041410563cdd3eccd5b759342ae", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs.html#a504b2e2b3cfdae621f1d39678eef2e56", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs.html#a2342cdf959c985175588aa7e129c48e7", null ]
 ];

@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym.html#abe531d02c574eab713826b31e9287ff1", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym.html#af03592638def9b37e281000bfa3a5054", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym.html#a4e4d11903199572cb37f9a2dc2c340d8", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym.html#ada59b516820b7abcf214f2eb27ed394b", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym.html#a647774e8d8fcd3c31789a58207392127", null ]
 ];

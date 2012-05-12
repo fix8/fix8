@@ -110,6 +110,7 @@ var searchData=
   ['routingtype_5frealm_5fels',['RoutingType_realm_els',['../namespaceFIX8_1_1TEX.html#ad1647bf50f63d51a6306e7b864772903',1,'FIX8::TEX']]],
   ['routingtype_5ftarget_5ffirm',['RoutingType_TARGET_FIRM',['../namespaceFIX8_1_1TEX.html#ad03a40aed593d545b0ee5da06c4bd1cd',1,'FIX8::TEX']]],
   ['routingtype_5ftarget_5flist',['RoutingType_TARGET_LIST',['../namespaceFIX8_1_1TEX.html#ac65f09b159b8c7ba33dfb2d8b44514b2',1,'FIX8::TEX']]],
+  ['rsize',['rsize',['../classFIX8_1_1presorted__set.html#a9797ef433470128d242dc3a3f14d11ac',1,'FIX8::presorted_set']]],
   ['rule80a_5fagency_5falgorithmic_5fprogram_5ftrading',['Rule80A_AGENCY_ALGORITHMIC_PROGRAM_TRADING',['../namespaceFIX8_1_1TEX.html#a6544d973432caddb9efbac17ccf09ba6',1,'FIX8::TEX']]],
   ['rule80a_5fagency_5findex_5farbitrage',['Rule80A_AGENCY_INDEX_ARBITRAGE',['../namespaceFIX8_1_1TEX.html#a8ffe355fbd9c4a6cbee34da7df6cf3fd',1,'FIX8::TEX']]],
   ['rule80a_5fagency_5fnon_5falgorithmic_5fprogram_5ftrade',['Rule80A_AGENCY_NON_ALGORITHMIC_PROGRAM_TRADE',['../namespaceFIX8_1_1TEX.html#af99ce5dfe760c83eaad4d72523258794',1,'FIX8::TEX']]],

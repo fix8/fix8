@@ -27,7 +27,6 @@ var searchData=
   ['tradingsessionstatus',['TradingSessionStatus',['../classFIX8_1_1TEX_1_1TradingSessionStatus.html',1,'FIX8::TEX']]],
   ['tradingsessionstatusrequest',['TradingSessionStatusRequest',['../classFIX8_1_1TEX_1_1TradingSessionStatusRequest.html',1,'FIX8::TEX']]],
   ['trailer',['trailer',['../classFIX8_1_1TEX_1_1trailer.html',1,'FIX8::TEX']]],
-  ['traitbase',['TraitBase',['../structFIX8_1_1FieldTrait_1_1TraitBase.html',1,'FIX8::FieldTrait']]],
   ['typedrealm',['TypedRealm',['../classFIX8_1_1TypedRealm.html',1,'FIX8']]],
   ['typedrealm_3c_20char_20_3e',['TypedRealm< char >',['../classFIX8_1_1TypedRealm.html',1,'FIX8']]],
   ['typedrealm_3c_20std_3a_3astring_20_3e',['TypedRealm< std::string >',['../classFIX8_1_1TypedRealm.html',1,'FIX8']]]

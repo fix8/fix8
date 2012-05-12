@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#a2935970f4f63b4950a25a2526a74bb36", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#aafce165eee8248b1cc2bd623d570c854", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#abafda7182c06a2c9a7857a862ba69467", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#a24fe8e913a36e1f2c374220a2e1c6fe8", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#a445105aa2e3b8e3161f2d3e9c809e12a", null ]
 ];

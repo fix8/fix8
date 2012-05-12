@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTickRules =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTickRules.html#a474375c384fb9d67382628f092f1b432", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTickRules.html#a8e6e285d7af1ffb8f13ad43736b65b4c", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTickRules.html#ae47240771852c77d6d109b0e37c4b301", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTickRules.html#a8a8f902bc2cdf0a7d4190bd155c2a22d", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTickRules.html#a7ac538b92c4806f94d8939af15fe6eea", null ]
 ];

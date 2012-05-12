@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoSecurityAltID =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoSecurityAltID.html#af55e758b4c27f66d69bf124cbc560496", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoSecurityAltID.html#a7aac8a7b74153a3d82624b7d22bfc0b0", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoSecurityAltID.html#ad595e7486244a4de4229cd6d628fba61", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoSecurityAltID.html#ad1fba9e8b5d475953da024479cc7f2db", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoSecurityAltID.html#ae25d99f021210c8fba2a2185386f155c", null ]
 ];

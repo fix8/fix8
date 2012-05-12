@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a552851c0b4d27cbd6657a9b724f0ec4d", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a2eac05e926935cd3d4cc99695a39213b", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a9594598382e968988bbd88a6dcbe81e7", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a9eb6859f72ade0556c06b4ae35d7b6e9", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a477865d255ea89c0299888b87f0d3828", null ]
 ];

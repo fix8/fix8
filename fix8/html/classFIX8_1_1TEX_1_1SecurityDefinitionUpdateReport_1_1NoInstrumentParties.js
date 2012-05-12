@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoInstrumentParties =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoInstrumentParties.html#ab4f64d8136b2cace82ead907b8e1d6ab", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoInstrumentParties.html#ab9c0f00efada6749c1d006ce6231609a", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoInstrumentParties.html#a5962ea029592188510a120080dbb51ed", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoInstrumentParties.html#a19cc44fe60f860341e7602c96f5ff7b0", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoInstrumentParties.html#a89219f8f41d42be5888e17ced15c95ac", null ]
 ];

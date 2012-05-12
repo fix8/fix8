@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoInstrument
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoInstrumentParties.html#a9959820f2a841379166530f9a7e93aad", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoInstrumentParties.html#a6200bc7947a18be439b8b3e12763d41b", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoInstrumentParties.html#a985d8fbbe67d483d5fbcf0e9da8f1a69", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoInstrumentParties.html#ae9245caab75f060e34897a1cf6c56f4d", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoInstrumentParties.html#a95405729db0d7c2c8fb5ab6052e13d96", null ]
 ];

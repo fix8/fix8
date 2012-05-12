@@ -1,6 +1,7 @@
 var searchData=
 [
   ['sequence',['sequence',['../classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca7a22c0ccad6314615fa7b2f7ec1fb90e',1,'FIX8::Logger']]],
+  ['session_5fhpp',['session_hpp',['../structFIX8_1_1Ctxt.html#a543540fdfa08a4b524ecc436da83ae66aea31c9f39f5b5196308d3e7403a420f9',1,'FIX8::Ctxt']]],
   ['session_5flog',['session_log',['../classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2a8f06c450c3b6d8ec13d86847ee790e2c',1,'FIX8::Configuration']]],
   ['shutdown',['shutdown',['../classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaa5016fc4b321b44eaa80c39a3736d980e',1,'FIX8::Session']]],
   ['st_5fcontinuous',['st_continuous',['../structFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a',1,'FIX8::States']]],

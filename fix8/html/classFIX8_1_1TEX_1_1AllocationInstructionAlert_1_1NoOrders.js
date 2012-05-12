@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoOrders =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoOrders.html#ac0f436d8cc0532608a7f3d4a1d50e623", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoOrders.html#a78289cfbe371a694fbbba6bcf1313c84", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoOrders.html#a7a5f588a408c8c456a4cf2d15543d8aa", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoOrders.html#ac89216fce9c4135d422475b04b688677", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoOrders.html#ae957b41dde10d3fa24aff1146370ce5d", null ]
 ];

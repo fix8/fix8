@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1RegistrationInstructionsResponse_1_1NoPartyIDs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1RegistrationInstructionsResponse_1_1NoPartyIDs.html#a8512cdb64b32c45f16ae077c30bf0ab1", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1RegistrationInstructionsResponse_1_1NoPartyIDs.html#a36b84dc0ff8684f53b5370fd5352a525", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1RegistrationInstructionsResponse_1_1NoPartyIDs.html#a646b61b3ea53646f1f424d2b4fe34195", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1RegistrationInstructionsResponse_1_1NoPartyIDs.html#ac9a2034cbe7cf6a198e7bec97fd791fd", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1RegistrationInstructionsResponse_1_1NoPartyIDs.html#a47a3a6de802f873af893358d0435519a", null ]
 ];

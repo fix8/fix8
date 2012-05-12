@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1AllocationReport_1_1NoExecs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoExecs.html#ab6a20c275b636cbef12c36b21d74e7e8", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoExecs.html#a935e61035301876877bdfdf8409ce171", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoExecs.html#a8cfa827b22b95248dd2a48538811e729", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoExecs.html#a541de61f24df33154bdd536d538c4309", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoExecs.html#ab2dd67ee67d2feaefb90c3683c5a51a3", null ]
 ];

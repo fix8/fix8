@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1No
     [ "get_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a01e0a895567ea1c405bae47afb7390d8", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a8f637e06b10803477f686a79a3edb9ea", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#af799d5a3878b7693af23fd9789627525", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a13431fe369a998e623e697e40389a6e6", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a98bed282d4da00ec18d079c0832124d5", null ]
 ];

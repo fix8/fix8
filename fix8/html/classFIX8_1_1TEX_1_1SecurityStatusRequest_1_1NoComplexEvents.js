@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1SecurityStatusRequest_1_1NoComplexEvents =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityStatusRequest_1_1NoComplexEvents.html#a754dfe288f92b1ab649c8c75fb6b4b9f", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityStatusRequest_1_1NoComplexEvents.html#ae3617695a39ddf2018895cd03f0e0f05", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityStatusRequest_1_1NoComplexEvents.html#a3ee78f195c8d0af56b378162c0b51883", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityStatusRequest_1_1NoComplexEvents.html#a4095729fa9b7a6d75d1319273c3e8e36", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityStatusRequest_1_1NoComplexEvents.html#a86d5083cb102427269266e6fdc2ae0b9", null ]
 ];

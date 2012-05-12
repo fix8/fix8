@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1ApplicationMessageRequest_1_1NoApplIDs_1_1NoNestedPartyI
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ApplicationMessageRequest_1_1NoApplIDs_1_1NoNestedPartyIDs.html#ac77e607e1be30263e9c78126e55a7b95", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ApplicationMessageRequest_1_1NoApplIDs_1_1NoNestedPartyIDs.html#aa638a37be2551844990eb21bc1a601eb", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ApplicationMessageRequest_1_1NoApplIDs_1_1NoNestedPartyIDs.html#acfadf4b2be9dad90e6832ceb148c9618", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1ApplicationMessageRequest_1_1NoApplIDs_1_1NoNestedPartyIDs.html#a56e2d67f55a675a598269bc51c03ed9d", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1ApplicationMessageRequest_1_1NoApplIDs_1_1NoNestedPartyIDs.html#a219f1ef9757eefca93679a5ac14c1918", null ]
 ];

@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoMiscFees =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoMiscFees.html#ac9d775bba6ea838f4fe8bf05cf589715", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoMiscFees.html#ab900df28952ac7c13a39d43f8e18f362", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoMiscFees.html#afffb340cec949a6a4e2e0d24db3ac96a", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoMiscFees.html#ae4c08c7a04b42e5a26119c7bb4044601", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoMiscFees.html#a85b47fe06beab08de6e1d6ed8f51f9c5", null ]
 ];

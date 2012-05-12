@@ -113,6 +113,7 @@ var f8config_8h =
     [ "PACKAGE_VERSION", "f8config_8h.html#aa326a05d5e30f9e9a4bb0b4469d5d0c0", null ],
     [ "PATCH_VERSION_NUM", "f8config_8h.html#a8d9556de1e767d55bb4d961702101c56", null ],
     [ "PERMIT_CUSTOM_FIELDS", "f8config_8h.html#ad1b83e64717a9f0c553b1389b10f4504", null ],
+    [ "RESERVE_PERCENT", "f8config_8h.html#a9b795b8180857ec209f8015b20a52252", null ],
     [ "RETSIGTYPE", "f8config_8h.html#adbe5dcee9c146b338794974137c55e70", null ],
     [ "STDC_HEADERS", "f8config_8h.html#a550e5c272cc3cf3814651721167dcd23", null ],
     [ "SYSCONFDIR", "f8config_8h.html#a2f62cb1c6f014272be957f002103552e", null ],

@@ -9,6 +9,7 @@ var classMyMenu =
     [ "get_ostr", "classMyMenu.html#a80cd0d96336dcc982f76feee799c4b8f", null ],
     [ "help", "classMyMenu.html#af92fcc82b1b1f684b2ca6c6ebb8e5b1f", null ],
     [ "new_order_single", "classMyMenu.html#a1d3b0ca23e9ef99df200bc80e841f2ff", null ],
+    [ "new_order_single_1000", "classMyMenu.html#ad22302f6f8a8d8e9c800855732395825", null ],
     [ "new_order_single_50", "classMyMenu.html#ad0bda1a05f1378cc4b8fe6e93fa065cf", null ],
     [ "nothing", "classMyMenu.html#aa2d8310db7e2730d0e72643a17f3a586", null ],
     [ "process", "classMyMenu.html#a37e125c2bc030fed0d595357c9a9590d", null ],

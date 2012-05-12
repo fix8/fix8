@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1IOI_1_1NoIOIQualifiers =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1IOI_1_1NoIOIQualifiers.html#ab62d3c99ba5b28fde30070a5378173d2", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1IOI_1_1NoIOIQualifiers.html#ab5962d419a3234caee172dfe3b6e4713", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1IOI_1_1NoIOIQualifiers.html#a353b66d06dfb18f63cf9684f3a1599af", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1IOI_1_1NoIOIQualifiers.html#ac796e731d26db2653fa7a4bf9ce9e78b", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1IOI_1_1NoIOIQualifiers.html#a48c0fca22fd62721cf225ec186451aa0", null ]
 ];

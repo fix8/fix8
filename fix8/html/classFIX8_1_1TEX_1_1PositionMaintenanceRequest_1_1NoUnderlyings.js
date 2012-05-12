@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoUnderlyings =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoUnderlyings.html#a0ca478dc491b0d5186f44d567c5753ac", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoUnderlyings.html#a9679199ca712d307502e320ceeac220c", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoUnderlyings.html#aa4f43511597f5eec38b013ff0ca5f9fc", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoUnderlyings.html#ad9b1f05051daac6cc5e58647bb6a468c", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoUnderlyings.html#a3f076bca584b9c6a24f5a1f73982bb64", null ]
 ];

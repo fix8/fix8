@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoLegs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoLegs.html#a85eb1f167183840ea5f54912a9b27449", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoLegs.html#a7821c74a9b3dabe0684f1ddae3a12d92", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoLegs.html#a0b3d593c3680d9b6aee97513bef15fa3", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoLegs.html#ae319e80ae9a48e6271eab44b3e22afa4", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoLegs.html#ab4da9eeeb40a3caf60f7ec62c860cec7", null ]
 ];

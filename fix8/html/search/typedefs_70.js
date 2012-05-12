@@ -60,7 +60,7 @@ var searchData=
   ['postranstype',['PosTransType',['../namespaceFIX8_1_1TEX.html#abc8621cbc17bd4b7917dd6befae13286',1,'FIX8::TEX']]],
   ['postype',['PosType',['../namespaceFIX8_1_1TEX.html#af2564a5241f5d76cb8ef3657f2893d70',1,'FIX8::TEX']]],
   ['preallocmethod',['PreallocMethod',['../namespaceFIX8_1_1TEX.html#a4e1eba9d92464a0957905f28ce1ba7a5',1,'FIX8::TEX']]],
-  ['presence',['Presence',['../namespaceFIX8.html#a529728b7d0dafe3a72a14ab4e4c6f699',1,'FIX8']]],
+  ['presence',['Presence',['../namespaceFIX8.html#ac20c8163c641bb0ba62d1e9924d2a8bd',1,'FIX8']]],
   ['presult',['PResult',['../classFIX8_1_1GeneratedTable.html#ae37d78cb42bfe1ffd6acf9d2c3ea93c9',1,'FIX8::GeneratedTable']]],
   ['pretradeanonymity',['PreTradeAnonymity',['../namespaceFIX8_1_1TEX.html#aa53bf45c4cbee789ce2e11c3824905e8',1,'FIX8::TEX']]],
   ['prevclosepx',['PrevClosePx',['../namespaceFIX8_1_1TEX.html#afd78e00adca718812d7604cca164df8a',1,'FIX8::TEX']]],

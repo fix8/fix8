@@ -1,13 +1,13 @@
 var classFIX8_1_1MessageBase =
 [
-    [ "MessageBase", "classFIX8_1_1MessageBase.html#a6a24eee3bc5d77f379ee3c13514fda36", null ],
+    [ "MessageBase", "classFIX8_1_1MessageBase.html#a590f438cf0def9eefa0d83c84d0579f5", null ],
     [ "MessageBase", "classFIX8_1_1MessageBase.html#a4af07392a04a883594f674a7d2929473", null ],
     [ "~MessageBase", "classFIX8_1_1MessageBase.html#ad427dadfefc45b8222ad53217df02c1b", null ],
     [ "add_field", "classFIX8_1_1MessageBase.html#a003de210da59ba359f5966cbeb795e99", null ],
     [ "add_field", "classFIX8_1_1MessageBase.html#af28c421582fea22d34b582269ab89a19", null ],
     [ "add_group", "classFIX8_1_1MessageBase.html#ae0112af5750dac37b9642b52c5f59f71", null ],
     [ "add_trait", "classFIX8_1_1MessageBase.html#acc8e3a02e8a2e280cfeb7bd9506bc2f6", null ],
-    [ "add_trait", "classFIX8_1_1MessageBase.html#a1742dc815aa493238a56ff95e2a83afa", null ],
+    [ "add_trait", "classFIX8_1_1MessageBase.html#a061999433f017d186c5ccb451424b11a", null ],
     [ "append_group", "classFIX8_1_1MessageBase.html#ac4c994a0e3bbc8aace9fbd6e250573ad", null ],
     [ "check_positions", "classFIX8_1_1MessageBase.html#a26ff1c4d04a88bfe72a0c0010fe3d35d", null ],
     [ "check_set_rlm", "classFIX8_1_1MessageBase.html#af962372b55a6a418fdff71c0bc06d418", null ],
@@ -40,6 +40,7 @@ var classFIX8_1_1MessageBase =
     [ "remove", "classFIX8_1_1MessageBase.html#a2d88fd748dc7f7c780718b08699848cc", null ],
     [ "replace", "classFIX8_1_1MessageBase.html#a78e2456ccddb523513dc124605f401f4", null ],
     [ "set", "classFIX8_1_1MessageBase.html#a9b24a0a320d461e1b5c4dd47d7904df1", null ],
+    [ "size", "classFIX8_1_1MessageBase.html#ae1a93afaced692db2ca748d613162230", null ],
     [ "Message", "classFIX8_1_1MessageBase.html#a658ef47bd757fd5e0f13adab5a417ced", null ],
     [ "operator<<", "classFIX8_1_1MessageBase.html#aed833b7ec5d49364562bb77dc261cf16", null ],
     [ "_ctx", "classFIX8_1_1MessageBase.html#aa9480ff62d8affc8b30db47e4a24c2a1", null ],

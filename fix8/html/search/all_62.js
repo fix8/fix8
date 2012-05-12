@@ -38,7 +38,7 @@ var searchData=
   ['bcoutbuf',['bcoutbuf',['../classFIX8_1_1bcoutbuf.html#aba17eda93cc0317a56c811a41c7b20e1',1,'FIX8::bcoutbuf']]],
   ['bdbpersister',['BDBPersister',['../classFIX8_1_1BDBPersister.html#a90158467ccc59fb8021e2c8e7b20b835',1,'FIX8::BDBPersister']]],
   ['bdbpersister',['BDBPersister',['../classFIX8_1_1BDBPersister.html',1,'FIX8']]],
-  ['begin',['begin',['../classXmlElement.html#ad15fcd02a4174887f99c59d8c252ae09',1,'XmlElement']]],
+  ['begin',['begin',['../classFIX8_1_1presorted__set.html#a7d0717c238e565e4e5e3140cc02e5d6d',1,'FIX8::presorted_set::begin()'],['../classFIX8_1_1presorted__set.html#ac97af8b093f989d767bcdbccae03d3e4',1,'FIX8::presorted_set::begin() const '],['../classXmlElement.html#ad15fcd02a4174887f99c59d8c252ae09',1,'XmlElement::begin()']]],
   ['begin_5fseq_5fnum',['begin_seq_num',['../namespaceFIX8.html#a87d817bfb0d49a2065ca2b6dd7f607a4',1,'FIX8']]],
   ['begin_5fstring',['begin_string',['../namespaceFIX8.html#aac1ae6202559b25f5dcc8b548759bf16',1,'FIX8']]],
   ['beginseqno',['BeginSeqNo',['../namespaceFIX8_1_1TEX.html#a21218b30abc72175bcf300518d2cfba8',1,'FIX8::TEX']]],

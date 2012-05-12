@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoUnderlyings_1_1NoUnderlyingSecurityA
     [ "get_msgtype", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#ac4ecd35238dad3661890a04a03c58874", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#ac503749022d11105c22f78020fb669d7", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a7f0e9114847026a58f1f65ca792a5425", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a68e9e1dacb487e7f4184c544c7a03555", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a191cdec182fdee9d4eaa472fd0d5b1fa", null ]
 ];

@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties.html#aa7f87746ad4b78972ac16f06958b586a", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties.html#a40e7dba17529cfc86610633cfcd9d651", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties.html#a93c4183800b6f0fbfe02d1ee0767f530", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties.html#a5ed5dca2bc3013d44a35aaa905570cf8", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoInstrumentParties.html#a65d57f06f206c60610bef86fe83eac99", null ]
 ];

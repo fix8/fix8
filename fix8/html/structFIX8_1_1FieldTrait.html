@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.1</span>
+   &#160;<span id="projectnumber">version  0.5.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -138,8 +138,6 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary comparitor functor.  <a href="structFIX8_1_1FieldTrait_1_1Compare.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait_1_1PosCompare.html">PosCompare</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary position comparitor functor.  <a href="structFIX8_1_1FieldTrait_1_1PosCompare.html#details">More...</a><br/></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait_1_1TraitBase.html">TraitBase</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure is used by the static instantiation tables.  <a href="structFIX8_1_1FieldTrait_1_1TraitBase.html#details">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:aa5411e9ee09c51ce758065d5db5f89e3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3">FieldType</a> { <br/>
@@ -208,8 +206,9 @@ Public Types</h2></td></tr>
  }</td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ab7783c7a6b1cfbd20ae49b24cace1ba1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#ab7783c7a6b1cfbd20ae49b24cace1ba1">FieldTrait</a> ()</td></tr>
+<tr class="memitem:a075d1df62b285730da008f424a3ce176"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#a075d1df62b285730da008f424a3ce176">FieldTrait</a> (unsigned short fnum, unsigned ftype, unsigned short pos, short field_traits)</td></tr>
 <tr class="memitem:a9d5a17d5b237c567bf483c16d68ac4ae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#a9d5a17d5b237c567bf483c16d68ac4ae">FieldTrait</a> (const unsigned short field, const <a class="el" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3">FieldType</a> ftype=<a class="el" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3aeb37a7cdf7b80fcfc8809ddd73064d8e">ft_untyped</a>, const unsigned short pos=0, bool ismandatory=false, bool isgroup=false, const unsigned subpos=0, bool ispresent=false)</td></tr>
-<tr class="memitem:a0f19ed2062ccdb436ec287457df98be3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#a0f19ed2062ccdb436ec287457df98be3">FieldTrait</a> (const <a class="el" href="structFIX8_1_1FieldTrait_1_1TraitBase.html">TraitBase</a> &amp;tb)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:abd4c514c4bca06aa8fbeda03fa056ebe"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#abd4c514c4bca06aa8fbeda03fa056ebe">is_int</a> (const <a class="el" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3">FieldType</a> ftype)</td></tr>
@@ -219,9 +218,8 @@ Static Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:aa024cc9be8a8d656409280d6816e74cb"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#aa024cc9be8a8d656409280d6816e74cb">_fnum</a></td></tr>
-<tr class="memitem:a831df02451509cfdd6bc4c8f32c95613"><td class="memItemLeft" align="right" valign="top">enum <a class="el" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3">FIX8::FieldTrait::FieldType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#a831df02451509cfdd6bc4c8f32c95613">_ftype</a></td></tr>
+<tr class="memitem:a2a832687fe650074fc14671a540b450c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3">FieldType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#a2a832687fe650074fc14671a540b450c">_ftype</a></td></tr>
 <tr class="memitem:a906ef6f37676ffe9c1652f150a543489"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#a906ef6f37676ffe9c1652f150a543489">_pos</a></td></tr>
-<tr class="memdesc:a906ef6f37676ffe9c1652f150a543489"><td class="mdescLeft">&#160;</td><td class="mdescRight">is ordinal, ie 0=n/a, 1=1st, 2=2nd  <a href="#a906ef6f37676ffe9c1652f150a543489"></a><br/></td></tr>
 <tr class="memitem:ab303d64670a3d304ad15ed2eb26774bf"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#ab303d64670a3d304ad15ed2eb26774bf">_subpos</a></td></tr>
 <tr class="memitem:aefce017fe6bffd0cd896f4326778d2d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1ebitset.html">ebitset</a>&lt; <a class="el" href="structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092">TraitTypes</a>, unsigned <br class="typebreak"/>
 short &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldTrait.html#aefce017fe6bffd0cd896f4326778d2d8">_field_traits</a></td></tr>
@@ -329,7 +327,7 @@ Friends</h2></td></tr>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00048">48</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00047">47</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
 </div>
 </div>
@@ -364,17 +362,76 @@ Friends</h2></td></tr>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00098">98</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00065">65</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ab7783c7a6b1cfbd20ae49b24cace1ba1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structFIX8_1_1FieldTrait.html#ab7783c7a6b1cfbd20ae49b24cace1ba1">FIX8::FieldTrait::FieldTrait</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00087">87</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a075d1df62b285730da008f424a3ce176"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structFIX8_1_1FieldTrait.html#ab7783c7a6b1cfbd20ae49b24cace1ba1">FIX8::FieldTrait::FieldTrait</a> </td>
+          <td>(</td>
+          <td class="paramtype">unsigned short&#160;</td>
+          <td class="paramname"><em>fnum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>ftype</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned short&#160;</td>
+          <td class="paramname"><em>pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>field_traits</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00089">89</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a9d5a17d5b237c567bf483c16d68ac4ae"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structFIX8_1_1FieldTrait.html#a9d5a17d5b237c567bf483c16d68ac4ae">FIX8::FieldTrait::FieldTrait</a> </td>
+          <td class="memname"><a class="el" href="structFIX8_1_1FieldTrait.html#ab7783c7a6b1cfbd20ae49b24cace1ba1">FIX8::FieldTrait::FieldTrait</a> </td>
           <td>(</td>
           <td class="paramtype">const unsigned short&#160;</td>
           <td class="paramname"><em>field</em>, </td>
@@ -437,33 +494,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00109">109</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0f19ed2062ccdb436ec287457df98be3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structFIX8_1_1FieldTrait.html#a9d5a17d5b237c567bf483c16d68ac4ae">FIX8::FieldTrait::FieldTrait</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structFIX8_1_1FieldTrait_1_1TraitBase.html">TraitBase</a> &amp;&#160;</td>
-          <td class="paramname"><em>tb</em></td><td>)</td>
-          <td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>Ctor. Construct from <a class="el" href="structFIX8_1_1FieldTrait_1_1TraitBase.html" title="This structure is used by the static instantiation tables.">TraitBase</a> object. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tb</td><td><a class="el" href="structFIX8_1_1FieldTrait_1_1TraitBase.html" title="This structure is used by the static instantiation tables.">TraitBase</a> object to construct from </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00117">117</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00100">100</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
 </div>
 </div>
@@ -491,9 +522,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>true if a char </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00082">82</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00075">75</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="traits_8hpp_source.html#l00053">ft_char</a>, and <a class="el" href="traits_8hpp_source.html#l00054">ft_end_char</a>.</p>
+<p>References <a class="el" href="traits_8hpp_source.html#l00052">ft_char</a>, and <a class="el" href="traits_8hpp_source.html#l00053">ft_end_char</a>.</p>
 
 </div>
 </div>
@@ -520,9 +551,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>true if a float </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00092">92</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00085">85</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="traits_8hpp_source.html#l00056">ft_end_float</a>, and <a class="el" href="traits_8hpp_source.html#l00055">ft_float</a>.</p>
+<p>References <a class="el" href="traits_8hpp_source.html#l00055">ft_end_float</a>, and <a class="el" href="traits_8hpp_source.html#l00054">ft_float</a>.</p>
 
 </div>
 </div>
@@ -549,9 +580,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>true if an int </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00077">77</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00070">70</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="traits_8hpp_source.html#l00052">ft_end_int</a>, and <a class="el" href="traits_8hpp_source.html#l00051">ft_int</a>.</p>
+<p>References <a class="el" href="traits_8hpp_source.html#l00051">ft_end_int</a>, and <a class="el" href="traits_8hpp_source.html#l00050">ft_int</a>.</p>
 
 </div>
 </div>
@@ -578,9 +609,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>true if a string </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00087">87</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00080">80</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="traits_8hpp_source.html#l00063">ft_end_string</a>, and <a class="el" href="traits_8hpp_source.html#l00057">ft_string</a>.</p>
+<p>References <a class="el" href="traits_8hpp_source.html#l00062">ft_end_string</a>, and <a class="el" href="traits_8hpp_source.html#l00056">ft_string</a>.</p>
 
 </div>
 </div>
@@ -633,7 +664,9 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00099">99</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00109">109</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00214">FIX8::FieldTraits::clear()</a>, <a class="el" href="traits_8hpp_source.html#l00234">FIX8::FieldTraits::clear_flag()</a>, <a class="el" href="traits_8hpp_source.html#l00184">FIX8::FieldTraits::get()</a>, <a class="el" href="traits_8hpp_source.html#l00260">FIX8::FieldTraits::getPos()</a>, <a class="el" href="traits_8hpp_source.html#l00170">FIX8::FieldTraits::getval()</a>, and <a class="el" href="traits_8hpp_source.html#l00204">FIX8::FieldTraits::set()</a>.</p>
 
 </div>
 </div>
@@ -648,23 +681,24 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00047">47</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00106">106</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00127">FIX8::FieldTrait::Compare::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00118">FIX8::FieldTrait::Compare::operator()()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a831df02451509cfdd6bc4c8f32c95613"></a>
+<a class="anchor" id="a2a832687fe650074fc14671a540b450c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3">FIX8::FieldTrait::FieldType</a>
-	 <a class="el" href="structFIX8_1_1FieldTrait.html#a831df02451509cfdd6bc4c8f32c95613">FIX8::FieldTrait::_ftype</a></td>
+          <td class="memname"><a class="el" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3">FieldType</a> <a class="el" href="structFIX8_1_1FieldTrait.html#a2a832687fe650074fc14671a540b450c">FIX8::FieldTrait::_ftype</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
+
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00107">107</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
 </div>
 </div>
@@ -679,11 +713,9 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>is ordinal, ie 0=n/a, 1=1st, 2=2nd </p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00108">108</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00095">95</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
-
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00137">FIX8::FieldTrait::PosCompare::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00128">FIX8::FieldTrait::PosCompare::operator()()</a>.</p>
 
 </div>
 </div>
@@ -698,9 +730,9 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00096">96</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00108">108</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00137">FIX8::FieldTrait::PosCompare::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00128">FIX8::FieldTrait::PosCompare::operator()()</a>.</p>
 
 </div>
 </div>
@@ -714,7 +746,7 @@ Friends</h2></td></tr>
       <li class="navelem"><a class="el" href="namespaceFIX8.html">FIX8</a>      </li>
       <li class="navelem"><a class="el" href="structFIX8_1_1FieldTrait.html">FieldTrait</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Apr 28 2012 16:34:38. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:57:30. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

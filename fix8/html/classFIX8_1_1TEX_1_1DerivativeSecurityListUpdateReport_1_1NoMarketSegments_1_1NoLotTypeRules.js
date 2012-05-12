@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1
     [ "get_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoLotTypeRules.html#a5276235027b065b9b316d8ac01cee7a1", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoLotTypeRules.html#a48d72dd0571bd823840581da7a418f44", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoLotTypeRules.html#a622fc461f7813a6d5df46beb676dbde9", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoLotTypeRules.html#a3b0141c01e45755f74e85f6657610844", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoLotTypeRules.html#a5a7a4d34eeae5eb2f479ad867634d6c9", null ]
 ];

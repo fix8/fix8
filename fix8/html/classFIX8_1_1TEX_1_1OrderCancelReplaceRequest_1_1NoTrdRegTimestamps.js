@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoTrdRegTimestamps =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoTrdRegTimestamps.html#a9e77e7dbbe81c9830daaed8f487d7461", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoTrdRegTimestamps.html#a8a92b98465226cc51b3ed8c14c29f904", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoTrdRegTimestamps.html#a36ce24247344b28f0c4d916f3b6860ee", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoTrdRegTimestamps.html#ac766c3cd46450e7eea58ad377a7fb27d", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoTrdRegTimestamps.html#a626d3eb5d54b0614e7a1aed20ac92c9d", null ]
 ];

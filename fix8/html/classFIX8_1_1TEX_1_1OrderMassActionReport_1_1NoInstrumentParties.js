@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoInstrumentParties =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoInstrumentParties.html#a3936969d9f1101e6120abd98d5fde32f", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoInstrumentParties.html#a932cf81a969f0605626bccc4e2f7f2b2", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoInstrumentParties.html#aca5eaf4d7498f64548b39947c8189e79", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoInstrumentParties.html#a005ce20cea769991c7b1f8b76633ed6d", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoInstrumentParties.html#a9787cfbd366cd2a293e71a71087ca623", null ]
 ];

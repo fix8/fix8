@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.1</span>
+   &#160;<span id="projectnumber">version  0.5.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -211,11 +211,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00100"></a>00100    {
 <a name="l00101"></a>00101       <span class="keywordflow">if</span> (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">get_msgtype</a>() == <a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html#a34b5430eb6fef6c6024bef56a21a97b6">TEX::ExecutionReport::get_msgtype</a>()())
 <a name="l00102"></a>00102       {
-<a name="l00103"></a>00103          <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="structFIX8_1_1FieldTrait_1_1TraitBase.html" title="This structure is used by the static instantiation tables.">FieldTrait::TraitBase</a> trt[] =
+<a name="l00103"></a>00103          <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">FieldTrait</a> trt[] =
 <a name="l00104"></a>00104          {
-<a name="l00105"></a>00105             { 6666, 7, 4, 0x004 }, { 6951,  8, 5, 0x004 }, { 7009,  1, 6, 0x004 },
+<a name="l00105"></a>00105             <a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">FieldTrait</a>(6666, 7, 4, 0x004), <a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">FieldTrait</a>(6951,  8, 5, 0x004), <a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">FieldTrait</a>(7009,  1, 6, 0x004),
 <a name="l00106"></a>00106          };
-<a name="l00107"></a>00107          msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#acc8e3a02e8a2e280cfeb7bd9506bc2f6">add_trait</a>(trt, trt + <span class="keyword">sizeof</span>(trt)/<span class="keyword">sizeof</span>(<a class="code" href="structFIX8_1_1FieldTrait_1_1TraitBase.html" title="This structure is used by the static instantiation tables.">FieldTrait::TraitBase</a>));
+<a name="l00107"></a>00107          msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#acc8e3a02e8a2e280cfeb7bd9506bc2f6">add_trait</a>(trt, <span class="keyword">sizeof</span>(trt)/<span class="keyword">sizeof</span>(<a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">FieldTrait</a>));
 <a name="l00108"></a>00108       }
 <a name="l00109"></a>00109 
 <a name="l00110"></a>00110       <span class="keywordflow">return</span> <span class="keyword">true</span>;
@@ -232,7 +232,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><a class="el" href="myfix__custom_8hpp.html">myfix_custom.hpp</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Apr 28 2012 16:33:59. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:51. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

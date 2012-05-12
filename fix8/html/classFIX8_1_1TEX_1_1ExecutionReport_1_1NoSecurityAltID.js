@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1ExecutionReport_1_1NoSecurityAltID =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoSecurityAltID.html#a871824f44ec7a923875f6a3aca0e371c", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoSecurityAltID.html#a136d508b9d9656330acc554a9406e76d", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoSecurityAltID.html#ae4b5ed1cc9d4d86141377d8fd0aed769", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoSecurityAltID.html#a8f7d368845ccdcfbe25b0614aaf3ea44", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoSecurityAltID.html#a607784c06bc9e6d87e4a837b4651fd73", null ]
 ];

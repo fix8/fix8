@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoComplexEvents =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoComplexEvents.html#ac18597fcd3be8935ac820f744b8df1fc", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoComplexEvents.html#a8b6ef281f092b28bac62d8e8f394d15b", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoComplexEvents.html#a125bde2f9d9631651e7e7f7bc3f77626", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoComplexEvents.html#a49e65ce9c6798b7947cb689e3f16c86d", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoComplexEvents.html#afe442eef3cb2354bb49ecacbe63be77e", null ]
 ];

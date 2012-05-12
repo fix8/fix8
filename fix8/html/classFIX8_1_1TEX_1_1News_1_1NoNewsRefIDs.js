@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1News_1_1NoNewsRefIDs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoNewsRefIDs.html#ae808dc8f86e1380006e85493fe5e5acf", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1News_1_1NoNewsRefIDs.html#aaffce9c281351196e426b5ff00d5179e", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoNewsRefIDs.html#a63e6d3999b146d8641275f1d1b3c22cf", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoNewsRefIDs.html#a6cadfa8cd52424fb20f1bb361c988369", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoNewsRefIDs.html#ae41127e3ca6081d23149c68f0f85d45c", null ]
 ];

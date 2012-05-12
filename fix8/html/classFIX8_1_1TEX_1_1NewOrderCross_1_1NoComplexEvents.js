@@ -6,5 +6,5 @@ var classFIX8_1_1TEX_1_1NewOrderCross_1_1NoComplexEvents =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoComplexEvents.html#ae26686ed70ad8f83a4745c07e04ed292", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoComplexEvents.html#ab4be1810dba8643518a4febe38296e2d", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoComplexEvents.html#a6e6e5ba6abf7a0add3d5f8b9587dbfae", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoComplexEvents.html#ab75a0c4a392f6dcf1e49ebdaba341062", null ]
+    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoComplexEvents.html#ae554007b5833974f68b941b229de3f27", null ]
 ];
