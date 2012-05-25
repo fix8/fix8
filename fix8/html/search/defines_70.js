@@ -8,5 +8,5 @@ var searchData=
   ['package_5furl',['PACKAGE_URL',['../f8config_8h.html#a5c93853116d5a50307b6744f147840aa',1,'f8config.h']]],
   ['package_5fversion',['PACKAGE_VERSION',['../f8config_8h.html#aa326a05d5e30f9e9a4bb0b4469d5d0c0',1,'f8config.h']]],
   ['patch_5fversion_5fnum',['PATCH_VERSION_NUM',['../f8config_8h.html#a8d9556de1e767d55bb4d961702101c56',1,'f8config.h']]],
-  ['permit_5fcustom_5ffields',['PERMIT_CUSTOM_FIELDS',['../f8config_8h.html#ad1b83e64717a9f0c553b1389b10f4504',1,'f8config.h']]]
+  ['profiling_5fbuild',['PROFILING_BUILD',['../f8config_8h.html#a5f07c2104d4aadaf8951de93264a0621',1,'f8config.h']]]
 ];

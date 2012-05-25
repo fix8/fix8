@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['waveno',['WaveNo',['../namespaceFIX8_1_1TEX.html#a98452f38e11eb7b37b139de8521bac94',1,'FIX8::TEX']]],
   ['what',['what',['../classFIX8_1_1f8Exception.html#abb6a7867b11df20e941a87b1c8447bb1',1,'FIX8::f8Exception']]],
   ['workingindicator',['WorkingIndicator',['../namespaceFIX8_1_1TEX.html#a5129e8236accd3942fc184f6a6169457',1,'FIX8::TEX']]],
   ['workingindicator_5fno',['WorkingIndicator_NO',['../namespaceFIX8_1_1TEX.html#ad31a9efd51461e68fa585fc60bb8fc73',1,'FIX8::TEX']]],

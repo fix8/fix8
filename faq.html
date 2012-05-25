@@ -40,12 +40,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </a>
           <a class="brand" href="#"><img src="fix8/fix8_Logo_RGB.png" width="28" height="28" /a></a>
           <div class="nav-collapse">
             <ul class="nav">
               <li><a href="index.html">Home</a></li>
               <li><a href="https://github.com/dakka/fix8/wiki">Wiki</a></li>
+              <li><a href="http://blog.fix8.org">Blog</a></li>
               <li><a href="fix8/html">API Documentation</a></li>
               <li class="active"><a href="#">FAQ</a></li>
               <li><a href="support.html">Support</a></li>
@@ -159,7 +161,7 @@
 						<div id="platformeThree" class="accordion-body collapse">
 							<div class="accordion-inner">
 								Since fix8 uses Intel <a href="http://threadingbuildingblocks.org/">TBB</a> only Intel IA32, Intel64 and IA64 and compatible
-								hardware is supported. There are however other non-supported patches for different hardware, including SPARC.
+								hardware is supported. There are however other non-supported patches for TBB to run on different hardware, including SPARC.
 							</div>
 						</div>
 					</div>
@@ -200,6 +202,17 @@ Message *my_sess::generate_logon()
 								<code>ServerSession</code>, you can call <code>get_session_element()</code>. This returns a pointer to the
 								<code>XmlElement</code> for the active session. With this object you can search for additional attributes parsed
 								from your xml config file, using <code>XmlElement::FindAttr()</code> or <code>XmlElement::GetAttr()</code>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devFour">Why isn't the framework calling my derived message handler?</a>
+						</div>
+						<div id="devFour" class="accordion-body collapse">
+							<div class="accordion-inner">
+								When you override <code>Session::handle_application</code> and call <code>msg->process(your_router)</code>
+								this method must provided in a compilation unit and not inlined in a header.
 							</div>
 						</div>
 					</div>
@@ -310,11 +323,30 @@ MessageBase *gr11(nonpsid->create_group());
 							</div>
 						</div>
 					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testFour">How do I specify local TBB, Poco or Berkeley DB libraries and headers?</a>
+						</div>
+						<div id="testFour" class="accordion-body collapse">
+							<div class="accordion-inner">
+								You may want to specify a local build for TBB, Poco or Berkeley DB instead of the default locations - if for example you don't have
+								permission on your system to install the libraries or you want to test a new library build. To specify an alternate location, simply
+								pass the alternate directory to configure, for example:
+								<pre>
+% ./configure --with-poco=/home/davo --with-tbb=home/davo --with-bdb=/home/davo</pre>
+								This assumes that the local install <code>lib</code>, <code>include</code>, <code>bin</code>, and so forth are immediately below the directory specified.
+								You will also need to update your <code>LD_LIBRARY_PATH</code> before running your application. In our above example:
+								<pre>
+% export LD_LIBRARY_PATH=/home/davo/lib:$LD_LIBRARY_PATH</pre>
+							</div>
+						</div>
+					</div>
 				</div>
 			<br>
 			<div class="pager">
 				<li><a href="index.html">Home</a></li>
 				<li><a href="https://github.com/dakka/fix8/wiki">Wiki</a></li>
+				<li><a href="http://blog.fix8.org">Blog</a></li>
 				<li><a href="fix8/html">API Documentation</a></li>
 				<li class="active"><a href="#">FAQ</a></li>
 				<li><a href="support.html">Support</a></li>

@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.5</span>
+   &#160;<span id="projectnumber">version  0.5.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -307,7 +307,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00190"></a>00190          <span class="keywordflow">if</span> (bgstr != _session.get_ctx()._beginStr)   <span class="comment">// invalid FIX version</span>
 <a name="l00191"></a>00191             <span class="keywordflow">throw</span> <a class="code" href="structFIX8_1_1InvalidVersion.html" title="A message was decoded that had a Fix version not configured for this session.">InvalidVersion</a>(bgstr);
 <a name="l00192"></a>00192 
-<a name="l00193"></a>00193          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> mlen(GetValue&lt;unsigned&gt;(len));
+<a name="l00193"></a>00193          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> mlen(fast_atoi&lt;unsigned&gt;(len.c_str()));
 <a name="l00194"></a>00194          <span class="keywordflow">if</span> (mlen == 0 || mlen &gt; _max_msg_len - _bg_sz - _chksum_sz) <span class="comment">// invalid msglen</span>
 <a name="l00195"></a>00195             <span class="keywordflow">throw</span> <a class="code" href="structFIX8_1_1InvalidBodyLength.html" title="A message was decoded with an invalid message body length.">InvalidBodyLength</a>(mlen);
 <a name="l00196"></a>00196 
@@ -350,15 +350,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00233"></a>00233 <span class="preprocessor">#else</span>
 <a name="l00234"></a>00234 <span class="preprocessor"></span>         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;Message&gt;</a> msg(inmsg);
 <a name="l00235"></a>00235          _session.send_process(msg.<a class="code" href="classFIX8_1_1scoped__ptr.html#ad398c370f7b8bbb51110e3e1d2c39a67">get</a>());
-<a name="l00236"></a>00236 <span class="preprocessor">#if defined CODECTIMING</span>
-<a name="l00237"></a>00237 <span class="preprocessor"></span>         ostringstream gerr;
-<a name="l00238"></a>00238          gerr &lt;&lt; <span class="stringliteral">&quot;  dtor(&quot;</span> &lt;&lt; inmsg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">get_msgtype</a>() &lt;&lt; <span class="stringliteral">&quot;):&quot;</span>;
-<a name="l00239"></a>00239          <a class="code" href="classFIX8_1_1IntervalTimer.html" title="High resolution interval timer.">IntervalTimer</a> itm;
-<a name="l00240"></a>00240          msg.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();
-<a name="l00241"></a>00241          gerr &lt;&lt; itm.<a class="code" href="classFIX8_1_1IntervalTimer.html#a0aa09b40c3fa1d9ebe45cf6e63c8f654">Calculate</a>();
-<a name="l00242"></a>00242          <a class="code" href="classFIX8_1_1SingleLogger.html#a497f1e0548017c7d610b5e4876661d6c">GlobalLogger::log</a>(gerr.str());
-<a name="l00243"></a>00243 <span class="preprocessor">#endif</span>
-<a name="l00244"></a>00244 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00236"></a>00236 <span class="preprocessor">#endif</span>
+<a name="l00237"></a>00237 <span class="preprocessor"></span><span class="preprocessor">#if defined CODECTIMING</span>
+<a name="l00238"></a>00238 <span class="preprocessor"></span>         ostringstream gerr;
+<a name="l00239"></a>00239          gerr &lt;&lt; <span class="stringliteral">&quot;  dtor(&quot;</span> &lt;&lt; inmsg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">get_msgtype</a>() &lt;&lt; <span class="stringliteral">&quot;):&quot;</span>;
+<a name="l00240"></a>00240          <a class="code" href="classFIX8_1_1IntervalTimer.html" title="High resolution interval timer.">IntervalTimer</a> itm;
+<a name="l00241"></a>00241          <span class="keyword">delete</span> msg.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();
+<a name="l00242"></a>00242          gerr &lt;&lt; itm.<a class="code" href="classFIX8_1_1IntervalTimer.html#a0aa09b40c3fa1d9ebe45cf6e63c8f654">Calculate</a>();
+<a name="l00243"></a>00243          <a class="code" href="classFIX8_1_1SingleLogger.html#a497f1e0548017c7d610b5e4876661d6c">GlobalLogger::log</a>(gerr.str());
+<a name="l00244"></a>00244 <span class="preprocessor">#endif</span>
 <a name="l00245"></a>00245 <span class="preprocessor"></span>         ++processed;
 <a name="l00246"></a>00246       }
 <a name="l00247"></a>00247       <span class="keywordflow">catch</span> (exception&amp; e) <span class="comment">// also catches Poco::Net::NetException</span>
@@ -449,7 +449,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><a class="el" href="connection_8cpp.html">connection.cpp</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:44. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri May 25 2012 21:59:28. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

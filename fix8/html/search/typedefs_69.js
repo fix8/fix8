@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['idsource',['IDSource',['../namespaceFIX8_1_1TEX.html#ae67638f55fca111898fe641fdd6ee35b',1,'FIX8::TEX']]],
   ['impliedmarketindicator',['ImpliedMarketIndicator',['../namespaceFIX8_1_1TEX.html#aab12b0977b1838fdeef68b508bfbe02c',1,'FIX8::TEX']]],
   ['inctaxind',['IncTaxInd',['../namespaceFIX8_1_1TEX.html#ad2d2956698051acfb7d362caa8ea7f9c',1,'FIX8::TEX']]],
   ['individualallocid',['IndividualAllocID',['../namespaceFIX8_1_1TEX.html#a833d578a200aab119918f3628d723a2b',1,'FIX8::TEX']]],
@@ -22,15 +23,14 @@ var searchData=
   ['internal_5fresult',['internal_result',['../classFIX8_1_1presorted__set.html#ab58edd957f3922b166c9e64fcc3e6d9e',1,'FIX8::presorted_set']]],
   ['investorcountryofresidence',['InvestorCountryOfResidence',['../namespaceFIX8_1_1TEX.html#a813305b8c3cf3b3f30a986fe961af5fe',1,'FIX8::TEX']]],
   ['inviewofcommon',['InViewOfCommon',['../namespaceFIX8_1_1TEX.html#a3e6bc83f9b9f2ec19cb3534289787b03',1,'FIX8::TEX']]],
-  ['ioiid',['IOIID',['../namespaceFIX8_1_1TEX.html#a7116c2295824e5eb7a6499e214bf37e8',1,'FIX8::TEX']]],
+  ['ioiid',['IOIid',['../namespaceFIX8_1_1TEX.html#a4fb17feeb37447ed03a85b7c448854ae',1,'FIX8::TEX::IOIid()'],['../namespaceFIX8_1_1TEX.html#a7116c2295824e5eb7a6499e214bf37e8',1,'FIX8::TEX::IOIID()']]],
   ['ioinaturalflag',['IOINaturalFlag',['../namespaceFIX8_1_1TEX.html#a603c2f8a4ae48219de20e2e53d9cffc5',1,'FIX8::TEX']]],
-  ['ioiothsvc',['IOIOthSvc',['../namespaceFIX8_1_1TEX.html#a3b1479fffb0ab62913d3ab3a76db0d72',1,'FIX8::TEX']]],
   ['ioiqltyind',['IOIQltyInd',['../namespaceFIX8_1_1TEX.html#a33f1e58047153127d1dd17d7dbc9a11a',1,'FIX8::TEX']]],
   ['ioiqty',['IOIQty',['../namespaceFIX8_1_1TEX.html#a10a1de4a2641849fcf5824da28e576df',1,'FIX8::TEX']]],
   ['ioiqualifier',['IOIQualifier',['../namespaceFIX8_1_1TEX.html#a7fe99734830eb98ea29fae42a18f7ef3',1,'FIX8::TEX']]],
   ['ioirefid',['IOIRefID',['../namespaceFIX8_1_1TEX.html#a10e0ed6745af04ca833232ef20329f51',1,'FIX8::TEX']]],
   ['ioitranstype',['IOITransType',['../namespaceFIX8_1_1TEX.html#a51c095675dd0c90e56259616d4f36c26',1,'FIX8::TEX']]],
   ['issuedate',['IssueDate',['../namespaceFIX8_1_1TEX.html#a27c57bce2e4ae2ac208b1796a6db5c61',1,'FIX8::TEX']]],
-  ['issuer',['Issuer',['../namespaceFIX8_1_1TEX.html#ada246af146f139be1fb9c645af9c9cfb',1,'FIX8::TEX']]],
+  ['issuer',['Issuer',['../namespaceFIX8_1_1TEX.html#a0c801f4f2c8522a7636c768e8daab762',1,'FIX8::TEX']]],
   ['iterator',['iterator',['../classFIX8_1_1presorted__set.html#a2de6d386eb790767b34cf1600e0b51cd',1,'FIX8::presorted_set']]]
 ];

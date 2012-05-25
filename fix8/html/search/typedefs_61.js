@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['account',['Account',['../namespaceFIX8_1_1TEX.html#aaf3c6f71c329907cc4b4a214e7f1d4e0',1,'FIX8::TEX']]],
+  ['account',['Account',['../namespaceFIX8_1_1TEX.html#af5da03d0b42152d1d45c3486bd2846b1',1,'FIX8::TEX']]],
   ['accounttype',['AccountType',['../namespaceFIX8_1_1TEX.html#a037a3a379ac7d6e9947c8e8573af0bb9',1,'FIX8::TEX']]],
   ['accruedinterestamt',['AccruedInterestAmt',['../namespaceFIX8_1_1TEX.html#a98df9a1ddba67e281ae9503265264583',1,'FIX8::TEX']]],
   ['accruedinterestrate',['AccruedInterestRate',['../namespaceFIX8_1_1TEX.html#af2cc0d56545602ddfd5d8eb26a7f2a3f',1,'FIX8::TEX']]],
@@ -20,7 +20,7 @@ var searchData=
   ['agreementdate',['AgreementDate',['../namespaceFIX8_1_1TEX.html#a1b4fd5fc3813d6e7c070e1dd26236131',1,'FIX8::TEX']]],
   ['agreementdesc',['AgreementDesc',['../namespaceFIX8_1_1TEX.html#a0072a03ea1038ed3c8eebcdaaad5c5fd',1,'FIX8::TEX']]],
   ['agreementid',['AgreementID',['../namespaceFIX8_1_1TEX.html#a0de13a5e4064c13a02473e858df7e1a3',1,'FIX8::TEX']]],
-  ['allocaccount',['AllocAccount',['../namespaceFIX8_1_1TEX.html#a66283d29f1f8d8e0754c658b50cbe633',1,'FIX8::TEX']]],
+  ['allocaccount',['AllocAccount',['../namespaceFIX8_1_1TEX.html#abcc4417fc4be13fcc96b21cefe425feb',1,'FIX8::TEX']]],
   ['allocaccounttype',['AllocAccountType',['../namespaceFIX8_1_1TEX.html#a8abe95c8fee8c174e8642e07f1a6fd05',1,'FIX8::TEX']]],
   ['allocaccruedinterestamt',['AllocAccruedInterestAmt',['../namespaceFIX8_1_1TEX.html#a825290b46930b55f0041fd1efe2b2fb0',1,'FIX8::TEX']]],
   ['allocacctidsource',['AllocAcctIDSource',['../namespaceFIX8_1_1TEX.html#aacba74e7c904c2469a684cd960c58e9c',1,'FIX8::TEX']]],
@@ -47,6 +47,7 @@ var searchData=
   ['allocsettlcurramt',['AllocSettlCurrAmt',['../namespaceFIX8_1_1TEX.html#aa568d4ef189419d653450e7d2310d92f',1,'FIX8::TEX']]],
   ['allocsettlcurrency',['AllocSettlCurrency',['../namespaceFIX8_1_1TEX.html#a75b019243c5864a2315cac0297466d06',1,'FIX8::TEX']]],
   ['allocsettlinsttype',['AllocSettlInstType',['../namespaceFIX8_1_1TEX.html#abe2c31c5d6feb7ec631cc89a6bb931e6',1,'FIX8::TEX']]],
+  ['allocshares',['AllocShares',['../namespaceFIX8_1_1TEX.html#a7c29ff2e6f4d5277d7eb6707ac6043ee',1,'FIX8::TEX']]],
   ['allocstatus',['AllocStatus',['../namespaceFIX8_1_1TEX.html#a9889726f805c988f120673f59c946ee5',1,'FIX8::TEX']]],
   ['alloctext',['AllocText',['../namespaceFIX8_1_1TEX.html#a6d86342f19e182af126753cc31d1f4f6',1,'FIX8::TEX']]],
   ['alloctranstype',['AllocTransType',['../namespaceFIX8_1_1TEX.html#ab9084a1f652ce2cede7019ea5efc794e',1,'FIX8::TEX']]],
@@ -58,7 +59,6 @@ var searchData=
   ['amt',['Amt',['../namespaceFIX8.html#ae9080bf032e2cbb56622482ab47c7edc',1,'FIX8']]],
   ['applbegseqnum',['ApplBegSeqNum',['../namespaceFIX8_1_1TEX.html#a4439cbd5643391f0d199e7fe6c14f497',1,'FIX8::TEX']]],
   ['applendseqnum',['ApplEndSeqNum',['../namespaceFIX8_1_1TEX.html#a0723cc285a7b7113696bb356508bb538',1,'FIX8::TEX']]],
-  ['applextid',['ApplExtID',['../namespaceFIX8_1_1TEX.html#a4c1ad910e99d4e17defed7a24eba7563',1,'FIX8::TEX']]],
   ['applid',['ApplID',['../namespaceFIX8_1_1TEX.html#a4ac8430b199fa51a4a07158070d52ae7',1,'FIX8::TEX']]],
   ['appllastseqnum',['ApplLastSeqNum',['../namespaceFIX8_1_1TEX.html#a1596d6b19ea80c2e0f05c10c1dbec959',1,'FIX8::TEX']]],
   ['applnewseqnum',['ApplNewSeqNum',['../namespaceFIX8_1_1TEX.html#a8ffdf5cc60d118e410d68b889638385d',1,'FIX8::TEX']]],
@@ -77,7 +77,6 @@ var searchData=
   ['applseqnum',['ApplSeqNum',['../namespaceFIX8_1_1TEX.html#a60b7fca7bf97ed12825d51241e4a1010',1,'FIX8::TEX']]],
   ['appltotalmessagecount',['ApplTotalMessageCount',['../namespaceFIX8_1_1TEX.html#a706e8fdf663443b590c35cceefb75b97',1,'FIX8::TEX']]],
   ['applverid',['ApplVerID',['../namespaceFIX8_1_1TEX.html#ad74deb035429fdcba6f3ce8a8448093d',1,'FIX8::TEX']]],
-  ['asgnreqid',['AsgnReqID',['../namespaceFIX8_1_1TEX.html#ae6fe9df4d53a7c162038fe010b5ae565',1,'FIX8::TEX']]],
   ['asgnrptid',['AsgnRptID',['../namespaceFIX8_1_1TEX.html#aa4150d16038756ec34d0d8be0042f4f7',1,'FIX8::TEX']]],
   ['asofindicator',['AsOfIndicator',['../namespaceFIX8_1_1TEX.html#a2e5947701b8862b3c725f0cc550c5047',1,'FIX8::TEX']]],
   ['assignmentmethod',['AssignmentMethod',['../namespaceFIX8_1_1TEX.html#a9671509c77a8e3f9089bebe0dfa911f9',1,'FIX8::TEX']]],
@@ -85,7 +84,7 @@ var searchData=
   ['attachmentpoint',['AttachmentPoint',['../namespaceFIX8_1_1TEX.html#ad6f32b8a1767bc3f327d914879f65735',1,'FIX8::TEX']]],
   ['autoacceptindicator',['AutoAcceptIndicator',['../namespaceFIX8_1_1TEX.html#a716dceec937b654ade2cfecdee3e0752',1,'FIX8::TEX']]],
   ['avgparpx',['AvgParPx',['../namespaceFIX8_1_1TEX.html#aa30f8842e3304262e31fe777a7ec780f',1,'FIX8::TEX']]],
-  ['avgpx',['AvgPx',['../namespaceFIX8_1_1TEX.html#ab46ea345fdaf45768a66dca07ceef51b',1,'FIX8::TEX']]],
+  ['avgpx',['AvgPx',['../namespaceFIX8_1_1TEX.html#ab2c57f51a6e19ab971196ae6f3bbc3b7',1,'FIX8::TEX']]],
   ['avgpxindicator',['AvgPxIndicator',['../namespaceFIX8_1_1TEX.html#acc752a9909532821a931ac6fdfeb3d46',1,'FIX8::TEX']]],
   ['avgpxprecision',['AvgPxPrecision',['../namespaceFIX8_1_1TEX.html#a2f66a093853f1112e0538b27f0be7cd9',1,'FIX8::TEX']]]
 ];

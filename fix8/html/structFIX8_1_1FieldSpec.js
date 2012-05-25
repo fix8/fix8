@@ -2,6 +2,7 @@ var structFIX8_1_1FieldSpec =
 [
     [ "FieldSpec", "structFIX8_1_1FieldSpec.html#a3822c875b519b2938f044d49f30671cc", null ],
     [ "~FieldSpec", "structFIX8_1_1FieldSpec.html#abe23d3e0662eee1ee84989c00ddd3513", null ],
+    [ "set_used", "structFIX8_1_1FieldSpec.html#a4f9e7cdd418f7cccc901d3176b8e9ef7", null ],
     [ "_baseTypeMap", "structFIX8_1_1FieldSpec.html#a7371c34b63a411dbf36d03085108d371", null ],
     [ "_comment", "structFIX8_1_1FieldSpec.html#a329f43855710605e544cf22b64acb8af", null ],
     [ "_description", "structFIX8_1_1FieldSpec.html#a992e631609c4be68e8586a3bb77cb09e", null ],
@@ -10,5 +11,6 @@ var structFIX8_1_1FieldSpec =
     [ "_dvals", "structFIX8_1_1FieldSpec.html#ada2f44e60b6e95b14099e12239df9d90", null ],
     [ "_ftype", "structFIX8_1_1FieldSpec.html#a131ae2999c2d526d46f72cae721a6dac", null ],
     [ "_name", "structFIX8_1_1FieldSpec.html#aa5ff91f9021d99901861571db94282a2", null ],
-    [ "_typeToCPP", "structFIX8_1_1FieldSpec.html#a7a425ca08fba3922fc9f0098f52eff4a", null ]
+    [ "_typeToCPP", "structFIX8_1_1FieldSpec.html#a7a425ca08fba3922fc9f0098f52eff4a", null ],
+    [ "_used", "structFIX8_1_1FieldSpec.html#ad46570ee307c2326c891ab7377ee7926", null ]
 ];

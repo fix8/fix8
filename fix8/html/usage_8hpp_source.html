@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.5</span>
+   &#160;<span id="projectnumber">version  0.5.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -178,48 +178,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00074"></a>00074          std::pair&lt;const std::string, const std::string&gt;(lsw, help))).second;
 <a name="l00075"></a>00075    }
 <a name="l00076"></a>00076 
-<a name="l00078"></a><a class="code" href="classUsageMan.html#aa366b62c393d3dbfaf9fd575aa68c562">00078</a>    <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="keyword">const</span> std::string&amp; xtr)
-<a name="l00079"></a>00079    {
-<a name="l00080"></a>00080       std::string topush(xtr);
-<a name="l00081"></a>00081       std::string::size_type spos;
-<a name="l00082"></a>00082       <span class="keywordflow">while</span> ((spos = topush.find_first_of(<span class="charliteral">&#39;@&#39;</span>)) != std::string::npos)
-<a name="l00083"></a>00083          topush.replace(spos, 1, std::string(<a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <span class="charliteral">&#39; &#39;</span>));
-<a name="l00084"></a>00084       <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.push_back(topush);
-<a name="l00085"></a>00085    }
-<a name="l00086"></a>00086 
-<a name="l00089"></a><a class="code" href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">00089</a>    <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">setdesc</a>(<span class="keyword">const</span> std::string&amp; desc) { <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a> = desc; }
-<a name="l00090"></a>00090 
-<a name="l00093"></a><a class="code" href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">00093</a>    <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">print</a>(std::ostream&amp; os)<span class="keyword"> const</span>
-<a name="l00094"></a>00094 <span class="keyword">   </span>{
-<a name="l00095"></a>00095       <span class="keywordflow">if</span> (!<a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a>.empty())
-<a name="l00096"></a>00096          os &lt;&lt; <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a> &lt;&lt; std::endl &lt;&lt; std::endl;
-<a name="l00097"></a>00097       os &lt;&lt; <span class="stringliteral">&quot;Usage: &quot;</span> &lt;&lt; <a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">prognm_</a> &lt;&lt; <span class="stringliteral">&quot; [-&quot;</span>;
-<a name="l00098"></a>00098       <span class="keywordflow">for</span> (std::string::const_iterator itr(<a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.end(); ++itr)
-<a name="l00099"></a>00099          <span class="keywordflow">if</span> (*itr != <span class="charliteral">&#39;:&#39;</span>)
-<a name="l00100"></a>00100             os &lt;&lt; *itr;
-<a name="l00101"></a>00101       os &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; <a class="code" href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">params_</a> &lt;&lt; std::endl;
-<a name="l00102"></a>00102       <span class="keyword">const</span> std::string <a class="code" href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a>(<a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <span class="charliteral">&#39; &#39;</span>);
-<a name="l00103"></a>00103       <span class="keywordflow">for</span> (OPTEL::const_iterator itr(<a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.end(); ++itr)
-<a name="l00104"></a>00104       {
-<a name="l00105"></a>00105          std::ostringstream ostr;
-<a name="l00106"></a>00106          ostr &lt;&lt; <span class="charliteral">&#39;-&#39;</span> &lt;&lt; itr-&gt;first &lt;&lt; <span class="stringliteral">&quot;,--&quot;</span> &lt;&lt; itr-&gt;second.first;
-<a name="l00107"></a>00107          os &lt;&lt; spacer &lt;&lt; std::left &lt;&lt; std::setw(<a class="code" href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">argoptlen_</a>) &lt;&lt; ostr.str()
-<a name="l00108"></a>00108             &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; itr-&gt;second.second &lt;&lt; std::endl;
-<a name="l00109"></a>00109       }
-<a name="l00110"></a>00110       <span class="keywordflow">for</span> (std::list&lt;std::string&gt;::const_iterator itr(<a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.end(); ++itr)
-<a name="l00111"></a>00111          os &lt;&lt; *itr &lt;&lt; std::endl;
-<a name="l00112"></a>00112    }
-<a name="l00113"></a>00113 };
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115 <span class="preprocessor">#endif // _USAGE_HPP_</span>
-<a name="l00116"></a>00116 <span class="preprocessor"></span>
+<a name="l00079"></a><a class="code" href="classUsageMan.html#aa366b62c393d3dbfaf9fd575aa68c562">00079</a>    <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="keyword">const</span> std::string&amp; xtr)
+<a name="l00080"></a>00080    {
+<a name="l00081"></a>00081       std::string topush(xtr);
+<a name="l00082"></a>00082       std::string::size_type spos;
+<a name="l00083"></a>00083       <span class="keywordflow">while</span> ((spos = topush.find_first_of(<span class="charliteral">&#39;@&#39;</span>)) != std::string::npos)
+<a name="l00084"></a>00084          topush.replace(spos, 1, std::string(<a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <span class="charliteral">&#39; &#39;</span>));
+<a name="l00085"></a>00085       <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.push_back(topush);
+<a name="l00086"></a>00086    }
+<a name="l00087"></a>00087 
+<a name="l00090"></a><a class="code" href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">00090</a>    <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">setdesc</a>(<span class="keyword">const</span> std::string&amp; desc) { <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a> = desc; }
+<a name="l00091"></a>00091 
+<a name="l00094"></a><a class="code" href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">00094</a>    <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">print</a>(std::ostream&amp; os)<span class="keyword"> const</span>
+<a name="l00095"></a>00095 <span class="keyword">   </span>{
+<a name="l00096"></a>00096       <span class="keywordflow">if</span> (!<a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a>.empty())
+<a name="l00097"></a>00097          os &lt;&lt; <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a> &lt;&lt; std::endl &lt;&lt; std::endl;
+<a name="l00098"></a>00098       os &lt;&lt; <span class="stringliteral">&quot;Usage: &quot;</span> &lt;&lt; <a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">prognm_</a> &lt;&lt; <span class="stringliteral">&quot; [-&quot;</span>;
+<a name="l00099"></a>00099       <span class="keywordflow">for</span> (std::string::const_iterator itr(<a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.end(); ++itr)
+<a name="l00100"></a>00100          <span class="keywordflow">if</span> (*itr != <span class="charliteral">&#39;:&#39;</span>)
+<a name="l00101"></a>00101             os &lt;&lt; *itr;
+<a name="l00102"></a>00102       os &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; <a class="code" href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">params_</a> &lt;&lt; std::endl;
+<a name="l00103"></a>00103       <span class="keyword">const</span> std::string <a class="code" href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a>(<a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <span class="charliteral">&#39; &#39;</span>);
+<a name="l00104"></a>00104       <span class="keywordflow">for</span> (OPTEL::const_iterator itr(<a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.end(); ++itr)
+<a name="l00105"></a>00105       {
+<a name="l00106"></a>00106          std::ostringstream ostr;
+<a name="l00107"></a>00107          ostr &lt;&lt; <span class="charliteral">&#39;-&#39;</span> &lt;&lt; itr-&gt;first &lt;&lt; <span class="stringliteral">&quot;,--&quot;</span> &lt;&lt; itr-&gt;second.first;
+<a name="l00108"></a>00108          os &lt;&lt; spacer &lt;&lt; std::left &lt;&lt; std::setw(<a class="code" href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">argoptlen_</a>) &lt;&lt; ostr.str()
+<a name="l00109"></a>00109             &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; itr-&gt;second.second &lt;&lt; std::endl;
+<a name="l00110"></a>00110       }
+<a name="l00111"></a>00111       <span class="keywordflow">for</span> (std::list&lt;std::string&gt;::const_iterator itr(<a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.end(); ++itr)
+<a name="l00112"></a>00112          os &lt;&lt; *itr &lt;&lt; std::endl;
+<a name="l00113"></a>00113    }
+<a name="l00114"></a>00114 };
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116 <span class="preprocessor">#endif // _USAGE_HPP_</span>
+<a name="l00117"></a>00117 <span class="preprocessor"></span>
 </pre></div></div><!-- contents -->
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="usage_8hpp.html">usage.hpp</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:54. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri May 25 2012 21:59:38. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

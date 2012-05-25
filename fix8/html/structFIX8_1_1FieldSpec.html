@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.5</span>
+   &#160;<span id="projectnumber">version  0.5.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -133,6 +133,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3822c875b519b2938f044d49f30671cc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldSpec.html#a3822c875b519b2938f044d49f30671cc">FieldSpec</a> (const std::string &amp;name, <a class="el" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3">FieldTrait::FieldType</a> ftype=<a class="el" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3aeb37a7cdf7b80fcfc8809ddd73064d8e">FieldTrait::ft_untyped</a>)</td></tr>
 <tr class="memitem:abe23d3e0662eee1ee84989c00ddd3513"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldSpec.html#abe23d3e0662eee1ee84989c00ddd3513">~FieldSpec</a> ()</td></tr>
+<tr class="memitem:a4f9e7cdd418f7cccc901d3176b8e9ef7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldSpec.html#a4f9e7cdd418f7cccc901d3176b8e9ef7">set_used</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:aa5ff91f9021d99901861571db94282a2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldSpec.html#aa5ff91f9021d99901861571db94282a2">_name</a></td></tr>
@@ -142,6 +143,7 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a7de93dd6eabb63b2208f5c620ff17f6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structFIX8_1_1RealmBase.html#a370d282b982644766ed7ae378ef4843f">RealmBase::RealmType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldSpec.html#a7de93dd6eabb63b2208f5c620ff17f6c">_dtype</a></td></tr>
 <tr class="memitem:a64019c86abc7a33b1941b95e58484509"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldSpec.html#a64019c86abc7a33b1941b95e58484509">_doffset</a></td></tr>
 <tr class="memitem:ada2f44e60b6e95b14099e12239df9d90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#aaebab02aab2294fd3380fb303f7de7f0">RealmMap</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldSpec.html#ada2f44e60b6e95b14099e12239df9d90">_dvals</a></td></tr>
+<tr class="memitem:ad46570ee307c2326c891ab7377ee7926"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldSpec.html#ad46570ee307c2326c891ab7377ee7926">_used</a></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a7371c34b63a411dbf36d03085108d371"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="namespaceFIX8.html#abbef208b1c28a9bb7b9dfda012b9179c">BaseTypeMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FieldSpec.html#a7371c34b63a411dbf36d03085108d371">_baseTypeMap</a></td></tr>
@@ -177,7 +179,7 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00136">136</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00138">138</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 </div>
 </div>
@@ -195,9 +197,30 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00139">139</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00141">141</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
 <p>References <a class="el" href="f8c_8hpp_source.html#l00134">_dvals</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a4f9e7cdd418f7cccc901d3176b8e9ef7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structFIX8_1_1FieldSpec.html#a4f9e7cdd418f7cccc901d3176b8e9ef7">FIX8::FieldSpec::set_used</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00148">148</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+
+<p>References <a class="el" href="f8c_8hpp_source.html#l00136">_used</a>.</p>
 
 </div>
 </div>
@@ -290,7 +313,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00134">134</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8hpp_source.html#l00139">~FieldSpec()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8hpp_source.html#l00141">~FieldSpec()</a>.</p>
 
 </div>
 </div>
@@ -339,6 +362,23 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ad46570ee307c2326c891ab7377ee7926"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="structFIX8_1_1FieldSpec.html#ad46570ee307c2326c891ab7377ee7926">FIX8::FieldSpec::_used</a><code> [mutable]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="f8c_8hpp_source.html#l00136">136</a> of file <a class="el" href="f8c_8hpp_source.html">f8c.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="f8c_8hpp_source.html#l00148">set_used()</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="f8c_8hpp_source.html">f8c.hpp</a></li>
 </ul>
@@ -349,7 +389,7 @@ Static Public Attributes</h2></td></tr>
       <li class="navelem"><a class="el" href="namespaceFIX8.html">FIX8</a>      </li>
       <li class="navelem"><a class="el" href="structFIX8_1_1FieldSpec.html">FieldSpec</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:57:30. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri May 25 2012 22:00:15. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

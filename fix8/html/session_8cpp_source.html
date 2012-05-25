@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.5</span>
+   &#160;<span id="projectnumber">version  0.5.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -362,7 +362,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00245"></a>00245          <span class="keywordflow">throw</span> <a class="code" href="structFIX8_1_1InvalidMessage.html" title="An invalid message was requested or decoded.">InvalidMessage</a>(from);
 <a name="l00246"></a>00246       <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> seqstr;
 <a name="l00247"></a>00247       <a class="code" href="classFIX8_1_1Session.html#aabfb501796d918107c99bdbb48ff1219">_seq</a>.<a class="code" href="classFIX8_1_1RegExp.html#a98ceca9e7a00eee1fe34ab3829946891">SubExpr</a>(match, from, seqstr, 0, 1);
-<a name="l00248"></a>00248       seqnum = GetValue&lt;unsigned&gt;(seqstr);
+<a name="l00248"></a>00248       seqnum = fast_atoi&lt;unsigned&gt;(seqstr.c_str());
 <a name="l00249"></a>00249 
 <a name="l00250"></a>00250       <a class="code" href="classFIX8_1_1Session.html#a8fc99dac42d6cd940954dc575671c522">plog</a>(from, 1);
 <a name="l00251"></a>00251       <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;Message&gt;</a> msg(<a class="code" href="classFIX8_1_1Message.html#a825a6117953bc9ea2f3ac99a00c81037">Message::factory</a>(<a class="code" href="classFIX8_1_1Session.html#af9ff171d40c5f8747c2045bf7afb3041">_ctx</a>, from));
@@ -386,7 +386,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00269"></a>00269 <span class="preprocessor"></span>      ostringstream gerr;
 <a name="l00270"></a>00270       gerr &lt;&lt; <span class="stringliteral">&quot;  dtor(&quot;</span> &lt;&lt; msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">get_msgtype</a>() &lt;&lt; <span class="stringliteral">&quot;):&quot;</span>;
 <a name="l00271"></a>00271       <a class="code" href="classFIX8_1_1IntervalTimer.html" title="High resolution interval timer.">IntervalTimer</a> itm;
-<a name="l00272"></a>00272       msg.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();
+<a name="l00272"></a>00272       <span class="keyword">delete</span> msg.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();
 <a name="l00273"></a>00273       gerr &lt;&lt; itm.<a class="code" href="classFIX8_1_1IntervalTimer.html#a0aa09b40c3fa1d9ebe45cf6e63c8f654">Calculate</a>();
 <a name="l00274"></a>00274       <a class="code" href="classFIX8_1_1Session.html#ae3f51cc05cc9aa0e2d9aca7bcc7747aa">GlobalLogger::log</a>(gerr.str());
 <a name="l00275"></a>00275 <span class="preprocessor">#endif</span>
@@ -827,7 +827,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00710"></a>00710       <span class="comment">//cout &lt;&lt; &quot;Sending:&quot; &lt;&lt; *msg;</span>
 <a name="l00711"></a>00711       <a class="code" href="classFIX8_1_1Session.html#af24127d02e1e6083789a5b1e1e2c78d8">modify_outbound</a>(msg);
 <a name="l00712"></a>00712       <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> output;
-<a name="l00713"></a>00713       <span class="keyword">const</span> <span class="keywordtype">unsigned</span> enclen(msg-&gt;<a class="code" href="classFIX8_1_1Message.html#a72496b83546f9d52bbf87527c447b641">encode</a>(output));
+<a name="l00713"></a>00713       <span class="keyword">const</span> <span class="keywordtype">unsigned</span> enclen(msg-&gt;<a class="code" href="classFIX8_1_1Message.html#a9ade2d356b51ea2f798a811a6a295633">encode</a>(output));
 <a name="l00714"></a>00714       <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1Session.html#a86ae39a6c7897426bd45d8577aca8692">_connection</a>-&gt;<a class="code" href="classFIX8_1_1Connection.html#abfff6f1008357a229125ded4b3946b47">send</a>(output))
 <a name="l00715"></a>00715       {
 <a name="l00716"></a>00716          ostringstream ostr;
@@ -894,7 +894,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><a class="el" href="session_8cpp.html">session.cpp</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:54. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri May 25 2012 21:59:38. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.5</span>
+   &#160;<span id="projectnumber">version  0.5.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -136,7 +136,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad77f88bfb1c272c7d898310bff489dd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#ad77f88bfb1c272c7d898310bff489dd2"></a><br/></td></tr>
 <tr class="memitem:a300f3be13eec793f815e06549fcafdf9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a> (const char sw, const std::string &amp;lsw, const std::string &amp;help)</td></tr>
 <tr class="memitem:aa366b62c393d3dbfaf9fd575aa68c562"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUsageMan.html#aa366b62c393d3dbfaf9fd575aa68c562">add</a> (const std::string &amp;xtr)</td></tr>
-<tr class="memdesc:aa366b62c393d3dbfaf9fd575aa68c562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an extra help line. Lines prefixed with '@' are indented one tabstop.  <a href="#aa366b62c393d3dbfaf9fd575aa68c562"></a><br/></td></tr>
 <tr class="memitem:a12499b81599f674e728a1e15e31edf8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">setdesc</a> (const std::string &amp;desc)</td></tr>
 <tr class="memitem:a9399c7c9c595777c8065264bd40b1009"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">print</a> (std::ostream &amp;os) const </td></tr>
 <tr><td colspan="2"><h2><a name="pri-types"></a>
@@ -302,7 +301,7 @@ Private Attributes</h2></td></tr>
 
 <p>References <a class="el" href="usage_8hpp_source.html#l00045">optels_</a>.</p>
 
-<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00314">print_usage()</a>.</p>
+<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00315">print_usage()</a>.</p>
 
 </div>
 </div>
@@ -320,10 +319,15 @@ Private Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-
 <p>Add an extra help line. Lines prefixed with '@' are indented one tabstop. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xtr</td><td>the extra help line </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="usage_8hpp_source.html#l00078">78</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
+<p>Definition at line <a class="el" href="usage_8hpp_source.html#l00079">79</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
 <p>References <a class="el" href="usage_8hpp_source.html#l00047">splen_</a>, and <a class="el" href="usage_8hpp_source.html#l00046">xtrlines_</a>.</p>
 
@@ -343,7 +347,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Insert the formatted usage into the given stream. </p>
+<p>Insert the formatted usage into the given output stream. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">os</td><td>the stream to insert to </td></tr>
@@ -351,11 +355,11 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="usage_8hpp_source.html#l00093">93</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
+<p>Definition at line <a class="el" href="usage_8hpp_source.html#l00094">94</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
-<p>References <a class="el" href="usage_8hpp_source.html#l00047">argoptlen_</a>, <a class="el" href="usage_8hpp_source.html#l00043">argstr_</a>, <a class="el" href="usage_8hpp_source.html#l00043">description_</a>, <a class="el" href="usage_8hpp_source.html#l00045">optels_</a>, <a class="el" href="usage_8hpp_source.html#l00042">params_</a>, <a class="el" href="usage_8hpp_source.html#l00042">prognm_</a>, <a class="el" href="f8c_8cpp_source.html#l00077">spacer</a>, <a class="el" href="usage_8hpp_source.html#l00047">splen_</a>, and <a class="el" href="usage_8hpp_source.html#l00046">xtrlines_</a>.</p>
+<p>References <a class="el" href="usage_8hpp_source.html#l00047">argoptlen_</a>, <a class="el" href="usage_8hpp_source.html#l00043">argstr_</a>, <a class="el" href="usage_8hpp_source.html#l00043">description_</a>, <a class="el" href="usage_8hpp_source.html#l00045">optels_</a>, <a class="el" href="usage_8hpp_source.html#l00042">params_</a>, <a class="el" href="usage_8hpp_source.html#l00042">prognm_</a>, <a class="el" href="f8c_8cpp_source.html#l00108">spacer</a>, <a class="el" href="usage_8hpp_source.html#l00047">splen_</a>, and <a class="el" href="usage_8hpp_source.html#l00046">xtrlines_</a>.</p>
 
-<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00314">print_usage()</a>.</p>
+<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00315">print_usage()</a>.</p>
 
 </div>
 </div>
@@ -381,11 +385,11 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="usage_8hpp_source.html#l00089">89</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
+<p>Definition at line <a class="el" href="usage_8hpp_source.html#l00090">90</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
 <p>References <a class="el" href="usage_8hpp_source.html#l00043">description_</a>.</p>
 
-<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00314">print_usage()</a>.</p>
+<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00315">print_usage()</a>.</p>
 
 </div>
 </div>
@@ -403,7 +407,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="usage_8hpp_source.html#l00047">47</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00093">print()</a>.</p>
+<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00094">print()</a>.</p>
 
 </div>
 </div>
@@ -420,7 +424,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="usage_8hpp_source.html#l00043">43</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00093">print()</a>, and <a class="el" href="usage_8hpp_source.html#l00056">UsageMan()</a>.</p>
+<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00094">print()</a>, and <a class="el" href="usage_8hpp_source.html#l00056">UsageMan()</a>.</p>
 
 </div>
 </div>
@@ -437,7 +441,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="usage_8hpp_source.html#l00043">43</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00093">print()</a>, and <a class="el" href="usage_8hpp_source.html#l00089">setdesc()</a>.</p>
+<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00094">print()</a>, and <a class="el" href="usage_8hpp_source.html#l00090">setdesc()</a>.</p>
 
 </div>
 </div>
@@ -454,7 +458,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="usage_8hpp_source.html#l00045">45</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00071">add()</a>, and <a class="el" href="usage_8hpp_source.html#l00093">print()</a>.</p>
+<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00071">add()</a>, and <a class="el" href="usage_8hpp_source.html#l00094">print()</a>.</p>
 
 </div>
 </div>
@@ -471,7 +475,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="usage_8hpp_source.html#l00042">42</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00093">print()</a>.</p>
+<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00094">print()</a>.</p>
 
 </div>
 </div>
@@ -488,7 +492,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="usage_8hpp_source.html#l00042">42</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00093">print()</a>.</p>
+<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00094">print()</a>.</p>
 
 </div>
 </div>
@@ -505,7 +509,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="usage_8hpp_source.html#l00047">47</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00078">add()</a>, and <a class="el" href="usage_8hpp_source.html#l00093">print()</a>.</p>
+<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00079">add()</a>, and <a class="el" href="usage_8hpp_source.html#l00094">print()</a>.</p>
 
 </div>
 </div>
@@ -522,7 +526,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="usage_8hpp_source.html#l00046">46</a> of file <a class="el" href="usage_8hpp_source.html">usage.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00078">add()</a>, and <a class="el" href="usage_8hpp_source.html#l00093">print()</a>.</p>
+<p>Referenced by <a class="el" href="usage_8hpp_source.html#l00079">add()</a>, and <a class="el" href="usage_8hpp_source.html#l00094">print()</a>.</p>
 
 </div>
 </div>
@@ -535,7 +539,7 @@ Private Attributes</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="classUsageMan.html">UsageMan</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:54. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri May 25 2012 21:59:38. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.5</span>
+   &#160;<span id="projectnumber">version  0.5.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -126,29 +126,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Create a streambuf from an open file descriptor.  
  <a href="classfdinbuf.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>&gt;</code></p>
 
 <p><a href="classfdinbuf-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad049e8f4bace43230fb06c708702ee22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdinbuf.html#ad049e8f4bace43230fb06c708702ee22">fdinbuf</a> (int infd)</td></tr>
+<tr class="memitem:ad049e8f4bace43230fb06c708702ee22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdinbuf.html#ad049e8f4bace43230fb06c708702ee22">fdinbuf</a> (int infd)</td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:ac0b8621b5de7a912bbf5eeb75ccb5329"><td class="memItemLeft" align="right" valign="top">virtual int_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdinbuf.html#ac0b8621b5de7a912bbf5eeb75ccb5329">underflow</a> ()</td></tr>
+<tr class="memitem:ac0b8621b5de7a912bbf5eeb75ccb5329"><td class="memItemLeft" align="right" valign="top">virtual int_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdinbuf.html#ac0b8621b5de7a912bbf5eeb75ccb5329">underflow</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:aed7ee3c2eaab2dfc11cfd5eee6641cfe"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdinbuf.html#aed7ee3c2eaab2dfc11cfd5eee6641cfe">_buffer</a> [<a class="el" href="classfdinbuf.html#a5d481424d32a9977984b4d22a0923298a0c018e7a43487282bfa052fab6d1ed37">_buffer_size</a>]</td></tr>
+<tr class="memitem:aa124a49bcadb485a4354dc943110e423"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdinbuf.html#aa124a49bcadb485a4354dc943110e423">_buffer</a> [<a class="el" href="classfdinbuf.html#a4ba464902ed6c3324903c74edf96042ca8a86bfdb1f2227dccfec77f4cddd915b">_buffer_size</a>]</td></tr>
 <tr class="memitem:a3a00a1f6674f860022926ebf9364d7ba"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdinbuf.html#a3a00a1f6674f860022926ebf9364d7ba">_fd</a></td></tr>
 <tr><td colspan="2"><h2><a name="pri-types"></a>
 Private Types</h2></td></tr>
-<tr class="memitem:a5d481424d32a9977984b4d22a0923298"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classfdinbuf.html#a5d481424d32a9977984b4d22a0923298a0c018e7a43487282bfa052fab6d1ed37">_buffer_size</a> =  16
+<tr class="memitem:a5d481424d32a9977984b4d22a0923298"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classfdinbuf.html#a4ba464902ed6c3324903c74edf96042ca8a86bfdb1f2227dccfec77f4cddd915b">_buffer_size</a> =  16
+ }</td></tr>
+<tr class="memitem:a4ba464902ed6c3324903c74edf96042c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classfdinbuf.html#a4ba464902ed6c3324903c74edf96042ca8a86bfdb1f2227dccfec77f4cddd915b">_buffer_size</a> =  16
  }</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Create a streambuf from an open file descriptor. </p>
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00133">133</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00149">149</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 </div><hr/><h2>Member Enumeration Documentation</h2>
 <a class="anchor" id="a5d481424d32a9977984b4d22a0923298"></a>
 <div class="memitem">
@@ -161,13 +165,34 @@ Private Types</h2></td></tr>
 </div>
 <div class="memdoc">
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em><a class="anchor" id="a5d481424d32a9977984b4d22a0923298a0c018e7a43487282bfa052fab6d1ed37"></a>_buffer_size</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a4ba464902ed6c3324903c74edf96042ca8a86bfdb1f2227dccfec77f4cddd915b"></a>_buffer_size</em>&nbsp;</td><td>
 </td></tr>
 </table>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00135">135</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00151">151</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4ba464902ed6c3324903c74edf96042c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a4ba464902ed6c3324903c74edf96042ca8a86bfdb1f2227dccfec77f4cddd915b"></a>_buffer_size</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00139">139</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
 </div>
 </div>
@@ -187,9 +212,30 @@ Private Types</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00157">157</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00173">173</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
-<p>References <a class="el" href="myfix_8hpp_source.html#l00138">_buffer</a>.</p>
+<p>References <a class="el" href="hftest_8hpp_source.html#l00154">_buffer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad049e8f4bace43230fb06c708702ee22"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfdinbuf.html#ad049e8f4bace43230fb06c708702ee22">fdinbuf::fdinbuf</a> </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>infd</em></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00161">161</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+
+<p>References <a class="el" href="hftest_8hpp_source.html#l00154">_buffer</a>.</p>
 
 </div>
 </div>
@@ -208,27 +254,47 @@ Private Types</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00141">141</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00145">145</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
 
-<p>References <a class="el" href="myfix_8hpp_source.html#l00138">_buffer</a>, <a class="el" href="myfix_8hpp_source.html#l00135">_buffer_size</a>, and <a class="el" href="myfix_8hpp_source.html#l00139">_fd</a>.</p>
+<p>References <a class="el" href="hftest_8hpp_source.html#l00154">_buffer</a>, <a class="el" href="hftest_8hpp_source.html#l00151">_buffer_size</a>, and <a class="el" href="hftest_8hpp_source.html#l00155">_fd</a>.</p>
 
 </div>
 </div>
-<hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="aed7ee3c2eaab2dfc11cfd5eee6641cfe"></a>
+<a class="anchor" id="ac0b8621b5de7a912bbf5eeb75ccb5329"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char <a class="el" href="classfdinbuf.html#aed7ee3c2eaab2dfc11cfd5eee6641cfe">fdinbuf::_buffer</a>[<a class="el" href="classfdinbuf.html#a5d481424d32a9977984b4d22a0923298a0c018e7a43487282bfa052fab6d1ed37">_buffer_size</a>]<code> [protected]</code></td>
+          <td class="memname">virtual int_type <a class="el" href="classfdinbuf.html#ac0b8621b5de7a912bbf5eeb75ccb5329">fdinbuf::underflow</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline, protected, virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00138">138</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00157">157</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="myfix_8hpp_source.html#l00157">fdinbuf()</a>, and <a class="el" href="myfix_8hpp_source.html#l00141">underflow()</a>.</p>
+<p>References <a class="el" href="hftest_8hpp_source.html#l00154">_buffer</a>, <a class="el" href="hftest_8hpp_source.html#l00151">_buffer_size</a>, and <a class="el" href="hftest_8hpp_source.html#l00155">_fd</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="aa124a49bcadb485a4354dc943110e423"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char <a class="el" href="classfdinbuf.html#aa124a49bcadb485a4354dc943110e423">fdinbuf::_buffer</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00154">154</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="hftest_8hpp_source.html#l00173">fdinbuf()</a>, and <a class="el" href="hftest_8hpp_source.html#l00157">underflow()</a>.</p>
 
 </div>
 </div>
@@ -243,13 +309,14 @@ Private Types</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00139">139</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00155">155</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="myfix_8hpp_source.html#l00141">underflow()</a>.</p>
+<p>Referenced by <a class="el" href="hftest_8hpp_source.html#l00157">underflow()</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li><a class="el" href="hftest_8hpp_source.html">hftest.hpp</a></li>
 <li><a class="el" href="myfix_8hpp_source.html">myfix.hpp</a></li>
 </ul>
 </div><!-- contents -->
@@ -258,7 +325,7 @@ Private Types</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="classfdinbuf.html">fdinbuf</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:54. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri May 25 2012 21:59:38. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

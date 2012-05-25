@@ -6,7 +6,7 @@ var classFIX8_1_1Message =
     [ "clear", "classFIX8_1_1Message.html#a14bc2ac8a76f8e2e327271dd6a4dde76", null ],
     [ "clone", "classFIX8_1_1Message.html#aa6ef2ef7ee1145847201db0b21a8f146", null ],
     [ "decode", "classFIX8_1_1Message.html#a699cb055f5d41a1a466501f89b445987", null ],
-    [ "encode", "classFIX8_1_1Message.html#a72496b83546f9d52bbf87527c447b641", null ],
+    [ "encode", "classFIX8_1_1Message.html#a9ade2d356b51ea2f798a811a6a295633", null ],
     [ "factory", "classFIX8_1_1Message.html#a825a6117953bc9ea2f3ac99a00c81037", null ],
     [ "factory", "classFIX8_1_1Message.html#ae74e4ed6614df826918519526bf2a536", null ],
     [ "fmt_chksum", "classFIX8_1_1Message.html#a2581bf25e3beb34503083376488fe71d", null ],

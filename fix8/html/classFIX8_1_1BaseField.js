@@ -5,7 +5,6 @@ var classFIX8_1_1BaseField =
     [ "copy", "classFIX8_1_1BaseField.html#adae06a72a6d6f1d2e3f9f2b87c5a5840", null ],
     [ "encode", "classFIX8_1_1BaseField.html#afd80e9008687fd420a6e85a416dde11e", null ],
     [ "from", "classFIX8_1_1BaseField.html#a93538fc19a4f590509f7e60cc655e927", null ],
-    [ "get_raw", "classFIX8_1_1BaseField.html#a6a90247b7d352dae7d829d95cf2a7e3b", null ],
     [ "get_realm", "classFIX8_1_1BaseField.html#a9e5a7244732c369e72ae46bec3b5995e", null ],
     [ "get_rlm_idx", "classFIX8_1_1BaseField.html#a374451d87d0136e4ef8dc733122cadf8", null ],
     [ "get_tag", "classFIX8_1_1BaseField.html#a767309ea0f4ea6e1451f5498bbede1c5", null ],

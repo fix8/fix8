@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.5</span>
+   &#160;<span id="projectnumber">version  0.5.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -124,7 +124,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Example client message router. Derives from fix8 generated router class.  
  <a href="classtex__router__client.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for tex_router_client:</div>
 <div class="dyncontent">
@@ -132,7 +132,9 @@ Inheritance diagram for tex_router_client:</div>
   <img src="classtex__router__client.png" usemap="#tex_router_client_map" alt=""/>
   <map id="tex_router_client_map" name="tex_router_client_map">
 <area href="classFIX8_1_1TEX_1_1Myfix__Router.html" alt="FIX8::TEX::Myfix_Router" shape="rect" coords="0,56,150,80"/>
+<area href="classFIX8_1_1TEX_1_1Perf__Router.html" alt="FIX8::TEX::Perf_Router" shape="rect" coords="160,56,310,80"/>
 <area href="classFIX8_1_1Router.html" title="Base class for inbound message routing." alt="FIX8::Router" shape="rect" coords="0,0,150,24"/>
+<area href="classFIX8_1_1Router.html" title="Base class for inbound message routing." alt="FIX8::Router" shape="rect" coords="160,0,310,24"/>
 </map>
  </div></div>
 
@@ -140,24 +142,53 @@ Inheritance diagram for tex_router_client:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aadbf0242da4317dcdc693e3eba4dc003"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtex__router__client.html#aadbf0242da4317dcdc693e3eba4dc003">tex_router_client</a> (<a class="el" href="classmyfix__session__client.html">myfix_session_client</a> &amp;session)</td></tr>
+<tr class="memitem:a6abe3d7a088814e7a9d89c77a5d2d8e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtex__router__client.html#a6abe3d7a088814e7a9d89c77a5d2d8e6">tex_router_client</a> (<a class="el" href="classhf__session__client.html">hf_session_client</a> &amp;session)</td></tr>
 <tr class="memitem:a5feb31188d987796bec4e53efd843957"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtex__router__client.html#a5feb31188d987796bec4e53efd843957">operator()</a> (const <a class="el" href="classFIX8_1_1TEX_1_1ExecutionReport.html">FIX8::TEX::ExecutionReport</a> *msg) const </td></tr>
+<tr class="memitem:aadbf0242da4317dcdc693e3eba4dc003"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtex__router__client.html#aadbf0242da4317dcdc693e3eba4dc003">tex_router_client</a> (<a class="el" href="classmyfix__session__client.html">myfix_session_client</a> &amp;session)</td></tr>
+<tr class="memitem:ac12c1e7af800ee3092ac800eaf76d906"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtex__router__client.html#ac12c1e7af800ee3092ac800eaf76d906">operator()</a> (const <a class="el" href="classFIX8_1_1TEX_1_1ExecutionReport.html">FIX8::TEX::ExecutionReport</a> *msg) const </td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:a6e1f53d45787af81cffad5faad25221b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhf__session__client.html">hf_session_client</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtex__router__client.html#a6e1f53d45787af81cffad5faad25221b">_session</a></td></tr>
 <tr class="memitem:af35207903dfbd4baad947b4f368a68c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmyfix__session__client.html">myfix_session_client</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtex__router__client.html#af35207903dfbd4baad947b4f368a68c6">_session</a></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Example client message router. Derives from fix8 generated router class. </p>
 <p>Your application must define a class similar to this in order to receive the appropriate callback when Message::process is called. </p>
 
-<p>Definition at line <a class="el" href="myfix_8hpp_source.html#l00044">44</a> of file <a class="el" href="myfix_8hpp_source.html">myfix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00044">44</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a6abe3d7a088814e7a9d89c77a5d2d8e6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtex__router__client.html#a6abe3d7a088814e7a9d89c77a5d2d8e6">tex_router_client::tex_router_client</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classhf__session__client.html">hf_session_client</a> &amp;&#160;</td>
+          <td class="paramname"><em>session</em></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Ctor. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">session</td><td>client session </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00051">51</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aadbf0242da4317dcdc693e3eba4dc003"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtex__router__client.html#aadbf0242da4317dcdc693e3eba4dc003">tex_router_client::tex_router_client</a> </td>
+          <td class="memname"><a class="el" href="classtex__router__client.html#a6abe3d7a088814e7a9d89c77a5d2d8e6">tex_router_client::tex_router_client</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classmyfix__session__client.html">myfix_session_client</a> &amp;&#160;</td>
           <td class="paramname"><em>session</em></td><td>)</td>
@@ -201,19 +232,56 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00591">591</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00467">467</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00380">FIX8::MessageBase::get()</a>, and <a class="el" href="myfix_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet()</a>.</p>
+</div>
+</div>
+<a class="anchor" id="ac12c1e7af800ee3092ac800eaf76d906"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool tex_router_client::operator() </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classFIX8_1_1TEX_1_1ExecutionReport.html">FIX8::TEX::ExecutionReport</a> *&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Execution report handler. Here is where you provide your own methods for the messages you wish to handle. Only those messages that are of interest to you need to be implemented. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>Execution report message session </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="a6e1f53d45787af81cffad5faad25221b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classhf__session__client.html">hf_session_client</a>&amp; <a class="el" href="classtex__router__client.html#a6e1f53d45787af81cffad5faad25221b">tex_router_client::_session</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="hftest_8hpp_source.html#l00046">46</a> of file <a class="el" href="hftest_8hpp_source.html">hftest.hpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="af35207903dfbd4baad947b4f368a68c6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classmyfix__session__client.html">myfix_session_client</a>&amp; <a class="el" href="classtex__router__client.html#af35207903dfbd4baad947b4f368a68c6">tex_router_client::_session</a><code> [private]</code></td>
+          <td class="memname"><a class="el" href="classmyfix__session__client.html">myfix_session_client</a>&amp; <a class="el" href="classtex__router__client.html#a6e1f53d45787af81cffad5faad25221b">tex_router_client::_session</a><code> [private]</code></td>
         </tr>
       </table>
 </div>
@@ -224,7 +292,9 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
+<li><a class="el" href="hftest_8hpp_source.html">hftest.hpp</a></li>
 <li><a class="el" href="myfix_8hpp_source.html">myfix.hpp</a></li>
+<li><a class="el" href="hftest_8cpp_source.html">hftest.cpp</a></li>
 <li><a class="el" href="myfix_8cpp_source.html">myfix.cpp</a></li>
 </ul>
 </div><!-- contents -->
@@ -233,7 +303,7 @@ Private Attributes</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="classtex__router__client.html">tex_router_client</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:54. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri May 25 2012 21:59:38. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

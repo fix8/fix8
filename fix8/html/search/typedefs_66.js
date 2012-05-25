@@ -20,6 +20,8 @@ var searchData=
   ['flexproducteligibilityindicator',['FlexProductEligibilityIndicator',['../namespaceFIX8_1_1TEX.html#a49390da85d5c43477f29f1b7f9053dca',1,'FIX8::TEX']]],
   ['floorprice',['FloorPrice',['../namespaceFIX8_1_1TEX.html#a9a9e3559f7d223e92fda5b5c5c908679',1,'FIX8::TEX']]],
   ['flowscheduletype',['FlowScheduleType',['../namespaceFIX8_1_1TEX.html#aa9bbdcbb535f3d8fa83752359bb5eec8',1,'FIX8::TEX']]],
-  ['forexreq',['ForexReq',['../namespaceFIX8_1_1TEX.html#a9fdb826678802845fb25b145bb1e05a7',1,'FIX8::TEX']]],
-  ['fundrenewwaiv',['FundRenewWaiv',['../namespaceFIX8_1_1TEX.html#a7583545a79a9299c9e0f4c22b7756af2',1,'FIX8::TEX']]]
+  ['forexreq',['ForexReq',['../namespaceFIX8_1_1TEX.html#ae38b4e101f0a077265f9838399a543e4',1,'FIX8::TEX']]],
+  ['fundrenewwaiv',['FundRenewWaiv',['../namespaceFIX8_1_1TEX.html#a7583545a79a9299c9e0f4c22b7756af2',1,'FIX8::TEX']]],
+  ['futsettdate',['FutSettDate',['../namespaceFIX8_1_1TEX.html#a475341fc4f20cb03697013ddf2f577e7',1,'FIX8::TEX']]],
+  ['futsettdate2',['FutSettDate2',['../namespaceFIX8_1_1TEX.html#a75e6e2b4e1b5f66b177ccac425c7fbd4',1,'FIX8::TEX']]]
 ];

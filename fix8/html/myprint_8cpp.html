@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.5</span>
+   &#160;<span id="projectnumber">version  0.5.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -165,10 +165,20 @@ Functions</h2></td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="myprint_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>This is a simple logfile/logstream printer using the metadata generated for <a class="el" href="myfix_8cpp.html">myfix.cpp</a>.<br/>
+<div class="textblock"><p><br/>
+ This is a simple logfile/logstream printer using the metadata generated for <a class="el" href="myfix_8cpp.html">myfix.cpp</a>.<br/>
  <br/>
- <code> f8print -- f8 protocol log printer</code></p>
-<p><code> Usage: f8print [-hosv] &lt;fix protocol file, use '-' for stdin&gt; -h,--help help, this screen -o,--offset bytes to skip on each line before parsing FIX message -s,--summary summary, generate message summary -v,--version print version then exit e.g. f8print myfix_server_protocol.log cat myfix_client_protocol.log | f8print - </code> </p>
+ <code> f8print -- f8 protocol log printer<br/>
+ <br/>
+ Usage: f8print [-hosv] &lt;fix protocol file, use '-' for stdin&gt;<br/>
+ -h,--help help, this screen<br/>
+ -o,--offset bytes to skip on each line before parsing FIX message<br/>
+ -s,--summary summary, generate message summary<br/>
+ -v,--version print version then exit<br/>
+ e.g.<br/>
+ f8print myfix_server_protocol.log<br/>
+ cat myfix_client_protocol.log | f8print -<br/>
+ </code> </p>
 
 <p>Definition in file <a class="el" href="myprint_8cpp_source.html">myprint.cpp</a>.</p>
 </div><hr/><h2>Typedef Documentation</h2>
@@ -177,7 +187,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef map&lt;string, unsigned&gt; <a class="el" href="myprint_8cpp.html#a736be6f8a6e38fb510aace973624d729">MessageCount</a></td>
+          <td class="memname">typedef map&lt;string, unsigned&gt; <a class="el" href="hfprint_8cpp.html#a736be6f8a6e38fb510aace973624d729">MessageCount</a></td>
         </tr>
       </table>
 </div>
@@ -232,7 +242,7 @@ Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="myprint_8cpp_source.html#l00131">131</a> of file <a class="el" href="myprint_8cpp_source.html">myprint.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00207">FIX8::F8MetaCntx::_beginStr</a>, <a class="el" href="message_8hpp_source.html#l00135">FIX8::BaseMsgEntry::_name</a>, <a class="el" href="Myfix__classes_8hpp_source.html#l00046">FIX8::TEX::ctx</a>, <a class="el" href="message_8hpp_source.html#l00330">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <a class="el" href="f8c_8cpp_source.html#l00077">inputFile</a>, <a class="el" href="f8config_8h_source.html#l00424">PACKAGE</a>, <a class="el" href="f8cutils_8cpp_source.html#l00314">print_usage()</a>, <a class="el" href="message_8hpp_source.html#l00203">FIX8::F8MetaCntx::set_ube()</a>, <a class="el" href="myfix_8cpp_source.html#l00156">sig_handler()</a>, <a class="el" href="myprint_8cpp.html#a43d94b9738327d443a6288e3b41e69d3">summary()</a>, <a class="el" href="myfix_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received()</a>, <a class="el" href="message_8hpp_source.html#l00218">FIX8::F8MetaCntx::version()</a>, <a class="el" href="f8config_8h_source.html#l00483">VERSION</a>, and <a class="el" href="f8exception_8hpp_source.html#l00075">FIX8::f8Exception::what()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00207">FIX8::F8MetaCntx::_beginStr</a>, <a class="el" href="message_8hpp_source.html#l00135">FIX8::BaseMsgEntry::_name</a>, <a class="el" href="Myfix__classes_8hpp_source.html#l00046">FIX8::TEX::ctx</a>, <a class="el" href="message_8hpp_source.html#l00330">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <a class="el" href="f8c_8cpp_source.html#l00108">inputFile</a>, <a class="el" href="f8config_8h_source.html#l00424">PACKAGE</a>, <a class="el" href="f8cutils_8cpp_source.html#l00315">print_usage()</a>, <a class="el" href="message_8hpp_source.html#l00203">FIX8::F8MetaCntx::set_ube()</a>, <a class="el" href="hfprint_8cpp_source.html#l00099">sig_handler()</a>, <a class="el" href="hfprint_8cpp.html#a43d94b9738327d443a6288e3b41e69d3">summary()</a>, <a class="el" href="hfprint_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received()</a>, <a class="el" href="message_8hpp_source.html#l00218">FIX8::F8MetaCntx::version()</a>, <a class="el" href="f8config_8h_source.html#l00483">VERSION</a>, and <a class="el" href="f8exception_8hpp_source.html#l00075">FIX8::f8Exception::what()</a>.</p>
 
 </div>
 </div>
@@ -250,11 +260,11 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00314">314</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00315">315</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
 
-<p>References <a class="el" href="usage_8hpp_source.html#l00071">UsageMan::add()</a>, <a class="el" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <a class="el" href="usage_8hpp_source.html#l00093">UsageMan::print()</a>, and <a class="el" href="usage_8hpp_source.html#l00089">UsageMan::setdesc()</a>.</p>
+<p>References <a class="el" href="usage_8hpp_source.html#l00071">UsageMan::add()</a>, <a class="el" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <a class="el" href="usage_8hpp_source.html#l00094">UsageMan::print()</a>, and <a class="el" href="usage_8hpp_source.html#l00090">UsageMan::setdesc()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00117">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00147">main()</a>.</p>
 
 </div>
 </div>
@@ -275,7 +285,7 @@ Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="myprint_8cpp_source.html#l00099">99</a> of file <a class="el" href="myprint_8cpp_source.html">myprint.cpp</a>.</p>
 
-<p>References <a class="el" href="myfix_8cpp_source.html#l00156">sig_handler()</a>, and <a class="el" href="myfix_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received()</a>.</p>
+<p>References <a class="el" href="hfprint_8cpp_source.html#l00099">sig_handler()</a>, and <a class="el" href="hfprint_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received()</a>.</p>
 
 </div>
 </div>
@@ -294,8 +304,6 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="myprint_8cpp_source.html#l00131">main()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a53950f1d1b31e114560c2b9b5b57b01e"></a>
@@ -313,8 +321,6 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Referenced by <a class="el" href="myfix_8cpp_source.html#l00170">main()</a>, and <a class="el" href="myfix_8cpp_source.html#l00156">sig_handler()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -323,7 +329,7 @@ Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="myprint_8cpp.html">myprint.cpp</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:54. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri May 25 2012 21:59:38. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

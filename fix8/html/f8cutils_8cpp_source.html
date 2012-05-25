@@ -35,7 +35,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.5.5</span>
+   &#160;<span id="projectnumber">version  0.5.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -189,9 +189,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00072"></a>00072 <span class="keywordtype">int</span> <a class="code" href="f8c_8cpp.html#a3e5a42a607f279586f1bb065526dbdc7">load_fix_version</a> (<a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a>&amp; xf, <a class="code" href="structFIX8_1_1Ctxt.html" title="f8c compilation context.">Ctxt</a>&amp; ctxt);
 <a name="l00073"></a>00073 <span class="keywordtype">int</span> <a class="code" href="f8c_8cpp.html#a9118f1751c9009c164e197ad3ea541da">load_fields</a>(<a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a>&amp; xf, <a class="code" href="namespaceFIX8.html#a3833e55341a96836340804258791257c">FieldSpecMap</a>&amp; fspec);
 <a name="l00074"></a>00074 <span class="keywordtype">void</span> <a class="code" href="f8c_8cpp.html#a42bf39d6c1a082a6171a7579770490d9">process_special_traits</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> field, <a class="code" href="classFIX8_1_1FieldTraits.html" title="A collection of FieldTraits for a message. Which fields are required, which are present.">FieldTraits</a>&amp; fts);
-<a name="l00075"></a>00075 <span class="keywordtype">int</span> <a class="code" href="f8c_8cpp.html#ae03b533bee4ed32539f690cf74e5b720">process_message_fields</a>(<span class="keyword">const</span> std::string&amp; where, <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *xt, <a class="code" href="classFIX8_1_1FieldTraits.html" title="A collection of FieldTraits for a message. Which fields are required, which are present.">FieldTraits</a>&amp; fts,
-<a name="l00076"></a>00076    <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a04724596d2e79ea27a5c57543a516869">FieldToNumMap</a>&amp; ftonSpec, <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a3833e55341a96836340804258791257c">FieldSpecMap</a>&amp; fspec, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> component);
-<a name="l00077"></a>00077 <span class="keywordtype">int</span> <a class="code" href="f8c_8cpp.html#ad0aac2a6f3acbb21e56df9a679cd7b56">load_messages</a>(<a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a>&amp; xf, <a class="code" href="namespaceFIX8.html#a86f0e9b48eff49a1efdbe9d63f78502e">MessageSpecMap</a>&amp; mspec, <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a04724596d2e79ea27a5c57543a516869">FieldToNumMap</a>&amp; ftonSpec, <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a3833e55341a96836340804258791257c">FieldSpecMap</a>&amp; fspec);
+<a name="l00075"></a>00075 <span class="keywordtype">int</span> <a class="code" href="f8c_8cpp.html#a909814831b31f674a45504b8aa82c931">process_message_fields</a>(<span class="keyword">const</span> std::string&amp; where, <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *xt, <a class="code" href="classFIX8_1_1FieldTraits.html" title="A collection of FieldTraits for a message. Which fields are required, which are present.">FieldTraits</a>&amp; fts,
+<a name="l00076"></a>00076    <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a04724596d2e79ea27a5c57543a516869">FieldToNumMap</a>&amp; ftonSpec, <a class="code" href="namespaceFIX8.html#a3833e55341a96836340804258791257c">FieldSpecMap</a>&amp; fspec, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> component);
+<a name="l00077"></a>00077 <span class="keywordtype">int</span> <a class="code" href="f8c_8cpp.html#a81334d41be1fd41daa060380539ef665">load_messages</a>(<a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a>&amp; xf, <a class="code" href="namespaceFIX8.html#a86f0e9b48eff49a1efdbe9d63f78502e">MessageSpecMap</a>&amp; mspec, <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a04724596d2e79ea27a5c57543a516869">FieldToNumMap</a>&amp; ftonSpec, <a class="code" href="namespaceFIX8.html#a3833e55341a96836340804258791257c">FieldSpecMap</a>&amp; fspec);
 <a name="l00078"></a>00078 <span class="keywordtype">void</span> <a class="code" href="f8c_8cpp.html#a2f178502a02af31f40f4b6563c5437fd">process_ordering</a>(<a class="code" href="namespaceFIX8.html#a86f0e9b48eff49a1efdbe9d63f78502e">MessageSpecMap</a>&amp; mspec);
 <a name="l00079"></a>00079 <span class="keyword">const</span> <span class="keywordtype">string</span> <a class="code" href="f8c_8cpp.html#a978c5a0879865cb86b8566dd10c18b5e">flname</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; from);
 <a name="l00080"></a>00080 <span class="keywordtype">void</span> <a class="code" href="f8c_8cpp.html#a55fb74b022a3f26b627c85c59bff4c33">process_value_enums</a>(FieldSpecMap::const_iterator itr, ostream&amp; ost_hpp, ostream&amp; ost_cpp);
@@ -286,9 +286,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00169"></a>00169    <span class="keywordflow">case</span> <a class="code" href="namespaceFIX8.html#a036113e0823a4e61c612a145bbff047a">Common_BeginString</a>:
 <a name="l00170"></a>00170    <span class="keywordflow">case</span> <a class="code" href="namespaceFIX8.html#a52ff589cac2bf2d52ba15622ccbfb754">Common_BodyLength</a>:
 <a name="l00171"></a>00171    <span class="keywordflow">case</span> <a class="code" href="namespaceFIX8.html#a0285d54102518664179caacd0c2cff13">Common_CheckSum</a>:
-<a name="l00172"></a>00172       fts.<a class="code" href="classFIX8_1_1FieldTraits.html#ae85b3f5d9b6f5b93097c017b01c83bca">set</a>(field, FieldTrait::suppress);  <span class="comment">// drop through</span>
+<a name="l00172"></a>00172       fts.<a class="code" href="classFIX8_1_1FieldTraits.html#af808a86b530b0ad6e8bc275383f6d7e3">set</a>(field, FieldTrait::suppress);  <span class="comment">// drop through</span>
 <a name="l00173"></a>00173    <span class="keywordflow">case</span> <a class="code" href="namespaceFIX8.html#a1fbd339871f540994b17250b20251fd0">Common_MsgType</a>:
-<a name="l00174"></a>00174       fts.<a class="code" href="classFIX8_1_1FieldTraits.html#ae85b3f5d9b6f5b93097c017b01c83bca">set</a>(field, FieldTrait::automatic);
+<a name="l00174"></a>00174       fts.<a class="code" href="classFIX8_1_1FieldTraits.html#af808a86b530b0ad6e8bc275383f6d7e3">set</a>(field, FieldTrait::automatic);
 <a name="l00175"></a>00175    <span class="keywordflow">default</span>:
 <a name="l00176"></a>00176       <span class="keywordflow">break</span>;
 <a name="l00177"></a>00177    }
@@ -343,8 +343,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00226"></a>00226 }
 <a name="l00227"></a>00227 
 <a name="l00228"></a>00228 <span class="comment">//-----------------------------------------------------------------------------------------</span>
-<a name="l00229"></a><a class="code" href="f8cutils_8cpp.html#ae03b533bee4ed32539f690cf74e5b720">00229</a> <span class="keywordtype">int</span> <a class="code" href="f8c_8cpp.html#ae03b533bee4ed32539f690cf74e5b720">process_message_fields</a>(<span class="keyword">const</span> std::string&amp; where, <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *xt, <a class="code" href="classFIX8_1_1FieldTraits.html" title="A collection of FieldTraits for a message. Which fields are required, which are present.">FieldTraits</a>&amp; fts, <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a04724596d2e79ea27a5c57543a516869">FieldToNumMap</a>&amp; ftonSpec,
-<a name="l00230"></a>00230    <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a3833e55341a96836340804258791257c">FieldSpecMap</a>&amp; fspec, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> subpos)
+<a name="l00229"></a><a class="code" href="f8cutils_8cpp.html#a909814831b31f674a45504b8aa82c931">00229</a> <span class="keywordtype">int</span> <a class="code" href="f8c_8cpp.html#a909814831b31f674a45504b8aa82c931">process_message_fields</a>(<span class="keyword">const</span> std::string&amp; where, <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *xt, <a class="code" href="classFIX8_1_1FieldTraits.html" title="A collection of FieldTraits for a message. Which fields are required, which are present.">FieldTraits</a>&amp; fts, <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a04724596d2e79ea27a5c57543a516869">FieldToNumMap</a>&amp; ftonSpec,
+<a name="l00230"></a>00230    <a class="code" href="namespaceFIX8.html#a3833e55341a96836340804258791257c">FieldSpecMap</a>&amp; fspec, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> subpos)
 <a name="l00231"></a>00231 {
 <a name="l00232"></a>00232    <span class="keywordtype">unsigned</span> processed(0);
 <a name="l00233"></a>00233    <a class="code" href="classXmlElement.html#ae87b0b2891d2c908c5dca6a69552e718">XmlElement::XmlSet</a> flist;
@@ -356,7 +356,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00239"></a>00239          <span class="keywordflow">if</span> ((*fitr)-&gt;GetAttr(<span class="stringliteral">&quot;name&quot;</span>, fname) &amp;&amp; (*fitr)-&gt;GetAttr(<span class="stringliteral">&quot;required&quot;</span>, required))
 <a name="l00240"></a>00240          {
 <a name="l00241"></a>00241             FieldToNumMap::const_iterator ftonItr(ftonSpec.find(fname));
-<a name="l00242"></a>00242             FieldSpecMap::const_iterator fs_itr;
+<a name="l00242"></a>00242             FieldSpecMap::iterator fs_itr;
 <a name="l00243"></a>00243             <span class="keywordflow">if</span> (ftonItr == ftonSpec.end() || (fs_itr = fspec.find(ftonItr-&gt;second)) == fspec.end())
 <a name="l00244"></a>00244             {
 <a name="l00245"></a>00245                cerr &lt;&lt; <a class="code" href="f8c_8cpp.html#ada41a588babf5bdab7e6b8281e4d2cb9">shortName</a> &lt;&lt; <span class="charliteral">&#39;:&#39;</span> &lt;&lt; <a class="code" href="namespaceFIX8.html#a5794a1c039643260424b110ce6ed2695">recover_line</a>(**fitr) &lt;&lt; <span class="stringliteral">&quot;: error: Field element missing required attributes&quot;</span> &lt;&lt; endl;
@@ -371,151 +371,153 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00254"></a>00254             {
 <a name="l00255"></a>00255                <a class="code" href="f8c_8cpp.html#a42bf39d6c1a082a6171a7579770490d9">process_special_traits</a>(fs_itr-&gt;first, fts);
 <a name="l00256"></a>00256                ++processed;
-<a name="l00257"></a>00257             }
-<a name="l00258"></a>00258          }
-<a name="l00259"></a>00259          <span class="keywordflow">else</span>
-<a name="l00260"></a>00260          {
-<a name="l00261"></a>00261             cerr &lt;&lt; <a class="code" href="f8c_8cpp.html#ada41a588babf5bdab7e6b8281e4d2cb9">shortName</a> &lt;&lt; <span class="charliteral">&#39;:&#39;</span> &lt;&lt; <a class="code" href="namespaceFIX8.html#a5794a1c039643260424b110ce6ed2695">recover_line</a>(**fitr) &lt;&lt; <span class="stringliteral">&quot;: error: Field element missing required attributes&quot;</span> &lt;&lt; endl;
-<a name="l00262"></a>00262             ++<a class="code" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>;
-<a name="l00263"></a>00263          }
-<a name="l00264"></a>00264       }
-<a name="l00265"></a>00265    }
-<a name="l00266"></a>00266 
-<a name="l00267"></a>00267    <span class="keywordflow">return</span> processed;
-<a name="l00268"></a>00268 }
-<a name="l00269"></a>00269 
-<a name="l00270"></a>00270 <span class="comment">//-----------------------------------------------------------------------------------------</span>
-<a name="l00271"></a><a class="code" href="f8cutils_8cpp.html#a978c5a0879865cb86b8566dd10c18b5e">00271</a> <span class="keyword">const</span> <span class="keywordtype">string</span> <a class="code" href="f8c_8cpp.html#a978c5a0879865cb86b8566dd10c18b5e">flname</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; from)
-<a name="l00272"></a>00272 {
-<a name="l00273"></a>00273    <span class="keywordflow">return</span> from.substr(0, from.find_first_of(<span class="charliteral">&#39;.&#39;</span>));
-<a name="l00274"></a>00274 }
-<a name="l00275"></a>00275 
-<a name="l00276"></a>00276 <span class="comment">//-----------------------------------------------------------------------------------------</span>
-<a name="l00277"></a><a class="code" href="f8cutils_8cpp.html#a2f178502a02af31f40f4b6563c5437fd">00277</a> <span class="keywordtype">void</span> <a class="code" href="f8c_8cpp.html#a2f178502a02af31f40f4b6563c5437fd">process_ordering</a>(<a class="code" href="namespaceFIX8.html#a86f0e9b48eff49a1efdbe9d63f78502e">MessageSpecMap</a>&amp; mspec)
-<a name="l00278"></a>00278 {
-<a name="l00279"></a>00279    <span class="keywordflow">for</span> (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
-<a name="l00280"></a>00280    {
-<a name="l00281"></a>00281       <a class="code" href="namespaceFIX8.html#a6621e6283079ef70d474341400de4260">FieldTraitOrder</a> mo;
-<a name="l00282"></a>00282       <span class="keywordflow">for</span> (<a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">Presence::const_iterator</a> flitr(mitr-&gt;second._fields.get_presence().begin());
-<a name="l00283"></a>00283          flitr != mitr-&gt;second._fields.get_presence().end(); ++flitr)
-<a name="l00284"></a>00284             mo.insert(FieldTraitOrder::value_type(&amp;*flitr));
-<a name="l00285"></a>00285 
-<a name="l00286"></a>00286       <span class="keywordtype">unsigned</span> cnt(0);
-<a name="l00287"></a>00287       <span class="keywordflow">for</span> (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
-<a name="l00288"></a>00288          (*fto)-&gt;_pos = ++cnt;
-<a name="l00289"></a>00289 
-<a name="l00290"></a>00290       <a class="code" href="f8cutils_8cpp.html#a273d305f7d7b01099fd7a82054ea9af4">process_group_ordering</a>(mitr-&gt;second);
-<a name="l00291"></a>00291    }
-<a name="l00292"></a>00292 }
-<a name="l00293"></a>00293 
-<a name="l00294"></a>00294 <span class="comment">//-----------------------------------------------------------------------------------------</span>
-<a name="l00295"></a><a class="code" href="f8cutils_8cpp.html#a273d305f7d7b01099fd7a82054ea9af4">00295</a> <span class="keywordtype">void</span> <a class="code" href="f8cutils_8cpp.html#a273d305f7d7b01099fd7a82054ea9af4">process_group_ordering</a>(<span class="keyword">const</span> <a class="code" href="structFIX8_1_1MessageSpec.html" title="f8c internal message representation.">MessageSpec</a>&amp; ms)
-<a name="l00296"></a>00296 {
-<a name="l00297"></a>00297    <span class="keywordflow">for</span> (GroupMap::const_iterator gitr(ms.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.begin()); gitr != ms.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.end(); ++gitr)
-<a name="l00298"></a>00298    {
-<a name="l00299"></a>00299       <a class="code" href="namespaceFIX8.html#a6621e6283079ef70d474341400de4260">FieldTraitOrder</a> go;
-<a name="l00300"></a>00300       <span class="keywordflow">for</span> (<a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">Presence::const_iterator</a> flitr(gitr-&gt;second._fields.get_presence().begin());
-<a name="l00301"></a>00301          flitr != gitr-&gt;second._fields.get_presence().end(); ++flitr)
-<a name="l00302"></a>00302             go.insert(FieldTraitOrder::value_type(&amp;*flitr));
-<a name="l00303"></a>00303 
-<a name="l00304"></a>00304       <span class="keywordtype">unsigned</span> gcnt(0);
-<a name="l00305"></a>00305       <span class="keywordflow">for</span> (FieldTraitOrder::iterator fto(go.begin()); fto != go.end(); ++fto)
-<a name="l00306"></a>00306          (*fto)-&gt;_pos = ++gcnt;
-<a name="l00307"></a>00307 
-<a name="l00308"></a>00308       if (!gitr-&gt;second._groups.empty())
-<a name="l00309"></a>00309          <a class="code" href="f8cutils_8cpp.html#a273d305f7d7b01099fd7a82054ea9af4">process_group_ordering</a>(gitr-&gt;second);
-<a name="l00310"></a>00310    }
-<a name="l00311"></a>00311 }
-<a name="l00312"></a>00312 
-<a name="l00313"></a>00313 <span class="comment">//-----------------------------------------------------------------------------------------</span>
-<a name="l00314"></a><a class="code" href="myprint_8cpp.html#ae5ad5cbeccaedc03a48d3c7eaa803e79">00314</a> <span class="keywordtype">void</span> <a class="code" href="f8c_8cpp.html#ae5ad5cbeccaedc03a48d3c7eaa803e79">print_usage</a>()
-<a name="l00315"></a>00315 {
-<a name="l00316"></a>00316    <a class="code" href="classUsageMan.html" title="Convenient program help/usage wrapper. Generates a standardised usage message.">UsageMan</a> um(<span class="stringliteral">&quot;f8c&quot;</span>, <a class="code" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <span class="stringliteral">&quot;&lt;input xml schema&gt;&quot;</span>);
-<a name="l00317"></a>00317    um.<a class="code" href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">setdesc</a>(<span class="stringliteral">&quot;f8c -- compile FIX xml schema&quot;</span>);
-<a name="l00318"></a>00318    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;o&#39;</span>, <span class="stringliteral">&quot;odir &lt;file&gt;&quot;</span>, <span class="stringliteral">&quot;output target directory (default ./)&quot;</span>);
-<a name="l00319"></a>00319    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;p&#39;</span>, <span class="stringliteral">&quot;prefix &lt;prefix&gt;&quot;</span>, <span class="stringliteral">&quot;output filename prefix (default Myfix)&quot;</span>);
-<a name="l00320"></a>00320    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;d&#39;</span>, <span class="stringliteral">&quot;dump&quot;</span>, <span class="stringliteral">&quot;dump 1st pass parsed source xml file, exit&quot;</span>);
-<a name="l00321"></a>00321    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;h&#39;</span>, <span class="stringliteral">&quot;help&quot;</span>, <span class="stringliteral">&quot;help, this screen&quot;</span>);
-<a name="l00322"></a>00322    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;i&#39;</span>, <span class="stringliteral">&quot;ignore&quot;</span>, <span class="stringliteral">&quot;ignore errors, attempt to generate code anyhow (default no)&quot;</span>);
-<a name="l00323"></a>00323    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;k&#39;</span>, <span class="stringliteral">&quot;keep&quot;</span>, <span class="stringliteral">&quot;retain generated temporaries even if there are errors (.*.tmp)&quot;</span>);
-<a name="l00324"></a>00324    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;v&#39;</span>, <span class="stringliteral">&quot;version&quot;</span>, <span class="stringliteral">&quot;print version, exit&quot;</span>);
-<a name="l00325"></a>00325    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;s&#39;</span>, <span class="stringliteral">&quot;second&quot;</span>, <span class="stringliteral">&quot;2nd pass only, no precompile (default both)&quot;</span>);
-<a name="l00326"></a>00326    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;N&#39;</span>, <span class="stringliteral">&quot;nounique&quot;</span>, <span class="stringliteral">&quot;do not enforce unique field parsing (default false)&quot;</span>);
-<a name="l00327"></a>00327    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;r&#39;</span>, <span class="stringliteral">&quot;retain&quot;</span>, <span class="stringliteral">&quot;retain 1st pass code (default delete)&quot;</span>);
-<a name="l00328"></a>00328    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;c&#39;</span>, <span class="stringliteral">&quot;classes &lt;server|client&gt;&quot;</span>, <span class="stringliteral">&quot;generate user session classes (default no)&quot;</span>);
-<a name="l00329"></a>00329    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;t&#39;</span>, <span class="stringliteral">&quot;tabwidth&quot;</span>, <span class="stringliteral">&quot;tabwidth for generated code (default 3 spaces)&quot;</span>);
-<a name="l00330"></a>00330    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;x&#39;</span>, <span class="stringliteral">&quot;fixt &lt;file&gt;&quot;</span>, <span class="stringliteral">&quot;For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file&quot;</span>);
-<a name="l00331"></a>00331    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;V&#39;</span>, <span class="stringliteral">&quot;verbose&quot;</span>, <span class="stringliteral">&quot;be more verbose when processing&quot;</span>);
-<a name="l00332"></a>00332    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;n&#39;</span>, <span class="stringliteral">&quot;namespace &lt;ns&gt;&quot;</span>, <span class="stringliteral">&quot;namespace to place generated code in (default FIXMmvv e.g. FIX4400)&quot;</span>);
-<a name="l00333"></a>00333    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="stringliteral">&quot;e.g.&quot;</span>);
-<a name="l00334"></a>00334    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="stringliteral">&quot;@f8c -p Texfix -n TEX myfix.xml&quot;</span>);
-<a name="l00335"></a>00335    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="stringliteral">&quot;@f8c -rp Texfix -n TEX -x ../schema/FIXT11.xml myfix.xml&quot;</span>);
-<a name="l00336"></a>00336    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="stringliteral">&quot;@f8c -p Texfix -n TEX -c client -x ../schema/FIXT11.xml myfix.xml&quot;</span>);
-<a name="l00337"></a>00337    um.<a class="code" href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">print</a>(cerr);
-<a name="l00338"></a>00338 }
-<a name="l00339"></a>00339 
-<a name="l00340"></a>00340 <span class="comment">//-------------------------------------------------------------------------------------------------</span>
-<a name="l00341"></a><a class="code" href="classFIX8_1_1RealmObject.html#aeb3c4c3d0605c2902f63c2be68e54f29">00341</a> <a class="code" href="classFIX8_1_1RealmObject.html" title="f8c range or set domain realm.">RealmObject</a> *RealmObject::create(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; from, <a class="code" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3">FieldTrait::FieldType</a> ftype, <span class="keywordtype">bool</span> isRange)
-<a name="l00342"></a>00342 {
-<a name="l00343"></a>00343    <span class="keywordflow">if</span> (FieldTrait::is_int(ftype))
-<a name="l00344"></a>00344       <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1TypedRealm.html" title="f8c typed realm.">TypedRealm&lt;int&gt;</a>(GetValue&lt;int&gt;(from), isRange);
-<a name="l00345"></a>00345    <span class="keywordflow">if</span> (FieldTrait::is_char(ftype))
-<a name="l00346"></a>00346       <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="structFIX8_1_1CharRealm.html" title="f8c character realm type.">CharRealm</a>(from[0], isRange);
-<a name="l00347"></a>00347    <span class="keywordflow">if</span> (FieldTrait::is_float(ftype))
-<a name="l00348"></a>00348       <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1TypedRealm.html" title="f8c typed realm.">TypedRealm&lt;double&gt;</a>(GetValue&lt;double&gt;(from), isRange);
-<a name="l00349"></a>00349    <span class="keywordflow">if</span> (FieldTrait::is_string(ftype))
-<a name="l00350"></a>00350       <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="structFIX8_1_1StringRealm.html" title="f8c string realm type.">StringRealm</a>(from, isRange);
-<a name="l00351"></a>00351    <span class="keywordflow">return</span> 0;
-<a name="l00352"></a>00352 }
-<a name="l00353"></a>00353 
-<a name="l00354"></a>00354 <span class="comment">//-------------------------------------------------------------------------------------------------</span>
-<a name="l00355"></a><a class="code" href="f8cutils_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4">00355</a> <span class="keywordtype">string</span> <a class="code" href="f8c_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4">insert_year</a>()
-<a name="l00356"></a>00356 {
-<a name="l00357"></a>00357    <span class="keyword">struct </span>tm tim;
-<a name="l00358"></a>00358    time_t now(time(0));
-<a name="l00359"></a>00359    localtime_r(&amp;now, &amp;tim);
-<a name="l00360"></a>00360    ostringstream ostr;
-<a name="l00361"></a>00361    ostr &lt;&lt; setw(2) &lt;&lt; (tim.tm_year - 100);
-<a name="l00362"></a>00362    <span class="keywordflow">return</span> ostr.str();
-<a name="l00363"></a>00363 }
-<a name="l00364"></a>00364 
-<a name="l00365"></a>00365 <span class="comment">//-------------------------------------------------------------------------------------------------</span>
-<a name="l00366"></a><a class="code" href="f8cutils_8cpp.html#a831ab1e9510d3df4a3d63b4016e389b9">00366</a> <span class="keywordtype">void</span> <a class="code" href="f8c_8cpp.html#ae9bc890a972bd4f06c354744387a95ac">generate_preamble</a>(ostream&amp; to, <span class="keywordtype">bool</span> donotedit)
-<a name="l00367"></a>00367 {
-<a name="l00368"></a>00368    to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;
-<a name="l00369"></a>00369    <span class="keywordtype">string</span> result;
-<a name="l00370"></a>00370    <span class="keywordflow">if</span> (donotedit)
-<a name="l00371"></a>00371    {
-<a name="l00372"></a>00372       to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25aacc070dea106130f37cad12aaf65fbc8">cs_do_not_edit</a>) &lt;&lt; <a class="code" href="namespaceFIX8.html#a208707a0f000f8ba8059636ba89de746">GetTimeAsStringMS</a>(result, 0, 0) &lt;&lt; <span class="stringliteral">&quot; ***&quot;</span> &lt;&lt; endl;
-<a name="l00373"></a>00373       to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;
-<a name="l00374"></a>00374    }
-<a name="l00375"></a>00375    to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a4732f090e95c1ed2c6dc8b8189822593">cs_copyright</a>) &lt;&lt; <a class="code" href="f8c_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4">insert_year</a>() &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a45c7cac434032e60b0eab9d56cc81c2e">cs_copyright2</a>) &lt;&lt; endl;
-<a name="l00376"></a>00376    to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;
-<a name="l00377"></a>00377 }
-<a name="l00378"></a>00378 
-<a name="l00379"></a>00379 <span class="comment">//-------------------------------------------------------------------------------------------------</span>
-<a name="l00380"></a>00380 ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1MessageSpec.html" title="f8c internal message representation.">FIX8::MessageSpec</a>&amp; what)
-<a name="l00381"></a>00381 {
-<a name="l00382"></a>00382    os &lt;&lt; <span class="stringliteral">&quot;Name:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4497083907089972aec0d549f7f2b871">_name</a>;
-<a name="l00383"></a>00383    <span class="keywordflow">if</span> (!what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4a980632b2640fbe8e2d802eac27ebba">_description</a>.empty())
-<a name="l00384"></a>00384       os &lt;&lt; <span class="stringliteral">&quot; Description:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4a980632b2640fbe8e2d802eac27ebba">_description</a>;
-<a name="l00385"></a>00385    if (!what.<a class="code" href="structFIX8_1_1MessageSpec.html#ae0f73d0b1ff8a36ad1109184e1c9eac6">_comment</a>.empty())
-<a name="l00386"></a>00386       os &lt;&lt; <span class="stringliteral">&quot; Comment:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#ae0f73d0b1ff8a36ad1109184e1c9eac6">_comment</a>;
-<a name="l00387"></a>00387    os &lt;&lt; <span class="stringliteral">&quot; isadmin:&quot;</span> &lt;&lt; boolalpha &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a2eb3aa22c9fe4f1db425021cf68123d1">_is_admin</a> &lt;&lt; endl;
-<a name="l00388"></a>00388    os &lt;&lt; <span class="stringliteral">&quot;Fields:&quot;</span> &lt;&lt; endl &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440">_fields</a>;
-<a name="l00389"></a>00389    for (GroupMap::const_iterator itr(what.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.begin()); itr != what.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.end(); ++itr)
-<a name="l00390"></a>00390       os &lt;&lt; <span class="stringliteral">&quot;Group (&quot;</span> &lt;&lt; itr-&gt;first &lt;&lt; <span class="stringliteral">&quot;): &quot;</span> &lt;&lt; endl &lt;&lt; itr-&gt;second &lt;&lt; endl;
-<a name="l00391"></a>00391 
-<a name="l00392"></a>00392    <span class="keywordflow">return</span> os;
-<a name="l00393"></a>00393 }
-<a name="l00394"></a>00394 
+<a name="l00257"></a>00257                fs_itr-&gt;second.set_used();
+<a name="l00258"></a>00258             }
+<a name="l00259"></a>00259          }
+<a name="l00260"></a>00260          <span class="keywordflow">else</span>
+<a name="l00261"></a>00261          {
+<a name="l00262"></a>00262             cerr &lt;&lt; <a class="code" href="f8c_8cpp.html#ada41a588babf5bdab7e6b8281e4d2cb9">shortName</a> &lt;&lt; <span class="charliteral">&#39;:&#39;</span> &lt;&lt; <a class="code" href="namespaceFIX8.html#a5794a1c039643260424b110ce6ed2695">recover_line</a>(**fitr) &lt;&lt; <span class="stringliteral">&quot;: error: Field element missing required attributes&quot;</span> &lt;&lt; endl;
+<a name="l00263"></a>00263             ++<a class="code" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>;
+<a name="l00264"></a>00264          }
+<a name="l00265"></a>00265       }
+<a name="l00266"></a>00266    }
+<a name="l00267"></a>00267 
+<a name="l00268"></a>00268    <span class="keywordflow">return</span> processed;
+<a name="l00269"></a>00269 }
+<a name="l00270"></a>00270 
+<a name="l00271"></a>00271 <span class="comment">//-----------------------------------------------------------------------------------------</span>
+<a name="l00272"></a><a class="code" href="f8cutils_8cpp.html#a978c5a0879865cb86b8566dd10c18b5e">00272</a> <span class="keyword">const</span> <span class="keywordtype">string</span> <a class="code" href="f8c_8cpp.html#a978c5a0879865cb86b8566dd10c18b5e">flname</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; from)
+<a name="l00273"></a>00273 {
+<a name="l00274"></a>00274    <span class="keywordflow">return</span> from.substr(0, from.find_first_of(<span class="charliteral">&#39;.&#39;</span>));
+<a name="l00275"></a>00275 }
+<a name="l00276"></a>00276 
+<a name="l00277"></a>00277 <span class="comment">//-----------------------------------------------------------------------------------------</span>
+<a name="l00278"></a><a class="code" href="f8cutils_8cpp.html#a2f178502a02af31f40f4b6563c5437fd">00278</a> <span class="keywordtype">void</span> <a class="code" href="f8c_8cpp.html#a2f178502a02af31f40f4b6563c5437fd">process_ordering</a>(<a class="code" href="namespaceFIX8.html#a86f0e9b48eff49a1efdbe9d63f78502e">MessageSpecMap</a>&amp; mspec)
+<a name="l00279"></a>00279 {
+<a name="l00280"></a>00280    <span class="keywordflow">for</span> (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
+<a name="l00281"></a>00281    {
+<a name="l00282"></a>00282       <a class="code" href="namespaceFIX8.html#a6621e6283079ef70d474341400de4260">FieldTraitOrder</a> mo;
+<a name="l00283"></a>00283       <span class="keywordflow">for</span> (<a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">Presence::const_iterator</a> flitr(mitr-&gt;second._fields.get_presence().begin());
+<a name="l00284"></a>00284          flitr != mitr-&gt;second._fields.get_presence().end(); ++flitr)
+<a name="l00285"></a>00285             mo.insert(FieldTraitOrder::value_type(&amp;*flitr));
+<a name="l00286"></a>00286 
+<a name="l00287"></a>00287       <span class="keywordtype">unsigned</span> cnt(0);
+<a name="l00288"></a>00288       <span class="keywordflow">for</span> (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
+<a name="l00289"></a>00289          (*fto)-&gt;_pos = ++cnt;
+<a name="l00290"></a>00290 
+<a name="l00291"></a>00291       <a class="code" href="f8cutils_8cpp.html#a273d305f7d7b01099fd7a82054ea9af4">process_group_ordering</a>(mitr-&gt;second);
+<a name="l00292"></a>00292    }
+<a name="l00293"></a>00293 }
+<a name="l00294"></a>00294 
+<a name="l00295"></a>00295 <span class="comment">//-----------------------------------------------------------------------------------------</span>
+<a name="l00296"></a><a class="code" href="f8cutils_8cpp.html#a273d305f7d7b01099fd7a82054ea9af4">00296</a> <span class="keywordtype">void</span> <a class="code" href="f8cutils_8cpp.html#a273d305f7d7b01099fd7a82054ea9af4">process_group_ordering</a>(<span class="keyword">const</span> <a class="code" href="structFIX8_1_1MessageSpec.html" title="f8c internal message representation.">MessageSpec</a>&amp; ms)
+<a name="l00297"></a>00297 {
+<a name="l00298"></a>00298    <span class="keywordflow">for</span> (GroupMap::const_iterator gitr(ms.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.begin()); gitr != ms.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.end(); ++gitr)
+<a name="l00299"></a>00299    {
+<a name="l00300"></a>00300       <a class="code" href="namespaceFIX8.html#a6621e6283079ef70d474341400de4260">FieldTraitOrder</a> go;
+<a name="l00301"></a>00301       <span class="keywordflow">for</span> (<a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">Presence::const_iterator</a> flitr(gitr-&gt;second._fields.get_presence().begin());
+<a name="l00302"></a>00302          flitr != gitr-&gt;second._fields.get_presence().end(); ++flitr)
+<a name="l00303"></a>00303             go.insert(FieldTraitOrder::value_type(&amp;*flitr));
+<a name="l00304"></a>00304 
+<a name="l00305"></a>00305       <span class="keywordtype">unsigned</span> gcnt(0);
+<a name="l00306"></a>00306       <span class="keywordflow">for</span> (FieldTraitOrder::iterator fto(go.begin()); fto != go.end(); ++fto)
+<a name="l00307"></a>00307          (*fto)-&gt;_pos = ++gcnt;
+<a name="l00308"></a>00308 
+<a name="l00309"></a>00309       if (!gitr-&gt;second._groups.empty())
+<a name="l00310"></a>00310          <a class="code" href="f8cutils_8cpp.html#a273d305f7d7b01099fd7a82054ea9af4">process_group_ordering</a>(gitr-&gt;second);
+<a name="l00311"></a>00311    }
+<a name="l00312"></a>00312 }
+<a name="l00313"></a>00313 
+<a name="l00314"></a>00314 <span class="comment">//-----------------------------------------------------------------------------------------</span>
+<a name="l00315"></a><a class="code" href="myprint_8cpp.html#ae5ad5cbeccaedc03a48d3c7eaa803e79">00315</a> <span class="keywordtype">void</span> <a class="code" href="f8c_8cpp.html#ae5ad5cbeccaedc03a48d3c7eaa803e79">print_usage</a>()
+<a name="l00316"></a>00316 {
+<a name="l00317"></a>00317    <a class="code" href="classUsageMan.html" title="Convenient program help/usage wrapper. Generates a standardised usage message.">UsageMan</a> um(<span class="stringliteral">&quot;f8c&quot;</span>, <a class="code" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <span class="stringliteral">&quot;&lt;input xml schema&gt;&quot;</span>);
+<a name="l00318"></a>00318    um.<a class="code" href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">setdesc</a>(<span class="stringliteral">&quot;f8c -- compile FIX xml schema&quot;</span>);
+<a name="l00319"></a>00319    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;o&#39;</span>, <span class="stringliteral">&quot;odir &lt;file&gt;&quot;</span>, <span class="stringliteral">&quot;output target directory (default ./)&quot;</span>);
+<a name="l00320"></a>00320    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;p&#39;</span>, <span class="stringliteral">&quot;prefix &lt;prefix&gt;&quot;</span>, <span class="stringliteral">&quot;output filename prefix (default Myfix)&quot;</span>);
+<a name="l00321"></a>00321    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;d&#39;</span>, <span class="stringliteral">&quot;dump&quot;</span>, <span class="stringliteral">&quot;dump 1st pass parsed source xml file, exit&quot;</span>);
+<a name="l00322"></a>00322    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;f&#39;</span>, <span class="stringliteral">&quot;fields&quot;</span>, <span class="stringliteral">&quot;generate code for all defined fields even if they are not used in any message (default no)&quot;</span>);
+<a name="l00323"></a>00323    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;h&#39;</span>, <span class="stringliteral">&quot;help&quot;</span>, <span class="stringliteral">&quot;help, this screen&quot;</span>);
+<a name="l00324"></a>00324    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;i&#39;</span>, <span class="stringliteral">&quot;ignore&quot;</span>, <span class="stringliteral">&quot;ignore errors, attempt to generate code anyhow (default no)&quot;</span>);
+<a name="l00325"></a>00325    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;k&#39;</span>, <span class="stringliteral">&quot;keep&quot;</span>, <span class="stringliteral">&quot;retain generated temporaries even if there are errors (.*.tmp)&quot;</span>);
+<a name="l00326"></a>00326    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;v&#39;</span>, <span class="stringliteral">&quot;version&quot;</span>, <span class="stringliteral">&quot;print version, exit&quot;</span>);
+<a name="l00327"></a>00327    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;s&#39;</span>, <span class="stringliteral">&quot;second&quot;</span>, <span class="stringliteral">&quot;2nd pass only, no precompile (default both)&quot;</span>);
+<a name="l00328"></a>00328    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;N&#39;</span>, <span class="stringliteral">&quot;nounique&quot;</span>, <span class="stringliteral">&quot;do not enforce unique field parsing (default false)&quot;</span>);
+<a name="l00329"></a>00329    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;r&#39;</span>, <span class="stringliteral">&quot;retain&quot;</span>, <span class="stringliteral">&quot;retain 1st pass code (default delete)&quot;</span>);
+<a name="l00330"></a>00330    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;c&#39;</span>, <span class="stringliteral">&quot;classes &lt;server|client&gt;&quot;</span>, <span class="stringliteral">&quot;generate user session classes (default no)&quot;</span>);
+<a name="l00331"></a>00331    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;t&#39;</span>, <span class="stringliteral">&quot;tabwidth&quot;</span>, <span class="stringliteral">&quot;tabwidth for generated code (default 3 spaces)&quot;</span>);
+<a name="l00332"></a>00332    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;x&#39;</span>, <span class="stringliteral">&quot;fixt &lt;file&gt;&quot;</span>, <span class="stringliteral">&quot;For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file&quot;</span>);
+<a name="l00333"></a>00333    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;V&#39;</span>, <span class="stringliteral">&quot;verbose&quot;</span>, <span class="stringliteral">&quot;be more verbose when processing&quot;</span>);
+<a name="l00334"></a>00334    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="charliteral">&#39;n&#39;</span>, <span class="stringliteral">&quot;namespace &lt;ns&gt;&quot;</span>, <span class="stringliteral">&quot;namespace to place generated code in (default FIXMmvv e.g. FIX4400)&quot;</span>);
+<a name="l00335"></a>00335    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="stringliteral">&quot;e.g.&quot;</span>);
+<a name="l00336"></a>00336    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="stringliteral">&quot;@f8c -p Texfix -n TEX myfix.xml&quot;</span>);
+<a name="l00337"></a>00337    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="stringliteral">&quot;@f8c -rp Texfix -n TEX -x ../schema/FIXT11.xml myfix.xml&quot;</span>);
+<a name="l00338"></a>00338    um.<a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="stringliteral">&quot;@f8c -p Texfix -n TEX -c client -x ../schema/FIXT11.xml myfix.xml&quot;</span>);
+<a name="l00339"></a>00339    um.<a class="code" href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">print</a>(cerr);
+<a name="l00340"></a>00340 }
+<a name="l00341"></a>00341 
+<a name="l00342"></a>00342 <span class="comment">//-------------------------------------------------------------------------------------------------</span>
+<a name="l00343"></a><a class="code" href="classFIX8_1_1RealmObject.html#aeb3c4c3d0605c2902f63c2be68e54f29">00343</a> <a class="code" href="classFIX8_1_1RealmObject.html" title="f8c range or set domain realm.">RealmObject</a> *RealmObject::create(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; from, <a class="code" href="structFIX8_1_1FieldTrait.html#aa5411e9ee09c51ce758065d5db5f89e3">FieldTrait::FieldType</a> ftype, <span class="keywordtype">bool</span> isRange)
+<a name="l00344"></a>00344 {
+<a name="l00345"></a>00345    <span class="keywordflow">if</span> (FieldTrait::is_int(ftype))
+<a name="l00346"></a>00346       <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1TypedRealm.html" title="f8c typed realm.">TypedRealm&lt;int&gt;</a>(GetValue&lt;int&gt;(from), isRange);
+<a name="l00347"></a>00347    <span class="keywordflow">if</span> (FieldTrait::is_char(ftype))
+<a name="l00348"></a>00348       <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="structFIX8_1_1CharRealm.html" title="f8c character realm type.">CharRealm</a>(from[0], isRange);
+<a name="l00349"></a>00349    <span class="keywordflow">if</span> (FieldTrait::is_float(ftype))
+<a name="l00350"></a>00350       <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1TypedRealm.html" title="f8c typed realm.">TypedRealm&lt;double&gt;</a>(GetValue&lt;double&gt;(from), isRange);
+<a name="l00351"></a>00351    <span class="keywordflow">if</span> (FieldTrait::is_string(ftype))
+<a name="l00352"></a>00352       <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="structFIX8_1_1StringRealm.html" title="f8c string realm type.">StringRealm</a>(from, isRange);
+<a name="l00353"></a>00353    <span class="keywordflow">return</span> 0;
+<a name="l00354"></a>00354 }
+<a name="l00355"></a>00355 
+<a name="l00356"></a>00356 <span class="comment">//-------------------------------------------------------------------------------------------------</span>
+<a name="l00357"></a><a class="code" href="f8cutils_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4">00357</a> <span class="keywordtype">string</span> <a class="code" href="f8c_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4">insert_year</a>()
+<a name="l00358"></a>00358 {
+<a name="l00359"></a>00359    <span class="keyword">struct </span>tm tim;
+<a name="l00360"></a>00360    time_t now(time(0));
+<a name="l00361"></a>00361    localtime_r(&amp;now, &amp;tim);
+<a name="l00362"></a>00362    ostringstream ostr;
+<a name="l00363"></a>00363    ostr &lt;&lt; setw(2) &lt;&lt; (tim.tm_year - 100);
+<a name="l00364"></a>00364    <span class="keywordflow">return</span> ostr.str();
+<a name="l00365"></a>00365 }
+<a name="l00366"></a>00366 
+<a name="l00367"></a>00367 <span class="comment">//-------------------------------------------------------------------------------------------------</span>
+<a name="l00368"></a><a class="code" href="f8cutils_8cpp.html#a831ab1e9510d3df4a3d63b4016e389b9">00368</a> <span class="keywordtype">void</span> <a class="code" href="f8c_8cpp.html#ae9bc890a972bd4f06c354744387a95ac">generate_preamble</a>(ostream&amp; to, <span class="keywordtype">bool</span> donotedit)
+<a name="l00369"></a>00369 {
+<a name="l00370"></a>00370    to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;
+<a name="l00371"></a>00371    <span class="keywordtype">string</span> result;
+<a name="l00372"></a>00372    <span class="keywordflow">if</span> (donotedit)
+<a name="l00373"></a>00373    {
+<a name="l00374"></a>00374       to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25aacc070dea106130f37cad12aaf65fbc8">cs_do_not_edit</a>) &lt;&lt; <a class="code" href="namespaceFIX8.html#a208707a0f000f8ba8059636ba89de746">GetTimeAsStringMS</a>(result, 0, 0) &lt;&lt; <span class="stringliteral">&quot; ***&quot;</span> &lt;&lt; endl;
+<a name="l00375"></a>00375       to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;
+<a name="l00376"></a>00376    }
+<a name="l00377"></a>00377    to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a4732f090e95c1ed2c6dc8b8189822593">cs_copyright</a>) &lt;&lt; <a class="code" href="f8c_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4">insert_year</a>() &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a45c7cac434032e60b0eab9d56cc81c2e">cs_copyright2</a>) &lt;&lt; endl;
+<a name="l00378"></a>00378    to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;
+<a name="l00379"></a>00379 }
+<a name="l00380"></a>00380 
+<a name="l00381"></a>00381 <span class="comment">//-------------------------------------------------------------------------------------------------</span>
+<a name="l00382"></a>00382 ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1MessageSpec.html" title="f8c internal message representation.">FIX8::MessageSpec</a>&amp; what)
+<a name="l00383"></a>00383 {
+<a name="l00384"></a>00384    os &lt;&lt; <span class="stringliteral">&quot;Name:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4497083907089972aec0d549f7f2b871">_name</a>;
+<a name="l00385"></a>00385    <span class="keywordflow">if</span> (!what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4a980632b2640fbe8e2d802eac27ebba">_description</a>.empty())
+<a name="l00386"></a>00386       os &lt;&lt; <span class="stringliteral">&quot; Description:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4a980632b2640fbe8e2d802eac27ebba">_description</a>;
+<a name="l00387"></a>00387    if (!what.<a class="code" href="structFIX8_1_1MessageSpec.html#ae0f73d0b1ff8a36ad1109184e1c9eac6">_comment</a>.empty())
+<a name="l00388"></a>00388       os &lt;&lt; <span class="stringliteral">&quot; Comment:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#ae0f73d0b1ff8a36ad1109184e1c9eac6">_comment</a>;
+<a name="l00389"></a>00389    os &lt;&lt; <span class="stringliteral">&quot; isadmin:&quot;</span> &lt;&lt; boolalpha &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a2eb3aa22c9fe4f1db425021cf68123d1">_is_admin</a> &lt;&lt; endl;
+<a name="l00390"></a>00390    os &lt;&lt; <span class="stringliteral">&quot;Fields:&quot;</span> &lt;&lt; endl &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440">_fields</a>;
+<a name="l00391"></a>00391    for (GroupMap::const_iterator itr(what.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.begin()); itr != what.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.end(); ++itr)
+<a name="l00392"></a>00392       os &lt;&lt; <span class="stringliteral">&quot;Group (&quot;</span> &lt;&lt; itr-&gt;first &lt;&lt; <span class="stringliteral">&quot;): &quot;</span> &lt;&lt; endl &lt;&lt; itr-&gt;second &lt;&lt; endl;
+<a name="l00393"></a>00393 
+<a name="l00394"></a>00394    <span class="keywordflow">return</span> os;
+<a name="l00395"></a>00395 }
+<a name="l00396"></a>00396 
 </pre></div></div><!-- contents -->
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="f8cutils_8cpp.html">f8cutils.cpp</a>      </li>
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun May 13 2012 07:56:44. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri May 25 2012 21:59:28. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 

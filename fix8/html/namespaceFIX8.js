@@ -224,6 +224,8 @@ var namespaceFIX8 =
     [ "cref", "namespaceFIX8.html#a05fbec449fbab85b71d88bc1fe018c7b", null ],
     [ "default_field_separator", "namespaceFIX8.html#a25dd5007a5a971fe43a58df371e1db34", null ],
     [ "exist", "namespaceFIX8.html#a4226474a0829e2de4e8025a1a2007f86", null ],
+    [ "fast_atof", "namespaceFIX8.html#a3c7dd7af00a6358afbfa053cfdf4dbb4", null ],
+    [ "fast_atoi", "namespaceFIX8.html#a522b95edc3502db3288130f3cfd1743c", null ],
     [ "GetTimeAsStringMS", "namespaceFIX8.html#a208707a0f000f8ba8059636ba89de746", null ],
     [ "GetTimeAsStringMS", "namespaceFIX8.html#a9c9529e1c2083057811f47a2435ce5d3", null ],
     [ "GetValue", "namespaceFIX8.html#ac96d648dbd809edefcc89b677c61a205", null ],

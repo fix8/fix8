@@ -57,7 +57,6 @@ var searchData=
   ['underlyinglegsymbolsfx',['UnderlyingLegSymbolSfx',['../namespaceFIX8_1_1TEX.html#a7d2f6226195143e955fae669593788d1',1,'FIX8::TEX']]],
   ['underlyinglocaleofissue',['UnderlyingLocaleOfIssue',['../namespaceFIX8_1_1TEX.html#a0ce5812787a2c3a28c0988a777de3b15',1,'FIX8::TEX']]],
   ['underlyingmaturitydate',['UnderlyingMaturityDate',['../namespaceFIX8_1_1TEX.html#a7c3a41a36bf1e2848a615170f7363fb4',1,'FIX8::TEX']]],
-  ['underlyingmaturityday',['UnderlyingMaturityDay',['../namespaceFIX8_1_1TEX.html#afdfdde5bbef839b49d4cab6ae6957a2b',1,'FIX8::TEX']]],
   ['underlyingmaturitymonthyear',['UnderlyingMaturityMonthYear',['../namespaceFIX8_1_1TEX.html#a6a9bc7deb4bd88732136365bf13405c0',1,'FIX8::TEX']]],
   ['underlyingmaturitytime',['UnderlyingMaturityTime',['../namespaceFIX8_1_1TEX.html#a9fc349882b7061b2528a4ec627123bef',1,'FIX8::TEX']]],
   ['underlyingnotionalpercentageoutstanding',['UnderlyingNotionalPercentageOutstanding',['../namespaceFIX8_1_1TEX.html#a59258e7a727640ad7d330b3cb88609e4',1,'FIX8::TEX']]],
