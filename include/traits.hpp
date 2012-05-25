@@ -157,6 +157,17 @@ public:
 
 	/*! Check if a field is present
 	  \param field to check
+	  \param itr hint iterator: set to itr of found element
+	  \return true if present */
+	bool has(const unsigned short field, Presence::const_iterator& itr) const
+	{
+		if (itr == _presence.end())
+			itr = _presence.find(field);
+		return itr != _presence.end();
+	}
+
+	/*! Check if a field is present
+	  \param field to check
 	  \return true if present */
 	bool has(const unsigned short field) const
 	{
@@ -187,6 +198,19 @@ public:
 		return itr != _presence.end() ? itr->_field_traits.has(type) : false;
 	}
 
+	/*! Check if a field has a specified trait.
+	  \param field to check
+	  \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
+	  \param type TraitType to check (default present)
+	  \return true if field has trait */
+	bool get(const unsigned short field, Presence::const_iterator& itr, FieldTrait::TraitTypes type) const
+	{
+		if (itr != _presence.end())
+			return itr->_field_traits.has(type);
+		itr = _presence.find(field);
+		return itr != _presence.end() ? itr->_field_traits.has(type) : false;
+	}
+
 	/*! Find the first field that does not have the specified trait.
 	  \param type TraitType to check (default mandatory)
 	  \return field number of field, 0 if none */
@@ -200,12 +224,44 @@ public:
 
 	/*! Set a trait for a specified field.
 	  \param field to set
+	  \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
+	  \param type TraitType to set (default present) */
+	void set(const unsigned short field, Presence::const_iterator& itr, FieldTrait::TraitTypes type)
+	{
+		if (itr == _presence.end())
+		{
+			itr = _presence.find(field);
+			if (itr != _presence.end())
+				itr->_field_traits.set(type);
+		}
+		else
+			itr->_field_traits.set(type);
+	}
+
+	/*! Set a trait for a specified field.
+	  \param field to set
 	  \param type TraitType to set (default present) */
 	void set(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present)
 	{
 		Presence::iterator itr(_presence.find(field));
 		if (itr != _presence.end())
 			itr->_field_traits.set(type);
+	}
+
+	/*! Clear a trait for a specified field.
+	  \param field to set
+	  \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
+	  \param type TraitType to set (default present) */
+	void clear(const unsigned short field, Presence::const_iterator& itr, FieldTrait::TraitTypes type=FieldTrait::present)
+	{
+		if (itr == _presence.end())
+		{
+			itr = _presence.find(field);
+			if (itr != _presence.end())
+				itr->_field_traits.clear(type);
+		}
+		else
+			itr->_field_traits.clear(type);
 	}
 
 	/*! Clear a trait for a specified field.
@@ -246,6 +302,12 @@ public:
 
 	/*! Check if a specified field has the group bit set (is a group).
 	  \param field field to check
+	  \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
+	  \return true if a group */
+	bool is_group(const unsigned short field, Presence::const_iterator& itr) const { return get(field, itr, FieldTrait::group); }
+
+	/*! Check if a specified field has the group bit set (is a group).
+	  \param field field to check
 	  \return true if a group */
 	bool is_group(const unsigned short field) const { return get(field, FieldTrait::group); }
 
@@ -253,6 +315,18 @@ public:
 	  \param field field to check
 	  \return true if a component */
 	bool is_component(const unsigned short field) const { return get(field, FieldTrait::component); }
+
+	/*! Get the field position of a specified field.
+	  \param field field to get
+	  \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
+	  \return position of field, 0 if no pos or not found */
+	unsigned short getPos(const unsigned short field, Presence::const_iterator& itr) const
+	{
+		if (itr != _presence.end())
+			return itr->_field_traits.has(FieldTrait::position) ? itr->_pos : 0;
+		itr = _presence.find(field);
+		return itr != _presence.end() && itr->_field_traits.has(FieldTrait::position) ? itr->_pos : 0;
+	}
 
 	/*! Get the field position of a specified field.
 	  \param field field to get

@@ -164,15 +164,15 @@ AC_ARG_WITH(reservepercent,
 AC_ARG_WITH(poco,
   AC_HELP_STRING([--with-poco=DIR],[location of Poco]),
 [
-	CPPFLAGS="$CPPFLAGS -I${withval}"
-	LDFLAGS="$LDFLAGS -L${withval}"
+	CPPFLAGS="$CPPFLAGS -I${withval}/include"
+	LDFLAGS="$LDFLAGS -L${withval}/lib"
 ],[])
 
 AC_ARG_WITH(tbb,
   AC_HELP_STRING([--with-tbb=DIR],[location of TBB]),
 [
-	CPPFLAGS="$CPPFLAGS -I${withval}"
-	LDFLAGS="$LDFLAGS -L${withval}"
+	CPPFLAGS="$CPPFLAGS -I${withval}/include"
+	LDFLAGS="$LDFLAGS -L${withval}/lib"
 ],[])
 
 AC_MSG_CHECKING(for TBB)
@@ -240,11 +240,9 @@ AM_CONDITIONAL(USECCRYPT, [test x$havecrypt = xyes])
 m4_include(m4/ax_compare_version.m4)
 m4_include(m4/ax_path_bdb.m4)
 
-have_bdb=no
 AX_PATH_BDB([3],[ LIBS="$BDB_LIBS $LIBS"
 LDFLAGS="$BDB_LDFLAGS $LDFLAGS"
 CPPFLAGS="$CPPFLAGS $BDB_CPPFLAGS"
-have_bdb=yes
 AC_DEFINE(HAVE_BDB, 1, [Define to 1 if you have berkeley DB])
 	])
 
@@ -341,7 +339,7 @@ esac])
 AC_ARG_ENABLE([msgrecycle],
 [AC_HELP_STRING([--enable-msgrecycle],[enable Message Recycling (default=no)])],
 [case "${enableval}" in
-	yes) AC_DEFINE(MSGRECYCLING, 1, [Define to 1 for Message Recycling]) ;;
+	yes) AC_DEFINE(MSGRECYCLING, 1, [Define to 1 to enable Message Recycling]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-msgrecycle) ;;
 esac])
@@ -349,7 +347,7 @@ esac])
 AC_ARG_ENABLE([codectiming],
 [AC_HELP_STRING([--enable-codectiming],[enable CODEC timing testing code (default=no)])],
 [case "${enableval}" in
-	yes) AC_DEFINE(CODECTIMING, 1, [Define to 1 for CODEC timing testing code]) ;;
+	yes) AC_DEFINE(CODECTIMING, 1, [Define to 1 to enable CODEC timing testing code]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-codectiming) ;;
 esac])
@@ -357,7 +355,7 @@ esac])
 AC_ARG_ENABLE([customfields],
 [AC_HELP_STRING([--enable-customfields],[enable User defined fields (default=no)])],
 [case "${enableval}" in
-	yes) AC_DEFINE(PERMIT_CUSTOM_FIELDS, 1, [Define to 1 for User Defined Fields]) ;;
+	yes) AC_DEFINE(PERMIT_CUSTOM_FIELDS, 1, [Define to 1 to enable User Defined Fields]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-customfields) ;;
 esac])

@@ -453,6 +453,113 @@ inline const std::string& PutValue(const T& a, std::string& target)
 }
 
 //----------------------------------------------------------------------------------------
+/*! Decode a string into an int or unsigned.
+  \tparam typename
+  \param str source string
+  \return the converted value */
+template<typename T>
+T fast_atoi(const char *str)
+{
+	T retval(0);
+	for (; *str; ++str)
+		retval = (retval << 3) + (retval << 1) + *str - '0';
+	return retval;
+}
+
+//----------------------------------------------------------------------------------------
+/*! Simple and fast atof (ascii to float) function.
+Executes about 5x faster than standard MSCRT library atof().
+An attractive alternative if the number of calls is in the millions.
+Assumes input is a proper integer, fraction, or scientific format.
+Matches library atof() to 15 digits (except at extreme exponents).
+Follows atof() precedent of essentially no error checking.
+09-May-2009 Tom Van Baak (tvb) www.LeapSecond.com
+	\param p source string
+	\return double converted value */
+inline double fast_atof (const char *p)
+{
+	bool frac(false);
+	double sign(1.), value(0.), scale(1.);
+
+	while (isspace(*p))
+		++p;
+
+	// Get sign, if any.
+	if (*p == '-')
+	{
+		sign = -1.;
+		++p;
+	}
+	else if (*p == '+')
+		++p;
+
+	// Get digits before decimal point or exponent, if any.
+	while (isdigit(*p))
+	{
+		value = value * 10. + (*p - '0');
+		++p;
+	}
+
+	// Get digits after decimal point, if any.
+	if (*p == '.')
+	{
+		++p;
+		double pow10(10.);
+		while (isdigit(*p))
+		{
+			value += (*p - '0') / pow10;
+			pow10 *= 10.;
+			++p;
+		}
+	}
+
+	// Handle exponent, if any.
+	if (toupper(*p) == 'E')
+	{
+		unsigned int expon(0);
+		++p;
+
+	// Get sign of exponent, if any.
+		if (*p == '-')
+		{
+			frac = true;
+			++p;
+		}
+		else if (*p == '+')
+			++p;
+
+	// Get digits of exponent, if any.
+		while (isdigit(*p))
+		{
+			expon = expon * 10 + (*p - '0');
+			++p;
+		}
+		if (expon > 308)
+			expon = 308;
+
+	// Calculate scaling factor.
+		while (expon >= 50)
+		{
+			scale *= 1E50;
+			expon -= 50;
+		}
+		while (expon >= 8)
+		{
+			scale *= 1E8;
+			expon -=  8;
+		}
+		while (expon > 0)
+		{
+			scale *= 10.0;
+			expon -=  1;
+		}
+	}
+
+	// Return signed and scaled floating point result.
+	return sign * (frac ? (value / scale) : (value * scale));
+}
+
+//----------------------------------------------------------------------------------------
 /// Bitset for enums.
 /*! \tparam T the enum type
     \tparam B the integral type of the enumeration */

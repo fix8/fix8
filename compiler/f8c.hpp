@@ -133,8 +133,10 @@ struct FieldSpec
 	unsigned _doffset;
 	RealmMap *_dvals;
 
+	mutable bool _used;
+
 	FieldSpec(const std::string& name, FieldTrait::FieldType ftype=FieldTrait::ft_untyped)
-		: _name(name), _ftype(ftype), _dtype(RealmBase::dt_set), _doffset(), _dvals() {}
+		: _name(name), _ftype(ftype), _dtype(RealmBase::dt_set), _doffset(), _dvals(), _used() {}
 
 	virtual ~FieldSpec()
 	{
@@ -142,6 +144,8 @@ struct FieldSpec
 			std::for_each(_dvals->begin(), _dvals->end(), free_ptr<Delete1stPairObject<> >());
 		delete _dvals;
 	}
+
+	void set_used() { _used = true; }
 };
 
 //-------------------------------------------------------------------------------------------------

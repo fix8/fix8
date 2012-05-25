@@ -50,3 +50,10 @@ test/Myfix_types.cpp
 test/Myfix_types.hpp
 test/f8print
 test/f8test
+test/Perf_classes.cpp
+test/Perf_classes.hpp
+test/Perf_router.hpp
+test/Perf_traits.cpp
+test/Perf_types.cpp
+test/Perf_types.hpp
+test/f8perf

@@ -29,14 +29,14 @@
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #############################################################################################
-
 lib_LTLIBRARIES = libfix8.la
-INCLUDES = -I$(top_srcdir)/include
+inc = $(top_srcdir)/include
+INCLUDES = -I$(inc)
 
 libfix8_la_SOURCES = popen.c \
-							xml.cpp f8utils.cpp message.cpp traits.cpp \
-							field.cpp session.cpp logger.cpp persist.cpp \
-							connection.cpp configuration.cpp memory.cpp
+                     xml.cpp f8utils.cpp message.cpp traits.cpp \
+                     field.cpp session.cpp logger.cpp persist.cpp \
+                     connection.cpp configuration.cpp memory.cpp
 
 AM_LDFLAGS = -ggdb -rdynamic -shared
 

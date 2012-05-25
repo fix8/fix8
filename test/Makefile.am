@@ -29,32 +29,44 @@
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #############################################################################################
-bin_PROGRAMS = f8test f8print
-lib_LTLIBRARIES = libmyfix.la
+bin_PROGRAMS = f8test f8print hftest hfprint
+lib_LTLIBRARIES = libmyfix.la libhftest.la
 INCLUDES = -I$(top_srcdir)/include
+CLEANFILES = $(libmyfix_la_SOURCES) $(libhftest_la_SOURCES)
+.NOTPARALLEL: $(XML_SCHEMA) $(XML_HF_SCHEMA)
+f8test_SOURCES = myfix.cpp myfix.hpp myfix_custom.hpp
+f8print_SOURCES = myprint.cpp myfix.hpp
 libmyfix_la_SOURCES = Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
 					 		 Myfix_router.hpp Myfix_classes.hpp Myfix_classes.cpp
-f8test_SOURCES = myfix.cpp
-f8print_SOURCES = myprint.cpp
+libhftest_la_SOURCES = Perf_types.hpp Perf_types.cpp Perf_traits.cpp \
+					 		 Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
+hftest_SOURCES = hftest.cpp hftest.hpp
+hfprint_SOURCES = hfprint.cpp hftest.hpp
+
 XML_SCHEMA = $(top_srcdir)/schema/FIX50SP2.xml
-#XML_SCHEMA = $(top_srcdir)/schema/FIX44.xml
-#XML_SCHEMA = FIX44TEST.xml
-CLEANFILES = $(libmyfix_la_SOURCES)
+XML_HF_SCHEMA = $(top_srcdir)/schema/FIX42PERF.xml
+
+$(libhftest_la_SOURCES): $(XML_HF_SCHEMA)
+	$(top_srcdir)/compiler/f8c -sVp Perf -n TEX $(XML_HF_SCHEMA)
 
 $(libmyfix_la_SOURCES): $(XML_SCHEMA)
-	$(top_srcdir)/compiler/f8c -rn TEX $(XML_SCHEMA) -x $(top_srcdir)/schema/FIXT11.xml
+	$(top_srcdir)/compiler/f8c -rVn TEX $(XML_SCHEMA) -x $(top_srcdir)/schema/FIXT11.xml
 
-.NOTPARALLEL: $(XML_SCHEMA)
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
-GEN_LIBS = -lrt -lfix8 -lmyfix
+GEN_LIBS = -lrt -lfix8
 TBB_LIBS = -ltbb
 BDB_LIBS = -ldb_cxx
 ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) $(BDB_LIBS) -L$(top_srcdir)/runtime
 
-f8test_LDFLAGS = -rdynamic $(ALL_LIBS)
-f8print_LDFLAGS = -rdynamic $(ALL_LIBS)
+f8test_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
+f8print_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
+hftest_LDFLAGS = -rdynamic $(ALL_LIBS) -lhftest
+hfprint_LDFLAGS = -rdynamic $(ALL_LIBS) -lhftest
 
 if USECOMPRESSION
 f8test_LDFLAGS += -lz
 f8print_LDFLAGS += -lz
+hftest_LDFLAGS += -lz
+hfprint_LDFLAGS += -lz
 endif
+

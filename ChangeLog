@@ -1,3 +1,7 @@
+0.5.70 	25/05/2012		<fix@fix8.org>
+Added HF test client demonstrating preload and bulk transmit capabilities;; encode/decode performance improvements with cached lookups;
+optimised field generation; fast ascii to int/double;
+
 0.5.50 	12/05/2012		<fix@fix8.org>
 Added support to compiler to generate user session class permitting quicker startup development;
 added presorted_set which significantly reduces Message contruction time; added codec and profile compilation switches;

@@ -74,7 +74,8 @@ public:
 			std::pair<const std::string, const std::string>(lsw, help))).second;
 	}
 
-	/// Add an extra help line. Lines prefixed with '@' are indented one tabstop.
+	/*! Add an extra help line. Lines prefixed with '@' are indented one tabstop.
+	  \param xtr the extra help line */
 	void add(const std::string& xtr)
 	{
 		std::string topush(xtr);
@@ -88,7 +89,7 @@ public:
 	  \param desc the description string */
 	void setdesc(const std::string& desc) { description_ = desc; }
 
-	/*! Insert the formatted usage into the given stream.
+	/*! Insert the formatted usage into the given output stream.
 	  \param os the stream to insert to */
 	void print(std::ostream& os) const
 	{

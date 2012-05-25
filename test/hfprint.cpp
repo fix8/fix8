@@ -32,21 +32,21 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #endif
 //-----------------------------------------------------------------------------------------
-/** \file myprint.cpp
+/** \file hfprint.cpp
 \n
-  This is a simple logfile/logstream printer using the metadata generated for myfix.cpp.\n
+  This is a simple logfile/logstream printer using the metadata generated for hftest.cpp.\n
 \n
 <tt>
-	f8print -- f8 protocol log printer\n
+	hfprint -- f8 protocol log printer\n
 \n
-	Usage: f8print [-hosv] <fix protocol file, use '-' for stdin>\n
+	Usage: hfprint [-hosv] <fix protocol file, use '-' for stdin>\n
 		-h,--help               help, this screen\n
 		-o,--offset             bytes to skip on each line before parsing FIX message\n
 		-s,--summary            summary, generate message summary\n
 		-v,--version            print version then exit\n
 	e.g.\n
-		f8print myfix_server_protocol.log\n
-		cat myfix_client_protocol.log | f8print -\n
+		hfprint myfix_server_protocol.log\n
+		cat myfix_client_protocol.log | hfprint -\n
 </tt>
 */
 //-----------------------------------------------------------------------------------------
@@ -79,10 +79,10 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include <usage.hpp>
-#include "Myfix_types.hpp"
-#include "Myfix_router.hpp"
-#include "Myfix_classes.hpp"
-#include "myfix.hpp"
+#include "Perf_types.hpp"
+#include "Perf_router.hpp"
+#include "Perf_classes.hpp"
+#include "hftest.hpp"
 
 //-----------------------------------------------------------------------------------------
 using namespace std;
@@ -241,16 +241,16 @@ int main(int argc, char **argv)
 //-----------------------------------------------------------------------------------------
 void print_usage()
 {
-	UsageMan um("f8print", GETARGLIST, "<fix protocol file, use '-' for stdin>");
-	um.setdesc("f8print -- f8 protocol log printer");
+	UsageMan um("hfprint", GETARGLIST, "<fix protocol file, use '-' for stdin>");
+	um.setdesc("hfprint -- f8 protocol log printer");
 	um.add('h', "help", "help, this screen");
 	um.add('v', "version", "print version then exit");
 	um.add('o', "offset", "bytes to skip on each line before parsing FIX message");
 	um.add('s', "summary", "summary, generate message summary");
 	um.add("e.g.");
-	um.add("@f8print myfix_server_protocol.log");
-	um.add("@f8print f8print -s -o 12 myfix_client_protocol.log");
-	um.add("@cat myfix_client_protocol.log | f8print -");
+	um.add("@hfprint myfix_server_protocol.log");
+	um.add("@hfprint hfprint -s -o 12 myfix_client_protocol.log");
+	um.add("@cat myfix_client_protocol.log | hfprint -");
 	um.print(cerr);
 }
 

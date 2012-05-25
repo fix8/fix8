@@ -245,7 +245,7 @@ bool Session::process(const f8String& from)
 			throw InvalidMessage(from);
 		f8String seqstr;
 		_seq.SubExpr(match, from, seqstr, 0, 1);
-		seqnum = GetValue<unsigned>(seqstr);
+		seqnum = fast_atoi<unsigned>(seqstr.c_str());
 
 		plog(from, 1);
 		scoped_ptr<Message> msg(Message::factory(_ctx, from));
@@ -269,7 +269,7 @@ bool Session::process(const f8String& from)
 		ostringstream gerr;
 		gerr << "  dtor(" << msg->get_msgtype() << "):";
 		IntervalTimer itm;
-		msg.release();
+		delete msg.release();
 		gerr << itm.Calculate();
 		GlobalLogger::log(gerr.str());
 #endif

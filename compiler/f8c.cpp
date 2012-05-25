@@ -32,6 +32,37 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #endif
 //-----------------------------------------------------------------------------------------
+/** \file f8c.cpp
+\n
+  This is the fix8 compiler.\n
+\n
+f8c -- compile FIX xml schema\n
+\n
+<tt>
+Usage: f8c [-NVcdhiknoprstvx] \<input xml schema\>\n
+   -N,--nounique           do not enforce unique field parsing (default false)\n
+   -V,--verbose            be more verbose when processing\n
+   -c,--classes \<server|client\> generate user session classes (default no)\n
+   -d,--dump               dump 1st pass parsed source xml file, exit\n
+   -h,--help               help, this screen\n
+   -i,--ignore             ignore errors, attempt to generate code anyhow (default no)\n
+   -k,--keep               retain generated temporaries even if there are errors (.*.tmp)\n
+   -n,--namespace \<ns\>     namespace to place generated code in (default FIXMmvv e.g. FIX4400)\n
+   -o,--odir \<file\>        output target directory (default ./)\n
+   -p,--prefix \<prefix\>    output filename prefix (default Myfix)\n
+   -r,--retain             retain 1st pass code (default delete)\n
+   -s,--second             2nd pass only, no precompile (default both)\n
+   -t,--tabwidth           tabwidth for generated code (default 3 spaces)\n
+   -v,--version            print version, exit\n
+   -x,--fixt \<file\>        For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file\n
+e.g.\n
+   f8c -p Texfix -n TEX myfix.xml\n
+   f8c -rp Texfix -n TEX -x ../schema/FIXT11.xml myfix.xml\n
+   f8c -p Texfix -n TEX -c client -x ../schema/FIXT11.xml myfix.xml\n
+</tt>
+\n
+*/
+//-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -75,10 +106,10 @@ const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8
 
 //-----------------------------------------------------------------------------------------
 string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"), prefix("Myfix"), gen_classes;
-bool verbose(false), error_ignore(false);
+bool verbose(false), error_ignore(false), gen_fields(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:Nc:");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:Nc:f");
 extern string spacer, shortName;
 
 //-----------------------------------------------------------------------------------------
@@ -96,9 +127,8 @@ int load_fix_version (XmlElement& xf, Ctxt& ctxt);
 int load_fields(XmlElement& xf, FieldSpecMap& fspec);
 void process_special_traits(const unsigned short field, FieldTraits& fts);
 int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits& fts,
-	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, const unsigned component);
-int load_messages(XmlElement& xf, MessageSpecMap& mspec,
-	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
+	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, const unsigned component);
+int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, FieldSpecMap& fspec);
 void process_ordering(MessageSpecMap& mspec);
 ostream *open_ofile(const string& odir, const string& fname, string& target);
 const string flname(const string& from);
@@ -107,7 +137,7 @@ const string& mkel(const string& base, const string& compon, string& where);
 const string& filepart(const string& source, string& where);
 void generate_preamble(ostream& to, bool donotedit=true);
 unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr, const string& name,
-	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, XmlElement::XmlSet& grplist);
+	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist);
 int precomp(XmlElement& xf, ostream& outf);
 int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique);
 void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int depth,
@@ -130,6 +160,7 @@ int main(int argc, char **argv)
 		{ "odir",			1,	0,	'o' },
 		{ "dump",			0,	0,	'd' },
 		{ "ignore",			0,	0,	'i' },
+		{ "fields",			0,	0,	'f' },
 		{ "keep",			0,	0,	'k' },
 		{ "retain",			0,	0,	'r' },
 		{ "classes",		1,	0,	'c' },
@@ -154,6 +185,7 @@ int main(int argc, char **argv)
 				  << _csMap.find_ref(cs_copyright_short2) << endl;
 			return 0;
 		case 'V': verbose = true; break;
+		case 'f': gen_fields = true; break;
 		case 'N': nounique = true; break;
 		case 'c': gen_classes = optarg; break;
 		case 'h': print_usage(); return 0;
@@ -326,6 +358,9 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 		string number, name, type;
 		if ((*itr)->GetAttr("number", number) && (*itr)->GetAttr("name", name) && (*itr)->GetAttr("type", type))
 		{
+			trim(number);
+			trim(name);
+			trim(type);
 			InPlaceStrToUpper(type);
 			FieldTrait::FieldType ft(FieldSpec::_baseTypeMap.find_value(type));
 			pair<FieldSpecMap::iterator, bool> result;
@@ -380,7 +415,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 }
 
 //-----------------------------------------------------------------------------------------
-int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec)
+int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, FieldSpecMap& fspec)
 {
 	int msgssLoaded(0), grpsparsed(0);
 
@@ -472,7 +507,7 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 
 //-----------------------------------------------------------------------------------------
 unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr, const string& name,
-	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, XmlElement::XmlSet& grplist)
+	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist)
 {
 	unsigned result(0);
 
@@ -553,7 +588,7 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 			ostringstream tostr;
 			tostr << "0x" << setfill('0') << hex << flitr->_field_traits.get();
 			outp << (spaceme ? spacer : " ");
-			outp << "_f(" << setw(4) << right << flitr->_fnum << ", " << setw(3)
+			outp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ", " << setw(3)
 				<< right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", " << tostr.str() << ')';
 		}
 		outp << endl << "};" << endl;
@@ -611,103 +646,13 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	ostream& oss_hpp(*ctxt._out[Ctxt::session_hpp].second);
 	int result(0);
 
-// ================================= Field processing =====================================
+// ================================= Field loading  =======================================
 	FieldSpecMap fspec;
 	int fields(load_fields(xf, fspec));
 	if (!fields || glob_errors)
 		return 0;
 	if (verbose)
 		cout << fields << " fields processed" << endl;
-
-	// output file preambles
-	generate_preamble(ost_hpp);
-	ost_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::types_hpp].first.second) << '_' << endl;
-	ost_hpp << "#define _" << flname(ctxt._out[Ctxt::types_hpp].first.second) << '_' << endl << endl;
-	ost_hpp << _csMap.find_ref(cs_start_namespace) << endl;
-	ost_hpp << "namespace " << ctxt._fixns << " {" << endl;
-
-	ost_hpp << endl << _csMap.find_ref(cs_divider) << endl;
-	generate_preamble(ost_cpp);
-	ost_cpp << _csMap.find_ref(cs_generated_includes) << endl;
-	ost_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first.second << '"' << endl;
-	ost_cpp << _csMap.find_ref(cs_divider) << endl;
-	ost_cpp << _csMap.find_ref(cs_start_namespace) << endl;
-	ost_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
-
-	ost_cpp << _csMap.find_ref(cs_start_anon_namespace) << endl;
-	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
-	// generate field types
-	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
-	{
-		if (!fitr->second._comment.empty())
-			ost_hpp << "// " << fitr->second._comment << endl;
-		ost_hpp << "typedef Field<" << FieldSpec::_typeToCPP.find_ref(fitr->second._ftype)
-			<< ", " << fitr->first << "> " << fitr->second._name << ';' << endl;
-		if (fitr->second._dvals)
-			process_value_enums(fitr, ost_hpp, ost_cpp);
-		ost_hpp << _csMap.find_ref(cs_divider) << endl;
-	}
-
-	// generate realmbase objs
-	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
-	ost_cpp << "const RealmBase realmbases[] =" << endl << '{' << endl;
-	unsigned dcnt(0);
-	for (FieldSpecMap::iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
-	{
-		if (!fitr->second._dvals)
-			continue;
-		ost_cpp << spacer << "{ reinterpret_cast<const void *>(" << fitr->second._name << "_realm), "
-			<< "static_cast<RealmBase::RealmType>(" << fitr->second._dtype << "), " << endl << spacer << spacer
-			<< "static_cast<FieldTrait::FieldType>(" << fitr->second._ftype << "), "
-			<< fitr->second._dvals->size() << ", " << fitr->second._name << "_descriptions }," << endl;
-		fitr->second._doffset = dcnt++;
-	}
-	ost_cpp << "};" << endl;
-
-	// generate field instantiators
-	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
-	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
-	{
-		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const RealmBase *db)";
-		ost_cpp << " { return new " << fitr->second._name << "(from, db); }" << endl;
-	}
-
-	ost_cpp << endl << _csMap.find_ref(cs_end_anon_namespace) << endl;
-	ost_cpp << "} // namespace " << ctxt._fixns << endl;
-
-	// generate field instantiator lookup
-	ost_hpp << "typedef GeneratedTable<unsigned, BaseEntry> " << ctxt._clname << "_BaseEntry;" << endl;
-
-	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
-	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairs[] =" << endl << '{' << endl;
-	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
-	{
-		if (fitr != fspec.begin())
-			ost_cpp << ',' << endl;
-		ost_cpp << spacer << "{ " << fitr->first << ", { &" << ctxt._fixns << "::Create_" << fitr->second._name << ", ";
-		if (fitr->second._dvals)
-			ost_cpp << "&" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
-		else
-			ost_cpp << '0';
-		ost_cpp << ", \"" << fitr->second._name << '\"';
-		if (!fitr->second._comment.empty())
-			ost_cpp << ',' << endl << spacer << spacer << '"' << fitr->second._comment << '"';
-		else
-			ost_cpp << ", 0";
-		ost_cpp << " } }";
-	}
-	ost_cpp << endl << "};" << endl;
-	ost_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairsz(sizeof(_pairs)/sizeof("
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair));" << endl;
-	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::NotFoundType "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_noval = {0, 0};" << endl;
-
-	// terminate files
-	ost_hpp << endl << "} // namespace " << ctxt._fixns << endl;
-	ost_hpp << _csMap.find_ref(cs_end_namespace) << endl;
-	ost_hpp << "#endif // _" << flname(ctxt._out[Ctxt::types_hpp].first.second) << '_' << endl;
-	ost_cpp << endl << _csMap.find_ref(cs_end_namespace) << endl;
 
 // ================================= Message processing ===================================
 
@@ -766,7 +711,6 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osr_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
 
 	osr_cpp << _csMap.find_ref(cs_divider) << endl;
-	osr_cpp << "typedef FieldTrait _f;" << endl << endl;
 
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
@@ -805,7 +749,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 				ostringstream tostr;
 				tostr << "0x" << setfill('0') << hex << flitr->_field_traits.get();
 				osr_cpp << (spaceme ? spacer : " ");
-				osr_cpp << "_f(" << setw(4) << right << flitr->_fnum << ", "
+				osr_cpp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ", "
 					<< setw(3) << right << flitr->_ftype << ", " << setw(3) << right
 					<< flitr->_pos << ", " << tostr.str() << ')';
 			}
@@ -866,7 +810,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	{
 		osc_cpp << "Message *Create_" << mitr->second._name << "() { return ";
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
-			osc_cpp << "reinterpret_cast<Message *>(new " << mitr->second._name << "); }" << endl;
+			osc_cpp << "reinterpret_cast<Message *>(::new " << mitr->second._name << "); }" << endl;
 		else
 			osc_cpp << "new " << mitr->second._name << "; }" << endl;
 	}
@@ -1006,6 +950,112 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		oss_hpp << endl << "#endif // _" << flname(ctxt._out[Ctxt::session_hpp].first.second) << '_' << endl;
 	}
 
+// ================================= Field processing =====================================
+
+	// output file preambles
+	generate_preamble(ost_hpp);
+	ost_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::types_hpp].first.second) << '_' << endl;
+	ost_hpp << "#define _" << flname(ctxt._out[Ctxt::types_hpp].first.second) << '_' << endl << endl;
+	ost_hpp << _csMap.find_ref(cs_start_namespace) << endl;
+	ost_hpp << "namespace " << ctxt._fixns << " {" << endl;
+
+	ost_hpp << endl << _csMap.find_ref(cs_divider) << endl;
+	generate_preamble(ost_cpp);
+	ost_cpp << _csMap.find_ref(cs_generated_includes) << endl;
+	ost_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first.second << '"' << endl;
+	ost_cpp << _csMap.find_ref(cs_divider) << endl;
+	ost_cpp << _csMap.find_ref(cs_start_namespace) << endl;
+	ost_cpp << "namespace " << ctxt._fixns << " {" << endl << endl;
+
+	ost_cpp << _csMap.find_ref(cs_start_anon_namespace) << endl;
+	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
+	// generate field types
+	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
+	{
+		if (!gen_fields && !fitr->second._used)
+			continue;
+		if (!fitr->second._comment.empty())
+			ost_hpp << "// " << fitr->second._comment << endl;
+		ost_hpp << "typedef Field<" << FieldSpec::_typeToCPP.find_ref(fitr->second._ftype)
+			<< ", " << fitr->first << "> " << fitr->second._name << ';' << endl;
+		if (fitr->second._dvals)
+			process_value_enums(fitr, ost_hpp, ost_cpp);
+		ost_hpp << _csMap.find_ref(cs_divider) << endl;
+	}
+
+	// generate realmbase objs
+	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
+	ost_cpp << "const RealmBase realmbases[] =" << endl << '{' << endl;
+	unsigned dcnt(0);
+	for (FieldSpecMap::iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
+	{
+		if (!fitr->second._used || (!gen_fields && !fitr->second._dvals))
+			continue;
+		ost_cpp << spacer << "{ reinterpret_cast<const void *>(" << fitr->second._name << "_realm), "
+			<< "static_cast<RealmBase::RealmType>(" << fitr->second._dtype << "), " << endl << spacer << spacer
+			<< "static_cast<FieldTrait::FieldType>(" << fitr->second._ftype << "), "
+			<< fitr->second._dvals->size() << ", " << fitr->second._name << "_descriptions }," << endl;
+		fitr->second._doffset = dcnt++;
+	}
+	ost_cpp << "};" << endl;
+
+	// generate field instantiators
+	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
+	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
+	{
+		if (!gen_fields && !fitr->second._used)
+			continue;
+		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const RealmBase *db)";
+		ost_cpp << " { return new " << fitr->second._name << "(from, db); }" << endl;
+	}
+
+	ost_cpp << endl << _csMap.find_ref(cs_end_anon_namespace) << endl;
+	ost_cpp << "} // namespace " << ctxt._fixns << endl;
+
+	// generate field instantiator lookup
+	ost_hpp << "typedef GeneratedTable<unsigned, BaseEntry> " << ctxt._clname << "_BaseEntry;" << endl;
+
+	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
+	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair "
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairs[] =" << endl << '{' << endl;
+	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
+	{
+		if (!gen_fields && !fitr->second._used)
+			continue;
+		if (fitr != fspec.begin())
+			ost_cpp << ',' << endl;
+		ost_cpp << spacer << "{ " << fitr->first << ", { &" << ctxt._fixns << "::Create_" << fitr->second._name << ", ";
+		if (fitr->second._dvals)
+			ost_cpp << "&" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
+		else
+			ost_cpp << '0';
+		ost_cpp << ", \"" << fitr->second._name << '\"';
+		if (!fitr->second._comment.empty())
+			ost_cpp << ',' << endl << spacer << spacer << '"' << fitr->second._comment << '"';
+		else
+			ost_cpp << ", 0";
+		ost_cpp << " } }";
+	}
+	ost_cpp << endl << "};" << endl;
+	ost_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairsz(sizeof(_pairs)/sizeof("
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair));" << endl;
+	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::NotFoundType "
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_noval = {0, 0};" << endl;
+
+	// terminate files
+	ost_hpp << endl << "} // namespace " << ctxt._fixns << endl;
+	ost_hpp << _csMap.find_ref(cs_end_namespace) << endl;
+	ost_hpp << "#endif // _" << flname(ctxt._out[Ctxt::types_hpp].first.second) << '_' << endl;
+	ost_cpp << endl << _csMap.find_ref(cs_end_namespace) << endl;
+
+	if (verbose)
+	{
+		unsigned cnt(0);
+		for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
+			if (fitr->second._used)
+				++cnt;
+		cout << cnt << " of " << fspec.size() << " fields used in messages." << endl;
+	}
 	return result;
 }
 

@@ -113,15 +113,6 @@ public:
 	  \return fix tag id (field num) */
 	unsigned short get_tag() const { return _fnum; }
 
-	/*! Get the raw value as a string.
-	  \return the field value as a string */
-	virtual std::string get_raw() const
-	{
-		std::ostringstream ostr;
-		print(ostr);
-		return ostr.str();
-	}
-
 	/*! Print this field to the supplied stream.
 	  \param os stream to print to
 	  \return the stream */
@@ -234,7 +225,7 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(GetValue<int>(from)) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atoi<int>(from.c_str())) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -273,7 +264,7 @@ public:
 	/*! Set the value from a string.
 	  \param from value to set
 	  \return original value (int) */
-	const int& set_from_raw(const f8String& from) { return _value = GetValue<int>(from); }
+	const int& set_from_raw(const f8String& from) { return _value = fast_atoi<int>(from.c_str()); }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
@@ -386,7 +377,7 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(GetValue<double>(from)) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from.c_str())) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -425,7 +416,7 @@ public:
 	/*! Set the value from a string.
 	  \param from value to set
 	  \return original value (double) */
-	virtual const double& set_from_raw(const f8String& from) { return _value = GetValue<double>(from); }
+	virtual const double& set_from_raw(const f8String& from) { return _value = fast_atof(from.c_str()); }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */

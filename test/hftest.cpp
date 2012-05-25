@@ -33,15 +33,15 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 //-----------------------------------------------------------------------------------------
-/** \file myfix.cpp
+/** \file hftest.cpp
 \n
-  This is a complete working example of a FIX client/server using FIX8.\n
+  This is a complete working example of a HF FIX client/server using FIX8.\n
 \n
 <tt>
-	Usage: f8test [-RSchlqrsv]\n
+	Usage: hftest [-RSchlqrsv]\n
 		-R,--receive            set next expected receive sequence number\n
 		-S,--send               set next send sequence number\n
-		-c,--config             xml config (default: myfix_client.xml or myfix_server.xml)\n
+		-c,--config             xml config (default: hf_client.xml or hf_server.xml)\n
 		-h,--help               help, this screen\n
 		-l,--log                global log filename\n
 		-q,--quiet              do not print fix output\n
@@ -54,24 +54,23 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   To use start the server:\n
 \n
 <tt>
-	  % f8test -sl server\n
+	  % hftest -sl server\n
 </tt>
 \n
   In another terminal session, start the client:\n
 \n
 <tt>
-	  % f8test -l client\n
+	  % hftest -l client\n
 </tt>
 \n
   \b Notes \n
 \n
-  1. If you have configured with \c --enable-msgrecycle, the example will reuse allocated messages.\n
-  2. If you have configured with \c --enable-customfields, the example will add custom fields\n
-     defined below.\n
-  3. The client has a simple menu. Press ? to see options.\n
-  4. The server will wait for the client to logout before exiting.\n
-  5. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
-  6. The example uses the files \c FIX50SP2.xml and \c FIXT11.xml in ./schema\n
+  1. Configure with \c --enable-codectiming \n
+  2. The client has a simple menu. Press ? to see options.\n
+  3. The server will wait for the client to logout before exiting.\n
+  4. Press P to preload NewOrderSingle messages, T to transmit them.\n
+  5. The server uses \c hf_client.xml and the client uses \c hf_server.xml for configuration settings. \n
+  6. The example uses \c FIX42.xml \n
 \n
 */
 
@@ -114,11 +113,11 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include <usage.hpp>
-#include "Myfix_types.hpp"
-#include "Myfix_router.hpp"
-#include "Myfix_classes.hpp"
+#include "Perf_types.hpp"
+#include "Perf_router.hpp"
+#include "Perf_classes.hpp"
 
-#include "myfix.hpp"
+#include "hftest.hpp"
 
 //-----------------------------------------------------------------------------------------
 using namespace std;
@@ -133,9 +132,9 @@ bool term_received(false);
 template<>
 const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
 {
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('T', "1000 New Order Singles"), &MyMenu::new_order_single_1000),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "Send a NewOrderSingle msg"), &MyMenu::new_order_single),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Preload n NewOrderSingle msgs"), &MyMenu::preload_new_order_single),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('a', "Send all Preloaded NewOrderSingle msgs"), &MyMenu::send_all_preloaded),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
@@ -145,12 +144,7 @@ const MyMenu::Handlers::NotFoundType MyMenu::Handlers::_noval = &MyMenu::nothing
 template<>
 const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
 	MyMenu::Handlers::get_table_end());
-bool quiet(false);
-
-//-----------------------------------------------------------------------------------------
-#if defined PERMIT_CUSTOM_FIELDS
-#include "myfix_custom.hpp"
-#endif
+bool quiet(true);
 
 //-----------------------------------------------------------------------------------------
 void sig_handler(int sig)
@@ -163,6 +157,9 @@ void sig_handler(int sig)
       term_received = true;
       signal(sig, sig_handler);
       break;
+	default:
+		cerr << sig << endl;
+		break;
    }
 }
 
@@ -206,7 +203,7 @@ int main(int argc, char **argv)
 		case 's': server = true; break;
 		case 'S': next_send = GetValue<unsigned>(optarg); break;
 		case 'R': next_receive = GetValue<unsigned>(optarg); break;
-		case 'q': quiet = true; break;
+		case 'q': quiet = false; break;
 		case 'r': reliable = true; break;
 		default: break;
 		}
@@ -218,26 +215,21 @@ int main(int argc, char **argv)
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 
-#if defined PERMIT_CUSTOM_FIELDS
-	TEX::myfix_custom custfields(true); // will cleanup; modifies ctx
-	TEX::ctx.set_ube(&custfields);
-#endif
-
 	try
 	{
-		const string conf_file(server ? clcf.empty() ? "myfix_server.xml" : clcf : clcf.empty() ? "myfix_client.xml" : clcf);
+		const string conf_file(server ? clcf.empty() ? "hf_server.xml" : clcf : clcf.empty() ? "hf_client.xml" : clcf);
 
 		if (server)
 		{
-			ServerSession<myfix_session_server>::Server_ptr
-				ms(new ServerSession<myfix_session_server>(TEX::ctx, conf_file, "TEX1"));
+			ServerSession<hf_session_server>::Server_ptr
+				ms(new ServerSession<hf_session_server>(TEX::ctx, conf_file, "TEX1"));
 
 			for (unsigned scnt(0); !term_received; )
 			{
 				if (!ms->poll())
 					continue;
-				SessionInstance<myfix_session_server>::Instance_ptr
-					inst(new SessionInstance<myfix_session_server>(*ms));
+				SessionInstance<hf_session_server>::Instance_ptr
+					inst(new SessionInstance<hf_session_server>(*ms));
 				if (!quiet)
 					inst->session_ptr()->control() |= Session::print;
 				ostringstream sostr;
@@ -250,8 +242,8 @@ int main(int argc, char **argv)
 		}
 		else if (reliable)
 		{
-			ReliableClientSession<myfix_session_client>::Client_ptr
-				mc(new ReliableClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
+			ReliableClientSession<hf_session_client>::Client_ptr
+				mc(new ReliableClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
 			mc->start(false);
@@ -264,8 +256,8 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			ClientSession<myfix_session_client>::Client_ptr
-				mc(new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
+			ClientSession<hf_session_client>::Client_ptr
+				mc(new ClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
 			mc->start(false, next_send, next_receive);
@@ -288,87 +280,21 @@ int main(int argc, char **argv)
 }
 
 //-----------------------------------------------------------------------------------------
-bool myfix_session_client::handle_application(const unsigned seqnum, const Message *msg)
-{
-	return enforce(seqnum, msg) || msg->process(_router);
-}
-
-//-----------------------------------------------------------------------------------------
-bool myfix_session_server::handle_application(const unsigned seqnum, const Message *msg)
-{
-	return enforce(seqnum, msg) || msg->process(_router);
-}
-
-//-----------------------------------------------------------------------------------------
 bool MyMenu::new_order_single()
 {
 	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
 	*nos += new TEX::TransactTime;
-	*nos += new TEX::OrderQty(1 + RandDev::getrandom(9999));
-	*nos += new TEX::Price(RandDev::getrandom(500.));
+	*nos += new TEX::OrderQty(1 + RandDev::getrandom(10000));
+	*nos += new TEX::Price(1. + RandDev::getrandom(500.));
 	static unsigned oid(0);
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
 	*nos += new TEX::ClOrdID(oistr.str());
 	*nos += new TEX::Symbol("BHP");
+	*nos += new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION);
 	*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
 	*nos += new TEX::Side(TEX::Side_BUY);
 	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
-
-#if 0
-	*nos += new TEX::NoUnderlyings(3);
-	GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
-
-	// repeating groups
-	MessageBase *gr1(noul->create_group());
-	*gr1 += new TEX::UnderlyingSymbol("BLAH");
-	*gr1 += new TEX::UnderlyingQty(1 + RandDev::getrandom(999));
-	*noul += gr1;
-
-	MessageBase *gr2(noul->create_group());
-	*gr2 += new TEX::UnderlyingSymbol("FOO");
-	// nested repeating groups
-	*gr2 += new TEX::NoUnderlyingSecurityAltID(2);
-	*noul += gr2;
-	GroupBase *nosai(gr2->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingSecurityAltID>());
-	MessageBase *gr3(nosai->create_group());
-	*gr3 += new TEX::UnderlyingSecurityAltID("UnderBlah");
-	*nosai += gr3;
-	MessageBase *gr4(nosai->create_group());
-	*gr4 += new TEX::UnderlyingSecurityAltID("OverFoo");
-	*nosai += gr4;
-
-	MessageBase *gr5(noul->create_group());
-	*gr5 += new TEX::UnderlyingSymbol("BOOM");
-	// nested repeating groups
-	GroupBase *nus(gr5->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>());
-	static const char *secIDs[] = { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
-	*gr5 += new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
-	for (size_t ii(0); ii < sizeof(secIDs)/sizeof(char *); ++ii)
-	{
-		MessageBase *gr(nus->create_group());
-		*gr += new TEX::UnderlyingStipType(secIDs[ii]);
-		*nus += gr;
-	}
-	*noul += gr5;
-
-	// multiply nested repeating groups
-	*nos += new TEX::NoAllocs(1);
-	GroupBase *noall(nos->find_group<TEX::NewOrderSingle::NoAllocs>());
-	MessageBase *gr9(noall->create_group());
-	*gr9 += new TEX::AllocAccount("Account1");
-	*gr9 += new TEX::NoNestedPartyIDs(1);
-	*noall += gr9;
-	GroupBase *nonp(gr9->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs>());
-	MessageBase *gr10(nonp->create_group());
-	*gr10 += new TEX::NestedPartyID("nestedpartyID1");
-	*gr10 += new TEX::NoNestedPartySubIDs(1);
-	*nonp += gr10;
-	GroupBase *nonpsid(gr10->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs>());
-	MessageBase *gr11(nonpsid->create_group());
-	*gr11 += new TEX::NestedPartySubID("subnestedpartyID1");
-	*nonpsid += gr11;
-#endif
 
 	_session.send(nos);
 
@@ -376,19 +302,53 @@ bool MyMenu::new_order_single()
 }
 
 //-----------------------------------------------------------------------------------------
-bool MyMenu::new_order_single_50()
+bool MyMenu::send_all_preloaded()
 {
-	for (int ii(0); ii < 50; ++ii)
-		new_order_single();
-
-	return true;
+	unsigned snt(0);
+	while (_session.cached())
+	{
+		TEX::NewOrderSingle *ptr(_session.pop());
+		if (!ptr)
+			break;
+		_session.send(ptr);
+		if (++snt % 1000 == 0)
+		{
+			cout << '\r' << snt << " NewOrderSingle msgs sent";
+			cout.flush();
+		}
+	}
+	cout << endl << _session.cached() << " NewOrderSingle msgs remaining." << endl;
 }
 
 //-----------------------------------------------------------------------------------------
-bool MyMenu::new_order_single_1000()
+bool MyMenu::preload_new_order_single()
 {
-	for (int ii(0); ii < 1000; ++ii)
-		new_order_single();
+	cout << endl << _session.cached() << " NewOrderSingle msgs currently preloaded." << endl;
+	cout << "Enter number of NewOrderSingle msgs to preload:";
+	cout.flush();
+	int num(0);
+	unset_raw_mode();
+	cin >> num;
+	set_raw_mode();
+	for (int ii(0); ii < num; ++ii)
+	{
+		TEX::NewOrderSingle *ptr(new TEX::NewOrderSingle);
+		*ptr += new TEX::Symbol("BHP");
+		*ptr += new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION);
+		*ptr += new TEX::OrdType(TEX::OrdType_LIMIT);
+		*ptr += new TEX::Side(TEX::Side_BUY);
+		*ptr += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+		*ptr += new TEX::TransactTime;
+		*ptr += new TEX::OrderQty(1 + RandDev::getrandom(10000));
+		*ptr += new TEX::Price(1. + RandDev::getrandom(500.));
+		static unsigned oid(10000);
+		ostringstream oistr;
+		oistr << "ord" << ++oid << '-' << num;
+		*ptr += new TEX::ClOrdID(oistr.str());
+		_session.push(ptr);
+	}
+
+	cout << _session.cached() << " NewOrderSingle msgs preloaded." << endl;
 
 	return true;
 }
@@ -416,14 +376,14 @@ bool MyMenu::do_logout()
 //-----------------------------------------------------------------------------------------
 void print_usage()
 {
-	UsageMan um("f8test", GETARGLIST, "");
-	um.setdesc("f8test -- f8 test client/server");
+	UsageMan um("hftest", GETARGLIST, "");
+	um.setdesc("hftest -- f8 HF test client/server");
 	um.add('s', "server", "run in server mode (default client mode)");
 	um.add('h', "help", "help, this screen");
 	um.add('v', "version", "print version then exit");
 	um.add('l', "log", "global log filename");
-	um.add('c', "config", "xml config (default: myfix_client.xml or myfix_server.xml)");
-	um.add('q', "quiet", "do not print fix output");
+	um.add('c', "config", "xml config (default: hf_client.xml or hf_server.xml)");
+	um.add('q', "quiet", "do not print fix output (default yes)");
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
 	um.add('r', "reliable", "start in reliable mode");
@@ -431,157 +391,73 @@ void print_usage()
 }
 
 //-----------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
+bool hf_session_client::handle_application(const unsigned seqnum, const FIX8::Message *msg)
+{
+	return enforce(seqnum, msg) || msg->process(_router);
+}
+
+//-----------------------------------------------------------------------------------------
 bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
 	static unsigned oid(0), eoid(0);
-
 	TEX::OrderQty qty;
 	TEX::Price price;
+	msg->get(qty);
+	msg->get(price);
 
-	if (!quiet)
-	{
-		// This is how you extract a copy of a field value
-		if (msg->get(qty))
-			cout << "Order qty (copy):" << qty() << endl;
-
-		// This is how you get a field value in place
-		if (msg->has<TEX::OrderQty>())
-			cout << "Order qty (in place):" << msg->get<TEX::OrderQty>()->get() << endl;
-
-		if (msg->get(price))
-			cout << "price:" << price() << endl;
-
-		// This is how you extract values from a repeating group
-		const GroupBase *grnoul(msg->find_group<TEX::NewOrderSingle::NoUnderlyings>());
-		if (grnoul)
-		{
-			for (size_t cnt(0); cnt < grnoul->size(); ++cnt)
-			{
-				TEX::UnderlyingSymbol unsym;
-				MessageBase *me(grnoul->get_element(cnt));
-				me->get(unsym);
-				cout << "Underlying symbol:" << unsym() << endl;
-				// This is how you extract values from a nested repeating group
-				GroupBase *nus(me->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>());
-				if (nus)
-				{
-					for (size_t cnt(0); cnt < nus->size(); ++cnt)
-					{
-						TEX::UnderlyingStipType stipType;
-						MessageBase *me(nus->get_element(cnt));
-						me->get(stipType);
-						cout << "Underlying StipType:" << stipType() << endl;
-					}
-				}
-			}
-		}
-
-		const GroupBase *grallocs(msg->find_group<TEX::NewOrderSingle::NoAllocs>());
-		if (grnoul)
-		{
-			for (size_t cnt(0); cnt < grallocs->size(); ++cnt)
-			{
-				TEX::AllocAccount acc;
-				MessageBase *me(grallocs->get_element(cnt));
-				me->get(acc);
-				cout << "TEX::NewOrderSingle::NoAllocs Account:" << acc() << endl;
-				// This is how you extract values from a nested repeating group
-				GroupBase *nnpi(me->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs>());
-				if (nnpi)
-				{
-					for (size_t cnt(0); cnt < nnpi->size(); ++cnt)
-					{
-						TEX::NestedPartyID npi;
-						MessageBase *me(nnpi->get_element(cnt));
-						me->get(npi);
-						cout << "TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs NestedPartyID:" << npi() << endl;
-						// This is how you extract values from a nested nested repeating group
-						GroupBase *nnpsi(me->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs>());
-						if (nnpsi)
-						{
-							for (size_t cnt(0); cnt < nnpsi->size(); ++cnt)
-							{
-								TEX::NestedPartySubID npsi;
-								MessageBase *me(nnpsi->get_element(cnt));
-								me->get(npsi);
-								cout << "TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs NestedPartySubID:" << npsi() << endl;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-#if defined MSGRECYCLING
-	scoped_ptr<TEX::ExecutionReport> er(new TEX::ExecutionReport);
-	msg->copy_legal(er.get());
-#else
 	TEX::ExecutionReport *er(new TEX::ExecutionReport);
 	msg->copy_legal(er);
-#endif
-	if (!quiet)
-		cout << endl;
 
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
 	*er += new TEX::OrderID(oistr.str());
 	*er += new TEX::ExecType(TEX::ExecType_NEW);
-	*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
+	unsigned ordResult(RandDev::getrandom(3));
+	switch (ordResult)
+	{
+	default:
+	case 0:
+		*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
+		break;
+	case 1:
+		*er += new TEX::OrdStatus(TEX::OrdStatus_CANCELED);
+		break;
+	case 2:
+		*er += new TEX::OrdStatus(TEX::OrdStatus_REJECTED);
+		break;
+	}
 	*er += new TEX::LeavesQty(qty());
 	*er += new TEX::CumQty(0);
 	*er += new TEX::AvgPx(0);
 	*er += new TEX::LastCapacity('5');
 	*er += new TEX::ReportToExch('Y');
-#if defined PERMIT_CUSTOM_FIELDS
-	*er += new TEX::Orderbook('X');
-	*er += new TEX::BrokerInitiated(true);
-	*er += new TEX::ExecOption(3);
+	*er += new TEX::ExecTransType(TEX::ExecTransType_NEW);
 	*er += new TEX::ExecID(oistr.str());
-#else
-	*er += new TEX::ExecID(oistr.str());
-#endif
-#if defined MSGRECYCLING
-	er->set_in_use(true);	// indicate this message is in use again
-	delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
-	*er += new TEX::AvgPx(9999); // will replace and delete original
-	_session.send_wait(er.get());
-#else
 	_session.send(er);
-#endif
 
-	unsigned remaining_qty(qty()), cum_qty(0);
-	while (remaining_qty > 0)
+	if (ordResult == 0)
 	{
-		unsigned trdqty(RandDev::getrandom(remaining_qty));
-		if (!trdqty)
-			trdqty = 1;
-#if defined MSGRECYCLING
-		while(er->get_in_use())
-			microsleep(10);
-		er->set_in_use(true);	// indicate this message is in use again
-		delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
-#else
-		er = new TEX::ExecutionReport;
-		msg->copy_legal(er);
-#endif
-		*er += new TEX::OrderID(oistr.str());
-		ostringstream eistr;
-		eistr << "exec" << ++eoid;
-		*er += new TEX::ExecID(eistr.str());
-		*er += new TEX::ExecType(TEX::ExecType_NEW);
-		*er += new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED);
-		remaining_qty -= trdqty;
-		cum_qty += trdqty;
-		*er += new TEX::LeavesQty(remaining_qty);
-		*er += new TEX::CumQty(cum_qty);
-		*er += new TEX::LastQty(trdqty);
-		*er += new TEX::AvgPx(price());
-#if defined MSGRECYCLING
-		_session.send_wait(er.get());
-#else
-		_session.send(er);
-#endif
+		unsigned remaining_qty(qty()), cum_qty(0);
+		while (remaining_qty > 0)
+		{
+			unsigned trdqty(1 + RandDev::getrandom(remaining_qty));
+			TEX::ExecutionReport *ner(new TEX::ExecutionReport);
+			msg->copy_legal(ner);
+			ostringstream eistr;
+			eistr << "exec" << ++eoid;
+			*ner += new TEX::ExecID(eistr.str());
+			*ner += new TEX::OrderID(oistr.str());
+			*ner += new TEX::ExecType(TEX::ExecType_NEW);
+			*ner += new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED);
+			remaining_qty -= trdqty;
+			cum_qty += trdqty;
+			*ner += new TEX::LeavesQty(remaining_qty);
+			*ner += new TEX::CumQty(cum_qty);
+			*ner += new TEX::ExecTransType(TEX::ExecTransType_NEW);
+			*ner += new TEX::AvgPx(price());
+			_session.send(ner);
+		}
 	}
 
 	return true;
@@ -590,12 +466,18 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 //-----------------------------------------------------------------------------------------
 bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 {
-	TEX::LastCapacity lastCap;
-	if (msg->get(lastCap))
+	static int exrecv(0);
+	if (++exrecv % 1000 == 0)
 	{
-		if (!quiet && !lastCap.is_valid())
-			cout << "TEX::LastCapacity(" << lastCap << ") is not a valid value" << endl;
+		cout << '\r' << exrecv << " ExecutionReport msgs received";
+		cout.flush();
 	}
 	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool hf_session_server::handle_application(const unsigned seqnum, const FIX8::Message *msg)
+{
+	return enforce(seqnum, msg) || msg->process(_router);
 }
 

@@ -30,13 +30,17 @@
 #
 #############################################################################################
 
-SUBDIRS = runtime compiler test doc
+SUBDIRS = runtime compiler test
+
+if USEDOXYGEN
+SUBDIRS += doc
+endif
 
 #############################################################################################
 ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = doc/fix8.doxygen doc/mainpage.doxygen \
-				 schema/*.xml schema/QUICKFIX-LICENCE
+				 schema/*.xml schema/QUICKFIX-LICENCE include/*.hpp
 
 $(distdir).tar.gz:
 	make dist

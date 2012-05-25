@@ -180,7 +180,7 @@ struct StaticTable
 
 //-------------------------------------------------------------------------------------------------
 /// Presorted set designed for infrequent insertions but super fast initialisation from a sorted static array.
-/// Search complexity is O(logN), ctor complexity approaches O(1), insert approaches O(N).
+/// Search complexity is O(logN), ctor complexity approaches O(1), insert is O(N).
 /*! \tparam K the key
     \tparam T the value type
     \tparam Comp the comparitor */

@@ -36,19 +36,19 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _FIX8_MYFIX_HPP_
 
 //-----------------------------------------------------------------------------------------
-class myfix_session_client;
+class hf_session_client;
 
 /// Example client message router. Derives from fix8 generated router class.
 /*! Your application must define a class similar to this in order to receive
     the appropriate callback when Message::process is called. */
-class tex_router_client : public FIX8::TEX::Myfix_Router
+class tex_router_client : public FIX8::TEX::Perf_Router
 {
-	myfix_session_client& _session;
+	hf_session_client& _session;
 
 public:
 	/*! Ctor.
 	    \param session client session */
-	tex_router_client(myfix_session_client& session) : _session(session) {}
+	tex_router_client(hf_session_client& session) : _session(session) {}
 
 	/*! Execution report handler. Here is where you provide your own methods for the messages you wish to
 		 handle. Only those messages that are of interest to you need to be implemented.
@@ -59,9 +59,11 @@ public:
 /// Example client session. Derives from FIX8::Session.
 /*! Your application must define a class similar to this in order to create and connect a client.
     You must also implement handle_application in order to receive application messages from the framework. */
-class myfix_session_client : public FIX8::Session
+class hf_session_client : public FIX8::Session
 {
 	tex_router_client _router;
+	typedef std::queue<FIX8::TEX::NewOrderSingle *> Nos_queue;
+	Nos_queue _nos_queue;
 
 public:
 	/*! Ctor. Initiator.
@@ -70,7 +72,7 @@ public:
 		 \param persist persister for this session
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
-	myfix_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist=0,
+	hf_session_client(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist=0,
 		FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, sid, persist, logger, plogger), _router(*this) {}
 
 	/*! Application message callback.
@@ -81,25 +83,35 @@ public:
 		 \return true on success */
 	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
 
-#if defined MSGRECYCLING
-	//int preload_nos(const std::string& sym, TEX::Side side, TEX::OrdType ordtype, TEX::TimeInForce tif);
-#endif
+	void push(FIX8::TEX::NewOrderSingle *nos) { _nos_queue.push(nos); }
+	FIX8::TEX::NewOrderSingle *pop()
+	{
+		if (_nos_queue.size())
+		{
+			FIX8::TEX::NewOrderSingle *nos(_nos_queue.front());
+			_nos_queue.pop();
+			return nos;
+		}
+		return 0;
+	}
+
+	int cached() const { return _nos_queue.size(); }
 };
 
 //-----------------------------------------------------------------------------------------
-class myfix_session_server;
+class hf_session_server;
 
 /// Example server message router. Derives from fix8 generated router class.
 /*! Your application must define a class similar to this in order to receive
     the appropriate callback when Message::process is called. */
-class tex_router_server : public FIX8::TEX::Myfix_Router
+class tex_router_server : public FIX8::TEX::Perf_Router
 {
-	myfix_session_server& _session;
+	hf_session_server& _session;
 
 public:
 	/*! Ctor.
 	    \param session server session */
-	tex_router_server(myfix_session_server& session) : _session(session) {}
+	tex_router_server(hf_session_server& session) : _session(session) {}
 
 	/*! NewOrderSingle message handler. Here is where you provide your own methods for the messages you wish to
 		 handle. Only those messages that are of interest to you need to be implemented.
@@ -110,7 +122,7 @@ public:
 /// Example server session. Derives from FIX8::Session.
 /*! Your application must define a class similar to this in order to receive client connections.
     You must also implement handle_application in order to receive application messages from the framework. */
-class myfix_session_server : public FIX8::Session
+class hf_session_server : public FIX8::Session
 {
 	tex_router_server _router;
 
@@ -120,7 +132,7 @@ public:
 		 \param persist persister for this session
 		 \param logger logger for this session
 		 \param plogger protocol logger for this session */
-	myfix_session_server(const FIX8::F8MetaCntx& ctx, FIX8::Persister *persist=0,
+	hf_session_server(const FIX8::F8MetaCntx& ctx, FIX8::Persister *persist=0,
 		FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, persist, logger, plogger),
 		_router(*this) {}
 
@@ -179,7 +191,7 @@ class MyMenu
 		bool operator() (const MenuItem& a, const MenuItem& b) const { return a._key < b._key; }
 	};
 
-	myfix_session_client& _session;
+	hf_session_client& _session;
 	int _fd;
 	std::istream _istr;
 	std::ostream& _ostr;
@@ -188,7 +200,7 @@ class MyMenu
 	Handlers _handlers;
 
 public:
-	MyMenu(myfix_session_client& session, int infd, std::ostream& ostr)
+	MyMenu(hf_session_client& session, int infd, std::ostream& ostr)
 		: _raw_mode(), _tty_state(), _session(session), _fd(infd), _istr(new fdinbuf(infd)), _ostr(ostr) {}
 	virtual ~MyMenu() {}
 
@@ -197,8 +209,8 @@ public:
 	bool process(const char ch) { return (this->*_handlers.find_ref(MenuItem(ch, std::string())))(); }
 
 	bool new_order_single();
-	bool new_order_single_50();
-	bool new_order_single_1000();
+	bool preload_new_order_single();
+	bool send_all_preloaded();
 	bool help();
 	bool nothing() { return true; }
 	bool do_exit() { return false; }

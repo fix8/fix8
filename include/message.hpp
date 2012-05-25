@@ -187,7 +187,7 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 /// Static metadata context class - one per FIX xml schema
-class Recycler;
+class Preallocator;
 
 struct F8MetaCntx
 {
@@ -209,7 +209,7 @@ struct F8MetaCntx
 	F8MetaCntx(const unsigned version, const GeneratedTable<const f8String, BaseMsgEntry>& bme,
 		const GeneratedTable<unsigned, BaseEntry>& be, const f8String& bg) : _version(version), _bme(bme), _be(be),
 #if defined PERMIT_CUSTOM_FIELDS
-			_ube(),
+         _ube(),
 #endif
 			_mk_hdr(_bme.find_ptr("header")->_create), _mk_trl(_bme.find_ptr("trailer")->_create),
 			_beginStr(bg) {}
@@ -241,7 +241,7 @@ protected:
 	Positions _pos;
 	Groups _groups;
 	const f8String& _msgType;
-	const class F8MetaCntx& _ctx;
+	const F8MetaCntx& _ctx;
 
 public:
 	/*! Ctor.
@@ -297,13 +297,13 @@ public:
 	/*! Encode message to stream.
 	    \param to stream to encode to
 	    \return number of bytes encoded */
-	unsigned encode(std::ostream& to);
+	unsigned encode(std::ostream& to) const;
 
 	/*! Encode message to stream.
 	    \param fnum repeating group fix field num (no...)
 	    \param to stream to encode to
 	    \return number of fields encoded */
-	unsigned encode_group(const unsigned short fnum, std::ostream& to);
+	unsigned encode_group(const unsigned short fnum, std::ostream& to) const;
 
 	unsigned check_positions();
 
@@ -315,7 +315,7 @@ public:
 
 	/*! Check that this field has the realm (domain) pointer set; if not then set.
 	    \param where field to check */
-	void check_set_rlm(BaseField *where)
+	void check_set_rlm(BaseField *where) const
 	{
 		if (!where->_rlm)
 		{
@@ -331,20 +331,42 @@ public:
 
 	/*! Add fix field to this message.
 	    \param fnum field tag
+		 \param itr hint iterator: set to itr of found element
 	    \param pos position of field in message
-	    \param what pointer to field */
-	void add_field(const unsigned short fnum, const unsigned pos, BaseField *what)
+	    \param what pointer to field
+	    \param check if false, don't check for presence */
+	void add_field(const unsigned short fnum, Presence::const_iterator itr, const unsigned pos, BaseField *what, bool check)
 	{
-		if (_fp.get(fnum, FieldTrait::present)) // for now, silently replace duplicate
+		if (check && _fp.get(fnum, itr, FieldTrait::present)) // for now, silently replace duplicate
 		{
-			std::cerr << _msgType << " replacing field:" << fnum << std::endl;
-			delete replace(fnum, what);
+			//std::cerr << _msgType << " replacing field:" << fnum << std::endl;
+			delete replace(fnum, itr, what);
 			return;
 		}
 
 		_fields.insert(Fields::value_type(fnum, what));
 		_pos.insert(Positions::value_type(pos, what));
-		_fp.set(fnum, FieldTrait::present);
+		_fp.set(fnum, itr, FieldTrait::present);
+	}
+
+	/*! Add fix field to this message.
+	    \param fnum field tag
+	    \param pos position of field in message
+	    \param what pointer to field
+	    \param check if false, don't check for presence */
+	void add_field(const unsigned short fnum, const unsigned pos, BaseField *what, bool check=true)
+	{
+		Presence::const_iterator itr(_fp.get_presence().end());
+		if (check && _fp.get(fnum, itr, FieldTrait::present)) // for now, silently replace duplicate
+		{
+			//std::cerr << _msgType << " replacing field:" << fnum << std::endl;
+			delete replace(fnum, itr, what);
+			return;
+		}
+
+		_fields.insert(Fields::value_type(fnum, what));
+		_pos.insert(Positions::value_type(pos, what));
+		_fp.set(fnum, itr, FieldTrait::present);
 	}
 
 	/*! Set field attribute to given value.
@@ -357,10 +379,11 @@ public:
 		 \return true on success; throws InvalidField if not valid */
 	bool add_field(BaseField *what)
 	{
-		const unsigned short fnum(what->_fnum);
-		if (_fp.has(fnum))
+		const unsigned short& fnum(what->_fnum);
+		Presence::const_iterator itr(_fp.get_presence().end());
+		if (_fp.has(fnum, itr))
 		{
-			add_field(fnum, _fp.getPos(fnum), what);
+			add_field(fnum, itr, _fp.getPos(fnum, itr), what, true);
 			return true;
 		}
 		throw InvalidField(fnum);
@@ -446,9 +469,22 @@ public:
 
 	/*! Replace a field value with another field value.
 	    \param fnum field number
+		 \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
+	    \param with field to replace with
+	    \return pointer to original field or 0 if not found */
+	BaseField *replace(const unsigned short fnum, Presence::const_iterator itr, BaseField *with);
+
+	/*! Replace a field value with another field value.
+	    \param fnum field number
 	    \param with field to replace with
 	    \return pointer to original field or 0 if not found */
 	BaseField *replace(const unsigned short fnum, BaseField *with);
+
+	/*! Remove a field from this message.
+	    \param fnum field number
+		 \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
+	    \return pointer to original field or 0 if not found */
+	BaseField *remove(const unsigned short fnum, Presence::const_iterator itr);
 
 	/*! Remove a field from this message.
 	    \param fnum field number
@@ -543,8 +579,8 @@ public:
 	    \param cnt - number of elements in field trait table */
 	template<typename InputIterator>
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt)
-		: MessageBase(ctx, msgType, begin, cnt), _header(ctx._mk_hdr()), _trailer(ctx._mk_trl()),
-		_custom_seqnum(), _no_increment()
+		: MessageBase(ctx, msgType, begin, cnt),
+		_header(ctx._mk_hdr()), _trailer(ctx._mk_trl()), _custom_seqnum(), _no_increment()
 #if defined MSGRECYCLING
 		{
 			_in_use = true;
@@ -588,7 +624,7 @@ public:
 	/*! Encode message to stream.
 	    \param to stream to encode to
 	    \return number of bytes encoded */
-	unsigned encode(f8String& to);
+	unsigned encode(f8String& to) const;
 
 	/*! Clone this message. Performs a deep copy.
 	    \return pointer to copy of this message */

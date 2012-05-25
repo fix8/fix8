@@ -10,19 +10,19 @@ AC_DEFUN([AX_PATH_BDB], [
   dnl # Used to indicate success or failure of this function.
   ax_path_bdb_ok=no
 
-  # Add --with-bdb-dir option to configure.
-  AC_ARG_WITH([bdb-dir],
-    [AC_HELP_STRING([--with-bdb-dir=DIR],
+  # Add --with-bdb option to configure.
+  AC_ARG_WITH([bdb],
+    [AC_HELP_STRING([--with-bdb=DIR],
                     [Berkeley DB installation directory])])
 
-  # Check if --with-bdb-dir was specified.
+  # Check if --with-bdb was specified.
   if test "x$with_bdb_dir" = "x" ; then
     # No option specified, so just search the system.
     AX_PATH_BDB_NO_OPTIONS([$1], [HIGHEST], [
       ax_path_bdb_ok=yes
     ])
    else
-     # Set --with-bdb-dir option.
+     # Set --with-bdb option.
      ax_path_bdb_INC="$with_bdb_dir/include"
      ax_path_bdb_LIB="$with_bdb_dir/lib"
 

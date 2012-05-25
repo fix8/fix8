@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<fix8>
+	<session name="TEX1"
+				role="acceptor"
+				fix_version="1100"
+				active="true"
+				heartbeat_interval="5"
+				session_log="session_log"
+				ip="127.0.0.1" port="11002"
+				sender_comp_id="TEX_DLD"
+				tcp_nodelay="true"
+				persist="mem0" />
+
+	<persist name="bdb0"
+				type="bdb"
+				dir="./run"
+				db="hf_server.db"/>
+
+	<persist name="mem0"
+				type="mem"/>
+
+	<log 		name="session_log"
+				type="session"
+				filename="|/bin/cat"
+				rotation="5"
+				flags="timestamp|sequence|compress|thread"/>
+
+	<log 		name="protocol_log"
+				type="protocol"
+				filename="./run/hf_server_protocol.log"
+				rotation="5"
+				flags="sequence|append|direction"/>
+</fix8>

@@ -73,8 +73,8 @@ int load_fix_version (XmlElement& xf, Ctxt& ctxt);
 int load_fields(XmlElement& xf, FieldSpecMap& fspec);
 void process_special_traits(const unsigned short field, FieldTraits& fts);
 int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits& fts,
-	const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec, const unsigned component);
-int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, const FieldSpecMap& fspec);
+	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, const unsigned component);
+int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, FieldSpecMap& fspec);
 void process_ordering(MessageSpecMap& mspec);
 const string flname(const string& from);
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
@@ -227,7 +227,7 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 
 //-----------------------------------------------------------------------------------------
 int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
-	const FieldSpecMap& fspec, const unsigned subpos)
+	FieldSpecMap& fspec, const unsigned subpos)
 {
 	unsigned processed(0);
 	XmlElement::XmlSet flist;
@@ -239,7 +239,7 @@ int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits
 			if ((*fitr)->GetAttr("name", fname) && (*fitr)->GetAttr("required", required))
 			{
 				FieldToNumMap::const_iterator ftonItr(ftonSpec.find(fname));
-				FieldSpecMap::const_iterator fs_itr;
+				FieldSpecMap::iterator fs_itr;
 				if (ftonItr == ftonSpec.end() || (fs_itr = fspec.find(ftonItr->second)) == fspec.end())
 				{
 					cerr << shortName << ':' << recover_line(**fitr) << ": error: Field element missing required attributes" << endl;
@@ -254,6 +254,7 @@ int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits
 				{
 					process_special_traits(fs_itr->first, fts);
 					++processed;
+					fs_itr->second.set_used();
 				}
 			}
 			else
@@ -318,6 +319,7 @@ void print_usage()
 	um.add('o', "odir <file>", "output target directory (default ./)");
 	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
 	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
+	um.add('f', "fields", "generate code for all defined fields even if they are not used in any message (default no)");
 	um.add('h', "help", "help, this screen");
 	um.add('i', "ignore", "ignore errors, attempt to generate code anyhow (default no)");
 	um.add('k', "keep", "retain generated temporaries even if there are errors (.*.tmp)");

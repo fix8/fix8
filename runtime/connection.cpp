@@ -190,7 +190,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			if (bgstr != _session.get_ctx()._beginStr)	// invalid FIX version
 				throw InvalidVersion(bgstr);
 
-			const unsigned mlen(GetValue<unsigned>(len));
+			const unsigned mlen(fast_atoi<unsigned>(len.c_str()));
 			if (mlen == 0 || mlen > _max_msg_len - _bg_sz - _chksum_sz) // invalid msglen
 				throw InvalidBodyLength(mlen);
 
@@ -233,14 +233,14 @@ int FIXWriter::operator()()
 #else
 			scoped_ptr<Message> msg(inmsg);
 			_session.send_process(msg.get());
+#endif
 #if defined CODECTIMING
 			ostringstream gerr;
 			gerr << "  dtor(" << inmsg->get_msgtype() << "):";
 			IntervalTimer itm;
-			msg.release();
+			delete msg.release();
 			gerr << itm.Calculate();
 			GlobalLogger::log(gerr.str());
-#endif
 #endif
 			++processed;
 		}
