@@ -75,110 +75,137 @@
 
 		<div class="container">
 			<div class="span12 columns">
-				<div class="hero-unit">
-				</div>
-				<h2>1. General</h2>
-				<div class="accordion" id="accordion2">
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleOne">What is fix8?</a>
-						</div>
-						<div id="generaleOne" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Fix8 is C++ development toolkit for providing <a href="http://www.fixprotocol.org">FIX</a> connectivity for userland applications.
-								Fix8 provides an API framework under which you can quickly develop a FIX interface.
+				<div class="hero-unit"></div>
+				<div class="accordion" id="mainheads">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsOne"><h2>1. General</h2></a>
+					</div>
+					<div id="mainheadsOne" class="accordion-body collapse">
+						<div class="accordion" id="accordion2">
+							<div class="accordion-group">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleOne">a) What is fix8?</a>
+								</div>
+								<div id="generaleOne" class="accordion-body collapse">
+									<div class="accordion-inner">
+										Fix8 is C++ development toolkit designed to provide <a href="http://www.fixprotocol.org">FIX</a> connectivity to userland applications.
+										Fix8 provides an API framework from which you can quickly develop a FIX interface.
+									</div>
+								</div>
 							</div>
+							<div class="accordion-group">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleTwo">b) What is the FIX protocol?</a>
+								</div>
+								<div id="generaleTwo" class="accordion-body collapse">
+									<div class="accordion-inner">
+										The <a href="http://www.fixprotocol.org">FIX</a> protocol allows market pariticpants to communicate with one another usually
+										for the purposes of trading.  Typically this occurs between exchanges and brokers/institutions although many organisations
+										also use FIX internally.
+									</div>
+								</div>
+							</div>
+							<div class="accordion-group">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleThree">c) Who is the intended audience?</a>
+								</div>
+								<div id="generaleThree" class="accordion-body collapse">
+									<div class="accordion-inner">
+										Fix8 is designed to be used by C++ developers for creating <a href="http://www.fixprotocol.org">FIX</a> protocol applications.
+									</div>
+								</div>
+							</div>
+							<div class="accordion-group">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleFour">d) What license is fix8 release under?</a>
+								</div>
+								<div id="generaleFour" class="accordion-body collapse">
+									<div class="accordion-inner">
+										Fix8 is open source and is released under the <a href="http://www.opensource.org/licenses/BSD-3-Clause">New BSD License.</a>
+									</div>
+								</div>
+							</div>
+						</div>
 						</div>
 					</div>
 					<div class="accordion-group">
 						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleTwo">What is the FIX protocol?</a>
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsTwo"><h2>2. Requirements</h2></a>
 						</div>
-						<div id="generaleTwo" class="accordion-body collapse">
-							<div class="accordion-inner">
-								The <a href="http://www.fixprotocol.org">FIX</a> protocol allows market pariticpants to communicate with one another usually for the purposes of trading.
-								Typically this occurs between exchanges and brokers/institutions although many organisations also use FIX internally.
+						<div id="mainheadsTwo" class="accordion-body collapse">
+							<div class="accordion" id="accordion3">
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeOne">a) What OS is supported?</a>
+									</div>
+									<div id="platformeOne" class="accordion-body collapse">
+										<div class="accordion-inner">
+											Fix8 is currently only supported on <a href="http://en.wikipedia.org/wiki/Linux">Linux.</a> Both 32 and 64 bit builds have
+											been tested.  Fix8 uses <a href="http://en.wikipedia.org/wiki/Posix">POSIX</a> system calls and should work on
+											other <a href="http://en.wikipedia.org/wiki/*NIX">*NIX</a> variants too.  If you get fix8 working on another *NIX
+											please let us know.
+										</div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeTwo">b) What libraries are required to build fix8?</a>
+									</div>
+									<div id="platformeTwo" class="accordion-body collapse">
+										<div class="accordion-inner">
+											Fix8 requires the standard set of <a href="http://www.gnu.org/gnu/linux-and-gnu.html">GNU/Linux</a> dev tools,
+											including <a href="http://http://gcc.gnu.org">gcc</a>,
+											<a href="http://www.gnu.org/software/libtool">libtool</a>,
+											<a href="http://www.gnu.org/software/autoconf">autoconf</a>,
+											<a href="http://www.gnu.org/s/automake">automake</a>.  Fix8 also requires the
+											<a href="http://pocoproject.org/">Poco</a> library, Intel <a href="http://threadingbuildingblocks.org/">TBB</a> and
+											Oracle <a href="http://www.oracle.com/technetwork/database/berkeleydb/overview/index.html">Berkeley DB</a>. If
+											you want to generate the API documentation you will also need <a href="http://www.doxygen.org">doxygen</a>.
+										</div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeThree">c) What hardware is supported?</a>
+									</div>
+									<div id="platformeThree" class="accordion-body collapse">
+										<div class="accordion-inner">
+											Since fix8 uses Intel <a href="http://threadingbuildingblocks.org/">TBB</a> only Intel IA32, Intel64 and IA64 and compatible
+											hardware is supported. There are however other non-supported patches for TBB to run on different hardware, including SPARC.
+										</div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeFour">d) Do I require a detailed FIX specification?</a>
+									</div>
+									<div id="platformeFour" class="accordion-body collapse">
+										<div class="accordion-inner">
+											fix8 requires an <a href="http://en.wikipedia.org/wiki/xml">XML</a> schema document which describes the exact specifications
+											of the messages and fields that will be supported by your application. You can use any of the standard schemas supplied with the
+											package or supply your own.
+										</div>
+									</div>
+								</div>
+							</div>
 							</div>
 						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleThree">Who is the intended audience?</a>
-						</div>
-						<div id="generaleThree" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Fix8 is designed to be used by C++ developers for creating <a href="http://www.fixprotocol.org">FIX</a> protocol applications.
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsThree"><h2>3. The Fix8 API</h2></a>
 							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleFour">What license is fix8 release under?</a>
-						</div>
-						<div id="generaleFour" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Fix8 is open source and is released under the <a href="http://www.opensource.org/licenses/BSD-3-Clause">New BSD License.</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="span12 columns">
-				<h2>2. Requirements</h2>
-				<div class="accordion" id="accordion3">
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeOne">What OS is supported?</a>
-						</div>
-						<div id="platformeOne" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Fix8 is currently only supported on <a href="http://en.wikipedia.org/wiki/Linux">Linux.</a> Both 32 and 64 bit builds have been tested.
-								Fix8 uses POSIX system calls and should work on other <a href="http://en.wikipedia.org/wiki/*NIX">*NIX</a> variants too.
-								If you get fix8 working on another *NIX please let us know.
-							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeTwo">What libraries are required to build fix8?</a>
-						</div>
-						<div id="platformeTwo" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Fix8 requires the standard set of <a href="http://www.gnu.org/gnu/linux-and-gnu.html">GNU/Linux</a> dev tools,
-								including <a href="http://http://gcc.gnu.org">gcc</a>,
-								<a href="http://www.gnu.org/software/libtool">libtool</a>,
-								<a href="http://www.gnu.org/software/autoconf">autoconf</a>,
-								<a href="http://www.gnu.org/s/automake">automake</a>.  Fix8 also requires the
-								<a href="http://pocoproject.org/">Poco</a> library, Intel <a href="http://threadingbuildingblocks.org/">TBB</a> and Oracle <a href="http://www.oracle.com/technetwork/database/berkeleydb/overview/index.html">Berkeley DB</a>. If
-								you want to generate the API documentation you will also need <a href="http://www.doxygen.org">doxygen</a>.
-							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeThree">What hardware is supported?</a>
-						</div>
-						<div id="platformeThree" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Since fix8 uses Intel <a href="http://threadingbuildingblocks.org/">TBB</a> only Intel IA32, Intel64 and IA64 and compatible
-								hardware is supported. There are however other non-supported patches for TBB to run on different hardware, including SPARC.
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="span12 columns">
-				<h2>3. The Fix8 API</h2>
-				<div class="accordion" id="accordion4">
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devOne">How do I add additional fields to the login message?</a>
-						</div>
-						<div id="devOne" class="accordion-body collapse">
-							<div class="accordion-inner">
-								What you need to to do is override <code>Session::generate_logon()</code> in your session class.  In that method, the first
-								thing you need to do is call the base class method. Then add your extra fields...
-								<pre>
+							<div id="mainheadsThree" class="accordion-body collapse">
+								<div class="accordion" id="accordion4">
+									<div class="accordion-group">
+										<div class="accordion-heading">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devOne">a) How do I add additional fields to the login message?</a>
+										</div>
+										<div id="devOne" class="accordion-body collapse">
+											<div class="accordion-inner">
+												What you need to to do is override <code>Session::generate_logon()</code> in your session class.  In that method, the first
+												thing you need to do is call the base class method. Then add your extra fields...
+												<pre>
 Message *my_sess::generate_logon()
 {
 	Message *msg(Session::generate_logon());
@@ -188,44 +215,44 @@ Message *my_sess::generate_logon()
 	*msg += TEX::RawData(rawstuff);
 	return msg;
 }</pre>
-								The same approach applies to all session level messages.
-							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devTwo">How can I access additional session attributes from the xml config file?</a>
-						</div>
-						<div id="devTwo" class="accordion-body collapse">
-							<div class="accordion-inner">
-								If you are using the session wrapper classes <code>ClientSession</code>, <code>ReliableClientSession</code> or
-								<code>ServerSession</code>, you can call <code>get_session_element()</code>. This returns a pointer to the
-								<code>XmlElement</code> for the active session. With this object you can search for additional attributes parsed
-								from your xml config file, using <code>XmlElement::FindAttr()</code> or <code>XmlElement::GetAttr()</code>
-							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devFour">Why isn't the framework calling my derived message handler?</a>
-						</div>
-						<div id="devFour" class="accordion-body collapse">
-							<div class="accordion-inner">
-								When you override <code>Session::handle_application</code> and call <code>msg->process(your_router)</code>
-								this method must provided in a compilation unit and not inlined in a header.
-							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devThree">How do I use nested repeating groups?</a>
-						</div>
-						<div id="devThree" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Nested repeating groups are easy to use. The following example creates multiple nested groups. Using <code>find_group</code>
-								and then <code>create_group</code> you can locate the group you wish to add, create an instance, populate the fields
-								and then add it to the message.
-								<pre>
+												The same approach applies to all session level messages.
+											</div>
+										</div>
+									</div>
+									<div class="accordion-group">
+										<div class="accordion-heading">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devTwo">b) How can I access additional session attributes from the xml config file?</a>
+										</div>
+										<div id="devTwo" class="accordion-body collapse">
+											<div class="accordion-inner">
+												If you are using the session wrapper classes <code>ClientSession</code>, <code>ReliableClientSession</code> or
+												<code>ServerSession</code>, you can call <code>get_session_element()</code>. This returns a pointer to the
+												<code>XmlElement</code> for the active session. With this object you can search for additional attributes parsed
+												from your xml config file, using <code>XmlElement::FindAttr()</code> or <code>XmlElement::GetAttr()</code>
+											</div>
+										</div>
+									</div>
+									<div class="accordion-group">
+										<div class="accordion-heading">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devFour">c) Why isn't the framework calling my derived message handler?</a>
+										</div>
+										<div id="devFour" class="accordion-body collapse">
+											<div class="accordion-inner">
+												When you override <code>Session::handle_application</code> and call <code>msg->process(your_router)</code>
+												you must define this method in a compilation unit and not inlined in a header.
+											</div>
+										</div>
+									</div>
+									<div class="accordion-group">
+										<div class="accordion-heading">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#devThree">d) How do I use nested repeating groups?</a>
+										</div>
+										<div id="devThree" class="accordion-body collapse">
+											<div class="accordion-inner">
+												Nested repeating groups are easy to use. The following example creates multiple nested groups. Using <code>find_group</code>
+												and then <code>create_group</code> you can locate the group you wish to add, create an instance, populate the fields
+												and then add it to the message.
+												<pre>
 *nos += new TEX::NoUnderlyings(3);
 GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
 
@@ -278,71 +305,97 @@ GroupBase *nonpsid(gr10->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedParty
 MessageBase *gr11(nonpsid->create_group());
 *gr11 += new TEX::NestedPartySubID("subnestedpartyID1");
 *nonpsid += gr11; </pre>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="span12 columns">
-			<h2>4. Building</h2>
-				<div class="accordion" id="accordion5">
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testThree">When I try and make, I get a automake error.</a>
-						</div>
-						<div id="testThree" class="accordion-body collapse">
-							<div class="accordion-inner">
-							From the <code>fix8</code> directory, do the following...
-								<pre>
+											</div>
+										</div>
+									</div>
+									</div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsFour"><h2>4. Building</h2></a>
+									</div>
+									<div id="mainheadsFour" class="accordion-body collapse">
+										<div class="accordion" id="accordion5">
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testThree">a) When I try and make, I get a automake error.</a>
+												</div>
+												<div id="testThree" class="accordion-body collapse">
+													<div class="accordion-inner">
+														From the <code>fix8</code> directory, do the following...
+														<pre>
 % rm -rf autom4te.cache
 % ./bootstrap
 % ./configure [with your options here]
 % make; make install</pre>
-							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testOne">How can I profile my application?</a>
-						</div>
-						<div id="testOne" class="accordion-body collapse">
-							<div class="accordion-inner">
-								To enable profiling with <code>gprof</code>, add <code>--enable-gprof</code> to your <code>configure</code> command line.
-								When you run your application the file <code>gmon.out</code> will be generated. Run <code>gprof</code> to examine the profile.
-							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testTwo">Can I profile FIX encoding/decoding?</a>
-						</div>
-						<div id="testTwo" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Yes. To enable CODEC profiling, add <code>--enable-codectiming</code> to your <code>configure</code> command line.
-								Fix8 will out message encode and decode timings to the global logger.
-							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testFour">How do I specify local TBB, Poco or Berkeley DB libraries and headers?</a>
-						</div>
-						<div id="testFour" class="accordion-body collapse">
-							<div class="accordion-inner">
-								You may want to specify a local build for TBB, Poco or Berkeley DB instead of the default locations - if for example you don't have
-								permission on your system to install the libraries or you want to test a new library build. To specify an alternate location, simply
-								pass the alternate directory to configure, for example:
-								<pre>
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testOne">b) How can I profile my application?</a>
+												</div>
+												<div id="testOne" class="accordion-body collapse">
+													<div class="accordion-inner">
+														To enable profiling with <code>gprof</code>, add <code>--enable-gprof</code> to your <code>configure</code> command line.
+														When you run your application the file <code>gmon.out</code> will be generated. Run <code>gprof</code> to
+														examine the profile.
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testTwo">c) Can I profile FIX encoding/decoding?</a>
+												</div>
+												<div id="testTwo" class="accordion-body collapse">
+													<div class="accordion-inner">
+														Yes. To enable CODEC profiling, add <code>--enable-codectiming</code> to your <code>configure</code> command line.
+														Fix8 will out message encode and decode timings to the global logger.
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testFour">d) How do I specify local TBB, Poco or Berkeley DB libraries and headers?</a>
+												</div>
+												<div id="testFour" class="accordion-body collapse">
+													<div class="accordion-inner">
+														You may want to specify a local build for TBB, Poco or Berkeley DB instead of the default locations - if for example
+														you don't have permission on your system to install the libraries or you want to test a new library build. To specify
+														an alternate location, simply pass the alternate directory to configure, for example:
+														<pre>
 % ./configure --with-poco=/home/davo --with-tbb=home/davo --with-bdb=/home/davo</pre>
 								This assumes that the local install <code>lib</code>, <code>include</code>, <code>bin</code>, and so forth are immediately below the directory specified.
 								You will also need to update your <code>LD_LIBRARY_PATH</code> before running your application. In our above example:
 								<pre>
 % export LD_LIBRARY_PATH=/home/davo/lib:$LD_LIBRARY_PATH</pre>
-							</div>
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testFive">e) Does fix8 support custom fields?</a>
+												</div>
+												<div id="testFive" class="accordion-body collapse">
+													<div class="accordion-inner">
+														Yes. In two ways. Firstly, since you have complete control over the shape and nature of all FIX messages in your
+														application by supplying the schema to the compiler, you can fine tune the FIX spoken to include any field you wish.
+														Alternatively, fix8 supports the addition of FIX fields in your application directly (without requiring the fix8
+														compiler to regenerate any code). For speed and efficiency, you should always aim to use the former method.
+														In fix8, the term 'custom field' really means additional fields not
+														defined in your schema. To use these, custom fields must be enabled when you run configure.
+								<pre>
+% ./configure --enable-customfields</pre>
+													</div>
+												</div>
+									</div>
+								</div>
 						</div>
 					</div>
+						<br>
+						<br>
 				</div>
-			<br>
 			<div class="pager">
 				<li><a href="index.html">Home</a></li>
 				<li><a href="https://github.com/dakka/fix8/wiki">Wiki</a></li>
