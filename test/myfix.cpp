@@ -315,7 +315,6 @@ bool MyMenu::new_order_single()
 	*nos += new TEX::Side(TEX::Side_BUY);
 	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
 
-#if 0
 	*nos += new TEX::NoUnderlyings(3);
 	GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
 
@@ -368,7 +367,6 @@ bool MyMenu::new_order_single()
 	MessageBase *gr11(nonpsid->create_group());
 	*gr11 += new TEX::NestedPartySubID("subnestedpartyID1");
 	*nonpsid += gr11;
-#endif
 
 	_session.send(nos);
 

@@ -132,7 +132,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 			_elmnt.SubExpr(match, from, tag, s_offset, 1);
 			_elmnt.SubExpr(match, from, val, s_offset, 2);
 			const unsigned tv(fast_atoi<unsigned>(tag.c_str()));
-			Presence::const_iterator itr(_fp.get_presence().end());
+			Presence::const_iterator itr(grp->_fp.get_presence().end());
 			if (grp->_fp.get(tv, itr, FieldTrait::present))	// already present; next group?
 				break;
 			if (pos == 0 && grp->_fp.getPos(tv, itr) != 1)	// first field in group is mandatory

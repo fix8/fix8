@@ -529,6 +529,7 @@ unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr
 				}
 				else
 				{
+					fs_itr->second._used = true;
 					pair<GroupMap::iterator, bool> gresult(
 						ritr._groups.insert(GroupMap::value_type(fs_itr->first, MessageSpec(gname))));
 					process_message_fields("group/field", *gitr, gresult.first->second._fields, ftonSpec, fspec, 0);
