@@ -1,5 +1,6 @@
 var classFIX8_1_1MemoryPool =
 [
+    [ "default_page_sz", "classFIX8_1_1MemoryPool.html#ab967b6cb1ac68563b445e567ea8b8c8ba0fa1baf5a9850226774f89e36d17ec3f", null ],
     [ "MemoryPool", "classFIX8_1_1MemoryPool.html#a2b887097d3b1ec96c0a579fc71172314", null ],
     [ "~MemoryPool", "classFIX8_1_1MemoryPool.html#a711e9a2c9e67a137cdc27082211a5164", null ],
     [ "alloc", "classFIX8_1_1MemoryPool.html#a69ed245f5d1fc3a90e4f0bfa197110d8", null ],

@@ -1,6 +1,10 @@
 var classFIX8_1_1Connection =
 [
-    [ "Role", "classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804", null ],
+    [ "Role", "classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804", [
+      [ "cn_acceptor", "classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288", null ],
+      [ "cn_initiator", "classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290", null ],
+      [ "cn_unknown", "classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6", null ]
+    ] ],
     [ "Connection", "classFIX8_1_1Connection.html#a4e0c9669d92c74c2ee96f2c8ab71cd59", null ],
     [ "Connection", "classFIX8_1_1Connection.html#adb377b5c1730618b258d04085e0ee657", null ],
     [ "~Connection", "classFIX8_1_1Connection.html#a8b5e9ade90396694c34c2d10f5ec7321", null ],

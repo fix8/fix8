@@ -10,6 +10,7 @@ var classFIX8_1_1TEX_1_1SequenceReset =
     [ "is_admin", "classFIX8_1_1TEX_1_1SequenceReset.html#a714b9ff71b94b5cc9204facb6252f31a", null ],
     [ "process", "classFIX8_1_1TEX_1_1SequenceReset.html#a30b58ea4fb9a877f158adfba5f57e5bb", null ],
     [ "process", "classFIX8_1_1TEX_1_1SequenceReset.html#a30b58ea4fb9a877f158adfba5f57e5bb", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1SequenceReset.html#af6320e4b9f5b07ab3c846d2b9120c5db", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SequenceReset.html#afb8ef3b865a327301bb407ac790617f4", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1SequenceReset.html#a68be8f68124a15be2b5e243feb639119", null ]
 ];

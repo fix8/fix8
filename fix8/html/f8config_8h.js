@@ -1,5 +1,6 @@
 var f8config_8h =
 [
+    [ "CODECTIMING", "f8config_8h.html#a7517bfdc6242fe5186b818774a86efb2", null ],
     [ "CONFIGURE_OPTIONS", "f8config_8h.html#a2c90b46e6c2ae53cbbf439080a01fd91", null ],
     [ "CONFIGURE_SDATE", "f8config_8h.html#ac42e21b7a399c6a4665e84349bca5177", null ],
     [ "CONFIGURE_TIME", "f8config_8h.html#a661078846f76fdf65bb222943a71a844", null ],
@@ -77,7 +78,6 @@ var f8config_8h =
     [ "HAVE_STRSPN", "f8config_8h.html#aecb4dff1de46336ff30ad7a3a6743cc5", null ],
     [ "HAVE_STRTOL", "f8config_8h.html#adca0e8e7c3827189abcd6ceae6f60c32", null ],
     [ "HAVE_STRTOUL", "f8config_8h.html#a0f08977476bc5b181092cf8b3ddaf368", null ],
-    [ "HAVE_SYS_GMON_H", "f8config_8h.html#adff79bafd396f497f993bb1c3860ced0", null ],
     [ "HAVE_SYS_IOCTL_H", "f8config_8h.html#a3c53bc046c95078b26f13b3cfecdf210", null ],
     [ "HAVE_SYS_PARAM_H", "f8config_8h.html#a05aa9fc25e1231d8eb347390558e4e22", null ],
     [ "HAVE_SYS_SOCKET_H", "f8config_8h.html#afb96c2bc08ebf33cca68c714f624a58d", null ],
@@ -112,7 +112,6 @@ var f8config_8h =
     [ "PACKAGE_URL", "f8config_8h.html#a5c93853116d5a50307b6744f147840aa", null ],
     [ "PACKAGE_VERSION", "f8config_8h.html#aa326a05d5e30f9e9a4bb0b4469d5d0c0", null ],
     [ "PATCH_VERSION_NUM", "f8config_8h.html#a8d9556de1e767d55bb4d961702101c56", null ],
-    [ "PROFILING_BUILD", "f8config_8h.html#a5f07c2104d4aadaf8951de93264a0621", null ],
     [ "RESERVE_PERCENT", "f8config_8h.html#a9b795b8180857ec209f8015b20a52252", null ],
     [ "RETSIGTYPE", "f8config_8h.html#adbe5dcee9c146b338794974137c55e70", null ],
     [ "STDC_HEADERS", "f8config_8h.html#a550e5c272cc3cf3814651721167dcd23", null ],

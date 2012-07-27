@@ -10,6 +10,7 @@ var classFIX8_1_1TEX_1_1Heartbeat =
     [ "is_admin", "classFIX8_1_1TEX_1_1Heartbeat.html#ac1e0b2d2083fe2c3867a84cb80942cd1", null ],
     [ "process", "classFIX8_1_1TEX_1_1Heartbeat.html#a9b36569203b8b7d57a7c6708bbd5c994", null ],
     [ "process", "classFIX8_1_1TEX_1_1Heartbeat.html#a9b36569203b8b7d57a7c6708bbd5c994", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1Heartbeat.html#a0effa8ea42e058624ff11a618c6704b1", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1Heartbeat.html#a0eb07c24badc22b1859186dc3d471722", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1Heartbeat.html#aa52dbbae9a625883c995085a1958ada3", null ]
 ];

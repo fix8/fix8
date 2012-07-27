@@ -2,7 +2,7 @@ var searchData=
 [
   ['ubuf',['Ubuf',['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html',1,'FIX8::BDBPersister::KeyDataBuffer']]],
   ['ubuf',['Ubuf',['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#a23b8bebb7e81c350c7d654a8dd760ce4',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf()'],['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#af1170eb0e7576216cb676c694244e8bb',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf(const unsigned val)'],['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#a17247a02467e079909414ebe9cc3c926',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf(const Ubuf &amp;from)']]],
-  ['underflow',['underflow',['../classgzstreambuf.html#a84ab99df5fd4df27425573757973e3f4',1,'gzstreambuf::underflow()'],['../classfdinbuf.html#ac0b8621b5de7a912bbf5eeb75ccb5329',1,'fdinbuf::underflow()'],['../classfdinbuf.html#ac0b8621b5de7a912bbf5eeb75ccb5329',1,'fdinbuf::underflow()']]],
+  ['underflow',['underflow',['../classFIX8_1_1fdinbuf.html#ab8c0e928fbc8b1152dbf356dc1d5bdef',1,'FIX8::fdinbuf::underflow()'],['../classgzstreambuf.html#a84ab99df5fd4df27425573757973e3f4',1,'gzstreambuf::underflow()']]],
   ['underlyingadjustedquantity',['UnderlyingAdjustedQuantity',['../namespaceFIX8_1_1TEX.html#a9eb641780c3a28692ac86de2d8911d44',1,'FIX8::TEX']]],
   ['underlyingallocationpercent',['UnderlyingAllocationPercent',['../namespaceFIX8_1_1TEX.html#a13d857abbd22dc1b709ff7735e2bb61b',1,'FIX8::TEX']]],
   ['underlyingattachmentpoint',['UnderlyingAttachmentPoint',['../namespaceFIX8_1_1TEX.html#a1b5137e6286a21384fd57e017af4e4da',1,'FIX8::TEX']]],
@@ -137,7 +137,7 @@ var searchData=
   ['unitofmeasure_5ftroy_5founces',['UnitOfMeasure_TROY_OUNCES',['../namespaceFIX8_1_1TEX.html#a924ec10b30c8eae6b53fa2a3cb948948',1,'FIX8::TEX']]],
   ['unitofmeasure_5fus_5fdollars',['UnitOfMeasure_US_DOLLARS',['../namespaceFIX8_1_1TEX.html#af782ae02c46a2db71c5f652d00f5db64',1,'FIX8::TEX']]],
   ['unitofmeasureqty',['UnitOfMeasureQty',['../namespaceFIX8_1_1TEX.html#a518cb00370f0a414282291817cf18577',1,'FIX8::TEX']]],
-  ['unset_5fraw_5fmode',['unset_raw_mode',['../classMyMenu.html#a46da09d1d70d3a5ad083a2ace0407860',1,'MyMenu::unset_raw_mode()'],['../classMyMenu.html#a46da09d1d70d3a5ad083a2ace0407860',1,'MyMenu::unset_raw_mode()']]],
+  ['unset_5fraw_5fmode',['unset_raw_mode',['../classFIX8_1_1tty__save__state.html#aaecaabf5b98750e1a62a093bea443899',1,'FIX8::tty_save_state']]],
   ['unsolicitedindicator',['UnsolicitedIndicator',['../namespaceFIX8_1_1TEX.html#a592c25022220e34be05b1d7a387905f9',1,'FIX8::TEX']]],
   ['unsolicitedindicator_5fno',['UnsolicitedIndicator_NO',['../namespaceFIX8_1_1TEX.html#a590c848f03de148e9236457269db1ff2',1,'FIX8::TEX']]],
   ['unsolicitedindicator_5frealm_5fels',['UnsolicitedIndicator_realm_els',['../namespaceFIX8_1_1TEX.html#a3bdab5d5c9fd1db4917dd135d70114d8',1,'FIX8::TEX']]],

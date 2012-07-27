@@ -6,7 +6,6 @@ var hierarchy =
     [ "FIX8::AsyncSocket< Message * >", "classFIX8_1_1AsyncSocket.html", [
       [ "FIX8::FIXWriter", "classFIX8_1_1FIXWriter.html", null ]
     ] ],
-    [ "fdinbuf", "classfdinbuf.html", null ],
     [ "filestdin", "classfilestdin.html", null ],
     [ "FIX8::_threadbase", "classFIX8_1_1__threadbase.html", [
       [ "FIX8::Thread< T >", "classFIX8_1_1Thread.html", null ],
@@ -62,6 +61,7 @@ var hierarchy =
       [ "FIX8::ClientConnection", "classFIX8_1_1ClientConnection.html", null ],
       [ "FIX8::ServerConnection", "classFIX8_1_1ServerConnection.html", null ]
     ] ],
+    [ "FIX8::ConsoleMenu", "classFIX8_1_1ConsoleMenu.html", null ],
     [ "FIX8::Ctxt", "structFIX8_1_1Ctxt.html", null ],
     [ "FIX8::CustomFields", "classFIX8_1_1CustomFields.html", [
       [ "FIX8::TEX::myfix_custom", "classFIX8_1_1TEX_1_1myfix__custom.html", null ]
@@ -99,11 +99,13 @@ var hierarchy =
       [ "FIX8::ThreadException", "structFIX8_1_1ThreadException.html", null ]
     ] ],
     [ "FIX8::F8MetaCntx", "structFIX8_1_1F8MetaCntx.html", null ],
+    [ "FIX8::fdinbuf", "classFIX8_1_1fdinbuf.html", null ],
     [ "FIX8::fdoutbuf", "classFIX8_1_1fdoutbuf.html", null ],
     [ "FIX8::FieldSpec", "structFIX8_1_1FieldSpec.html", null ],
     [ "FIX8::FieldTrait", "structFIX8_1_1FieldTrait.html", null ],
     [ "FIX8::FieldTrait::Compare", "structFIX8_1_1FieldTrait_1_1Compare.html", null ],
     [ "FIX8::FieldTrait::PosCompare", "structFIX8_1_1FieldTrait_1_1PosCompare.html", null ],
+    [ "FIX8::FieldTrait_Hash_Array", "structFIX8_1_1FieldTrait__Hash__Array.html", null ],
     [ "FIX8::FieldTraits", "classFIX8_1_1FieldTraits.html", null ],
     [ "FIX8::fptrostream", "classFIX8_1_1fptrostream.html", null ],
     [ "FIX8::free_ptr< Deleter >", "structFIX8_1_1free__ptr.html", null ],
@@ -1864,6 +1866,7 @@ var hierarchy =
       [ "FIX8::MemoryPersister", "classFIX8_1_1MemoryPersister.html", null ]
     ] ],
     [ "FIX8::presorted_set< K, T, Comp >", "classFIX8_1_1presorted__set.html", null ],
+    [ "FIX8::presorted_set< unsigned short, FieldTrait, FieldTrait::Compare >", "classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html", null ],
     [ "FIX8::RealmBase", "structFIX8_1_1RealmBase.html", null ],
     [ "FIX8::RealmObject", "classFIX8_1_1RealmObject.html", [
       [ "FIX8::TypedRealm< T >", "classFIX8_1_1TypedRealm.html", null ],
@@ -1910,6 +1913,7 @@ var hierarchy =
     [ "FIX8::Tickval", "classFIX8_1_1Tickval.html", null ],
     [ "FIX8::Timer< T >", "classFIX8_1_1Timer.html", null ],
     [ "FIX8::TimerEvent< T >", "classFIX8_1_1TimerEvent.html", null ],
+    [ "FIX8::tty_save_state", "classFIX8_1_1tty__save__state.html", null ],
     [ "gzstreambase", "classgzstreambase.html", [
       [ "ogzstream", "classogzstream.html", null ]
     ] ],

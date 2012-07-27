@@ -38,7 +38,7 @@ var searchData=
   ['inplacexlate',['InplaceXlate',['../classXmlElement.html#aaf341d7c5d3cb937fc2b84f6ae9b0dba',1,'XmlElement']]],
   ['inputfile',['inputFile',['../f8c_8cpp.html#a5e9f951ac74e1226535d038b1893d4a1',1,'f8c.cpp']]],
   ['inputsource',['InputSource',['../namespaceFIX8_1_1TEX.html#a8672f4cf19ca495c04d456ba73a9cbd8',1,'FIX8::TEX']]],
-  ['insert',['insert',['../classFIX8_1_1presorted__set.html#a187bc407c739c4bfcdf25d10372ae658',1,'FIX8::presorted_set::insert(const_iterator what)'],['../classFIX8_1_1presorted__set.html#a2f87c3c645fe60416cca6a4276469177',1,'FIX8::presorted_set::insert(const_iterator what_begin, const_iterator what_end)']]],
+  ['insert',['insert',['../classFIX8_1_1presorted__set.html#a187bc407c739c4bfcdf25d10372ae658',1,'FIX8::presorted_set::insert(const_iterator what)'],['../classFIX8_1_1presorted__set.html#a2f87c3c645fe60416cca6a4276469177',1,'FIX8::presorted_set::insert(const_iterator what_begin, const_iterator what_end)'],['../classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a200116afcef2e5b442fc4ae0334c0faf',1,'FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::insert(const_iterator what)'],['../classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a3d2315ed424645a5715bc2da93b02e5a',1,'FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::insert(const_iterator what_begin, const_iterator what_end)']]],
   ['insert_5fyear',['insert_year',['../f8c_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4',1,'insert_year():&#160;f8cutils.cpp'],['../f8cutils_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4',1,'insert_year():&#160;f8cutils.cpp']]],
   ['instance',['instance',['../classFIX8_1_1Singleton.html#a4126bed417aa223a55989694f938e51e',1,'FIX8::Singleton']]],
   ['instance_5fptr',['Instance_ptr',['../classFIX8_1_1SessionInstance.html#a9a0bf2cb1f7dcefaed6f9b380bbcd782',1,'FIX8::SessionInstance']]],
@@ -86,7 +86,7 @@ var searchData=
   ['integral_5ftype',['integral_type',['../classFIX8_1_1ebitset.html#af81a199a48e1a239ffd4fb387e12a9f4',1,'FIX8::ebitset::integral_type()'],['../classFIX8_1_1ebitset__r.html#a6f33e20ca33e5e9ef3b208cf73a34c0b',1,'FIX8::ebitset_r::integral_type()']]],
   ['interestaccrualdate',['InterestAccrualDate',['../namespaceFIX8_1_1TEX.html#a838b71d90e3354c2fdabe286458e5dc8',1,'FIX8::TEX']]],
   ['interestatmaturity',['InterestAtMaturity',['../namespaceFIX8_1_1TEX.html#a2f9a993eb2c0e6d3d1384c90108e34bb',1,'FIX8::TEX']]],
-  ['internal_5fresult',['internal_result',['../classFIX8_1_1presorted__set.html#ab58edd957f3922b166c9e64fcc3e6d9e',1,'FIX8::presorted_set']]],
+  ['internal_5fresult',['internal_result',['../classFIX8_1_1presorted__set.html#ab58edd957f3922b166c9e64fcc3e6d9e',1,'FIX8::presorted_set::internal_result()'],['../classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a7ad06b4a5bb47e2f9f1acec371720f56',1,'FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::internal_result()']]],
   ['intervaltimer',['IntervalTimer',['../classFIX8_1_1IntervalTimer.html',1,'FIX8']]],
   ['intervaltimer',['IntervalTimer',['../classFIX8_1_1IntervalTimer.html#a62ac8015e34730792fb3df74d5f5280d',1,'FIX8::IntervalTimer']]],
   ['invalidbodylength',['InvalidBodyLength',['../structFIX8_1_1InvalidBodyLength.html',1,'FIX8']]],
@@ -177,5 +177,6 @@ var searchData=
   ['islinux',['ISLINUX',['../f8config_8h.html#a69558ec41f9db5924e0e7b6d4964f018',1,'f8config.h']]],
   ['issuedate',['IssueDate',['../namespaceFIX8_1_1TEX.html#a27c57bce2e4ae2ac208b1796a6db5c61',1,'FIX8::TEX']]],
   ['issuer',['Issuer',['../namespaceFIX8_1_1TEX.html#a0c801f4f2c8522a7636c768e8daab762',1,'FIX8::TEX']]],
-  ['iterator',['iterator',['../classFIX8_1_1presorted__set.html#a2de6d386eb790767b34cf1600e0b51cd',1,'FIX8::presorted_set']]]
+  ['iterator',['iterator',['../classFIX8_1_1presorted__set.html#a2de6d386eb790767b34cf1600e0b51cd',1,'FIX8::presorted_set::iterator()'],['../classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#ab7a07189080a5d92f4f36a6015f04f1c',1,'FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::iterator()']]],
+  ['itoa',['itoa',['../namespaceFIX8.html#a7c2009dc0b1b420da3204dc4af33daf8',1,'FIX8']]]
 ];

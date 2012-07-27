@@ -5,6 +5,7 @@ var classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoUnderlyings_1_1NoUndlyInstrument
     [ "create_group", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a96af57945950d966748c83d5f71b13d0", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a51ed7b35dc26879a21b118d479136963", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a673bea1c39d07f038058d753a88aeb25", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a4b0edbdda1a1eaa860cf6605b9e67bb2", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a01457aca81bac20fee5e59383e8431eb", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a639ed04d5a4b488c34af7ca0ceb46506", null ]
 ];

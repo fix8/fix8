@@ -1,7 +1,10 @@
 var classFIX8_1_1Configuration =
 [
     [ "ConfigMap", "classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410", null ],
-    [ "Logtype", "classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2", null ],
+    [ "Logtype", "classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2", [
+      [ "session_log", "classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2a8f06c450c3b6d8ec13d86847ee790e2c", null ],
+      [ "protocol_log", "classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2a0596d4c2007a735c0f84ad824f3eb283", null ]
+    ] ],
     [ "Configuration", "classFIX8_1_1Configuration.html#a16a94169784d5c3c98092ddc0edf552a", null ],
     [ "~Configuration", "classFIX8_1_1Configuration.html#a0bb1685581bfae684ec48ca7de704d80", null ],
     [ "create_logger", "classFIX8_1_1Configuration.html#accd1c699ae043053cc5bd7edc4979d7f", null ],

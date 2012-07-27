@@ -10,6 +10,7 @@ var classFIX8_1_1Field_3_01UTCDateOnly_00_01field_01_4 =
     [ "operator()", "classFIX8_1_1Field_3_01UTCDateOnly_00_01field_01_4.html#af6fc91adf5887728527428bf0274cee5", null ],
     [ "operator=", "classFIX8_1_1Field_3_01UTCDateOnly_00_01field_01_4.html#a17f8ed4ab4dcf23ee3df8e39eb3553ef", null ],
     [ "print", "classFIX8_1_1Field_3_01UTCDateOnly_00_01field_01_4.html#a782931baf70804d653c820f3c3a46e0b", null ],
+    [ "print", "classFIX8_1_1Field_3_01UTCDateOnly_00_01field_01_4.html#a0e5a793fafb53965300918743f6c3f33", null ],
     [ "set", "classFIX8_1_1Field_3_01UTCDateOnly_00_01field_01_4.html#a5782cbf7c9fa9c453bd11c124f1b679d", null ],
     [ "_value", "classFIX8_1_1Field_3_01UTCDateOnly_00_01field_01_4.html#a51d58a20f8e5c2b34a04bc27a9c7fa5b", null ]
 ];

@@ -1,5 +1,7 @@
 var classFIX8_1_1BDBPersister =
 [
+    [ "KeyDataBuffer", "structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html", "structFIX8_1_1BDBPersister_1_1KeyDataBuffer" ],
+    [ "KeyDataPair", "structFIX8_1_1BDBPersister_1_1KeyDataPair.html", "structFIX8_1_1BDBPersister_1_1KeyDataPair" ],
     [ "BDBPersister", "classFIX8_1_1BDBPersister.html#a90158467ccc59fb8021e2c8e7b20b835", null ],
     [ "~BDBPersister", "classFIX8_1_1BDBPersister.html#ae22dd401eae325a26539c48ea8cd0819", null ],
     [ "bt_compare_fcn", "classFIX8_1_1BDBPersister.html#a564b03bb50e6a1d320f8522108cedcbf", null ],

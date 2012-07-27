@@ -5,6 +5,7 @@ var classFIX8_1_1TEX_1_1ExecutionReport_1_1NoTrdRegTimestamps =
     [ "create_group", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoTrdRegTimestamps.html#a9878dab572488ec2de476f71ee95232d", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoTrdRegTimestamps.html#a9b4deb2fa2d8127a3f51ad72bddf97bc", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoTrdRegTimestamps.html#a8ce3ffaff446ec0fd07a0cb562361257", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoTrdRegTimestamps.html#a28d12036d5d5b4f9181f926a6edb63db", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoTrdRegTimestamps.html#a516b4ef73f0f3e441fe5b17e18613d76", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoTrdRegTimestamps.html#abb2998df48ebbd5eec4380fb0688d884", null ]
 ];

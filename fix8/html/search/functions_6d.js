@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['main',['main',['../f8c_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;f8c.cpp'],['../hfprint_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;hfprint.cpp'],['../hftest_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;hftest.cpp'],['../myfix_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;myfix.cpp'],['../myprint_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;myprint.cpp']]],
+  ['main',['main',['../f8c_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;f8c.cpp'],['../harness_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;harness.cpp'],['../hfprint_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;hfprint.cpp'],['../hftest_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;hftest.cpp'],['../myfix_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;myfix.cpp'],['../myprint_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;myprint.cpp']]],
   ['make_5fid',['make_id',['../classFIX8_1_1SessionID.html#a0ce1f3ba3cf5355bff480325f4acce0a',1,'FIX8::SessionID']]],
   ['marketdataincrementalrefresh',['MarketDataIncrementalRefresh',['../classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh.html#a1dfe7ad6d3aa4f9293d05693f8550874',1,'FIX8::TEX::MarketDataIncrementalRefresh']]],
   ['marketdatarequest',['MarketDataRequest',['../classFIX8_1_1TEX_1_1MarketDataRequest.html#ab8bec6e4e11e8e8cc114d590b42a0c23',1,'FIX8::TEX::MarketDataRequest']]],
@@ -456,5 +456,5 @@ var searchData=
   ['myfix_5frouter',['Myfix_Router',['../classFIX8_1_1TEX_1_1Myfix__Router.html#ac45e99228730daefbd69f33f1851cba7',1,'FIX8::TEX::Myfix_Router']]],
   ['myfix_5fsession_5fclient',['myfix_session_client',['../classmyfix__session__client.html#af277fd982d3485290a1c565d8a811e11',1,'myfix_session_client']]],
   ['myfix_5fsession_5fserver',['myfix_session_server',['../classmyfix__session__server.html#aa561fe2a4a8c1eec11049553c42b984f',1,'myfix_session_server']]],
-  ['mymenu',['MyMenu',['../classMyMenu.html#ad7a4c4452d5c8ef780190c91c5d86d50',1,'MyMenu::MyMenu(hf_session_client &amp;session, int infd, std::ostream &amp;ostr)'],['../classMyMenu.html#ae98dd48738a5df1d7f379e8fd18ec1ff',1,'MyMenu::MyMenu(myfix_session_client &amp;session, int infd, std::ostream &amp;ostr)']]]
+  ['mymenu',['MyMenu',['../classMyMenu.html#ad7a4c4452d5c8ef780190c91c5d86d50',1,'MyMenu::MyMenu(hf_session_client &amp;session, int infd, std::ostream &amp;ostr)'],['../classMyMenu.html#aedb573336525ac4d06564c0e1ec95ace',1,'MyMenu::MyMenu(myfix_session_client &amp;session, int infd, std::ostream &amp;ostr, FIX8::ConsoleMenu *cm=0)']]]
 ];

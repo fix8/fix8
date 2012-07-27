@@ -1,5 +1,6 @@
 var classFIX8_1_1f8Allocator =
 [
+    [ "rebind", "structFIX8_1_1f8Allocator_1_1rebind.html", "structFIX8_1_1f8Allocator_1_1rebind" ],
     [ "const_pointer", "classFIX8_1_1f8Allocator.html#a83c7d5e9c1ede550f6bf5ec06c8b74cd", null ],
     [ "const_reference", "classFIX8_1_1f8Allocator.html#a4cc2174958a0b986f39792eb49f09042", null ],
     [ "difference_type", "classFIX8_1_1f8Allocator.html#ab1b93cd3804ddd85e8a10c527ac2a21a", null ],

@@ -8,6 +8,7 @@ var classFIX8_1_1presorted__set =
     [ "presorted_set", "classFIX8_1_1presorted__set.html#aad77674120f69d8e97cbeaa178a857e6", null ],
     [ "presorted_set", "classFIX8_1_1presorted__set.html#a40e195ca97fdf5f5e949284e82cbacd8", null ],
     [ "~presorted_set", "classFIX8_1_1presorted__set.html#a803f16346b76937f43f2f31f80d7f29a", null ],
+    [ "at", "classFIX8_1_1presorted__set.html#a5b64a2e288fdf06f13c910cb48a064c9", null ],
     [ "begin", "classFIX8_1_1presorted__set.html#a7d0717c238e565e4e5e3140cc02e5d6d", null ],
     [ "begin", "classFIX8_1_1presorted__set.html#ac97af8b093f989d767bcdbccae03d3e4", null ],
     [ "calc_reserve", "classFIX8_1_1presorted__set.html#a8f9bcca3bab1083dcf2cd51482e16f5a", null ],

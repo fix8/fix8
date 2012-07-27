@@ -1,5 +1,6 @@
 var myprint_8cpp =
 [
+    [ "filestdin", "classfilestdin.html", "classfilestdin" ],
     [ "MessageCount", "myprint_8cpp.html#a736be6f8a6e38fb510aace973624d729", null ],
     [ "GETARGLIST", "myprint_8cpp.html#ac47670de2527381421f4d515ac8372df", null ],
     [ "main", "myprint_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627", null ],

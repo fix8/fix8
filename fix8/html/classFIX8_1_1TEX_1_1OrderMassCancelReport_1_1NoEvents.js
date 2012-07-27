@@ -5,6 +5,7 @@ var classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoEvents =
     [ "create_group", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoEvents.html#aad470520c9cfadbb46c960e5df997316", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoEvents.html#a0797611d788a759d3a7f16e996b87426", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoEvents.html#a02d09611d24f9b4271bce69dc9064092", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoEvents.html#acf61a224d9073bdcd42a2a1ec2026c90", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoEvents.html#a2aedeab32694af01f23400a4308413c4", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoEvents.html#a662820135bac64f3b755a6f29facb183", null ]
 ];

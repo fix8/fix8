@@ -101,7 +101,7 @@ var searchData=
   ['responsedestination',['ResponseDestination',['../namespaceFIX8_1_1TEX.html#aed93b3077e009739c6c4f3dde1b3f797',1,'FIX8::TEX']]],
   ['responsetransporttype',['ResponseTransportType',['../namespaceFIX8_1_1TEX.html#a1626fa71a2c225e13509628d620efabd',1,'FIX8::TEX']]],
   ['restructuringtype',['RestructuringType',['../namespaceFIX8_1_1TEX.html#aaa88637d874aca92618fbe2479b42e98',1,'FIX8::TEX']]],
-  ['result',['result',['../classFIX8_1_1presorted__set.html#ab80a702156efae6ac6731c0de13939bc',1,'FIX8::presorted_set']]],
+  ['result',['result',['../classFIX8_1_1presorted__set.html#ab80a702156efae6ac6731c0de13939bc',1,'FIX8::presorted_set::result()'],['../classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#aa479dc1c6901c0b1a6c15a4774275e74',1,'FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::result()']]],
   ['reversalindicator',['ReversalIndicator',['../namespaceFIX8_1_1TEX.html#a71f7e88c8bcaa85d42038c2d261d5dab',1,'FIX8::TEX']]],
   ['revthreadcodes',['RevThreadCodes',['../classFIX8_1_1Logger.html#a288d6d01354fe848f48150f3e656076e',1,'FIX8::Logger']]],
   ['rfqreqid',['RFQReqID',['../namespaceFIX8_1_1TEX.html#a98f0cfd42a2764f0dacff353df49d593',1,'FIX8::TEX']]],

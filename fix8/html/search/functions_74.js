@@ -37,7 +37,7 @@ var searchData=
   ['taxadvantagetype_5froth_5fira_5f25',['TaxAdvantageType_ROTH_IRA_25',['../namespaceFIX8_1_1TEX.html#aece757619b7bbeefebce3ff899b2d8fe',1,'FIX8::TEX']]],
   ['taxadvantagetype_5fself_5fdirected_5fira',['TaxAdvantageType_SELF_DIRECTED_IRA',['../namespaceFIX8_1_1TEX.html#a359765b4bc60cf451dd112e9d3ca31f4',1,'FIX8::TEX']]],
   ['taxadvantagetype_5ftessa',['TaxAdvantageType_TESSA',['../namespaceFIX8_1_1TEX.html#a3150c8dc85cb17e23876baf212ffcf6f',1,'FIX8::TEX']]],
-  ['term_5freceived',['term_received',['../hfprint_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e',1,'term_received(false):&#160;hfprint.cpp'],['../hftest_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e',1,'term_received(false):&#160;hftest.cpp'],['../myfix_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e',1,'term_received(false):&#160;myfix.cpp'],['../myprint_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e',1,'term_received(false):&#160;myprint.cpp']]],
+  ['term_5freceived',['term_received',['../harness_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e',1,'term_received(false):&#160;harness.cpp'],['../hfprint_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e',1,'term_received(false):&#160;hfprint.cpp'],['../hftest_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e',1,'term_received(false):&#160;hftest.cpp'],['../myfix_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e',1,'term_received(false):&#160;myfix.cpp'],['../myprint_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e',1,'term_received(false):&#160;myprint.cpp']]],
   ['terminationtype_5fflexible',['TerminationType_FLEXIBLE',['../namespaceFIX8_1_1TEX.html#a31cb6392a469d93af76c57936401adb1',1,'FIX8::TEX']]],
   ['terminationtype_5fopen',['TerminationType_OPEN',['../namespaceFIX8_1_1TEX.html#a83dad895691f6c232728a3d6e9f3b341',1,'FIX8::TEX']]],
   ['terminationtype_5fovernight',['TerminationType_OVERNIGHT',['../namespaceFIX8_1_1TEX.html#a1d81b35606e0d4d067a85985dd13960d',1,'FIX8::TEX']]],
@@ -416,5 +416,6 @@ var searchData=
   ['triggertype_5frealm_5fels',['TriggerType_realm_els',['../namespaceFIX8_1_1TEX.html#aa3b0c0796d489166a1be7a361c2bbb47',1,'FIX8::TEX']]],
   ['triggertype_5fspecified_5ftrading_5fsession',['TriggerType_SPECIFIED_TRADING_SESSION',['../namespaceFIX8_1_1TEX.html#a8d8f19e4f695785894712a2098302142',1,'FIX8::TEX']]],
   ['trim',['trim',['../namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20',1,'FIX8::trim(std::string &amp;source, const std::string &amp;ws=&quot; \t&quot;)'],['../namespaceFIX8.html#ad3ffb03a8b99d6de696664b0a00b0bf5',1,'FIX8::trim(string &amp;source, const string &amp;ws)']]],
+  ['tty_5fsave_5fstate',['tty_save_state',['../classFIX8_1_1tty__save__state.html#a90779370998cf131d746373b9681c72e',1,'FIX8::tty_save_state']]],
   ['typedrealm',['TypedRealm',['../classFIX8_1_1TypedRealm.html#aaf084574dafb81376d462fa2c4920a13',1,'FIX8::TypedRealm']]]
 ];

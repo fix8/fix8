@@ -1,5 +1,6 @@
 var structFIX8_1_1BDBPersister_1_1KeyDataBuffer =
 [
+    [ "Ubuf", "unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html", "unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf" ],
     [ "KeyDataBuffer", "structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html#aa2ef3427233d7e213f1384fb8750fc3d", null ],
     [ "KeyDataBuffer", "structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html#ac12abe5cfaa7e40bfb7e93d58ed023ce", null ],
     [ "KeyDataBuffer", "structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html#aa50b18acdf4a7241e2edec3388ddeeed", null ],

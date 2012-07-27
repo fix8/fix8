@@ -20,7 +20,7 @@ var searchData=
   ['integral_5ftype',['integral_type',['../classFIX8_1_1ebitset.html#af81a199a48e1a239ffd4fb387e12a9f4',1,'FIX8::ebitset::integral_type()'],['../classFIX8_1_1ebitset__r.html#a6f33e20ca33e5e9ef3b208cf73a34c0b',1,'FIX8::ebitset_r::integral_type()']]],
   ['interestaccrualdate',['InterestAccrualDate',['../namespaceFIX8_1_1TEX.html#a838b71d90e3354c2fdabe286458e5dc8',1,'FIX8::TEX']]],
   ['interestatmaturity',['InterestAtMaturity',['../namespaceFIX8_1_1TEX.html#a2f9a993eb2c0e6d3d1384c90108e34bb',1,'FIX8::TEX']]],
-  ['internal_5fresult',['internal_result',['../classFIX8_1_1presorted__set.html#ab58edd957f3922b166c9e64fcc3e6d9e',1,'FIX8::presorted_set']]],
+  ['internal_5fresult',['internal_result',['../classFIX8_1_1presorted__set.html#ab58edd957f3922b166c9e64fcc3e6d9e',1,'FIX8::presorted_set::internal_result()'],['../classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a7ad06b4a5bb47e2f9f1acec371720f56',1,'FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::internal_result()']]],
   ['investorcountryofresidence',['InvestorCountryOfResidence',['../namespaceFIX8_1_1TEX.html#a813305b8c3cf3b3f30a986fe961af5fe',1,'FIX8::TEX']]],
   ['inviewofcommon',['InViewOfCommon',['../namespaceFIX8_1_1TEX.html#a3e6bc83f9b9f2ec19cb3534289787b03',1,'FIX8::TEX']]],
   ['ioiid',['IOIid',['../namespaceFIX8_1_1TEX.html#a4fb17feeb37447ed03a85b7c448854ae',1,'FIX8::TEX::IOIid()'],['../namespaceFIX8_1_1TEX.html#a7116c2295824e5eb7a6499e214bf37e8',1,'FIX8::TEX::IOIID()']]],
@@ -32,5 +32,5 @@ var searchData=
   ['ioitranstype',['IOITransType',['../namespaceFIX8_1_1TEX.html#a51c095675dd0c90e56259616d4f36c26',1,'FIX8::TEX']]],
   ['issuedate',['IssueDate',['../namespaceFIX8_1_1TEX.html#a27c57bce2e4ae2ac208b1796a6db5c61',1,'FIX8::TEX']]],
   ['issuer',['Issuer',['../namespaceFIX8_1_1TEX.html#a0c801f4f2c8522a7636c768e8daab762',1,'FIX8::TEX']]],
-  ['iterator',['iterator',['../classFIX8_1_1presorted__set.html#a2de6d386eb790767b34cf1600e0b51cd',1,'FIX8::presorted_set']]]
+  ['iterator',['iterator',['../classFIX8_1_1presorted__set.html#a2de6d386eb790767b34cf1600e0b51cd',1,'FIX8::presorted_set::iterator()'],['../classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#ab7a07189080a5d92f4f36a6015f04f1c',1,'FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::iterator()']]]
 ];

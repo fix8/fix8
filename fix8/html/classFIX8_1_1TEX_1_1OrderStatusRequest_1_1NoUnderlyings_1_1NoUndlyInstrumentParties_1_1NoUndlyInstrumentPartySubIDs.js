@@ -5,6 +5,7 @@ var classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoUnderlyings_1_1NoUndlyInstrument
     [ "create_group", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a787e86865972341203b2f33dcccf743c", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#aab44225471afff56f90c00b07842d6c6", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#af2b3d759f48a10deb6402eb0d3a74467", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a7bc463c10f00352b44016f85dc04efaf", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a9a6bab8353079a2d38dc5193db642063", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ae48f5e2dd877df560068b81c62ff5d16", null ]
 ];

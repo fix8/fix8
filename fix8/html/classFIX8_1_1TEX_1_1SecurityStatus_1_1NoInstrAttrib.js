@@ -5,6 +5,7 @@ var classFIX8_1_1TEX_1_1SecurityStatus_1_1NoInstrAttrib =
     [ "create_group", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoInstrAttrib.html#a38a6bb14d66f727592f825fa12e3f98d", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoInstrAttrib.html#a455e2cac36c696202dbb198485871f7d", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoInstrAttrib.html#a79220640edb63219665b459d79f969aa", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoInstrAttrib.html#abe9158c8f0ad1d7d9f34a13f41cec746", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoInstrAttrib.html#aa68af657701a791c9830140b9b21030f", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoInstrAttrib.html#aee935508faa172c96258fd52358b3698", null ]
 ];

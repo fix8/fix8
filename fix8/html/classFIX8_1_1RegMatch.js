@@ -1,5 +1,6 @@
 var classFIX8_1_1RegMatch =
 [
+    [ "SubLimit_", "classFIX8_1_1RegMatch.html#a6bb4e56c48b8cec75db80a8dfc7e3fe0a58b255649a49f4e7bd77c790d4ec71bb", null ],
     [ "RegMatch", "classFIX8_1_1RegMatch.html#a668ccad180809a780a63a475f47acd95", null ],
     [ "~RegMatch", "classFIX8_1_1RegMatch.html#a743f5179f5d8e32f023fd00d1aec1d7d", null ],
     [ "SubCnt", "classFIX8_1_1RegMatch.html#ae1986f6b79bf706344ca8cc9617da235", null ],

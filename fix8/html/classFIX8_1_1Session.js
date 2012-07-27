@@ -1,9 +1,17 @@
 var classFIX8_1_1Session =
 [
+    [ "RetransmissionContext", "structFIX8_1_1Session_1_1RetransmissionContext.html", "structFIX8_1_1Session_1_1RetransmissionContext" ],
     [ "Control", "classFIX8_1_1Session.html#a62154bc440eb551ea00ed63b7b55d3fc", null ],
     [ "Handlers", "classFIX8_1_1Session.html#a3d8362f1256c51bbc7d79da9ec559d78", null ],
     [ "SequencePair", "classFIX8_1_1Session.html#ae9ef38b606a6a2dbe98d7977f381bb95", null ],
-    [ "SessionControl", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caa", null ],
+    [ "default_retry_interval", "classFIX8_1_1Session.html#a433a389c79f504ac9ee61607796b212ea45d69f5084711c9d68d7ec3d28fed790", null ],
+    [ "default_login_retries", "classFIX8_1_1Session.html#a433a389c79f504ac9ee61607796b212eaaf5fd5c6da5313a21bfc95026b2f9130", null ],
+    [ "SessionControl", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caa", [
+      [ "shutdown", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaa5016fc4b321b44eaa80c39a3736d980e", null ],
+      [ "print", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaaa43fb4836277e668cd544a67c08cace7", null ],
+      [ "debug", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaa607f8c76c40e25275ff49a321241deff", null ],
+      [ "count", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaac1a79fd8b7456de519547acba0066c25", null ]
+    ] ],
     [ "Session", "classFIX8_1_1Session.html#a8444adfe07c5dd62c2eeb0de46daff07", null ],
     [ "Session", "classFIX8_1_1Session.html#a0f96fb2ddd808c9dedc1cf3bd7bbc349", null ],
     [ "~Session", "classFIX8_1_1Session.html#a8753bb9dee966b7d39abc9b7237cd665", null ],

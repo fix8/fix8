@@ -95,7 +95,9 @@ var searchData=
   ['msg_5fseq_5fnum',['msg_seq_num',['../namespaceFIX8.html#ad416b42d381b07f4d20fb8bdb5762af3',1,'FIX8']]],
   ['msg_5ftype',['msg_type',['../namespaceFIX8.html#a32bb4b4c038dc2994ca89bd3df17413f',1,'FIX8']]],
   ['msgdirection',['MsgDirection',['../namespaceFIX8_1_1TEX.html#af5fe4af8c0c7e7aa404948cb6e62ebfb',1,'FIX8::TEX']]],
+  ['msglist',['MsgList',['../namespaceFIX8.html#a6dd88a2896940d8d1994e0ed7cc1eefd',1,'FIX8']]],
   ['msgseqnum',['MsgSeqNum',['../namespaceFIX8_1_1TEX.html#a893e24274cba1da18e7accc91c35fb2f',1,'FIX8::TEX']]],
+  ['msgtable',['MsgTable',['../namespaceFIX8.html#a0645c021f7723c1311e406ab1616e2d9',1,'FIX8']]],
   ['msgtype',['MsgType',['../namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e',1,'FIX8::TEX']]],
   ['multilegmodel',['MultilegModel',['../namespaceFIX8_1_1TEX.html#aa6b46ffcfd536e4314b70b96682b1c1e',1,'FIX8::TEX']]],
   ['multilegpricemethod',['MultilegPriceMethod',['../namespaceFIX8_1_1TEX.html#af6a8eeaa40a8b050ee862b56768162f8',1,'FIX8::TEX']]],
@@ -103,6 +105,6 @@ var searchData=
   ['multilegrpttypereq',['MultiLegRptTypeReq',['../namespaceFIX8_1_1TEX.html#a6a4f6ab4de1b4d0449d3d7a9fb31accd',1,'FIX8::TEX']]],
   ['multiplecharvalue',['MultipleCharValue',['../namespaceFIX8.html#aef79551763b005a8beff04f025ec1a84',1,'FIX8']]],
   ['multiplestringvalue',['MultipleStringValue',['../namespaceFIX8.html#a39701c32172213a1cab14c1dfda4a96d',1,'FIX8']]],
-  ['myfix_5fbaseentry',['Myfix_BaseEntry',['../namespaceFIX8_1_1TEX.html#aaf22823da9a1fd8ce6e6191013c25067',1,'FIX8::TEX']]],
-  ['myfix_5fbasemsgentry',['Myfix_BaseMsgEntry',['../namespaceFIX8_1_1TEX.html#ac71881b47e88723657876679d016f7fc',1,'FIX8::TEX']]]
+  ['myfix_5fbaseentry',['Myfix_BaseEntry',['../namespaceFIX8_1_1TEX.html#a5772a6fd4623c84679c135c297d29e5b',1,'FIX8::TEX']]],
+  ['myfix_5fbasemsgentry',['Myfix_BaseMsgEntry',['../namespaceFIX8_1_1TEX.html#a6fd3b83148ef6a740fbf08ec8ba81941',1,'FIX8::TEX']]]
 ];

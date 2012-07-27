@@ -5,6 +5,7 @@ var classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig_1_1NoComplexE
     [ "create_group", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#aa748b185f9b6b5c117e18db4588bd04e", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#ae95de2d3001a204fd5b3f15010287936", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a2627488c35f5906751d5796aa76a3919", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a07e2be8a98bb94042d78f9082abc4174", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#afee09f425a84fd8a084c70e478f2140d", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a0ee2199a26b86f4e68774d2521204996", null ]
 ];

@@ -8,6 +8,7 @@ var classFIX8_1_1TEX_1_1OrderCancelReject =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderCancelReject.html#a1c463dc6599a7675306eb86dd8ad1704", null ],
     [ "process", "classFIX8_1_1TEX_1_1OrderCancelReject.html#ab1af5a8e7bb373dacd7d5fa50c2b5a77", null ],
     [ "process", "classFIX8_1_1TEX_1_1OrderCancelReject.html#ab1af5a8e7bb373dacd7d5fa50c2b5a77", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1OrderCancelReject.html#a0af5e1bc63d19cdc2ed07a4721a00629", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderCancelReject.html#ae07ff5a312adf12243ededd84b981679", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1OrderCancelReject.html#a457f1b4752358701a1cb42d3f2055795", null ]
 ];

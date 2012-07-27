@@ -1,8 +1,10 @@
 var classXmlElement =
 [
+    [ "EntityOrderComp", "structXmlElement_1_1EntityOrderComp.html", "structXmlElement_1_1EntityOrderComp" ],
     [ "XmlAttrs", "classXmlElement.html#ae85eace076ada6f09b8d40efc60d8d0a", null ],
     [ "XmlSet", "classXmlElement.html#ae87b0b2891d2c908c5dca6a69552e718", null ],
     [ "XmlSubEls", "classXmlElement.html#a6a45eea88fecd1c55694985085e90e08", null ],
+    [ "MaxDepth", "classXmlElement.html#aab5a9293b371ae19d4dc2c1bd6bee49bacc6863a02162cb1a1bc3dc07c4331650", null ],
     [ "XmlElement", "classXmlElement.html#a604980b35f37a37c635fd606ebe25682", null ],
     [ "XmlElement", "classXmlElement.html#af8c88915b51b4b1c4f56a0dcea51f220", null ],
     [ "~XmlElement", "classXmlElement.html#a1e67b1dfcd561d1d602988d100d80d9b", null ],

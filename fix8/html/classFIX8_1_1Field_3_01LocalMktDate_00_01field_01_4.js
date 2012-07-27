@@ -10,6 +10,7 @@ var classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4 =
     [ "operator()", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a301bf536b953705f91bc72cf6a21a2bf", null ],
     [ "operator=", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a862e2fd22a7fc72ea06539e32508f7df", null ],
     [ "print", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a8cd312a778f7eda3787991139345cd4d", null ],
+    [ "print", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#affb272478e33cfd971964271b287859f", null ],
     [ "set", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#ab1e455c5b2f3aef21513c458cf900e9e", null ],
     [ "_value", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#ad651ae6dc5f4127544877a46064d780d", null ]
 ];

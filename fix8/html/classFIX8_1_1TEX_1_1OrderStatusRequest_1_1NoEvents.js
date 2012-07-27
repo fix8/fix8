@@ -5,6 +5,7 @@ var classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoEvents =
     [ "create_group", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoEvents.html#ada117269f01df4f90b2faf58ed85432b", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoEvents.html#a7002779be20178586a09ba456532708a", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoEvents.html#a2d7d5ed4e7831f51b82ec74f74693460", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoEvents.html#a76a7b13d2d2fa2eabcce87207e7db6c8", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoEvents.html#acd6b865da48315f425e2dfad85fc378d", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoEvents.html#a5d9a2d1fb89816c03d601b86e46a76f5", null ]
 ];

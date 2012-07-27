@@ -12,6 +12,6 @@ var searchData=
   ['applicationmessagerequestack',['ApplicationMessageRequestAck',['../classFIX8_1_1TEX_1_1ApplicationMessageRequestAck.html',1,'FIX8::TEX']]],
   ['assignmentreport',['AssignmentReport',['../classFIX8_1_1TEX_1_1AssignmentReport.html',1,'FIX8::TEX']]],
   ['asyncsocket',['AsyncSocket',['../classFIX8_1_1AsyncSocket.html',1,'FIX8']]],
-  ['asyncsocket_3c_20f8string_20_3e',['AsyncSocket< f8String >',['../classFIX8_1_1AsyncSocket.html',1,'FIX8']]],
-  ['asyncsocket_3c_20message_20_2a_20_3e',['AsyncSocket< Message * >',['../classFIX8_1_1AsyncSocket.html',1,'FIX8']]]
+  ['asyncsocket_3c_20f8string_20_3e',['AsyncSocket&lt; f8String &gt;',['../classFIX8_1_1AsyncSocket.html',1,'FIX8']]],
+  ['asyncsocket_3c_20message_20_2a_20_3e',['AsyncSocket&lt; Message * &gt;',['../classFIX8_1_1AsyncSocket.html',1,'FIX8']]]
 ];

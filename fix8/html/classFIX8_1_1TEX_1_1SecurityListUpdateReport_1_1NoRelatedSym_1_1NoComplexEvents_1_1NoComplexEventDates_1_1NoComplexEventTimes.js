@@ -5,6 +5,7 @@ var classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEve
     [ "create_group", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a478277c70a8009175ee2197b6eb486ab", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a6d0636c5b2de2c772535f4871f357243", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a917c27593de4c2cc4bfeb02bb7ad2b52", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a19c7dd1875fc22567fbf1eec128b6b8d", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a63d89145fe5547aac60af82d856e54ba", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#ae6f1cb980f5d7a4da13b252388f3676a", null ]
 ];
