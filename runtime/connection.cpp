@@ -234,14 +234,6 @@ int FIXWriter::operator()()
 			scoped_ptr<Message> msg(inmsg);
 			_session.send_process(msg.get());
 #endif
-#if defined CODECTIMING
-			ostringstream gerr;
-			gerr << "  dtor(" << inmsg->get_msgtype() << "):";
-			IntervalTimer itm;
-			delete msg.release();
-			gerr << itm.Calculate();
-			GlobalLogger::log(gerr.str());
-#endif
 			++processed;
 		}
 		catch (exception& e)	// also catches Poco::Net::NetException

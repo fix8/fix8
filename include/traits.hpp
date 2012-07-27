@@ -137,6 +137,222 @@ struct FieldTrait
 };
 
 //-------------------------------------------------------------------------------------------------
+struct FieldTrait_Hash_Array
+{
+   const unsigned _els, _sz;
+   unsigned short *_arr;
+
+   FieldTrait_Hash_Array(const FieldTrait *from, const size_t els)
+      : _els(els), _sz((from + _els - 1)->_fnum + 1), _arr(new unsigned short [_sz])
+   {
+		for (unsigned ii(0); ii < _sz; _arr[ii++] = 0)
+			;
+      for (unsigned offset(0); offset < _els; ++offset)
+         _arr[from[offset]._fnum] = offset;
+   }
+
+   ~FieldTrait_Hash_Array() { delete[] _arr; }
+};
+
+//-------------------------------------------------------------------------------------------------
+/// Specialisation of Presorted set using hash array lookup
+/// Search complexity is O(1), ctor complexity approaches O(1), no insert
+template<>
+class presorted_set<unsigned short, FieldTrait, FieldTrait::Compare>
+{
+public:
+	typedef FieldTrait* iterator;
+	typedef const FieldTrait* const_iterator;
+	typedef std::pair<iterator, bool> result;
+
+	/*! Calculate the amount of space to reserve in set
+	  \param sz number of elements currently in set; if 0 retun reserve elements as size to reserve
+	  \param res percentage of sz to keep in reserve
+	  \return number of elements to additionally reserve (at least 1) */
+	static size_t calc_reserve(size_t sz, size_t res)
+	{
+		if (!sz)  // special case - reserve means number to reserve, not %
+			return res;
+		const size_t val(sz * res / 100);
+		return val ? val : 1;
+	}
+
+private:
+	const size_t _reserve;
+	size_t _sz, _rsz;
+	FieldTrait *_arr;
+	const FieldTrait_Hash_Array *_ftha;
+
+	typedef std::pair<iterator, iterator> internal_result;
+	typedef std::pair<const_iterator, const_iterator> const_internal_result;
+
+public:
+	/*! ctor - initialise from static sorted set
+	  \param arr_start pointer to start of static array to copy elements from
+	  \param sz number of elements in set to copy
+	  \param ftha pointer to field hash array
+	  \param reserve percentage of sz to keep in reserve */
+	presorted_set(const_iterator arr_start, const size_t sz, const FieldTrait_Hash_Array *ftha, const size_t reserve=RESERVE_PERCENT)
+		: _reserve(reserve), _sz(sz), _rsz(_sz + calc_reserve(_sz, _reserve)), _arr(new FieldTrait[_rsz]), _ftha(ftha)
+			{ memcpy(_arr, arr_start, _sz * sizeof(FieldTrait)); }
+
+	presorted_set(const_iterator arr_start, const size_t sz, const size_t reserve=RESERVE_PERCENT) : _reserve(reserve),
+		_sz(sz), _rsz(_sz + calc_reserve(_sz, _reserve)), _arr(new FieldTrait[_rsz]), _ftha()
+			{ memcpy(_arr, arr_start, _sz * sizeof(FieldTrait)); }
+
+	/*! ctor - initialise an empty set; defer memory allocation;
+	  \param sz number of elements to initially allocate
+	  \param reserve percentage of sz to keep in reserve */
+	explicit presorted_set(const size_t sz=0, const size_t reserve=RESERVE_PERCENT) : _reserve(reserve),
+		_sz(sz), _rsz(_sz + calc_reserve(_sz, _reserve)), _arr(), _ftha() {}
+
+	/// dtor
+	~presorted_set() { delete[] _arr; }
+
+	/*! Find an element with the given value
+	  \param what element to find
+	  \param answer true if element is found
+	  \return pointer to found element or pointer to location where element would be inserted */
+	iterator find(const FieldTrait what, bool& answer)
+	{
+		if (_ftha)
+			return (answer = what._fnum < _ftha->_sz && (_arr + _ftha->_arr[what._fnum])->_fnum == what._fnum) ? _arr + _ftha->_arr[what._fnum] : 0;
+		const internal_result res(std::equal_range (_arr, _arr + _sz, what, FieldTrait::Compare()));
+		answer = res.first != res.second;
+		return res.first;
+	}
+
+	/*! Find an element with the given key
+	  \param key to find
+	  \param answer true if element is found
+	  \return pointer to found element or pointer to location where element would be inserted */
+	iterator find(const unsigned short key, bool& answer) { return find(FieldTrait(key), answer); }
+
+	/*! Find an element with the given key (const version)
+	  \param key to find
+	  \return pointer to found element or end() */
+	const_iterator find(const unsigned short key) const { return find(FieldTrait(key)); }
+
+	/*! Find an element with the given value (const version)
+	  \param what element to find
+	  \return pointer to found element or end() */
+	const_iterator find(const FieldTrait what) const
+	{
+		if (_ftha)
+			return what._fnum < _ftha->_sz && (_arr + _ftha->_arr[what._fnum])->_fnum == what._fnum ? _arr + _ftha->_arr[what._fnum] : end();
+		const const_internal_result res(std::equal_range (_arr, _arr + _sz, what, FieldTrait::Compare()));
+		return res.first != res.second ? res.first : end();
+	}
+
+	/*! Find an element with the given key
+	  \param key to find
+	  \return pointer to found element or end() */
+	iterator find(const unsigned short key) { return find(FieldTrait(key)); }
+
+	/*! Find an element with the given value
+	  \param what value to find
+	  \return pointer to found element or end() */
+	iterator find(const FieldTrait what)
+	{
+		if (_ftha)
+			return what._fnum < _ftha->_sz && (_arr + _ftha->_arr[what._fnum])->_fnum == what._fnum ? _arr + _ftha->_arr[what._fnum] : end();
+		internal_result res(std::equal_range (_arr, _arr + _sz, what, FieldTrait::Compare()));
+		return res.first != res.second ? res.first : end();
+	}
+
+	/*! Get the element at index location
+	  \param idx of the pair to retrieve
+	  \return const_iterator to element or end() if not found */
+	const_iterator at(const size_t idx) const { return idx < _sz ? _arr + idx : end(); }
+
+	/*! Insert an element into the set
+	  \param what pointer to element to insert
+	  \return result with iterator to insert location and true or end() and false */
+	result insert(const_iterator what)
+	{
+		if (!_sz)
+		{
+			_arr = new FieldTrait[_rsz];
+			memcpy(_arr, what, sizeof(FieldTrait));
+			++_sz;
+			return result(_arr, true);
+		}
+
+		bool answer;
+		iterator where(find(*what, answer));
+		if (answer)
+			return result(end(), false);
+
+		if (_sz < _rsz)
+		{
+			memmove(where + 1, where, (end() - where) * sizeof(FieldTrait));
+			memcpy(where, what, sizeof(FieldTrait));
+		}
+		else
+		{
+			iterator new_arr(new FieldTrait[_rsz = _sz + calc_reserve(_sz, _reserve)]);
+			size_t wptr(where - _arr);
+			if (wptr > 0)
+				memcpy(new_arr, _arr, sizeof(FieldTrait) * wptr);
+			memcpy(new_arr + wptr, what, sizeof(FieldTrait));
+			memcpy(new_arr + wptr + 1, where, (end() - where) * sizeof(FieldTrait));
+			delete[] _arr;
+			_arr = new_arr;
+		}
+		++_sz;
+		return result(where, true);
+	}
+
+	/*! Find the distance between two iterators
+	  \param what_begin start iterator
+	  \param what_end end iterator (must be >= to what_begin
+	  \return distance in elements */
+	static size_t distance(const_iterator what_begin, const_iterator what_end)
+		{ return what_end - what_begin; }
+
+	/*! Insert a range of elements into the set
+	  \param what_begin pointer to 1st element to insert
+	  \param what_end pointer to nth element + 1 to insert */
+	void insert(const_iterator what_begin, const_iterator what_end)
+	{
+		for (const_iterator ptr(what_begin); ptr < what_end; ++ptr)
+			if (!insert(ptr).second)
+				break;
+	}
+
+	/*! Clear the set (does not delete) */
+	void clear() { _sz = 0; }
+
+	/*! Obtain the number of elements in the set
+	  \return the number of elements */
+	size_t size() const { return _sz; }
+
+	/*! Check if the set is empty
+	  \return true if empty */
+	bool empty() const { return _sz == 0; }
+
+	/*! Obtain the number of elements that can be inserted before reallocating
+	  \return reserved + sz */
+	size_t rsize() const { return _rsz; }
+
+	/*! Get a pointer to the first element
+	  \return the first element */
+	iterator begin() { return _arr; }
+
+	/*! Get a pointer to the last element + 1
+	  \return the last element + 1 */
+	iterator end() { return _arr + _sz; }
+
+	/*! Get a const pointer to the first element
+	  \return the first element */
+	const_iterator begin() const { return _arr; }
+
+	/*! Get a const pointer to the last element + 1
+	  \return the last element + 1 */
+	const_iterator end() const { return _arr + _sz; }
+};
+
+//-------------------------------------------------------------------------------------------------
 typedef presorted_set<unsigned short, FieldTrait, FieldTrait::Compare> Presence;
 
 /// A collection of FieldTraits for a message. Which fields are required, which are present.
@@ -150,8 +366,13 @@ public:
 	  \param begin start iterator to input
 	  \param cnt number of elements to input */
 	template<typename InputIterator>
-	FieldTraits(const InputIterator begin, const size_t cnt) : _presence(begin, cnt) {}
+	FieldTraits(const InputIterator begin, const size_t cnt
 
+#if defined PERMIT_CUSTOM_FIELDS
+			) : _presence(begin, cnt) {}
+#else
+		, const FieldTrait_Hash_Array *ftha) : _presence(begin, cnt, ftha) {}
+#endif
 	/// Ctor.
 	FieldTraits() {}
 

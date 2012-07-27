@@ -213,7 +213,7 @@ const CSMap::TypePair CSMap::_valueTable[] =
 	CSMap::TypePair(cs_trailer_preamble,
 "	void add_preamble()\n"
 "	{\n"
-"		add_field(new check_sum);\n"
+"		add_field(Common_CheckSum, 3, new check_sum);\n"
 "	}"),
 };
 template<>

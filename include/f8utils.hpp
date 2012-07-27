@@ -37,6 +37,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <tbb/atomic.h>
 #include <tbb/mutex.h>
+#include <sys/ioctl.h>
+#include <termios.h>
 
 namespace FIX8 {
 
@@ -317,7 +319,7 @@ public:
 	  \param offset to start searching
 	  \param num desired sub-expression
 	  \return the target string */
-	std::string& SubExpr(RegMatch& match, const std::string& source, std::string& target, const int offset=0, const int num=0) const
+	static std::string& SubExpr(RegMatch& match, const std::string& source, std::string& target, const int offset=0, const int num=0)
 	{
 		if (num < match.subCnt_)
 			target = source.substr(offset + match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
@@ -331,7 +333,7 @@ public:
 	  \param source source string
 	  \param num desired sub-expression
 	  \return the source string */
-	std::string& Erase(RegMatch& match, std::string& source, const int num=0) const
+	static std::string& Erase(RegMatch& match, std::string& source, const int num=0)
 	{
 		if (num < match.subCnt_)
 			source.erase(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
@@ -344,7 +346,7 @@ public:
 	  \param with replacement string
 	  \param num desired sub-expression
 	  \return the source string */
-	std::string& Replace(RegMatch& match, std::string& source, const std::string& with, const int num=0) const
+	static std::string& Replace(RegMatch& match, std::string& source, const std::string& with, const int num=0)
 	{
 		if (num < match.subCnt_)
 			source.replace(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so, with);
@@ -464,6 +466,47 @@ T fast_atoi(const char *str)
 	for (; *str; ++str)
 		retval = (retval << 3) + (retval << 1) + *str - '0';
 	return retval;
+}
+
+
+//----------------------------------------------------------------------------------------
+/**
+ * C++ version 0.4 char* style "itoa":
+ * Written by Lukas Chmela
+ * Released under GPLv3.
+ * see http://www.strudel.org.uk/itoa
+ */
+inline size_t itoa(int value, char *result, const int base=10)
+{
+	// check that the base if valid
+	if (base < 2 || base > 36)
+	{
+		*result = 0;
+		return 0;
+	}
+
+	char *ptr(result), *ptr1(result);
+	int tmp_value;
+
+	do
+	{
+		tmp_value = value;
+		value /= base;
+		*ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
+	}
+	while (value);
+
+	// Apply negative sign
+	if (tmp_value < 0)
+		*ptr++ = '-';
+	*ptr-- = 0;
+	while(ptr1 < ptr)
+	{
+		const char tmp_char(*ptr);
+		*ptr-- = *ptr1;
+		*ptr1++ = tmp_char;
+	}
+	return ::strlen(result);
 }
 
 //----------------------------------------------------------------------------------------
@@ -918,6 +961,88 @@ public:
 	/*! Get the instance of the underlying object removing it from the singleton.
 	    \return the instance */
 	static T *release() { return _instance.fetch_and_store(0); }
+};
+
+//---------------------------------------------------------------------------------------------------
+/// Create a streambuf from an open file descriptor.
+class fdinbuf : public std::streambuf
+{
+   enum { _buffer_size = 16 };
+
+protected:
+   char _buffer[_buffer_size];
+   int _fd;
+
+   virtual int_type underflow()
+   {
+      if (gptr() < egptr())
+         return *gptr();
+      int put_back_cnt(gptr() - eback());
+      if (put_back_cnt > 4)
+         put_back_cnt = 4;
+		std::memcpy(_buffer + (4 - put_back_cnt), gptr() - put_back_cnt, put_back_cnt);
+      int num_read(read (_fd, _buffer + 4, _buffer_size - 4));
+      if (num_read <= 0)
+         return -1;
+      setg(_buffer + (4 - put_back_cnt), _buffer + 4, _buffer + 4 + num_read);
+      return *gptr();
+   }
+
+public:
+   fdinbuf(int infd) : _buffer(), _fd(infd) { setg(_buffer + 4, _buffer + 4, _buffer + 4); }
+};
+
+//---------------------------------------------------------------------------------------------------
+class tty_save_state
+{
+	bool _raw_mode;
+	int _fd;
+	termio _tty_state;
+
+public:
+	explicit tty_save_state(int fd) : _raw_mode(), _fd(fd) {}
+
+	tty_save_state& operator=(const tty_save_state& from)
+	{
+		if (&from != this)
+		{
+			_raw_mode = from._raw_mode;
+			_fd = from._fd;
+			_tty_state = from._tty_state;
+		}
+		return *this;
+	}
+
+	void unset_raw_mode()
+	{
+		if (_raw_mode)
+		{
+			if (ioctl(_fd, TCSETA, &_tty_state) < 0)
+				std::cerr << Str_error(errno, "Cannot reset ioctl") << std::endl;
+			else
+				_raw_mode = false;
+		}
+	}
+
+	void set_raw_mode()
+	{
+		if (!_raw_mode)
+		{
+			if (ioctl(_fd, TCGETA, &_tty_state) < 0)
+			{
+				std::cerr << Str_error(errno, "Cannot get ioctl") << std::endl;
+				return;
+			}
+			termio tty_state(_tty_state);
+			tty_state.c_lflag = 0;
+			tty_state.c_cc[VTIME] = 0;
+			tty_state.c_cc[VMIN] = 1;
+			if (ioctl(_fd, TCSETA, &tty_state) < 0)
+				std::cerr << Str_error(errno, "Cannot reset ioctl") << std::endl;
+			else
+				_raw_mode = true;
+		}
+	}
 };
 
 //----------------------------------------------------------------------------------------

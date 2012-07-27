@@ -79,6 +79,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include <usage.hpp>
+#include <consolemenu.hpp>
 #include "Perf_types.hpp"
 #include "Perf_router.hpp"
 #include "Perf_classes.hpp"

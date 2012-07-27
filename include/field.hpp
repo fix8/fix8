@@ -61,7 +61,7 @@ struct RealmBase
 	const void *_range;
 	RealmType _dtype;
 	FieldTrait::FieldType _ftype;
-	const size_t _sz;
+	const int _sz;
 	const char * const *_descriptions;
 
 	/*! Check if this value is a member/in range of the domain set.
@@ -73,6 +73,16 @@ struct RealmBase
 	{
 		const T *rng(static_cast<const T*>(_range));
 		return _dtype == dt_set ? std::binary_search(rng, rng + _sz, what) : *rng <= what && what <= *(rng + 1);
+	}
+
+	/*! Get the realm value with the specified index
+	  \tparam T domain type
+	  \param idx of value
+	  \return reference to the associated value */
+	template<typename T>
+	const T& get_rlm_val(const int idx) const
+	{
+		return *(static_cast<const T*>(_range) + idx);
 	}
 
 	/*! Get the realm index of this value in the domain set.
@@ -118,6 +128,11 @@ public:
 	  \return the stream */
 	virtual std::ostream& print(std::ostream& os) const = 0;
 
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	virtual void print(char *to, size_t& sz) const = 0;
+
 	/*! Copy this field.
 	  \return the copy */
 	virtual BaseField *copy() = 0;
@@ -140,6 +155,20 @@ public:
 		const std::ios::pos_type where(os.tellp());
 		os << _fnum << '=' << *this << default_field_separator;
 		return os.tellp() - where;
+	}
+
+	/*! Encode this field to the supplied stream.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream
+	  \return the number of bytes encoded */
+	size_t encode(char *to, size_t& sz) const
+	{
+		const size_t cur_sz(sz);
+		sz += itoa(_fnum, to + sz);
+		*(to + sz++) = '=';
+		print(to + sz, sz);
+		*(to + sz++) = default_field_separator;
+		return sz - cur_sz;
 	}
 
 	/*! Get the realm pointer for this field.
@@ -219,8 +248,9 @@ public:
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const int val) : BaseField(field), _value(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const int val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
@@ -274,6 +304,11 @@ public:
 	  \param os stream to insert to
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << _value; }
+
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	void print(char *to, size_t& sz) const { sz += itoa(_value, to); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -348,6 +383,11 @@ public:
 	  \param os stream to insert to
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << _value; }
+
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	void print(char *to, size_t& sz) const { sz += _value.copy(to, _value.size()); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -358,26 +398,34 @@ class Field<double, field> : public BaseField
 {
 protected:
 	double _value;
+	int _precision;
 
 public:
 	/// The FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
-	Field () : BaseField(field), _value() {}
+	Field () : BaseField(field), _value(), _precision(2) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
-	Field (const Field& from) : BaseField(field, from._rlm), _value(from._value) {}
+	Field (const Field& from) : BaseField(field, from._rlm), _value(from._value), _precision(from._precision) {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const double& val) : BaseField(field), _value(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const double& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val), _precision(2) {}
+
+	/*! Value ctor.
+	  \param val value to set
+	  \param prec precision digits
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const double& val, const int prec, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val), _precision(prec) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from.c_str())) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(2) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -388,6 +436,10 @@ public:
 			_value = that._value;
 		return *this;
 	}
+
+	/*! Set the output precision
+	  \param prec precision digits */
+	void set_precision(const int prec) { _precision = prec; }
 
 	/// Dtor.
 	virtual ~Field() {}
@@ -426,6 +478,20 @@ public:
 	  \param os stream to insert to
 	  \return stream */
 	virtual std::ostream& print(std::ostream& os) const { return os << _value; }
+
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	virtual void print(char *to, size_t& sz) const { sz += std::sprintf(to, "%.*f", _precision, _value); }
+#if 0
+	virtual void print(char *to, size_t& sz) const
+	{
+		std::string res;
+		PutValue<double>(_value, res);
+		res.copy(to, res.size());
+		sz += res.size();
+	}
+#endif
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -443,13 +509,14 @@ public:
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
 
-	/// Copy Ctor.
-	/* \param from field to copy */
+	/*! Copy Ctor.
+	  \param from field to copy */
 	Field (const Field& from) : BaseField(field, from._rlm), _value(from._value) {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const char& val) : BaseField(field), _value(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
@@ -503,6 +570,11 @@ public:
 	  \param os stream to insert to
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << _value; }
+
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	void print(char *to, size_t& sz) const { *to = _value; ++sz; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -575,13 +647,14 @@ public:
 	/// Ctor.
 	Field () : BaseField(field), _tzdiff() {}
 
-	/// Copy Ctor.
-	/* \param from field to copy */
+	/*! Copy Ctor.
+	  \param from field to copy */
 	Field (const Field& from) : BaseField(field), _value(from._value), _tzdiff(from._tzdiff) {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const Poco::DateTime& val) : BaseField(field), _value(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const Poco::DateTime& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
@@ -637,6 +710,14 @@ public:
 	std::ostream& print(std::ostream& os) const
 		{ return os << Poco::DateTimeFormatter::format(_value, _fmt_sec); }
 
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	void print(char *to, size_t& sz) const
+	{
+		f8String res(Poco::DateTimeFormatter::format(_value, _fmt_sec));
+		sz += res.copy(to, res.size());
+	}
 };
 
 template<const unsigned short field>
@@ -668,7 +749,7 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -703,7 +784,12 @@ public:
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }
+	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
+
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	void print(char *to, size_t& sz) const {}  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -730,7 +816,7 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -765,7 +851,12 @@ public:
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }
+	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
+
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	void print(char *to, size_t& sz) const {}  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -792,7 +883,7 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -827,7 +918,12 @@ public:
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }
+	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
+
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	void print(char *to, size_t& sz) const {}  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -854,7 +950,7 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -888,7 +984,12 @@ public:
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }
+	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
+
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	void print(char *to, size_t& sz) const {}  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -915,7 +1016,7 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -950,7 +1051,12 @@ public:
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }
+	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
+
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	void print(char *to, size_t& sz) const {}  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -966,8 +1072,9 @@ public:
 	Field () : Field<int, field>() {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const unsigned& val) : Field<int, field>(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -995,8 +1102,9 @@ public:
 	Field () : Field<int, field>() {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const unsigned& val) : Field<int, field>(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1024,8 +1132,9 @@ public:
 	Field () : Field<int, field>() {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const unsigned& val) : Field<int, field>(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1053,8 +1162,9 @@ public:
 	Field () : Field<int, field>() {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const unsigned& val) : Field<int, field>(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1082,8 +1192,9 @@ public:
 	Field () : Field<int, field>() {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const unsigned& val) : Field<int, field>(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1116,8 +1227,9 @@ public:
 	Field () : BaseField(field) {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const char val) : BaseField(field), _value(toupper(val) == 'Y') {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(toupper(val) == 'Y') {}
 
 	/*! Value ctor.
 	  \param val value to set */
@@ -1175,6 +1287,11 @@ public:
 	  \param os stream to insert to
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << (_value ? 'Y' : 'N'); }
+
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	void print(char *to, size_t& sz) const { *to = _value ? 'Y' : 'N'; ++sz; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1197,8 +1314,9 @@ public:
 	Field () : Field<double, field>() {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const double& val) : Field<double, field>(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const double& val, const RealmBase *rlm=0) : Field<double, field>(val, rlm) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
@@ -1231,7 +1349,7 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm) : Field<f8String, field>(from, rlm) {}
 
 	/// Dtor.
 	virtual ~Field() {}
@@ -1241,7 +1359,7 @@ public:
 /// Field metadata structure
 struct BaseEntry
 {
-	BaseField *(*_create)(const f8String& str, const RealmBase* rlm);
+	BaseField *(*_create)(const f8String& str, const RealmBase* rlm, const int rv);
 	const RealmBase *_rlm;
 	const char *_name, *_comment;
 };
@@ -1265,6 +1383,13 @@ const f8String Common_MsgType_REJECT("3");
 const f8String Common_MsgType_SEQUENCE_RESET("4");
 const f8String Common_MsgType_LOGOUT("5");
 const f8String Common_MsgType_LOGON("A");
+
+//-------------------------------------------------------------------------------------------------
+// Common (session) fields
+const f8String Common_BeginString_Str("8");
+const f8String Common_BodyLength_Str("9");
+const f8String Common_CheckSum_Str("10");
+const f8String Common_MsgType_Str("35");
 
 //-------------------------------------------------------------------------------------------------
 // Common FIX field numbers

@@ -50,6 +50,7 @@ const unsigned char default_field_separator(0x1);
 template<typename Key, typename Val>
 class GeneratedTable
 {
+public:
 	/// A pair structure to statically declare the data set
 	struct Pair
 	{
@@ -61,8 +62,15 @@ class GeneratedTable
 		{
 			bool operator()(const Pair &p1, const Pair &p2) const { return p1._key < p2._key; }
 		};
+
+		/// Equivalence
+		bool operator==(const Pair& what) const
+		{
+			return _key == what._key && _value == what._value;
+		}
 	};
 
+private:
 	/// The actual data set
 	static const Pair _pairs[];
 
@@ -76,6 +84,14 @@ class GeneratedTable
 	typedef typename std::pair<const Pair *, const Pair *> PResult;
 
 public:
+	/*! Get iterator to start of Pairs
+	  \return pointer to first pair */
+	static const Pair *begin() { return _pairs; }
+
+	/*! Get iterator to last + 1 of Pairs
+	  \return pointer to last + 1 pair */
+	static const Pair *end() { return _pairs + _pairsz; }
+
 	/*! Find a key (reference). If not found, throw InvalidMetadata.
 	  Ye Olde Binary Chop
 	  \param key the key to find
@@ -109,6 +125,21 @@ public:
 		PResult res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
 		return res.first != res.second ? &res.first->_value : 0;
 	}
+
+	/*! Find a key pair record (pointer).
+	  \param key the key to find
+	  \return key/value pair (pointer) or 0 if not found */
+	static const Pair *find_pair_ptr(const Key& key)
+	{
+		const Pair what = { key };
+		PResult res(std::equal_range (_pairs, _pairs + _pairsz, what, typename Pair::Less()));
+		return res.first != res.second ? res.first : 0;
+	}
+
+	/*! Get the pair at index location
+	  \param idx of the pair to retrieve
+	  \return reference to pair or _noval if not found */
+	static const Pair *at(const size_t idx) { return idx < _pairsz ? _pairs + idx : 0; }
 
 	///Ctor.
 	GeneratedTable() {}
@@ -274,6 +305,11 @@ public:
 		internal_result res(std::equal_range (_arr, _arr + _sz, what, Comp()));
 		return res.first != res.second ? res.first : end();
 	}
+
+	/*! Get the element at index location
+	  \param idx of the pair to retrieve
+	  \return const_iterator to element or end() if not found */
+	const_iterator at(const size_t idx) const { return idx < _sz ? _arr + idx : end(); }
 
 	/*! Insert an element into the set
 	  \param what pointer to element to insert

@@ -1,5 +1,8 @@
+0.6.00 	21/07/2012		<fix@fix8.org>
+Added buffered logging; redesigned and improved field and message encoding and decoding performance, field lookups and static jump tables; added simple console based metadata driven test harness; compiler optimisations including pruning of unused fields;
+
 0.5.70 	25/05/2012		<fix@fix8.org>
-Added HF test client demonstrating preload and bulk transmit capabilities;; encode/decode performance improvements with cached lookups;
+Added HF test client demonstrating preload and bulk transmit capabilities; encode/decode performance improvements with cached lookups;
 optimised field generation; fast ascii to int/double;
 
 0.5.50 	12/05/2012		<fix@fix8.org>

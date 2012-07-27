@@ -51,7 +51,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-BaseEntry *BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String&, const RealmBase*),
+BaseEntry *BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String&, const RealmBase*, int rv),
 		const RealmBase *rlm, const char *name, const char *comment)
 {
 	be->_create = create;

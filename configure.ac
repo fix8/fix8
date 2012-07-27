@@ -112,8 +112,17 @@ AC_CHECK_TOOL([DOXYGEN],[doxygen])
 if test -z "$DOXYGEN";
 	then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
 fi
+oktodox=yes
+AC_ARG_ENABLE([doxygen],
+[AC_HELP_STRING([--enable-doxygen],[enable doxygen generation (default=yes if available)])],
+[case "${enableval}" in
+	yes) ;;
+	no)  oktodox=no;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-doxygen) ;;
+esac])
+
 AM_CONDITIONAL([USEDOXYGEN],
-	[test -n "$DOXYGEN"])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
+	[test -n "$DOXYGEN" && test $oktodox = yes])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
 
 AC_CHECK_FUNCS([scandir getopt_long sysconf getaddrinfo getnameinfo \
 	daemon popen waitpid setlogmask alarm dup2 ftruncate \
@@ -303,6 +312,14 @@ AC_ARG_ENABLE([xmlstrictbool],
 	yes) AC_DEFINE(XMLENTITY_STRICT_BOOL, 1, [Define to 1 if you wish to enforce strict bool ]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-xmlstrictbool) ;;
+esac])
+
+AC_ARG_ENABLE([bufgloblogging],
+[AC_HELP_STRING([--enable-bufgloblogging],[enable buffered global logging behaviour (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(BUFFERED_GLOBAL_LOGGING, 1, [Define to 1 if you wish to enable buffered global logging]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-bufgloblogging) ;;
 esac])
 
 AC_ARG_ENABLE([valgrind],

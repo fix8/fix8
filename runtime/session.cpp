@@ -265,14 +265,6 @@ bool Session::process(const f8String& from)
 			_persist->put(_next_send_seq, _next_receive_seq);
 			//cout << "Persisted:" << _next_send_seq << " and " << _next_receive_seq << endl;
 		}
-#if defined CODECTIMING
-		ostringstream gerr;
-		gerr << "  dtor(" << msg->get_msgtype() << "):";
-		IntervalTimer itm;
-		delete msg.release();
-		gerr << itm.Calculate();
-		GlobalLogger::log(gerr.str());
-#endif
 		return result;
 
 	}

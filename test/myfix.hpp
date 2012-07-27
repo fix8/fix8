@@ -132,41 +132,13 @@ public:
 	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
 };
 
-//---------------------------------------------------------------------------------------------------
-/// Create a streambuf from an open file descriptor.
-class fdinbuf : public std::streambuf
-{
-   enum { _buffer_size = 16 };
-
-protected:
-   char _buffer[_buffer_size];
-   int _fd;
-
-   virtual int_type underflow()
-   {
-      if (gptr() < egptr())
-         return *gptr();
-      int put_back_cnt(gptr() - eback());
-      if (put_back_cnt > 4)
-         put_back_cnt = 4;
-		std::memcpy(_buffer + (4 - put_back_cnt), gptr() - put_back_cnt, put_back_cnt);
-      int num_read(read (_fd, _buffer + 4, _buffer_size - 4));
-      if (num_read <= 0)
-         return EOF;
-      setg(_buffer + (4 - put_back_cnt), _buffer + 4, _buffer + 4 + num_read);
-      return *gptr();
-   }
-
-public:
-   fdinbuf(int infd) : _buffer(), _fd(infd) { setg(_buffer + 4, _buffer + 4, _buffer + 4); }
-};
-
 //-------------------------------------------------------------------------------------------------
 /// Simple menu system that will work with most term types.
 class MyMenu
 {
-	bool _raw_mode;
-	termio _tty_state;
+	FIX8::tty_save_state _tty;
+	FIX8::MsgList _lst;
+	FIX8::ConsoleMenu *_cm;
 
 	/// Individual menu item.
 	struct MenuItem
@@ -180,7 +152,6 @@ class MyMenu
 	};
 
 	myfix_session_client& _session;
-	int _fd;
 	std::istream _istr;
 	std::ostream& _ostr;
 
@@ -188,8 +159,8 @@ class MyMenu
 	Handlers _handlers;
 
 public:
-	MyMenu(myfix_session_client& session, int infd, std::ostream& ostr)
-		: _raw_mode(), _tty_state(), _session(session), _fd(infd), _istr(new fdinbuf(infd)), _ostr(ostr) {}
+	MyMenu(myfix_session_client& session, int infd, std::ostream& ostr, FIX8::ConsoleMenu *cm=0)
+		: _tty(infd), _cm(cm), _session(session), _istr(new FIX8::fdinbuf(infd)), _ostr(ostr) {}
 	virtual ~MyMenu() {}
 
 	std::istream& get_istr() { return _istr; }
@@ -203,37 +174,14 @@ public:
 	bool nothing() { return true; }
 	bool do_exit() { return false; }
 	bool do_logout();
+	bool create_msgs();
+	bool edit_msgs();
+	bool delete_msgs();
+	bool send_msgs();
+	bool write_msgs();
+	bool read_msgs();
 
-	void unset_raw_mode()
-	{
-		if (_raw_mode)
-		{
-			if (ioctl(_fd, TCSETA, &_tty_state) < 0)
-				std::cerr << FIX8::Str_error(errno, "Cannot reset ioctl") << std::endl;
-			else
-				_raw_mode = false;
-		}
-	}
-
-	void set_raw_mode()
-	{
-		if (!_raw_mode)
-		{
-			if (ioctl(_fd, TCGETA, &_tty_state) < 0)
-			{
-				std::cerr << FIX8::Str_error(errno, "Cannot set ioctl") << std::endl;
-				return;
-			}
-			termio tty_state(_tty_state);
-			tty_state.c_lflag = 0;
-			tty_state.c_cc[VTIME] = 0;
-			tty_state.c_cc[VMIN] = 1;
-			if (ioctl(_fd, TCSETA, &tty_state) < 0)
-				std::cerr << FIX8::Str_error(errno, "Cannot reset ioctl") << std::endl;
-			else
-				_raw_mode = true;
-		}
-	}
+	FIX8::tty_save_state& get_tty() { return _tty; }
 
 	friend class FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
 };

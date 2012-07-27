@@ -54,27 +54,63 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-RegExp MessageBase::_elmnt("([0-9]+)=([^\x01]+)\x01");
-RegExp Message::_hdr("8=([^\x01]+)\x01{1}9=([^\x01]+)\x01{1}(35=)([^\x01]+)\x01");
-RegExp Message::_tlr("(10=)([^\x01]+)\x01");
-
-//-------------------------------------------------------------------------------------------------
 namespace {
 	const string spacer(3, ' ');
 }
 
 //-------------------------------------------------------------------------------------------------
+unsigned MessageBase::extract_header(const f8String& from, f8String& len, f8String& mtype)
+{
+	const char *dptr(from.data());
+
+	f8String tag, val;
+	unsigned s_offset(0), result;
+	if ((result = extract_element(dptr, from.size(), tag, val)))
+	{
+		if (tag != "8")
+			return 0;
+		s_offset += result;
+		if ((result = extract_element(dptr + s_offset, from.size() - s_offset, tag, val)))
+		{
+			if (tag != "9")
+				return 0;
+			len = val;
+			s_offset += result;
+			if ((result = extract_element(dptr + s_offset, from.size() - s_offset, tag, val)))
+			{
+				if (tag != "35")
+					return 0;
+				mtype = val;
+				s_offset += result;
+			}
+		}
+	}
+	return s_offset;
+}
+
+//-------------------------------------------------------------------------------------------------
+unsigned MessageBase::extract_trailer(const f8String& from, f8String& chksum)
+{
+	unsigned result(0);
+	const size_t res(from.find_last_of("10"));
+	if (res != f8String::npos)
+	{
+		f8String tag;
+		result = extract_element(from.data() + res - 1, from.size() - res - 1, tag, chksum);
+	}
+	return result;
+}
+
+//-------------------------------------------------------------------------------------------------
 unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 {
-	RegMatch match;
-	unsigned s_offset(offset);
-	f8String tag, val;
+	unsigned s_offset(offset), result;
 	const unsigned fsize(from.size());
+	const char *dptr(from.data());
+	f8String tag, val;
 
-	for (unsigned pos(_pos.size()); s_offset < fsize && _elmnt.SearchString(match, from, 3, s_offset) == 3; )
+	for (unsigned pos(_pos.size()); s_offset <= fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 	{
-		_elmnt.SubExpr(match, from, tag, s_offset, 1);
-		_elmnt.SubExpr(match, from, val, s_offset, 2);
 		const unsigned tv(fast_atoi<unsigned>(tag.c_str()));
 		const BaseEntry *be(_ctx._be.find_ptr(tv));
 #if defined PERMIT_CUSTOM_FIELDS
@@ -86,7 +122,7 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 		Presence::const_iterator itr(_fp.get_presence().end());
 		if (!_fp.has(tv, itr))
 			break;
-		s_offset += match.SubSize();
+		s_offset += result;
 		if (_fp.get(tv, itr, FieldTrait::present))
 		{
 			if (!_fp.get(tv, itr, FieldTrait::automatic))
@@ -94,7 +130,7 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 		}
 		else
 		{
-			add_field(tv, itr, ++pos, be->_create(val, be->_rlm), false);
+			add_field(tv, itr, ++pos, be->_create(val, be->_rlm, -1), false);
 			if (_fp.is_group(tv, itr))
 				s_offset = decode_group(tv, from, s_offset);
 		}
@@ -115,24 +151,23 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& from, const unsigned offset)
 {
-	unsigned s_offset(offset);
+	unsigned s_offset(offset), result;
 	GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
 		throw InvalidRepeatingGroup(fnum);
 	const unsigned fsize(from.size());
+	const char *dptr(from.data());
+	f8String tag, val;
 
 	for (bool ok(true); ok && s_offset < fsize; )
 	{
 		RegMatch match;
 		scoped_ptr<MessageBase> grp(grpbase->create_group());
 
-		for (unsigned pos(0); s_offset < fsize && _elmnt.SearchString(match, from, 3, s_offset) == 3; )
+		for (unsigned pos(0); s_offset < fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 		{
-			f8String tag, val;
-			_elmnt.SubExpr(match, from, tag, s_offset, 1);
-			_elmnt.SubExpr(match, from, val, s_offset, 2);
 			const unsigned tv(fast_atoi<unsigned>(tag.c_str()));
-			Presence::const_iterator itr(_fp.get_presence().end());
+			Presence::const_iterator itr(grp->_fp.get_presence().end());
 			if (grp->_fp.get(tv, itr, FieldTrait::present))	// already present; next group?
 				break;
 			if (pos == 0 && grp->_fp.getPos(tv, itr) != 1)	// first field in group is mandatory
@@ -145,8 +180,8 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 				ok = false;
 				break;
 			}
-			s_offset += match.SubSize();
-			grp->add_field(tv, itr, ++pos, be->_create(val, be->_rlm), false);
+			s_offset += result;
+			grp->add_field(tv, itr, ++pos, be->_create(val, be->_rlm, -1), false);
 			grp->_fp.set(tv, itr, FieldTrait::present);	// is present
 			if (grp->_fp.is_group(tv, itr)) // nested group
 				s_offset = grp->decode_group(tv, from, s_offset);
@@ -173,30 +208,14 @@ unsigned MessageBase::check_positions()
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned Message::decode(const f8String& from)
-{
-	unsigned offset(_header->decode(from, 0));
-	offset = MessageBase::decode(from, offset);
-	return _trailer->decode(from, offset);
-}
-
-//-------------------------------------------------------------------------------------------------
 Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 {
 	RegMatch match;
 	Message *msg(0);
-	if (_hdr.SearchString(match, from, 5, 0) == 5)
+	f8String len, mtype;
+	if (extract_header(from, len, mtype))
 	{
-		f8String len, mtype;
-		_hdr.SubExpr(match, from, len, 0, 2);
-		_hdr.SubExpr(match, from, mtype, 0, 4);
 		const unsigned mlen(fast_atoi<unsigned>(len.c_str()));
-
-#if defined CODECTIMING
-		ostringstream gerr;
-		gerr << "  ctor(" << mtype << "):";
-		IntervalTimer itm;
-#endif
 		const BaseMsgEntry *bme(ctx._bme.find_ptr(mtype));
 		if (!bme)
 			throw InvalidMessage(mtype);
@@ -206,10 +225,9 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 			ctx._ube->post_msg_ctor(msg);
 #endif
 #if defined CODECTIMING
-		gerr << itm.Calculate();
-		GlobalLogger::log(gerr.str());
-		gerr.str("");
+		ostringstream gerr;
 		gerr << "decode(" << mtype << "):";
+		IntervalTimer itm;
 #endif
 		msg->decode(from);
 #if defined CODECTIMING
@@ -223,11 +241,9 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 		static_cast<msg_type *>(fitr->second)->set(mtype);
 		msg->check_set_rlm(fitr->second);
 
-		if (_tlr.SearchString(match, from, 3, 0) == 3)
+		f8String chksum;
+		if (extract_trailer(from, chksum))
 		{
-			f8String chksum;
-			_hdr.SubExpr(match, from, chksum, 0, 2);
-
 			Fields::const_iterator fitr(msg->_trailer->_fields.find(Common_CheckSum));
 			static_cast<check_sum *>(fitr->second)->set(chksum);
 			const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), // chksum value
@@ -280,6 +296,25 @@ unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 }
 
 //-------------------------------------------------------------------------------------------------
+unsigned MessageBase::encode(char *to, size_t& sz) const
+{
+	const size_t where(sz);
+	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
+	{
+		check_set_rlm(itr->second);
+		Presence::const_iterator fpitr(_fp.get_presence().end());
+		if (!_fp.get(itr->second->_fnum, fpitr, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
+		{
+			itr->second->encode(to, sz);
+			if (_fp.get(itr->second->_fnum, fpitr, FieldTrait::group))
+				encode_group(itr->second->_fnum, to, sz);
+		}
+	}
+
+	return sz - where;
+}
+
+//-------------------------------------------------------------------------------------------------
 unsigned MessageBase::encode(ostream& to) const
 {
 	const std::ios::pos_type where(to.tellp());
@@ -299,6 +334,18 @@ unsigned MessageBase::encode(ostream& to) const
 }
 
 //-------------------------------------------------------------------------------------------------
+unsigned MessageBase::encode_group(const unsigned short fnum, char *to, size_t& sz) const
+{
+	const size_t where(sz);
+	GroupBase *grpbase(find_group(fnum));
+	if (!grpbase)
+		throw InvalidRepeatingGroup(fnum);
+	for (GroupElement::iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr)
+		(*itr)->encode(to, sz);
+	return sz - where;
+}
+
+//-------------------------------------------------------------------------------------------------
 unsigned MessageBase::encode_group(const unsigned short fnum, std::ostream& to) const
 {
 	const std::ios::pos_type where(to.tellp());
@@ -311,6 +358,68 @@ unsigned MessageBase::encode_group(const unsigned short fnum, std::ostream& to) 
 }
 
 //-------------------------------------------------------------------------------------------------
+unsigned Message::encode(f8String& to) const
+{
+	char msg[1024], hmsg[1024];
+	size_t sz(0), hsz(0);
+
+#if defined CODECTIMING
+	ostringstream gerr;
+	gerr << "encode(" << _msgType << "):";
+	IntervalTimer itm;
+#endif
+
+	if (!_header)
+		throw MissingMessageComponent("header");
+	Fields::const_iterator fitr(_header->_fields.find(Common_MsgType));
+	static_cast<msg_type *>(fitr->second)->set(_msgType);
+	_header->encode(msg, sz);
+	MessageBase::encode(msg, sz);
+	if (!_trailer)
+		throw MissingMessageComponent("trailer");
+	_trailer->encode(msg, sz);
+	const unsigned msgLen(sz);	// checksummable msglength
+
+	if ((fitr = _header->_fields.find(Common_BeginString)) == _header->_fields.end())
+		throw MissingMandatoryField(Common_BeginString);
+	_header->_fp.clear(Common_BeginString, FieldTrait::suppress);
+	fitr->second->encode(hmsg, hsz);
+#if defined MSGRECYCLING
+	_header->_fp.set(Common_BeginString, FieldTrait::suppress); // in case we want to reuse
+#endif
+
+	if ((fitr = _header->_fields.find(Common_BodyLength)) == _header->_fields.end())
+		throw MissingMandatoryField(Common_BodyLength);
+	_header->_fp.clear(Common_BodyLength, FieldTrait::suppress);
+	static_cast<body_length *>(fitr->second)->set(msgLen);
+	fitr->second->encode(hmsg, hsz);
+#if defined MSGRECYCLING
+	_header->_fp.set(Common_BodyLength, FieldTrait::suppress); // in case we want to reuse
+#endif
+
+	::memcpy(hmsg + hsz, msg, sz);
+	hsz += sz;
+
+	if ((fitr = _trailer->_fields.find(Common_CheckSum)) == _trailer->_fields.end())
+		throw MissingMandatoryField(Common_CheckSum);
+	static_cast<check_sum *>(fitr->second)->set(fmt_chksum(calc_chksum(hmsg, hsz)));
+	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
+	fitr->second->encode(hmsg, hsz);
+#if defined MSGRECYCLING
+	_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress); // in case we want to reuse
+#endif
+
+#if defined CODECTIMING
+	gerr << itm.Calculate();
+	GlobalLogger::log(gerr.str());
+#endif
+
+	to.assign(hmsg, hsz);
+	return to.size();
+}
+
+//-------------------------------------------------------------------------------------------------
+#if 0
 unsigned Message::encode(f8String& to) const
 {
 	f8ostrstream msg;
@@ -326,7 +435,17 @@ unsigned Message::encode(f8String& to) const
 	Fields::const_iterator fitr(_header->_fields.find(Common_MsgType));
 	static_cast<msg_type *>(fitr->second)->set(_msgType);
 	_header->encode(msg);
+#if defined CODECTIMING
+	gerr << itm.Calculate();
+	GlobalLogger::log(gerr.str());
+	itm.Reset();
+#endif
 	MessageBase::encode(msg);
+#if defined CODECTIMING
+	gerr << ' ' << itm.Calculate();
+	GlobalLogger::log(gerr.str());
+	itm.Reset();
+#endif
 	if (!_trailer)
 		throw MissingMessageComponent("trailer");
 	_trailer->encode(msg);
@@ -337,10 +456,20 @@ unsigned Message::encode(f8String& to) const
 		throw MissingMandatoryField(Common_BeginString);
 	_header->_fp.clear(Common_BeginString, FieldTrait::suppress);
 	fitr->second->encode(hmsg);
+#if defined CODECTIMING
+	gerr << ' ' << itm.Calculate();
+	GlobalLogger::log(gerr.str());
+	itm.Reset();
+#endif
 #if defined MSGRECYCLING
 	_header->_fp.set(Common_BeginString, FieldTrait::suppress); // in case we want to reuse
 #endif
 
+//#if defined CODECTIMING
+//	gerr << ' ' << itm.Calculate();
+//	GlobalLogger::log(gerr.str());
+//	itm.Reset();
+//#endif
 	if ((fitr = _header->_fields.find(Common_BodyLength)) == _header->_fields.end())
 		throw MissingMandatoryField(Common_BodyLength);
 	_header->_fp.clear(Common_BodyLength, FieldTrait::suppress);
@@ -361,14 +490,15 @@ unsigned Message::encode(f8String& to) const
 	_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress); // in case we want to reuse
 #endif
 
-#if defined CODECTIMING
-	gerr << itm.Calculate();
-	GlobalLogger::log(gerr.str());
-#endif
+//#if defined CODECTIMING
+//	gerr << ' ' << itm.Calculate();
+//	GlobalLogger::log(gerr.str());
+//#endif
 
 	to.assign(hmsg.str());
 	return to.size();
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 void MessageBase::print(ostream& os, int depth) const
@@ -409,6 +539,29 @@ void MessageBase::print_group(const unsigned short fnum, ostream& os, int depth)
 	{
 		os << dspacer << (*itr)->_msgType << " (Repeating group " << cnt << '/' << grpbase->_msgs.size() << ')' << endl;
 		(*itr)->print(os, depth + 1);
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+void MessageBase::print_field(const unsigned short fnum, ostream& os) const
+{
+	Fields::const_iterator fitr(_fields.find(fnum));
+	if (fitr != _fields.end())
+	{
+		const BaseEntry *tbe(_ctx._be.find_ptr(fnum));
+		if (!tbe)
+#if defined PERMIT_CUSTOM_FIELDS
+			if (!_ctx._ube || (tbe = _ctx._ube->find_ptr(fnum)) == 0)
+#endif
+				throw InvalidField(fnum);
+		os << tbe->_name << " (" << fnum << "): ";
+		int idx;
+		if (fitr->second->_rlm && (idx = (fitr->second->get_rlm_idx())) >= 0)
+			os << fitr->second->_rlm->_descriptions[idx] << " (" << *fitr->second << ')';
+		else
+			os << *fitr->second;
+		if (_fp.is_group(fnum))
+			print_group(fnum, os, 0);
 	}
 }
 

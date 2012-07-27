@@ -33,15 +33,15 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 //-----------------------------------------------------------------------------------------
-/** \file hftest.cpp
+/** \file harness.cpp
 \n
-  This is a complete working example of a HF FIX client/server using FIX8.\n
+  This is a complete working example of a FIX client/server using FIX8.\n
 \n
 <tt>
-	Usage: hftest [-RSchlqrsv]\n
+	Usage: harness [-RSchlqrsv]\n
 		-R,--receive            set next expected receive sequence number\n
 		-S,--send               set next send sequence number\n
-		-c,--config             xml config (default: hf_client.xml or hf_server.xml)\n
+		-c,--config             xml config (default: myfix_client.xml or myfix_server.xml)\n
 		-h,--help               help, this screen\n
 		-l,--log                global log filename\n
 		-q,--quiet              do not print fix output\n
@@ -54,23 +54,24 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   To use start the server:\n
 \n
 <tt>
-	  % hftest -sl server\n
+	  % harness -sl server\n
 </tt>
 \n
   In another terminal session, start the client:\n
 \n
 <tt>
-	  % hftest -l client\n
+	  % harness -l client\n
 </tt>
 \n
   \b Notes \n
 \n
-  1. Configure with \c --enable-codectiming \n
-  2. The client has a simple menu. Press ? to see options.\n
-  3. The server will wait for the client to logout before exiting.\n
-  4. Press P to preload NewOrderSingle messages, T to transmit them.\n
-  5. The server uses \c hf_client.xml and the client uses \c hf_server.xml for configuration settings. \n
-  6. The example uses \c FIX42.xml \n
+  1. If you have configured with \c --enable-msgrecycle, the example will reuse allocated messages.\n
+  2. If you have configured with \c --enable-customfields, the example will add custom fields\n
+     defined below.\n
+  3. The client has a simple menu. Press ? to see options.\n
+  4. The server will wait for the client to logout before exiting.\n
+  5. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
+  6. The example uses the files \c FIX50SP2.xml and \c FIXT11.xml in ./schema\n
 \n
 */
 
@@ -113,11 +114,12 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include <usage.hpp>
-#include "Perf_types.hpp"
-#include "Perf_router.hpp"
-#include "Perf_classes.hpp"
+#include <consolemenu.hpp>
+#include "Myfix_types.hpp"
+#include "Myfix_router.hpp"
+#include "Myfix_classes.hpp"
 
-#include "hftest.hpp"
+#include "myfix.hpp"
 
 //-----------------------------------------------------------------------------------------
 using namespace std;
@@ -132,10 +134,12 @@ bool term_received(false);
 template<>
 const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
 {
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "Send a NewOrderSingle msg"), &MyMenu::new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Preload n NewOrderSingle msgs"), &MyMenu::preload_new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('a', "Send all Preloaded NewOrderSingle msgs"), &MyMenu::send_all_preloaded),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('f', "Flush global log"), &MyMenu::flush_log),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('c', "Create messages"), &MyMenu::create_msgs),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('e', "Edit messages"), &MyMenu::edit_msgs),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('d', "Delete messages"), &MyMenu::delete_msgs),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('s', "Send messages"), &MyMenu::send_msgs),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('w', "Write messages to disk"), &MyMenu::write_msgs),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('r', "Read messages from disk"), &MyMenu::read_msgs),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
@@ -145,7 +149,7 @@ const MyMenu::Handlers::NotFoundType MyMenu::Handlers::_noval = &MyMenu::nothing
 template<>
 const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
 	MyMenu::Handlers::get_table_end());
-bool quiet(true);
+bool quiet(false);
 
 //-----------------------------------------------------------------------------------------
 void sig_handler(int sig)
@@ -158,9 +162,6 @@ void sig_handler(int sig)
       term_received = true;
       signal(sig, sig_handler);
       break;
-	default:
-		cerr << sig << endl;
-		break;
    }
 }
 
@@ -204,7 +205,7 @@ int main(int argc, char **argv)
 		case 's': server = true; break;
 		case 'S': next_send = GetValue<unsigned>(optarg); break;
 		case 'R': next_receive = GetValue<unsigned>(optarg); break;
-		case 'q': quiet = false; break;
+		case 'q': quiet = true; break;
 		case 'r': reliable = true; break;
 		default: break;
 		}
@@ -218,19 +219,19 @@ int main(int argc, char **argv)
 
 	try
 	{
-		const string conf_file(server ? clcf.empty() ? "hf_server.xml" : clcf : clcf.empty() ? "hf_client.xml" : clcf);
+		const string conf_file(server ? clcf.empty() ? "myfix_server.xml" : clcf : clcf.empty() ? "myfix_client.xml" : clcf);
 
 		if (server)
 		{
-			ServerSession<hf_session_server>::Server_ptr
-				ms(new ServerSession<hf_session_server>(TEX::ctx, conf_file, "TEX1"));
+			ServerSession<myfix_session_server>::Server_ptr
+				ms(new ServerSession<myfix_session_server>(TEX::ctx, conf_file, "TEX1"));
 
 			for (unsigned scnt(0); !term_received; )
 			{
 				if (!ms->poll())
 					continue;
-				SessionInstance<hf_session_server>::Instance_ptr
-					inst(new SessionInstance<hf_session_server>(*ms));
+				SessionInstance<myfix_session_server>::Instance_ptr
+					inst(new SessionInstance<myfix_session_server>(*ms));
 				if (!quiet)
 					inst->session_ptr()->control() |= Session::print;
 				ostringstream sostr;
@@ -243,30 +244,40 @@ int main(int argc, char **argv)
 		}
 		else if (reliable)
 		{
-			ReliableClientSession<hf_session_client>::Client_ptr
-				mc(new ReliableClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1"));
+			ReliableClientSession<myfix_session_client>::Client_ptr
+				mc(new ReliableClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
 			mc->start(false);
-			MyMenu mymenu(*mc->session_ptr(), 0, cout);
+			ConsoleMenu cm(TEX::ctx, mc->session_ptr(), cin, cout, 50);
+			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
-				;
+			sleep(1);
+			do
+			{
+				cout << endl << "?=help > " << flush;
+			}
+			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch));
 			mymenu.get_tty().unset_raw_mode();
 		}
 		else
 		{
-			ClientSession<hf_session_client>::Client_ptr
-				mc(new ClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1"));
+			ClientSession<myfix_session_client>::Client_ptr
+				mc(new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
 			mc->start(false, next_send, next_receive);
-			MyMenu mymenu(*mc->session_ptr(), 0, cout);
+			ConsoleMenu cm(TEX::ctx, mc->session_ptr(), cin, cout, 50);
+			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
-				;
+			sleep(1);
+			do
+			{
+				cout << endl << "?=help > " << flush;
+			}
+			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch));
 			mymenu.get_tty().unset_raw_mode();
 		}
 	}
@@ -281,80 +292,15 @@ int main(int argc, char **argv)
 }
 
 //-----------------------------------------------------------------------------------------
-bool MyMenu::new_order_single()
+bool myfix_session_client::handle_application(const unsigned seqnum, const Message *msg)
 {
-	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
-	*nos += new TEX::TransactTime;
-	*nos += new TEX::OrderQty(1 + RandDev::getrandom(10000));
-	*nos += new TEX::Price(1. + RandDev::getrandom(500.));
-	static unsigned oid(0);
-	ostringstream oistr;
-	oistr << "ord" << ++oid;
-	*nos += new TEX::ClOrdID(oistr.str());
-	*nos += new TEX::Symbol("BHP");
-	*nos += new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION);
-	*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
-	*nos += new TEX::Side(TEX::Side_BUY);
-	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
-
-	_session.send(nos);
-
-	return true;
+	return enforce(seqnum, msg) || msg->process(_router);
 }
 
 //-----------------------------------------------------------------------------------------
-bool MyMenu::send_all_preloaded()
+bool myfix_session_server::handle_application(const unsigned seqnum, const Message *msg)
 {
-	unsigned snt(0);
-	while (_session.cached())
-	{
-		TEX::NewOrderSingle *ptr(_session.pop());
-		if (!ptr)
-			break;
-		_session.send(ptr);
-		if (++snt % 1000 == 0)
-		{
-			cout << '\r' << snt << " NewOrderSingle msgs sent";
-			cout.flush();
-		}
-	}
-	cout << endl << _session.cached() << " NewOrderSingle msgs remaining." << endl;
-	return true;
-}
-
-//-----------------------------------------------------------------------------------------
-bool MyMenu::preload_new_order_single()
-{
-	cout << endl << _session.cached() << " NewOrderSingle msgs currently preloaded." << endl;
-	cout << "Enter number of NewOrderSingle msgs to preload:";
-	cout.flush();
-	int num(0);
-	_tty.unset_raw_mode();
-	cin >> num;
-	_tty.set_raw_mode();
-	for (int ii(0); ii < num; ++ii)
-	{
-		TEX::NewOrderSingle *ptr(new TEX::NewOrderSingle);
-		*ptr += new TEX::Symbol("BHP");
-		*ptr += new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION);
-		*ptr += new TEX::OrdType(TEX::OrdType_LIMIT);
-		*ptr += new TEX::Side(TEX::Side_BUY);
-		*ptr += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
-		*ptr += new TEX::TransactTime;
-		*ptr += new TEX::OrderQty(1 + RandDev::getrandom(10000));
-		TEX::Price *prc(new TEX::Price(1. + RandDev::getrandom(500.)));
-		prc->set_precision(3);
-		*ptr += prc;
-		static unsigned oid(10000);
-		ostringstream oistr;
-		oistr << "ord" << ++oid << '-' << num;
-		*ptr += new TEX::ClOrdID(oistr.str());
-		_session.push(ptr);
-	}
-
-	cout << _session.cached() << " NewOrderSingle msgs preloaded." << endl;
-
-	return true;
+	return enforce(seqnum, msg) || msg->process(_router);
 }
 
 //-----------------------------------------------------------------------------------------
@@ -370,13 +316,6 @@ bool MyMenu::help()
 }
 
 //-----------------------------------------------------------------------------------------
-bool MyMenu::flush_log()
-{
-	GlobalLogger::flush_log();
-	return true; // will exit
-}
-
-//-----------------------------------------------------------------------------------------
 bool MyMenu::do_logout()
 {
 	_session.send(new TEX::Logout);
@@ -387,14 +326,14 @@ bool MyMenu::do_logout()
 //-----------------------------------------------------------------------------------------
 void print_usage()
 {
-	UsageMan um("hftest", GETARGLIST, "");
-	um.setdesc("hftest -- f8 HF test client/server");
+	UsageMan um("harness", GETARGLIST, "");
+	um.setdesc("harness -- menu driven f8 test client/server");
 	um.add('s', "server", "run in server mode (default client mode)");
 	um.add('h', "help", "help, this screen");
 	um.add('v', "version", "print version then exit");
 	um.add('l', "log", "global log filename");
-	um.add('c', "config", "xml config (default: hf_client.xml or hf_server.xml)");
-	um.add('q', "quiet", "do not print fix output (default yes)");
+	um.add('c', "config", "xml config (default: myfix_client.xml or myfix_server.xml)");
+	um.add('q', "quiet", "do not print fix output");
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
 	um.add('r', "reliable", "start in reliable mode");
@@ -402,73 +341,55 @@ void print_usage()
 }
 
 //-----------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------
-bool hf_session_client::handle_application(const unsigned seqnum, const FIX8::Message *msg)
-{
-	return enforce(seqnum, msg) || msg->process(_router);
-}
-
-//-----------------------------------------------------------------------------------------
 bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
 	static unsigned oid(0), eoid(0);
+
 	TEX::OrderQty qty;
 	TEX::Price price;
+
 	msg->get(qty);
 	msg->get(price);
 
 	TEX::ExecutionReport *er(new TEX::ExecutionReport);
 	msg->copy_legal(er);
+	if (!quiet)
+		cout << endl;
 
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
 	*er += new TEX::OrderID(oistr.str());
 	*er += new TEX::ExecType(TEX::ExecType_NEW);
-	unsigned ordResult(RandDev::getrandom(3));
-	switch (ordResult)
-	{
-	default:
-	case 0:
-		*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
-		break;
-	case 1:
-		*er += new TEX::OrdStatus(TEX::OrdStatus_CANCELED);
-		break;
-	case 2:
-		*er += new TEX::OrdStatus(TEX::OrdStatus_REJECTED);
-		break;
-	}
+	*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
 	*er += new TEX::LeavesQty(qty());
 	*er += new TEX::CumQty(0);
 	*er += new TEX::AvgPx(0);
-	*er += new TEX::LastCapacity('5');
+	*er += new TEX::LastCapacity('1');
 	*er += new TEX::ReportToExch('Y');
-	*er += new TEX::ExecTransType(TEX::ExecTransType_NEW);
 	*er += new TEX::ExecID(oistr.str());
 	_session.send(er);
 
-	if (ordResult == 0)
+	unsigned remaining_qty(qty()), cum_qty(0);
+	while (remaining_qty > 0)
 	{
-		unsigned remaining_qty(qty()), cum_qty(0);
-		while (remaining_qty > 0)
-		{
-			unsigned trdqty(1 + RandDev::getrandom(remaining_qty));
-			TEX::ExecutionReport *ner(new TEX::ExecutionReport);
-			msg->copy_legal(ner);
-			ostringstream eistr;
-			eistr << "exec" << ++eoid;
-			*ner += new TEX::ExecID(eistr.str());
-			*ner += new TEX::OrderID(oistr.str());
-			*ner += new TEX::ExecType(TEX::ExecType_NEW);
-			*ner += new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED);
-			remaining_qty -= trdqty;
-			cum_qty += trdqty;
-			*ner += new TEX::LeavesQty(remaining_qty);
-			*ner += new TEX::CumQty(cum_qty);
-			*ner += new TEX::ExecTransType(TEX::ExecTransType_NEW);
-			*ner += new TEX::AvgPx(price());
-			_session.send(ner);
-		}
+		unsigned trdqty(RandDev::getrandom(remaining_qty));
+		if (!trdqty)
+			trdqty = 1;
+		er = new TEX::ExecutionReport;
+		msg->copy_legal(er);
+		*er += new TEX::OrderID(oistr.str());
+		ostringstream eistr;
+		eistr << "exec" << ++eoid;
+		*er += new TEX::ExecID(eistr.str());
+		*er += new TEX::ExecType(TEX::ExecType_NEW);
+		*er += new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED);
+		remaining_qty -= trdqty;
+		cum_qty += trdqty;
+		*er += new TEX::LeavesQty(remaining_qty);
+		*er += new TEX::CumQty(cum_qty);
+		*er += new TEX::LastQty(trdqty);
+		*er += new TEX::AvgPx(price());
+		_session.send(er);
 	}
 
 	return true;
@@ -477,18 +398,85 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 //-----------------------------------------------------------------------------------------
 bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 {
-	static int exrecv(0);
-	if (++exrecv % 1000 == 0)
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::create_msgs()
+{
+	_cm->CreateMsgs(_tty, _lst);
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::edit_msgs()
+{
+	_cm->EditMsgs(_tty, _lst);
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::delete_msgs()
+{
+	_cm->DeleteMsgs(_tty, _lst);
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::send_msgs()
+{
+	if (_cm->get_yn("Send messages? (y/n):", true))
 	{
-		cout << '\r' << exrecv << " ExecutionReport msgs received";
-		cout.flush();
+		for (MsgList::const_iterator itr(_lst.begin()); itr != _lst.end(); ++itr)
+			_session.send(*itr);
+		_lst.clear();
 	}
 	return true;
 }
 
 //-----------------------------------------------------------------------------------------
-bool hf_session_server::handle_application(const unsigned seqnum, const FIX8::Message *msg)
+bool MyMenu::write_msgs()
 {
-	return enforce(seqnum, msg) || msg->process(_router);
+	cout << "Enter filename: " << flush;
+	string fname;
+	if (!_cm->GetString(_tty, fname).empty())
+	{
+		ofstream ofs(fname.c_str());
+		if (!ofs)
+		{
+			cout << Str_error(errno, "Could not open file");
+			return false;
+		}
+		for (MsgList::const_iterator itr(_lst.begin()); itr != _lst.end(); ++itr)
+		{
+			(static_cast<MessageBase *>(*itr))->encode(ofs); // we only want the main message part, not the header/trailer
+			ofs << endl;
+		}
+	}
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::read_msgs()
+{
+#if 0
+	cout << "Enter filename: " << flush;
+	string fname;
+	if (!_cm->GetString(_tty, fname).empty())
+	{
+		ifstream ifs(fname.c_str());
+		if (!ifs)
+		{
+			cout << Str_error(errno, "Could not open file");
+			return false;
+		}
+		for (MsgList::const_iterator itr(_lst.begin()); itr != _lst.end(); ++itr)
+		{
+			(static_cast<MessageBase *>(*itr))->decode(buf, 0);
+			ofs << endl;
+		}
+	}
+#endif
+	return true;
 }
 

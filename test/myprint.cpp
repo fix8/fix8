@@ -79,6 +79,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include <usage.hpp>
+#include <consolemenu.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"

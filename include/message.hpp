@@ -133,6 +133,9 @@ struct BaseMsgEntry
 {
 	Message *(*_create)();
 	const char *_name, *_comment;
+
+	bool operator==(const BaseMsgEntry& what) const
+		{ return _create == what._create && _name == what._name && _comment == what._comment; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -186,17 +189,18 @@ public:
 #endif
 
 //-------------------------------------------------------------------------------------------------
-/// Static metadata context class - one per FIX xml schema
-class Preallocator;
+typedef GeneratedTable<const f8String, BaseMsgEntry> MsgTable;
+typedef GeneratedTable<unsigned, BaseEntry> FieldTable;
 
+/// Static metadata context class - one per FIX xml schema
 struct F8MetaCntx
 {
 	const unsigned _version;
 
 	/// Framework generated lookup table to generate Fix messages
-	const GeneratedTable<const f8String, BaseMsgEntry>& _bme;
+	const MsgTable& _bme;
 	/// Framework generated lookup table to generate Fix fields
-	const GeneratedTable<unsigned, BaseEntry>& _be;
+	const FieldTable& _be;
 #if defined PERMIT_CUSTOM_FIELDS
 	/// User supplied lookup table to generate Fix fields
 	CustomFields *_ube;
@@ -206,13 +210,13 @@ struct F8MetaCntx
 	/// Fix header beginstring
 	const f8String _beginStr;
 
-	F8MetaCntx(const unsigned version, const GeneratedTable<const f8String, BaseMsgEntry>& bme,
-		const GeneratedTable<unsigned, BaseEntry>& be, const f8String& bg) : _version(version), _bme(bme), _be(be),
+	F8MetaCntx(const unsigned version, const MsgTable& bme, const FieldTable& be, const f8String& bg)
+		: _version(version), _bme(bme), _be(be),
 #if defined PERMIT_CUSTOM_FIELDS
-         _ube(),
+		_ube(),
 #endif
-			_mk_hdr(_bme.find_ptr("header")->_create), _mk_trl(_bme.find_ptr("trailer")->_create),
-			_beginStr(bg) {}
+		_mk_hdr(_bme.find_ptr("header")->_create), _mk_trl(_bme.find_ptr("trailer")->_create),
+		_beginStr(bg) {}
 
 	/// 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	unsigned version() const { return _version; }
@@ -233,15 +237,61 @@ typedef std::multimap<unsigned short, BaseField *> Positions;
 class MessageBase
 {
 protected:
-
-	static RegExp _elmnt;
-
 	Fields _fields;
 	FieldTraits _fp;
 	Positions _pos;
 	Groups _groups;
 	const f8String& _msgType;
 	const F8MetaCntx& _ctx;
+
+	/*! Extract a tag/value element from a char buffer.
+	    \param from source buffer
+	    \param sz size of string
+	    \param tag tag to extract to
+	    \param val value to extract to
+	    \return number of bytes consumed */
+	static unsigned extract_element(const char *from, const unsigned sz, f8String& tag, f8String& val)
+	{
+		enum { get_tag, get_value } state(get_tag);
+		tag.clear();
+		val.clear();
+
+		for (unsigned ii(0); ii < sz; ++ii)
+		{
+			switch (state)
+			{
+			case get_tag:
+				if (!isdigit(from[ii]))
+				{
+					if (from[ii] != '=')
+						return 0;
+					state = get_value;
+				}
+				else
+					tag += from[ii];
+				break;
+			case get_value:
+				if (from[ii] == default_field_separator)
+					return ++ii;
+				val += from[ii];
+				break;
+			}
+		}
+		return 0;
+	}
+
+	/*! Extract length and message type from a header buffer
+	    \param from source buffer
+	    \param len length to extract to
+	    \param mtype message type to extract to
+	    \return number of bytes consumed */
+	static unsigned extract_header(const f8String& from, f8String& len, f8String& mtype);
+
+	/*! Extract chksum from a trailer buffer
+	    \param from source buffer
+	    \param chksum chksum to extract to
+	    \return number of bytes consumed */
+	static unsigned extract_trailer(const f8String& from, f8String& chksum);
 
 public:
 	/*! Ctor.
@@ -251,8 +301,13 @@ public:
 	    \param begin - InputIterator pointing to begining of field trait table
 	    \param cnt - number of elements in field trait table */
 	template<typename InputIterator>
-	MessageBase(const class F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt)
-		: _fp(begin, cnt), _msgType(msgType), _ctx(ctx) {}
+	MessageBase(const class F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt
+#if defined PERMIT_CUSTOM_FIELDS
+		) : _fp(begin, cnt),
+#else
+		, const FieldTrait_Hash_Array *ftha) : _fp(begin, cnt, ftha),
+#endif
+		_msgType(msgType), _ctx(ctx) {}
 
 	/// Copy ctor.
 	MessageBase(const MessageBase& from);
@@ -299,11 +354,24 @@ public:
 	    \return number of bytes encoded */
 	unsigned encode(std::ostream& to) const;
 
-	/*! Encode message to stream.
+	/*! Encode message to buffer.
+	    \param to buffer to encode to
+	    \param sz current message size
+	    \return number of bytes encoded */
+	unsigned encode(char *to, size_t& sz) const;
+
+	/*! Encode group message to stream.
 	    \param fnum repeating group fix field num (no...)
 	    \param to stream to encode to
-	    \return number of fields encoded */
+	    \return number of bytes encoded */
 	unsigned encode_group(const unsigned short fnum, std::ostream& to) const;
+
+	/*! Encode group message to buffer.
+	    \param fnum repeating group fix field num (no...)
+	    \param to buffer to encode to
+	    \param sz current message size
+	    \return number of bytes encoded */
+	unsigned encode_group(const unsigned short fnum, char *to, size_t& sz) const;
 
 	unsigned check_positions();
 
@@ -540,11 +608,20 @@ public:
 	    \param depth nesting depth */
 	virtual void print(std::ostream& os, int depth=0) const;
 
+	/*! Print the field specified by the field num from message to the specified stream.
+	    \param fnum field number
+	    \param os refererence to stream to print to */
+	virtual void print_field(const unsigned short fnum, std::ostream& os) const;
+
 	/*! Print the repeating group to the specified stream.
 	    \param fnum field number
 	    \param os refererence to stream to print to
 	    \param depth nesting depth */
 	virtual void print_group(const unsigned short fnum, std::ostream& os, int depth=0) const;
+
+	/*! Get the FieldTraits
+	   \return reference to FieldTraits object */
+	const FieldTraits& get_fp() const { return _fp; }
 
 	/*! Inserter friend.
 	    \param os stream to send to
@@ -553,6 +630,8 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const MessageBase& what) { what.print(os); return os; }
 	friend class Message;
 
+	/*! Presence printer
+	    \param os stream to send to */
 	void print_fp(std::ostream& os) { os << _fp; }
 };
 
@@ -565,7 +644,6 @@ class Message : public MessageBase
 #endif
 
 protected:
-	static RegExp _hdr, _tlr;
 	MessageBase *_header, *_trailer;
 	unsigned _custom_seqnum;
 	bool _no_increment;
@@ -578,8 +656,12 @@ public:
 	    \param begin - InputIterator pointing to begining of field trait table
 	    \param cnt - number of elements in field trait table */
 	template<typename InputIterator>
-	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt)
-		: MessageBase(ctx, msgType, begin, cnt),
+	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt
+#if defined PERMIT_CUSTOM_FIELDS
+		) : MessageBase(ctx, msgType, begin, cnt),
+#else
+		, const FieldTrait_Hash_Array *ftha) : MessageBase(ctx, msgType, begin, cnt, ftha),
+#endif
 		_header(ctx._mk_hdr()), _trailer(ctx._mk_trl()), _custom_seqnum(), _no_increment()
 #if defined MSGRECYCLING
 		{
@@ -619,7 +701,8 @@ public:
 	/*! Decode from string.
 	    \param from source string
 	    \return number of bytes consumed */
-	unsigned decode(const f8String& from);
+	unsigned decode(const f8String& from)
+		{ return _trailer->decode(from, MessageBase::decode(from, _header->decode(from, 0))); }
 
 	/*! Encode message to stream.
 	    \param to stream to encode to
@@ -663,10 +746,18 @@ public:
 		return val % 256;
 	}
 
+	static unsigned calc_chksum(const char *from, const size_t sz, const unsigned offset=0, const int len=-1)
+	{
+		unsigned val(0);
+		const char *eptr(from + (len != -1 ? len + offset : sz - offset));
+		for (const char *ptr(from + offset); ptr < eptr; val += *ptr++);
+		return val % 256;
+	}
+
 	/*! Format a checksum into the required 3 digit, 0 padded string.
 	    \param val checksum value
 	    \return string containing formatted value */
-	static const f8String fmt_chksum(const unsigned val)
+	static f8String fmt_chksum(const unsigned val)
 	{
 		f8ostrstream ostr;
 		ostr << std::setfill('0') << std::setw(3) << val;

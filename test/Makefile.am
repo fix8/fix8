@@ -29,28 +29,32 @@
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #############################################################################################
-bin_PROGRAMS = f8test f8print hftest hfprint
+bin_PROGRAMS = f8test f8print hftest hfprint harness
 lib_LTLIBRARIES = libmyfix.la libhftest.la
-INCLUDES = -I$(top_srcdir)/include
-CLEANFILES = $(libmyfix_la_SOURCES) $(libhftest_la_SOURCES)
-.NOTPARALLEL: $(XML_SCHEMA) $(XML_HF_SCHEMA)
 f8test_SOURCES = myfix.cpp myfix.hpp myfix_custom.hpp
 f8print_SOURCES = myprint.cpp myfix.hpp
+harness_SOURCES = harness.cpp myfix.hpp
+hftest_SOURCES = hftest.cpp hftest.hpp
+hfprint_SOURCES = hfprint.cpp hftest.hpp
 libmyfix_la_SOURCES = Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
 					 		 Myfix_router.hpp Myfix_classes.hpp Myfix_classes.cpp
 libhftest_la_SOURCES = Perf_types.hpp Perf_types.cpp Perf_traits.cpp \
 					 		 Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
-hftest_SOURCES = hftest.cpp hftest.hpp
-hfprint_SOURCES = hfprint.cpp hftest.hpp
+
+CLEANFILES = $(libmyfix_la_SOURCES) $(libhftest_la_SOURCES)
+INCLUDES = -I$(top_srcdir)/include
 
 XML_SCHEMA = $(top_srcdir)/schema/FIX50SP2.xml
 XML_HF_SCHEMA = $(top_srcdir)/schema/FIX42PERF.xml
+XML_FIXT_SCHEMA = $(top_srcdir)/schema/FIXT11.xml
+
+.NOTPARALLEL: $(XML_SCHEMA) $(XML_HF_SCHEMA)
 
 $(libhftest_la_SOURCES): $(XML_HF_SCHEMA)
 	$(top_srcdir)/compiler/f8c -sVp Perf -n TEX $(XML_HF_SCHEMA)
 
 $(libmyfix_la_SOURCES): $(XML_SCHEMA)
-	$(top_srcdir)/compiler/f8c -rVn TEX $(XML_SCHEMA) -x $(top_srcdir)/schema/FIXT11.xml
+	$(top_srcdir)/compiler/f8c -rVn TEX $(XML_SCHEMA) -x $(XML_FIXT_SCHEMA)
 
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
 GEN_LIBS = -lrt -lfix8
@@ -62,11 +66,13 @@ f8test_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
 f8print_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
 hftest_LDFLAGS = -rdynamic $(ALL_LIBS) -lhftest
 hfprint_LDFLAGS = -rdynamic $(ALL_LIBS) -lhftest
+harness_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
 
 if USECOMPRESSION
 f8test_LDFLAGS += -lz
 f8print_LDFLAGS += -lz
 hftest_LDFLAGS += -lz
 hfprint_LDFLAGS += -lz
+harness_LDFLAGS += -lz
 endif
 

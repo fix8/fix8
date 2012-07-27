@@ -106,6 +106,10 @@ public:
 	  \return true on success */
    bool schedule(const TimerEvent<T>& what, const unsigned timeToWaitMS, const bool hi_res=false);
 
+	/*! Kill timer thread.
+	  \param sig signal to kill with */
+   void kill(const int sig) { _thread.Kill(sig); }
+
 	/// Join timer thread. Wait till exits.
    void join() { _thread.Join(); }
 
@@ -121,7 +125,7 @@ public:
 template<typename T>
 int Timer<T>::operator()()
 {
-   const struct timespec tspec = { 0, 1000 * 1000 * _granularity }; // if _granularity == 1 : 1ms at 1000Hz; 10ms at 100Hz
+   const struct timespec tspec = { 0, 1000 * 100 * _granularity }; // if _granularity == 1 : 0.1ms at 1000Hz; 1ms at 100Hz
    unsigned elapsed(0);
 
    while(true)

@@ -39,10 +39,11 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 f8c -- compile FIX xml schema\n
 \n
 <tt>
-Usage: f8c [-NVcdhiknoprstvx] \<input xml schema\>\n
+Usage: f8c [-NVcdfhiknoprstvx] \<input xml schema\>\n
    -N,--nounique           do not enforce unique field parsing (default false)\n
    -V,--verbose            be more verbose when processing\n
    -c,--classes \<server|client\> generate user session classes (default no)\n
+   -f,--fields             generate code for all defined fields even if they are not used in any message (default no)\n
    -d,--dump               dump 1st pass parsed source xml file, exit\n
    -h,--help               help, this screen\n
    -i,--ignore             ignore errors, attempt to generate code anyhow (default no)\n
@@ -529,6 +530,7 @@ unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr
 				}
 				else
 				{
+					fs_itr->second._used = true; 	// we always assume group count fields are used
 					pair<GroupMap::iterator, bool> gresult(
 						ritr._groups.insert(GroupMap::value_type(fs_itr->first, MessageSpec(gname))));
 					process_message_fields("group/field", *gitr, gresult.first->second._fields, ftonSpec, fspec, 0);
@@ -592,6 +594,11 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 				<< right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", " << tostr.str() << ')';
 		}
 		outp << endl << "};" << endl;
+#if !defined PERMIT_CUSTOM_FIELDS
+		outp << "const FieldTrait_Hash_Array " << prefix << ms._name << "::" << gsitr->second._name << "::_ftha("
+			<< prefix << ms._name << "::" << gsitr->second._name << "::_traits, "
+			<< gitr->second._fields.get_presence().size() << ");" << endl;
+#endif
 		outp << "const MsgType " << prefix << ms._name << "::" << gsitr->second._name << "::_msgtype(\""
 			<< gsitr->second._name << "\");" << endl;
 		outp << "const unsigned short " << prefix << ms._name << "::" << gsitr->second._name << "::_fnum;" << endl;
@@ -605,6 +612,9 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		outh << dspacer << "class " << gsitr->second._name
 			<< " : public GroupBase // depth: " << depth << endl << dspacer << '{' << endl;
 		outh << d2spacer << "static const FieldTrait _traits[];" << endl;
+#if !defined PERMIT_CUSTOM_FIELDS
+		outh << d2spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
+#endif
 		outh << d2spacer << "static const MsgType _msgtype;" << endl << endl;
 		outh << dspacer << "public:" << endl;
 		outh << d2spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl << endl;
@@ -612,12 +622,22 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		outh << d2spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
 		if (gitr->second._groups.empty())
 			outh << d2spacer << "MessageBase *create_group() const { return new MessageBase(ctx, _msgtype(), _traits, "
-				<< gitr->second._fields.get_presence().size() << "); }" << endl;
+				<< gitr->second._fields.get_presence().size()
+#if defined PERMIT_CUSTOM_FIELDS
+				<< "); }" << endl;
+#else
+				<< ", &_ftha); }" << endl;
+#endif
 		else
 		{
 			outh << d2spacer << "MessageBase *create_group() const" << endl << d2spacer << '{' << endl;
 			outh << d2spacer << spacer << "MessageBase *mb(new MessageBase(ctx, _msgtype(), _traits, "
-				<< gitr->second._fields.get_presence().size() << "));" << endl;
+				<< gitr->second._fields.get_presence().size()
+#if defined PERMIT_CUSTOM_FIELDS
+				<< "));" << endl;
+#else
+				<< ", &_ftha));" << endl;
+#endif
 			for (GroupMap::const_iterator gsitr(gitr->second._groups.begin()); gsitr != gitr->second._groups.end(); ++gsitr)
 				outh << d2spacer << spacer << "mb->append_group(new " << gsitr->second._name << "); // "
 					<< gsitr->first << endl;
@@ -685,7 +705,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	osc_hpp << endl << _csMap.find_ref(cs_divider) << endl;
-	osc_hpp << "typedef GeneratedTable<const f8String, BaseMsgEntry> " << ctxt._clname << "_BaseMsgEntry;" << endl;
+	osc_hpp << "typedef MsgTable " << ctxt._clname << "_BaseMsgEntry;" << endl;
 	osc_hpp << "extern F8MetaCntx ctx;" << endl;
 	osc_hpp << "class " << ctxt._clname << "_Router;" << endl;
 	osc_hpp << endl << _csMap.find_ref(cs_divider) << endl;
@@ -754,8 +774,15 @@ int process(XmlElement& xf, Ctxt& ctxt)
 					<< flitr->_pos << ", " << tostr.str() << ')';
 			}
 			osr_cpp << endl << "};" << endl;
+#if !defined PERMIT_CUSTOM_FIELDS
+			osr_cpp << "const FieldTrait_Hash_Array " << mitr->second._name << "::_ftha(" << mitr->second._name << "::_traits, "
+				<< mitr->second._fields.get_presence().size() << ");" << endl;
+#endif
 			osr_cpp << "const MsgType " << mitr->second._name << "::_msgtype(\"" << mitr->first << "\");" << endl;
 			osc_hpp << spacer << "static const FieldTrait _traits[];" << endl;
+#if !defined PERMIT_CUSTOM_FIELDS
+			osc_hpp << spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
+#endif
 			osc_hpp << spacer << "static const MsgType _msgtype;" << endl << endl;
 		}
 
@@ -763,7 +790,12 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		osc_hpp << spacer << mitr->second._name << "()";
 		if (mitr->second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
-				<< "(ctx, _msgtype(), _traits, " << mitr->second._fields.get_presence().size()<< ')';
+				<< "(ctx, _msgtype(), _traits, " << mitr->second._fields.get_presence().size()
+#if defined PERMIT_CUSTOM_FIELDS
+				<< ')';
+#else
+				<< ", &_ftha)";
+#endif
 		if (isHeader || isTrailer)
 			osc_hpp << " { add_preamble(); }" << endl;
 		else if (!mitr->second._groups.empty())
@@ -810,7 +842,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	{
 		osc_cpp << "Message *Create_" << mitr->second._name << "() { return ";
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
-			osc_cpp << "reinterpret_cast<Message *>(::new " << mitr->second._name << "); }" << endl;
+			osc_cpp << "reinterpret_cast<Message *>(new " << mitr->second._name << "); }" << endl;
 		else
 			osc_cpp << "new " << mitr->second._name << "; }" << endl;
 	}
@@ -1005,15 +1037,37 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	{
 		if (!gen_fields && !fitr->second._used)
 			continue;
-		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const RealmBase *db)";
-		ost_cpp << " { return new " << fitr->second._name << "(from, db); }" << endl;
+		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const RealmBase *db, const int rv)";
+		ost_cpp << " // " << fitr->second._name << endl;
+		if (fitr->second._dvals) // generate code to create a Field using a value taken from an index into a Realm
+		{
+			ost_cpp << spacer << "{ return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set ? new "
+				<< fitr->second._name << "(from, db) : new " << fitr->second._name << "(db->get_rlm_val<";
+			if (FieldTrait::is_int(fitr->second._ftype))
+				ost_cpp << "int";
+			else if (FieldTrait::is_char(fitr->second._ftype))
+				ost_cpp << "char";
+			else if (FieldTrait::is_float(fitr->second._ftype))
+				ost_cpp << "double";
+			else if (FieldTrait::is_string(fitr->second._ftype))
+				ost_cpp << "f8String";
+			else
+			{
+				ost_cpp << "unknown";
+				cerr << shortName << ": error: unknown FieldTrait::type in realm " << fitr->second._name << endl;
+				++glob_errors;
+			}
+			ost_cpp << ">(rv), db); }" << endl;
+		}
+		else
+			ost_cpp << spacer << "{ return new " << fitr->second._name << "(from, db); }" << endl;
 	}
 
 	ost_cpp << endl << _csMap.find_ref(cs_end_anon_namespace) << endl;
 	ost_cpp << "} // namespace " << ctxt._fixns << endl;
 
 	// generate field instantiator lookup
-	ost_hpp << "typedef GeneratedTable<unsigned, BaseEntry> " << ctxt._clname << "_BaseEntry;" << endl;
+	ost_hpp << "typedef FieldTable " << ctxt._clname << "_BaseEntry;" << endl;
 
 	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
 	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair "

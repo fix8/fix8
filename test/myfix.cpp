@@ -114,6 +114,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include <usage.hpp>
+#include <consolemenu.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
@@ -257,10 +258,10 @@ int main(int argc, char **argv)
 			mc->start(false);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
 			char ch;
-			mymenu.set_raw_mode();
+			mymenu.get_tty().set_raw_mode();
 			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
 				;
-			mymenu.unset_raw_mode();
+			mymenu.get_tty().unset_raw_mode();
 		}
 		else
 		{
@@ -271,10 +272,10 @@ int main(int argc, char **argv)
 			mc->start(false, next_send, next_receive);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
 			char ch;
-			mymenu.set_raw_mode();
+			mymenu.get_tty().set_raw_mode();
 			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
 				;
-			mymenu.unset_raw_mode();
+			mymenu.get_tty().unset_raw_mode();
 		}
 	}
 	catch (f8Exception& e)
@@ -315,7 +316,6 @@ bool MyMenu::new_order_single()
 	*nos += new TEX::Side(TEX::Side_BUY);
 	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
 
-#if 0
 	*nos += new TEX::NoUnderlyings(3);
 	GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
 
@@ -368,7 +368,6 @@ bool MyMenu::new_order_single()
 	MessageBase *gr11(nonpsid->create_group());
 	*gr11 += new TEX::NestedPartySubID("subnestedpartyID1");
 	*nonpsid += gr11;
-#endif
 
 	_session.send(nos);
 

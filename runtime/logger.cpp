@@ -63,7 +63,7 @@ tbb::atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_ins
 template<>
 tbb::mutex Singleton<SingleLogger<glob_log0> >::_mutex = tbb::mutex();
 
-const string Logger::_bit_names[] = { "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction" };
+const string Logger::_bit_names[] = { "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer" };
 
 //RegExp Logger::_elmnt("([0-9]+)=([^\x01]+)\x01");
 
@@ -115,11 +115,30 @@ int Logger::operator()()
 			ostr << GetTimeAsStringMS(ts, &msg._when, 9) << ' ';
 		}
 
-		tbb::mutex::scoped_lock guard(_mutex);
-		get_stream() << ostr.str() << msg._str << endl;
+		if (_flags & buffer)
+		{
+			string result(ostr.str());
+			result += msg._str;
+			_buffer.push_back(result);
+		}
+		else
+		{
+			tbb::mutex::scoped_lock guard(_mutex);
+			get_stream() << ostr.str() << msg._str << endl;
+		}
    }
 
    return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+void Logger::flush()
+{
+	tbb::mutex::scoped_lock guard(_mutex);
+	for (std::list<std::string>::const_iterator itr(_buffer.begin()); itr != _buffer.end(); ++itr)
+		get_stream() << *itr << endl;
+	_buffer.clear();
+	_lines = 0;
 }
 
 //-------------------------------------------------------------------------------------------------

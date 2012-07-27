@@ -156,9 +156,10 @@ class Logger
 {
 	Thread<Logger> _thread;
 	std::ostringstream _buf;
+	std::list<std::string> _buffer;
 
 public:
-	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, num_flags };
+	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, buffer, num_flags };
 	enum { rotation_default = 5, max_rotation = 64} ;
 	typedef ebitset<Flags> LogFlags;
 
@@ -166,6 +167,7 @@ protected:
 	tbb::mutex _mutex;
 	LogFlags _flags;
 	std::ostream *_ofs;
+	size_t _lines;
 
 	struct LogElement
 	{
@@ -208,7 +210,7 @@ protected:
 public:
 	/*! Ctor.
 	    \param flags ebitset flags */
-	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _ofs(), _sequence(), _osequence() { _thread.Start(); }
+	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _ofs(), _lines(), _sequence(), _osequence() { _thread.Start(); }
 
 	/// Dtor.
 	virtual ~Logger() { delete _ofs; }
@@ -245,6 +247,9 @@ public:
 
 	/// Remove dead threads from the thread code cache.
 	void purge_thread_codes();
+
+	/// Flush the buffer
+	virtual void flush();
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -321,7 +326,11 @@ class SingleLogger : public Singleton<SingleLogger<fn> >, public FileLogger
 {
 public:
 	/// Ctor.
-	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << thread) {}
+	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << thread
+#if defined BUFFERED_GLOBAL_LOGGING
+		<< buffer
+#endif
+	) {}
 
 	/*! Set the global logfile name.
 	    \param from name to set to */
@@ -336,6 +345,11 @@ public:
 	static bool log(const std::string& what)
 	{
 		return Singleton<SingleLogger<fn> >::instance()->send(what);
+	}
+
+	static void flush_log()
+	{
+		Singleton<SingleLogger<fn> >::instance()->flush();
 	}
 };
 
