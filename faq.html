@@ -389,6 +389,24 @@ MessageBase *gr11(nonpsid->create_group());
 % ./configure --enable-customfields</pre>
 													</div>
 												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#testSix">f) When I run ./configure I get lots of errors</a>
+												</div>
+												<div id="testSix" class="accordion-body collapse">
+													<div class="accordion-inner">
+													This problem is usually because libtool is not installed.  If you are using debian or ubuntu:
+								<pre>
+% apt-get install libtool</pre>
+													On centos/RH:
+								<pre>
+% yum install libtool</pre>
+													You might also need autoconf and automake. Install these the same way.
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 						</div>
