@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.0</span>
+   &#160;<span id="projectnumber">version  0.6.1</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -133,8 +133,8 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ae87b0b2891d2c908c5dca6a69552e718"><td class="memItemLeft" align="right" valign="top">typedef std::set&lt; <a class="el" href="classXmlElement.html">XmlElement</a> <br class="typebreak"/>
-*, <a class="el" href="structXmlElement_1_1EntityOrderComp.html">EntityOrderComp</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#ae87b0b2891d2c908c5dca6a69552e718">XmlSet</a></td></tr>
+<tr class="memitem:a946b9b7311e41476a5208f1a46b98bbf"><td class="memItemLeft" align="right" valign="top">typedef std::set&lt; const <br class="typebreak"/>
+<a class="el" href="classXmlElement.html">XmlElement</a> *, <a class="el" href="structXmlElement_1_1EntityOrderComp.html">EntityOrderComp</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlSet</a></td></tr>
 <tr class="memitem:ae85eace076ada6f09b8d40efc60d8d0a"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; std::string, <br class="typebreak"/>
 std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#ae85eace076ada6f09b8d40efc60d8d0a">XmlAttrs</a></td></tr>
 </table><table class="memberdecls">
@@ -148,12 +148,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1e67b1dfcd561d1d602988d100d80d9b"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a1e67b1dfcd561d1d602988d100d80d9b">~XmlElement</a> ()</td></tr>
 <tr class="memdesc:a1e67b1dfcd561d1d602988d100d80d9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#a1e67b1dfcd561d1d602988d100d80d9b"></a><br/></td></tr>
 <tr class="memitem:aa5c2996a03585197d1c4169ba6bf2652"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#aa5c2996a03585197d1c4169ba6bf2652">ParseAttrs</a> (const std::string &amp;attlst)</td></tr>
-<tr class="memitem:a69af8f8ccf0bdfd5f9d11572a99855c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a69af8f8ccf0bdfd5f9d11572a99855c6">find</a> (const std::string &amp;what, bool ignorecase=false, const std::string *atag=0, const std::string *aval=0, const char delim='/')</td></tr>
-<tr class="memitem:a7bd706c60e6b618ab048ab4e0b935da2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a7bd706c60e6b618ab048ab4e0b935da2">find</a> (const std::string &amp;what, <a class="el" href="classXmlElement.html#ae87b0b2891d2c908c5dca6a69552e718">XmlSet</a> &amp;eset, bool ignorecase=false, const std::string *atag=0, const std::string *aval=0, const char delim='/')</td></tr>
+<tr class="memitem:a69d6c53407dfd69e3ed16f0044dea111"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">find</a> (const std::string &amp;what, bool ignorecase=false, const std::string *atag=0, const std::string *aval=0, const char delim='/') const </td></tr>
+<tr class="memitem:af3ca984c6a21b635ea00adf4b595173d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#af3ca984c6a21b635ea00adf4b595173d">find</a> (const std::string &amp;what, <a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlSet</a> &amp;eset, bool ignorecase=false, const std::string *atag=0, const std::string *aval=0, const char delim='/') const </td></tr>
 <tr class="memitem:a8a1842abc11fcabcf06ce6e6e462ee2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a> (const std::string &amp;what, std::string &amp;target) const </td></tr>
 <tr class="memitem:a0e87bacc107955cd66b422f08b197076"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a0e87bacc107955cd66b422f08b197076">GetAttrValue</a> (std::string &amp;target) const </td></tr>
 <tr class="memitem:a65d283c7943d251d5b69aefa3b9a39ef"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a65d283c7943d251d5b69aefa3b9a39ef">FindAttrGetValue</a> (const std::string &amp;what, std::string &amp;target)</td></tr>
-<tr class="memitem:a6088d88b6ec9b35a36e23327bc05b249"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a6088d88b6ec9b35a36e23327bc05b249">findAttrByValue</a> (const std::string &amp;what, const std::string &amp;value)</td></tr>
+<tr class="memitem:ac6d0f0d27e933e960bfdee122f8c6b04"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#ac6d0f0d27e933e960bfdee122f8c6b04">findAttrByValue</a> (const std::string &amp;what, const std::string &amp;value) const </td></tr>
 <tr class="memitem:a9bcc420674262afdd97a18c1639349a2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a9bcc420674262afdd97a18c1639349a2"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a9bcc420674262afdd97a18c1639349a2">FindAttr</a> (const std::string &amp;what, const T defValue) const </td></tr>
 <tr class="memitem:abb8234e640a0b260ccba5cdb17169619"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
@@ -209,8 +209,8 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a128c2239e81510b79b38de65b3aaf8ec"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a128c2239e81510b79b38de65b3aaf8ec">subidx_</a></td></tr>
 <tr class="memitem:a543a0defe1fabd9b06b0d362bcf9ae16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classXmlElement.html#a6a45eea88fecd1c55694985085e90e08">XmlSubEls</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a543a0defe1fabd9b06b0d362bcf9ae16">children_</a></td></tr>
 <tr class="memdesc:a543a0defe1fabd9b06b0d362bcf9ae16"><td class="mdescLeft">&#160;</td><td class="mdescRight">simple n-ary tree  <a href="#a543a0defe1fabd9b06b0d362bcf9ae16"></a><br/></td></tr>
-<tr class="memitem:a1379e6ffd7eb376e23b242a71a466d25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classXmlElement.html#ae87b0b2891d2c908c5dca6a69552e718">XmlSet</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a1379e6ffd7eb376e23b242a71a466d25">ordchildren_</a></td></tr>
-<tr class="memdesc:a1379e6ffd7eb376e23b242a71a466d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of all child entities in file order.  <a href="#a1379e6ffd7eb376e23b242a71a466d25"></a><br/></td></tr>
+<tr class="memitem:a1379e6ffd7eb376e23b242a71a466d25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlSet</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a1379e6ffd7eb376e23b242a71a466d25">ordchildren_</a></td></tr>
+<tr class="memdesc:a1379e6ffd7eb376e23b242a71a466d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of all child elements in file order.  <a href="#a1379e6ffd7eb376e23b242a71a466d25"></a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -220,7 +220,8 @@ Static Private Attributes</h2></td></tr>
 <tr class="memitem:ad3bf155ed5555c2dbb725d7c41baee8d"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#ad3bf155ed5555c2dbb725d7c41baee8d">seq_</a></td></tr>
 <tr class="memitem:a19ad3a90ff235dd17343f7f602b4dec0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classFIX8_1_1RegExp.html">FIX8::RegExp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a19ad3a90ff235dd17343f7f602b4dec0">rCE_</a></td></tr>
 <tr class="memitem:a67fb445cd0c0cd39982945373942e105"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classFIX8_1_1RegExp.html">FIX8::RegExp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a67fb445cd0c0cd39982945373942e105">rCX_</a></td></tr>
-<tr class="memitem:a01f925f763768a55313ed42e668cdd30"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classXmlElement.html#ae87b0b2891d2c908c5dca6a69552e718">XmlSet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a01f925f763768a55313ed42e668cdd30">emptyset_</a></td></tr>
+<tr class="memitem:a9b03aa156b9de6ca25b737e298a0d0bb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a9b03aa156b9de6ca25b737e298a0d0bb">root_</a></td></tr>
+<tr class="memitem:a01f925f763768a55313ed42e668cdd30"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlSet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXmlElement.html#a01f925f763768a55313ed42e668cdd30">emptyset_</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
@@ -241,22 +242,22 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00071">71</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00072">72</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae87b0b2891d2c908c5dca6a69552e718"></a>
+<a class="anchor" id="a946b9b7311e41476a5208f1a46b98bbf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::set&lt;<a class="el" href="classXmlElement.html">XmlElement</a> *, <a class="el" href="structXmlElement_1_1EntityOrderComp.html">EntityOrderComp</a>&gt; <a class="el" href="classXmlElement.html#ae87b0b2891d2c908c5dca6a69552e718">XmlElement::XmlSet</a></td>
+          <td class="memname">typedef std::set&lt;const <a class="el" href="classXmlElement.html">XmlElement</a> *, <a class="el" href="structXmlElement_1_1EntityOrderComp.html">EntityOrderComp</a>&gt; <a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlElement::XmlSet</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>XmlSet ordering preserved from source file </p>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00059">59</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00060">60</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
 </div>
 </div>
@@ -278,7 +279,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00062">62</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00063">63</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
 </div>
 </div>
@@ -330,7 +331,7 @@ Friends</h2></td></tr>
 
 <p>Copy Ctor. Non-copyable. </p>
 
-<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00517">Factory()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00533">Factory()</a>.</p>
 
 </div>
 </div>
@@ -412,9 +413,9 @@ Friends</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00371">371</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00375">375</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00072">attrs_</a>, <a class="el" href="xml_8hpp_source.html#l00064">children_</a>, <a class="el" href="xml_8hpp_source.html#l00047">decl_</a>, <a class="el" href="xml_8hpp_source.html#l00067">ordchildren_</a>, and <a class="el" href="xml_8hpp_source.html#l00047">value_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00073">attrs_</a>, <a class="el" href="xml_8hpp_source.html#l00065">children_</a>, <a class="el" href="xml_8hpp_source.html#l00048">decl_</a>, <a class="el" href="xml_8hpp_source.html#l00068">ordchildren_</a>, and <a class="el" href="xml_8hpp_source.html#l00048">value_</a>.</p>
 
 </div>
 </div>
@@ -442,9 +443,9 @@ Friends</h2></td></tr>
 <p>Get an iterator to the first child attribute. </p>
 <dl class="section return"><dt>Returns</dt><dd>const_iterator to first attribute </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00247">247</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00248">248</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00072">attrs_</a>, and <a class="el" href="xml_8hpp_source.html#l00073">emptyattrs_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00073">attrs_</a>, and <a class="el" href="xml_8hpp_source.html#l00074">emptyattrs_</a>.</p>
 
 </div>
 </div>
@@ -471,9 +472,9 @@ Friends</h2></td></tr>
 <p>Get an iterator to the last+1 child attribute. </p>
 <dl class="section return"><dt>Returns</dt><dd>const_iterator to last+1 attribute </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00251">251</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00252">252</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00072">attrs_</a>, and <a class="el" href="xml_8hpp_source.html#l00073">emptyattrs_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00073">attrs_</a>, and <a class="el" href="xml_8hpp_source.html#l00074">emptyattrs_</a>.</p>
 
 </div>
 </div>
@@ -500,9 +501,9 @@ Friends</h2></td></tr>
 <p>Get an iterator to the first child element. </p>
 <dl class="section return"><dt>Returns</dt><dd>const_iterator to first element </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00255">255</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00256">256</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00068">emptyset_</a>, and <a class="el" href="xml_8hpp_source.html#l00067">ordchildren_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00069">emptyset_</a>, and <a class="el" href="xml_8hpp_source.html#l00068">ordchildren_</a>.</p>
 
 </div>
 </div>
@@ -529,9 +530,9 @@ Friends</h2></td></tr>
 <p>Get an iterator to the last+1 child element. </p>
 <dl class="section return"><dt>Returns</dt><dd>const_iterator to last+1 element </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00259">259</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00260">260</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00068">emptyset_</a>, and <a class="el" href="xml_8hpp_source.html#l00067">ordchildren_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00069">emptyset_</a>, and <a class="el" href="xml_8hpp_source.html#l00068">ordchildren_</a>.</p>
 
 <p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00057">FIX8::Configuration::find_element()</a>.</p>
 
@@ -567,20 +568,20 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the depth </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00517">517</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00533">533</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00238">Reset()</a>, and <a class="el" href="classXmlElement.html#a604980b35f37a37c635fd606ebe25682">XmlElement()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00239">Reset()</a>, and <a class="el" href="classXmlElement.html#a604980b35f37a37c635fd606ebe25682">XmlElement()</a>.</p>
 
 <p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00148">main()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a69af8f8ccf0bdfd5f9d11572a99855c6"></a>
+<a class="anchor" id="a69d6c53407dfd69e3ed16f0044dea111"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classXmlElement.html">XmlElement</a>* XmlElement::find </td>
+          <td class="memname">const <a class="el" href="classXmlElement.html">XmlElement</a>* XmlElement::find </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>what</em>, </td>
@@ -612,28 +613,28 @@ Friends</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Find an element with a given entity name, attribute name and attribute value. </p>
+<p>Find an element with a given name, attribute name and attribute value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">what</td><td>the entity name to search for </td></tr>
-    <tr><td class="paramname">ignorecase</td><td>if true ignore case of entity name </td></tr>
+    <tr><td class="paramname">what</td><td>the name to search for </td></tr>
+    <tr><td class="paramname">ignorecase</td><td>if true ignore case of name </td></tr>
     <tr><td class="paramname">atag</td><td>the attribute name </td></tr>
     <tr><td class="paramname">aval</td><td>the attribute value </td></tr>
     <tr><td class="paramname">delim</td><td>the Xpath delimiter </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the found entity or 0 if not found </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the found or 0 if not found </dd></dl>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00138">FindAttrGetValue()</a>, <a class="el" href="f8c_8cpp_source.html#l00346">load_fields()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00121">load_fix_version()</a>, <a class="el" href="configuration_8hpp_source.html#l00090">FIX8::Configuration::load_map()</a>, <a class="el" href="f8c_8cpp_source.html#l00419">load_messages()</a>, <a class="el" href="f8precomp_8cpp_source.html#l00084">precomp()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00229">process_message_fields()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00139">FindAttrGetValue()</a>, <a class="el" href="f8c_8cpp_source.html#l00346">load_fields()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00121">load_fix_version()</a>, <a class="el" href="configuration_8hpp_source.html#l00090">FIX8::Configuration::load_map()</a>, <a class="el" href="f8c_8cpp_source.html#l00419">load_messages()</a>, <a class="el" href="f8precomp_8cpp_source.html#l00084">precomp()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00229">process_message_fields()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7bd706c60e6b618ab048ab4e0b935da2"></a>
+<a class="anchor" id="af3ca984c6a21b635ea00adf4b595173d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -646,7 +647,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classXmlElement.html#ae87b0b2891d2c908c5dca6a69552e718">XmlSet</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlSet</a> &amp;&#160;</td>
           <td class="paramname"><em>eset</em>, </td>
         </tr>
         <tr>
@@ -676,23 +677,23 @@ Friends</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Recursively find all elements with a given entity name, attribute name and attribute value. </p>
+<p>Recursively find all elements with a given name, attribute name and attribute value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">what</td><td>the entity name to search for </td></tr>
+    <tr><td class="paramname">what</td><td>the name to search for </td></tr>
     <tr><td class="paramname">eset</td><td>target XmlSet to place results </td></tr>
-    <tr><td class="paramname">ignorecase</td><td>if true ignore case of entity name </td></tr>
+    <tr><td class="paramname">ignorecase</td><td>if true ignore case of name </td></tr>
     <tr><td class="paramname">atag</td><td>the attribute name </td></tr>
     <tr><td class="paramname">aval</td><td>the attribute value </td></tr>
     <tr><td class="paramname">delim</td><td>the Xpath delimiter </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the number of found entities </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of found elements </dd></dl>
 
 </div>
 </div>
@@ -745,15 +746,15 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the value of the found attribute </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00156">156</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00157">157</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00072">attrs_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00073">attrs_</a>.</p>
 
 <p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00189">FIX8::Configuration::get_heartbeat_interval()</a>, <a class="el" href="configuration_8hpp_source.html#l00183">FIX8::Configuration::get_logfile_rotation()</a>, <a class="el" href="configuration_8hpp_source.html#l00201">FIX8::Configuration::get_reset_sequence_number_flag()</a>, <a class="el" href="configuration_8hpp_source.html#l00170">FIX8::Configuration::get_retry_count()</a>, <a class="el" href="configuration_8hpp_source.html#l00163">FIX8::Configuration::get_retry_interval()</a>, <a class="el" href="configuration_8hpp_source.html#l00195">FIX8::Configuration::get_tcp_nodelay()</a>, <a class="el" href="configuration_8hpp_source.html#l00176">FIX8::Configuration::get_version()</a>, and <a class="el" href="f8c_8hpp_source.html#l00190">FIX8::recover_line()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6088d88b6ec9b35a36e23327bc05b249"></a>
+<a class="anchor" id="ac6d0f0d27e933e960bfdee122f8c6b04"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -772,7 +773,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -786,9 +787,9 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if found </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00442">442</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00458">458</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00072">attrs_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00073">attrs_</a>.</p>
 
 </div>
 </div>
@@ -826,16 +827,16 @@ template&lt;typename T &gt; </div>
 <p>Find an element and obtain the attribute's value with the name "value". </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">what</td><td>entity name to find </td></tr>
+    <tr><td class="paramname">what</td><td>name to find </td></tr>
     <tr><td class="paramname">target</td><td>where to place value </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if found </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00138">138</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00139">139</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="classXmlElement.html#a69af8f8ccf0bdfd5f9d11572a99855c6">find()</a>, and <a class="el" href="xml_8hpp_source.html#l00128">GetAttrValue()</a>.</p>
+<p>References <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">find()</a>, and <a class="el" href="xml_8hpp_source.html#l00129">GetAttrValue()</a>.</p>
 
 </div>
 </div>
@@ -888,9 +889,9 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>reference to value of the found attribute </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00174">174</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00175">175</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00072">attrs_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00073">attrs_</a>.</p>
 
 <p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00156">FIX8::Configuration::get_logname()</a>.</p>
 
@@ -929,11 +930,11 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if found </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00454">454</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00470">470</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00072">attrs_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00073">attrs_</a>.</p>
 
-<p>Referenced by <a class="el" href="configuration_8cpp_source.html#l00128">FIX8::Configuration::create_logger()</a>, <a class="el" href="configuration_8cpp_source.html#l00097">FIX8::Configuration::create_persister()</a>, <a class="el" href="configuration_8cpp_source.html#l00086">FIX8::Configuration::get_address()</a>, <a class="el" href="configuration_8cpp_source.html#l00166">FIX8::Configuration::get_logflags()</a>, <a class="el" href="configuration_8cpp_source.html#l00078">FIX8::Configuration::get_role()</a>, <a class="el" href="configuration_8hpp_source.html#l00077">FIX8::Configuration::get_string_field()</a>, and <a class="el" href="xml_8hpp_source.html#l00128">GetAttrValue()</a>.</p>
+<p>Referenced by <a class="el" href="configuration_8cpp_source.html#l00128">FIX8::Configuration::create_logger()</a>, <a class="el" href="configuration_8cpp_source.html#l00097">FIX8::Configuration::create_persister()</a>, <a class="el" href="configuration_8cpp_source.html#l00086">FIX8::Configuration::get_address()</a>, <a class="el" href="configuration_8cpp_source.html#l00166">FIX8::Configuration::get_logflags()</a>, <a class="el" href="configuration_8cpp_source.html#l00078">FIX8::Configuration::get_role()</a>, <a class="el" href="configuration_8hpp_source.html#l00077">FIX8::Configuration::get_string_field()</a>, and <a class="el" href="xml_8hpp_source.html#l00129">GetAttrValue()</a>.</p>
 
 </div>
 </div>
@@ -967,11 +968,11 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if found </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00128">128</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00129">129</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00454">GetAttr()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00470">GetAttr()</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00138">FindAttrGetValue()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00139">FindAttrGetValue()</a>.</p>
 
 </div>
 </div>
@@ -998,9 +999,9 @@ template&lt;typename T &gt; </div>
 <p>Get the count of children this element has. </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of children </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00206">206</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00207">207</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00048">chldcnt_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00049">chldcnt_</a>.</p>
 
 </div>
 </div>
@@ -1027,9 +1028,9 @@ template&lt;typename T &gt; </div>
 <p>Get the declaration if available. </p>
 <dl class="section return"><dt>Returns</dt><dd>the depth </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00235">235</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00236">236</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00047">decl_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00048">decl_</a>.</p>
 
 </div>
 </div>
@@ -1056,9 +1057,9 @@ template&lt;typename T &gt; </div>
 <p>Get the depth of this element </p>
 <dl class="section return"><dt>Returns</dt><dd>the depth </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00194">194</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00195">195</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00048">depth_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00049">depth_</a>.</p>
 
 </div>
 </div>
@@ -1085,7 +1086,7 @@ template&lt;typename T &gt; </div>
 <p>Get the global error count. </p>
 <dl class="section return"><dt>Returns</dt><dd>the error count </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00198">198</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00199">199</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
 <p>References <a class="el" href="xml_8hpp_source.html#l00044">errors_</a>.</p>
 
@@ -1116,9 +1117,9 @@ template&lt;typename T &gt; </div>
 <p>Get the source line of this element (element order). </p>
 <dl class="section return"><dt>Returns</dt><dd>the line </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00210">210</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00211">211</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00048">txtline_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00049">txtline_</a>.</p>
 
 <p>Referenced by <a class="el" href="f8c_8hpp_source.html#l00190">FIX8::recover_line()</a>.</p>
 
@@ -1147,7 +1148,7 @@ template&lt;typename T &gt; </div>
 <p>Get the actual current source line. </p>
 <dl class="section return"><dt>Returns</dt><dd>the source line </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00202">202</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00203">203</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
 <p>References <a class="el" href="xml_8hpp_source.html#l00044">line_</a>.</p>
 
@@ -1178,7 +1179,7 @@ template&lt;typename T &gt; </div>
 <p>Get the maximum depth supported. </p>
 <dl class="section return"><dt>Returns</dt><dd>the maximum depth </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00222">222</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00223">223</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
 <p>References <a class="el" href="xml_8hpp_source.html#l00044">maxdepth_</a>.</p>
 
@@ -1207,11 +1208,11 @@ template&lt;typename T &gt; </div>
 <p>Get the sequence number for this element (incremented for each new element). </p>
 <dl class="section return"><dt>Returns</dt><dd>the sequence number </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00218">218</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00219">219</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00048">sequence_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00049">sequence_</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00053">XmlElement::EntityOrderComp::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00054">XmlElement::EntityOrderComp::operator()()</a>.</p>
 
 </div>
 </div>
@@ -1238,9 +1239,9 @@ template&lt;typename T &gt; </div>
 <p>Get the subindex. </p>
 <dl class="section return"><dt>Returns</dt><dd>the subindex </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00214">214</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00215">215</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00048">subidx_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00049">subidx_</a>.</p>
 
 </div>
 </div>
@@ -1267,9 +1268,9 @@ template&lt;typename T &gt; </div>
 <p>Get the element tag name. </p>
 <dl class="section return"><dt>Returns</dt><dd>the tag </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00227">227</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00228">228</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00047">tag_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00048">tag_</a>.</p>
 
 <p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00084">precomp()</a>.</p>
 
@@ -1298,9 +1299,9 @@ template&lt;typename T &gt; </div>
 <p>Get the element value. </p>
 <dl class="section return"><dt>Returns</dt><dd>the value </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00231">231</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00232">232</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00047">value_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00048">value_</a>.</p>
 
 </div>
 </div>
@@ -1326,11 +1327,11 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the translated string </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00470">470</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00486">486</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
 
 <p>References <a class="el" href="xml_8hpp_source.html#l00045">rCE_</a>, <a class="el" href="xml_8hpp_source.html#l00045">rCX_</a>, <a class="el" href="f8utils_8hpp_source.html#l00349">FIX8::RegExp::Replace()</a>, <a class="el" href="f8utils_8hpp_source.html#l00306">FIX8::RegExp::SearchString()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00322">FIX8::RegExp::SubExpr()</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00306">ParseAttrs()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00310">ParseAttrs()</a>.</p>
 
 </div>
 </div>
@@ -1374,9 +1375,9 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of attributes extracted </dd></dl>
 
-<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00306">306</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8cpp_source.html#l00310">310</a> of file <a class="el" href="xml_8cpp_source.html">xml.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00072">attrs_</a>, <a class="el" href="xml_8hpp_source.html#l00044">errors_</a>, <a class="el" href="xml_8cpp_source.html#l00470">InplaceXlate()</a>, and <a class="el" href="xml_8hpp_source.html#l00044">line_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00073">attrs_</a>, <a class="el" href="xml_8hpp_source.html#l00044">errors_</a>, <a class="el" href="xml_8cpp_source.html#l00486">InplaceXlate()</a>, and <a class="el" href="xml_8hpp_source.html#l00044">line_</a>.</p>
 
 </div>
 </div>
@@ -1403,11 +1404,11 @@ template&lt;typename T &gt; </div>
 
 <p>Reset all counters, errors and sequences. </p>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00238">238</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00239">239</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00044">errors_</a>, <a class="el" href="xml_8hpp_source.html#l00044">line_</a>, <a class="el" href="xml_8hpp_source.html#l00044">maxdepth_</a>, and <a class="el" href="xml_8hpp_source.html#l00044">seq_</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00044">errors_</a>, <a class="el" href="xml_8hpp_source.html#l00044">line_</a>, <a class="el" href="xml_8hpp_source.html#l00044">maxdepth_</a>, <a class="el" href="xml_8hpp_source.html#l00046">root_</a>, and <a class="el" href="xml_8hpp_source.html#l00044">seq_</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00517">Factory()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00533">Factory()</a>.</p>
 
 </div>
 </div>
@@ -1466,9 +1467,9 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00072">72</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00073">73</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00247">abegin()</a>, <a class="el" href="xml_8hpp_source.html#l00251">aend()</a>, <a class="el" href="xml_8hpp_source.html#l00156">FindAttr()</a>, <a class="el" href="xml_8cpp_source.html#l00442">findAttrByValue()</a>, <a class="el" href="xml_8hpp_source.html#l00174">FindAttrRef()</a>, <a class="el" href="xml_8cpp_source.html#l00454">GetAttr()</a>, <a class="el" href="xml_8cpp_source.html#l00074">operator&lt;&lt;()</a>, <a class="el" href="xml_8cpp_source.html#l00306">ParseAttrs()</a>, and <a class="el" href="xml_8cpp_source.html#l00371">~XmlElement()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00248">abegin()</a>, <a class="el" href="xml_8hpp_source.html#l00252">aend()</a>, <a class="el" href="xml_8hpp_source.html#l00157">FindAttr()</a>, <a class="el" href="xml_8cpp_source.html#l00458">findAttrByValue()</a>, <a class="el" href="xml_8hpp_source.html#l00175">FindAttrRef()</a>, <a class="el" href="xml_8cpp_source.html#l00470">GetAttr()</a>, <a class="el" href="xml_8cpp_source.html#l00075">operator&lt;&lt;()</a>, <a class="el" href="xml_8cpp_source.html#l00310">ParseAttrs()</a>, and <a class="el" href="xml_8cpp_source.html#l00375">~XmlElement()</a>.</p>
 
 </div>
 </div>
@@ -1492,9 +1493,9 @@ template&lt;typename T &gt; </div>
 
 <p>simple n-ary tree </p>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00064">64</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00065">65</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00074">operator&lt;&lt;()</a>, and <a class="el" href="xml_8cpp_source.html#l00371">~XmlElement()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00075">operator&lt;&lt;()</a>, and <a class="el" href="xml_8cpp_source.html#l00375">~XmlElement()</a>.</p>
 
 </div>
 </div>
@@ -1516,9 +1517,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00048">48</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00049">49</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00206">GetChildCnt()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00207">GetChildCnt()</a>.</p>
 
 </div>
 </div>
@@ -1540,9 +1541,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00047">47</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00048">48</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00235">GetDecl()</a>, <a class="el" href="xml_8cpp_source.html#l00074">operator&lt;&lt;()</a>, and <a class="el" href="xml_8cpp_source.html#l00371">~XmlElement()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00236">GetDecl()</a>, <a class="el" href="xml_8cpp_source.html#l00075">operator&lt;&lt;()</a>, and <a class="el" href="xml_8cpp_source.html#l00375">~XmlElement()</a>.</p>
 
 </div>
 </div>
@@ -1564,9 +1565,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00048">48</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00049">49</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00194">GetDepth()</a>, and <a class="el" href="xml_8cpp_source.html#l00074">operator&lt;&lt;()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00195">GetDepth()</a>, and <a class="el" href="xml_8cpp_source.html#l00075">operator&lt;&lt;()</a>.</p>
 
 </div>
 </div>
@@ -1588,9 +1589,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00073">73</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00074">74</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00247">abegin()</a>, and <a class="el" href="xml_8hpp_source.html#l00251">aend()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00248">abegin()</a>, and <a class="el" href="xml_8hpp_source.html#l00252">aend()</a>.</p>
 
 </div>
 </div>
@@ -1602,7 +1603,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classXmlElement.html#ae87b0b2891d2c908c5dca6a69552e718">XmlElement::XmlSet</a> XmlElement::emptyset_</td>
+          <td class="memname"><a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlElement::XmlSet</a> XmlElement::emptyset_</td>
         </tr>
       </table>
   </td>
@@ -1612,9 +1613,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00068">68</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00069">69</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00255">begin()</a>, and <a class="el" href="xml_8hpp_source.html#l00259">end()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00256">begin()</a>, and <a class="el" href="xml_8hpp_source.html#l00260">end()</a>.</p>
 
 </div>
 </div>
@@ -1638,7 +1639,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="xml_8hpp_source.html#l00044">44</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00198">GetErrorCnt()</a>, <a class="el" href="xml_8cpp_source.html#l00306">ParseAttrs()</a>, and <a class="el" href="xml_8hpp_source.html#l00238">Reset()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00199">GetErrorCnt()</a>, <a class="el" href="xml_8cpp_source.html#l00310">ParseAttrs()</a>, and <a class="el" href="xml_8hpp_source.html#l00239">Reset()</a>.</p>
 
 </div>
 </div>
@@ -1662,7 +1663,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="xml_8hpp_source.html#l00044">44</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00202">GetLineCnt()</a>, <a class="el" href="xml_8cpp_source.html#l00306">ParseAttrs()</a>, and <a class="el" href="xml_8hpp_source.html#l00238">Reset()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00203">GetLineCnt()</a>, <a class="el" href="xml_8cpp_source.html#l00310">ParseAttrs()</a>, and <a class="el" href="xml_8hpp_source.html#l00239">Reset()</a>.</p>
 
 </div>
 </div>
@@ -1686,7 +1687,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="xml_8hpp_source.html#l00044">44</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00222">GetMaxDepth()</a>, and <a class="el" href="xml_8hpp_source.html#l00238">Reset()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00223">GetMaxDepth()</a>, and <a class="el" href="xml_8hpp_source.html#l00239">Reset()</a>.</p>
 
 </div>
 </div>
@@ -1698,7 +1699,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classXmlElement.html#ae87b0b2891d2c908c5dca6a69552e718">XmlSet</a>* XmlElement::ordchildren_</td>
+          <td class="memname"><a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlSet</a>* XmlElement::ordchildren_</td>
         </tr>
       </table>
   </td>
@@ -1708,11 +1709,11 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Set of all child entities in file order. </p>
+<p>Set of all child elements in file order. </p>
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00067">67</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00068">68</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00255">begin()</a>, <a class="el" href="xml_8hpp_source.html#l00259">end()</a>, <a class="el" href="xml_8cpp_source.html#l00074">operator&lt;&lt;()</a>, and <a class="el" href="xml_8cpp_source.html#l00371">~XmlElement()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00256">begin()</a>, <a class="el" href="xml_8hpp_source.html#l00260">end()</a>, <a class="el" href="xml_8cpp_source.html#l00075">operator&lt;&lt;()</a>, and <a class="el" href="xml_8cpp_source.html#l00375">~XmlElement()</a>.</p>
 
 </div>
 </div>
@@ -1736,7 +1737,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="xml_8hpp_source.html#l00045">45</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00470">InplaceXlate()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00486">InplaceXlate()</a>.</p>
 
 </div>
 </div>
@@ -1760,7 +1761,31 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="xml_8hpp_source.html#l00045">45</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00470">InplaceXlate()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00486">InplaceXlate()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9b03aa156b9de6ca25b737e298a0d0bb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classXmlElement.html">XmlElement</a> * XmlElement::root_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00046">46</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00239">Reset()</a>.</p>
 
 </div>
 </div>
@@ -1784,7 +1809,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="xml_8hpp_source.html#l00044">44</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00238">Reset()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00239">Reset()</a>.</p>
 
 </div>
 </div>
@@ -1806,9 +1831,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00048">48</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00049">49</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00218">GetSequence()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00219">GetSequence()</a>.</p>
 
 </div>
 </div>
@@ -1830,9 +1855,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00048">48</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00049">49</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00214">GetSubIdx()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00215">GetSubIdx()</a>.</p>
 
 </div>
 </div>
@@ -1854,9 +1879,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00047">47</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00048">48</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00227">GetTag()</a>, and <a class="el" href="xml_8cpp_source.html#l00074">operator&lt;&lt;()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00228">GetTag()</a>, and <a class="el" href="xml_8cpp_source.html#l00075">operator&lt;&lt;()</a>.</p>
 
 </div>
 </div>
@@ -1878,9 +1903,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00048">48</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00049">49</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00210">GetLine()</a>, and <a class="el" href="xml_8cpp_source.html#l00074">operator&lt;&lt;()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00211">GetLine()</a>, and <a class="el" href="xml_8cpp_source.html#l00075">operator&lt;&lt;()</a>.</p>
 
 </div>
 </div>
@@ -1902,9 +1927,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00047">47</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
+<p>Definition at line <a class="el" href="xml_8hpp_source.html#l00048">48</a> of file <a class="el" href="xml_8hpp_source.html">xml.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00231">GetVal()</a>, <a class="el" href="xml_8cpp_source.html#l00074">operator&lt;&lt;()</a>, and <a class="el" href="xml_8cpp_source.html#l00371">~XmlElement()</a>.</p>
+<p>Referenced by <a class="el" href="xml_8hpp_source.html#l00232">GetVal()</a>, <a class="el" href="xml_8cpp_source.html#l00075">operator&lt;&lt;()</a>, and <a class="el" href="xml_8cpp_source.html#l00375">~XmlElement()</a>.</p>
 
 </div>
 </div>
@@ -1915,7 +1940,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jul 27 2012 10:52:41. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 7 2012 17:43:35. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

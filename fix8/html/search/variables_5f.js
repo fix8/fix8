@@ -1,7 +1,7 @@
 var searchData=
 [
   ['_5faddr',['_addr',['../classFIX8_1_1ClientConnection.html#ade1b3b4f8a90466e69a220503e55c01f',1,'FIX8::ClientConnection::_addr()'],['../classFIX8_1_1ClientSession.html#a47766e5b7be4b0b4aee80e2796cf2921',1,'FIX8::ClientSession::_addr()'],['../classFIX8_1_1ServerSession.html#aa67b9e62eca1e673c5c2fc76d84c86e4',1,'FIX8::ServerSession::_addr()']]],
-  ['_5fallsessions',['_allsessions',['../classFIX8_1_1Configuration.html#ac2fe0255e5948ae62a0675da9d956592',1,'FIX8::Configuration']]],
+  ['_5fallsessions',['_allsessions',['../classFIX8_1_1Configuration.html#a337fd1c50608ac77b1ae6c66ebcae028',1,'FIX8::Configuration']]],
   ['_5fargs',['_args',['../classFIX8_1_1Thread_3_4_1_1__helper.html#a142488d62314186db8c7e11ab75f0388',1,'FIX8::Thread&lt;&gt;::_helper']]],
   ['_5farr',['_arr',['../classFIX8_1_1presorted__set.html#a43ce741e5784f5aba44659ca5efce7c9',1,'FIX8::presorted_set::_arr()'],['../structFIX8_1_1FieldTrait__Hash__Array.html#ad331276fc97a08774414246e279f6acc',1,'FIX8::FieldTrait_Hash_Array::_arr()'],['../classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#ab8d6c4c0f32d3b3be014ac38ee47c467',1,'FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::_arr()']]],
   ['_5fattr',['_attr',['../classFIX8_1_1__threadbase.html#ad283ee5e542e006f54261e11b9fdb0da',1,'FIX8::_threadbase']]],

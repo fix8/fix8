@@ -1,6 +1,6 @@
 var classFIX8_1_1Configuration =
 [
-    [ "ConfigMap", "classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410", null ],
+    [ "ConfigMap", "classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968", null ],
     [ "Logtype", "classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2", [
       [ "session_log", "classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2a8f06c450c3b6d8ec13d86847ee790e2c", null ],
       [ "protocol_log", "classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2a0596d4c2007a735c0f84ad824f3eb283", null ]
@@ -14,7 +14,7 @@ var classFIX8_1_1Configuration =
     [ "find_persister", "classFIX8_1_1Configuration.html#a49e12b5f0089c74316463f53ab7cf9b9", null ],
     [ "find_session", "classFIX8_1_1Configuration.html#ac3e825f73abbf5158e68bd65e67b9107", null ],
     [ "get_address", "classFIX8_1_1Configuration.html#ace764895c637f1ceb7d466505a6687df", null ],
-    [ "get_all_sessions", "classFIX8_1_1Configuration.html#a3ce20a4ed775647372f5b7c31e4c2f76", null ],
+    [ "get_all_sessions", "classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28", null ],
     [ "get_default_appl_ver_id", "classFIX8_1_1Configuration.html#aae45bd1594aa91931eff6a0fa4ed9288", null ],
     [ "get_heartbeat_interval", "classFIX8_1_1Configuration.html#ab5e71fcd3c960ca2819eebc950905605", null ],
     [ "get_logfile_rotation", "classFIX8_1_1Configuration.html#a8dd08aba00b3d263115dcb2018ff8365", null ],
@@ -32,7 +32,7 @@ var classFIX8_1_1Configuration =
     [ "get_version", "classFIX8_1_1Configuration.html#a1b9b3ed95e31f1dc4c8f6cae250b9fe5", null ],
     [ "load_map", "classFIX8_1_1Configuration.html#aa2a0005d65ad4a61776d645b253cf943", null ],
     [ "process", "classFIX8_1_1Configuration.html#ab7cb14b586b4b9036b7d7d7a47c83965", null ],
-    [ "_allsessions", "classFIX8_1_1Configuration.html#ac2fe0255e5948ae62a0675da9d956592", null ],
+    [ "_allsessions", "classFIX8_1_1Configuration.html#a337fd1c50608ac77b1ae6c66ebcae028", null ],
     [ "_ipexp", "classFIX8_1_1Configuration.html#a14f714c10732c0933f0d976f44098598", null ],
     [ "_loggers", "classFIX8_1_1Configuration.html#a9d9042695e7515137f5f0a142b04b3c1", null ],
     [ "_persisters", "classFIX8_1_1Configuration.html#a61b8a17e389c8963c2f0d56c6f9c488f", null ],

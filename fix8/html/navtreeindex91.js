@@ -1,5 +1,8 @@
 var NAVTREEINDEX91 =
 {
+"namespacemembers_type.html":[1,1,3,0],
+"namespacemembers_type_0x62.html":[1,1,3,1],
+"namespacemembers_type_0x63.html":[1,1,3,2],
 "namespacemembers_type_0x64.html":[1,1,3,3],
 "namespacemembers_type_0x65.html":[1,1,3,4],
 "namespacemembers_type_0x66.html":[1,1,3,5],
@@ -246,8 +249,5 @@ var NAVTREEINDEX91 =
 "structFIX8_1_1InvalidMetadata.html":[2,0,0,12],
 "structFIX8_1_1InvalidMetadata.html#a257236d65c8abee90222d84f6194699a":[2,0,0,12,0],
 "structFIX8_1_1InvalidMetadata.html#a5a5ec29d68f756764c6ec5b139af81a4":[2,0,0,12,1],
-"structFIX8_1_1InvalidMsgSequence.html":[2,0,0,16],
-"structFIX8_1_1InvalidMsgSequence.html#ab4525fb5d91a2635e99244475eca0b26":[2,0,0,16,0],
-"structFIX8_1_1InvalidRepeatingGroup.html":[2,0,0,24],
-"structFIX8_1_1InvalidRepeatingGroup.html#abee3a3ca7c3ff4ff64d514f5f1db0512":[2,0,0,24,0]
+"structFIX8_1_1InvalidMsgSequence.html":[2,0,0,16]
 };

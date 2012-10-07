@@ -23,7 +23,7 @@ var f8c_8cpp =
     [ "prefix", "f8c_8cpp.html#a65d7e0a249e49d86b4ba92c9784a8da8", null ],
     [ "print_usage", "f8c_8cpp.html#ae5ad5cbeccaedc03a48d3c7eaa803e79", null ],
     [ "process", "f8c_8cpp.html#ac63c8b64f8691f24a680807711eca14c", null ],
-    [ "process_message_fields", "f8c_8cpp.html#a909814831b31f674a45504b8aa82c931", null ],
+    [ "process_message_fields", "f8c_8cpp.html#a21974783bda967e1c25d3d3b4d645f98", null ],
     [ "process_ordering", "f8c_8cpp.html#a2f178502a02af31f40f4b6563c5437fd", null ],
     [ "process_special_traits", "f8c_8cpp.html#a42bf39d6c1a082a6171a7579770490d9", null ],
     [ "process_value_enums", "f8c_8cpp.html#a55fb74b022a3f26b627c85c59bff4c33", null ],

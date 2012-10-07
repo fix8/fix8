@@ -103,6 +103,7 @@ var f8config_8h =
     [ "LT_OBJDIR", "f8config_8h.html#ac2d5925d76379847dd9fc4747b061659", null ],
     [ "MAGIC_NUM", "f8config_8h.html#a23f15b5855019d8ac0c75f82484f8047", null ],
     [ "MAJOR_VERSION_NUM", "f8config_8h.html#ab0321c14ceb0d62f8093d79f29da520a", null ],
+    [ "MAX_MSG_LENGTH", "f8config_8h.html#aae15a57359405fa67f39ff805c6eddd4", null ],
     [ "MINOR_VERSION_NUM", "f8config_8h.html#a37f45b01bad6430f4367b95004c5176f", null ],
     [ "PACKAGE", "f8config_8h.html#aca8570fb706c81df371b7f9bc454ae03", null ],
     [ "PACKAGE_BUGREPORT", "f8config_8h.html#a1d1d2d7f8d2f95b376954d649ab03233", null ],

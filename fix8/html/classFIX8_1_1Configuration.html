@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.0</span>
+   &#160;<span id="projectnumber">version  0.6.1</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -164,30 +164,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aee6c01563c11821c57992e3719149206"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#a24883f3659515b6e800735c3123cf68e">target_comp_id</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#aee6c01563c11821c57992e3719149206">get_target_comp_id</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
 <tr class="memitem:ad8298c3594e29d4d3bb94f39c4293f21"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Persister.html">Persister</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ad8298c3594e29d4d3bb94f39c4293f21">create_persister</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
 <tr class="memitem:accd1c699ae043053cc5bd7edc4979d7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html">Logger</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#accd1c699ae043053cc5bd7edc4979d7f">create_logger</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const <a class="el" href="classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2">Logtype</a> ltype) const </td></tr>
-<tr class="memitem:a3ce20a4ed775647372f5b7c31e4c2f76"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a3ce20a4ed775647372f5b7c31e4c2f76">get_all_sessions</a> (std::vector&lt; <a class="el" href="classXmlElement.html">XmlElement</a> * &gt; &amp;target, const <a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804">Connection::Role</a> role=<a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">Connection::cn_unknown</a>) const </td></tr>
+<tr class="memitem:ad78d4276318213ebf19c1ce4ed6d6d28"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28">get_all_sessions</a> (std::vector&lt; const <a class="el" href="classXmlElement.html">XmlElement</a> * &gt; &amp;target, const <a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804">Connection::Role</a> role=<a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">Connection::cn_unknown</a>) const </td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-types"></a>
 Private Types</h2></td></tr>
-<tr class="memitem:a0c48c647e4e6317d81b6fc619cb5e410"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; const <br class="typebreak"/>
-std::string, <a class="el" href="classXmlElement.html">XmlElement</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">ConfigMap</a></td></tr>
+<tr class="memitem:ad328d6f51eb7affedb75353b99f6c968"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; const <br class="typebreak"/>
+std::string, const <a class="el" href="classXmlElement.html">XmlElement</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">ConfigMap</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a018a8c76cb47a35fc25f4d5f2518581a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a018a8c76cb47a35fc25f4d5f2518581a">find_element</a> (const std::string &amp;tag, const <a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">ConfigMap</a> &amp;from) const </td></tr>
+<tr class="memitem:a018a8c76cb47a35fc25f4d5f2518581a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a018a8c76cb47a35fc25f4d5f2518581a">find_element</a> (const std::string &amp;tag, const <a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">ConfigMap</a> &amp;from) const </td></tr>
 <tr class="memitem:a3fef1d5ad6917771112e7f07e0df1def"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a3fef1d5ad6917771112e7f07e0df1def">find_logger</a> (const std::string &amp;tag) const </td></tr>
 <tr class="memitem:a49e12b5f0089c74316463f53ab7cf9b9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a49e12b5f0089c74316463f53ab7cf9b9">find_persister</a> (const std::string &amp;tag) const </td></tr>
 <tr class="memitem:a7693a3f4a90f3366e6871355e62998c8"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a7693a3f4a90f3366e6871355e62998c8"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">get_string_field</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const std::string &amp;tag, T &amp;to) const </td></tr>
-<tr class="memitem:aa2a0005d65ad4a61776d645b253cf943"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#aa2a0005d65ad4a61776d645b253cf943">load_map</a> (const std::string &amp;tag, <a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">ConfigMap</a> &amp;map_name, const bool is_session=false)</td></tr>
+<tr class="memitem:aa2a0005d65ad4a61776d645b253cf943"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#aa2a0005d65ad4a61776d645b253cf943">load_map</a> (const std::string &amp;tag, <a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">ConfigMap</a> &amp;map_name, const bool is_session=false)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a77748b3262b1c41a0d79186930f2a206"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a77748b3262b1c41a0d79186930f2a206">_xmlfile</a></td></tr>
 <tr class="memitem:a77fbbe437539acfc1da61e624f60aaa4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a77fbbe437539acfc1da61e624f60aaa4">_root</a></td></tr>
-<tr class="memitem:ae884b567fca772e7654694117e16cce8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">ConfigMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ae884b567fca772e7654694117e16cce8">_sessions</a></td></tr>
-<tr class="memitem:a61b8a17e389c8963c2f0d56c6f9c488f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">ConfigMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a61b8a17e389c8963c2f0d56c6f9c488f">_persisters</a></td></tr>
-<tr class="memitem:a9d9042695e7515137f5f0a142b04b3c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">ConfigMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a9d9042695e7515137f5f0a142b04b3c1">_loggers</a></td></tr>
-<tr class="memitem:ac2fe0255e5948ae62a0675da9d956592"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classXmlElement.html">XmlElement</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ac2fe0255e5948ae62a0675da9d956592">_allsessions</a></td></tr>
+<tr class="memitem:ae884b567fca772e7654694117e16cce8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">ConfigMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ae884b567fca772e7654694117e16cce8">_sessions</a></td></tr>
+<tr class="memitem:a61b8a17e389c8963c2f0d56c6f9c488f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">ConfigMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a61b8a17e389c8963c2f0d56c6f9c488f">_persisters</a></td></tr>
+<tr class="memitem:a9d9042695e7515137f5f0a142b04b3c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">ConfigMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a9d9042695e7515137f5f0a142b04b3c1">_loggers</a></td></tr>
+<tr class="memitem:a337fd1c50608ac77b1ae6c66ebcae028"><td class="memItemLeft" align="right" valign="top">std::vector&lt; const <a class="el" href="classXmlElement.html">XmlElement</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a337fd1c50608ac77b1ae6c66ebcae028">_allsessions</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -198,7 +198,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00043">43</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 </div><h2>Member Typedef Documentation</h2>
-<a class="anchor" id="a0c48c647e4e6317d81b6fc619cb5e410"></a>
+<a class="anchor" id="ad328d6f51eb7affedb75353b99f6c968"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -206,7 +206,7 @@ Static Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::map&lt;const std::string, <a class="el" href="classXmlElement.html">XmlElement</a> *&gt; <a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">FIX8::Configuration::ConfigMap</a></td>
+          <td class="memname">typedef std::map&lt;const std::string, const <a class="el" href="classXmlElement.html">XmlElement</a> *&gt; <a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">FIX8::Configuration::ConfigMap</a></td>
         </tr>
       </table>
   </td>
@@ -348,7 +348,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00128">128</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00454">XmlElement::GetAttr()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00470">XmlElement::GetAttr()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
 
 </div>
 </div>
@@ -370,7 +370,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00097">97</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00454">XmlElement::GetAttr()</a>, <a class="el" href="persist_8cpp_source.html#l00061">FIX8::BDBPersister::initialise()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00224">FIX8::scoped_ptr&lt; T &gt;::release()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00470">XmlElement::GetAttr()</a>, <a class="el" href="persist_8cpp_source.html#l00061">FIX8::BDBPersister::initialise()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00224">FIX8::scoped_ptr&lt; T &gt;::release()</a>.</p>
 
 </div>
 </div>
@@ -390,7 +390,7 @@ Static Private Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">ConfigMap</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">ConfigMap</a> &amp;&#160;</td>
           <td class="paramname"><em>from</em>&#160;</td>
         </tr>
         <tr>
@@ -417,7 +417,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00057">57</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00259">XmlElement::end()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00260">XmlElement::end()</a>.</p>
 
 <p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00063">find_logger()</a>, <a class="el" href="configuration_8hpp_source.html#l00068">find_persister()</a>, and <a class="el" href="configuration_8hpp_source.html#l00135">find_session()</a>.</p>
 
@@ -555,18 +555,18 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00086">86</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00454">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00470">XmlElement::GetAttr()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3ce20a4ed775647372f5b7c31e4c2f76"></a>
+<a class="anchor" id="ad78d4276318213ebf19c1ce4ed6d6d28"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">unsigned Configuration::get_all_sessions </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="classXmlElement.html">XmlElement</a> * &gt; &amp;&#160;</td>
+          <td class="paramtype">std::vector&lt; const <a class="el" href="classXmlElement.html">XmlElement</a> * &gt; &amp;&#160;</td>
           <td class="paramname"><em>target</em>, </td>
         </tr>
         <tr>
@@ -668,7 +668,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00189">189</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00156">XmlElement::FindAttr()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00157">XmlElement::FindAttr()</a>.</p>
 
 </div>
 </div>
@@ -715,7 +715,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00183">183</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00156">XmlElement::FindAttr()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00157">XmlElement::FindAttr()</a>.</p>
 
 </div>
 </div>
@@ -743,7 +743,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00166">166</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00242">FIX8::Logger::_bit_names</a>, <a class="el" href="xml_8cpp_source.html#l00454">XmlElement::GetAttr()</a>, <a class="el" href="logger_8hpp_source.html#l00162">FIX8::Logger::num_flags</a>, <a class="el" href="f8utils_8hpp_source.html#l00654">FIX8::ebitset&lt; T, B &gt;::set()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00242">FIX8::Logger::_bit_names</a>, <a class="el" href="xml_8cpp_source.html#l00470">XmlElement::GetAttr()</a>, <a class="el" href="logger_8hpp_source.html#l00162">FIX8::Logger::num_flags</a>, <a class="el" href="f8utils_8hpp_source.html#l00654">FIX8::ebitset&lt; T, B &gt;::set()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
 
 </div>
 </div>
@@ -790,7 +790,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00156">156</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00174">XmlElement::FindAttrRef()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00175">XmlElement::FindAttrRef()</a>.</p>
 
 </div>
 </div>
@@ -826,7 +826,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00201">201</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00156">XmlElement::FindAttr()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00157">XmlElement::FindAttr()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00087">FIX8::ClientSession&lt; T &gt;::ClientSession()</a>.</p>
 
@@ -875,7 +875,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00170">170</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00156">XmlElement::FindAttr()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00157">XmlElement::FindAttr()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00087">FIX8::ClientSession&lt; T &gt;::ClientSession()</a>.</p>
 
@@ -924,7 +924,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00163">163</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00156">XmlElement::FindAttr()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00157">XmlElement::FindAttr()</a>.</p>
 
 <p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00087">FIX8::ClientSession&lt; T &gt;::ClientSession()</a>.</p>
 
@@ -954,7 +954,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00078">78</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00208">FIX8::Connection::cn_acceptor</a>, <a class="el" href="connection_8hpp_source.html#l00208">FIX8::Connection::cn_initiator</a>, <a class="el" href="connection_8hpp_source.html#l00208">FIX8::Connection::cn_unknown</a>, and <a class="el" href="xml_8cpp_source.html#l00454">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00208">FIX8::Connection::cn_acceptor</a>, <a class="el" href="connection_8hpp_source.html#l00208">FIX8::Connection::cn_initiator</a>, <a class="el" href="connection_8hpp_source.html#l00208">FIX8::Connection::cn_unknown</a>, and <a class="el" href="xml_8cpp_source.html#l00470">XmlElement::GetAttr()</a>.</p>
 
 </div>
 </div>
@@ -1088,7 +1088,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00077">77</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00454">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00470">XmlElement::GetAttr()</a>.</p>
 
 <p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00207">get_default_appl_ver_id()</a>, <a class="el" href="configuration_8hpp_source.html#l00213">get_sender_comp_id()</a>, and <a class="el" href="configuration_8hpp_source.html#l00219">get_target_comp_id()</a>.</p>
 
@@ -1162,7 +1162,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00195">195</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00156">XmlElement::FindAttr()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00157">XmlElement::FindAttr()</a>.</p>
 
 </div>
 </div>
@@ -1198,7 +1198,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00176">176</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00156">XmlElement::FindAttr()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00157">XmlElement::FindAttr()</a>.</p>
 
 </div>
 </div>
@@ -1218,7 +1218,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">ConfigMap</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">ConfigMap</a> &amp;&#160;</td>
           <td class="paramname"><em>map_name</em>, </td>
         </tr>
         <tr>
@@ -1252,7 +1252,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00090">90</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="configuration_8hpp_source.html#l00051">_allsessions</a>, <a class="el" href="configuration_8hpp_source.html#l00048">_root</a>, and <a class="el" href="classXmlElement.html#a69af8f8ccf0bdfd5f9d11572a99855c6">XmlElement::find()</a>.</p>
+<p>References <a class="el" href="configuration_8hpp_source.html#l00051">_allsessions</a>, <a class="el" href="configuration_8hpp_source.html#l00048">_root</a>, and <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>.</p>
 
 </div>
 </div>
@@ -1280,7 +1280,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <h2>Member Data Documentation</h2>
-<a class="anchor" id="ac2fe0255e5948ae62a0675da9d956592"></a>
+<a class="anchor" id="a337fd1c50608ac77b1ae6c66ebcae028"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1288,7 +1288,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="classXmlElement.html">XmlElement</a> *&gt; FIX8::Configuration::_allsessions</td>
+          <td class="memname">std::vector&lt;const <a class="el" href="classXmlElement.html">XmlElement</a> *&gt; FIX8::Configuration::_allsessions</td>
         </tr>
       </table>
   </td>
@@ -1334,7 +1334,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">ConfigMap</a> FIX8::Configuration::_loggers</td>
+          <td class="memname"><a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">ConfigMap</a> FIX8::Configuration::_loggers</td>
         </tr>
       </table>
   </td>
@@ -1358,7 +1358,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">ConfigMap</a> FIX8::Configuration::_persisters</td>
+          <td class="memname"><a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">ConfigMap</a> FIX8::Configuration::_persisters</td>
         </tr>
       </table>
   </td>
@@ -1406,7 +1406,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1Configuration.html#a0c48c647e4e6317d81b6fc619cb5e410">ConfigMap</a> FIX8::Configuration::_sessions</td>
+          <td class="memname"><a class="el" href="classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968">ConfigMap</a> FIX8::Configuration::_sessions</td>
         </tr>
       </table>
   </td>
@@ -1451,7 +1451,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jul 27 2012 10:52:41. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 7 2012 17:43:35. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

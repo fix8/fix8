@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.0</span>
+   &#160;<span id="projectnumber">version  0.6.1</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -289,9 +289,9 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#a3ce20a4ed775647372f5b7c31e4c2f76">  184</a></span>&#160;<span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1Configuration.html#a3ce20a4ed775647372f5b7c31e4c2f76">Configuration::get_all_sessions</a>(vector&lt;XmlElement *&gt;&amp; target, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804" title="Roles: acceptor, initiator or unknown.">Connection::Role</a> role)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00184"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28">  184</a></span>&#160;<span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28">Configuration::get_all_sessions</a>(vector&lt;const XmlElement *&gt;&amp; target, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804" title="Roles: acceptor, initiator or unknown.">Connection::Role</a> role)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;   <span class="keywordflow">for</span> (vector&lt;XmlElement *&gt;::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;   <span class="keywordflow">for</span> (vector&lt;const XmlElement *&gt;::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;      <span class="keywordflow">if</span> (role == <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">Connection::cn_unknown</a> || get_role(*itr) == role)</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;         target.push_back(*itr);</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;   <span class="keywordflow">return</span> target.size();</div>
@@ -300,7 +300,7 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jul 27 2012 10:52:29. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 7 2012 17:43:23. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

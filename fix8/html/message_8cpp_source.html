@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.0</span>
+   &#160;<span id="projectnumber">version  0.6.1</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -468,7 +468,7 @@ $(document).ready(function(){initNavTree('message_8cpp_source.html','');});
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00361"></a><span class="lineno"><a class="code" href="classFIX8_1_1Message.html#a9ade2d356b51ea2f798a811a6a295633">  361</a></span>&#160;<span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1Message.html#a9ade2d356b51ea2f798a811a6a295633">Message::encode</a>(<a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>&amp; to)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   <span class="keywordtype">char</span> msg[1024], hmsg[1024];</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;   <span class="keywordtype">char</span> msg[<a class="code" href="f8config_8h.html#aae15a57359405fa67f39ff805c6eddd4">MAX_MSG_LENGTH</a>], hmsg[<a class="code" href="f8config_8h.html#aae15a57359405fa67f39ff805c6eddd4">MAX_MSG_LENGTH</a>];</div>
 <div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;   <span class="keywordtype">size_t</span> sz(0), hsz(0);</div>
 <div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
 <div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;<span class="preprocessor">#if defined CODECTIMING</span></div>
@@ -795,7 +795,7 @@ $(document).ready(function(){initNavTree('message_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jul 27 2012 10:52:29. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 7 2012 17:43:24. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

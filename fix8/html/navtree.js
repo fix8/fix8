@@ -131,10 +131,10 @@ var NAVTREEINDEX =
 "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoComplexEvents.html#a8ec09b7ab22736a52f88c8e84175f5ad",
 "classFIX8_1_1ebitset.html#ac0da8008ef58b472bdb87cb2ff195ad2",
 "classXmlElement.html#a280b8bb84c5e8ceb1472a5aea878ed85",
-"f8config_8h.html#a6218b1d9d8c7c8cad89b631eb83f2dbf",
-"field_8hpp_source.html",
-"namespacemembers_type_0x64.html",
-"structFIX8_1_1InvalidVersion.html"
+"f8config_8h.html#a5dce2e44217226f8c8a4157bcd073c39",
+"field_8hpp.html#afb17d3b4d77fbe3ac5da70095e63e9b7",
+"namespacemembers_type.html",
+"structFIX8_1_1InvalidMsgSequence.html#ab4525fb5d91a2635e99244475eca0b26"
 ];
 
 var navTreeSubIndices = new Array();

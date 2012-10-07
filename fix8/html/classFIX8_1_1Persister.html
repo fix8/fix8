@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.0</span>
+   &#160;<span id="projectnumber">version  0.6.1</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -105,8 +105,8 @@ $(document).ready(function(){initNavTree('classFIX8_1_1Persister.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-types">Protected Types</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="classFIX8_1_1Persister-members.html">List of all members</a>  </div>
@@ -130,6 +130,12 @@ Inheritance diagram for FIX8::Persister:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a25d31ebe0aa26a189618248aec4f4357"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classFIX8_1_1Persister.html#a25d31ebe0aa26a189618248aec4f4357a6671b0b2d47dc4e4d716424be8e95f89">MaxMsgLen</a> =  MAX_MSG_LENGTH
+ }</td></tr>
+<tr class="memdesc:a25d31ebe0aa26a189618248aec4f4357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum length of persisted FIX message.  <a href="classFIX8_1_1Persister.html#a25d31ebe0aa26a189618248aec4f4357">More...</a><br/></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8d445e222b09652878db6268a4efc52e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Persister.html#a8d445e222b09652878db6268a4efc52e">Persister</a> ()</td></tr>
@@ -145,12 +151,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a80aebfa8f8e41b7d25ec958f8ccad8fe"><td class="memItemLeft" align="right" valign="top">virtual unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Persister.html#a80aebfa8f8e41b7d25ec958f8ccad8fe">find_nearest_highest_seqnum</a> (const unsigned requested, const unsigned last) const =0</td></tr>
 <tr class="memitem:a7cd911c314b215c6dba3433fbed45a71"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Persister.html#a7cd911c314b215c6dba3433fbed45a71">stop</a> ()</td></tr>
 <tr class="memdesc:a7cd911c314b215c6dba3433fbed45a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the persister thread.  <a href="#a7cd911c314b215c6dba3433fbed45a71"></a><br/></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2><a name="pro-types"></a>
-Protected Types</h2></td></tr>
-<tr class="memitem:a25d31ebe0aa26a189618248aec4f4357"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classFIX8_1_1Persister.html#a25d31ebe0aa26a189618248aec4f4357a6671b0b2d47dc4e4d716424be8e95f89">MaxMsgLen</a> =  1024
- }</td></tr>
-<tr class="memdesc:a25d31ebe0aa26a189618248aec4f4357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum length of persisted FIX message.  <a href="classFIX8_1_1Persister.html#a25d31ebe0aa26a189618248aec4f4357">More...</a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -169,19 +169,11 @@ Private Member Functions</h2></td></tr>
 <a class="anchor" id="a25d31ebe0aa26a189618248aec4f4357"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">anonymous enum</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Maximum length of persisted FIX message. </p>
@@ -192,7 +184,7 @@ Private Member Functions</h2></td></tr>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00053">53</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00062">62</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -244,7 +236,7 @@ Private Member Functions</h2></td></tr>
 
 <p>Ctor. </p>
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00058">58</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00056">56</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -271,7 +263,7 @@ Private Member Functions</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00061">61</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00059">59</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -647,7 +639,7 @@ Private Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classFIX8_1_1BDBPersister.html#a220415a4b3eaf16fede750d1435b6355">FIX8::BDBPersister</a>.</p>
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00108">108</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00109">109</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 <p>Referenced by <a class="el" href="session_8cpp_source.html#l00211">FIX8::Session::stop()</a>.</p>
 
@@ -672,7 +664,7 @@ Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00054">54</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00052">52</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -682,7 +674,7 @@ Private Member Functions</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Fri Jul 27 2012 10:52:45. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 7 2012 17:43:39. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>
