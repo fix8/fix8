@@ -782,6 +782,7 @@ with_sysroot
 enable_libtool_lock
 enable_doxygen
 with_reservepercent
+with_maxmsglen
 with_poco
 with_tbb
 with_bdb
@@ -1460,6 +1461,7 @@ Optional Packages:
   --with-reservepercent=VALUE
                           Percentage of message fields to reserve for
                           additional fields
+  --with-maxmsglen=VALUE  Maximum length of a FIX message (default=1024)
   --with-poco=DIR         location of Poco
   --with-tbb=DIR          location of TBB
   --with-bdb=DIR          Berkeley DB installation directory
@@ -18902,14 +18904,36 @@ fi
 
 
 
-$as_echo "#define RESERVE_PERCENT 30" >>confdefs.h
+cat >>confdefs.h <<_ACEOF
+#define RESERVE_PERCENT 30
+_ACEOF
 
 
 # Check whether --with-reservepercent was given.
 if test "${with_reservepercent+set}" = set; then :
   withval=$with_reservepercent;
 
-$as_echo "#define RESERVE_PERCENT \${withval}" >>confdefs.h
+cat >>confdefs.h <<_ACEOF
+#define RESERVE_PERCENT ${withval}
+_ACEOF
+
+
+fi
+
+
+
+cat >>confdefs.h <<_ACEOF
+#define MAX_MSG_LENGTH 1024
+_ACEOF
+
+
+# Check whether --with-maxmsglen was given.
+if test "${with_maxmsglen+set}" = set; then :
+  withval=$with_maxmsglen;
+
+cat >>confdefs.h <<_ACEOF
+#define MAX_MSG_LENGTH ${withval}
+_ACEOF
 
 
 fi

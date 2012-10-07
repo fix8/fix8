@@ -360,7 +360,7 @@ unsigned MessageBase::encode_group(const unsigned short fnum, std::ostream& to) 
 //-------------------------------------------------------------------------------------------------
 unsigned Message::encode(f8String& to) const
 {
-	char msg[1024], hmsg[1024];
+	char msg[MAX_MSG_LENGTH], hmsg[MAX_MSG_LENGTH];
 	size_t sz(0), hsz(0);
 
 #if defined CODECTIMING

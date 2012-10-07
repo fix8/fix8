@@ -163,11 +163,18 @@ AC_CHECK_FILE("$DEVURANDOM",
 		AC_DEFINE(HAVE_DEV_URANDOM, 1, [Define to 1 if the /dev/urandom device is available])
 	])
 
-AC_DEFINE(RESERVE_PERCENT, 30, [Percentage of message fields to reserve for additional fields])
+AC_DEFINE_UNQUOTED(RESERVE_PERCENT, 30, [Percentage of message fields to reserve for additional fields])
 AC_ARG_WITH(reservepercent,
   AC_HELP_STRING([--with-reservepercent=VALUE],[Percentage of message fields to reserve for additional fields]),
 [
-	AC_DEFINE(RESERVE_PERCENT, ${withval}, [Percentage of message fields to reserve for additional fields])
+	AC_DEFINE_UNQUOTED(RESERVE_PERCENT, ${withval},[Percentage of message fields to reserve for additional fields])
+],[])
+
+AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, 1024, [Maximum length of a FIX message])
+AC_ARG_WITH(maxmsglen,
+  AC_HELP_STRING([--with-maxmsglen=VALUE],[Maximum length of a FIX message (default=1024)]),
+[
+	AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, ${withval}, [Maximum length of a FIX message (default=1024)])
 ],[])
 
 AC_ARG_WITH(poco,

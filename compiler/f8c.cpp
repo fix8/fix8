@@ -127,7 +127,7 @@ int process(XmlElement& xf, Ctxt& ctxt);
 int load_fix_version (XmlElement& xf, Ctxt& ctxt);
 int load_fields(XmlElement& xf, FieldSpecMap& fspec);
 void process_special_traits(const unsigned short field, FieldTraits& fts);
-int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits& fts,
+int process_message_fields(const std::string& where, const XmlElement *xt, FieldTraits& fts,
 	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, const unsigned component);
 int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, FieldSpecMap& fspec);
 void process_ordering(MessageSpecMap& mspec);
@@ -444,7 +444,7 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 
 	// lookup msgtype realm - all messages must have corresponding entry here
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
-	if (fsitr == fspec.end())
+	if (fsitr == fspec.end() || !fsitr->second._dvals)
 	{
 		cerr << "error: Could not locate MsgType realm defintions in " << shortName << endl;
 		++glob_errors;

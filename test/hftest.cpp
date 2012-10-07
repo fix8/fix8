@@ -225,6 +225,9 @@ int main(int argc, char **argv)
 			ServerSession<hf_session_server>::Server_ptr
 				ms(new ServerSession<hf_session_server>(TEX::ctx, conf_file, "TEX1"));
 
+			const XmlElement *el(ms->get_session_element());
+			XmlElement::XmlSet eset;
+
 			for (unsigned scnt(0); !term_received; )
 			{
 				if (!ms->poll())

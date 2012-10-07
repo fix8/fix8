@@ -181,9 +181,9 @@ Logger::LogFlags Configuration::get_logflags(const XmlElement *from) const
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned Configuration::get_all_sessions(vector<XmlElement *>& target, const Connection::Role role) const
+unsigned Configuration::get_all_sessions(vector<const XmlElement *>& target, const Connection::Role role) const
 {
-	for (vector<XmlElement *>::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)
+	for (vector<const XmlElement *>::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)
 		if (role == Connection::cn_unknown || get_role(*itr) == role)
 			target.push_back(*itr);
 	return target.size();

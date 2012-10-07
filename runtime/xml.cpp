@@ -69,6 +69,7 @@ int XmlElement::errors_(0), XmlElement::line_(1), XmlElement::maxdepth_(0), XmlE
 XmlElement::XmlSet XmlElement::emptyset_;
 XmlElement::XmlAttrs XmlElement::emptyattrs_;
 RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&(amp|lt|gt|apos|quot);");
+XmlElement *XmlElement::root_;
 
 //-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlElement& en)
@@ -135,6 +136,9 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 
 	if (maxdepth_ < depth)
 		maxdepth_ = depth_;
+
+	if (depth_ == 0)
+		root_ = this;
 
 	while (ifs.good() && state != finished)
 	{
@@ -381,9 +385,15 @@ XmlElement::~XmlElement()
 }
 
 //-----------------------------------------------------------------------------------------
-XmlElement *XmlElement::find(const string& what, bool ignorecase, const string *atag,
-	const string *aval, const char delim)	// find 1st matching entity
+const XmlElement *XmlElement::find(const string& what, bool ignorecase, const string *atag,
+	const string *aval, const char delim)	const// find 1st matching entity
 {
+	if (what.compare(0, 2, "//") == 0) 	// root based
+	{
+		const string rmsl(what, 2);
+		return root_->find(rmsl, ignorecase, atag, aval, delim);
+	}
+
 	if (ignorecase ? what % tag_ : what == tag_)
 		return atag && aval && !findAttrByValue(*atag, *aval) ? 0 : this;
 
@@ -408,8 +418,14 @@ XmlElement *XmlElement::find(const string& what, bool ignorecase, const string *
 
 //-----------------------------------------------------------------------------------------
 int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
-	const string *atag, const string *aval, const char delim) 	// find all matching entities
+	const string *atag, const string *aval, const char delim) const	// find all matching entities
 {
+	if (what.compare(0, 2, "//") == 0) 	// root based
+	{
+		const string rmsl(what, 2);
+		return root_->find(rmsl, eset, ignorecase, atag, aval, delim);
+	}
+
 	if (ignorecase ? what % tag_ : what == tag_)
 	{
 		if (atag && aval && !findAttrByValue(*atag, *aval))
@@ -439,7 +455,7 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 }
 
 //-----------------------------------------------------------------------------------------
-bool XmlElement::findAttrByValue(const string& what, const string& val)
+bool XmlElement::findAttrByValue(const string& what, const string& val) const
 {
 	if (attrs_)
 	{

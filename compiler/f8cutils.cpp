@@ -120,7 +120,7 @@ const string& filepart(const string& source, string& where)
 //-----------------------------------------------------------------------------------------
 int load_fix_version (XmlElement& xf, Ctxt& ctxt)
 {
-	XmlElement *fix(xf.find("fix"));
+	const XmlElement *fix(xf.find("fix"));
 	if (!fix)
 	{
 		cerr << "No fix header element found in " << shortName << endl;
@@ -226,7 +226,7 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 }
 
 //-----------------------------------------------------------------------------------------
-int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
+int process_message_fields(const std::string& where, const XmlElement *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
 	FieldSpecMap& fspec, const unsigned subpos)
 {
 	unsigned processed(0);

@@ -1,3 +1,6 @@
+0.6.01 	07/09/2012		<fix@fix8.org>
+Added configurable max message length(maxmsglen); xml xpath permits absolute xpaths; fixed issue with compiler and msgtype;
+
 0.6.00 	21/07/2012		<fix@fix8.org>
 Added buffered logging; redesigned and improved field and message encoding and decoding performance, field lookups and static jump tables; added simple console based metadata driven test harness; compiler optimisations including pruning of unused fields;
 

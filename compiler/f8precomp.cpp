@@ -58,7 +58,7 @@ using namespace std;
 using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
-typedef std::map<std::string, XmlElement *> Components;
+typedef std::map<std::string, const XmlElement *> Components;
 
 //-----------------------------------------------------------------------------------------
 const string doctype("<?xml version='1.0' encoding='ISO-8859-1'?>");
@@ -100,10 +100,10 @@ int precomp(XmlElement& xf, ostream& outf)
 	output_attributes(xf, outf);
 	outf << '>' << endl;
 
-	XmlElement *header(xf.find("fix/header"));
+	const XmlElement *header(xf.find("fix/header"));
 	if (header)
 		process_messages(*header, components, "header", 0, outf);
-	XmlElement *trailer(xf.find("fix/trailer"));
+	const XmlElement *trailer(xf.find("fix/trailer"));
 	if (trailer)
 		process_messages(*trailer, components, "trailer", 0, outf);
 
@@ -141,10 +141,10 @@ int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique)
 	output_attributes(xft, outf);
 	outf << '>' << endl;
 
-	XmlElement *header(xft.find("fix/header"));
+	const XmlElement *header(xft.find("fix/header"));
 	if (header)
 		process_messages(*header, componentsfixt, "header", 0, outf);
-	XmlElement *trailer(xft.find("fix/trailer"));
+	const XmlElement *trailer(xft.find("fix/trailer"));
 	if (trailer)
 		process_messages(*trailer, componentsfixt, "trailer", 0, outf);
 
@@ -171,7 +171,7 @@ int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique)
 //-----------------------------------------------------------------------------------------
 void filter_unique(XmlElement::XmlSet& fldlist)
 {
-	typedef map<string, XmlElement *> UniqueFieldMap;
+	typedef map<string, const XmlElement *> UniqueFieldMap;
 	UniqueFieldMap ufm;
 	unsigned dupls(0);
 	for(XmlElement::XmlSet::const_iterator itr(fldlist.begin()); itr != fldlist.end(); ++itr)

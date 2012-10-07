@@ -43,6 +43,7 @@ class XmlElement
 	enum { MaxDepth = 128 };
 	static int errors_, line_, maxdepth_, seq_;
 	static FIX8::RegExp rCE_, rCX_;
+	static XmlElement *root_;
 
 	std::string tag_, *value_, *decl_;
 	int depth_, sequence_, txtline_, chldcnt_, subidx_;
@@ -56,14 +57,14 @@ class XmlElement
 
 public:
 	/*! XmlSet ordering preserved from source file */
-	typedef std::set<XmlElement *, EntityOrderComp> XmlSet;
+	typedef std::set<const XmlElement *, EntityOrderComp> XmlSet;
 
 private:
 	typedef std::multimap<std::string, XmlElement *> XmlSubEls;
 	/// simple n-ary tree
 	XmlSubEls *children_;
 
-	/// Set of all child entities in file order
+	/// Set of all child elements in file order
 	XmlSet *ordchildren_;
 	static XmlSet emptyset_;
 
@@ -95,26 +96,26 @@ public:
 	  \return number of attributes extracted */
 	int ParseAttrs(const std::string& attlst);
 
-	/*! Find an element with a given entity name, attribute name and attribute value.
-	  \param what the entity name to search for
-	  \param ignorecase if true ignore case of entity name
+	/*! Find an element with a given name, attribute name and attribute value.
+	  \param what the name to search for
+	  \param ignorecase if true ignore case of name
 	  \param atag the attribute name
 	  \param aval the attribute value
 	  \param delim the Xpath delimiter
-	  \return the found entity or 0 if not found */
-	XmlElement *find(const std::string& what, bool ignorecase=false,
-		const std::string *atag=0, const std::string *aval=0, const char delim='/');
+	  \return the found or 0 if not found */
+	const XmlElement *find(const std::string& what, bool ignorecase=false,
+		const std::string *atag=0, const std::string *aval=0, const char delim='/') const;
 
-	/*! Recursively find all elements with a given entity name, attribute name and attribute value.
-	  \param what the entity name to search for
+	/*! Recursively find all elements with a given name, attribute name and attribute value.
+	  \param what the name to search for
 	  \param eset target XmlSet to place results
-	  \param ignorecase if true ignore case of entity name
+	  \param ignorecase if true ignore case of name
 	  \param atag the attribute name
 	  \param aval the attribute value
 	  \param delim the Xpath delimiter
-	  \return the number of found entities */
+	  \return the number of found elements */
 	int find(const std::string& what, XmlSet& eset, bool ignorecase=false,
-		const std::string *atag=0, const std::string *aval=0, const char delim='/');
+		const std::string *atag=0, const std::string *aval=0, const char delim='/') const;
 
 	/*! Find an attribute's with the given name.
 	  \param what attribute to find
@@ -132,12 +133,12 @@ public:
 	}
 
 	/*! Find an element and obtain the attribute's value with the name "value".
-	  \param what entity name to find
+	  \param what name to find
 	  \param target where to place value
 	  \return true if found */
 	bool FindAttrGetValue(const std::string& what, std::string& target)
 	{
-		 XmlElement *inst(find(what));
+		 const XmlElement *inst(find(what));
 		 return inst ? inst->GetAttrValue(target) : false;
 	}
 
@@ -145,7 +146,7 @@ public:
 	  \param what attribute to find
 	  \param value attribute value
 	  \return true if found */
-	bool findAttrByValue(const std::string& what, const std::string& value);
+	bool findAttrByValue(const std::string& what, const std::string& value) const;
 
 	/*! Find an attribute with the given name and return its typed value.
 	  \tparam type of target attribute
@@ -235,7 +236,7 @@ public:
 	const std::string *GetDecl() const { return decl_; }
 
 	/// Reset all counters, errors and sequences.
-	static void Reset() { errors_ = maxdepth_ = seq_ = 0; line_ = 1; }
+	static void Reset() { errors_ = maxdepth_ = seq_ = 0; line_ = 1; root_ = 0; }
 
 	/*! Create a new root element (and recursively parse) from a given xml filename.
 	  \param fname the xml filename

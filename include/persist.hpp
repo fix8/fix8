@@ -49,8 +49,6 @@ class Persister
 	Persister& operator=(const Persister&);
 
 protected:
-	/// Maximum length of persisted FIX message.
-	enum { MaxMsgLen = 1024 };
 	bool _opened;
 
 public:
@@ -59,6 +57,9 @@ public:
 
 	/// Dtor.
 	virtual ~Persister() {}
+
+	/// Maximum length of persisted FIX message.
+	enum { MaxMsgLen = MAX_MSG_LENGTH };
 
 	/*! Persist a message.
 	    \param seqnum sequence number of message

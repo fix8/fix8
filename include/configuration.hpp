@@ -46,9 +46,9 @@ class Configuration
 
 	std::string _xmlfile;
 	XmlElement *_root;
-	typedef std::map<const std::string, XmlElement *> ConfigMap;
+	typedef std::map<const std::string, const XmlElement *> ConfigMap;
 	ConfigMap _sessions, _persisters, _loggers;
-	std::vector<XmlElement *> _allsessions;
+	std::vector<const XmlElement *> _allsessions;
 
 	/*! Find an xml entity by tag in the supplied map.
 	  \param tag the tag to find
@@ -231,7 +231,7 @@ public:
 	  \param target vector to place results
 	  \param role role to filter (cn_unknown means all)
 	  \return number of sessions found */
-	unsigned get_all_sessions(std::vector<XmlElement *>& target, const Connection::Role role=Connection::cn_unknown) const;
+	unsigned get_all_sessions(std::vector<const XmlElement *>& target, const Connection::Role role=Connection::cn_unknown) const;
 };
 
 //-------------------------------------------------------------------------------------------------
