@@ -91,6 +91,7 @@ var f8config_8h =
     [ "HAVE_TIME_H", "f8config_8h.html#a2397007ae170bf57faa808bacaaa2499", null ],
     [ "HAVE_TIMERSUB", "f8config_8h.html#afb7f6733b49dfb7a0bbb03947cfdefda", null ],
     [ "HAVE_UNISTD_H", "f8config_8h.html#a219b06937831d0da94d801ab13987639", null ],
+    [ "HAVE_UNSIGNED_LONG_LONG_INT", "f8config_8h.html#a28a855e28d09fa9e2e43f22de9605100", null ],
     [ "HAVE_VAR_RUN", "f8config_8h.html#aba4d71b29215284e61bb98bc77693da1", null ],
     [ "HAVE_VFORK", "f8config_8h.html#a6e660eb97fa8ec4462facdd5d3721aed", null ],
     [ "HAVE_WAITPID", "f8config_8h.html#a9196ec9c05152e1058c8a20a5ffd3f1a", null ],

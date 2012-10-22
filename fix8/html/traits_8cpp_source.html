@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.1</span>
+   &#160;<span id="projectnumber">version  0.6.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -109,75 +109,79 @@ $(document).ready(function(){initNavTree('traits_8cpp_source.html','');});
 <a href="traits_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#if 0</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Fix8 is released under the New BSD License.</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;Copyright (c) 2010-12, David L. Dight &lt;fix@fix8.org&gt;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;All rights reserved.</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;Fix8 Open Source FIX Engine.</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;Copyright (C) 2010-12 David L. Dight &lt;fix@fix8.org&gt;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Redistribution and use in source and binary forms, with or without modification, are</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;permitted provided that the following conditions are met:</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    * Redistributions of source code must retain the above copyright notice, <span class="keyword">this</span> list of</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;      conditions and the following disclaimer.</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    * Redistributions in binary form must reproduce the above copyright notice, <span class="keyword">this</span> list</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;      of conditions and the following disclaimer in the documentation and/or other</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;      materials provided with the distribution.</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    * Neither the name of the author nor the names of its contributors may be used to</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;      endorse or promote products derived from <span class="keyword">this</span> software without specific prior</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;      written permission.</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    * Products derived from <span class="keyword">this</span> software may not be called <span class="stringliteral">&quot;Fix8&quot;</span>, nor can <span class="stringliteral">&quot;Fix8&quot;</span> appear</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;      in their name without written permission from fix8.org</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS <span class="stringliteral">&quot;AS IS&quot;</span> AND ANY EXPRESS</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;#endif</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;iterator&gt;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;numeric&gt;</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;bitset&gt;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;strings.h&gt;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">using namespace </span>FIX8;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;This program is free software; you can redistribute it and/or modify it under  the terms of</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;the GNU General Public License as published by the Free Software Foundation; either version</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;2 of the License, or (at your option) any later version.</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;See the GNU General Public License <span class="keywordflow">for</span> more details.</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;You should have received a copy of  the GNU General Public License along with <span class="keyword">this</span> program;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordflow">if</span> not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;Boston, MA 02110-1301 USA.</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM <span class="stringliteral">&quot;AS IS&quot;</span> WITHOUT WARRANTY OF ANY</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;#endif</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;iterator&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;numeric&gt;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;bitset&gt;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;strings.h&gt;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">FIX8::FieldTrait</a>&amp; what)</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;   <span class="keywordflow">return</span> os &lt;&lt; <span class="stringliteral">&quot;Tag: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#aa024cc9be8a8d656409280d6816e74cb">_fnum</a> &lt;&lt; <span class="stringliteral">&quot; Type: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#a2a832687fe650074fc14671a540b450c">_ftype</a> &lt;&lt; <span class="stringliteral">&quot; Flags: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#aefce017fe6bffd0cd896f4326778d2d8">_field_traits</a>.<a class="code" href="classFIX8_1_1ebitset.html#ac4d5a990adbca9f7cad645f93cbd36e1">get</a>();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1FieldTraits.html" title="A collection of FieldTraits for a message. Which fields are required, which are present.">FIX8::FieldTraits</a>&amp; what)</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;{</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;   copy(what.<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#af76f7d71c7a01ff071449bb54329ce05">begin</a>(), what.<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>(), ostream_iterator&lt;FieldTrait&gt;(os, <span class="stringliteral">&quot;\n&quot;</span>));</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;   <span class="keywordflow">return</span> os;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">using namespace </span>FIX8;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">FIX8::FieldTrait</a>&amp; what)</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;{</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   <span class="keywordflow">return</span> os &lt;&lt; <span class="stringliteral">&quot;Tag: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#aa024cc9be8a8d656409280d6816e74cb">_fnum</a> &lt;&lt; <span class="stringliteral">&quot; Type: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#a2a832687fe650074fc14671a540b450c">_ftype</a> &lt;&lt; <span class="stringliteral">&quot; Flags: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#aefce017fe6bffd0cd896f4326778d2d8">_field_traits</a>.<a class="code" href="classFIX8_1_1ebitset.html#ac4d5a990adbca9f7cad645f93cbd36e1">get</a>();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1FieldTraits.html" title="A collection of FieldTraits for a message. Which fields are required, which are present.">FIX8::FieldTraits</a>&amp; what)</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;{</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;   copy(what.<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#af76f7d71c7a01ff071449bb54329ce05">begin</a>(), what.<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>(), ostream_iterator&lt;FieldTrait&gt;(os, <span class="stringliteral">&quot;\n&quot;</span>));</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   <span class="keywordflow">return</span> os;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 7 2012 17:43:35. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Tue Oct 23 2012 09:01:16. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

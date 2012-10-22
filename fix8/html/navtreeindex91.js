@@ -1,5 +1,12 @@
 var NAVTREEINDEX91 =
 {
+"namespacemembers_func_0x73.html":[1,1,1,16],
+"namespacemembers_func_0x74.html":[1,1,1,17],
+"namespacemembers_func_0x75.html":[1,1,1,18],
+"namespacemembers_func_0x76.html":[1,1,1,19],
+"namespacemembers_func_0x77.html":[1,1,1,20],
+"namespacemembers_func_0x79.html":[1,1,1,21],
+"namespacemembers_type.html":[1,1,3],
 "namespacemembers_type.html":[1,1,3,0],
 "namespacemembers_type_0x62.html":[1,1,3,1],
 "namespacemembers_type_0x63.html":[1,1,3,2],
@@ -242,12 +249,5 @@ var NAVTREEINDEX91 =
 "structFIX8_1_1InvalidDomainValue.html#af152cea8bd04a1806b7790f8a4afe8c2":[2,0,0,14,0],
 "structFIX8_1_1InvalidField.html":[2,0,0,15],
 "structFIX8_1_1InvalidField.html#af98de218e214efe135d4ad3f52e5e782":[2,0,0,15,0],
-"structFIX8_1_1InvalidMemoryPtr.html":[2,0,0,31],
-"structFIX8_1_1InvalidMemoryPtr.html#a35b4a455da95515b259350dcdfc1015e":[2,0,0,31,0],
-"structFIX8_1_1InvalidMessage.html":[2,0,0,19],
-"structFIX8_1_1InvalidMessage.html#a4d938d1d6daadf0d8ff43eb0d3b46e44":[2,0,0,19,0],
-"structFIX8_1_1InvalidMetadata.html":[2,0,0,12],
-"structFIX8_1_1InvalidMetadata.html#a257236d65c8abee90222d84f6194699a":[2,0,0,12,0],
-"structFIX8_1_1InvalidMetadata.html#a5a5ec29d68f756764c6ec5b139af81a4":[2,0,0,12,1],
-"structFIX8_1_1InvalidMsgSequence.html":[2,0,0,16]
+"structFIX8_1_1InvalidMemoryPtr.html":[2,0,0,31]
 };

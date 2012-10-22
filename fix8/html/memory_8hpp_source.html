@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.1</span>
+   &#160;<span id="projectnumber">version  0.6.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -109,102 +109,106 @@ $(document).ready(function(){initNavTree('memory_8hpp_source.html','');});
 <a href="memory_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#if 0</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Fix8 is released under the New BSD License.</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;Copyright (c) 2010-12, David L. Dight &lt;fix@fix8.org&gt;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;All rights reserved.</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;Fix8 Open Source FIX Engine.</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;Copyright (C) 2010-12 David L. Dight &lt;fix@fix8.org&gt;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Redistribution and use in source and binary forms, with or without modification, are</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;permitted provided that the following conditions are met:</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    * Redistributions of source code must retain the above copyright notice, <span class="keyword">this</span> list of</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;      conditions and the following disclaimer.</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    * Redistributions in binary form must reproduce the above copyright notice, <span class="keyword">this</span> list</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;      of conditions and the following disclaimer in the documentation and/or other</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;      materials provided with the distribution.</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    * Neither the name of the author nor the names of its contributors may be used to</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;      endorse or promote products derived from <span class="keyword">this</span> software without specific prior</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;      written permission.</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    * Products derived from <span class="keyword">this</span> software may not be called <span class="stringliteral">&quot;Fix8&quot;</span>, nor can <span class="stringliteral">&quot;Fix8&quot;</span> appear</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;      in their name without written permission from fix8.org</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS <span class="stringliteral">&quot;AS IS&quot;</span> AND ANY EXPRESS</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;#endif</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#ifndef _FIX8_MEMORY_HPP_</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="memory_8hpp.html#a92548c2aeb02f0b8f5445ed1dbe4b5e2">   36</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _FIX8_MEMORY_HPP_</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;tbb/concurrent_queue.h&gt;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;tbb/atomic.h&gt;</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html">   47</a></span>&#160;<span class="keyword">class </span><a class="code" href="classFIX8_1_1MemoryPool.html">MemoryPool</a>  <span class="comment">// lock free, fixed memory pool</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;{</div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#ab967b6cb1ac68563b445e567ea8b8c8ba0fa1baf5a9850226774f89e36d17ec3f">   49</a></span>&#160;   <span class="keyword">enum</span> { <a class="code" href="classFIX8_1_1MemoryPool.html#ab967b6cb1ac68563b445e567ea8b8c8ba0fa1baf5a9850226774f89e36d17ec3f">default_page_sz</a> = 4096 };</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a4156f399cb8cc2d0dd71ff7885c42740">   51</a></span>&#160;   tbb::concurrent_bounded_queue&lt;void *&gt; <a class="code" href="classFIX8_1_1MemoryPool.html#a4156f399cb8cc2d0dd71ff7885c42740">_free_list</a>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a9add920f0c6c1b0b3cda0ff6022de18d">   52</a></span>&#160;   <span class="keywordtype">void</span> *<a class="code" href="classFIX8_1_1MemoryPool.html#a19f8995bbf7e37bdc97547df86264942">_store</a>, *<a class="code" href="classFIX8_1_1MemoryPool.html#a9add920f0c6c1b0b3cda0ff6022de18d">_store_end</a>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#ae29a02ee021a7a98279119baeb477ff8">   53</a></span>&#160;   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1MemoryPool.html#ae29a02ee021a7a98279119baeb477ff8">_numblocks</a>, <a class="code" href="classFIX8_1_1MemoryPool.html#a40a9fbab5bf3375d484be1745287a966">_blksz</a>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#ac085e20afbef7f392e309a7bbe3d8869">   54</a></span>&#160;   tbb::atomic&lt;unsigned&gt; <a class="code" href="classFIX8_1_1MemoryPool.html#ac085e20afbef7f392e309a7bbe3d8869">_blknum</a>;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;   <a class="code" href="classFIX8_1_1MemoryPool.html#a2b887097d3b1ec96c0a579fc71172314">MemoryPool</a>(<span class="keyword">const</span> <span class="keywordtype">size_t</span> numblocks, <span class="keyword">const</span> <span class="keywordtype">size_t</span> blksz) <span class="keywordflow">throw</span>(std::bad_alloc);</div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a711e9a2c9e67a137cdc27082211a5164">   58</a></span>&#160;   <a class="code" href="classFIX8_1_1MemoryPool.html#a711e9a2c9e67a137cdc27082211a5164">~MemoryPool</a>() { std::free(<a class="code" href="classFIX8_1_1MemoryPool.html#a19f8995bbf7e37bdc97547df86264942">_store</a>); }</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;This program is free software; you can redistribute it and/or modify it under  the terms of</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;the GNU General Public License as published by the Free Software Foundation; either version</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;2 of the License, or (at your option) any later version.</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;See the GNU General Public License <span class="keywordflow">for</span> more details.</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;You should have received a copy of  the GNU General Public License along with <span class="keyword">this</span> program;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordflow">if</span> not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;Boston, MA 02110-1301 USA.</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM <span class="stringliteral">&quot;AS IS&quot;</span> WITHOUT WARRANTY OF ANY</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;#endif</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#ifndef _FIX8_MEMORY_HPP_</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="code" href="memory_8hpp.html#a92548c2aeb02f0b8f5445ed1dbe4b5e2">   40</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _FIX8_MEMORY_HPP_</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;tbb/concurrent_queue.h&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;tbb/atomic.h&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html">   51</a></span>&#160;<span class="keyword">class </span><a class="code" href="classFIX8_1_1MemoryPool.html">MemoryPool</a>  <span class="comment">// lock free, fixed memory pool</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;{</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#ab967b6cb1ac68563b445e567ea8b8c8ba0fa1baf5a9850226774f89e36d17ec3f">   53</a></span>&#160;   <span class="keyword">enum</span> { <a class="code" href="classFIX8_1_1MemoryPool.html#ab967b6cb1ac68563b445e567ea8b8c8ba0fa1baf5a9850226774f89e36d17ec3f">default_page_sz</a> = 4096 };</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a4156f399cb8cc2d0dd71ff7885c42740">   55</a></span>&#160;   tbb::concurrent_bounded_queue&lt;void *&gt; <a class="code" href="classFIX8_1_1MemoryPool.html#a4156f399cb8cc2d0dd71ff7885c42740">_free_list</a>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a9add920f0c6c1b0b3cda0ff6022de18d">   56</a></span>&#160;   <span class="keywordtype">void</span> *<a class="code" href="classFIX8_1_1MemoryPool.html#a19f8995bbf7e37bdc97547df86264942">_store</a>, *<a class="code" href="classFIX8_1_1MemoryPool.html#a9add920f0c6c1b0b3cda0ff6022de18d">_store_end</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#ae29a02ee021a7a98279119baeb477ff8">   57</a></span>&#160;   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1MemoryPool.html#ae29a02ee021a7a98279119baeb477ff8">_numblocks</a>, <a class="code" href="classFIX8_1_1MemoryPool.html#a40a9fbab5bf3375d484be1745287a966">_blksz</a>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#ac085e20afbef7f392e309a7bbe3d8869">   58</a></span>&#160;   tbb::atomic&lt;unsigned&gt; <a class="code" href="classFIX8_1_1MemoryPool.html#ac085e20afbef7f392e309a7bbe3d8869">_blknum</a>;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;   <span class="keywordtype">void</span> *<a class="code" href="classFIX8_1_1MemoryPool.html#a69ed245f5d1fc3a90e4f0bfa197110d8">alloc</a>() throw(std::bad_alloc);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1MemoryPool.html#ab20954fa7a83e8aed0b97882ce652e26">release</a>(<span class="keywordtype">void</span> *what) throw(<a class="code" href="structFIX8_1_1FreelistFull.html" title="The memory pool free list was unexpectedly full.">FreelistFull</a>);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a0f1f524a086daab816600cfc28e92e01">reset</a>();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   <a class="code" href="classFIX8_1_1MemoryPool.html#a2b887097d3b1ec96c0a579fc71172314">MemoryPool</a>(<span class="keyword">const</span> <span class="keywordtype">size_t</span> numblocks, <span class="keyword">const</span> <span class="keywordtype">size_t</span> blksz) <span class="keywordflow">throw</span>(std::bad_alloc);</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a711e9a2c9e67a137cdc27082211a5164">   62</a></span>&#160;   <a class="code" href="classFIX8_1_1MemoryPool.html#a711e9a2c9e67a137cdc27082211a5164">~MemoryPool</a>() { std::free(<a class="code" href="classFIX8_1_1MemoryPool.html#a19f8995bbf7e37bdc97547df86264942">_store</a>); }</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a966bcb4d1d8eb6fbca05828e164be09f">   64</a></span>&#160;   <span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a966bcb4d1d8eb6fbca05828e164be09f">get_blknum</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1MemoryPool.html#ac085e20afbef7f392e309a7bbe3d8869">_blknum</a>; }</div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a026e9e671d85de206b2748d040420ebc">   65</a></span>&#160;   <span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a026e9e671d85de206b2748d040420ebc">get_sz</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a40a9fbab5bf3375d484be1745287a966">_blksz</a>; }</div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a7722e0aa8d8b5836d33ae76a3d73a11d">   66</a></span>&#160;   <span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a7722e0aa8d8b5836d33ae76a3d73a11d">get_numblocks</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1MemoryPool.html#ae29a02ee021a7a98279119baeb477ff8">_numblocks</a>; }</div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a773133895bfff6249ee7e37538a0363d">   67</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a773133895bfff6249ee7e37538a0363d">in_range</a>(<span class="keywordtype">void</span> *what)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a19f8995bbf7e37bdc97547df86264942">_store</a> &lt;= what &amp;&amp; what &lt; <a class="code" href="classFIX8_1_1MemoryPool.html#a9add920f0c6c1b0b3cda0ff6022de18d">_store_end</a>; }</div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#aa40a7195ddd816ebf5ba5b7a1975727f">   68</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1MemoryPool.html#aa40a7195ddd816ebf5ba5b7a1975727f">allocated</a>(<span class="keywordtype">void</span> *what)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> what &lt; static_cast&lt;char *&gt;(<a class="code" href="classFIX8_1_1MemoryPool.html#a19f8995bbf7e37bdc97547df86264942">_store</a>) + <a class="code" href="classFIX8_1_1MemoryPool.html#a40a9fbab5bf3375d484be1745287a966">_blksz</a> * <a class="code" href="classFIX8_1_1MemoryPool.html#ac085e20afbef7f392e309a7bbe3d8869">_blknum</a>; }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;};</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a41d12e0808ad2a3f4192deb7bf0693a5">   72</a></span>&#160;<span class="keyword">typedef</span> std::pair&lt;unsigned, unsigned&gt; <a class="code" href="namespaceFIX8.html#a41d12e0808ad2a3f4192deb7bf0693a5">Region</a>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a844e80367bbb296639a8d5a11c4db291">   73</a></span>&#160;<span class="keyword">typedef</span> std::list&lt;Region&gt; <a class="code" href="namespaceFIX8.html#a844e80367bbb296639a8d5a11c4db291">RegionList</a>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   <span class="keywordtype">void</span> *<a class="code" href="classFIX8_1_1MemoryPool.html#a69ed245f5d1fc3a90e4f0bfa197110d8">alloc</a>() throw(std::bad_alloc);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1MemoryPool.html#ab20954fa7a83e8aed0b97882ce652e26">release</a>(<span class="keywordtype">void</span> *what) throw(<a class="code" href="structFIX8_1_1FreelistFull.html" title="The memory pool free list was unexpectedly full.">FreelistFull</a>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a0f1f524a086daab816600cfc28e92e01">reset</a>();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a966bcb4d1d8eb6fbca05828e164be09f">   68</a></span>&#160;   <span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a966bcb4d1d8eb6fbca05828e164be09f">get_blknum</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1MemoryPool.html#ac085e20afbef7f392e309a7bbe3d8869">_blknum</a>; }</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a026e9e671d85de206b2748d040420ebc">   69</a></span>&#160;   <span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a026e9e671d85de206b2748d040420ebc">get_sz</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a40a9fbab5bf3375d484be1745287a966">_blksz</a>; }</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a7722e0aa8d8b5836d33ae76a3d73a11d">   70</a></span>&#160;   <span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a7722e0aa8d8b5836d33ae76a3d73a11d">get_numblocks</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1MemoryPool.html#ae29a02ee021a7a98279119baeb477ff8">_numblocks</a>; }</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#a773133895bfff6249ee7e37538a0363d">   71</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a773133895bfff6249ee7e37538a0363d">in_range</a>(<span class="keywordtype">void</span> *what)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1MemoryPool.html#a19f8995bbf7e37bdc97547df86264942">_store</a> &lt;= what &amp;&amp; what &lt; <a class="code" href="classFIX8_1_1MemoryPool.html#a9add920f0c6c1b0b3cda0ff6022de18d">_store_end</a>; }</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="classFIX8_1_1MemoryPool.html#aa40a7195ddd816ebf5ba5b7a1975727f">   72</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1MemoryPool.html#aa40a7195ddd816ebf5ba5b7a1975727f">allocated</a>(<span class="keywordtype">void</span> *what)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> what &lt; static_cast&lt;char *&gt;(<a class="code" href="classFIX8_1_1MemoryPool.html#a19f8995bbf7e37bdc97547df86264942">_store</a>) + <a class="code" href="classFIX8_1_1MemoryPool.html#a40a9fbab5bf3375d484be1745287a966">_blksz</a> * <a class="code" href="classFIX8_1_1MemoryPool.html#ac085e20afbef7f392e309a7bbe3d8869">_blknum</a>; }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;};</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="code" href="classFIX8_1_1RegionManager.html">   75</a></span>&#160;<span class="keyword">class </span><a class="code" href="classFIX8_1_1RegionManager.html">RegionManager</a></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;{</div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="code" href="classFIX8_1_1RegionManager.html#a8ee6beafefa4623a744a5937d4b0fed1">   77</a></span>&#160;   <span class="keyword">typedef</span> std::map&lt;unsigned, MemoryPool *&gt; <a class="code" href="classFIX8_1_1RegionManager.html#a8ee6beafefa4623a744a5937d4b0fed1">Regions</a>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="code" href="classFIX8_1_1RegionManager.html#ad53bcfad70a5c8175ad6021eb0ff74c8">   78</a></span>&#160;   <a class="code" href="classFIX8_1_1RegionManager.html#a8ee6beafefa4623a744a5937d4b0fed1">Regions</a> <a class="code" href="classFIX8_1_1RegionManager.html#ad53bcfad70a5c8175ad6021eb0ff74c8">_regions</a>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;   <a class="code" href="classFIX8_1_1RegionManager.html#ace103ae66249f4d8753ff906234704e4">RegionManager</a>(<span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a844e80367bbb296639a8d5a11c4db291">RegionList</a>&amp; rlist);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;   <span class="keyword">virtual</span> <a class="code" href="classFIX8_1_1RegionManager.html#a6706a03497260708e01f933f536b3a3c">~RegionManager</a>();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a41d12e0808ad2a3f4192deb7bf0693a5">   76</a></span>&#160;<span class="keyword">typedef</span> std::pair&lt;unsigned, unsigned&gt; <a class="code" href="namespaceFIX8.html#a41d12e0808ad2a3f4192deb7bf0693a5">Region</a>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a844e80367bbb296639a8d5a11c4db291">   77</a></span>&#160;<span class="keyword">typedef</span> std::list&lt;Region&gt; <a class="code" href="namespaceFIX8.html#a844e80367bbb296639a8d5a11c4db291">RegionList</a>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="classFIX8_1_1RegionManager.html">   79</a></span>&#160;<span class="keyword">class </span><a class="code" href="classFIX8_1_1RegionManager.html">RegionManager</a></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{</div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="code" href="classFIX8_1_1RegionManager.html#a8ee6beafefa4623a744a5937d4b0fed1">   81</a></span>&#160;   <span class="keyword">typedef</span> std::map&lt;unsigned, MemoryPool *&gt; <a class="code" href="classFIX8_1_1RegionManager.html#a8ee6beafefa4623a744a5937d4b0fed1">Regions</a>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="code" href="classFIX8_1_1RegionManager.html#ad53bcfad70a5c8175ad6021eb0ff74c8">   82</a></span>&#160;   <a class="code" href="classFIX8_1_1RegionManager.html#a8ee6beafefa4623a744a5937d4b0fed1">Regions</a> <a class="code" href="classFIX8_1_1RegionManager.html#ad53bcfad70a5c8175ad6021eb0ff74c8">_regions</a>;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;   <span class="keywordtype">void</span> *<a class="code" href="classFIX8_1_1RegionManager.html#a3167a49189b23a45000214538c54bcb6">alloc</a>(<span class="keywordtype">size_t</span> sz) <span class="keywordflow">throw</span>(std::bad_alloc);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1RegionManager.html#a38798fa4e3d846f2c872a8f3be3319b1">release</a>(<span class="keywordtype">void</span> *what) <span class="keywordflow">throw</span>(<a class="code" href="structFIX8_1_1FreelistFull.html" title="The memory pool free list was unexpectedly full.">FreelistFull</a>);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1RegionManager.html#a556fec584ca18e312a842fdda39d5655">reset</a>();</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;   <a class="code" href="classFIX8_1_1RegionManager.html#ace103ae66249f4d8753ff906234704e4">RegionManager</a>(<span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a844e80367bbb296639a8d5a11c4db291">RegionList</a>&amp; rlist);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;   <span class="keyword">virtual</span> <a class="code" href="classFIX8_1_1RegionManager.html#a6706a03497260708e01f933f536b3a3c">~RegionManager</a>();</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1RegionManager.html#ab147c001ecebde5ad1ba720ac8a36a51">report</a>(std::ostream&amp; os);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;};</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;} <span class="comment">// FIX8</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;   <span class="keywordtype">void</span> *<a class="code" href="classFIX8_1_1RegionManager.html#a3167a49189b23a45000214538c54bcb6">alloc</a>(<span class="keywordtype">size_t</span> sz) <span class="keywordflow">throw</span>(std::bad_alloc);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1RegionManager.html#a38798fa4e3d846f2c872a8f3be3319b1">release</a>(<span class="keywordtype">void</span> *what) <span class="keywordflow">throw</span>(<a class="code" href="structFIX8_1_1FreelistFull.html" title="The memory pool free list was unexpectedly full.">FreelistFull</a>);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1RegionManager.html#a556fec584ca18e312a842fdda39d5655">reset</a>();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1RegionManager.html#ab147c001ecebde5ad1ba720ac8a36a51">report</a>(std::ostream&amp; os);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;};</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#endif // _FIX8_MEMORY_HPP_</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;} <span class="comment">// FIX8</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#endif // _FIX8_MEMORY_HPP_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 7 2012 17:43:24. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Tue Oct 23 2012 09:01:05. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>
