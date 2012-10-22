@@ -288,26 +288,56 @@ operates.
      Run the configure checks, but stop before creating any output
      files.
 
-`configure' also accepts some other, not widely useful, options.  Run
-`configure --help' for more details. Here are some of them:-
+Fine tuning of the installation directories:
+  --bindir=DIR            user executables [EPREFIX/bin]
+  --sbindir=DIR           system admin executables [EPREFIX/sbin]
+  --libexecdir=DIR        program executables [EPREFIX/libexec]
+  --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
+  --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
+  --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
+  --libdir=DIR            object code libraries [EPREFIX/lib]
+  --includedir=DIR        C header files [PREFIX/include]
+  --oldincludedir=DIR     C header files for non-gcc [/usr/include]
+  --datarootdir=DIR       read-only arch.-independent data root [PREFIX/share]
+  --datadir=DIR           read-only architecture-independent data [DATAROOTDIR]
+  --infodir=DIR           info documentation [DATAROOTDIR/info]
+  --localedir=DIR         locale-dependent data [DATAROOTDIR/locale]
+  --mandir=DIR            man documentation [DATAROOTDIR/man]
+  --docdir=DIR            documentation root [DATAROOTDIR/doc/fix8]
+  --htmldir=DIR           html documentation [DOCDIR]
+  --dvidir=DIR            dvi documentation [DOCDIR]
+  --pdfdir=DIR            pdf documentation [DOCDIR]
+  --psdir=DIR             ps documentation [DOCDIR]
 
-  --enable-pam            Enable Plugable Authentication Module (PAM) support
-                          (default=no)
-  --enable-php            Enable Embedded PHP support (default=no)
-  --enable-fastcgi        Enable FASTCGI support (requires installation of
-                          fastcgi) (default=no)
-  --enable-debug          Enable DEBUG support (default=no)
-  --enable-https          Enable HTTPS support (through OpenSSL, default=no)
-  --enable-bdb            Enable Berkeley DB support (SDB enabled by default)
-  --enable-gdbm           Enable GDBM DB support
+Program names:
+  --program-prefix=PREFIX            prepend PREFIX to installed program names
+  --program-suffix=SUFFIX            append SUFFIX to installed program names
+  --program-transform-name=PROGRAM   run sed PROGRAM on installed program names
 
+System types:
+  --build=BUILD     configure for building on BUILD [guessed]
+  --host=HOST       cross-compile to build programs to run on HOST [BUILD]
 
-Optional Packages:
+Optional Features:
+  --disable-option-checking  ignore unrecognized --enable/--with options
+  --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
+  --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --enable-static[=PKGS]  build static libraries [default=no]
+  --enable-shared[=PKGS]  build shared libraries [default=yes]
+  --enable-fast-install[=PKGS]
+                          optimize for fast installation [default=yes]
+  --disable-dependency-tracking  speeds up one-time build
+  --enable-dependency-tracking   do not reject slow dependency extractors
+  --disable-libtool-lock  avoid locking (might break parallel builds)
+  --enable-doxygen        enable doxygen generation (default=yes if available)
   --enable-xmlstrictbool  enable xml strict bool behaviour (default=no)
+  --enable-bufgloblogging enable buffered global logging behaviour
+                          (default=no)
   --enable-valgrind       enable internal support for valgrind (default=no)
   --enable-gprof          enable internal support for gprof (default=no)
   --enable-poolalloc      enable Memory Pool Allocator (default=no)
   --enable-msgrecycle     enable Message Recycling (default=no)
+  --enable-codectiming    enable CODEC timing testing code (default=no)
   --enable-customfields   enable User defined fields (default=no)
   --enable-debug          enable DEBUG support (default=no)
   --enable-ssl            enable SSL support (through OpenSSL, default=no)
@@ -320,9 +350,28 @@ Optional Packages:
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-sysroot=DIR Search for dependent libraries within DIR
                         (or the compiler's sysroot if not specified).
+  --with-reservepercent=VALUE
+                          Percentage of message fields to reserve for
+                          additional fields
+  --with-maxmsglen=VALUE  Maximum length of a FIX message (default=1024)
   --with-poco=DIR         location of Poco
   --with-tbb=DIR          location of TBB
-  --with-bdb-dir=DIR      Berkeley DB installation directory
+  --with-bdb=DIR          Berkeley DB installation directory
 
+Some influential environment variables:
+  CC          C compiler command
+  CFLAGS      C compiler flags
+  LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
+              nonstandard directory <lib dir>
+  LIBS        libraries to pass to the linker, e.g. -l<library>
+  CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
+              you have headers in a nonstandard directory <include dir>
+  CPP         C preprocessor
+  CXX         C++ compiler command
+  CXXFLAGS    C++ compiler flags
+  CXXCPP      C++ preprocessor
+
+Use these variables to override the choices made by `configure' or to help
+it to find libraries and programs with nonstandard names/locations.
 
 Report bugs to <fix@fix8.org>.

@@ -15,7 +15,7 @@ doc/        doxygen documentation (generated when built)
 include/    header files for the runtime library and compiler
 runtime/    runtime library source
 schema/     quickfix FIX xml schemas
-test/       test client/server source
+test/       test applications client/server source
 
 
 DOCUMENTATION
@@ -41,8 +41,8 @@ BUILDING ON UNIX/LINUX/MAC OS X
 
 The build system is based on automake/autoconf/libtool.
 
-% tar xvzf fix8-0.5.0.tar.gz
-% cd fix8-0.5.0
+% tar xvzf fix8-0.6.1.tar.gz
+% cd fix8-0.6.1
 % ./configure
 % make
 % make install

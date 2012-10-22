@@ -1,35 +1,38 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+This program is free software; you can redistribute it and/or modify it under  the terms of
+the GNU General Public License as published by the Free Software Foundation; either version
+2 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.
+See the GNU General Public License for more details.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should have received a copy of  the GNU General Public License along with this program;
+if not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,
+Boston, MA 02110-1301 USA.
 
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #endif
 //-----------------------------------------------------------------------------------------
@@ -65,10 +68,14 @@ using namespace FIX8;
 using namespace std;
 
 //----------------------------------------------------------------------------------------
-int XmlElement::errors_(0), XmlElement::line_(1), XmlElement::maxdepth_(0), XmlElement::seq_(0);
+int XmlElement::errors_(0), XmlElement::line_(1), XmlElement::incline_(1),
+	 XmlElement::maxdepth_(0), XmlElement::seq_(0);
+string XmlElement::inclusion_;
 XmlElement::XmlSet XmlElement::emptyset_;
 XmlElement::XmlAttrs XmlElement::emptyattrs_;
-RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&(amp|lt|gt|apos|quot);");
+RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&(amp|lt|gt|apos|quot);"),
+	XmlElement::rIn_("href=\"([^\"]+)\""),
+   XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
 XmlElement *XmlElement::root_;
 
 //-----------------------------------------------------------------------------------------
@@ -113,12 +120,37 @@ ostream& operator<<(ostream& os, const XmlElement& en)
 }
 
 //-----------------------------------------------------------------------------------------
+namespace {
+
+// execute command and pipe output to string; only 1 line is captured.
+string& exec_cmd(const string& cmd, string& result)
+{
+   FILE *apipe(popen(cmd.c_str(), "r"));
+   if (apipe)
+   {
+      const size_t maxcmdlen(128);
+      char buffer[maxcmdlen] = {};
+      if (!feof(apipe) && fgets(buffer, maxcmdlen, apipe) && buffer[0])
+      {
+         result = buffer;
+         result.resize(result.size() - 1);
+      }
+      pclose(apipe);
+   }
+   return result;
+}
+
+}
+
+//-----------------------------------------------------------------------------------------
 // finite state machine with simple recursive descent parser
 //-----------------------------------------------------------------------------------------
 XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const char *rootAttr)
 	: value_(), decl_(), depth_(depth), sequence_(++seq_), txtline_(txtline),
-	chldcnt_(), subidx_(subidx), children_(), ordchildren_(), attrs_()
+	chldcnt_(), subidx_(subidx), children_(), _was_include(), ordchildren_(), attrs_()
 {
+	istream *ifsptr(&ifs);
+
 	enum
   	{
 		olb, otag, ocom0, ocom1, comment, ccom0, ccom1, ccomment,
@@ -140,14 +172,16 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 	if (depth_ == 0)
 		root_ = this;
 
-	while (ifs.good() && state != finished)
+	while (ifsptr->good() && state != finished)
 	{
 		char c;
-		ifs >> noskipws >> c;
+		*ifsptr >> noskipws >> c;
 		switch (c)
 		{
-		case '\n':	// lame but the only way to track it
-			line_++;	// drop through
+			if (!inclusion_.empty())
+				incline_++;
+			else
+				line_++; // drop through
 		case '\r':
 			continue;
 		default:
@@ -163,7 +197,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 		case otag:
 			if (c == '>')
 				state = value;
-			else if (c == '/' && ifs.peek() == '>')	//empty
+			else if (c == '/' && ifsptr->peek() == '>')	//empty
 			{
 				state = ctag;
 				tmpctag = tmpotag;
@@ -206,7 +240,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 				tmpdec += c;
 			break;
 		case oattr:
-			if (c == '/' && ifs.peek() == '>')	//empty
+			if (c == '/' && ifsptr->peek() == '>')	//empty
 			{
 				state = ctag;
 				tmpctag = tmpotag;
@@ -239,9 +273,9 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 		case value:
 			if (c == '<')
 			{
-				if (ifs.peek() != '/')
+				if (ifsptr->peek() != '/')
 				{
-					ifs.putback(c);
+					ifsptr->putback(c);
 					if (depth_ + 1 > MaxDepth)
 					{
 						++errors_;
@@ -250,9 +284,13 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 					}
 					else
 					{
-						scoped_ptr<XmlElement> child(new XmlElement(ifs, chldcnt_ + 1, line_, depth_ + 1));
-						if (child->GetTag().empty())
+						XmlElement *child(new XmlElement(*ifsptr, chldcnt_ + 1, line_, depth_ + 1));
+						if (child->GetTag().empty()
+							|| (child->_was_include && (!child->children_ || !child->children_->begin()->second->children_)))
+						{
+							delete child;
 							--seq_;
+						}
 						else
 						{
 							if (!children_)
@@ -260,10 +298,26 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 								children_ = new XmlSubEls;
 								ordchildren_ = new XmlSet;
 							}
-							XmlElement *chld(child.release());
-							++chldcnt_;
-							children_->insert(XmlSubEls::value_type(chld->GetTag(), chld));
-							ordchildren_->insert(chld);
+
+							if (child->_was_include) // move great-grandchildren to children
+							{
+								for (XmlSubEls::const_iterator itr(child->children_->begin()->second->children_->begin());
+									itr != child->children_->begin()->second->children_->end(); ++itr)
+								{
+									--itr->second->depth_;
+									children_->insert(XmlSubEls::value_type(itr->first, itr->second));
+									ordchildren_->insert(itr->second);
+								}
+
+								delete child;
+								inclusion_.clear();
+							}
+							else
+							{
+								++chldcnt_;
+								children_->insert(XmlSubEls::value_type(child->GetTag(), child));
+								ordchildren_->insert(child);
+							}
 						}
 					}
 				}
@@ -285,10 +339,47 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 				{
 					++errors_;
 					cerr << "Error (" << line_ << "): unmatched tag " << '\''
-						 << tmpotag << '\'' << " against " << '\'' << tmpctag << '\'' << endl;
+						 << tmpotag << '\'' << " does not close with " << '\'' << tmpctag << '\'';
+					if (!inclusion_.empty())
+						cerr << " in inclusion " << inclusion_ << " (" << incline_ << ')';
+					cerr << endl;
 				}
 				else
 				{
+					if ((tag_ = tmpotag) == "xi:include")	// handle inclusion
+					{
+						RegMatch match;
+						if (rIn_.SearchString(match, tmpattr, 2) == 2)
+						{
+							string whatv;
+							rIn_.SubExpr(match, tmpattr, whatv, 0, 1);
+							ifstream *ifs1(new ifstream(InplaceXlate(whatv).c_str()));
+							if (!*ifs1)
+							{
+								++errors_;
+								cerr << "Error (" << line_ << "): could not process include " << '\'' << whatv << '\'' << endl;
+							}
+							else
+							{
+								ifsptr = ifs1;	// process xml elements from this stream now
+								state = olb;	// reset
+								inclusion_ = whatv;
+								incline_ = 1;
+								tmpctag.clear();
+								tmpval.clear();
+								tmpattr.clear();
+								tmpdec.clear();
+								_was_include = true;
+								break;
+							}
+						}
+						else
+						{
+							++errors_;
+							cerr << "Error (" << line_ << "): invalid xml include specification " << '\'' << tmpattr << '\'' << endl;
+						}
+					}
+
 					tag_ = tmpotag;
 					if (!tmpval.empty() && tmpval.find_first_not_of(" \t\n\r") != string::npos)
 						value_ = new string(InplaceXlate(tmpval));
@@ -304,6 +395,9 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 
 	if (!tmpattr.empty())
 		ParseAttrs(tmpattr);
+
+	if (_was_include)
+		delete ifsptr;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -354,7 +448,10 @@ int XmlElement::ParseAttrs(const string& attlst)
 					{
 						++errors_;
 						cerr << "Error (" << line_ << ") attribute \'" << tmptag
-							<< "\' already defined; ignoring" << endl;
+							<< "\' already defined; ignoring";
+						if (!inclusion_.empty())
+							cerr << " in inclusion " << inclusion_ << " (" << incline_ << ')';
+						cerr << endl;
 					}
 				}
 				tmptag.clear();
@@ -378,7 +475,7 @@ XmlElement::~XmlElement()
 	delete attrs_;
 	delete decl_;
 
-	if (children_)
+	if (children_ && !_was_include)
 		for_each (children_->begin(), children_->end(), free_ptr<Delete2ndPairObject<> >());
 	delete children_;
 	delete ordchildren_;
@@ -525,6 +622,25 @@ const string& XmlElement::InplaceXlate (string& what)
 		oval += static_cast<char>(value & 0xff);
 		rCE_.Replace(match, what, oval);
 	}
+
+   if (rEn_.SearchString(match, what, 2) == 2)  // environment var replacement ${XXX}
+   {
+      string whatv;
+      rEn_.SubExpr(match, what, whatv, 0, 1);
+      string result(getenv(whatv.c_str()));
+      if (!result.empty())
+         rEn_.Replace(match, what, result);
+   }
+
+   if (rEv_.SearchString(match, what, 2) == 2)  // evaluate shell command and replace with result !{XXX}
+   {
+      string whatv;
+      rEv_.SubExpr(match, what, whatv, 0, 1);
+      string result;
+      exec_cmd(whatv, result);
+      if (!result.empty())
+         rEv_.Replace(match, what, result);
+   }
 
 	return what;
 }

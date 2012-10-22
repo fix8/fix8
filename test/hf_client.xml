@@ -1,53 +1,27 @@
 <?xml version='1.0' encoding='ISO-8859-1'?>
 <fix8>
-	<session name="DLD1"
-				role="initiator"
-				fix_version="1100"
-				active="true"
-				ip="127.0.0.1"
-				port="11002"
-				sender_comp_id="DLD_TEX"
-				target_comp_id="TEX_DLD"
-				login_retry_interval="15000"
-				protocol_log="protocol_log"
-				reset_sequence_numbers="false"
-				tcp_nodelay="true"
-				login_retries="100"
-				persist="mem0" />
+  <session name="DLD1"
+           role="initiator"
+           fix_version="1100"
+           active="true"
+           ip="127.0.0.1"
+           port="11002"
+           sender_comp_id="DLD_TEX"
+           target_comp_id="TEX_DLD"
+           login_retry_interval="15000"
+           protocol_log="protocol_log"
+           reset_sequence_numbers="false"
+           tcp_nodelay="true"
+           login_retries="100"
+           persist="mem0" />
 
-	<persist name="bdb0"
-				type="bdb" dir="./run"
-				db="hf_client.db" />
+  <persist name="bdb0"
+           type="bdb" dir="./run"
+           db="hf_client.db" />
 
-	<persist name="mem0"
-				type="mem" />
+  <persist name="mem0"
+           type="mem" />
 
-	<log 		name="session_log"
-				type="session"
-				filename="|/bin/cat"
-				rotation="5"
-				flags="timestamp|sequence|compress|thread"/>
-
-	<log 		name="session_log_udp"
-				type="session"
-				filename="127.0.0.1:51000"
-				rotation="5"
-				flags="timestamp|sequence|thread"/>
-
-	<log 		name="protocol_log_udp"
-				type="protocol"
-				filename="127.0.0.1:514"
-				flags="sequence|append|direction"/>
-
-	<log 		name="protocol_log_with_attributes"
-				type="protocol"
-				filename="./run/hf_client_protocol.log"
-				rotation="5"
-				flags="sequence|append|direction|compress"/>
-
-	<log 		name="protocol_log"
-				type="protocol"
-				filename="./run/hf_client_protocol.log"
-				rotation="5"
-				flags="append"/>
+  <xi:include href="./hf_client_include.xml"/>
 </fix8>
+
