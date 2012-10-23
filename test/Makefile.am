@@ -60,7 +60,7 @@ $(libhftest_la_SOURCES): $(XML_HF_SCHEMA)
 $(libmyfix_la_SOURCES): $(XML_SCHEMA)
 	$(top_srcdir)/compiler/f8c -rVn TEX $(XML_SCHEMA) -x $(XML_FIXT_SCHEMA)
 
-POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
+POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML
 GEN_LIBS = -lrt -lfix8
 TBB_LIBS = -ltbb
 BDB_LIBS = -ldb_cxx
