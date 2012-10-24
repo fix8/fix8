@@ -396,7 +396,7 @@ MessageBase *gr11(nonpsid->create_group());
 											</div>
 											<div class="accordion-group">
 												<div class="accordion-heading">
-													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#testSix">f) When I run ./configure I get lots of errors</a>
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSix">f) When I run ./configure I get lots of errors</a>
 												</div>
 												<div id="testSix" class="accordion-body collapse">
 													<div class="accordion-inner">
@@ -407,6 +407,34 @@ MessageBase *gr11(nonpsid->create_group());
 								<pre>
 % yum install libtool</pre>
 													You might also need autoconf and automake. Install these the same way.
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSeven">g) When I compile my schema I get a "Could not locate MsgType realm defintions" error</a>
+												</div>
+												<div id="testSeven" class="accordion-body collapse">
+													<div class="accordion-inner">
+														The fix8 compiler requires that your schema declare each FIX msgtype referred to in your Message section in the field type 35 (Msgtype)
+														in the fields element. The compiler needs these to verify your message definitions. You should have something like the following...
+<pre>&lt;fields&gt;
+.
+.
+.
+	&lt;field number='35' name='MsgType' type='STRING'&gt;
+		&lt;value enum='0' description='HEARTBEAT' /&gt;
+		&lt;value enum='1' description='TEST_REQUEST' /&gt;
+		&lt;value enum='2' description='RESEND_REQUEST' /&gt;
+		&lt;value enum='3' description='REJECT' /&gt;
+		&lt;value enum='4' description='SEQUENCE_RESET' /&gt;
+		&lt;value enum='5' description='LOGOUT' /&gt;
+		&lt;value enum='6' description='INDICATION_OF_INTEREST' /&gt;
+		&lt;value enum='7' description='ADVERTISEMENT' /&gt;
+		&lt;value enum='8' description='EXECUTION_REPORT' /&gt;
+.
+.
+.</pre>
 													</div>
 												</div>
 											</div>
