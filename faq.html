@@ -215,8 +215,8 @@ Message *my_sess::generate_logon()
 	Message *msg(Session::generate_logon());
 	// now add your raw data
 	string rawstuff("blah");
-	*msg += TEX::RawDataLength(rawstuff.size());
-	*msg += TEX::RawData(rawstuff);
+	*msg += new TEX::RawDataLength(rawstuff.size());
+	*msg += new TEX::RawData(rawstuff);
 	return msg;
 }</pre>
 												The same approach applies to all session level messages.
