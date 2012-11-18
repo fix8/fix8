@@ -8,7 +8,7 @@ var searchData=
   ['badsendingtime',['BadSendingTime',['../structFIX8_1_1BadSendingTime.html',1,'FIX8']]],
   ['baseallocator',['BaseAllocator',['../structFIX8_1_1BaseAllocator.html',1,'FIX8']]],
   ['baseentry',['BaseEntry',['../structFIX8_1_1BaseEntry.html',1,'FIX8']]],
-  ['baseentry_5fctor',['BaseEntry_ctor',['../namespaceFIX8.html#a126bb258c48dd04ec0a17e1083f9459e',1,'FIX8::BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String &amp;, const RealmBase *), const RealmBase *rlm, const char *name, const char *comment)'],['../namespaceFIX8.html#a4a9fef4e2b3b5da0e5169de5b8d29f00',1,'FIX8::BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String &amp;, const RealmBase *, int rv), const RealmBase *rlm, const char *name, const char *comment)']]],
+  ['baseentry_5fctor',['BaseEntry_ctor',['../namespaceFIX8.html#a3ce48db02bfd7dd03bf84b38cd528fe8',1,'FIX8::BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String &amp;, const RealmBase *, const int), const RealmBase *rlm, const char *name, const char *comment)'],['../namespaceFIX8.html#a4a9fef4e2b3b5da0e5169de5b8d29f00',1,'FIX8::BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String &amp;, const RealmBase *, int rv), const RealmBase *rlm, const char *name, const char *comment)']]],
   ['basefield',['BaseField',['../classFIX8_1_1BaseField.html#a90be0d13ed9a58ce88a17c0be7796174',1,'FIX8::BaseField']]],
   ['basefield',['BaseField',['../classFIX8_1_1BaseField.html',1,'FIX8']]],
   ['basemsgentry',['BaseMsgEntry',['../structFIX8_1_1BaseMsgEntry.html',1,'FIX8']]],

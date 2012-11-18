@@ -26,6 +26,7 @@ var f8utils_8hpp =
     [ "GetValue", "f8utils_8hpp.html#ac96d648dbd809edefcc89b677c61a205", null ],
     [ "GetValue", "f8utils_8hpp.html#a667716a0a146c6a524f970d4c22efb35", null ],
     [ "GetValue", "f8utils_8hpp.html#afef67868434c6efa9fea68f062b8eaba", null ],
+    [ "InPlaceReplaceInSet", "f8utils_8hpp.html#a6990067429b01a85d2d95a15675d1e31", null ],
     [ "InPlaceStrToLower", "f8utils_8hpp.html#adbbb9f9c65c6cbdf4d5a9d7446db7666", null ],
     [ "InPlaceStrToUpper", "f8utils_8hpp.html#a4137a195b29b8ed64119e8f16d040ee9", null ],
     [ "itoa", "f8utils_8hpp.html#a7c2009dc0b1b420da3204dc4af33daf8", null ],

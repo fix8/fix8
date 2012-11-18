@@ -3,6 +3,7 @@ var searchData=
   ['idsource',['IDSource',['../namespaceFIX8_1_1TEX.html#ae67638f55fca111898fe641fdd6ee35b',1,'FIX8::TEX']]],
   ['impliedmarketindicator',['ImpliedMarketIndicator',['../namespaceFIX8_1_1TEX.html#aab12b0977b1838fdeef68b508bfbe02c',1,'FIX8::TEX']]],
   ['inctaxind',['IncTaxInd',['../namespaceFIX8_1_1TEX.html#ad2d2956698051acfb7d362caa8ea7f9c',1,'FIX8::TEX']]],
+  ['index',['Index',['../classFIX8_1_1FilePersister.html#a7eb0a14862baf78381079885c09cf581',1,'FIX8::FilePersister']]],
   ['individualallocid',['IndividualAllocID',['../namespaceFIX8_1_1TEX.html#a833d578a200aab119918f3628d723a2b',1,'FIX8::TEX']]],
   ['individualallocrejcode',['IndividualAllocRejCode',['../namespaceFIX8_1_1TEX.html#ad3f07f64ee8552d901777f4df9244898',1,'FIX8::TEX']]],
   ['individualalloctype',['IndividualAllocType',['../namespaceFIX8_1_1TEX.html#aaf90a8d11d615d5b87768146664d499b',1,'FIX8::TEX']]],

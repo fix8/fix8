@@ -18,7 +18,7 @@ var hierarchy =
     ] ],
     [ "FIX8::BaseEntry", "structFIX8_1_1BaseEntry.html", null ],
     [ "FIX8::BaseField", "classFIX8_1_1BaseField.html", [
-      [ "FIX8::Field< T, field >", "structFIX8_1_1Field.html", null ],
+      [ "FIX8::Field< T, field >", "classFIX8_1_1Field.html", null ],
       [ "FIX8::Field< Boolean, field >", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html", null ],
       [ "FIX8::Field< char, field >", "classFIX8_1_1Field_3_01char_00_01field_01_4.html", null ],
       [ "FIX8::Field< double, field >", "classFIX8_1_1Field_3_01double_00_01field_01_4.html", [
@@ -107,6 +107,8 @@ var hierarchy =
     [ "FIX8::FieldTrait::PosCompare", "structFIX8_1_1FieldTrait_1_1PosCompare.html", null ],
     [ "FIX8::FieldTrait_Hash_Array", "structFIX8_1_1FieldTrait__Hash__Array.html", null ],
     [ "FIX8::FieldTraits", "classFIX8_1_1FieldTraits.html", null ],
+    [ "FIX8::FilePersister::IPrec", "structFIX8_1_1FilePersister_1_1IPrec.html", null ],
+    [ "FIX8::FilePersister::Prec", "structFIX8_1_1FilePersister_1_1Prec.html", null ],
     [ "FIX8::fptrostream", "classFIX8_1_1fptrostream.html", null ],
     [ "FIX8::free_ptr< Deleter >", "structFIX8_1_1free__ptr.html", null ],
     [ "FIX8::GeneratedTable< Key, Val >", "classFIX8_1_1GeneratedTable.html", null ],
@@ -1863,6 +1865,7 @@ var hierarchy =
     [ "FIX8::MessageSpec", "structFIX8_1_1MessageSpec.html", null ],
     [ "FIX8::Persister", "classFIX8_1_1Persister.html", [
       [ "FIX8::BDBPersister", "classFIX8_1_1BDBPersister.html", null ],
+      [ "FIX8::FilePersister", "classFIX8_1_1FilePersister.html", null ],
       [ "FIX8::MemoryPersister", "classFIX8_1_1MemoryPersister.html", null ]
     ] ],
     [ "FIX8::presorted_set< K, T, Comp >", "classFIX8_1_1presorted__set.html", null ],

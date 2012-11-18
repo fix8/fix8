@@ -11,6 +11,7 @@ var searchData=
   ['positionmaintenancereport',['PositionMaintenanceReport',['../classFIX8_1_1TEX_1_1PositionMaintenanceReport.html',1,'FIX8::TEX']]],
   ['positionmaintenancerequest',['PositionMaintenanceRequest',['../classFIX8_1_1TEX_1_1PositionMaintenanceRequest.html',1,'FIX8::TEX']]],
   ['positionreport',['PositionReport',['../classFIX8_1_1TEX_1_1PositionReport.html',1,'FIX8::TEX']]],
+  ['prec',['Prec',['../structFIX8_1_1FilePersister_1_1Prec.html',1,'FIX8::FilePersister']]],
   ['presorted_5fset',['presorted_set',['../classFIX8_1_1presorted__set.html',1,'FIX8']]],
   ['presorted_5fset_3c_20unsigned_20short_2c_20fieldtrait_2c_20fieldtrait_3a_3acompare_20_3e',['presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;',['../classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html',1,'FIX8']]]
 ];

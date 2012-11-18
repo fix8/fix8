@@ -12,5 +12,6 @@ var searchData=
   ['invalidmsgsequence',['InvalidMsgSequence',['../structFIX8_1_1InvalidMsgSequence.html',1,'FIX8']]],
   ['invalidrepeatinggroup',['InvalidRepeatingGroup',['../structFIX8_1_1InvalidRepeatingGroup.html',1,'FIX8']]],
   ['invalidversion',['InvalidVersion',['../structFIX8_1_1InvalidVersion.html',1,'FIX8']]],
-  ['ioi',['IOI',['../classFIX8_1_1TEX_1_1IOI.html',1,'FIX8::TEX']]]
+  ['ioi',['IOI',['../classFIX8_1_1TEX_1_1IOI.html',1,'FIX8::TEX']]],
+  ['iprec',['IPrec',['../structFIX8_1_1FilePersister_1_1IPrec.html',1,'FIX8::FilePersister']]]
 ];

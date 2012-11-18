@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.2</span>
+   &#160;<span id="projectnumber">version  0.6.3</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -158,19 +158,19 @@ $(document).ready(function(){initNavTree('f8config_8h_source.html','');});
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">/* #undef CLOSEDIR_VOID */</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">/* Define to 1 to enable CODEC timing testing code */</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="code" href="f8config_8h.html#a7517bfdc6242fe5186b818774a86efb2">   53</a></span>&#160;<span class="preprocessor">#define CODECTIMING 1</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">/* #undef CODECTIMING */</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">/* configure options */</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2c90b46e6c2ae53cbbf439080a01fd91">   56</a></span>&#160;<span class="preprocessor">#define CONFIGURE_OPTIONS &quot; &#39;--prefix=/home/davidd/tmp&#39; &#39;--enable-codectiming&#39; &#39;CC=ccache gcc&#39; &#39;CXX=ccache g++&#39;&quot;</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2c90b46e6c2ae53cbbf439080a01fd91">   56</a></span>&#160;<span class="preprocessor">#define CONFIGURE_OPTIONS &quot; &#39;--prefix=/home/davidd/tmp&#39; &#39;CC=ccache gcc&#39; &#39;CXX=ccache g++&#39;&quot;</span></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">/* Short Date system was configured */</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac42e21b7a399c6a4665e84349bca5177">   59</a></span>&#160;<span class="preprocessor">#define CONFIGURE_SDATE &quot;23/10/2012&quot;</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac42e21b7a399c6a4665e84349bca5177">   59</a></span>&#160;<span class="preprocessor">#define CONFIGURE_SDATE &quot;18/11/2012&quot;</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">/* Date system was configured */</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="code" href="f8config_8h.html#a661078846f76fdf65bb222943a71a844">   62</a></span>&#160;<span class="preprocessor">#define CONFIGURE_TIME &quot;Tue Oct 23 08:57:01 EST 2012&quot;</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="code" href="f8config_8h.html#a661078846f76fdf65bb222943a71a844">   62</a></span>&#160;<span class="preprocessor">#define CONFIGURE_TIME &quot;Sun Nov 18 14:31:08 EST 2012&quot;</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">/* date/time as seconds since start epoch */</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="code" href="f8config_8h.html#aa9f4b710a2fbad8c48c513fd1e654a05">   65</a></span>&#160;<span class="preprocessor">#define CONFIGURE_TIME_NUM 1350943021</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="code" href="f8config_8h.html#aa9f4b710a2fbad8c48c513fd1e654a05">   65</a></span>&#160;<span class="preprocessor">#define CONFIGURE_TIME_NUM 1353209468</span></div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">/* Define to one of `_getb67&#39;, `GETB67&#39;, `getb67&#39; for Cray-2 and Cray-YMP</span></div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">   systems. This function is required for `alloca.c&#39; support on those systems.</span></div>
@@ -552,7 +552,7 @@ $(document).ready(function(){initNavTree('f8config_8h_source.html','');});
 <div class="line"><a name="l00444"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1c0439e4355794c09b64274849eb0279">  444</a></span>&#160;<span class="preprocessor">#define PACKAGE_NAME &quot;fix8&quot;</span></div>
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;<span class="comment">/* Define to the full name and version of this package. */</span></div>
-<div class="line"><a name="l00447"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac73e6f903c16eca7710f92e36e1c6fbf">  447</a></span>&#160;<span class="preprocessor">#define PACKAGE_STRING &quot;fix8 0.6.2&quot;</span></div>
+<div class="line"><a name="l00447"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac73e6f903c16eca7710f92e36e1c6fbf">  447</a></span>&#160;<span class="preprocessor">#define PACKAGE_STRING &quot;fix8 0.6.3&quot;</span></div>
 <div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;<span class="comment">/* Define to the one symbol short name of this package. */</span></div>
 <div class="line"><a name="l00450"></a><span class="lineno"><a class="code" href="f8config_8h.html#af415af6bfede0e8d5453708afe68651c">  450</a></span>&#160;<span class="preprocessor">#define PACKAGE_TARNAME &quot;fix8&quot;</span></div>
@@ -561,7 +561,7 @@ $(document).ready(function(){initNavTree('f8config_8h_source.html','');});
 <div class="line"><a name="l00453"></a><span class="lineno"><a class="code" href="f8config_8h.html#a5c93853116d5a50307b6744f147840aa">  453</a></span>&#160;<span class="preprocessor">#define PACKAGE_URL &quot;http://www.fix8.org&quot;</span></div>
 <div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;<span class="comment">/* Define to the version of this package. */</span></div>
-<div class="line"><a name="l00456"></a><span class="lineno"><a class="code" href="f8config_8h.html#aa326a05d5e30f9e9a4bb0b4469d5d0c0">  456</a></span>&#160;<span class="preprocessor">#define PACKAGE_VERSION &quot;0.6.2&quot;</span></div>
+<div class="line"><a name="l00456"></a><span class="lineno"><a class="code" href="f8config_8h.html#aa326a05d5e30f9e9a4bb0b4469d5d0c0">  456</a></span>&#160;<span class="preprocessor">#define PACKAGE_VERSION &quot;0.6.3&quot;</span></div>
 <div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;<span class="comment">/* Patch number */</span></div>
 <div class="line"><a name="l00459"></a><span class="lineno"><a class="code" href="f8config_8h.html#a8d9556de1e767d55bb4d961702101c56">  459</a></span>&#160;<span class="preprocessor">#define PATCH_VERSION_NUM 0</span></div>
@@ -602,7 +602,7 @@ $(document).ready(function(){initNavTree('f8config_8h_source.html','');});
 <div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="comment">/* #undef TM_IN_SYS_TIME */</span></div>
 <div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;</div>
 <div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;<span class="comment">/* Version number of package */</span></div>
-<div class="line"><a name="l00497"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1c6d5de492ac61ad29aec7aa9a436bbf">  497</a></span>&#160;<span class="preprocessor">#define VERSION &quot;0.6.2&quot;</span></div>
+<div class="line"><a name="l00497"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1c6d5de492ac61ad29aec7aa9a436bbf">  497</a></span>&#160;<span class="preprocessor">#define VERSION &quot;0.6.3&quot;</span></div>
 <div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;<span class="comment">/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most</span></div>
 <div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;<span class="comment">   significant byte first (like Motorola and SPARC, unlike Intel). */</span></div>
@@ -670,7 +670,7 @@ $(document).ready(function(){initNavTree('f8config_8h_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Tue Oct 23 2012 09:01:04. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 18 2012 14:35:29. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

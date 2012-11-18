@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.2</span>
+   &#160;<span id="projectnumber">version  0.6.3</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -127,8 +127,8 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Domain range/set static metadata base class.  <a href="structFIX8_1_1RealmBase.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base field class (ABC) for all fields.  <a href="classFIX8_1_1BaseField.html#details">More...</a><br/></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Field.html">FIX8::Field&lt; T, field &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ABC field template. Partial specialisations of this class use Int2Type idiom.  <a href="structFIX8_1_1Field.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field.html">FIX8::Field&lt; T, field &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classFIX8_1_1Field.html" title="Field template. There will ONLY be partial specialisations of this class using Int2Type idiom...">Field</a> template. There will ONLY be partial specialisations of this class using Int2Type idiom.  <a href="classFIX8_1_1Field.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html">FIX8::Field&lt; int, field &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Partial specialisation for int field type.  <a href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01f8String_00_01field_01_4.html">FIX8::Field&lt; f8String, field &gt;</a></td></tr>
@@ -170,7 +170,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01MultipleCharValue_00_01field_01_4.html">FIX8::Field&lt; MultipleCharValue, field &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Partial specialisation for MultipleCharValue field type.  <a href="classFIX8_1_1Field_3_01MultipleCharValue_00_01field_01_4.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1BaseEntry.html">FIX8::BaseEntry</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structFIX8_1_1Field.html" title="ABC field template. Partial specialisations of this class use Int2Type idiom.">Field</a> metadata structure.  <a href="structFIX8_1_1BaseEntry.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classFIX8_1_1Field.html" title="Field template. There will ONLY be partial specialisations of this class using Int2Type idiom...">Field</a> metadata structure.  <a href="structFIX8_1_1BaseEntry.html#details">More...</a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -279,7 +279,7 @@ Common_EncryptMethod &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a126bb258c48dd04ec0a17e1083f9459e"><td class="memItemLeft" align="right" valign="top">BaseEntry *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a126bb258c48dd04ec0a17e1083f9459e">FIX8::BaseEntry_ctor</a> (BaseEntry *be, BaseField *(*create)(const f8String &amp;, const RealmBase *), const RealmBase *rlm, const char *name, const char *comment)</td></tr>
+<tr class="memitem:a3ce48db02bfd7dd03bf84b38cd528fe8"><td class="memItemLeft" align="right" valign="top">BaseEntry *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a3ce48db02bfd7dd03bf84b38cd528fe8">FIX8::BaseEntry_ctor</a> (BaseEntry *be, BaseField *(*create)(const f8String &amp;, const RealmBase *, const int), const RealmBase *rlm, const char *name, const char *comment)</td></tr>
 <tr class="memitem:aa30604797b7d0eb424f057eea0d40120"><td class="memItemLeft" align="right" valign="top">const f8String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aa30604797b7d0eb424f057eea0d40120">FIX8::Common_MsgType_HEARTBEAT</a> (&quot;0&quot;)</td></tr>
 <tr class="memitem:ab81da725128a9689b97c5db7fa6c1a0e"><td class="memItemLeft" align="right" valign="top">const f8String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab81da725128a9689b97c5db7fa6c1a0e">FIX8::Common_MsgType_TEST_REQUEST</a> (&quot;1&quot;)</td></tr>
 <tr class="memitem:a335f1df36e788ddcb1019dbc7c3fd0ce"><td class="memItemLeft" align="right" valign="top">const f8String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a335f1df36e788ddcb1019dbc7c3fd0ce">FIX8::Common_MsgType_RESEND_REQUEST</a> (&quot;2&quot;)</td></tr>
@@ -331,7 +331,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Tue Oct 23 2012 09:01:16. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 18 2012 14:35:40. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

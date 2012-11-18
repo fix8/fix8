@@ -4,7 +4,7 @@ var classFIX8_1_1ClientSession =
     [ "ClientSession", "classFIX8_1_1ClientSession.html#a612e21e2688547c14cd09d1ec0e7df5e", null ],
     [ "~ClientSession", "classFIX8_1_1ClientSession.html#acffaabee2a52e1c3871261419cd9b6d3", null ],
     [ "session_ptr", "classFIX8_1_1ClientSession.html#a497d0d92a7dd4a2ddd8273e793ba874c", null ],
-    [ "start", "classFIX8_1_1ClientSession.html#a6052375375f996fd06b8e587da89ba64", null ],
+    [ "start", "classFIX8_1_1ClientSession.html#a4dc939ee494c1a217e28d3c089bb1724", null ],
     [ "_addr", "classFIX8_1_1ClientSession.html#a47766e5b7be4b0b4aee80e2796cf2921", null ],
     [ "_cc", "classFIX8_1_1ClientSession.html#a4c7ced6c3a290e4f9fb73be97f01253c", null ],
     [ "_id", "classFIX8_1_1ClientSession.html#a5c931f9000ccdab8ae3bd1fafdcdaabd", null ],

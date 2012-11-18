@@ -20,6 +20,7 @@ var files =
     [ "f8utils.hpp", "f8utils_8hpp.html", "f8utils_8hpp" ],
     [ "field.cpp", "field_8cpp.html", "field_8cpp" ],
     [ "field.hpp", "field_8hpp.html", "field_8hpp" ],
+    [ "filepersist.cpp", "filepersist_8cpp.html", null ],
     [ "FIX50SP2.xml", "FIX50SP2_8xml.html", null ],
     [ "gzstream.cpp", "gzstream_8cpp.html", null ],
     [ "gzstream.hpp", "gzstream_8hpp.html", [
