@@ -79,9 +79,9 @@ const RealmBase extra_realmbases[] =
       static_cast<FieldTrait::FieldType>(1), sizeof(ExecOption_realm)/sizeof(int), ExecOption_descriptions },
 };
 
-BaseField *Create_Orderbook(const f8String& from, const RealmBase *db) { return new Orderbook(from, db); }
-BaseField *Create_BrokerInitiated(const f8String& from, const RealmBase *db) { return new BrokerInitiated(from, db); }
-BaseField *Create_ExecOption(const f8String& from, const RealmBase *db) { return new ExecOption(from, db); }
+BaseField *Create_Orderbook(const f8String& from, const RealmBase *db, const int rv) { return new Orderbook(from, db); }
+BaseField *Create_BrokerInitiated(const f8String& from, const RealmBase *db, const int rv) { return new BrokerInitiated(from, db); }
+BaseField *Create_ExecOption(const f8String& from, const RealmBase *db, const int rv) { return new ExecOption(from, db); }
 
 } // namespace
 

@@ -115,6 +115,15 @@ AC_FUNC_STRCOLL
 AC_CHECK_TOOL([STRIP],[strip])
 AC_CHECK_TOOL([DOXYGEN],[doxygen])
 
+# check what version of gcc we're using
+GCC_VERSION=`$CC -dumpversion`
+gcc_major=`echo $GCC_VERSION | cut -d. -f1`
+gcc_minor=`echo $GCC_VERSION | cut -d. -f2`
+echo "Compiling with gcc version $GCC_VERSION"
+
+# gcc > 4.6, -fvar-tracking-assignments-toggle
+AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test $gcc_major -ge 4 -o $gcc_major -eq 4 -a $gcc_minor -gt 6])
+
 if test -z "$DOXYGEN";
 	then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
 fi

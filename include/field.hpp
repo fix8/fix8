@@ -188,47 +188,12 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// ABC field template. Partial specialisations of this class use Int2Type idiom.
+/// Field template. There will ONLY be partial specialisations of this class using Int2Type idiom.
 /*! \tparam T field type
     \tparam field field number (fix tag) */
 template<typename T, const unsigned short field>
-struct Field : public BaseField
+class Field : public BaseField
 {
-	/// The FIX fieldID (tag number).
-	static unsigned short get_field_id() { return field; }
-
-	///Ctor.
-	Field () : BaseField(field) {}
-
-	/*! Construct from string ctor.
-	  \param from string to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field(const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
-
-	///Dtor.
-	virtual ~Field() {}
-
-	/*! Get field value.
-	  \return value (T) */
-	virtual const T& get() const = 0;
-
-	/*! Get field value.
-	  \return value (T) */
-	virtual const T& operator()() const = 0;
-
-	/*! Get field value.
-	  \param from value to set
-	  \return origianl value (T) */
-	virtual const T& set(const T& from) = 0;
-
-	/*! Set the value from a string.
-	  \param from value to set
-	  \return original value (T) */
-	virtual const T& set_from_raw(const f8String& from) = 0;
-
-	/*! Copy (clone) this field.
-	  \return copy of field */
-	virtual Field *copy() = 0;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1281,7 +1246,7 @@ public:
 	/*! Set the value from a string.
 	  \param from value to set
 	  \return original value (bool) */
-	bool set_from_raw(const f8String& from) { return toupper(from[0]) == 'Y'; }
+	bool set_from_raw(const f8String& from) { return _value = toupper(from[0]) == 'Y'; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
@@ -1375,7 +1340,7 @@ struct BaseEntry
   \param name Field name
   \param comment Field comments
   \return BaseEntry object */
-BaseEntry *BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String&, const RealmBase*),
+BaseEntry *BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String&, const RealmBase*, const int),
 	const RealmBase *rlm, const char *name, const char *comment);
 
 //-------------------------------------------------------------------------------------------------

@@ -126,6 +126,15 @@ string& InPlaceStrToUpper(string& src)
 }
 
 //-----------------------------------------------------------------------------------------
+string& InPlaceReplaceInSet(const string& iset, string& src, const char repl)
+{
+	for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
+		if (iset.find(*itr) == string::npos)
+			*itr = repl;
+	return src;
+}
+
+//-----------------------------------------------------------------------------------------
 string& InPlaceStrToLower(string& src)
 {
 	for (string::iterator itr(src.begin()); itr != src.end(); ++itr)

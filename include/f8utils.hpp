@@ -62,6 +62,13 @@ std::string& InPlaceStrToLower(std::string& src);
   \return reference to modified string */
 std::string& CheckAddTrailingSlash(std::string& source);
 
+/*! Replace any character found in the supplied set in string with supplied character
+  \param iset set of characters
+  \param src source string
+  \param repl character to replace
+  \return reference to modified string */
+std::string& InPlaceReplaceInSet(const std::string& iset, std::string& src, const char repl='_');
+
 /*! Find standard error string for given errno.
   \param err errno value
   \param str if not 0, prepend string to error string

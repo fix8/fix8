@@ -121,9 +121,10 @@ public:
 	/*! Start the session - initiate the connection, logon and start heartbeating.
 	  \param wait if true wait till session finishes before returning
 	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
-	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
-	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0)
-		{ _session->start(_cc, wait, send_seqnum, recv_seqnum); }
+	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1
+	  \param davi default appl version id (FIXT) */
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
+		{ _session->start(_cc, wait, send_seqnum, recv_seqnum, davi); }
 
 	/// Convenient scoped pointer for your session
 	typedef scoped_ptr<ClientSession<T> > Client_ptr;

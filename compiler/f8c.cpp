@@ -389,8 +389,11 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 				for(XmlElement::XmlSet::const_iterator ditr(realmlist.begin()); ditr != realmlist.end(); ++ditr)
 				{
 					string enum_str, description;
-					if ((*ditr)->GetAttr("enum", enum_str) && (*ditr)->GetAttr("description", description))
+					if ((*ditr)->GetAttr("enum", enum_str))
 					{
+						if (!(*ditr)->GetAttr("description", description))
+							description = enum_str; 	// use enum if no description supplied
+
 						if (!result.first->second._dvals)
 							result.first->second._dvals = new RealmMap;
 						string lower, upper;
@@ -450,7 +453,8 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
 	if (fsitr == fspec.end() || !fsitr->second._dvals)
 	{
-		cerr << "error: Could not locate MsgType realm defintions in " << shortName << endl;
+		cerr << "error: Could not locate MsgType realm defintions in " << shortName
+			<< ". See FAQ for more details." << endl;
 		++glob_errors;
 		return 0;
 	}
@@ -469,7 +473,7 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 			if (ditr == fsitr->second._dvals->end())
 			{
 				cerr << shortName << ':' << recover_line(**itr) << ": error: Message "
-				  << name << " does not have corrresponding entry in MsgType field realm" << endl;
+				  << name << " does not have corrresponding entry in MsgType field realm. See FAQ for more details." << endl;
 				++glob_errors;
 				continue;
 			}
@@ -940,7 +944,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		oss_hpp << endl << _csMap.find_ref(cs_divider) << endl;
 		oss_hpp << "class " << ctxt._clname << "_session_" << gen_classes
 			<< " : public FIX8::Session" << endl << '{' << endl;
-		oss_hpp << spacer << ctxt._clname << "_router_" << gen_classes << "& _router; " << endl << endl;
+		oss_hpp << spacer << ctxt._clname << "_router_" << gen_classes << " _router; " << endl << endl;
 		oss_hpp << "public:" << endl;
 		oss_hpp << spacer << ctxt._clname << "_session_" << gen_classes;
 		if (is_server)
@@ -1025,7 +1029,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	unsigned dcnt(0);
 	for (FieldSpecMap::iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
-		if (!fitr->second._used || (!gen_fields && !fitr->second._dvals))
+		if ((!fitr->second._used && !gen_fields) || !fitr->second._dvals)
 			continue;
 		ost_cpp << spacer << "{ reinterpret_cast<const void *>(" << fitr->second._name << "_realm), "
 			<< "static_cast<RealmBase::RealmType>(" << fitr->second._dtype << "), " << endl << spacer << spacer

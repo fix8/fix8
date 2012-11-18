@@ -1,4 +1,7 @@
-0.6.02 	23/09/2012		<fix@fix8.org>
+0.6.03 	18/11/2012		<fix@fix8.org>
+Fixed jira issues: FX-1, FX-4, FX-5, FX-6, FX-7, FX-8, FX-9
+
+0.6.02 	23/10/2012		<fix@fix8.org>
 Changed to GPLv2; added shell command pipe variable import to XML; added xi:include to XML;
 
 0.6.01 	07/09/2012		<fix@fix8.org>

@@ -86,6 +86,12 @@ const string& mkel(const string& base, const string& compon, string& where);
 void process_group_ordering(const MessageSpec& ms);
 
 //-----------------------------------------------------------------------------------------
+namespace
+{
+	const string ident_set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789");
+};
+
+//-----------------------------------------------------------------------------------------
 ostream *open_ofile(const string& odir, const string& fname, string& target)
 {
 	ostringstream ofs;
@@ -203,7 +209,9 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 		if (cnt)
 			ost_cpp << ", ";
 		ost_cpp << *ditr->first;
-		ost_hpp << typestr << itr->second._name << '_' << ditr->second;
+		string transdesc(ditr->second);
+		// replace any illegal c++ identifier characters
+		ost_hpp << typestr << itr->second._name << '_' << InPlaceReplaceInSet(ident_set, transdesc, '_');
 		if (ditr->first->is_range())
 		{
 			if (cnt == 0)

@@ -231,7 +231,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 			if (opt == '.')
 				return 0;
 
-			if ((idx = _opt_keys.find_first_of(opt)) != f8String::npos)
+			if (static_cast<size_t>((idx = _opt_keys.find_first_of(opt))) != f8String::npos)
 			{
 				idx += (page * _lpp);
 				if (idx < rb->_sz)

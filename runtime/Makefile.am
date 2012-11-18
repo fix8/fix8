@@ -41,7 +41,7 @@ libfix8_la_SOURCES = popen.c \
                      xml.cpp f8utils.cpp message.cpp traits.cpp \
                      field.cpp session.cpp logger.cpp persist.cpp \
                      connection.cpp configuration.cpp memory.cpp \
-							consolemenu.cpp
+							consolemenu.cpp filepersist.cpp
 
 AM_LDFLAGS = -ggdb -rdynamic -shared
 

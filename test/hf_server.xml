@@ -6,6 +6,7 @@
 				active="true"
 				heartbeat_interval="5"
 				session_log="session_log"
+            protocol_log="protocol_log"
 				ip="127.0.0.1" port="11002"
 				sender_comp_id="TEX_DLD"
 				tcp_nodelay="true"

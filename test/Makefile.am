@@ -66,6 +66,9 @@ TBB_LIBS = -ltbb
 BDB_LIBS = -ldb_cxx
 ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) $(BDB_LIBS) -L$(top_srcdir)/runtime
 
+if TOGGLETRACKINGASSIGNMENTS
+libmyfix_la_CXXFLAGS = -fvar-tracking-assignments-toggle
+endif
 f8test_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
 f8print_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
 hftest_LDFLAGS = -rdynamic $(ALL_LIBS) -lhftest

@@ -109,17 +109,24 @@ Persister *Configuration::create_persister(const XmlElement *from) const
 			string type;
 			if (which->GetAttr("type", type))
 			{
-				if (type % "bdb")
+				string dir, db;
+				bool has_dir(which->GetAttr("dir", dir)), has_db(which->GetAttr("db", db));
+
+				if (type == "bdb" && has_dir && has_db)
 				{
-					string dir, db;
-					if (which->GetAttr("dir", dir) && which->GetAttr("db", db))
-					{
-						scoped_ptr<BDBPersister> result(new BDBPersister);
-						if (result->initialise(dir, db))
-							return result.release();
-					}
+					scoped_ptr<BDBPersister> result(new BDBPersister);
+					if (result->initialise(dir, db))
+						return result.release();
 				}
-				else if (type % "mem")
+#if 0
+				else if (type == "file" && has_dir && has_db)
+				{
+					scoped_ptr<FilePersister> result(new FilePersister);
+					if (result->initialise(dir, db))
+						return result.release();
+				}
+#endif
+				else if (type == "mem")
 					return new MemoryPersister;
 			}
 		}

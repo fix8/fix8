@@ -178,6 +178,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 		*ifsptr >> noskipws >> c;
 		switch (c)
 		{
+		case '\n':
 			if (!inclusion_.empty())
 				incline_++;
 			else

@@ -273,7 +273,11 @@ int main(int argc, char **argv)
 				mc(new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
-			mc->start(false, next_send, next_receive);
+			bool reset_sequence_numbers;
+			unsigned attempts(0), login_retry_interval, login_retries;
+			default_appl_ver_id davi;
+			mc->session_ptr()->get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);
+			mc->start(false, next_send, next_receive, davi());
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
