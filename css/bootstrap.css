@@ -3980,7 +3980,8 @@ a.thumbnail:hover {
 .hero-unit k2 {
   font-size: 24px;
   line-height: 36px;
-  color: #f58220
+  /* color: #f58220 */
+  color: white
 }
 .hero-unit h2 {
   color: inherit
