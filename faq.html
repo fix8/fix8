@@ -412,9 +412,23 @@ MessageBase *gr11(nonpsid->create_group());
 											</div>
 											<div class="accordion-group">
 												<div class="accordion-heading">
-													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSeven">g) When I compile my schema I get a "Could not locate MsgType realm defintions" error</a>
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSeven">g) When linking, Fix8 reports that PocoXML.so is missing. What do I do?</a>
 												</div>
 												<div id="testSeven" class="accordion-body collapse">
+													<div class="accordion-inner">
+													This problem is usually because you have built the poco library yourself. PocoXML is built in by default which leads to some
+													cross-dependencies. The fix is to modify <code>compiler/Makefile.am</code> and replace the first line below with the second:
+								<pre>
+POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
+POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML</pre>
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testEight">h) When I compile my schema I get a "Could not locate MsgType realm defintions" error</a>
+												</div>
+												<div id="testEight" class="accordion-body collapse">
 													<div class="accordion-inner">
 														The fix8 compiler requires that your schema declare each FIX msgtype referred to in your Message section in the field type 35 (Msgtype)
 														in the fields element. The compiler needs these to verify your message definitions. You should have something like the following...
