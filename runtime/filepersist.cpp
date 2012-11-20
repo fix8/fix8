@@ -272,14 +272,14 @@ bool FilePersister::put(const unsigned seqnum, const f8String& what)
 		return false;
 	}
 	IPrec iprec(seqnum, offset, what.size());
-	if (write (_iod, static_cast<void *>(&iprec), sizeof(IPrec)) == sizeof(IPrec))
+	if (write (_iod, static_cast<void *>(&iprec), sizeof(IPrec)) != sizeof(IPrec))
 	{
 		ostringstream eostr;
 		eostr << "Error could not write index record for seqnum " << seqnum << " to: " << _dbIname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
-	if (write (_fod, what.data(), sizeof(what.size())) == sizeof(what.size()))
+	if (write (_fod, what.data(), sizeof(what.size())) != sizeof(what.size()))
 	{
 		ostringstream eostr;
 		eostr << "Error could not write record for seqnum " << seqnum << " to: " << _dbFname;
@@ -287,7 +287,7 @@ bool FilePersister::put(const unsigned seqnum, const f8String& what)
 		return false;
 	}
 
-	return true;
+	return _index.insert(Index::value_type(seqnum, iprec._prec)).second;
 }
 
 //-------------------------------------------------------------------------------------------------

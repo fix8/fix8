@@ -1482,7 +1482,7 @@ Optional Packages:
   --with-reservepercent=VALUE
                           Percentage of message fields to reserve for
                           additional fields
-  --with-maxmsglen=VALUE  Maximum length of a FIX message (default=1024)
+  --with-maxmsglen=VALUE  Maximum length of a FIX message (default=8192)
   --with-poco=DIR         location of Poco
   --with-tbb=DIR          location of TBB
   --with-bdb=DIR          Berkeley DB installation directory
@@ -18986,7 +18986,7 @@ fi
 
 
 cat >>confdefs.h <<_ACEOF
-#define MAX_MSG_LENGTH 1024
+#define MAX_MSG_LENGTH 8192
 _ACEOF
 
 
@@ -19055,7 +19055,7 @@ $as_echo "#define HAS_TBB 1" >>confdefs.h
 	    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 		 echo
-		 echo "ERROR: TBB development libraries are required. Install and try again."
+		 echo "ERROR: TBB development libraries are required. Install and try again (see wiki:prerequisites)."
 		 echo
 		 exit 1
 	fi
@@ -19097,7 +19097,7 @@ $as_echo "#define HAS_POCO 1" >>confdefs.h
 	    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 		 echo
-		 echo "ERROR: Poco development libraries are required. Install and try again."
+		 echo "ERROR: Poco development libraries are required. Install and try again (see wiki:prerequisites)."
 		 echo
 		 exit 1
 	fi
@@ -21788,7 +21788,7 @@ $as_echo "#define HAVE_BDB 1" >>confdefs.h
 
 if test "$have_bdb" = "no"; then
 		echo
-		echo "ERROR: Oracle Berkeley DB development libraries are required. Install and try again."
+		echo "ERROR: Oracle Berkeley DB development libraries are required. Install and try again (see wiki:prerequisites)."
 		echo
 		exit 1
 fi

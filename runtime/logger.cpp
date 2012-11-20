@@ -69,8 +69,6 @@ tbb::mutex Singleton<SingleLogger<glob_log0> >::_mutex = tbb::mutex();
 
 const string Logger::_bit_names[] = { "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer" };
 
-//RegExp Logger::_elmnt("([0-9]+)=([^\x01]+)\x01");
-
 //-------------------------------------------------------------------------------------------------
 int Logger::operator()()
 {

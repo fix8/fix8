@@ -165,7 +165,6 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 
 	for (bool ok(true); ok && s_offset < fsize; )
 	{
-		RegMatch match;
 		scoped_ptr<MessageBase> grp(grpbase->create_group());
 
 		for (unsigned pos(0); s_offset < fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
@@ -214,7 +213,6 @@ unsigned MessageBase::check_positions()
 //-------------------------------------------------------------------------------------------------
 Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 {
-	RegMatch match;
 	Message *msg(0);
 	f8String len, mtype;
 	if (extract_header(from, len, mtype))
@@ -251,7 +249,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 			Fields::const_iterator fitr(msg->_trailer->_fields.find(Common_CheckSum));
 			static_cast<check_sum *>(fitr->second)->set(chksum);
 			const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), // chksum value
-				mchkval(calc_chksum(from, 0, match.SubPos(1))); // chksum pos
+				mchkval(calc_chksum(from, 0)); // chksum pos
 			if (chkval != mchkval)
 				throw BadCheckSum(mchkval);
 		}

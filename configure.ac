@@ -185,11 +185,11 @@ AC_ARG_WITH(reservepercent,
 	AC_DEFINE_UNQUOTED(RESERVE_PERCENT, ${withval},[Percentage of message fields to reserve for additional fields])
 ],[])
 
-AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, 1024, [Maximum length of a FIX message])
+AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, 8192, [Maximum length of a FIX message in bytes])
 AC_ARG_WITH(maxmsglen,
-  AC_HELP_STRING([--with-maxmsglen=VALUE],[Maximum length of a FIX message (default=1024)]),
+  AC_HELP_STRING([--with-maxmsglen=VALUE],[Maximum length of a FIX message (default=8192)]),
 [
-	AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, ${withval}, [Maximum length of a FIX message (default=1024)])
+	AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, ${withval}, [Maximum length of a FIX message (default=8192)])
 ],[])
 
 AC_ARG_WITH(poco,
@@ -219,7 +219,7 @@ AC_MSG_CHECKING(for TBB)
 	else
 	    AC_MSG_RESULT(no)
 		 echo
-		 echo "ERROR: TBB development libraries are required. Install and try again."
+		 echo "ERROR: TBB development libraries are required. Install and try again (see wiki:prerequisites)."
 		 echo
 		 exit 1
 	fi
@@ -241,7 +241,7 @@ AC_MSG_CHECKING(for Poco)
 	else
 	    AC_MSG_RESULT(no)
 		 echo
-		 echo "ERROR: Poco development libraries are required. Install and try again."
+		 echo "ERROR: Poco development libraries are required. Install and try again (see wiki:prerequisites)."
 		 echo
 		 exit 1
 	fi
@@ -279,7 +279,7 @@ AC_DEFINE(HAVE_BDB, 1, [Define to 1 if you have berkeley DB])
 
 if test "$have_bdb" = "no"; then
 		echo
-		echo "ERROR: Oracle Berkeley DB development libraries are required. Install and try again."
+		echo "ERROR: Oracle Berkeley DB development libraries are required. Install and try again (see wiki:prerequisites)."
 		echo
 		exit 1
 fi

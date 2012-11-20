@@ -211,7 +211,12 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 		ost_cpp << *ditr->first;
 		string transdesc(ditr->second);
 		// replace any illegal c++ identifier characters
-		ost_hpp << typestr << itr->second._name << '_' << InPlaceReplaceInSet(ident_set, transdesc, '_');
+		InPlaceReplaceInSet(ident_set, transdesc, '_');
+		ost_hpp << typestr << itr->second._name << '_';
+		if (transdesc.empty())
+			ost_hpp << *ditr->first;
+		else
+			ost_hpp << transdesc;
 		if (ditr->first->is_range())
 		{
 			if (cnt == 0)

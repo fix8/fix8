@@ -391,7 +391,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 					string enum_str, description;
 					if ((*ditr)->GetAttr("enum", enum_str))
 					{
-						if (!(*ditr)->GetAttr("description", description))
+						if (!(*ditr)->GetAttr("description", description) || description.empty())
 							description = enum_str; 	// use enum if no description supplied
 
 						if (!result.first->second._dvals)
