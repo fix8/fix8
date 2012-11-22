@@ -90,6 +90,9 @@ struct FieldTrait
 
 	FieldTrait() {}
 
+	FieldTrait(const FieldTrait& from) : _fnum(from._fnum), _ftype(from._ftype), _pos(from._pos),
+		_subpos(from._subpos), _field_traits(from._field_traits) {}
+
 	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, short field_traits)
 		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _subpos(), _field_traits(field_traits | (pos ? 1 : 0) << position)  {}
 

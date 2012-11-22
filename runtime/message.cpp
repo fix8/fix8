@@ -591,7 +591,7 @@ Message *Message::clone() const
 }
 
 //-------------------------------------------------------------------------------------------------
-void Message::print(ostream& os) const
+void Message::print(ostream& os, int) const
 {
 	if (_header)
 		os << *_header;

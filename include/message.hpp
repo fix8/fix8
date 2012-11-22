@@ -800,8 +800,9 @@ public:
 	virtual bool get_no_increment() const { return _no_increment; }
 
 	/*! Print the message to the specified stream.
-	    \param os refererence to stream to print to */
-	virtual void print(std::ostream& os) const;
+	    \param os refererence to stream to print to
+	    \param depth not used */
+	virtual void print(std::ostream& os, int depth=0) const;
 
 	/*! Inserter friend.
 	    \param os stream to send to
