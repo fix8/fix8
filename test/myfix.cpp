@@ -274,7 +274,7 @@ int main(int argc, char **argv)
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
 			bool reset_sequence_numbers;
-			unsigned attempts(0), login_retry_interval, login_retries;
+			unsigned login_retry_interval, login_retries;
 			default_appl_ver_id davi;
 			mc->session_ptr()->get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);
 			mc->start(false, next_send, next_receive, davi());

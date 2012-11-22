@@ -531,7 +531,7 @@ unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr
 			if (ftonItr != ftonSpec.end() && (fs_itr = fspec.find(ftonItr->second)) != fspec.end())
 			{
 				if (!ritr._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
-					required == "Y", true, 0)))
+					false, true, 0)))
 				{
 					cerr << "error: Could not add group trait object " << gname << endl;
 					++glob_errors;
