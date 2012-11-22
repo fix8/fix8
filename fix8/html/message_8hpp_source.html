@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.3</span>
+   &#160;<span id="projectnumber">version  0.6.4</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -641,20 +641,20 @@ $(document).ready(function(){initNavTree('message_8hpp_source.html','');});
 <div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;</div>
 <div class="line"><a name="l00800"></a><span class="lineno"><a class="code" href="classFIX8_1_1Message.html#a117f8048127b51e211f1f09536a95e50">  800</a></span>&#160;   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1Message.html#a117f8048127b51e211f1f09536a95e50">get_no_increment</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Message.html#aa4249dd336c6bd7252f5b2a33ae233f2">_no_increment</a>; }</div>
 <div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;</div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1Message.html#a80594014f879a9c1a645b642b978d75a">print</a>(std::ostream&amp; os) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;</div>
-<div class="line"><a name="l00810"></a><span class="lineno"><a class="code" href="classFIX8_1_1Message.html#a2504e9ef602040d181c571a055726116">  810</a></span>&#160;   <span class="keyword">friend</span> std::ostream&amp; <a class="code" href="classFIX8_1_1Message.html#a2504e9ef602040d181c571a055726116">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a>&amp; what) { what.<a class="code" href="classFIX8_1_1Message.html#a80594014f879a9c1a645b642b978d75a">print</a>(os); <span class="keywordflow">return</span> os; }</div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;};</div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;</div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;} <span class="comment">// FIX8</span></div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;<span class="preprocessor">#endif // _FIX8_MESSAGE_HPP_</span></div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1Message.html#a772d6d76fdb3f7684ad8633e517c60c3">print</a>(std::ostream&amp; os, <span class="keywordtype">int</span> depth=0) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;</div>
+<div class="line"><a name="l00811"></a><span class="lineno"><a class="code" href="classFIX8_1_1Message.html#a2504e9ef602040d181c571a055726116">  811</a></span>&#160;   <span class="keyword">friend</span> std::ostream&amp; <a class="code" href="classFIX8_1_1Message.html#a2504e9ef602040d181c571a055726116">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a>&amp; what) { what.<a class="code" href="classFIX8_1_1Message.html#a772d6d76fdb3f7684ad8633e517c60c3">print</a>(os); <span class="keywordflow">return</span> os; }</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;};</div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;} <span class="comment">// FIX8</span></div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;<span class="preprocessor">#endif // _FIX8_MESSAGE_HPP_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 18 2012 14:35:29. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Nov 22 2012 14:22:27. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

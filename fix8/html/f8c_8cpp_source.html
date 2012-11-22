@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.3</span>
+   &#160;<span id="projectnumber">version  0.6.4</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -468,7 +468,7 @@ $(document).ready(function(){initNavTree('f8c_8cpp_source.html','');});
 <div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;               <span class="keywordtype">string</span> enum_str, description;</div>
 <div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;               <span class="keywordflow">if</span> ((*ditr)-&gt;GetAttr(<span class="stringliteral">&quot;enum&quot;</span>, enum_str))</div>
 <div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;               {</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;                  <span class="keywordflow">if</span> (!(*ditr)-&gt;GetAttr(<span class="stringliteral">&quot;description&quot;</span>, description))</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;                  <span class="keywordflow">if</span> (!(*ditr)-&gt;GetAttr(<span class="stringliteral">&quot;description&quot;</span>, description) || description.empty())</div>
 <div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;                     description = enum_str;    <span class="comment">// use enum if no description supplied</span></div>
 <div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;</div>
 <div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;                  <span class="keywordflow">if</span> (!result.first-&gt;second._dvals)</div>
@@ -608,7 +608,7 @@ $(document).ready(function(){initNavTree('f8c_8cpp_source.html','');});
 <div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;         <span class="keywordflow">if</span> (ftonItr != ftonSpec.end() &amp;&amp; (fs_itr = fspec.find(ftonItr-&gt;second)) != fspec.end())</div>
 <div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;         {</div>
 <div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;            <span class="keywordflow">if</span> (!ritr.<a class="code" href="structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440">_fields</a>.<a class="code" href="classFIX8_1_1FieldTraits.html#abf65465635c1ae0cbacccc2baef88c9c">add</a>(<a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">FieldTrait</a>(fs_itr-&gt;first, FieldTrait::ft_int, (*gitr)-&gt;GetSubIdx(),</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;               required == <span class="stringliteral">&quot;Y&quot;</span>, <span class="keyword">true</span>, 0)))</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;               <span class="keyword">false</span>, <span class="keyword">true</span>, 0)))</div>
 <div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;            {</div>
 <div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;               cerr &lt;&lt; <span class="stringliteral">&quot;error: Could not add group trait object &quot;</span> &lt;&lt; gname &lt;&lt; endl;</div>
 <div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;               ++<a class="code" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>;</div>
@@ -1201,7 +1201,7 @@ $(document).ready(function(){initNavTree('f8c_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 18 2012 14:35:28. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Nov 22 2012 14:22:27. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.3</span>
+   &#160;<span id="projectnumber">version  0.6.4</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -309,7 +309,7 @@ $(document).ready(function(){initNavTree('harness_8cpp_source.html','');});
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;            mc(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1ReliableClientSession.html" title="Reliable Client wrapper. This client attempts to recover from disconnects and login rejects...">ReliableClientSession&lt;myfix_session_client&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a51c71fd32dd93234cd45486cac2ee12f">TEX::ctx</a>, conf_file, <span class="stringliteral">&quot;DLD1&quot;</span>));</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="harness_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet</a>)</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            mc-&gt;<a class="code" href="classFIX8_1_1ClientSession.html#a497d0d92a7dd4a2ddd8273e793ba874c">session_ptr</a>()-&gt;<a class="code" href="classFIX8_1_1Session.html#aa983adcf0b53b341a1bddab23861964f">control</a>() |= Session::print;</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;         mc-&gt;<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d4eb63e18fa3f16d437312179c8ca24">start</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;         mc-&gt;<a class="code" href="classFIX8_1_1ReliableClientSession.html#a97c13086d807222d92659a6d821dc96c">start</a>(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;         <a class="code" href="classFIX8_1_1ConsoleMenu.html" title="Console test harness menu.">ConsoleMenu</a> cm(<a class="code" href="namespaceFIX8_1_1TEX.html#a51c71fd32dd93234cd45486cac2ee12f">TEX::ctx</a>, mc-&gt;<a class="code" href="classFIX8_1_1ClientSession.html#a497d0d92a7dd4a2ddd8273e793ba874c">session_ptr</a>(), cin, cout, 50);</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;         <a class="code" href="classMyMenu.html" title="Simple menu system that will work with most term types.">MyMenu</a> mymenu(*mc-&gt;<a class="code" href="classFIX8_1_1ClientSession.html#a497d0d92a7dd4a2ddd8273e793ba874c">session_ptr</a>(), 0, cout, &amp;cm);</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;         <span class="keywordtype">char</span> ch;</div>
@@ -544,7 +544,7 @@ $(document).ready(function(){initNavTree('harness_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 18 2012 14:35:29. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Nov 22 2012 14:22:27. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

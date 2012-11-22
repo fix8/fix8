@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.3</span>
+   &#160;<span id="projectnumber">version  0.6.4</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -316,7 +316,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            mc(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1ReliableClientSession.html" title="Reliable Client wrapper. This client attempts to recover from disconnects and login rejects...">ReliableClientSession&lt;myfix_session_client&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a51c71fd32dd93234cd45486cac2ee12f">TEX::ctx</a>, conf_file, <span class="stringliteral">&quot;DLD1&quot;</span>));</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="harness_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet</a>)</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            mc-&gt;<a class="code" href="classFIX8_1_1ClientSession.html#a497d0d92a7dd4a2ddd8273e793ba874c">session_ptr</a>()-&gt;<a class="code" href="classFIX8_1_1Session.html#aa983adcf0b53b341a1bddab23861964f">control</a>() |= Session::print;</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;         mc-&gt;<a class="code" href="classFIX8_1_1ReliableClientSession.html#a9d4eb63e18fa3f16d437312179c8ca24">start</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;         mc-&gt;<a class="code" href="classFIX8_1_1ReliableClientSession.html#a97c13086d807222d92659a6d821dc96c">start</a>(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;         <a class="code" href="classMyMenu.html" title="Simple menu system that will work with most term types.">MyMenu</a> mymenu(*mc-&gt;<a class="code" href="classFIX8_1_1ClientSession.html#a497d0d92a7dd4a2ddd8273e793ba874c">session_ptr</a>(), 0, cout);</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;         <span class="keywordtype">char</span> ch;</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;         mymenu.<a class="code" href="classMyMenu.html#a381663b9838cf71aee2307913e1caf04">get_tty</a>().<a class="code" href="classFIX8_1_1tty__save__state.html#a64dbe0f3a2b970a69308bb187909e12a">set_raw_mode</a>();</div>
@@ -331,7 +331,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="harness_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet</a>)</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            mc-&gt;session_ptr()-&gt;control() |= Session::print;</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;         <span class="keywordtype">bool</span> reset_sequence_numbers;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;         <span class="keywordtype">unsigned</span> attempts(0), login_retry_interval, login_retries;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;         <span class="keywordtype">unsigned</span> login_retry_interval, login_retries;</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;         <a class="code" href="classFIX8_1_1Field.html">default_appl_ver_id</a> davi;</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;         mc-&gt;session_ptr()-&gt;get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;         mc-&gt;start(<span class="keyword">false</span>, next_send, next_receive, davi());</div>
@@ -666,7 +666,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 18 2012 14:35:29. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Nov 22 2012 14:22:27. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>
