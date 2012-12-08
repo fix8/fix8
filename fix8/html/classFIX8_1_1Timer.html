@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.4</span>
+   &#160;<span id="projectnumber">version  0.6.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -123,8 +123,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8ca7fabc51131406105b424de5c7da55"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a8ca7fabc51131406105b424de5c7da55">Timer</a> (T &amp;monitor, int granularity=1)</td></tr>
 <tr class="memitem:a9dbcccd87c85a483eb47e1d0e23634a4"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a9dbcccd87c85a483eb47e1d0e23634a4">~Timer</a> ()</td></tr>
 <tr class="memdesc:a9dbcccd87c85a483eb47e1d0e23634a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#a9dbcccd87c85a483eb47e1d0e23634a4"></a><br/></td></tr>
-<tr class="memitem:a67273582c31d26851df37b284d1256cc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a67273582c31d26851df37b284d1256cc">schedule</a> (const <a class="el" href="classFIX8_1_1TimerEvent.html">TimerEvent</a>&lt; T &gt; &amp;what, const unsigned timeToWaitMS, const bool hi_res=false)</td></tr>
-<tr class="memitem:a661a851e5353dce6e5eec459f0d924fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a661a851e5353dce6e5eec459f0d924fc">kill</a> (const int sig)</td></tr>
+<tr class="memitem:a2597b9463946766f60d5321a5390cd74"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a2597b9463946766f60d5321a5390cd74">schedule</a> (const <a class="el" href="classFIX8_1_1TimerEvent.html">TimerEvent</a>&lt; T &gt; &amp;what, const unsigned timeToWaitMS)</td></tr>
+<tr class="memitem:a8459f0c5f91c707601e564a669c21934"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a8459f0c5f91c707601e564a669c21934">clear</a> ()</td></tr>
+<tr class="memitem:a6520db3e8bbce98e9082898101797822"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a6520db3e8bbce98e9082898101797822">kill</a> (const int sig=SIGKILL)</td></tr>
 <tr class="memitem:a5b55fe74a9d29f5a28a50fe24d464709"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a5b55fe74a9d29f5a28a50fe24d464709">join</a> ()</td></tr>
 <tr class="memdesc:a5b55fe74a9d29f5a28a50fe24d464709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Join timer thread. Wait till exits.  <a href="#a5b55fe74a9d29f5a28a50fe24d464709"></a><br/></td></tr>
 <tr class="memitem:aa57170841069bcafd9aed79595e3d962"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#aa57170841069bcafd9aed79595e3d962">start</a> ()</td></tr>
@@ -152,7 +153,7 @@ class FIX8::Timer&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00088">88</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00087">87</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a8ca7fabc51131406105b424de5c7da55"></a>
 <div class="memitem">
@@ -196,7 +197,7 @@ template&lt;typename T&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00101">101</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00100">100</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -225,11 +226,34 @@ template&lt;typename T&gt; </div>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00104">104</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00103">103</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
 <h2>Member Function Documentation</h2>
+<a class="anchor" id="a8459f0c5f91c707601e564a669c21934"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer</a>&lt; T &gt;::clear </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Empty the scheduler of any pending timer events. </p>
+<dl class="section return"><dt>Returns</dt><dd>number of timer events that were waiting on the queue </dd></dl>
+
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00180">180</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00215">FIX8::Session::stop()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a5b55fe74a9d29f5a28a50fe24d464709"></a>
 <div class="memitem">
 <div class="memproto">
@@ -255,11 +279,11 @@ template&lt;typename T&gt; </div>
 
 <p>Join timer thread. Wait till exits. </p>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00118">118</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00120">120</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a661a851e5353dce6e5eec459f0d924fc"></a>
+<a class="anchor" id="a6520db3e8bbce98e9082898101797822"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -272,7 +296,7 @@ template&lt;typename T&gt; </div>
           <td class="memname">void <a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer</a>&lt; T &gt;::kill </td>
           <td>(</td>
           <td class="paramtype">const int&#160;</td>
-          <td class="paramname"><em>sig</em></td><td>)</td>
+          <td class="paramname"><em>sig</em> = <code>SIGKILL</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -290,7 +314,7 @@ template&lt;typename T&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00115">115</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00117">117</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -311,13 +335,13 @@ template&lt;typename T &gt; </div>
 <p><a class="el" href="classFIX8_1_1Timer.html" title="High resolution timer.">Timer</a> thread entry point. </p>
 <dl class="section return"><dt>Returns</dt><dd>result at timer thread exit </dd></dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00130">130</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00132">132</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00126">FIX8::Tickval::get_tickval()</a>, <a class="el" href="f8utils_8hpp_source.html#l00951">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00837">FIX8::rnanosleep()</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00125">FIX8::Tickval::get_tickval()</a>, <a class="el" href="f8utils_8hpp_source.html#l00950">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00836">FIX8::rnanosleep()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a67273582c31d26851df37b284d1256cc"></a>
+<a class="anchor" id="a2597b9463946766f60d5321a5390cd74"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -333,13 +357,7 @@ template&lt;typename T&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const unsigned&#160;</td>
-          <td class="paramname"><em>timeToWaitMS</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const bool&#160;</td>
-          <td class="paramname"><em>hi_res</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>timeToWaitMS</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -353,17 +371,16 @@ template&lt;typename T&gt; </div>
   <table class="params">
     <tr><td class="paramname">what</td><td>TimeEvent to schedule </td></tr>
     <tr><td class="paramname">timeToWaitMS</td><td>interval to wait in ms </td></tr>
-    <tr><td class="paramname">hi_res</td><td>if true, interval to wait is in microsecs </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00178">178</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00196">196</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00126">FIX8::Tickval::get_tickval()</a>, <a class="el" href="tickval_8hpp_source.html#l00057">FIX8::Tickval::million</a>, <a class="el" href="timer_8hpp_source.html#l00074">FIX8::TimerEvent&lt; T &gt;::set()</a>, and <a class="el" href="tickval_8hpp_source.html#l00056">FIX8::Tickval::thousand</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00125">FIX8::Tickval::get_tickval()</a>, <a class="el" href="timer_8hpp_source.html#l00073">FIX8::TimerEvent&lt; T &gt;::set()</a>, and <a class="el" href="tickval_8hpp_source.html#l00055">FIX8::Tickval::thousand</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00360">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00538">FIX8::Session::heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00215">FIX8::Session::stop()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00367">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00548">FIX8::Session::heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00215">FIX8::Session::stop()</a>.</p>
 
 </div>
 </div>
@@ -392,9 +409,9 @@ template&lt;typename T&gt; </div>
 
 <p>Start the timer thread. </p>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00121">121</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00123">123</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00120">FIX8::Session::Session()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00119">FIX8::Session::Session()</a>.</p>
 
 </div>
 </div>
@@ -419,7 +436,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00095">95</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00094">94</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -443,7 +460,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00093">93</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00092">92</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -467,7 +484,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00090">90</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00089">89</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -491,7 +508,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00092">92</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00091">91</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -515,9 +532,9 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00091">91</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00090">90</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00118">FIX8::Timer&lt; Session &gt;::join()</a>, <a class="el" href="timer_8hpp_source.html#l00115">FIX8::Timer&lt; Session &gt;::kill()</a>, and <a class="el" href="timer_8hpp_source.html#l00121">FIX8::Timer&lt; Session &gt;::start()</a>.</p>
+<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00120">FIX8::Timer&lt; Session &gt;::join()</a>, <a class="el" href="timer_8hpp_source.html#l00117">FIX8::Timer&lt; Session &gt;::kill()</a>, and <a class="el" href="timer_8hpp_source.html#l00123">FIX8::Timer&lt; Session &gt;::start()</a>.</p>
 
 </div>
 </div>
@@ -527,7 +544,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Nov 22 2012 14:22:42. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 07:56:39. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

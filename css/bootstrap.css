@@ -1261,6 +1261,10 @@ table {
   -moz-border-radius: 0 0 4px 0;
   border-radius: 0 0 4px 0;
 }
+.table-striped thead tr:nth-child(odd) th {
+  background-color: #12887d;
+  color: #f5f5f5;
+}
 .table-striped tbody tr:nth-child(odd) td,
 .table-striped tbody tr:nth-child(odd) th {
   background-color: #f9f9f9;
@@ -1269,6 +1273,12 @@ table {
 .table tbody tr:hover th {
   background-color: #f5f5f5;
 }
+.center-table
+{
+	margin: 0 auto !important;
+	float: none !important;
+}
+
 table .span1 {
   float: none;
   width: 44px;

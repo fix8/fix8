@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.4</span>
+   &#160;<span id="projectnumber">version  0.6.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -107,141 +107,140 @@ $(document).ready(function(){initNavTree('Perf__classes_8cpp_source.html','');})
 </div><!--header-->
 <div class="contents">
 <a href="Perf__classes_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// *** f8c generated file: DO NOT EDIT! Created: 2012-11-22 14:21:05 ***</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// *** f8c generated file: DO NOT EDIT! Created: 2012-12-09 07:55:46 ***</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#if 0</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;Fix8 Open Source FIX Engine.</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Copyright (C) 2010-12 David L. Dight &lt;fix@fix8.org&gt;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;This program is free software; you can redistribute it and/or modify it under  the terms of</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;the GNU General Public License as published by the Free Software Foundation; either version</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;2 of the License, or (at your option) any later version.</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;General Public License as  published by the Free Software Foundation,  either version 3  of</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;the License, or (at your option) any later version.</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;See the GNU General Public License <span class="keywordflow">for</span> more details.</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;GNU General Public License <span class="keywordflow">for</span> more details.</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;You should have received a copy of  the GNU General Public License along with <span class="keyword">this</span> program;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordflow">if</span> not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;Boston, MA 02110-1301 USA.</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM <span class="stringliteral">&quot;AS IS&quot;</span> WITHOUT WARRANTY OF ANY</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;#endif</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8config_8h.html">f8config.h</a>&gt;</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;iterator&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &lt;bitset&gt;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &lt;cerrno&gt;</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#if defined HAS_TR1_UNORDERED_MAP</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;tr1/unordered_map&gt;</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span><span class="comment">// f8 includes</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8exception_8hpp.html">f8exception.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="memory_8hpp.html">memory.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8allocator_8hpp.html">f8allocator.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8utils_8hpp.html">f8utils.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8types_8hpp.html">f8types.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="traits_8hpp.html">traits.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="field_8hpp.html">field.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="message_8hpp.html">message.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__types_8hpp.html">Perf_types.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__router_8hpp.html">Perf_router.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__classes_8hpp.html">Perf_classes.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">namespace </span>TEX {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">namespace </span>{</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;Message *Create_Heartbeat() { <span class="keywordflow">return</span> <span class="keyword">new</span> Heartbeat; }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;Message *Create_TestRequest() { <span class="keywordflow">return</span> <span class="keyword">new</span> TestRequest; }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;Message *Create_ResendRequest() { <span class="keywordflow">return</span> <span class="keyword">new</span> ResendRequest; }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;Message *Create_Reject() { <span class="keywordflow">return</span> <span class="keyword">new</span> Reject; }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;Message *Create_SequenceReset() { <span class="keywordflow">return</span> <span class="keyword">new</span> SequenceReset; }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;Message *Create_Logout() { <span class="keywordflow">return</span> <span class="keyword">new</span> Logout; }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;Message *Create_ExecutionReport() { <span class="keywordflow">return</span> <span class="keyword">new</span> ExecutionReport; }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;Message *Create_OrderCancelReject() { <span class="keywordflow">return</span> <span class="keyword">new</span> OrderCancelReject; }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;Message *Create_Logon() { <span class="keywordflow">return</span> <span class="keyword">new</span> Logon; }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;Message *Create_NewOrderSingle() { <span class="keywordflow">return</span> <span class="keyword">new</span> NewOrderSingle; }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;Message *Create_OrderCancelRequest() { <span class="keywordflow">return</span> <span class="keyword">new</span> OrderCancelRequest; }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;Message *Create_OrderCancelReplaceRequest() { <span class="keywordflow">return</span> <span class="keyword">new</span> OrderCancelReplaceRequest; }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;Message *Create_OrderStatusRequest() { <span class="keywordflow">return</span> <span class="keyword">new</span> OrderStatusRequest; }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;Message *Create_DontKnowTrade() { <span class="keywordflow">return</span> <span class="keyword">new</span> DontKnowTrade; }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;Message *Create_header() { <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span>Message *<span class="keyword">&gt;</span>(<span class="keyword">new</span> header); }</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;Message *Create_BusinessMessageReject() { <span class="keywordflow">return</span> <span class="keyword">new</span> BusinessMessageReject; }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;Message *Create_trailer() { <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span>Message *<span class="keyword">&gt;</span>(<span class="keyword">new</span> trailer); }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ab482135f8cdcad3f4135431f969c1f38">Perf_BaseMsgEntry</a> bme;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a57b2348a0208eef9c26b2f380e1a8292">Perf_BaseEntry</a> be;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;} <span class="comment">// namespace</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">const</span> TEX::Perf_BaseMsgEntry::Pair <a class="code" href="classFIX8_1_1GeneratedTable.html#a1aee85718d82a93244333b4342673d68" title="The actual data set.">TEX::Perf_BaseMsgEntry::_pairs</a>[] =</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;{</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   { <span class="stringliteral">&quot;0&quot;</span>, { &amp;TEX::Create_Heartbeat, <span class="stringliteral">&quot;Heartbeat&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   { <span class="stringliteral">&quot;1&quot;</span>, { &amp;TEX::Create_TestRequest, <span class="stringliteral">&quot;TestRequest&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   { <span class="stringliteral">&quot;2&quot;</span>, { &amp;TEX::Create_ResendRequest, <span class="stringliteral">&quot;ResendRequest&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;   { <span class="stringliteral">&quot;3&quot;</span>, { &amp;TEX::Create_Reject, <span class="stringliteral">&quot;Reject&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   { <span class="stringliteral">&quot;4&quot;</span>, { &amp;TEX::Create_SequenceReset, <span class="stringliteral">&quot;SequenceReset&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;   { <span class="stringliteral">&quot;5&quot;</span>, { &amp;TEX::Create_Logout, <span class="stringliteral">&quot;Logout&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;   { <span class="stringliteral">&quot;8&quot;</span>, { &amp;TEX::Create_ExecutionReport, <span class="stringliteral">&quot;ExecutionReport&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   { <span class="stringliteral">&quot;9&quot;</span>, { &amp;TEX::Create_OrderCancelReject, <span class="stringliteral">&quot;OrderCancelReject&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   { <span class="stringliteral">&quot;A&quot;</span>, { &amp;TEX::Create_Logon, <span class="stringliteral">&quot;Logon&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   { <span class="stringliteral">&quot;D&quot;</span>, { &amp;TEX::Create_NewOrderSingle, <span class="stringliteral">&quot;NewOrderSingle&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   { <span class="stringliteral">&quot;F&quot;</span>, { &amp;TEX::Create_OrderCancelRequest, <span class="stringliteral">&quot;OrderCancelRequest&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;   { <span class="stringliteral">&quot;G&quot;</span>, { &amp;TEX::Create_OrderCancelReplaceRequest, <span class="stringliteral">&quot;OrderCancelReplaceRequest&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;   { <span class="stringliteral">&quot;H&quot;</span>, { &amp;TEX::Create_OrderStatusRequest, <span class="stringliteral">&quot;OrderStatusRequest&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;   { <span class="stringliteral">&quot;Q&quot;</span>, { &amp;TEX::Create_DontKnowTrade, <span class="stringliteral">&quot;DontKnowTrade&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;   { <span class="stringliteral">&quot;header&quot;</span>, { &amp;TEX::Create_header, <span class="stringliteral">&quot;header&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;   { <span class="stringliteral">&quot;j&quot;</span>, { &amp;TEX::Create_BusinessMessageReject, <span class="stringliteral">&quot;BusinessMessageReject&quot;</span>, 0 } },</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;   { <span class="stringliteral">&quot;trailer&quot;</span>, { &amp;TEX::Create_trailer, <span class="stringliteral">&quot;trailer&quot;</span>, 0 } }</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;};</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code" href="classFIX8_1_1GeneratedTable.html#a8d438b5ba50588617df1a3a07c55b04a" title="The number of elements in the data set.">TEX::Perf_BaseMsgEntry::_pairsz</a>(<span class="keyword">sizeof</span>(_pairs)/<span class="keyword">sizeof</span>(TEX::Perf_BaseMsgEntry::Pair));</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keyword">const</span> <a class="code" href="classFIX8_1_1GeneratedTable.html#a6fd305759ef9e5ceeb8b21415b89cb14">TEX::Perf_BaseMsgEntry::NotFoundType</a> <a class="code" href="classFIX8_1_1GeneratedTable.html#a9fc140413f948aa5a954d3035d2cdc3d" title="The value to return when the key is not found.">TEX::Perf_BaseMsgEntry::_noval</a> = {0, 0};</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;F8MetaCntx <a class="code" href="namespaceFIX8_1_1TEX.html#a51c71fd32dd93234cd45486cac2ee12f">ctx</a>(4200, bme, be, <span class="stringliteral">&quot;FIX.4.2&quot;</span>);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;} <span class="comment">// namespace TEX</span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;} <span class="comment">// namespace FIX8</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;You should have received a copy of the GNU General Public License along with Fix8.  If not,</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;see &lt;http:<span class="comment">//www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM <span class="stringliteral">&quot;AS IS&quot;</span> WITHOUT WARRANTY OF ANY</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;#endif</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8config_8h.html">f8config.h</a>&gt;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;iterator&gt;</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;bitset&gt;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;cerrno&gt;</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#if defined HAS_TR1_UNORDERED_MAP</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;tr1/unordered_map&gt;</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor"></span><span class="comment">// f8 includes</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8exception_8hpp.html">f8exception.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="memory_8hpp.html">memory.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8allocator_8hpp.html">f8allocator.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8utils_8hpp.html">f8utils.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8types_8hpp.html">f8types.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="traits_8hpp.html">traits.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="field_8hpp.html">field.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="message_8hpp.html">message.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__types_8hpp.html">Perf_types.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__router_8hpp.html">Perf_router.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__classes_8hpp.html">Perf_classes.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">namespace </span>TEX {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">namespace </span>{</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;Message *Create_Heartbeat() { <span class="keywordflow">return</span> <span class="keyword">new</span> Heartbeat; }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;Message *Create_TestRequest() { <span class="keywordflow">return</span> <span class="keyword">new</span> TestRequest; }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;Message *Create_ResendRequest() { <span class="keywordflow">return</span> <span class="keyword">new</span> ResendRequest; }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;Message *Create_Reject() { <span class="keywordflow">return</span> <span class="keyword">new</span> Reject; }</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;Message *Create_SequenceReset() { <span class="keywordflow">return</span> <span class="keyword">new</span> SequenceReset; }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;Message *Create_Logout() { <span class="keywordflow">return</span> <span class="keyword">new</span> Logout; }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;Message *Create_ExecutionReport() { <span class="keywordflow">return</span> <span class="keyword">new</span> ExecutionReport; }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;Message *Create_OrderCancelReject() { <span class="keywordflow">return</span> <span class="keyword">new</span> OrderCancelReject; }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;Message *Create_Logon() { <span class="keywordflow">return</span> <span class="keyword">new</span> Logon; }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;Message *Create_NewOrderSingle() { <span class="keywordflow">return</span> <span class="keyword">new</span> NewOrderSingle; }</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;Message *Create_OrderCancelRequest() { <span class="keywordflow">return</span> <span class="keyword">new</span> OrderCancelRequest; }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;Message *Create_OrderCancelReplaceRequest() { <span class="keywordflow">return</span> <span class="keyword">new</span> OrderCancelReplaceRequest; }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;Message *Create_OrderStatusRequest() { <span class="keywordflow">return</span> <span class="keyword">new</span> OrderStatusRequest; }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;Message *Create_DontKnowTrade() { <span class="keywordflow">return</span> <span class="keyword">new</span> DontKnowTrade; }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;Message *Create_header() { <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span>Message *<span class="keyword">&gt;</span>(<span class="keyword">new</span> header); }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;Message *Create_BusinessMessageReject() { <span class="keywordflow">return</span> <span class="keyword">new</span> BusinessMessageReject; }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;Message *Create_trailer() { <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span>Message *<span class="keyword">&gt;</span>(<span class="keyword">new</span> trailer); }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ab482135f8cdcad3f4135431f969c1f38">Perf_BaseMsgEntry</a> bme;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a57b2348a0208eef9c26b2f380e1a8292">Perf_BaseEntry</a> be;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;} <span class="comment">// namespace</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">const</span> TEX::Perf_BaseMsgEntry::Pair <a class="code" href="classFIX8_1_1GeneratedTable.html#a1aee85718d82a93244333b4342673d68" title="The actual data set.">TEX::Perf_BaseMsgEntry::_pairs</a>[] =</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;{</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;   { <span class="stringliteral">&quot;0&quot;</span>, { &amp;TEX::Create_Heartbeat, <span class="stringliteral">&quot;Heartbeat&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   { <span class="stringliteral">&quot;1&quot;</span>, { &amp;TEX::Create_TestRequest, <span class="stringliteral">&quot;TestRequest&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   { <span class="stringliteral">&quot;2&quot;</span>, { &amp;TEX::Create_ResendRequest, <span class="stringliteral">&quot;ResendRequest&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   { <span class="stringliteral">&quot;3&quot;</span>, { &amp;TEX::Create_Reject, <span class="stringliteral">&quot;Reject&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;   { <span class="stringliteral">&quot;4&quot;</span>, { &amp;TEX::Create_SequenceReset, <span class="stringliteral">&quot;SequenceReset&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   { <span class="stringliteral">&quot;5&quot;</span>, { &amp;TEX::Create_Logout, <span class="stringliteral">&quot;Logout&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;   { <span class="stringliteral">&quot;8&quot;</span>, { &amp;TEX::Create_ExecutionReport, <span class="stringliteral">&quot;ExecutionReport&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;   { <span class="stringliteral">&quot;9&quot;</span>, { &amp;TEX::Create_OrderCancelReject, <span class="stringliteral">&quot;OrderCancelReject&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   { <span class="stringliteral">&quot;A&quot;</span>, { &amp;TEX::Create_Logon, <span class="stringliteral">&quot;Logon&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   { <span class="stringliteral">&quot;D&quot;</span>, { &amp;TEX::Create_NewOrderSingle, <span class="stringliteral">&quot;NewOrderSingle&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   { <span class="stringliteral">&quot;F&quot;</span>, { &amp;TEX::Create_OrderCancelRequest, <span class="stringliteral">&quot;OrderCancelRequest&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   { <span class="stringliteral">&quot;G&quot;</span>, { &amp;TEX::Create_OrderCancelReplaceRequest, <span class="stringliteral">&quot;OrderCancelReplaceRequest&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;   { <span class="stringliteral">&quot;H&quot;</span>, { &amp;TEX::Create_OrderStatusRequest, <span class="stringliteral">&quot;OrderStatusRequest&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;   { <span class="stringliteral">&quot;Q&quot;</span>, { &amp;TEX::Create_DontKnowTrade, <span class="stringliteral">&quot;DontKnowTrade&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;   { <span class="stringliteral">&quot;header&quot;</span>, { &amp;TEX::Create_header, <span class="stringliteral">&quot;header&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;   { <span class="stringliteral">&quot;j&quot;</span>, { &amp;TEX::Create_BusinessMessageReject, <span class="stringliteral">&quot;BusinessMessageReject&quot;</span>, 0 } },</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;   { <span class="stringliteral">&quot;trailer&quot;</span>, { &amp;TEX::Create_trailer, <span class="stringliteral">&quot;trailer&quot;</span>, 0 } }</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;};</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code" href="classFIX8_1_1GeneratedTable.html#a8d438b5ba50588617df1a3a07c55b04a" title="The number of elements in the data set.">TEX::Perf_BaseMsgEntry::_pairsz</a>(<span class="keyword">sizeof</span>(_pairs)/<span class="keyword">sizeof</span>(TEX::Perf_BaseMsgEntry::Pair));</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keyword">const</span> <a class="code" href="classFIX8_1_1GeneratedTable.html#a6fd305759ef9e5ceeb8b21415b89cb14">TEX::Perf_BaseMsgEntry::NotFoundType</a> <a class="code" href="classFIX8_1_1GeneratedTable.html#a9fc140413f948aa5a954d3035d2cdc3d" title="The value to return when the key is not found.">TEX::Perf_BaseMsgEntry::_noval</a> = {0, 0};</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;F8MetaCntx <a class="code" href="namespaceFIX8_1_1TEX.html#a51c71fd32dd93234cd45486cac2ee12f">ctx</a>(4200, bme, be, <span class="stringliteral">&quot;FIX.4.2&quot;</span>);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;} <span class="comment">// namespace TEX</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;} <span class="comment">// namespace FIX8</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Nov 22 2012 14:22:38. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 07:56:35. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

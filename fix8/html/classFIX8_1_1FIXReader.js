@@ -15,6 +15,5 @@ var classFIX8_1_1FIXReader =
     [ "stop", "classFIX8_1_1FIXReader.html#ab5612c34ff96435657fd44fb0f691ad0", null ],
     [ "_bg_sz", "classFIX8_1_1FIXReader.html#a2ad2382816c26d5d32cf2aad9d2b8bfe", null ],
     [ "_callback_thread", "classFIX8_1_1FIXReader.html#a01f1fb31f10e4fb46e55f2db53a93e87", null ],
-    [ "_hdr", "classFIX8_1_1FIXReader.html#a0820bcbf6fb885a5d79d37b424f943e5", null ],
     [ "_socket_error", "classFIX8_1_1FIXReader.html#aa38cf8da5c1a54dc3d237da1c15a6386", null ]
 ];

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Fix8 Performance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Modern open source FIX framework featuring complete schema driven customisation, high performance and fast application development.">
+    <meta name="author" content="David L. Dight">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+	 <link rel="stylesheet" type="text/css" href="css/fam-icons.css" />
+  </head>
+
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#"><img src="fix8/fix8_Logo_RGB.png" width="28" height="28" /a></a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
+              <li><a href="http://blog.fix8.org">News</a></li>
+              <li><a href="fix8/html">API Documentation</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="support.html">Support</a></li>
+              <li><a href="issues.html">Issues</a></li>
+              <li><a href="https://github.com/dakka/fix8">Project</a></li>
+              <li class="active"><a href="#">Performance</a></li>
+				  <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+	<div class="container">
+
+		<div class="container">
+			<div class="row">
+				<div class="span6 offset5">
+					<br>
+					<img src="fix8/fix8_Logo_RGB.png"/>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+
+		<!--a href="http://groups.google.com/group/fix8-support"><img src="fix8/googlegroups_logo.gif"/></a-->
+		<br>
+
+		<div class="hero-unit">
+			<div class="container">
+				<div class="row">
+					<div class="span11">
+						<p><h3>We believe performance is one of the distinguishing features of Fix8. Here we will present our current <i>encode</i> and <i>decode</i>
+						performance stats along
+						with a description of our test environment and test methodology. We have also recently added a short test script so that you can analyse
+						your own results for comparison. </h3></p>
+						<br>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<h2>1. Our test environment</h2>
+					<p>We have a dedicated test platform with the following specifications:</p>
+<pre>
+Ubuntu 12.10 quantal
+Linux Version 3.5.0-18-generic x86_64 GNU/Linux
+Compiled #29-Ubuntu SMP Fri Oct 19 10:26:51 UTC 2012
+Eight (4x2 HT) 2GHz Intel i7 Processors (Intel(R) Core(TM) i7-2635QM CPU @ 2.00GHz)
+6144 KB Cache; 15.9GB RAM
+31927 Bogomips Total
+</pre>
+				<br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<h2>2. The test client/server</h2>
+					<p> Before you begin you need to cleanly build fix8 and pass the codec timing switch to configure <code>--enable-codectiming</code>.
+						For our test, we will simulate an HF client preloading and sending 500000 orders to a server. We will measure the encode and
+						decode timings for both the client and the server. The test client and server <code>hftest</code> are built by default when you build fix8.
+						Also by default, the xml configuration files <code>hf_server.xml, hf_client.xml, hf_client_include.xml</code> needed are supplied
+						already preconfigured.</p>
+						<p>To run the server, execute the following command (assuming the xml config files are in the current directory, and the subdirectory
+						<code>run</code> exists):</p>
+<pre>
+% ./hftest -sl server
+</pre>
+					In another terminal, run the client:
+<pre>
+% ./hftest -l client
+</pre>
+					<p>When the client has connected (there will no on screen messages), press <code>?</code> to see the help menu...
+<pre>
+Key     Command
+===     =======
+?       Help
+a       Send all Preloaded NewOrderSingle msgs
+f       Flush global log
+l       Logout
+n       Send a NewOrderSingle msg
+p       Preload n NewOrderSingle msgs
+x       Exit
+</pre>
+					<p>Now press <code>'p'</code> and when prompted type <code>500000</code> and press <code>enter</code>:
+<pre>
+0 NewOrderSingle msgs currently preloaded.
+Enter number of NewOrderSingle msgs to preload:500000
+500000 NewOrderSingle msgs preloaded.
+</pre>
+					<p>Now press <code>'a'</code> to send the preloaded orders to the server:
+<pre>
+500000 NewOrderSingle msgs sent
+0 NewOrderSingle msgs remaining.
+1967000 ExecutionReport msgs received
+</pre>
+					<p>When all the execution reports have been received, press <code>'f'</code> to flush the global log. A few moments later you
+					can press <code>'x'</code> to exit. Occasionally you may get a core dump on exit - you can ignore this for now. Switch to your
+					server and press <code>^C</code> to terminate the server.
+					</p>
+					<br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<h2>3. Preparing the results</h2>
+					<p>
+						If all has gone to plan you should have two log files, <code>server</code> and <code>client</code>. Now we need to run the
+						test result analysis script. In the <code>./fix8/test</code> you will find a script called <code>f8_hf_test</code>. Run
+						as follows:
+					</p>
+<pre>
+% ./f8_hf_test server client
+av. decode(client): 0.00001808 sec/msg, 35.58 secs, 1967357 msgs
+av. encode(client): 0.00001578 sec/msg, 7.78 secs, 500027 msgs
+av. decode(server): 0.00001708 sec/msg, 8.54 secs, 500027 msgs
+av. encode(server): 0.00001799 sec/msg, 35.40 secs, 1967360 msgs
+%
+</pre>
+					<br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<h2>4. The results</h2>
+					<p>
+						Here are the results tabulated from above.
+					</p>
+					<br>
+						<table class="span6 table table-striped table-bordered table-condensed center-table">
+							<thead>
+								<tr class="success">
+									<th>Mode</th>
+									<th>Operation</th>
+									<th>Msgs processed</th>
+									<th>Time secs</th>
+									<th>Average &#xb5;s/msg</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="success">
+									<td>client</td>
+									<td>encode</td>
+									<td>500027</td>
+									<td>7.78</td>
+									<td>15.78</td>
+								</tr>
+								<tr class="success">
+									<td></td>
+									<td>decode</td>
+									<td>1967357</td>
+									<td>35.58</td>
+									<td>18.08</td>
+								</tr>
+								<tr class="success">
+									<td>server</td>
+									<td>encode</td>
+									<td>1967360</td>
+									<td>35.40</td>
+									<td>17.99</td>
+								</tr>
+								<tr class="success">
+									<td></td>
+									<td>decode</td>
+									<td>500027</td>
+									<td>8.54</td>
+									<td>17.08</td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<p>Averaged across client and server...</p>
+						<table class="span3 table table-striped table-bordered table-condensed center-table">
+							<thead>
+								<tr class="success">
+									<th>Operation</th>
+									<th>Average &#xb5;s/msg</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="success">
+									<td>encode</td>
+									<td>16.88</td>
+								</tr>
+								<tr class="success">
+									<td>decode</td>
+									<td>17.58</td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+					</div>
+				</div>
+			</div>
+		<br>
+		<br>
+
+      <div class="pager">
+			<li><a href="index.html">Home</a></li>
+			<li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
+		   <li><a href="http://blog.fix8.org">News</a></li>
+			<li><a href="fix8/html">API Documentation</a></li>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="support.html">Support</a></li>
+         <li><a href="issues.html">Issues</a></li>
+         <li><a href="https://github.com/dakka/fix8">Project</a></li>
+			<li><a href="performance.html">Performance</a></li>
+			<li><a href="contact.html">Contact</a></li>
+		</div>
+
+		<div class="modal-footer">
+		  <p>&copy; <a href="mailto:fix@fix8.org">David L. Dight. </a>2010-12</p>
+		</div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-transition.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-button.js"></script>
+    <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>

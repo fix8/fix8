@@ -1,15 +1,16 @@
 var NAVTREEINDEX61 =
 {
+"classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a60ab68439082a6a8f8103fa496b15c84":[2,0,0,0,16,8,0,0],
 "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ae98d1890e28b5aa9bb69ae73b52e6442":[2,0,0,0,16,8,0,3],
 "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#afdf9ca7366b58d33206a645d9fe89606":[2,0,0,0,16,8,0,1],
 "classFIX8_1_1TEX_1_1OrderStatusRequest.html":[2,0,0,0,76],
 "classFIX8_1_1TEX_1_1OrderStatusRequest.html#a1d198970ebf97770ccb37dc83261c689":[2,0,0,0,76,11],
 "classFIX8_1_1TEX_1_1OrderStatusRequest.html#a1d198970ebf97770ccb37dc83261c689":[2,0,0,0,76,10],
-"classFIX8_1_1TEX_1_1OrderStatusRequest.html#a568dedf21124c1c3b3a4271e9badddf1":[2,0,0,0,76,8],
 "classFIX8_1_1TEX_1_1OrderStatusRequest.html#a568dedf21124c1c3b3a4271e9badddf1":[2,0,0,0,76,6],
+"classFIX8_1_1TEX_1_1OrderStatusRequest.html#a568dedf21124c1c3b3a4271e9badddf1":[2,0,0,0,76,8],
 "classFIX8_1_1TEX_1_1OrderStatusRequest.html#a635bcec15c642af668ce92e305a767c6":[2,0,0,0,76,16],
-"classFIX8_1_1TEX_1_1OrderStatusRequest.html#aaa58782f4a49217bd942b0cfb6f348f8":[2,0,0,0,76,12],
 "classFIX8_1_1TEX_1_1OrderStatusRequest.html#aaa58782f4a49217bd942b0cfb6f348f8":[2,0,0,0,76,13],
+"classFIX8_1_1TEX_1_1OrderStatusRequest.html#aaa58782f4a49217bd942b0cfb6f348f8":[2,0,0,0,76,12],
 "classFIX8_1_1TEX_1_1OrderStatusRequest.html#aceff9808b68de4230128a3a97ca55b9b":[2,0,0,0,76,15],
 "classFIX8_1_1TEX_1_1OrderStatusRequest.html#acf5a4ea0cba1fc7e49f1ccc220f15f4d":[2,0,0,0,76,14],
 "classFIX8_1_1TEX_1_1OrderStatusRequest.html#af52398aa08fc1dcdc574b7509a00633b":[2,0,0,0,76,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX61 =
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartyAltIDs.html#af17c1fff74c494e98bb48dc601444679":[2,0,0,0,71,0,3,2,1],
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartyAltIDs.html#af397d1bbedfebb584a1cdcd1f44caff0":[2,0,0,0,71,0,3,2,7],
 "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartySubIDs.html":[2,0,0,0,71,0,3,3],
-"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartySubIDs.html#a4402ac5d16b70c8457e19b78ee2cf0b5":[2,0,0,0,71,0,3,3,2],
-"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartySubIDs.html#a4756f6622abb9c42ba2b922cd0573c70":[2,0,0,0,71,0,3,3,5]
+"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedPartySubIDs.html#a4402ac5d16b70c8457e19b78ee2cf0b5":[2,0,0,0,71,0,3,3,2]
 };

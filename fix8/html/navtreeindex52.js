@@ -1,5 +1,6 @@
 var NAVTREEINDEX52 =
 {
+"classFIX8_1_1TEX_1_1Myfix__Router.html#a33d63a3507db1fb2e313bbd414911c8e":[2,0,0,0,120,58],
 "classFIX8_1_1TEX_1_1Myfix__Router.html#a34163d353c723b703b4b86d79df0f51b":[2,0,0,0,120,6],
 "classFIX8_1_1TEX_1_1Myfix__Router.html#a41ab3199c35ff84f0766e9ddf4f2c88d":[2,0,0,0,120,47],
 "classFIX8_1_1TEX_1_1Myfix__Router.html#a4640c99e34daf0be4e72b00c05f9fc44":[2,0,0,0,120,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX52 =
 "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#a2f8555a7d097501f6c644873b97f3a38":[2,0,0,0,110,6,0,2],
 "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#a6cb639e1e47e55aaacd82f839b54529e":[2,0,0,0,110,6,0,3],
 "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#a92f7877b6a3e9ab7064a66f87b990c6d":[2,0,0,0,110,6,0,5],
-"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#aa242d2b228c4bfd98aaf0ef9ad694d65":[2,0,0,0,110,6,0,8],
-"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#ab98b13123e512b6c71fff160568df7d1":[2,0,0,0,110,6,0,1]
+"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#aa242d2b228c4bfd98aaf0ef9ad694d65":[2,0,0,0,110,6,0,8]
 };

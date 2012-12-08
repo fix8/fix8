@@ -5,5 +5,5 @@ var searchData=
   ['keydatabuffer',['KeyDataBuffer',['../structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html',1,'FIX8::BDBPersister']]],
   ['keydatapair',['KeyDataPair',['../structFIX8_1_1BDBPersister_1_1KeyDataPair.html',1,'FIX8::BDBPersister']]],
   ['keydatapair',['KeyDataPair',['../structFIX8_1_1BDBPersister_1_1KeyDataPair.html#ab7696053ce4a3e53f5d9ebe64cf7d5d1',1,'FIX8::BDBPersister::KeyDataPair']]],
-  ['kill',['Kill',['../classFIX8_1_1__threadbase.html#a011793a03a7b3c1e8e053a68371ead4a',1,'FIX8::_threadbase::Kill(int signum) const '],['../classFIX8_1_1__threadbase.html#aea0c91f2d528044300e02de330ae6fee',1,'FIX8::_threadbase::Kill(_threadbase &amp;ctxt, const int signal=SIGTERM)'],['../classFIX8_1_1Timer.html#a661a851e5353dce6e5eec459f0d924fc',1,'FIX8::Timer::kill()']]]
+  ['kill',['Kill',['../classFIX8_1_1__threadbase.html#a011793a03a7b3c1e8e053a68371ead4a',1,'FIX8::_threadbase::Kill(int signum) const '],['../classFIX8_1_1__threadbase.html#aea0c91f2d528044300e02de330ae6fee',1,'FIX8::_threadbase::Kill(_threadbase &amp;ctxt, const int signal=SIGTERM)'],['../classFIX8_1_1Timer.html#a6520db3e8bbce98e9082898101797822',1,'FIX8::Timer::kill()']]]
 ];

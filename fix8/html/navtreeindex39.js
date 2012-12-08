@@ -1,5 +1,6 @@
 var NAVTREEINDEX39 =
 {
+"classFIX8_1_1TEX_1_1CrossOrderCancelRequest_1_1NoSides.html#a382b17c25dfa2ad0b9242154e127e42b":[2,0,0,0,113,6,2],
 "classFIX8_1_1TEX_1_1CrossOrderCancelRequest_1_1NoSides.html#a3a33098c7e52286ce94aa5c4ed530cf2":[2,0,0,0,113,6,6],
 "classFIX8_1_1TEX_1_1CrossOrderCancelRequest_1_1NoSides.html#a4d7875e7875ff4ce22b8b1a8662d6596":[2,0,0,0,113,6,5],
 "classFIX8_1_1TEX_1_1CrossOrderCancelRequest_1_1NoSides.html#aa782ae862d233681bef8a4d7f1b3da5c":[2,0,0,0,113,6,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX39 =
 "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html":[2,0,0,0,55,4,2,0],
 "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a1dd8bdd8e726690f4381e5551f8c7b08":[2,0,0,0,55,4,2,0,7],
 "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a4546ed8f3b869e0d8174a2c959a4c543":[2,0,0,0,55,4,2,0,0],
-"classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a4c3a6928e61213380da01382aca731d4":[2,0,0,0,55,4,2,0,6],
-"classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a56ea522e742b52b29dda1e8f3878b9f0":[2,0,0,0,55,4,2,0,4]
+"classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a4c3a6928e61213380da01382aca731d4":[2,0,0,0,55,4,2,0,6]
 };

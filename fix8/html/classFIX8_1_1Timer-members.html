@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.4</span>
+   &#160;<span id="projectnumber">version  0.6.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -116,17 +116,18 @@ $(document).ready(function(){initNavTree('classFIX8_1_1Timer.html','');});
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a500f5a76dcaa9594bf75af390c23738f">_monitor</a></td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#ac98ef999b473d4f0a69c1f281062cc52">_mutex</a></td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a7ce1007783a32c87c15335e734302b91">_thread</a></td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a5b55fe74a9d29f5a28a50fe24d464709">join</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a661a851e5353dce6e5eec459f0d924fc">kill</a>(const int sig)</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#aee0583a2ed07102f6647285427a1b524">operator()</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a67273582c31d26851df37b284d1256cc">schedule</a>(const TimerEvent&lt; T &gt; &amp;what, const unsigned timeToWaitMS, const bool hi_res=false)</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#aa57170841069bcafd9aed79595e3d962">start</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a8ca7fabc51131406105b424de5c7da55">Timer</a>(T &amp;monitor, int granularity=1)</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a9dbcccd87c85a483eb47e1d0e23634a4">~Timer</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a8459f0c5f91c707601e564a669c21934">clear</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a5b55fe74a9d29f5a28a50fe24d464709">join</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a6520db3e8bbce98e9082898101797822">kill</a>(const int sig=SIGKILL)</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#aee0583a2ed07102f6647285427a1b524">operator()</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a2597b9463946766f60d5321a5390cd74">schedule</a>(const TimerEvent&lt; T &gt; &amp;what, const unsigned timeToWaitMS)</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#aa57170841069bcafd9aed79595e3d962">start</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a8ca7fabc51131406105b424de5c7da55">Timer</a>(T &amp;monitor, int granularity=1)</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Timer.html#a9dbcccd87c85a483eb47e1d0e23634a4">~Timer</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Nov 22 2012 14:22:42. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 07:56:39. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

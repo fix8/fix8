@@ -1,5 +1,6 @@
 var NAVTREEINDEX41 =
 {
+"classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoMarketSegments.html#a041e3e10596cb8bd021d12a6ec0af40f":[2,0,0,0,11,4,12],
 "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoMarketSegments.html#a15f51e97ecfa932d4d4bbaa9f0602bcd":[2,0,0,0,11,4,8],
 "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoMarketSegments.html#a161f285994c4569d449953aca132b7b0":[2,0,0,0,11,4,9],
 "classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoMarketSegments.html#a5d7f88ee0aaedc5e539afa601b6705ca":[2,0,0,0,11,4,7],
@@ -246,8 +247,7 @@ var NAVTREEINDEX41 =
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#a8c920d0d43be0519c0f1cfb039cdcc54":[2,0,0,0,83,10],
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#a91f5ace0abd435b98c7906d64ce94b8b":[2,0,0,0,83,14],
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#a956b935350d469202aa6173f17a2e4ac":[2,0,0,0,83,15],
-"classFIX8_1_1TEX_1_1DontKnowTrade.html#aa67bcdccf44fba3a1b619830340ecf75":[2,0,0,0,83,7],
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#aa67bcdccf44fba3a1b619830340ecf75":[2,0,0,0,83,9],
-"classFIX8_1_1TEX_1_1DontKnowTrade.html#ab0136d0eccaafc6527ee993dacc21c3c":[2,0,0,0,83,12],
+"classFIX8_1_1TEX_1_1DontKnowTrade.html#aa67bcdccf44fba3a1b619830340ecf75":[2,0,0,0,83,7],
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#ab0136d0eccaafc6527ee993dacc21c3c":[2,0,0,0,83,13]
 };

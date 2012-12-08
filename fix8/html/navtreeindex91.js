@@ -1,12 +1,10 @@
 var NAVTREEINDEX91 =
 {
-"namespacemembers_0x77.html":[1,1,0,20],
-"namespacemembers_0x78.html":[1,1,0,21],
 "namespacemembers_0x79.html":[1,1,0,22],
 "namespacemembers_enum.html":[1,1,4],
 "namespacemembers_eval.html":[1,1,5],
-"namespacemembers_func.html":[1,1,1],
 "namespacemembers_func.html":[1,1,1,0],
+"namespacemembers_func.html":[1,1,1],
 "namespacemembers_func_0x62.html":[1,1,1,1],
 "namespacemembers_func_0x63.html":[1,1,1,2],
 "namespacemembers_func_0x64.html":[1,1,1,3],
@@ -28,8 +26,8 @@ var NAVTREEINDEX91 =
 "namespacemembers_func_0x76.html":[1,1,1,19],
 "namespacemembers_func_0x77.html":[1,1,1,20],
 "namespacemembers_func_0x79.html":[1,1,1,21],
-"namespacemembers_type.html":[1,1,3],
 "namespacemembers_type.html":[1,1,3,0],
+"namespacemembers_type.html":[1,1,3],
 "namespacemembers_type_0x62.html":[1,1,3,1],
 "namespacemembers_type_0x63.html":[1,1,3,2],
 "namespacemembers_type_0x64.html":[1,1,3,3],
@@ -249,5 +247,7 @@ var NAVTREEINDEX91 =
 "structFIX8_1_1FilePersister_1_1IPrec.html#a7dc5331755d7cbc4d7e4a32ffe2c5e49":[2,0,0,99,0,1],
 "structFIX8_1_1FilePersister_1_1IPrec.html#a99dcd5b849c287de887f4b2cefee14b0":[2,0,0,99,0,0],
 "structFIX8_1_1FilePersister_1_1IPrec.html#ab71dd45b69e471d21e61b7451e017933":[2,0,0,99,0,2],
-"structFIX8_1_1FilePersister_1_1Prec.html":[2,0,0,99,1]
+"structFIX8_1_1FilePersister_1_1Prec.html":[2,0,0,99,1],
+"structFIX8_1_1FilePersister_1_1Prec.html#a46d8d3d81dad0af85a8aca84b146cff9":[2,0,0,99,1,1],
+"structFIX8_1_1FilePersister_1_1Prec.html#a62fe0420a34cbb92e8949b6572d154d0":[2,0,0,99,1,2]
 };

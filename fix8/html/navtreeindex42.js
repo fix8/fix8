@@ -1,5 +1,6 @@
 var NAVTREEINDEX42 =
 {
+"classFIX8_1_1TEX_1_1DontKnowTrade.html#ab0136d0eccaafc6527ee993dacc21c3c":[2,0,0,0,83,12],
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#acdc3c1413aa2c943f220117dbfd7d56c":[2,0,0,0,83,8],
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#acdc3c1413aa2c943f220117dbfd7d56c":[2,0,0,0,83,6],
 "classFIX8_1_1TEX_1_1DontKnowTrade_1_1NoComplexEvents.html":[2,0,0,0,83,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX42 =
 "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a096bd1dcc7b24505bfb7ce9b8c2dc7ab":[2,0,0,0,64,4,10],
 "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a0e84dd2a70b02d06efd6b8bff078d296":[2,0,0,0,64,4,9],
 "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a4085348928517f4379af73ea40db8d3c":[2,0,0,0,64,4,4],
-"classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a48cd447062af7aeff3cb89f814639b2f":[2,0,0,0,64,4,3],
-"classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a90dc2169fd93eadaebb7a16a2a365c53":[2,0,0,0,64,4,6]
+"classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a48cd447062af7aeff3cb89f814639b2f":[2,0,0,0,64,4,3]
 };
