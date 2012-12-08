@@ -1,22 +1,21 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
 
 Fix8 Open Source FIX Engine.
 Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
 
-This program is free software; you can redistribute it and/or modify it under  the terms of
-the GNU General Public License as published by the Free Software Foundation; either version
-2 of the License, or (at your option) any later version.
+Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
+General Public License as  published by the Free Software Foundation,  either version 3  of
+the License, or (at your option) any later version.
 
-This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.
-See the GNU General Public License for more details.
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-You should have received a copy of  the GNU General Public License along with this program;
-if not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,
-Boston, MA 02110-1301 USA.
+You should have received a copy of the GNU General Public License along with Fix8.  If not,
+see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -107,7 +106,7 @@ struct FieldTrait
 	FieldTrait(const unsigned short field, const FieldType ftype=ft_untyped, const unsigned short pos=0,
 		bool ismandatory=false, bool isgroup=false, const unsigned subpos=0, bool ispresent=false) :
 		_fnum(field), _ftype(ftype), _pos(pos), _subpos(subpos),
-		_field_traits(ismandatory ? 1 : 0 | (ispresent ? 1 : 0) << present
+		_field_traits((ismandatory ? 1 : 0) | (ispresent ? 1 : 0) << present
 		| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group | (subpos ? 1 : 0) << component) {}
 
 	unsigned short _fnum;
@@ -116,7 +115,7 @@ struct FieldTrait
 	mutable ebitset<TraitTypes, unsigned short> _field_traits;
 
 	/// Binary comparitor functor.
-	struct Compare : public std::binary_function<FieldTrait, FieldTrait, bool>
+	struct Compare
 	{
 		/*! Comparitor operator.
 		  \param p1 lhs to compare
@@ -126,7 +125,7 @@ struct FieldTrait
 	};
 
 	/// Binary position comparitor functor.
-	struct PosCompare : public std::binary_function<FieldTrait, FieldTrait, bool>
+	struct PosCompare
 	{
 		/*! Comparitor operator.
 		  \param p1 lhs to compare
@@ -287,15 +286,15 @@ public:
 
 		bool answer;
 		iterator where(find(*what, answer));
-		if (answer)
+		if (answer) // sorry already here
 			return result(end(), false);
 
-		if (_sz < _rsz)
+		if (_sz < _rsz) // we have space
 		{
 			memmove(where + 1, where, (end() - where) * sizeof(FieldTrait));
 			memcpy(where, what, sizeof(FieldTrait));
 		}
-		else
+		else // we have to make space
 		{
 			iterator new_arr(new FieldTrait[_rsz = _sz + calc_reserve(_sz, _reserve)]);
 			size_t wptr(where - _arr);

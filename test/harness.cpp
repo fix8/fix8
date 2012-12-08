@@ -1,22 +1,21 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
 
 Fix8 Open Source FIX Engine.
 Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
 
-This program is free software; you can redistribute it and/or modify it under  the terms of
-the GNU General Public License as published by the Free Software Foundation; either version
-2 of the License, or (at your option) any later version.
+Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
+General Public License as  published by the Free Software Foundation,  either version 3  of
+the License, or (at your option) any later version.
 
-This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.
-See the GNU General Public License for more details.
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-You should have received a copy of  the GNU General Public License along with this program;
-if not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,
-Boston, MA 02110-1301 USA.
+You should have received a copy of the GNU General Public License along with Fix8.  If not,
+see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -201,6 +200,7 @@ int main(int argc, char **argv)
 		{
 		case 'v':
 			cout << argv[0] << " for "PACKAGE" version "VERSION << endl;
+			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
@@ -271,7 +271,11 @@ int main(int argc, char **argv)
 				mc(new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
-			mc->start(false, next_send, next_receive);
+			default_appl_ver_id davi;
+			bool reset_sequence_numbers;
+			unsigned login_retry_interval, login_retries;
+			mc->session_ptr()->get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);
+			mc->start(false, next_send, next_receive, davi());
 			ConsoleMenu cm(TEX::ctx, mc->session_ptr(), cin, cout, 50);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
 			char ch;

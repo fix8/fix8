@@ -1,22 +1,21 @@
 //-------------------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
 
 Fix8 Open Source FIX Engine.
 Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
 
-This program is free software; you can redistribute it and/or modify it under  the terms of
-the GNU General Public License as published by the Free Software Foundation; either version
-2 of the License, or (at your option) any later version.
+Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
+General Public License as  published by the Free Software Foundation,  either version 3  of
+the License, or (at your option) any later version.
 
-This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.
-See the GNU General Public License for more details.
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-You should have received a copy of  the GNU General Public License along with this program;
-if not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,
-Boston, MA 02110-1301 USA.
+You should have received a copy of the GNU General Public License along with Fix8.  If not,
+see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -246,42 +245,6 @@ protected:
 	Groups _groups;
 	const f8String& _msgType;
 	const F8MetaCntx& _ctx;
-
-	/*! Extract a tag/value element from a char buffer.
-	    \param from source buffer
-	    \param sz size of string
-	    \param tag tag to extract to
-	    \param val value to extract to
-	    \return number of bytes consumed */
-	static unsigned extract_element(const char *from, const unsigned sz, f8String& tag, f8String& val)
-	{
-		enum { get_tag, get_value } state(get_tag);
-		tag.clear();
-		val.clear();
-
-		for (unsigned ii(0); ii < sz; ++ii)
-		{
-			switch (state)
-			{
-			case get_tag:
-				if (!isdigit(from[ii]))
-				{
-					if (from[ii] != '=')
-						return 0;
-					state = get_value;
-				}
-				else
-					tag += from[ii];
-				break;
-			case get_value:
-				if (from[ii] == default_field_separator)
-					return ++ii;
-				val += from[ii];
-				break;
-			}
-		}
-		return 0;
-	}
 
 	/*! Extract length and message type from a header buffer
 	    \param from source buffer
@@ -625,6 +588,42 @@ public:
 	/*! Get the FieldTraits
 	   \return reference to FieldTraits object */
 	const FieldTraits& get_fp() const { return _fp; }
+
+	/*! Extract a tag/value element from a char buffer.
+	    \param from source buffer
+	    \param sz size of string
+	    \param tag tag to extract to
+	    \param val value to extract to
+	    \return number of bytes consumed */
+	static unsigned extract_element(const char *from, const unsigned sz, f8String& tag, f8String& val)
+	{
+		enum { get_tag, get_value } state(get_tag);
+		tag.clear();
+		val.clear();
+
+		for (unsigned ii(0); ii < sz; ++ii)
+		{
+			switch (state)
+			{
+			case get_tag:
+				if (!isdigit(from[ii]))
+				{
+					if (from[ii] != '=')
+						return 0;
+					state = get_value;
+				}
+				else
+					tag += from[ii];
+				break;
+			case get_value:
+				if (from[ii] == default_field_separator)
+					return ++ii;
+				val += from[ii];
+				break;
+			}
+		}
+		return 0;
+	}
 
 	/*! Inserter friend.
 	    \param os stream to send to

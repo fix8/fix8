@@ -1,22 +1,21 @@
 //-------------------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
 
 Fix8 Open Source FIX Engine.
 Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
 
-This program is free software; you can redistribute it and/or modify it under  the terms of
-the GNU General Public License as published by the Free Software Foundation; either version
-2 of the License, or (at your option) any later version.
+Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
+General Public License as  published by the Free Software Foundation,  either version 3  of
+the License, or (at your option) any later version.
 
-This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.
-See the GNU General Public License for more details.
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-You should have received a copy of  the GNU General Public License along with this program;
-if not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,
-Boston, MA 02110-1301 USA.
+You should have received a copy of the GNU General Public License along with Fix8.  If not,
+see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -137,11 +136,12 @@ template<typename T>
 class ReliableClientSession : public ClientSession<T>
 {
 	Thread<ReliableClientSession<T> > _thread;
+	unsigned _send_seqnum, _recv_seqnum;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
 	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
-		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this))
+		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this)), _send_seqnum(), _recv_seqnum()
 	{
 	}
 
@@ -155,6 +155,8 @@ public:
 	  \param davi default appl version id (FIXT) */
 	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
 	{
+		_send_seqnum = send_seqnum;
+		_recv_seqnum = recv_seqnum;
 		if (!wait)
 			_thread.Start();
 		else
@@ -178,7 +180,8 @@ public:
 
 				this->_sock = new Poco::Net::StreamSocket,
 				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session);
-				this->_session->start(this->_cc, true, 0, 0, davi());
+				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, davi());
+				_send_seqnum = _recv_seqnum = 0; // only set seqnums for the first time round
 			}
 			catch(f8Exception& e)
 			{
@@ -187,6 +190,7 @@ public:
 			}
 
 			//std::cout << "operator()():out of try" << std::endl;
+			this->_session->stop();
 			delete this->_cc;
 			delete this->_sock;
 			millisleep(login_retry_interval);

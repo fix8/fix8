@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_COPYRIGHT([Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).
+AC_COPYRIGHT([Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
 Fix8 Open Source FIX Engine.
 Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
 All rights reserved.])
@@ -10,22 +10,21 @@ AM_INIT_AUTOMAKE
 AH_TOP([//-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
 
 Fix8 Open Source FIX Engine.
 Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
 
-This program is free software; you can redistribute it and/or modify it under  the terms of
-the GNU General Public License as published by the Free Software Foundation; either version
-2 of the License, or (at your option) any later version.
+Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
+General Public License as  published by the Free Software Foundation,  either version 3  of
+the License, or (at your option) any later version.
 
-This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.
-See the GNU General Public License for more details.
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-You should have received a copy of  the GNU General Public License along with this program;
-if not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,
-Boston, MA 02110-1301 USA.
+You should have received a copy of the GNU General Public License along with Fix8.  If not,
+see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -62,10 +61,10 @@ AC_DEFINE_UNQUOTED([PATCH_VERSION_NUM], [$PATCH_VERSION_NUM], [Patch number])
 AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 29 | MINOR_VERSION_NUM << 23 | PATCH_VERSION_NUM)], [Encoded Version])
 AC_DEFINE_UNQUOTED([CONFIGURE_OPTIONS], ["$ac_configure_args"], [configure options])
 
-BRAND_SUMMARY='Fix8 FIX Framework Server'
+BRAND_SUMMARY='Fix8 Open Source FIX Framework'
 BRAND_DESCRIPTION='Modern fast FIX Framework'
-BRAND_COMPANY_SHORTNAME='DD'
-BRAND_COMPANY_LONGNAME='David L. Dight'
+BRAND_COMPANY_SHORTNAME='fix8'
+BRAND_COMPANY_LONGNAME='fix8 by David L. Dight'
 
 # Checks for programs.
 AC_PROG_LIBTOOL
@@ -121,8 +120,8 @@ gcc_major=`echo $GCC_VERSION | cut -d. -f1`
 gcc_minor=`echo $GCC_VERSION | cut -d. -f2`
 echo "Compiling with gcc version $GCC_VERSION"
 
-# gcc > 4.6, -fvar-tracking-assignments-toggle
-AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test $gcc_major -ge 4 -o $gcc_major -eq 4 -a $gcc_minor -gt 6])
+# gcc >= 4.7, -fvar-tracking-assignments-toggle
+AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test $gcc_major -ge 4 -a $gcc_minor -ge 7])
 
 if test -z "$DOXYGEN";
 	then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
@@ -501,7 +500,6 @@ AC_SUBST(INTSYSCONF)
 AC_SUBST(CONFIGURE_TIME)
 AC_SUBST(CONFIGURE_SDATE)
 AC_SUBST(CONFIGURE_TIME_NUM)
-AC_SUBST(MIMEFILE)
 AC_SUBST(LIBS)
 AC_SUBST(VERSION_DASHED)
 AC_SUBST(MAJOR_VERSION)

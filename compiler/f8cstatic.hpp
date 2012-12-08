@@ -1,22 +1,21 @@
 //-------------------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
 
 Fix8 Open Source FIX Engine.
 Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
 
-This program is free software; you can redistribute it and/or modify it under  the terms of
-the GNU General Public License as published by the Free Software Foundation; either version
-2 of the License, or (at your option) any later version.
+Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
+General Public License as  published by the Free Software Foundation,  either version 3  of
+the License, or (at your option) any later version.
 
-This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.
-See the GNU General Public License for more details.
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-You should have received a copy of  the GNU General Public License along with this program;
-if not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,
-Boston, MA 02110-1301 USA.
+You should have received a copy of the GNU General Public License along with Fix8.  If not,
+see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -172,24 +171,23 @@ const CSMap::TypePair CSMap::_valueTable[] =
 CSMap::TypePair(cs_copyright,
 "#if 0\n"
 "\n"
-"Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).\n"
+"Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.\n"
 "\n"
 "Fix8 Open Source FIX Engine.\n"
 "Copyright (C) 2010-"),
 CSMap::TypePair(cs_copyright2,
 " David L. Dight <fix@fix8.org>\n"
 "\n"
-"This program is free software; you can redistribute it and/or modify it under  the terms of\n"
-"the GNU General Public License as published by the Free Software Foundation; either version\n"
-"2 of the License, or (at your option) any later version.\n"
+"Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU\n"
+"General Public License as  published by the Free Software Foundation,  either version 3  of\n"
+"the License, or (at your option) any later version.\n"
 "\n"
-"This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;\n"
-"without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.\n"
-"See the GNU General Public License for more details.\n"
+"Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without\n"
+"even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of  the GNU General Public License along with this program;\n"
-"if not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,\n"
-"Boston, MA 02110-1301 USA.\n"
+"You should have received a copy of the GNU General Public License along with Fix8.  If not,\n"
+"see <http://www.gnu.org/licenses/>.\n"
 "\n"
 "BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO\n"
 "THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE\n"

@@ -1,22 +1,21 @@
 //-------------------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
 
 Fix8 Open Source FIX Engine.
 Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
 
-This program is free software; you can redistribute it and/or modify it under  the terms of
-the GNU General Public License as published by the Free Software Foundation; either version
-2 of the License, or (at your option) any later version.
+Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
+General Public License as  published by the Free Software Foundation,  either version 3  of
+the License, or (at your option) any later version.
 
-This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.
-See the GNU General Public License for more details.
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-You should have received a copy of  the GNU General Public License along with this program;
-if not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,
-Boston, MA 02110-1301 USA.
+You should have received a copy of the GNU General Public License along with Fix8.  If not,
+see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -101,7 +100,6 @@ public:
 /// Fix message reader
 class FIXReader : public AsyncSocket<f8String>
 {
-	static RegExp _hdr;
 	enum { _max_msg_len = 1024, _chksum_sz = 7 };
 	tbb::atomic<bool> _socket_error;
 
@@ -197,7 +195,13 @@ public:
 	/*! Send message over socket.
 	    \param msg message string to send
 	    \return number of bytes sent */
-	int send(const f8String& msg) { return _sock->sendBytes(msg.data(), msg.size()); }
+	int send(const f8String& msg)
+	{
+		const int result(_sock->sendBytes(msg.data(), msg.size()));
+		if (result <= 0)
+			throw PeerResetConnection("connection gone");
+		return result;
+	}
 
 	/// Send a message to the processing method instructing it to quit.
 	virtual void stop() { _msg_queue.try_push(0); }

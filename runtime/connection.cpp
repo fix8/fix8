@@ -1,22 +1,21 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
 
 Fix8 Open Source FIX Engine.
 Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
 
-This program is free software; you can redistribute it and/or modify it under  the terms of
-the GNU General Public License as published by the Free Software Foundation; either version
-2 of the License, or (at your option) any later version.
+Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
+General Public License as  published by the Free Software Foundation,  either version 3  of
+the License, or (at your option) any later version.
 
-This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.
-See the GNU General Public License for more details.
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-You should have received a copy of  the GNU General Public License along with this program;
-if not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,
-Boston, MA 02110-1301 USA.
+You should have received a copy of the GNU General Public License along with Fix8.  If not,
+see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -56,9 +55,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
 using namespace std;
-
-//-------------------------------------------------------------------------------------------------
-RegExp FIXReader::_hdr("8=([^\x01]+)\x01{1}9=([^\x01]+)\x01");
 
 //-------------------------------------------------------------------------------------------------
 int FIXReader::operator()()
@@ -117,27 +113,15 @@ int FIXReader::operator()()
 //-------------------------------------------------------------------------------------------------
 int FIXReader::callback_processor()
 {
-	bool stopping(false);
 	int processed(0), ignored(0);
 
    for (; !_session.is_shutdown();)
    {
       f8String msg;
 
-		if (stopping)	// make sure we dequeue any pending msgs before exiting
-		{
-			if (!_msg_queue.try_pop(msg))
-				break;
-		}
-		else
-			_msg_queue.pop (msg); // will block
-
+		_msg_queue.pop (msg); // will block
       if (msg.empty())  // means exit
-		{
-         stopping = true;
-			//continue;
 			break;
-		}
 
       if (!_session.process(msg))
 		{
@@ -184,31 +168,37 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 		while (bt != default_field_separator && offs < _max_msg_len);
 		to.assign(msg_buf, offs);
 
-		RegMatch match;
-		if (_hdr.SearchString(match, to, 3, 0) == 3)
+		f8String tag, bgstr, len;
+		unsigned result;
+		if ((result = MessageBase::extract_element(to.data(), to.size(), tag, bgstr)))
 		{
-			f8String bgstr, len;
-			_hdr.SubExpr(match, to, bgstr, 0, 1);
-			_hdr.SubExpr(match, to, len, 0, 2);
+			if (tag != "8")
+				throw IllegalMessage(to);
 
 			if (bgstr != _session.get_ctx()._beginStr)	// invalid FIX version
 				throw InvalidVersion(bgstr);
 
-			const unsigned mlen(fast_atoi<unsigned>(len.c_str()));
-			if (mlen == 0 || mlen > _max_msg_len - _bg_sz - _chksum_sz) // invalid msglen
-				throw InvalidBodyLength(mlen);
+			if ((result = MessageBase::extract_element(to.data() + result, to.size() - result, tag, len)))
+			{
+				if (tag != "9")
+					throw IllegalMessage(to);
 
-			// read the body
-			if ((result = sockRead(msg_buf, mlen) != static_cast<int>(mlen)))
-				return false;
+				const unsigned mlen(fast_atoi<unsigned>(len.c_str()));
+				if (mlen == 0 || mlen > _max_msg_len - _bg_sz - _chksum_sz) // invalid msglen
+					throw InvalidBodyLength(mlen);
 
-			// read the checksum
-			if ((result = sockRead(msg_buf + mlen, _chksum_sz) != static_cast<int>(_chksum_sz)))
-				return false;
+				// read the body
+				if ((result = sockRead(msg_buf, mlen) != static_cast<int>(mlen)))
+					return false;
 
-			to.append(msg_buf, mlen + _chksum_sz);
-			_session.update_received();
-			return true;
+				// read the checksum
+				if ((result = sockRead(msg_buf + mlen, _chksum_sz) != static_cast<int>(_chksum_sz)))
+					return false;
+
+				to.append(msg_buf, mlen + _chksum_sz);
+				_session.update_received();
+				return true;
+			}
 		}
 
 		throw IllegalMessage(to);
@@ -227,7 +217,7 @@ int FIXWriter::operator()()
    {
 		try
 		{
-			Message *inmsg;
+			Message *inmsg(0);
 			_msg_queue.pop (inmsg); // will block
 			if (!inmsg)
 				break;
@@ -239,6 +229,12 @@ int FIXWriter::operator()()
 			_session.send_process(msg.get());
 #endif
 			++processed;
+		}
+		catch (PeerResetConnection& e)
+		{
+			_session.log(e.what());
+			result = -1;
+			break;
 		}
 		catch (exception& e)	// also catches Poco::Net::NetException
 		{
@@ -266,6 +262,7 @@ void Connection::start()
 //-------------------------------------------------------------------------------------------------
 void Connection::stop()
 {
+	//cerr << "Connection::stop()" << endl;
 #if 0
 	//_reader.stop();
 	//_writer.stop();

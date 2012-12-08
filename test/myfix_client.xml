@@ -4,8 +4,7 @@
 				role="initiator"
 				fix_version="1100"
 				active="true"
-				ip="127.0.0.1"
-				port="11001"
+				ip="127.0.0.1" port="11001"
 				sender_comp_id="DLD_TEX"
 				target_comp_id="TEX_DLD"
 				session_log="session_log"
@@ -13,6 +12,7 @@
 				login_retry_interval="15000"
 				reset_sequence_numbers="false"
 				default_appl_ver_id="9"
+				heartbeat_interval="10"
 				tcp_nodelay="true"
 				login_retries="100"
 				persist="bdb0" />

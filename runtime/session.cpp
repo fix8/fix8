@@ -1,22 +1,21 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU General Public License, version 2 (GPL-2.0).
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
 
 Fix8 Open Source FIX Engine.
 Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
 
-This program is free software; you can redistribute it and/or modify it under  the terms of
-the GNU General Public License as published by the Free Software Foundation; either version
-2 of the License, or (at your option) any later version.
+Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
+General Public License as  published by the Free Software Foundation,  either version 3  of
+the License, or (at your option) any later version.
 
-This program is distributed in the  hope that it will  be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR  PURPOSE.
-See the GNU General Public License for more details.
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-You should have received a copy of  the GNU General Public License along with this program;
-if not,  write to the  Free  Software Foundation , Inc., 51  Franklin Street,  Fifth Floor,
-Boston, MA 02110-1301 USA.
+You should have received a copy of the GNU General Public License along with Fix8.  If not,
+see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -173,6 +172,8 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 	_connection = connection; // takes owership
 	if (!_connection->connect()) // if already connected returns true
 		return -1;;
+	if (_connection->get_role() != Connection::cn_initiator)
+		atomic_init(States::st_wait_for_logon); // important for server that this is done before connect
 	_connection->start();
 	log("Session connected");
 
@@ -196,7 +197,6 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 	}
 	else
 	{
-		atomic_init(States::st_wait_for_logon);
 		if (send_seqnum)
 			_req_next_send_seq = send_seqnum;
 		if (recv_seqnum)
@@ -215,9 +215,14 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 void Session::stop()
 {
 	_control |= shutdown;
-	_timer.schedule(_hb_processor, 0);
-	if (_persist)
-		_persist->stop();
+	if (_connection->get_role() == Connection::cn_initiator)
+		_timer.clear();
+	else
+	{
+		_timer.schedule(_hb_processor, 0);
+		if (_persist)
+			_persist->stop();
+	}
 	_connection->stop();
 	millisleep(250); // let the thread shutdowns finish
 }
@@ -229,7 +234,6 @@ bool Session::enforce(const unsigned seqnum, const Message *msg)
 	{
 		if (_state != States::st_logon_received)
 			compid_check(seqnum, msg);
-		gap_fill_flag gff;
 		if (msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET && sequence_check(seqnum, msg))
 			return false;
 	}
@@ -246,7 +250,10 @@ bool Session::process(const f8String& from)
 	{
 		RegMatch match;
 		if (_seq.SearchString(match, from, 2, 0) != 2)
+		{
+			//cerr << "Session::process throwing for " << from << endl;
 			throw InvalidMessage(from);
+		}
 		f8String seqstr;
 		_seq.SubExpr(match, from, seqstr, 0, 1);
 		seqnum = fast_atoi<unsigned>(seqstr.c_str());
@@ -331,8 +338,8 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 			_state = States::st_resend_request_sent;
 			send(rmsg);
 		}
-	//	else
-	//		throw InvalidMsgSequence(seqnum, _next_receive_seq);
+		else
+			throw InvalidMsgSequence(seqnum, _next_receive_seq);
 		return false;
 	}
 
@@ -438,12 +445,13 @@ bool Session::handle_sequence_reset(const unsigned seqnum, const Message *msg)
 	enforce(seqnum, msg);
 
 	new_seq_num nsn;
-	if (msg->Header()->get(nsn))
+	if (msg->get(nsn))
 	{
-		if (nsn() > static_cast<int>(_next_send_seq))
-			_next_send_seq = nsn();
-		else if (nsn() < static_cast<int>(_next_send_seq))
-			throw MsgSequenceTooLow(nsn(), _next_send_seq);
+		//cerr << "newseqnum = " << nsn() << ", _next_receive_seq = " << _next_receive_seq << endl;
+		if (nsn() > static_cast<int>(_next_receive_seq))
+			_next_receive_seq = nsn() - 1;
+		else if (nsn() < static_cast<int>(_next_receive_seq))
+			throw MsgSequenceTooLow(nsn(), _next_receive_seq);
 	}
 
 	if (_state == States::st_resend_request_sent)
@@ -469,7 +477,10 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		else if ((begin() > end() && end()) || begin() == 0)
 			send(generate_reject(seqnum, "Invalid begin or end resend seqnum"));
 		else
+		{
+			//cout << "got resend request:" << begin() << " to " << end() << endl;
 			_persist->get(begin(), end(), *this, &Session::retrans_callback);
+		}
 	}
 
 	return true;
@@ -478,8 +489,6 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& rctx)
 {
-	Message *msg(Message::factory(_ctx, with.second));
-
 	//cout << "first:" << with.first << ' ' << rctx << endl;
 
 	if (rctx._no_more_records)
@@ -519,6 +528,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 
 	rctx._last = with.first;
 
+	Message *msg(Message::factory(_ctx, with.second));
 	return send(msg);
 }
 
@@ -537,6 +547,9 @@ bool Session::handle_test_request(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::heartbeat_service()
 {
+	if (is_shutdown())
+		return false;
+
 	Tickval now(true);
 	if ((now - *_last_sent).secs() >= _connection->get_hb_interval())
 	{
@@ -698,7 +711,10 @@ bool Session::send_process(Message *msg) // called from the connection thread
 		*msg->Header() += new orig_sending_time(sendtime());
 	}
 	else
+	{
+		//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
 		*msg->Header() += new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
+	}
 	*msg->Header() += new sending_time;
 
 	try
@@ -729,7 +745,7 @@ bool Session::send_process(Message *msg) // called from the connection thread
 				//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
 			}
 
-			if (!msg->get_custom_seqnum() && !msg->get_no_increment())
+			if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
 			{
 				++_next_send_seq;
 				//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
