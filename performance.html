@@ -114,7 +114,8 @@ Eight (4x2 HT) 2GHz Intel i7 Processors (Intel(R) Core(TM) i7-2635QM CPU @ 2.00G
 			<div class="row">
 				<div class="span12">
 					<h2>2. The test client/server</h2>
-					<p> Before you begin you need to cleanly build fix8 and pass the codec timing switch to configure <code>--enable-codectiming</code>.
+					<p>Before you begin you need to pass the codec timing switch to configure <code>--enable-codectiming</code>
+						and cleanly build fix8.
 						For our test, we will simulate an HF client preloading and sending 500000 orders to a server. We will measure the encode and
 						decode timings for both the client and the server. The test client and server <code>hftest</code> are built by default when you build fix8.
 						Also by default, the xml configuration files <code>hf_server.xml, hf_client.xml, hf_client_include.xml</code> needed are supplied
