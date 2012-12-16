@@ -186,7 +186,7 @@ public:
 
 	FIX8::tty_save_state& get_tty() { return _tty; }
 
-	friend class FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
+	friend struct FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
 };
 
 //-----------------------------------------------------------------------------------------

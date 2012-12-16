@@ -116,9 +116,9 @@ struct CharRealm : public TypedRealm<char>
 typedef std::map<RealmObject *, std::string, RealmObject::less> RealmMap;
 
 //-------------------------------------------------------------------------------------------------
-typedef std::map<unsigned, class FieldSpec> FieldSpecMap;
+typedef std::map<unsigned, struct FieldSpec> FieldSpecMap;
 typedef std::map<std::string, unsigned> FieldToNumMap;
-typedef std::map<unsigned, class MessageSpec> GroupMap;
+typedef std::map<unsigned, struct MessageSpec> GroupMap;
 
 //-------------------------------------------------------------------------------------------------
 typedef StaticTable<std::string, FieldTrait::FieldType> BaseTypeMap;

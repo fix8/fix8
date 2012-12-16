@@ -9,6 +9,7 @@
            sender_comp_id="DLD_TEX"
            target_comp_id="TEX_DLD"
            login_retry_interval="15000"
+			  heartbeat_interval="5"
            protocol_log="protocol_log"
            reset_sequence_numbers="false"
            tcp_nodelay="true"

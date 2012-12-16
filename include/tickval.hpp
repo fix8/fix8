@@ -46,7 +46,7 @@ namespace FIX8
 {
 
 //---------------------------------------------------------------------------------------------------
-/// High resolution time in nanosecond ticks.
+/// High resolution time in nanosecond ticks. Thread safe.
 class Tickval
 {
 public:
@@ -57,23 +57,23 @@ public:
 	static const ticks billion = thousand * million;
 
 private:
-	ticks _value;
+	tbb::atomic<ticks> _value;
 
 public:
 	/*! Ctor.
 	  \param settonow if true, construct with current time */
-	Tickval(bool settonow=false) : _value() { if (settonow) now(); }
+	Tickval(bool settonow=false) { _value = noticks; if (settonow) now(); }
 
 	/*! Copy Ctor. */
-	Tickval(const Tickval& from) : _value(from._value) {}
+	Tickval(const Tickval& from) { _value = from._value; }
 
 	/*! Ctor.
 	  \param from construct from raw ticks value (nanoseconds) */
-	explicit Tickval(const ticks& from) : _value(from) {}
+	explicit Tickval(const ticks& from) { _value = from; }
 
 	/*! Ctor.
 	  \param from construct from timespec object */
-	explicit Tickval(const timespec& from) : _value(_cvt(from)) {}
+	explicit Tickval(const timespec& from) { _value = _cvt(from); }
 
 	/*! Assignment operator. */
 	Tickval& operator=(const Tickval& that)
@@ -94,7 +94,7 @@ public:
 
 	/*! Get the raw tick value (nanosecs).
 	  \return raw ticks */
-	const ticks& get_ticks() const { return _value; }
+	ticks get_ticks() const { return _value; }
 
 	/*! Assign the current time to this object.
 	  \return current object */

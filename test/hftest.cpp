@@ -132,22 +132,26 @@ const string GETARGLIST("hl:svqc:R:S:r");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
-template<>
-const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
+namespace FIX8
 {
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "Send a NewOrderSingle msg"), &MyMenu::new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Preload n NewOrderSingle msgs"), &MyMenu::preload_new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('a', "Send all Preloaded NewOrderSingle msgs"), &MyMenu::send_all_preloaded),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('f', "Flush global log"), &MyMenu::flush_log),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
-};
-template<>
-const MyMenu::Handlers::NotFoundType MyMenu::Handlers::_noval = &MyMenu::nothing;
-template<>
-const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
+	template<>
+	const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
+	{
+		MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "Send a NewOrderSingle msg"), &MyMenu::new_order_single),
+		MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Preload n NewOrderSingle msgs"), &MyMenu::preload_new_order_single),
+		MyMenu::Handlers::TypePair(MyMenu::MenuItem('a', "Send all Preloaded NewOrderSingle msgs"), &MyMenu::send_all_preloaded),
+		MyMenu::Handlers::TypePair(MyMenu::MenuItem('f', "Flush global log"), &MyMenu::flush_log),
+		MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
+		MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
+		MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+	};
+	template<>
+	const MyMenu::Handlers::NotFoundType MyMenu::Handlers::_noval = &MyMenu::nothing;
+	template<>
+	const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
 	MyMenu::Handlers::get_table_end());
+}
+
 bool quiet(true);
 
 //-----------------------------------------------------------------------------------------
@@ -253,12 +257,16 @@ int main(int argc, char **argv)
 				mc(new ReliableClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
-			mc->start(false);
+			mc->start(false, next_send, next_receive);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
 			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
 				;
+			// don't explicitly call mc->session_ptr()->stop() with reliable sessions
+			// before checking if the session is already shutdown - the framework will generally do this for you
+			if (!mc->session_ptr()->is_shutdown())
+				mc->session_ptr()->stop();
 			mymenu.get_tty().unset_raw_mode();
 		}
 		else
@@ -267,12 +275,18 @@ int main(int argc, char **argv)
 				mc(new ClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
-			mc->start(false, next_send, next_receive);
+			bool reset_sequence_numbers;
+			unsigned login_retry_interval, login_retries;
+			default_appl_ver_id davi;
+			mc->session_ptr()->get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);
+			mc->start(false, next_send, next_receive, davi());
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
 			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
 				;
+			if (!mc->session_ptr()->is_shutdown())
+				mc->session_ptr()->stop();
 			mymenu.get_tty().unset_raw_mode();
 		}
 	}

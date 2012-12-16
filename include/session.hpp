@@ -170,7 +170,7 @@ protected:
 	Control _control;
 	tbb::atomic<unsigned> _next_send_seq, _next_receive_seq;
 	tbb::atomic<States::SessionStates> _state;
-	tbb::atomic<Tickval *> _last_sent, _last_received;
+	Tickval _last_sent, _last_received;
 	const F8MetaCntx& _ctx;
 	Connection *_connection;
 	unsigned _req_next_send_seq, _req_next_receive_seq;
@@ -411,10 +411,10 @@ public:
 	bool plog(const std::string& what, const unsigned direction=0) const { return _plogger ? _plogger->send(what, direction) : false; }
 
 	/// Update the last sent time.
-	void update_sent() { _last_sent->now(); }
+	void update_sent() { _last_sent.now(); }
 
 	/// Update the last received time.
-	void update_received() { _last_received->now(); }
+	void update_received() { _last_received.now(); }
 
 	/*! Check that a message has the correct sender/target compid for this session. Throws BadCompidId on error.
 	    \param seqnum message sequence number
@@ -481,7 +481,7 @@ public:
 	    \return true if shutdown is underway */
 	bool is_shutdown() { return _control.has(shutdown); }
 
-	friend class StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)>;
+	friend struct StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)>;
 };
 
 //-------------------------------------------------------------------------------------------------

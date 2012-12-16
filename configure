@@ -18689,13 +18689,21 @@ fi
 
 
 # check what version of gcc we're using
-GCC_VERSION=`$CC -dumpversion`
-gcc_major=`echo $GCC_VERSION | cut -d. -f1`
-gcc_minor=`echo $GCC_VERSION | cut -d. -f2`
-echo "Compiling with gcc version $GCC_VERSION"
 
-# gcc >= 4.7, -fvar-tracking-assignments-toggle
- if test $gcc_major -ge 4 -a $gcc_minor -ge 7; then
+# test for gcc >= 4.7
+is_late_gcc=no
+case "$CXX" in
+  *g++*)
+		GCC_VERSION=`$CC -dumpversion`
+		gcc_major=`echo $GCC_VERSION | cut -d. -f1`
+		gcc_minor=`echo $GCC_VERSION | cut -d. -f2`
+		if test $gcc_major -ge 4 -a $gcc_minor -ge 7; then
+			is_late_gcc=yes
+		fi ;;
+esac
+
+# use -fvar-tracking-assignments-toggle
+ if test x$is_late_gcc = xyes; then
   TOGGLETRACKINGASSIGNMENTS_TRUE=
   TOGGLETRACKINGASSIGNMENTS_FALSE='#'
 else

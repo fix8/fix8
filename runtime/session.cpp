@@ -68,23 +68,26 @@ const Tickval::ticks Tickval::million;
 const Tickval::ticks Tickval::billion;
 
 //-------------------------------------------------------------------------------------------------
-template<>
-const Session::Handlers::TypePair Session::Handlers::_valueTable[] =
+namespace FIX8
 {
-	Session::Handlers::TypePair(Common_MsgType_HEARTBEAT, &Session::handle_heartbeat),
-	Session::Handlers::TypePair(Common_MsgType_TEST_REQUEST, &Session::handle_test_request),
-	Session::Handlers::TypePair(Common_MsgType_RESEND_REQUEST, &Session::handle_resend_request),
-	Session::Handlers::TypePair(Common_MsgType_REJECT, &Session::handle_reject),
-	Session::Handlers::TypePair(Common_MsgType_SEQUENCE_RESET, &Session::handle_sequence_reset),
-	Session::Handlers::TypePair(Common_MsgType_LOGOUT, &Session::handle_logout),
-	Session::Handlers::TypePair(Common_MsgType_LOGON, &Session::handle_logon),
-};
-template<>
-const Session::Handlers::NotFoundType Session::Handlers::_noval(&Session::handle_application);
+	template<>
+	const Session::Handlers::TypePair Session::Handlers::_valueTable[] =
+	{
+		Session::Handlers::TypePair(Common_MsgType_HEARTBEAT, &Session::handle_heartbeat),
+		Session::Handlers::TypePair(Common_MsgType_TEST_REQUEST, &Session::handle_test_request),
+		Session::Handlers::TypePair(Common_MsgType_RESEND_REQUEST, &Session::handle_resend_request),
+		Session::Handlers::TypePair(Common_MsgType_REJECT, &Session::handle_reject),
+		Session::Handlers::TypePair(Common_MsgType_SEQUENCE_RESET, &Session::handle_sequence_reset),
+		Session::Handlers::TypePair(Common_MsgType_LOGOUT, &Session::handle_logout),
+		Session::Handlers::TypePair(Common_MsgType_LOGON, &Session::handle_logon),
+	};
+	template<>
+	const Session::Handlers::NotFoundType Session::Handlers::_noval(&Session::handle_application);
 
-template<>
-const Session::Handlers::TypeMap Session::Handlers::_valuemap(Session::Handlers::_valueTable,
-	Session::Handlers::get_table_end());
+	template<>
+	const Session::Handlers::TypeMap Session::Handlers::_valuemap(Session::Handlers::_valueTable,
+		Session::Handlers::get_table_end());
+}
 
 //-------------------------------------------------------------------------------------------------
 void SessionID::make_id()
@@ -117,7 +120,6 @@ void SessionID::from_string(const f8String& from)
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
-	_last_sent(), _last_received(),
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
 	_reset_sequence_numbers(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
@@ -128,7 +130,6 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
-	_last_sent(), _last_received(),
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
 	_reset_sequence_numbers(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
@@ -142,8 +143,6 @@ void Session::atomic_init(States::SessionStates st)
 {
 	_state = st;
 	_next_send_seq = _next_receive_seq = 1;
-	_last_sent = new Tickval(true);
-	_last_received = new Tickval(true);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -154,9 +153,6 @@ Session::~Session()
 		log("Session terminating");
 		_logger->stop();
 	}
-
-	delete _last_sent;
-	delete _last_received;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -330,8 +326,8 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 
 	if (seqnum > _next_receive_seq)
 	{
-		//if (_state == States::st_resend_request_sent)
-//			log("Resend request already sent");
+		if (_state == States::st_resend_request_sent)
+			log("Resend request already sent");
 		if (_state == States::st_continuous)
 		{
 			Message *rmsg(generate_resend_request(_next_receive_seq));
@@ -551,7 +547,7 @@ bool Session::heartbeat_service()
 		return false;
 
 	Tickval now(true);
-	if ((now - *_last_sent).secs() >= _connection->get_hb_interval())
+	if ((now - _last_sent).secs() >= _connection->get_hb_interval())
 	{
 		const f8String testReqID;
 		Message *msg(generate_heartbeat(testReqID));
@@ -560,17 +556,23 @@ bool Session::heartbeat_service()
 	}
 
 	now.now();
-	if ((now - *_last_received).secs() > _connection->get_hb_interval20pc())
+	if ((now - _last_received).secs() > _connection->get_hb_interval20pc())
 	{
 		if (_state == States::st_test_request_sent)	// already sent
 		{
 			send(generate_logout(), 0, true); // so it won't increment
 			_state = States::st_logoff_sent;
+			ostringstream ostr;
+			ostr << "Remote has ignored my test request. Aborting session...";
+			log(ostr.str());
 			stop();
 			return true;
 		}
 		else
 		{
+			ostringstream ostr;
+			ostr << "Have not received anything from remote for " << (now - _last_received).secs() << " secs. Sending test request";
+			log(ostr.str());
 			const f8String testReqID("TEST");
 			send(generate_test_request(testReqID));
 			_state = States::st_test_request_sent;
@@ -730,7 +732,7 @@ bool Session::send_process(Message *msg) // called from the connection thread
 			log(ostr.str());
 			return false;
 		}
-		_last_sent->now();
+		_last_sent.now();
 		plog(output);
 
 		//cout << "send_process" << endl;

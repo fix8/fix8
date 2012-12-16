@@ -96,18 +96,22 @@ using namespace std;
 using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
-const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp",
-	"_classes.hpp", "_router.hpp", "_session.hpp" };
-template<>
-const size_t GeneratedTable<unsigned int, BaseEntry>::_pairsz(0);
-template<>
-const GeneratedTable<unsigned int, BaseEntry>::Pair GeneratedTable<unsigned int, BaseEntry>::_pairs[] = {};
-template<>
-const size_t GeneratedTable<const f8String, BaseMsgEntry>::_pairsz(0);
-template<>
-const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8String, BaseMsgEntry>::_pairs[] = {};
+namespace FIX8
+{
+	template<>
+	const size_t GeneratedTable<unsigned int, BaseEntry>::_pairsz(0);
+	template<>
+	const GeneratedTable<unsigned int, BaseEntry>::Pair GeneratedTable<unsigned int, BaseEntry>::_pairs[] = {};
+	template<>
+	const size_t GeneratedTable<const f8String, BaseMsgEntry>::_pairsz(0);
+	template<>
+	const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8String, BaseMsgEntry>::_pairs[] = {};
+}
 
 //-----------------------------------------------------------------------------------------
+const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp",
+	"_classes.hpp", "_router.hpp", "_session.hpp" };
+
 string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"), prefix("Myfix"), gen_classes;
 bool verbose(false), error_ignore(false), gen_fields(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3);
@@ -857,6 +861,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_cpp << "const " << ctxt._clname << "_BaseMsgEntry bme;" << endl;
 	osc_cpp << "const " << ctxt._clname << "_BaseEntry be;" << endl;
 	osc_cpp << endl << _csMap.find_ref(cs_end_anon_namespace) << endl;
+	osc_cpp << endl << "} // namespace " << ctxt._fixns << endl;
 
 	osc_cpp << endl << _csMap.find_ref(cs_divider) << endl;
 	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::Pair "
@@ -879,7 +884,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		<< ctxt._clname << "_BaseMsgEntry::Pair));" << endl;
 	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::NotFoundType "
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = {0, 0};" << endl;
-	osc_cpp << "F8MetaCntx ctx(" << ctxt._version << ", bme, be, \"" << ctxt._beginstr << "\");" << endl;
+	osc_cpp << "namespace " << ctxt._fixns << " { F8MetaCntx ctx(" << ctxt._version << ", bme, be, \"" << ctxt._beginstr << "\"); }" << endl;
 
 // ==================================== Message router ==================================
 
@@ -905,7 +910,6 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osu_hpp << "#endif // _" << flname(ctxt._out[Ctxt::router_hpp].first.second) << '_' << endl;
 	osr_cpp << endl << _csMap.find_ref(cs_end_namespace) << endl;
 	osr_cpp << "} // namespace " << ctxt._fixns << endl;
-	osc_cpp << endl << "} // namespace " << ctxt._fixns << endl;
 	osc_cpp << _csMap.find_ref(cs_end_namespace) << endl;
 	osc_cpp << endl;
 

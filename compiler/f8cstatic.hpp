@@ -35,6 +35,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #endif
 //-------------------------------------------------------------------------------------------------
+namespace FIX8 {
+
+//-------------------------------------------------------------------------------------------------
 template<>
 const BaseTypeMap::TypePair BaseTypeMap::_valueTable[] =
 {
@@ -226,4 +229,5 @@ const CSMap::TypeMap CSMap::_valuemap(CSMap::_valueTable, CSMap::get_table_end()
 template<>
 const CSMap::NotFoundType CSMap::_noval("not found");
 
+} // namespace FIX8
 //-------------------------------------------------------------------------------------------------

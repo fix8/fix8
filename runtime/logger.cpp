@@ -58,15 +58,18 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-char FIX8::glob_log0[max_global_filename_length] = { "global_filename_not_set.log" };
+namespace FIX8
+{
+	char glob_log0[max_global_filename_length] = { "global_filename_not_set.log" };
 
-template<>
-tbb::atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
-	= tbb::atomic<SingleLogger<glob_log0> *>();
-template<>
-tbb::mutex Singleton<SingleLogger<glob_log0> >::_mutex = tbb::mutex();
+	template<>
+	tbb::atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
+		= tbb::atomic<SingleLogger<glob_log0> *>();
+	template<>
+	tbb::mutex Singleton<SingleLogger<glob_log0> >::_mutex = tbb::mutex();
 
-const string Logger::_bit_names[] = { "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer" };
+	const string Logger::_bit_names[] = { "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer" };
+}
 
 //-------------------------------------------------------------------------------------------------
 int Logger::operator()()

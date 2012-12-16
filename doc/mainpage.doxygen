@@ -4,6 +4,7 @@
   * used in a FIX8 project.
   *
   * For a complete example client/server, see \link myfix.cpp \endlink. For an example simple hf client see \link hftest.cpp \endlink.\n
+  * For an example client/server using the built-in test harness, see \link harness.cpp \endlink.\n\n
   * This documentation also includes all the compiler generated code for this example, based on the \link FIX50SP2.xml \endlink schema.
   *
   * <ul>
@@ -15,6 +16,7 @@
   * <ul>
   * <li> \link FIX8::Session \endlink encapsulates a FIX session. Your client or server session must inherit from this class.
   * <li> \link FIX8::ClientSession \endlink a wrapper class for FIX session. Provides a simple client connection.
+  * <li> \link FIX8::ReliableClientSession \endlink a wrapper class for FIX session. Provides a reliable client connection.
   * <li> \link FIX8::ServerSession \endlink a wrapper class for FIX session. Provides a simple listening server.
   * <li> \link FIX8::SessionInstance \endlink a wrapper class for FIX server session instance.
   * <li> \link FIX8::BDBPersister \endlink is a BerkeleyDB backed FIX message persister.
@@ -26,6 +28,7 @@
   * <li> \link FIX8::Message \endlink is a complete Fix message with header, body and trailer.
   * <li> \link FIX8::Thread \endlink is a modern pthread wrapper.
   * <li> \link FIX8::SessionID \endlink a <A HREF="http://www.quickfixengine.org">Quickfix</A> style session id.
+  * <li> \link FIX8::Timer \endlink a high resolution timer with event notification.
   * </ul>
   *
   * <A HREF="http://www.fix8.org">Return to the home page.</A>

@@ -267,7 +267,7 @@ public:
 	    \param begin - InputIterator pointing to begining of field trait table
 	    \param cnt - number of elements in field trait table */
 	template<typename InputIterator>
-	MessageBase(const class F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt
+	MessageBase(const struct F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt
 #if defined PERMIT_CUSTOM_FIELDS
 		) : _fp(begin, cnt),
 #else
