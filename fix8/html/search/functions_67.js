@@ -67,7 +67,7 @@ var searchData=
   ['get_5ftargetcompid',['get_targetCompID',['../classFIX8_1_1SessionID.html#a9cdbc97fa63ccff7bfbbb244fed06887',1,'FIX8::SessionID']]],
   ['get_5ftcp_5fnodelay',['get_tcp_nodelay',['../classFIX8_1_1Configuration.html#a23e75c52ddcf807011115ed12c23664a',1,'FIX8::Configuration']]],
   ['get_5fthread_5fcode',['get_thread_code',['../classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81',1,'FIX8::Logger']]],
-  ['get_5fticks',['get_ticks',['../classFIX8_1_1Tickval.html#a1f7b4f446dc7ba78537d0ceb926eb36b',1,'FIX8::Tickval']]],
+  ['get_5fticks',['get_ticks',['../classFIX8_1_1Tickval.html#ad790963ef8cb2b3ed63bab122562d7fa',1,'FIX8::Tickval']]],
   ['get_5ftickval',['get_tickval',['../classFIX8_1_1Tickval.html#a0543385fc89162739f2159e1fc1bdc89',1,'FIX8::Tickval::get_tickval()'],['../classFIX8_1_1Tickval.html#aebd35b770a0e564ba0f6ef04a0109f07',1,'FIX8::Tickval::get_tickval(Tickval &amp;to)']]],
   ['get_5ftty',['get_tty',['../classMyMenu.html#a381663b9838cf71aee2307913e1caf04',1,'MyMenu::get_tty()'],['../classMyMenu.html#a381663b9838cf71aee2307913e1caf04',1,'MyMenu::get_tty()']]],
   ['get_5fversion',['get_version',['../classFIX8_1_1Configuration.html#a1b9b3ed95e31f1dc4c8f6cae250b9fe5',1,'FIX8::Configuration']]],

@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.5</span>
+   &#160;<span id="projectnumber">version  0.6.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -268,8 +268,8 @@ Inheritance diagram for FIX8::MessageBase:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a590f438cf0def9eefa0d83c84d0579f5"><td class="memTemplParams" colspan="2">template&lt;typename InputIterator &gt; </td></tr>
-<tr class="memitem:a590f438cf0def9eefa0d83c84d0579f5"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#a590f438cf0def9eefa0d83c84d0579f5">MessageBase</a> (const class <a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a> &amp;ctx, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;msgType, const InputIterator begin, const size_t cnt)</td></tr>
+<tr class="memitem:adc086e165f4594152c7174b7e87cb8be"><td class="memTemplParams" colspan="2">template&lt;typename InputIterator &gt; </td></tr>
+<tr class="memitem:adc086e165f4594152c7174b7e87cb8be"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#adc086e165f4594152c7174b7e87cb8be">MessageBase</a> (const struct <a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a> &amp;ctx, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;msgType, const InputIterator begin, const size_t cnt)</td></tr>
 <tr class="memitem:a4af07392a04a883594f674a7d2929473"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#a4af07392a04a883594f674a7d2929473">MessageBase</a> (const <a class="el" href="classFIX8_1_1MessageBase.html">MessageBase</a> &amp;from)</td></tr>
 <tr class="memdesc:a4af07392a04a883594f674a7d2929473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy ctor.  <a href="#a4af07392a04a883594f674a7d2929473"></a><br/></td></tr>
 <tr class="memitem:a67f8dd289ec80c52818b01a2dbe9f6b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1MessageBase.html">MessageBase</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#a67f8dd289ec80c52818b01a2dbe9f6b6">operator=</a> (const <a class="el" href="classFIX8_1_1MessageBase.html">MessageBase</a> &amp;that)</td></tr>
@@ -356,7 +356,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00239">239</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a590f438cf0def9eefa0d83c84d0579f5"></a>
+<a class="anchor" id="adc086e165f4594152c7174b7e87cb8be"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -368,7 +368,7 @@ template&lt;typename InputIterator &gt; </div>
         <tr>
           <td class="memname">FIX8::MessageBase::MessageBase </td>
           <td>(</td>
-          <td class="paramtype">const class <a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a> &amp;&#160;</td>
+          <td class="paramtype">const struct <a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a> &amp;&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -931,7 +931,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00243">_fp</a>, <a class="el" href="message_8hpp_source.html#l00372">add_field()</a>, <a class="el" href="message_8hpp_source.html#l00352">check_set_rlm()</a>, <a class="el" href="message_8cpp_source.html#l00269">copy_legal()</a>, <a class="el" href="message_8hpp_source.html#l00532">find_group()</a>, <a class="el" href="traits_8hpp_source.html#l00422">FIX8::FieldTraits::get()</a>, <a class="el" href="traits_8hpp_source.html#l00068">FIX8::FieldTrait::group</a>, <a class="el" href="traits_8hpp_source.html#l00389">FIX8::FieldTraits::has()</a>, <a class="el" href="traits_8hpp_source.html#l00068">FIX8::FieldTrait::present</a>, and <a class="el" href="message_8cpp_source.html#l00516">replace()</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8cpp_source.html#l00269">copy_legal()</a>, and <a class="el" href="harness_8cpp_source.html#l00352">tex_router_server::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="message_8cpp_source.html#l00269">copy_legal()</a>, and <a class="el" href="harness_8cpp_source.html#l00356">tex_router_server::operator()()</a>.</p>
 
 </div>
 </div>
@@ -1541,7 +1541,7 @@ template&lt;typename T &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00242">_fields</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00313">FIX8::Session::compid_check()</a>, <a class="el" href="session_8cpp_source.html#l00367">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00464">FIX8::Session::handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00443">FIX8::Session::handle_sequence_reset()</a>, <a class="el" href="session_8cpp_source.html#l00536">FIX8::Session::handle_test_request()</a>, <a class="el" href="harness_8cpp_source.html#l00352">tex_router_server::operator()()</a>, <a class="el" href="session_8cpp_source.html#l00692">FIX8::Session::send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00326">FIX8::Session::sequence_check()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00309">FIX8::Session::compid_check()</a>, <a class="el" href="session_8cpp_source.html#l00363">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00460">FIX8::Session::handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00439">FIX8::Session::handle_sequence_reset()</a>, <a class="el" href="session_8cpp_source.html#l00532">FIX8::Session::handle_test_request()</a>, <a class="el" href="harness_8cpp_source.html#l00356">tex_router_server::operator()()</a>, <a class="el" href="session_8cpp_source.html#l00694">FIX8::Session::send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00322">FIX8::Session::sequence_check()</a>.</p>
 
 </div>
 </div>
@@ -1676,7 +1676,7 @@ template&lt;typename T &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00246">_msgType</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00231">FIX8::Session::enforce()</a>, <a class="el" href="hfprint_8cpp_source.html#l00135">main()</a>, <a class="el" href="myfix__custom_8hpp_source.html#l00102">FIX8::TEX::myfix_custom::post_msg_ctor()</a>, <a class="el" href="session_8cpp_source.html#l00245">FIX8::Session::process()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00116">FIX8::ConsoleMenu::SelectField()</a>, and <a class="el" href="session_8cpp_source.html#l00692">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00227">FIX8::Session::enforce()</a>, <a class="el" href="hfprint_8cpp_source.html#l00135">main()</a>, <a class="el" href="myfix__custom_8hpp_source.html#l00102">FIX8::TEX::myfix_custom::post_msg_ctor()</a>, <a class="el" href="session_8cpp_source.html#l00241">FIX8::Session::process()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00116">FIX8::ConsoleMenu::SelectField()</a>, and <a class="el" href="session_8cpp_source.html#l00694">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -1787,7 +1787,7 @@ template&lt;typename T &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00243">_fp</a>, <a class="el" href="traits_8hpp_source.html#l00422">FIX8::FieldTraits::get()</a>, and <a class="el" href="traits_8hpp_source.html#l00068">FIX8::FieldTrait::present</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00367">FIX8::Session::handle_logon()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00116">FIX8::ConsoleMenu::SelectField()</a>, and <a class="el" href="session_8cpp_source.html#l00692">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">FIX8::Session::handle_logon()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00116">FIX8::ConsoleMenu::SelectField()</a>, and <a class="el" href="session_8cpp_source.html#l00694">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -2590,7 +2590,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 15:15:44. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:29:00. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

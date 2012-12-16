@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.5</span>
+   &#160;<span id="projectnumber">version  0.6.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -284,8 +284,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a117f8048127b51e211f1f09536a95e50"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Message.html#a117f8048127b51e211f1f09536a95e50">get_no_increment</a> () const </td></tr>
 <tr class="memitem:a772d6d76fdb3f7684ad8633e517c60c3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Message.html#a772d6d76fdb3f7684ad8633e517c60c3">print</a> (std::ostream &amp;os, int depth=0) const </td></tr>
 <tr class="inherit_header pub_methods_classFIX8_1_1MessageBase"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classFIX8_1_1MessageBase')"><img src="closed.png" alt="-"/>&nbsp;Public Member Functions inherited from <a class="el" href="classFIX8_1_1MessageBase.html">FIX8::MessageBase</a></td></tr>
-<tr class="memitem:a590f438cf0def9eefa0d83c84d0579f5 inherit pub_methods_classFIX8_1_1MessageBase"><td class="memTemplParams" colspan="2">template&lt;typename InputIterator &gt; </td></tr>
-<tr class="memitem:a590f438cf0def9eefa0d83c84d0579f5"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#a590f438cf0def9eefa0d83c84d0579f5">MessageBase</a> (const class <a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a> &amp;ctx, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;msgType, const InputIterator begin, const size_t cnt)</td></tr>
+<tr class="memitem:adc086e165f4594152c7174b7e87cb8be inherit pub_methods_classFIX8_1_1MessageBase"><td class="memTemplParams" colspan="2">template&lt;typename InputIterator &gt; </td></tr>
+<tr class="memitem:adc086e165f4594152c7174b7e87cb8be"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#adc086e165f4594152c7174b7e87cb8be">MessageBase</a> (const struct <a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a> &amp;ctx, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;msgType, const InputIterator begin, const size_t cnt)</td></tr>
 <tr class="memitem:a4af07392a04a883594f674a7d2929473 inherit pub_methods_classFIX8_1_1MessageBase"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#a4af07392a04a883594f674a7d2929473">MessageBase</a> (const <a class="el" href="classFIX8_1_1MessageBase.html">MessageBase</a> &amp;from)</td></tr>
 <tr class="memdesc:a4af07392a04a883594f674a7d2929473 inherit pub_methods_classFIX8_1_1MessageBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy ctor.  <a href="#a4af07392a04a883594f674a7d2929473"></a><br/></td></tr>
 <tr class="memitem:a67f8dd289ec80c52818b01a2dbe9f6b6 inherit pub_methods_classFIX8_1_1MessageBase"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1MessageBase.html">MessageBase</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1MessageBase.html#a67f8dd289ec80c52818b01a2dbe9f6b6">operator=</a> (const <a class="el" href="classFIX8_1_1MessageBase.html">MessageBase</a> &amp;that)</td></tr>
@@ -703,7 +703,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>References <a class="el" href="timer_8hpp_source.html#l00229">FIX8::IntervalTimer::Calculate()</a>, <a class="el" href="namespaceFIX8.html#a036113e0823a4e61c612a145bbff047a">FIX8::Common_BeginString()</a>, <a class="el" href="namespaceFIX8.html#a52ff589cac2bf2d52ba15622ccbfb754">FIX8::Common_BodyLength()</a>, <a class="el" href="namespaceFIX8.html#a0285d54102518664179caacd0c2cff13">FIX8::Common_CheckSum()</a>, <a class="el" href="namespaceFIX8.html#a1fbd339871f540994b17250b20251fd0">FIX8::Common_MsgType()</a>, <a class="el" href="field_8hpp_source.html#l00156">FIX8::BaseField::encode()</a>, <a class="el" href="classFIX8_1_1MessageBase.html#a35621eb0f38affb26760f8a42a18e375">FIX8::MessageBase::encode()</a>, <a class="el" href="logger_8hpp_source.html#l00348">FIX8::SingleLogger&lt; fn &gt;::log()</a>, <a class="el" href="f8config_8h_source.html#l00428">MAX_MSG_LENGTH</a>, and <a class="el" href="traits_8hpp_source.html#l00068">FIX8::FieldTrait::suppress</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00692">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00694">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -750,7 +750,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00773">773</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00245">FIX8::Session::process()</a>, and <a class="el" href="session_8cpp_source.html#l00490">FIX8::Session::retrans_callback()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00241">FIX8::Session::process()</a>, and <a class="el" href="session_8cpp_source.html#l00486">FIX8::Session::retrans_callback()</a>.</p>
 
 </div>
 </div>
@@ -862,7 +862,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00650">_custom_seqnum</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00692">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00694">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -893,7 +893,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00645">_in_use</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00678">FIX8::Session::send_wait()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00680">FIX8::Session::send_wait()</a>.</p>
 
 </div>
 </div>
@@ -924,7 +924,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00651">_no_increment</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00692">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00694">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -955,7 +955,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00649">_header</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00313">FIX8::Session::compid_check()</a>, <a class="el" href="session_8cpp_source.html#l00367">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00692">FIX8::Session::send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00326">FIX8::Session::sequence_check()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00309">FIX8::Session::compid_check()</a>, <a class="el" href="session_8cpp_source.html#l00363">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00694">FIX8::Session::send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00322">FIX8::Session::sequence_check()</a>.</p>
 
 </div>
 </div>
@@ -986,7 +986,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00725">725</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00245">FIX8::Session::process()</a>, and <a class="el" href="session_8cpp_source.html#l00692">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00241">FIX8::Session::process()</a>, and <a class="el" href="session_8cpp_source.html#l00694">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -1072,7 +1072,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00721">721</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="harness_8cpp_source.html#l00303">myfix_session_client::handle_application()</a>, <a class="el" href="hftest_8cpp_source.html#l00412">hf_session_client::handle_application()</a>, <a class="el" href="harness_8cpp_source.html#l00309">myfix_session_server::handle_application()</a>, and <a class="el" href="hftest_8cpp_source.html#l00496">hf_session_server::handle_application()</a>.</p>
+<p>Referenced by <a class="el" href="harness_8cpp_source.html#l00307">myfix_session_client::handle_application()</a>, <a class="el" href="hftest_8cpp_source.html#l00426">hf_session_client::handle_application()</a>, <a class="el" href="harness_8cpp_source.html#l00313">myfix_session_server::handle_application()</a>, and <a class="el" href="hftest_8cpp_source.html#l00510">hf_session_server::handle_application()</a>.</p>
 
 </div>
 </div>
@@ -1109,7 +1109,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00650">_custom_seqnum</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00668">FIX8::Session::send()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00670">FIX8::Session::send()</a>.</p>
 
 </div>
 </div>
@@ -1183,7 +1183,7 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00651">_no_increment</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00668">FIX8::Session::send()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00670">FIX8::Session::send()</a>.</p>
 
 </div>
 </div>
@@ -1390,7 +1390,7 @@ template&lt;typename InputIterator &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 15:15:44. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:29:00. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

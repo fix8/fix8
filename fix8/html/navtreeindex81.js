@@ -1,5 +1,11 @@
 var NAVTREEINDEX81 =
 {
+"classFIX8_1_1TEX_1_1StreamAssignmentRequest.html#a36a036d68a21d29098edd99718f3eb2b":[2,0,0,0,67,5],
+"classFIX8_1_1TEX_1_1StreamAssignmentRequest.html#a389a0e851534806ca972519c7f974e43":[2,0,0,0,67,3],
+"classFIX8_1_1TEX_1_1StreamAssignmentRequest.html#a738ba99af18eefa66fc3419020fc612e":[2,0,0,0,67,4],
+"classFIX8_1_1TEX_1_1StreamAssignmentRequest.html#a87be70d4627ddd0ab840bcd3262639d6":[2,0,0,0,67,1],
+"classFIX8_1_1TEX_1_1StreamAssignmentRequest.html#a9690b7880a3034c921b3bd30137148cf":[2,0,0,0,67,7],
+"classFIX8_1_1TEX_1_1StreamAssignmentRequest.html#a9a4d1e5713d69f03ffab08725b61c4d8":[2,0,0,0,67,2],
 "classFIX8_1_1TEX_1_1StreamAssignmentRequest.html#ae77970fd1ec3155e59773356fa2dc3ba":[2,0,0,0,67,6],
 "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs.html":[2,0,0,0,67,0],
 "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs.html#a4c820ab17ca31897e69ce1bec3cadfdf":[2,0,0,0,67,0,8],
@@ -243,11 +249,5 @@ var NAVTREEINDEX81 =
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings_1_1NoUnderlyingLegSecurityAltID.html#a1f7648428fda1556d5659ad272b40a97":[2,0,0,0,28,3,3,0,3],
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings_1_1NoUnderlyingLegSecurityAltID.html#a36d3deeffeafceb2786e6ab1c3d4acd9":[2,0,0,0,28,3,3,0,0],
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings_1_1NoUnderlyingLegSecurityAltID.html#aa45d0706318b044db9b32a423ecacee5":[2,0,0,0,28,3,3,0,6],
-"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings_1_1NoUnderlyingLegSecurityAltID.html#ab85ec71a4f4888bcc170178c1f801da1":[2,0,0,0,28,3,3,0,4],
-"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings_1_1NoUnderlyingLegSecurityAltID.html#aea06e87f86d77e98645ef851f2edf3ae":[2,0,0,0,28,3,3,0,5],
-"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings_1_1NoUnderlyingLegSecurityAltID.html#aea247896c5d1bbc065c0cc33642c1c3d":[2,0,0,0,28,3,3,0,7],
-"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings_1_1NoUnderlyingLegSecurityAltID.html#aed56a51a1fa0e330d7b61a3721ab6597":[2,0,0,0,28,3,3,0,1],
-"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoPosAmt.html":[2,0,0,0,28,4],
-"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoPosAmt.html#a0e2a2fefec2727287c8b014d4c7a079e":[2,0,0,0,28,4,5],
-"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoPosAmt.html#a540590622d31b98d51ff284b4308cbe4":[2,0,0,0,28,4,6]
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings_1_1NoUnderlyingLegSecurityAltID.html#ab85ec71a4f4888bcc170178c1f801da1":[2,0,0,0,28,3,3,0,4]
 };

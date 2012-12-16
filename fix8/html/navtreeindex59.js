@@ -1,5 +1,11 @@
 var NAVTREEINDEX59 =
 {
+"classFIX8_1_1TEX_1_1OrderMassActionRequest_1_1NoInstrumentParties.html#a2246c5db9ac4409bb401dc3db97e4838":[2,0,0,0,65,2,2],
+"classFIX8_1_1TEX_1_1OrderMassActionRequest_1_1NoInstrumentParties.html#a2c8423405badaa691a517c380fc2c67d":[2,0,0,0,65,2,6],
+"classFIX8_1_1TEX_1_1OrderMassActionRequest_1_1NoInstrumentParties.html#a330379ceea9e0055576be68f870dc621":[2,0,0,0,65,2,8],
+"classFIX8_1_1TEX_1_1OrderMassActionRequest_1_1NoInstrumentParties.html#a6e37b7856cb07110291abbbb0596596b":[2,0,0,0,65,2,4],
+"classFIX8_1_1TEX_1_1OrderMassActionRequest_1_1NoInstrumentParties.html#a775a88cb9b9bfa9bb1058737d6bf5336":[2,0,0,0,65,2,5],
+"classFIX8_1_1TEX_1_1OrderMassActionRequest_1_1NoInstrumentParties.html#a900bc3288add5e6935af883f488bd421":[2,0,0,0,65,2,7],
 "classFIX8_1_1TEX_1_1OrderMassActionRequest_1_1NoInstrumentParties.html#aa21b6d844a2347448c60babd95436dec":[2,0,0,0,65,2,1],
 "classFIX8_1_1TEX_1_1OrderMassActionRequest_1_1NoInstrumentParties.html#ab2eb1af88e13f597212519b67d0e5c88":[2,0,0,0,65,2,3],
 "classFIX8_1_1TEX_1_1OrderMassActionRequest_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html":[2,0,0,0,65,2,0],
@@ -243,11 +249,5 @@ var NAVTREEINDEX59 =
 "classFIX8_1_1TEX_1_1OrderMassCancelRequest.html#a731d368611a83ba0da220e47772e92ea":[2,0,0,0,108,15],
 "classFIX8_1_1TEX_1_1OrderMassCancelRequest.html#acf2d2f010157b0ed745bb7e1df2bc0db":[2,0,0,0,108,12],
 "classFIX8_1_1TEX_1_1OrderMassCancelRequest.html#af8f6b1fdb6c4f8f0e7317c3ca716cadb":[2,0,0,0,108,13],
-"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoComplexEvents.html":[2,0,0,0,108,0],
-"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoComplexEvents.html#a1e789a987f79e1b91ea3090b4290245f":[2,0,0,0,108,0,2],
-"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoComplexEvents.html#a654720b8e1d47e1127e481baaa182b4c":[2,0,0,0,108,0,3],
-"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoComplexEvents.html#a98e516329bf6b197178961ab6a1cfa30":[2,0,0,0,108,0,8],
-"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoComplexEvents.html#aa0306ad1c8474b82347e5913ae6961af":[2,0,0,0,108,0,7],
-"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoComplexEvents.html#aa2a4fbdb98cd4ba952ddcb59d5be5b9c":[2,0,0,0,108,0,6],
-"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoComplexEvents.html#aaf1ecb9ce8802ef432f6bbaa799804f2":[2,0,0,0,108,0,5]
+"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoComplexEvents.html":[2,0,0,0,108,0]
 };

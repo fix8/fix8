@@ -1,6 +1,12 @@
 var NAVTREEINDEX42 =
 {
+"classFIX8_1_1TEX_1_1DontKnowTrade.html#a8c920d0d43be0519c0f1cfb039cdcc54":[2,0,0,0,83,10],
+"classFIX8_1_1TEX_1_1DontKnowTrade.html#a91f5ace0abd435b98c7906d64ce94b8b":[2,0,0,0,83,14],
+"classFIX8_1_1TEX_1_1DontKnowTrade.html#a956b935350d469202aa6173f17a2e4ac":[2,0,0,0,83,15],
+"classFIX8_1_1TEX_1_1DontKnowTrade.html#aa67bcdccf44fba3a1b619830340ecf75":[2,0,0,0,83,9],
+"classFIX8_1_1TEX_1_1DontKnowTrade.html#aa67bcdccf44fba3a1b619830340ecf75":[2,0,0,0,83,7],
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#ab0136d0eccaafc6527ee993dacc21c3c":[2,0,0,0,83,12],
+"classFIX8_1_1TEX_1_1DontKnowTrade.html#ab0136d0eccaafc6527ee993dacc21c3c":[2,0,0,0,83,13],
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#acdc3c1413aa2c943f220117dbfd7d56c":[2,0,0,0,83,8],
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#acdc3c1413aa2c943f220117dbfd7d56c":[2,0,0,0,83,6],
 "classFIX8_1_1TEX_1_1DontKnowTrade_1_1NoComplexEvents.html":[2,0,0,0,83,0],
@@ -243,11 +249,5 @@ var NAVTREEINDEX42 =
 "classFIX8_1_1TEX_1_1Email_1_1NoRoutingIDs.html#a26478fd19ce45a39e4f010f50f3ba5cb":[2,0,0,0,64,3,0],
 "classFIX8_1_1TEX_1_1Email_1_1NoRoutingIDs.html#a470d1059dd69f8d92189455ce2ba3434":[2,0,0,0,64,3,6],
 "classFIX8_1_1TEX_1_1Email_1_1NoRoutingIDs.html#a8d7d9d8dc8d4ecc0cc8fa93095dda280":[2,0,0,0,64,3,7],
-"classFIX8_1_1TEX_1_1Email_1_1NoRoutingIDs.html#aadffa4667e10038451af9416abecea5c":[2,0,0,0,64,3,1],
-"classFIX8_1_1TEX_1_1Email_1_1NoRoutingIDs.html#ae3ba11bf57350ba8c63c57ab61b2afe6":[2,0,0,0,64,3,3],
-"classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html":[2,0,0,0,64,4],
-"classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a096bd1dcc7b24505bfb7ce9b8c2dc7ab":[2,0,0,0,64,4,10],
-"classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a0e84dd2a70b02d06efd6b8bff078d296":[2,0,0,0,64,4,9],
-"classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a4085348928517f4379af73ea40db8d3c":[2,0,0,0,64,4,4],
-"classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a48cd447062af7aeff3cb89f814639b2f":[2,0,0,0,64,4,3]
+"classFIX8_1_1TEX_1_1Email_1_1NoRoutingIDs.html#aadffa4667e10038451af9416abecea5c":[2,0,0,0,64,3,1]
 };

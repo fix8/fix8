@@ -1,5 +1,11 @@
 var NAVTREEINDEX73 =
 {
+"classFIX8_1_1TEX_1_1SecurityDefinition.html#aeecf36af990a7bac8d7794337b616941":[2,0,0,0,95,9],
+"classFIX8_1_1TEX_1_1SecurityDefinitionRequest.html":[2,0,0,0,94],
+"classFIX8_1_1TEX_1_1SecurityDefinitionRequest.html#a4086bc687ce0a39f2734f605a3e61074":[2,0,0,0,94,9],
+"classFIX8_1_1TEX_1_1SecurityDefinitionRequest.html#a55d192b1efb6447f3c243a85a790e337":[2,0,0,0,94,8],
+"classFIX8_1_1TEX_1_1SecurityDefinitionRequest.html#a6dfa99e586a98218565b19d9c6fe9fc2":[2,0,0,0,94,12],
+"classFIX8_1_1TEX_1_1SecurityDefinitionRequest.html#a71ecba573765f1003a29fd95cef909ac":[2,0,0,0,94,13],
 "classFIX8_1_1TEX_1_1SecurityDefinitionRequest.html#a9a32a4ebc94c1c7363205e349d7e7666":[2,0,0,0,94,14],
 "classFIX8_1_1TEX_1_1SecurityDefinitionRequest.html#abf931052e9e0d0d2da9fb1b63d3ca4b8":[2,0,0,0,94,11],
 "classFIX8_1_1TEX_1_1SecurityDefinitionRequest.html#ae537ce992dc86740a9fb39fd9d68d8f9":[2,0,0,0,94,10],
@@ -243,11 +249,5 @@ var NAVTREEINDEX73 =
 "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#a89f0ca5c09ebe817eff2ff6552465d6e":[2,0,0,0,53,5,7],
 "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#aafce165eee8248b1cc2bd623d570c854":[2,0,0,0,53,5,9],
 "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#abafda7182c06a2c9a7857a862ba69467":[2,0,0,0,53,5,11],
-"classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#ac14866198de5da7333800e2ef4adb273":[2,0,0,0,53,5,6],
-"classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#adc243dc794d9ef72cc0622d19bab182a":[2,0,0,0,53,5,5],
-"classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoLotTypeRules.html":[2,0,0,0,53,5,0],
-"classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoLotTypeRules.html#a1cdf948f126c19298c27058d42c3922a":[2,0,0,0,53,5,0,7],
-"classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoLotTypeRules.html#a299cff1d2ad7efa47ada72c9ceab1764":[2,0,0,0,53,5,0,2],
-"classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoLotTypeRules.html#a2dcd564e80154d1808648ae88c9c87aa":[2,0,0,0,53,5,0,3],
-"classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments_1_1NoLotTypeRules.html#a4454f1d2346c88506254fa732a3a85e7":[2,0,0,0,53,5,0,6]
+"classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#ac14866198de5da7333800e2ef4adb273":[2,0,0,0,53,5,6]
 };

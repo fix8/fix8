@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.5</span>
+   &#160;<span id="projectnumber">version  0.6.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -315,7 +315,7 @@ $(document).ready(function(){initNavTree('message_8hpp_source.html','');});
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;   <span class="keyword">template</span>&lt;<span class="keyword">typename</span> InputIterator&gt;</div>
-<div class="line"><a name="l00270"></a><span class="lineno"><a class="code" href="classFIX8_1_1MessageBase.html#a590f438cf0def9eefa0d83c84d0579f5">  270</a></span>&#160;   <a class="code" href="classFIX8_1_1MessageBase.html#a590f438cf0def9eefa0d83c84d0579f5">MessageBase</a>(<span class="keyword">const</span> <span class="keyword">class</span> <a class="code" href="structFIX8_1_1F8MetaCntx.html" title="Static metadata context class - one per FIX xml schema.">F8MetaCntx</a>&amp; <a class="code" href="namespaceFIX8_1_1TEX.html#a51c71fd32dd93234cd45486cac2ee12f">ctx</a>, <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>&amp; msgType, <span class="keyword">const</span> InputIterator begin, <span class="keyword">const</span> <span class="keywordtype">size_t</span> cnt</div>
+<div class="line"><a name="l00270"></a><span class="lineno"><a class="code" href="classFIX8_1_1MessageBase.html#adc086e165f4594152c7174b7e87cb8be">  270</a></span>&#160;   <a class="code" href="classFIX8_1_1MessageBase.html#adc086e165f4594152c7174b7e87cb8be">MessageBase</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structFIX8_1_1F8MetaCntx.html" title="Static metadata context class - one per FIX xml schema.">F8MetaCntx</a>&amp; <a class="code" href="namespaceFIX8_1_1TEX.html#a51c71fd32dd93234cd45486cac2ee12f">ctx</a>, <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>&amp; msgType, <span class="keyword">const</span> InputIterator begin, <span class="keyword">const</span> <span class="keywordtype">size_t</span> cnt</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;#<span class="keywordflow">if</span> defined PERMIT_CUSTOM_FIELDS</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;      ) : <a class="code" href="classFIX8_1_1MessageBase.html#a431cb6682a191a0031729a2bcee83ad6">_fp</a>(begin, cnt),</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;#else</div>
@@ -323,7 +323,7 @@ $(document).ready(function(){initNavTree('message_8hpp_source.html','');});
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;#endif</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      <a class="code" href="classFIX8_1_1MessageBase.html#a617a169934dba1343ea90f09b5e37d4a">_msgType</a>(msgType), <a class="code" href="classFIX8_1_1MessageBase.html#a6ea0490ab4028fdbaf2f26d382ecb2a9">_ctx</a>(ctx) {}</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;   <a class="code" href="classFIX8_1_1MessageBase.html#a590f438cf0def9eefa0d83c84d0579f5">MessageBase</a>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1MessageBase.html" title="Base class for all fix messages.">MessageBase</a>&amp; from);</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;   <a class="code" href="classFIX8_1_1MessageBase.html#adc086e165f4594152c7174b7e87cb8be">MessageBase</a>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1MessageBase.html" title="Base class for all fix messages.">MessageBase</a>&amp; from);</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;   <a class="code" href="classFIX8_1_1MessageBase.html" title="Base class for all fix messages.">MessageBase</a>&amp; <a class="code" href="classFIX8_1_1MessageBase.html#a67f8dd289ec80c52818b01a2dbe9f6b6" title="Assignment operator.">operator=</a>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1MessageBase.html" title="Base class for all fix messages.">MessageBase</a>&amp; that);</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;</div>
 <div class="line"><a name="l00284"></a><span class="lineno"><a class="code" href="classFIX8_1_1MessageBase.html#ad427dadfefc45b8222ad53217df02c1b">  284</a></span>&#160;   <span class="keyword">virtual</span> <a class="code" href="classFIX8_1_1MessageBase.html#ad427dadfefc45b8222ad53217df02c1b" title="Dtor.">~MessageBase</a>() { <a class="code" href="classFIX8_1_1MessageBase.html#a3451302a3803372f11f118078a54d789">clear</a>(<span class="keyword">false</span>); }</div>
@@ -653,7 +653,7 @@ $(document).ready(function(){initNavTree('message_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 15:15:29. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:45. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

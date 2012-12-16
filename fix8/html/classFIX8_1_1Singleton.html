@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.5</span>
+   &#160;<span id="projectnumber">version  0.6.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -138,6 +138,11 @@ Static Public Member Functions</h2></td></tr>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a30e6bf5b133749e90d65d0c596ca876c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a30e6bf5b133749e90d65d0c596ca876c">Singleton</a> (const <a class="el" href="classFIX8_1_1Singleton.html">Singleton</a> &amp;)</td></tr>
 <tr class="memitem:a8fc19b7c46702f67de622e8ca7d92c86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Singleton.html">Singleton</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a8fc19b7c46702f67de622e8ca7d92c86">operator=</a> (const <a class="el" href="classFIX8_1_1Singleton.html">Singleton</a> &amp;)</td></tr>
+<tr class="memitem:a09a07e596f9951567c87437d67aecfd4"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:a09a07e596f9951567c87437d67aecfd4"><td class="memTemplItemLeft" align="right" valign="top">tbb::atomic&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a><br class="typebreak"/>
+&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; * &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">_instance</a></td></tr>
+<tr class="memitem:a869f9079fbb2a0134233c51fb13fc285"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:a869f9079fbb2a0134233c51fb13fc285"><td class="memTemplItemLeft" align="right" valign="top">tbb::mutex&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a869f9079fbb2a0134233c51fb13fc285">_mutex</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -243,6 +248,64 @@ template&lt;typename T&gt; </div>
 </div>
 </div>
 <h2>Member Function Documentation</h2>
+<a class="anchor" id="a09a07e596f9951567c87437d67aecfd4"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tbb::atomic&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; * &gt; <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton</a>&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; &gt;::_instance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00067">67</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00950">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>, <a class="el" href="f8utils_8hpp_source.html#l00973">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::release()</a>, <a class="el" href="f8utils_8hpp_source.html#l00969">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::reset()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00946">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::~Singleton()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a869f9079fbb2a0134233c51fb13fc285"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tbb::mutex <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton</a>&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; &gt;::_mutex </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00069">69</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00950">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a4126bed417aa223a55989694f938e51e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -417,8 +480,6 @@ template&lt;typename T&gt; </div>
 
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00935">935</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00950">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>, <a class="el" href="f8utils_8hpp_source.html#l00973">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::release()</a>, <a class="el" href="f8utils_8hpp_source.html#l00969">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::reset()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00946">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::~Singleton()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="af58481bf755f035ef45289d6e8a2e4b5"></a>
@@ -443,8 +504,6 @@ template&lt;typename T&gt; </div>
 
 <p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00936">936</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00950">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
-
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
@@ -453,7 +512,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 15:15:41. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:57. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

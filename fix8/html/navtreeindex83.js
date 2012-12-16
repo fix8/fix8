@@ -1,5 +1,11 @@
 var NAVTREEINDEX83 =
 {
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a9594598382e968988bbd88a6dcbe81e7":[2,0,0,0,27,0,7],
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#acff7da3659358ea0b3cc03db42f4e0ef":[2,0,0,0,27,0,2],
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#aeab0a1cbc7f91dcf77ee11abe6f33601":[2,0,0,0,27,0,3],
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html":[2,0,0,0,27,0,0],
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html#a51fe8840601f9bcadd8ef41ac75bb6ed":[2,0,0,0,27,0,0,1],
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html#a6d269dc42aa72b8ebc125ba1302944c8":[2,0,0,0,27,0,0,4],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html#a7c28ae57c14543887e28b66da5eb451f":[2,0,0,0,27,0,0,7],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html#a939fe9ad3588d76ac5611711c113b773":[2,0,0,0,27,0,0,6],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html#aacf6f7c530eaa70dec8619b948e69ebf":[2,0,0,0,27,0,0,2],
@@ -243,11 +249,5 @@ var NAVTREEINDEX83 =
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html":[2,0,0,0,14,8,0],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a106b97f173d3bdc8dbe45e89ec0dbfcd":[2,0,0,0,14,8,0,5],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a4353c442facb3c1aa11fe7cc30057733":[2,0,0,0,14,8,0,1],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a4c2ffb76406905e31ead3a8029fa26e2":[2,0,0,0,14,8,0,2],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a4f0c83acfbe22bbd5cfd548a0db1af6d":[2,0,0,0,14,8,0,0],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a6b7d3172c23a5c866529a3f43be3ceb6":[2,0,0,0,14,8,0,6],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a957a663dbf9cc7878c0455ca540f41b9":[2,0,0,0,14,8,0,3],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#ac31780d4c9c45a73516f8281b4922b19":[2,0,0,0,14,8,0,4],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#ac5e36fb33aad67258496be07676ca8cb":[2,0,0,0,14,8,0,7],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoUnderlyings_1_1NoUnderlyingStips.html":[2,0,0,0,14,8,1]
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a4c2ffb76406905e31ead3a8029fa26e2":[2,0,0,0,14,8,0,2]
 };

@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.5</span>
+   &#160;<span id="projectnumber">version  0.6.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -164,14 +164,14 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 <div class="line"><a name="l00057"></a><span class="lineno"><a class="code" href="classFIX8_1_1TimerEvent.html">   57</a></span>&#160;<span class="keyword">class </span><a class="code" href="classFIX8_1_1TimerEvent.html" title="Timer event object to provide callback context with Timer.">TimerEvent</a></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{</div>
 <div class="line"><a name="l00059"></a><span class="lineno"><a class="code" href="classFIX8_1_1TimerEvent.html#abc9ba7872f9048ea99a8b54c5fb5f5d8">   59</a></span>&#160;   bool (T::*<a class="code" href="classFIX8_1_1TimerEvent.html#abc9ba7872f9048ea99a8b54c5fb5f5d8">_callback</a>)();</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="code" href="classFIX8_1_1TimerEvent.html#a27858758541dddb03fb082a407db6e41">   60</a></span>&#160;   <span class="keyword">mutable</span> <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> <a class="code" href="classFIX8_1_1TimerEvent.html#a27858758541dddb03fb082a407db6e41">_t</a>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="code" href="classFIX8_1_1TimerEvent.html#a27858758541dddb03fb082a407db6e41">   60</a></span>&#160;   <span class="keyword">mutable</span> <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> <a class="code" href="classFIX8_1_1TimerEvent.html#a27858758541dddb03fb082a407db6e41">_t</a>;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="classFIX8_1_1TimerEvent.html#ae8605becfa88a9e987c67252da8e86ba">   66</a></span>&#160;   <span class="keyword">explicit</span> <a class="code" href="classFIX8_1_1TimerEvent.html#ae8605becfa88a9e987c67252da8e86ba">TimerEvent</a>(<span class="keywordtype">bool</span> (T::*callback)()) : <a class="code" href="classFIX8_1_1TimerEvent.html#abc9ba7872f9048ea99a8b54c5fb5f5d8">_callback</a>(callback), <a class="code" href="classFIX8_1_1TimerEvent.html#a27858758541dddb03fb082a407db6e41">_t</a>() {}</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00069"></a><span class="lineno"><a class="code" href="classFIX8_1_1TimerEvent.html#a530ae75c06dad46cf6731743ff955752">   69</a></span>&#160;   <a class="code" href="classFIX8_1_1TimerEvent.html#a530ae75c06dad46cf6731743ff955752" title="Dtor.">~TimerEvent</a>() {}</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="classFIX8_1_1TimerEvent.html#ac008ce0cae9ad35ea0b314cc0f7bd57a">   73</a></span>&#160;   <span class="keywordtype">void</span> <span class="keyword">set</span>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a>&amp; t) <span class="keyword">const</span> { <a class="code" href="classFIX8_1_1TimerEvent.html#a27858758541dddb03fb082a407db6e41">_t</a> = t; }</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="classFIX8_1_1TimerEvent.html#ac008ce0cae9ad35ea0b314cc0f7bd57a">   73</a></span>&#160;   <span class="keywordtype">void</span> <span class="keyword">set</span>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a>&amp; t) <span class="keyword">const</span> { <a class="code" href="classFIX8_1_1TimerEvent.html#a27858758541dddb03fb082a407db6e41">_t</a> = t; }</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
 <div class="line"><a name="l00078"></a><span class="lineno"><a class="code" href="classFIX8_1_1TimerEvent.html#a8768fc736e831767a3dda9c08ca07fb4">   78</a></span>&#160;   <span class="keywordtype">bool</span> operator&lt;(const TimerEvent&lt;T&gt;&amp; right) <span class="keyword">const</span> { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1TimerEvent.html#a27858758541dddb03fb082a407db6e41">_t</a> &gt; right._t; };</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
@@ -276,7 +276,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00196"></a><span class="lineno"><a class="code" href="classFIX8_1_1Timer.html#a2597b9463946766f60d5321a5390cd74">  196</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1Timer.html#a2597b9463946766f60d5321a5390cd74">Timer&lt;T&gt;::schedule</a>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1TimerEvent.html" title="Timer event object to provide callback context with Timer.">TimerEvent&lt;T&gt;</a>&amp; what, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> timeToWait)</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;{</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;   <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> tofire;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;   <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> tofire;</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;   <span class="keywordflow">if</span> (timeToWait)</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;   {</div>
@@ -295,7 +295,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="comment">//---------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00216"></a><span class="lineno"><a class="code" href="classFIX8_1_1IntervalTimer.html">  216</a></span>&#160;<span class="comment"></span><span class="keyword">class </span><a class="code" href="classFIX8_1_1IntervalTimer.html" title="High resolution interval timer.">IntervalTimer</a></div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;{</div>
-<div class="line"><a name="l00218"></a><span class="lineno"><a class="code" href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">  218</a></span>&#160;   <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> <a class="code" href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">startTime_</a>, <a class="code" href="classFIX8_1_1IntervalTimer.html#a3f725a9fac0a0c58f08da3567141657f">delta_</a>;</div>
+<div class="line"><a name="l00218"></a><span class="lineno"><a class="code" href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">  218</a></span>&#160;   <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> <a class="code" href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">startTime_</a>, <a class="code" href="classFIX8_1_1IntervalTimer.html#a3f725a9fac0a0c58f08da3567141657f">delta_</a>;</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00222"></a><span class="lineno"><a class="code" href="classFIX8_1_1IntervalTimer.html#a62ac8015e34730792fb3df74d5f5280d">  222</a></span>&#160;   <a class="code" href="classFIX8_1_1IntervalTimer.html#a62ac8015e34730792fb3df74d5f5280d" title="Ctor. RAII.">IntervalTimer</a>() : <a class="code" href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">startTime_</a>(true) {}</div>
@@ -304,7 +304,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
 <div class="line"><a name="l00229"></a><span class="lineno"><a class="code" href="classFIX8_1_1IntervalTimer.html#a0aa09b40c3fa1d9ebe45cf6e63c8f654">  229</a></span>&#160;   <span class="keyword">const</span> <a class="code" href="classFIX8_1_1IntervalTimer.html" title="High resolution interval timer.">IntervalTimer</a>&amp; <a class="code" href="classFIX8_1_1IntervalTimer.html#a0aa09b40c3fa1d9ebe45cf6e63c8f654">Calculate</a>()</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;   {</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> now(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> now(<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      <a class="code" href="classFIX8_1_1IntervalTimer.html#a3f725a9fac0a0c58f08da3567141657f">delta_</a> = now - <a class="code" href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">startTime_</a>;</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;      <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;   }</div>
@@ -335,7 +335,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 15:15:40. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:56. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

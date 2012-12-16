@@ -1,5 +1,11 @@
 var NAVTREEINDEX33 =
 {
+"classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoLegs_1_1NoLegSecurityAltID.html":[2,0,0,0,39,6,0],
+"classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoLegs_1_1NoLegSecurityAltID.html#a000f8db82de3bb22dcae1c328cbff84e":[2,0,0,0,39,6,0,1],
+"classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoLegs_1_1NoLegSecurityAltID.html#a06b46603d4c71441ebde636c06b9fe3e":[2,0,0,0,39,6,0,7],
+"classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoLegs_1_1NoLegSecurityAltID.html#a55be8364ffddb1caa004a433c585710c":[2,0,0,0,39,6,0,0],
+"classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoLegs_1_1NoLegSecurityAltID.html#a5dbc6f435e98039069f2f5097fc84076":[2,0,0,0,39,6,0,6],
+"classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoLegs_1_1NoLegSecurityAltID.html#a789d33cb2ab9e7563e119d0c685385e3":[2,0,0,0,39,6,0,5],
 "classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoLegs_1_1NoLegSecurityAltID.html#a8728a2b46d52e52997fa77ab885cf1c3":[2,0,0,0,39,6,0,3],
 "classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoLegs_1_1NoLegSecurityAltID.html#a87797e5e7728e5713c69d575c69fa536":[2,0,0,0,39,6,0,2],
 "classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoLegs_1_1NoLegSecurityAltID.html#adc07a27bb1f525bf88816a0f3899dbd2":[2,0,0,0,39,6,0,4],
@@ -243,11 +249,5 @@ var NAVTREEINDEX33 =
 "classFIX8_1_1TEX_1_1CollateralReport_1_1NoPartyIDs_1_1NoPartySubIDs.html#a6e0f3d3086f5c9344843444851164f33":[2,0,0,0,38,7,0,0],
 "classFIX8_1_1TEX_1_1CollateralReport_1_1NoPartyIDs_1_1NoPartySubIDs.html#a6fce9d09fa4ced5838b4298d33edc26a":[2,0,0,0,38,7,0,4],
 "classFIX8_1_1TEX_1_1CollateralReport_1_1NoPartyIDs_1_1NoPartySubIDs.html#a8ed93921e5556c125b304f06333ad8d4":[2,0,0,0,38,7,0,1],
-"classFIX8_1_1TEX_1_1CollateralReport_1_1NoPartyIDs_1_1NoPartySubIDs.html#aa355f133fbcf66c84fb9b361ceb660d2":[2,0,0,0,38,7,0,3],
-"classFIX8_1_1TEX_1_1CollateralReport_1_1NoPartyIDs_1_1NoPartySubIDs.html#ac0926acd79925772f9ea540f9cda3562":[2,0,0,0,38,7,0,5],
-"classFIX8_1_1TEX_1_1CollateralReport_1_1NoSecurityAltID.html":[2,0,0,0,38,8],
-"classFIX8_1_1TEX_1_1CollateralReport_1_1NoSecurityAltID.html#a259e1bf1b0ef018cfd1f042fef28e24c":[2,0,0,0,38,8,6],
-"classFIX8_1_1TEX_1_1CollateralReport_1_1NoSecurityAltID.html#a5379912f8006d7072065f6f0d2fbe7d0":[2,0,0,0,38,8,2],
-"classFIX8_1_1TEX_1_1CollateralReport_1_1NoSecurityAltID.html#a6b8735f3fa9105055eafb9c9928f4454":[2,0,0,0,38,8,4],
-"classFIX8_1_1TEX_1_1CollateralReport_1_1NoSecurityAltID.html#a7cd28732c4cf07a27616be0b2356c209":[2,0,0,0,38,8,3]
+"classFIX8_1_1TEX_1_1CollateralReport_1_1NoPartyIDs_1_1NoPartySubIDs.html#aa355f133fbcf66c84fb9b361ceb660d2":[2,0,0,0,38,7,0,3]
 };

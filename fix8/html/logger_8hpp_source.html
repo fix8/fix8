@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.5</span>
+   &#160;<span id="projectnumber">version  0.6.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -271,7 +271,7 @@ $(document).ready(function(){initNavTree('logger_8hpp_source.html','');});
 <div class="line"><a name="l00177"></a><span class="lineno"><a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a8a6352174a852019fbc56474e6260ccf">  177</a></span>&#160;      pthread_t <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a8a6352174a852019fbc56474e6260ccf">_tid</a>;</div>
 <div class="line"><a name="l00178"></a><span class="lineno"><a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ac73291f8e309afde96e2ccb705f59582">  178</a></span>&#160;      std::string <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ac73291f8e309afde96e2ccb705f59582">_str</a>;</div>
 <div class="line"><a name="l00179"></a><span class="lineno"><a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a88cb8f4c070be040298afd0530ed5206">  179</a></span>&#160;      <span class="keywordtype">unsigned</span> <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a88cb8f4c070be040298afd0530ed5206">_val</a>;</div>
-<div class="line"><a name="l00180"></a><span class="lineno"><a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ae61f658def107ef819ed03232ccf8d47">  180</a></span>&#160;      <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ae61f658def107ef819ed03232ccf8d47">_when</a>;</div>
+<div class="line"><a name="l00180"></a><span class="lineno"><a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ae61f658def107ef819ed03232ccf8d47">  180</a></span>&#160;      <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ae61f658def107ef819ed03232ccf8d47">_when</a>;</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
 <div class="line"><a name="l00182"></a><span class="lineno"><a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#aec5cedcf5363e78861d445679caf1493">  182</a></span>&#160;      <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a45e05391b59682c551b0ee2a59eea6b7">LogElement</a>(<span class="keyword">const</span> pthread_t tid, <span class="keyword">const</span> std::string&amp; str, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> val=0)</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;         : <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a8a6352174a852019fbc56474e6260ccf">_tid</a>(tid), <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ac73291f8e309afde96e2ccb705f59582">_str</a>(str), <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a88cb8f4c070be040298afd0530ed5206">_val</a>(val), <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ae61f658def107ef819ed03232ccf8d47">_when</a>(true) {}</div>
@@ -320,7 +320,7 @@ $(document).ready(function(){initNavTree('logger_8hpp_source.html','');});
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;   <span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1Logger.html#aa11f47142886e4dd38230ad63ce0377f">operator()</a>();</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
-<div class="line"><a name="l00245"></a><span class="lineno"><a class="code" href="classFIX8_1_1Logger.html#a2aead0799d1095aca012e6bf6e6470c8">  245</a></span>&#160;   <span class="keyword">static</span> <span class="keyword">const</span> std::string <a class="code" href="classFIX8_1_1Logger.html#a2aead0799d1095aca012e6bf6e6470c8" title="string representation of logflags">_bit_names</a>[];</div>
+<div class="line"><a name="l00245"></a><span class="lineno"><a class="code" href="classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c">  245</a></span>&#160;   <span class="keyword">static</span> <span class="keyword">const</span> std::string <a class="code" href="classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c" title="string representation of logflags">_bit_names</a>[];</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;   <span class="keywordtype">char</span> <a class="code" href="classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81">get_thread_code</a>(pthread_t tid);</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
@@ -409,7 +409,7 @@ $(document).ready(function(){initNavTree('logger_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 15:15:29. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:45. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

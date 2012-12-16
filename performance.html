@@ -107,9 +107,13 @@ Compiled #29-Ubuntu SMP Fri Oct 19 10:26:51 UTC 2012
 Eight (4x2 HT) 2GHz Intel i7 Processors (Intel(R) Core(TM) i7-2635QM CPU @ 2.00GHz)
 6144 KB Cache; 15.9GB RAM
 31927 Bogomips Total
-gcc version 4.7.2 (Ubuntu/Linaro 4.7.2-2ubuntu1)
 </pre>
 				<br>
+				<p>And we are building with the following two compilers:</p>
+<pre>
+gcc version 4.7.2 (Ubuntu/Linaro 4.7.2-2ubuntu1)
+clang version 3.0-6ubuntu3 (tags/RELEASE_30/final) (based on LLVM 3.0)
+</pre>
 				</div>
 			</div>
 			<div class="row">
@@ -129,6 +133,10 @@ gcc version 4.7.2 (Ubuntu/Linaro 4.7.2-2ubuntu1)
 					In another terminal, run the client:
 <pre>
 % ./hftest -l client
+</pre>
+					<p>If you find the client disconnects during the test, restart the client in reliable mode:
+<pre>
+% ./hftest -rl client
 </pre>
 					<p>When the client has connected (there are no on screen messages), press <code>?</code> to see the help menu...
 <pre>
@@ -184,12 +192,13 @@ av. encode(server): 0.00001799 sec/msg, 35.40 secs, 1967360 msgs
 				<div class="span12">
 					<h2>4. The results</h2>
 					<p>
-						Here are the results tabulated from above.
+						Here are the results for gcc and clang tabulated.
 					</p>
 					<br>
 						<table class="span6 table table-striped table-bordered table-condensed center-table">
 							<thead>
 								<tr class="success">
+									<th>Compiler</th>
 									<th>Mode</th>
 									<th>Operation</th>
 									<th>Msgs processed</th>
@@ -199,6 +208,7 @@ av. encode(server): 0.00001799 sec/msg, 35.40 secs, 1967360 msgs
 							</thead>
 							<tbody>
 								<tr class="success">
+									<td>gcc</td>
 									<td>client</td>
 									<td>encode</td>
 									<td>500027</td>
@@ -207,12 +217,14 @@ av. encode(server): 0.00001799 sec/msg, 35.40 secs, 1967360 msgs
 								</tr>
 								<tr class="success">
 									<td></td>
+									<td></td>
 									<td>decode</td>
 									<td>1967357</td>
 									<td>35.58</td>
 									<td>18.08</td>
 								</tr>
 								<tr class="success">
+									<td></td>
 									<td>server</td>
 									<td>encode</td>
 									<td>1967360</td>
@@ -221,10 +233,43 @@ av. encode(server): 0.00001799 sec/msg, 35.40 secs, 1967360 msgs
 								</tr>
 								<tr class="success">
 									<td></td>
+									<td></td>
 									<td>decode</td>
 									<td>500027</td>
 									<td>8.54</td>
 									<td>17.08</td>
+								</tr>
+								<tr class="success">
+									<td>clang</td>
+									<td>client</td>
+									<td>encode</td>
+									<td>500023</td>
+									<td>7.83</td>
+									<td>15.67</td>
+								</tr>
+								<tr class="success">
+									<td></td>
+									<td></td>
+									<td>decode</td>
+									<td>1964133</td>
+									<td>38.01</td>
+									<td>19.35</td>
+								</tr>
+								<tr class="success">
+									<td></td>
+									<td>server</td>
+									<td>encode</td>
+									<td>1964134</td>
+									<td>36.05</td>
+									<td>18.35</td>
+								</tr>
+								<tr class="success">
+									<td></td>
+									<td></td>
+									<td>decode</td>
+									<td>500023</td>
+									<td>8.85</td>
+									<td>17.71</td>
 								</tr>
 							</tbody>
 						</table>
@@ -233,22 +278,36 @@ av. encode(server): 0.00001799 sec/msg, 35.40 secs, 1967360 msgs
 						<table class="span3 table table-striped table-bordered table-condensed center-table">
 							<thead>
 								<tr class="success">
+									<th>Compiler</th>
 									<th>Operation</th>
 									<th>Average &#xb5;s/msg</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr class="success">
+									<td>gcc</td>
 									<td>encode</td>
 									<td>16.88</td>
 								</tr>
 								<tr class="success">
+									<td></td>
 									<td>decode</td>
 									<td>17.58</td>
+								</tr>
+								<tr class="success">
+									<td>clang</td>
+									<td>encode</td>
+									<td>17.01</td>
+								</tr>
+								<tr class="success">
+									<td></td>
+									<td>decode</td>
+									<td>18.53</td>
 								</tr>
 							</tbody>
 						</table>
 						<br>
+						</table>
 					</div>
 				</div>
 			</div>

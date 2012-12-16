@@ -1,5 +1,11 @@
 var NAVTREEINDEX85 =
 {
+"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoPartyIDs.html#a360c680e55da3f142c234f7c652a48a6":[2,0,0,0,15,7,4,7],
+"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoPartyIDs.html#aa9c0ce2acc047b2621758caeeaaf40a6":[2,0,0,0,15,7,4,6],
+"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoPartyIDs.html#ac539e12514b38d0a282aec49b3ec1374":[2,0,0,0,15,7,4,5],
+"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoPartyIDs.html#ac645947182b990e3d8e5ecae7a7d03bf":[2,0,0,0,15,7,4,1],
+"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoPartyIDs.html#ac9587e10aa4cc16a1ea535eae4788533":[2,0,0,0,15,7,4,2],
+"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoPartyIDs.html#ad945ffde22fa7c353be1e73c928e342e":[2,0,0,0,15,7,4,3],
 "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoPartyIDs.html#af7dd95c76a47ca85c3e4bac1c8f3a2b3":[2,0,0,0,15,7,4,8],
 "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoPartyIDs_1_1NoPartySubIDs.html":[2,0,0,0,15,7,4,0],
 "classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoPartyIDs_1_1NoPartySubIDs.html#a0bc7d49f60ed33e7db37a5dab54612a9":[2,0,0,0,15,7,4,0,7],
@@ -243,11 +249,5 @@ var NAVTREEINDEX85 =
 "classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoOrdTypeRules.html#ab0cd805b83b345f0896219deec14abfb":[2,0,0,0,47,0,3,3],
 "classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoTimeInForceRules.html":[2,0,0,0,47,0,4],
 "classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoTimeInForceRules.html#a0eb34ad078b00bc2e59f717fc6b4ed43":[2,0,0,0,47,0,4,3],
-"classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoTimeInForceRules.html#a0f41d3ec95c27f896811d2df43ede0c3":[2,0,0,0,47,0,4,2],
-"classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoTimeInForceRules.html#a12bb04f321f8c6a19dcf47e3bc258c52":[2,0,0,0,47,0,4,0],
-"classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoTimeInForceRules.html#a39667d7bcf5a1e022f81c1e8ed74c425":[2,0,0,0,47,0,4,1],
-"classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoTimeInForceRules.html#a3b72222bcf18edadc94e209ab6170d81":[2,0,0,0,47,0,4,6],
-"classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoTimeInForceRules.html#a836707d775cf85fbfcd5fb9c58375725":[2,0,0,0,47,0,4,5],
-"classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoTimeInForceRules.html#a9a012380f28d81f4373a1d41266fb025":[2,0,0,0,47,0,4,4],
-"classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoTimeInForceRules.html#ae7635e6adb861b09fe9064481556884a":[2,0,0,0,47,0,4,7]
+"classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoTimeInForceRules.html#a0f41d3ec95c27f896811d2df43ede0c3":[2,0,0,0,47,0,4,2]
 };

@@ -1,5 +1,11 @@
 var NAVTREEINDEX53 =
 {
+"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#a0b65ab7b4c3f47a2e37ccd00e156d715":[2,0,0,0,110,6,0,4],
+"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#a22652bd9471523379222faa7c26eae47":[2,0,0,0,110,6,0,6],
+"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#a2f8555a7d097501f6c644873b97f3a38":[2,0,0,0,110,6,0,2],
+"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#a6cb639e1e47e55aaacd82f839b54529e":[2,0,0,0,110,6,0,3],
+"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#a92f7877b6a3e9ab7064a66f87b990c6d":[2,0,0,0,110,6,0,5],
+"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#aa242d2b228c4bfd98aaf0ef9ad694d65":[2,0,0,0,110,6,0,8],
 "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#ab98b13123e512b6c71fff160568df7d1":[2,0,0,0,110,6,0,1],
 "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs.html#af9a5d69f47cce583b41a518319d0efc6":[2,0,0,0,110,6,0,7],
 "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoSides_1_1NoAllocs_1_1NoNestedPartyIDs.html":[2,0,0,0,110,6,0,0],
@@ -243,11 +249,5 @@ var NAVTREEINDEX53 =
 "classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStipulations.html#a682cc95634b37c0cbb7e2170518e51b2":[2,0,0,0,73,0,6,5],
 "classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStipulations.html#a8044e2104edf4b2779bc7dc3bbe6d615":[2,0,0,0,73,0,6,3],
 "classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStipulations.html#a83f07c8ef677281b06250137b37a4429":[2,0,0,0,73,0,6,0],
-"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStipulations.html#ada4eeb21ae082924c97745baff695298":[2,0,0,0,73,0,6,4],
-"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html":[2,0,0,0,73,0,7],
-"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#a065b73a87501cc140ee943e48cee9578":[2,0,0,0,73,0,7,0],
-"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#a3e1ef8675b2aff2dbb595e40c968cf35":[2,0,0,0,73,0,7,1],
-"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#a646c75932422ac668c840d73539730ff":[2,0,0,0,73,0,7,6],
-"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#a87ce49f6c8fc766b7fdb8f127e44318b":[2,0,0,0,73,0,7,2],
-"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#aa045b742df441d8af00730eb376871d0":[2,0,0,0,73,0,7,3]
+"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStipulations.html#ada4eeb21ae082924c97745baff695298":[2,0,0,0,73,0,6,4]
 };

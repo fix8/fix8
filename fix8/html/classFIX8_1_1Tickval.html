@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.5</span>
+   &#160;<span id="projectnumber">version  0.6.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -118,7 +118,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1Tickval.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>High resolution time in nanosecond ticks.  
+<p>High resolution time in nanosecond ticks. <a class="el" href="classFIX8_1_1Thread.html" title="Modern POSIX pthread wrapper. Thread by pointer to member function. Ctor provides T instance and spec...">Thread</a> safe.  
  <a href="classFIX8_1_1Tickval.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>&gt;</code></p>
@@ -135,7 +135,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa1a1b99a8f1405995536213f13eebb70"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#aa1a1b99a8f1405995536213f13eebb70">Tickval</a> (const timespec &amp;from)</td></tr>
 <tr class="memitem:ab9c14be3e5dabee179bb859c0e76a61f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#ab9c14be3e5dabee179bb859c0e76a61f">operator=</a> (const <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;that)</td></tr>
 <tr class="memitem:a5931f207353378191d36ce919134bbb1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#a5931f207353378191d36ce919134bbb1">operator=</a> (const timespec &amp;that)</td></tr>
-<tr class="memitem:a1f7b4f446dc7ba78537d0ceb926eb36b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#a1f7b4f446dc7ba78537d0ceb926eb36b">get_ticks</a> () const </td></tr>
+<tr class="memitem:ad790963ef8cb2b3ed63bab122562d7fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#ad790963ef8cb2b3ed63bab122562d7fa">get_ticks</a> () const </td></tr>
 <tr class="memitem:a9a7c3f6ef8335a4b201d075b798896b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#a9a7c3f6ef8335a4b201d075b798896b2">now</a> ()</td></tr>
 <tr class="memitem:a10ac6bf45dfb0bbe96d68abdb438b9bb"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#a10ac6bf45dfb0bbe96d68abdb438b9bb">secs</a> () const </td></tr>
 <tr class="memitem:a5d3c5e5a834e7852b2f619f8ccacd7e4"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#a5d3c5e5a834e7852b2f619f8ccacd7e4">msecs</a> () const </td></tr>
@@ -165,7 +165,7 @@ Private Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a587fad30627bd376d2babbe5ea972cee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#a587fad30627bd376d2babbe5ea972cee">_value</a></td></tr>
+<tr class="memitem:ac4c14a564b343eb11bdbc45459c4ee6e"><td class="memItemLeft" align="right" valign="top">tbb::atomic&lt; <a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#ac4c14a564b343eb11bdbc45459c4ee6e">_value</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
@@ -183,7 +183,7 @@ Friends</h2></td></tr>
 <tr class="memitem:ad4781969035fcc5896d9c7771931bcfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#ad4781969035fcc5896d9c7771931bcfc">operator-=</a> (<a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;oldtime, const <a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a> &amp;ns)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>High resolution time in nanosecond ticks. </p>
+<div class="textblock"><p>High resolution time in nanosecond ticks. <a class="el" href="classFIX8_1_1Thread.html" title="Modern POSIX pthread wrapper. Thread by pointer to member function. Ctor provides T instance and spec...">Thread</a> safe. </p>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00050">50</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 </div><h2>Member Typedef Documentation</h2>
@@ -233,7 +233,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00065">65</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00101">now()</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00060">_value</a>, <a class="el" href="tickval_8hpp_source.html#l00054">noticks</a>, and <a class="el" href="tickval_8hpp_source.html#l00101">now()</a>.</p>
 
 <p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00125">get_tickval()</a>.</p>
 
@@ -263,6 +263,8 @@ Friends</h2></td></tr>
 <p>Copy Ctor. </p>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00068">68</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+
+<p>References <a class="el" href="tickval_8hpp_source.html#l00060">_value</a>.</p>
 
 </div>
 </div>
@@ -297,6 +299,8 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00072">72</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
+<p>References <a class="el" href="tickval_8hpp_source.html#l00060">_value</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="aa1a1b99a8f1405995536213f13eebb70"></a>
@@ -329,6 +333,8 @@ Friends</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00076">76</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+
+<p>References <a class="el" href="tickval_8hpp_source.html#l00233">_cvt()</a>, and <a class="el" href="tickval_8hpp_source.html#l00060">_value</a>.</p>
 
 </div>
 </div>
@@ -367,11 +373,11 @@ Friends</h2></td></tr>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00057">billion</a>.</p>
 
-<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00089">operator=()</a>.</p>
+<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00089">operator=()</a>, and <a class="el" href="tickval_8hpp_source.html#l00076">Tickval()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1f7b4f446dc7ba78537d0ceb926eb36b"></a>
+<a class="anchor" id="ad790963ef8cb2b3ed63bab122562d7fa"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -379,7 +385,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a>&amp; FIX8::Tickval::get_ticks </td>
+          <td class="memname"><a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a> FIX8::Tickval::get_ticks </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -420,8 +426,8 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Generate a <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> object, constructed with the current time. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </dd></dl>
+<p>Generate a <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> object, constructed with the current time. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00125">125</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
@@ -452,8 +458,8 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Assign current time to a given <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> object. </p>
-<dl class="section return"><dt>Returns</dt><dd>target <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> object </dd></dl>
+<p>Assign current time to a given <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> object. </p>
+<dl class="section return"><dt>Returns</dt><dd>target <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> object </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00134">134</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
@@ -515,7 +521,7 @@ Friends</h2></td></tr>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00125">get_tickval()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00080">FIX8::GetTimeAsStringMS()</a>, <a class="el" href="session_8cpp_source.html#l00548">FIX8::Session::heartbeat_service()</a>, <a class="el" href="timer_8hpp_source.html#l00242">FIX8::IntervalTimer::Reset()</a>, and <a class="el" href="tickval_8hpp_source.html#l00065">Tickval()</a>.</p>
+<p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00080">FIX8::GetTimeAsStringMS()</a>, <a class="el" href="session_8cpp_source.html#l00544">FIX8::Session::heartbeat_service()</a>, <a class="el" href="timer_8hpp_source.html#l00242">FIX8::IntervalTimer::Reset()</a>, <a class="el" href="session_8cpp_source.html#l00694">FIX8::Session::send_process()</a>, <a class="el" href="tickval_8hpp_source.html#l00065">Tickval()</a>, <a class="el" href="session_8hpp_source.html#l00417">FIX8::Session::update_received()</a>, and <a class="el" href="session_8hpp_source.html#l00414">FIX8::Session::update_sent()</a>.</p>
 
 </div>
 </div>
@@ -857,8 +863,8 @@ Friends</h2></td></tr>
 <p>Inequivalence operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
-    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
+    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
+    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -902,12 +908,12 @@ Friends</h2></td></tr>
 <p>Binary addition operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> to add to </td></tr>
-    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> to add </td></tr>
+    <tr><td class="paramname">newtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> to add to </td></tr>
+    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> to add </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Result as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Result as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00250">250</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
@@ -947,8 +953,8 @@ Friends</h2></td></tr>
 <p>Binary addition operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> to add to </td></tr>
-    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> to add </td></tr>
+    <tr><td class="paramname">newtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> to add to </td></tr>
+    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> to add </td></tr>
   </table>
   </dd>
 </dl>
@@ -992,12 +998,12 @@ Friends</h2></td></tr>
 <p>Binary addition operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> to add to </td></tr>
+    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> to add to </td></tr>
     <tr><td class="paramname">ns</td><td>ticks to add </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>oldtime as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>oldtime as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00255">255</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
@@ -1037,12 +1043,12 @@ Friends</h2></td></tr>
 <p>Binary negate operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> to subtract from </td></tr>
-    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> to subtract </td></tr>
+    <tr><td class="paramname">newtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> to subtract from </td></tr>
+    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> to subtract </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Result as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Result as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00239">239</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
@@ -1082,8 +1088,8 @@ Friends</h2></td></tr>
 <p>Binary negate operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> to subtract from </td></tr>
-    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> to subtract </td></tr>
+    <tr><td class="paramname">newtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> to subtract from </td></tr>
+    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> to subtract </td></tr>
   </table>
   </dd>
 </dl>
@@ -1127,12 +1133,12 @@ Friends</h2></td></tr>
 <p>Binary negate operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> to subtract from </td></tr>
-    <tr><td class="paramname">ns</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> to subtract </td></tr>
+    <tr><td class="paramname">oldtime</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> to subtract from </td></tr>
+    <tr><td class="paramname">ns</td><td><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> to subtract </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>oldtime as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>oldtime as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00261">261</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
@@ -1172,8 +1178,8 @@ Friends</h2></td></tr>
 <p>Less than operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
-    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
+    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
+    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -1217,8 +1223,8 @@ Friends</h2></td></tr>
 <p>Less than or equal to operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
-    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
+    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
+    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -1262,8 +1268,8 @@ Friends</h2></td></tr>
 <p>Equivalence operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
-    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
+    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
+    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -1307,8 +1313,8 @@ Friends</h2></td></tr>
 <p>Greater than operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
-    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
+    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
+    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -1352,8 +1358,8 @@ Friends</h2></td></tr>
 <p>Greater than or equal to operator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
-    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks.">Tickval</a> </td></tr>
+    <tr><td class="paramname">a</td><td>lhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
+    <tr><td class="paramname">b</td><td>rhs <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -1364,7 +1370,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2>Member Data Documentation</h2>
-<a class="anchor" id="a587fad30627bd376d2babbe5ea972cee"></a>
+<a class="anchor" id="ac4c14a564b343eb11bdbc45459c4ee6e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1372,7 +1378,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a> FIX8::Tickval::_value</td>
+          <td class="memname">tbb::atomic&lt;<a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a>&gt; FIX8::Tickval::_value</td>
         </tr>
       </table>
   </td>
@@ -1384,7 +1390,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00060">60</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00097">get_ticks()</a>, <a class="el" href="tickval_8hpp_source.html#l00109">msecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00117">nsecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00151">operator unsigned long long()</a>, <a class="el" href="tickval_8hpp_source.html#l00147">operator void *()</a>, <a class="el" href="tickval_8hpp_source.html#l00143">operator!()</a>, <a class="el" href="tickval_8hpp_source.html#l00278">FIX8::operator!=()</a>, <a class="el" href="tickval_8hpp_source.html#l00250">FIX8::operator+()</a>, <a class="el" href="tickval_8hpp_source.html#l00255">FIX8::operator+=()</a>, <a class="el" href="tickval_8hpp_source.html#l00239">FIX8::operator-()</a>, <a class="el" href="tickval_8hpp_source.html#l00244">FIX8::operator-=()</a>, <a class="el" href="tickval_8hpp_source.html#l00288">FIX8::operator&lt;()</a>, <a class="el" href="tickval_8hpp_source.html#l00298">FIX8::operator&lt;=()</a>, <a class="el" href="tickval_8hpp_source.html#l00079">operator=()</a>, <a class="el" href="tickval_8hpp_source.html#l00273">FIX8::operator==()</a>, <a class="el" href="tickval_8hpp_source.html#l00283">FIX8::operator&gt;()</a>, <a class="el" href="tickval_8hpp_source.html#l00293">FIX8::operator&gt;=()</a>, <a class="el" href="tickval_8hpp_source.html#l00105">secs()</a>, <a class="el" href="tickval_8hpp_source.html#l00121">todouble()</a>, and <a class="el" href="tickval_8hpp_source.html#l00113">usecs()</a>.</p>
+<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00097">get_ticks()</a>, <a class="el" href="tickval_8hpp_source.html#l00109">msecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00117">nsecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00151">operator unsigned long long()</a>, <a class="el" href="tickval_8hpp_source.html#l00147">operator void *()</a>, <a class="el" href="tickval_8hpp_source.html#l00143">operator!()</a>, <a class="el" href="tickval_8hpp_source.html#l00278">FIX8::operator!=()</a>, <a class="el" href="tickval_8hpp_source.html#l00250">FIX8::operator+()</a>, <a class="el" href="tickval_8hpp_source.html#l00255">FIX8::operator+=()</a>, <a class="el" href="tickval_8hpp_source.html#l00239">FIX8::operator-()</a>, <a class="el" href="tickval_8hpp_source.html#l00244">FIX8::operator-=()</a>, <a class="el" href="tickval_8hpp_source.html#l00288">FIX8::operator&lt;()</a>, <a class="el" href="tickval_8hpp_source.html#l00298">FIX8::operator&lt;=()</a>, <a class="el" href="tickval_8hpp_source.html#l00079">operator=()</a>, <a class="el" href="tickval_8hpp_source.html#l00273">FIX8::operator==()</a>, <a class="el" href="tickval_8hpp_source.html#l00283">FIX8::operator&gt;()</a>, <a class="el" href="tickval_8hpp_source.html#l00293">FIX8::operator&gt;=()</a>, <a class="el" href="tickval_8hpp_source.html#l00105">secs()</a>, <a class="el" href="tickval_8hpp_source.html#l00065">Tickval()</a>, <a class="el" href="tickval_8hpp_source.html#l00121">todouble()</a>, and <a class="el" href="tickval_8hpp_source.html#l00113">usecs()</a>.</p>
 
 </div>
 </div>
@@ -1456,7 +1462,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00054">54</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00147">operator void *()</a>, and <a class="el" href="tickval_8hpp_source.html#l00143">operator!()</a>.</p>
+<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00147">operator void *()</a>, <a class="el" href="tickval_8hpp_source.html#l00143">operator!()</a>, and <a class="el" href="tickval_8hpp_source.html#l00065">Tickval()</a>.</p>
 
 </div>
 </div>
@@ -1491,7 +1497,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 15:15:44. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:29:00. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -299,7 +299,6 @@ var searchData=
   ['crosstype_5fcross_5fone_5fside',['CrossType_CROSS_ONE_SIDE',['../namespaceFIX8_1_1TEX.html#a5698ca7167584e468e9eb4555527f1d2',1,'FIX8::TEX']]],
   ['crosstype_5fcross_5fsame_5fprice',['CrossType_CROSS_SAME_PRICE',['../namespaceFIX8_1_1TEX.html#a13c9e51b798986832f4fb77300fa1fa7',1,'FIX8::TEX']]],
   ['crosstype_5frealm_5fels',['CrossType_realm_els',['../namespaceFIX8_1_1TEX.html#a4611f83303f90a6e562ce41e9c53ecb1',1,'FIX8::TEX']]],
-  ['ctx',['ctx',['../namespaceFIX8_1_1TEX.html#a5ee5c1541ab05b590ebc9719cdcd9588',1,'FIX8::TEX']]],
   ['customerorfirm_5fcustomer',['CustomerOrFirm_CUSTOMER',['../namespaceFIX8_1_1TEX.html#a73bede2197aab1e16c521bc54927b30d',1,'FIX8::TEX']]],
   ['customerorfirm_5ffirm',['CustomerOrFirm_FIRM',['../namespaceFIX8_1_1TEX.html#ade2733686005bc9bb0b250965fea3c72',1,'FIX8::TEX']]],
   ['customerorfirm_5frealm_5fels',['CustomerOrFirm_realm_els',['../namespaceFIX8_1_1TEX.html#acba15b67c7e7eeafd7a48648c6eb10c3',1,'FIX8::TEX']]],

@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.5</span>
+   &#160;<span id="projectnumber">version  0.6.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -740,25 +740,25 @@ $(document).ready(function(){initNavTree('f8utils_8hpp_source.html','');});
 <div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00943"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#a47e7d4a31178559e00b0d14150038d2a">  943</a></span>&#160;   <a class="code" href="classFIX8_1_1Singleton.html#a47e7d4a31178559e00b0d14150038d2a" title="Ctor.">Singleton</a>() {}</div>
 <div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;</div>
-<div class="line"><a name="l00946"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#af3033ae46dafa190c1fa02964808e58c">  946</a></span>&#160;   <span class="keyword">virtual</span> <a class="code" href="classFIX8_1_1Singleton.html#af3033ae46dafa190c1fa02964808e58c" title="Dtor.">~Singleton</a>() { <span class="keyword">delete</span> <a class="code" href="classFIX8_1_1Singleton.html#adecf21731e7e87ef04dfd86c69dca50b">_instance</a>.fetch_and_store(0); }</div>
+<div class="line"><a name="l00946"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#af3033ae46dafa190c1fa02964808e58c">  946</a></span>&#160;   <span class="keyword">virtual</span> <a class="code" href="classFIX8_1_1Singleton.html#af3033ae46dafa190c1fa02964808e58c" title="Dtor.">~Singleton</a>() { <span class="keyword">delete</span> <a class="code" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">_instance</a>.fetch_and_store(0); }</div>
 <div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;</div>
 <div class="line"><a name="l00950"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#a4126bed417aa223a55989694f938e51e">  950</a></span>&#160;   <span class="keyword">static</span> T *<a class="code" href="classFIX8_1_1Singleton.html#a4126bed417aa223a55989694f938e51e">instance</a>()</div>
 <div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;   {</div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Singleton.html#adecf21731e7e87ef04dfd86c69dca50b">_instance</a>) <span class="comment">// cast operator performs atomic load with acquire</span></div>
-<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;         <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Singleton.html#adecf21731e7e87ef04dfd86c69dca50b">_instance</a>;</div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">_instance</a>) <span class="comment">// cast operator performs atomic load with acquire</span></div>
+<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;         <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">_instance</a>;</div>
 <div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;</div>
-<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;      tbb::mutex::scoped_lock guard(<a class="code" href="classFIX8_1_1Singleton.html#af58481bf755f035ef45289d6e8a2e4b5">_mutex</a>);</div>
-<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Singleton.html#adecf21731e7e87ef04dfd86c69dca50b">_instance</a> == 0)</div>
-<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;         <a class="code" href="classFIX8_1_1Singleton.html#adecf21731e7e87ef04dfd86c69dca50b">_instance</a> = <span class="keyword">new</span> T;</div>
-<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Singleton.html#adecf21731e7e87ef04dfd86c69dca50b">_instance</a>;</div>
+<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;      tbb::mutex::scoped_lock guard(<a class="code" href="classFIX8_1_1Singleton.html#a869f9079fbb2a0134233c51fb13fc285">_mutex</a>);</div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">_instance</a> == 0)</div>
+<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;         <a class="code" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">_instance</a> = <span class="keyword">new</span> T;</div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">_instance</a>;</div>
 <div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;   }</div>
 <div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;</div>
 <div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;</div>
 <div class="line"><a name="l00964"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#a26973beaa1c61051e86f89d6a8787faa">  964</a></span>&#160;   T *<a class="code" href="classFIX8_1_1Singleton.html#a26973beaa1c61051e86f89d6a8787faa">operator-&gt;</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Singleton.html#a4126bed417aa223a55989694f938e51e">instance</a>(); }</div>
 <div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;</div>
-<div class="line"><a name="l00969"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#af4b944c4dfa35a0e61f274c9920c6ab9">  969</a></span>&#160;   <span class="keyword">static</span> T *<a class="code" href="classFIX8_1_1Singleton.html#af4b944c4dfa35a0e61f274c9920c6ab9">reset</a>(T *what) { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Singleton.html#adecf21731e7e87ef04dfd86c69dca50b">_instance</a>.fetch_and_store(what); }</div>
+<div class="line"><a name="l00969"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#af4b944c4dfa35a0e61f274c9920c6ab9">  969</a></span>&#160;   <span class="keyword">static</span> T *<a class="code" href="classFIX8_1_1Singleton.html#af4b944c4dfa35a0e61f274c9920c6ab9">reset</a>(T *what) { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">_instance</a>.fetch_and_store(what); }</div>
 <div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;</div>
-<div class="line"><a name="l00973"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#a08df65624eecfd2cf144e4837e66f019">  973</a></span>&#160;   <span class="keyword">static</span> T *<a class="code" href="classFIX8_1_1Singleton.html#a08df65624eecfd2cf144e4837e66f019">release</a>() { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Singleton.html#adecf21731e7e87ef04dfd86c69dca50b">_instance</a>.fetch_and_store(0); }</div>
+<div class="line"><a name="l00973"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#a08df65624eecfd2cf144e4837e66f019">  973</a></span>&#160;   <span class="keyword">static</span> T *<a class="code" href="classFIX8_1_1Singleton.html#a08df65624eecfd2cf144e4837e66f019">release</a>() { <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">_instance</a>.fetch_and_store(0); }</div>
 <div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;};</div>
 <div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;</div>
 <div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;<span class="comment">//---------------------------------------------------------------------------------------------------</span></div>
@@ -850,7 +850,7 @@ $(document).ready(function(){initNavTree('f8utils_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 15:15:29. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:45. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

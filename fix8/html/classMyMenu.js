@@ -36,7 +36,7 @@ var classMyMenu =
     [ "send_all_preloaded", "classMyMenu.html#ae8b731aa4bfcff89e1a9f16afaaf3e2a", null ],
     [ "send_msgs", "classMyMenu.html#a7e584e8b4c1ed049712cdd31bdfa6d8d", null ],
     [ "write_msgs", "classMyMenu.html#aa702d8304303510898b9938e1dc15c07", null ],
-    [ "FIX8::StaticTable< const MenuItem, bool(MyMenu::*)(), MenuItem >", "classMyMenu.html#ab147bbd48c69842357dfa850bbaca75c", null ],
+    [ "FIX8::StaticTable< const MenuItem, bool(MyMenu::*)(), MenuItem >", "classMyMenu.html#aed7525c78af0f64c017c25f387505aa3", null ],
     [ "_cm", "classMyMenu.html#a3be5a89b79d4d00d3edfbc3e30da8d20", null ],
     [ "_handlers", "classMyMenu.html#a16e8958dbfe5bc3e02853c5b879ca4c6", null ],
     [ "_istr", "classMyMenu.html#a055f1c3989a51d8c3ddbbb6419fba9ca", null ],

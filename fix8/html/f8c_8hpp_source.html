@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.5</span>
+   &#160;<span id="projectnumber">version  0.6.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -219,9 +219,9 @@ $(document).ready(function(){initNavTree('f8c_8hpp_source.html','');});
 <div class="line"><a name="l00116"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#aaebab02aab2294fd3380fb303f7de7f0">  116</a></span>&#160;<span class="keyword">typedef</span> std::map&lt;RealmObject *, std::string, RealmObject::less&gt; <a class="code" href="namespaceFIX8.html#aaebab02aab2294fd3380fb303f7de7f0">RealmMap</a>;</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a3833e55341a96836340804258791257c">  119</a></span>&#160;<span class="keyword">typedef</span> std::map&lt;unsigned, class FieldSpec&gt; <a class="code" href="namespaceFIX8.html#a3833e55341a96836340804258791257c">FieldSpecMap</a>;</div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#aba98fd7f333103f1c65718ce1d2d1306">  119</a></span>&#160;<span class="keyword">typedef</span> std::map&lt;unsigned, struct FieldSpec&gt; <a class="code" href="namespaceFIX8.html#aba98fd7f333103f1c65718ce1d2d1306">FieldSpecMap</a>;</div>
 <div class="line"><a name="l00120"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a04724596d2e79ea27a5c57543a516869">  120</a></span>&#160;<span class="keyword">typedef</span> std::map&lt;std::string, unsigned&gt; <a class="code" href="namespaceFIX8.html#a04724596d2e79ea27a5c57543a516869">FieldToNumMap</a>;</div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a679e4b4a0416a4fec64a8de1ac48a6f9">  121</a></span>&#160;<span class="keyword">typedef</span> std::map&lt;unsigned, class MessageSpec&gt; <a class="code" href="namespaceFIX8.html#a679e4b4a0416a4fec64a8de1ac48a6f9">GroupMap</a>;</div>
+<div class="line"><a name="l00121"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#ab2f736655c16c802e88bb5772312605d">  121</a></span>&#160;<span class="keyword">typedef</span> std::map&lt;unsigned, struct MessageSpec&gt; <a class="code" href="namespaceFIX8.html#ab2f736655c16c802e88bb5772312605d">GroupMap</a>;</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00124"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#abbef208b1c28a9bb7b9dfda012b9179c">  124</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="structFIX8_1_1StaticTable.html" title="A specialised map to enable native static initalisation.">StaticTable&lt;std::string, FieldTrait::FieldType&gt;</a> <a class="code" href="namespaceFIX8.html#abbef208b1c28a9bb7b9dfda012b9179c">BaseTypeMap</a>;</div>
@@ -257,7 +257,7 @@ $(document).ready(function(){initNavTree('f8c_8hpp_source.html','');});
 <div class="line"><a name="l00156"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html">  156</a></span>&#160;<span class="comment"></span><span class="keyword">struct </span><a class="code" href="structFIX8_1_1MessageSpec.html" title="f8c internal message representation.">MessageSpec</a></div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;{</div>
 <div class="line"><a name="l00158"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440">  158</a></span>&#160;   <a class="code" href="classFIX8_1_1FieldTraits.html" title="A collection of FieldTraits for a message. Which fields are required, which are present.">FieldTraits</a> <a class="code" href="structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440">_fields</a>;</div>
-<div class="line"><a name="l00159"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">  159</a></span>&#160;   <a class="code" href="namespaceFIX8.html#a679e4b4a0416a4fec64a8de1ac48a6f9">GroupMap</a> <a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>;</div>
+<div class="line"><a name="l00159"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">  159</a></span>&#160;   <a class="code" href="namespaceFIX8.html#ab2f736655c16c802e88bb5772312605d">GroupMap</a> <a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>;</div>
 <div class="line"><a name="l00160"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html#a4497083907089972aec0d549f7f2b871">  160</a></span>&#160;   std::string <a class="code" href="structFIX8_1_1MessageSpec.html#a4497083907089972aec0d549f7f2b871">_name</a>, <a class="code" href="structFIX8_1_1MessageSpec.html#a4a980632b2640fbe8e2d802eac27ebba">_description</a>, <a class="code" href="structFIX8_1_1MessageSpec.html#ae0f73d0b1ff8a36ad1109184e1c9eac6">_comment</a>;</div>
 <div class="line"><a name="l00161"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html#a2eb3aa22c9fe4f1db425021cf68123d1">  161</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="structFIX8_1_1MessageSpec.html#a2eb3aa22c9fe4f1db425021cf68123d1">_is_admin</a>;</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
@@ -299,7 +299,7 @@ $(document).ready(function(){initNavTree('f8c_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 9 2012 15:15:29. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:45. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

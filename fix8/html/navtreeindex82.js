@@ -1,5 +1,11 @@
 var NAVTREEINDEX82 =
 {
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings_1_1NoUnderlyingLegSecurityAltID.html#aea06e87f86d77e98645ef851f2edf3ae":[2,0,0,0,28,3,3,0,5],
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings_1_1NoUnderlyingLegSecurityAltID.html#aea247896c5d1bbc065c0cc33642c1c3d":[2,0,0,0,28,3,3,0,7],
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings_1_1NoUnderlyingLegSecurityAltID.html#aed56a51a1fa0e330d7b61a3721ab6597":[2,0,0,0,28,3,3,0,1],
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoPosAmt.html":[2,0,0,0,28,4],
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoPosAmt.html#a0e2a2fefec2727287c8b014d4c7a079e":[2,0,0,0,28,4,5],
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoPosAmt.html#a540590622d31b98d51ff284b4308cbe4":[2,0,0,0,28,4,6],
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoPosAmt.html#a6e20bd11948af7122c2a86caf199fff1":[2,0,0,0,28,4,7],
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoPosAmt.html#a739c042e9054e3c1d73d3a8f49a0becb":[2,0,0,0,28,4,1],
 "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoPosAmt.html#a7941570271cf9e080d7cf4e13b933806":[2,0,0,0,28,4,2],
@@ -243,11 +249,5 @@ var NAVTREEINDEX82 =
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a2eac05e926935cd3d4cc99695a39213b":[2,0,0,0,27,0,5],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a3f288b813f88f25d6e96a9940cc28a5d":[2,0,0,0,27,0,1],
 "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a477865d255ea89c0299888b87f0d3828":[2,0,0,0,27,0,8],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a552851c0b4d27cbd6657a9b724f0ec4d":[2,0,0,0,27,0,4],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a9594598382e968988bbd88a6dcbe81e7":[2,0,0,0,27,0,7],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#acff7da3659358ea0b3cc03db42f4e0ef":[2,0,0,0,27,0,2],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#aeab0a1cbc7f91dcf77ee11abe6f33601":[2,0,0,0,27,0,3],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html":[2,0,0,0,27,0,0],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html#a51fe8840601f9bcadd8ef41ac75bb6ed":[2,0,0,0,27,0,0,1],
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents_1_1NoComplexEventDates.html#a6d269dc42aa72b8ebc125ba1302944c8":[2,0,0,0,27,0,0,4]
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoComplexEvents.html#a552851c0b4d27cbd6657a9b724f0ec4d":[2,0,0,0,27,0,4]
 };

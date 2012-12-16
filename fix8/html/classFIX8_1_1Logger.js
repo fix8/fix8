@@ -28,7 +28,7 @@ var classFIX8_1_1Logger =
     [ "rotate", "classFIX8_1_1Logger.html#a96598126c3eb87a72b3581a223b7b489", null ],
     [ "send", "classFIX8_1_1Logger.html#a41aff49ccaf67b09eee5e2991949b98b", null ],
     [ "stop", "classFIX8_1_1Logger.html#a858c1ea1f37e54d330c5ab05b4fb80a3", null ],
-    [ "_bit_names", "classFIX8_1_1Logger.html#a2aead0799d1095aca012e6bf6e6470c8", null ],
+    [ "_bit_names", "classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c", null ],
     [ "_buf", "classFIX8_1_1Logger.html#a16c633385a6d715c09fe8f1f9052ea87", null ],
     [ "_buffer", "classFIX8_1_1Logger.html#a24892c6b55cde6cd91e97e0180ddfa39", null ],
     [ "_flags", "classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387", null ],

@@ -95,7 +95,7 @@
 								<div id="generaleOne" class="accordion-body collapse">
 									<div class="accordion-inner">
 										Fix8 is a C++ development toolkit designed to provide <a href="http://www.fixprotocol.org">FIX</a> connectivity to userland applications.
-										Fix8 provides an API framework from which you can quickly develop a FIX interface.
+										Fix8 provides an API framework on which you can quickly develop a FIX interface.
 									</div>
 								</div>
 							</div>
@@ -128,6 +128,7 @@
 								<div id="generaleFour" class="accordion-body collapse">
 									<div class="accordion-inner">
 										Fix8 is open source and is released under the <a href="http://www.gnu.org/licenses/lgpl.html">GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.</a>
+										<p>This license <i>does not</i> require you to release your propriatry source code or Fix8 generated code when you release software that links against the Fix8 runtime library.</p>
 									</div>
 								</div>
 							</div>
@@ -450,6 +451,21 @@ POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML</pre>
 .
 .
 .</pre>
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testNine">i) How do I build Fix8 with clang (LLVM) ?</a>
+												</div>
+												<div id="testNine" class="accordion-body collapse">
+													<div class="accordion-inner">
+														By default, gcc is chosen by configure to build Fix8. You can override this by passing an environment variable to configure, as follows:
+<pre>
+./bootstrap
+CXX=clang ./configure [with your options here]
+make; make install
+</pre>
 													</div>
 												</div>
 											</div>

@@ -1,5 +1,11 @@
 var NAVTREEINDEX54 =
 {
+"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html":[2,0,0,0,73,0,7],
+"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#a065b73a87501cc140ee943e48cee9578":[2,0,0,0,73,0,7,0],
+"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#a3e1ef8675b2aff2dbb595e40c968cf35":[2,0,0,0,73,0,7,1],
+"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#a646c75932422ac668c840d73539730ff":[2,0,0,0,73,0,7,6],
+"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#a87ce49f6c8fc766b7fdb8f127e44318b":[2,0,0,0,73,0,7,2],
+"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#aa045b742df441d8af00730eb376871d0":[2,0,0,0,73,0,7,3],
 "classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#ae6f78641b7721de599991dbd8ca62b82":[2,0,0,0,73,0,7,7],
 "classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#af8d93731725c2711aaafe94749c9c11c":[2,0,0,0,73,0,7,5],
 "classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoStrategyParameters.html#af8e451090f249b5445aada88f357223b":[2,0,0,0,73,0,7,4],
@@ -243,11 +249,5 @@ var NAVTREEINDEX54 =
 "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#a738d46b570ebd0041df47a7e3e72779c":[2,0,0,0,12,5,2],
 "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#a8feff5b59ffbac1a2ee54c7c28985899":[2,0,0,0,12,5,8],
 "classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#a9342c527ad657f47c9b63734dd6d373e":[2,0,0,0,12,5,1],
-"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#acb4ce1882e66d5caebe1975de03a7f2d":[2,0,0,0,12,5,4],
-"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#adff21fc7cecdfee7eab7876989a1d190":[2,0,0,0,12,5,3],
-"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs_1_1NoPartySubIDs.html":[2,0,0,0,12,5,0],
-"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs_1_1NoPartySubIDs.html#a2e2a9867247ce96fc255b77040aaac2f":[2,0,0,0,12,5,0,1],
-"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs_1_1NoPartySubIDs.html#a38cbfcbd1c3503f6b02c71c363e4abeb":[2,0,0,0,12,5,0,2],
-"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs_1_1NoPartySubIDs.html#a86e218c6ad85531f568d177c11d37955":[2,0,0,0,12,5,0,5],
-"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs_1_1NoPartySubIDs.html#a94589e702f63f338e8d2a54cee02fea9":[2,0,0,0,12,5,0,6]
+"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoPartyIDs.html#acb4ce1882e66d5caebe1975de03a7f2d":[2,0,0,0,12,5,4]
 };
