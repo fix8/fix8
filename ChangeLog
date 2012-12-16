@@ -1,3 +1,6 @@
+0.6.6 	16/12/2012		<fix@fix8.org>
+Fixed jira issues: FX-17, FX-18
+
 0.6.5 	09/12/2012		<fix@fix8.org>
 Changed to LGPL; added performance script; fixed jira issues: FX-11, FX-12, FX-13, FX-14, FX-15, FX-16
 
