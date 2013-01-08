@@ -176,6 +176,11 @@
 
 #include "qcustomplot.h"
 
+#if QT_VERSION < 0x050000 || defined(QT_PRINTSUPPORT_LIB)
+#include <QPrinter>
+#else
+#include <QPdfWriter>
+#endif
 // ================================================================================
 // =================== QCPData
 // ================================================================================
@@ -7349,6 +7354,7 @@ void QCustomPlot::rescaleAxes()
 bool QCustomPlot::savePdf(const QString &fileName, bool noCosmeticPen, int width, int height)
 {
   bool success = false;
+
   int newWidth, newHeight;
   if (width == 0 || height == 0)
   {
@@ -7360,13 +7366,18 @@ bool QCustomPlot::savePdf(const QString &fileName, bool noCosmeticPen, int width
     newHeight = height;
   }
   
-  QPrinter printer(QPrinter::ScreenResolution);
-  printer.setOutputFileName(fileName);
-  printer.setFullPage(true);
   QRect oldViewport = mViewport;
   mViewport = QRect(0, 0, newWidth, newHeight);
   updateAxisRect();
+#if QT_VERSION < 0x050000 || defined(QT_PRINTSUPPORT_LIB)
+  QPrinter printer(QPrinter::ScreenResolution);
+  printer.setOutputFileName(fileName);
+  printer.setFullPage(true);
   printer.setPaperSize(mViewport.size(), QPrinter::DevicePixel);
+#else
+  QPdfWriter printer(fileName);
+  printer.setPageSize(QPagedPaintDevice::Custom);
+#endif
   QCPPainter printpainter;
   if (printpainter.begin(&printer))
   {
@@ -7381,6 +7392,7 @@ bool QCustomPlot::savePdf(const QString &fileName, bool noCosmeticPen, int width
   }
   mViewport = oldViewport;
   updateAxisRect();
+
   return success;
 }
 
