@@ -27,19 +27,16 @@
 #ifndef QCUSTOMPLOT_H
 #define QCUSTOMPLOT_H
 
-#include <QObject>
 #include <QWidget>
 #include <QPainter>
-#include <QPaintEvent>
 #include <QPixmap>
 #include <QVector>
 #include <QString>
-#include <QDateTime>
 #include <QMultiMap>
 #include <QFlags>
-#include <QDebug>
 #include <QVector2D>
 #include <QStack>
+#include <QSet>
 #include <qmath.h>
 #include <limits>
 

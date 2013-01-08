@@ -45,6 +45,7 @@
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QMessageBox>
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
