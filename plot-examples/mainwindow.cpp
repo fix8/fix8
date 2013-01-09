@@ -584,7 +584,7 @@ void MainWindow::setupMultiAxisDemo(QCustomPlot *customPlot)
   QVector<double> piTicks;
   QVector<QString> piLabels;
   piTicks << 0  << 0.5*M_PI << M_PI << 1.5*M_PI << 2*M_PI << 2.5*M_PI << 3*M_PI;
-  piLabels << "0" << QString::fromUtf8("½π") << QString::fromUtf8("π") << QString::fromUtf8("1½π") << QString::fromUtf8("2π") << QString::fromUtf8("2½π") << QString::fromUtf8("3π");
+  piLabels << "0" << QString::fromUtf8("\xc2\xbd\xcf\x80") << QString::fromUtf8("\xcf\x80") << QString::fromUtf8("1\xc2\xbd\xcf\x80") << QString::fromUtf8("2\xcf\x80") << QString::fromUtf8("2\xc2\xbd\xcf\x80") << QString::fromUtf8("3\xcf\x80");
   customPlot->xAxis2->setAutoTicks(false);
   customPlot->xAxis2->setAutoTickLabels(false);
   customPlot->xAxis2->setTickVector(piTicks);
@@ -910,7 +910,7 @@ void MainWindow::setupStatisticalDemo(QCustomPlot *customPlot)
   customPlot->xAxis->setTickVectorLabels(QVector<QString>() << "Sample 1" << "Sample 2" << "Control Group");
   
   // prepare axes:
-  customPlot->yAxis->setLabel(QString::fromUtf8("O₂ Absorption [mg]"));
+  customPlot->yAxis->setLabel(QString::fromUtf8("\xe2\x82\x82 Absorption [mg]"));
   customPlot->rescaleAxes();
   customPlot->xAxis->scaleRange(1.7, customPlot->xAxis->range().center());
   customPlot->yAxis->setRange(0, 7);
