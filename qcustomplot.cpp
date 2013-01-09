@@ -13589,7 +13589,7 @@ void QCPLineEnding::draw(QCPPainter *painter, const QVector2D &pos, const QVecto
     {
       QPointF points[4] = {pos.toPointF(),
                            (pos-lengthVec+widthVec).toPointF(),
-                           (pos-lengthVec*0.8).toPointF(),
+                           (pos-lengthVec*0.8f).toPointF(),
                            (pos-lengthVec-widthVec).toPointF()
                           };
       painter->setPen(miterPen);
@@ -14623,8 +14623,8 @@ void QCPItemBracket::draw(QCPPainter *painter)
         painter->setBrush(Qt::NoBrush);
         QPainterPath path;
         path.moveTo((centerVec+widthVec+lengthVec).toPointF());
-        path.cubicTo((centerVec+widthVec*1-lengthVec*0.8).toPointF(), (centerVec+0.4*widthVec+1*lengthVec).toPointF(), centerVec.toPointF());
-        path.cubicTo((centerVec-0.4*widthVec+1*lengthVec).toPointF(), (centerVec-widthVec*1-lengthVec*0.8).toPointF(), (centerVec-widthVec+lengthVec).toPointF());
+        path.cubicTo((centerVec+widthVec*1-lengthVec*0.8f).toPointF(), (centerVec+0.4f*widthVec+1*lengthVec).toPointF(), centerVec.toPointF());
+        path.cubicTo((centerVec-0.4f*widthVec+1*lengthVec).toPointF(), (centerVec-widthVec*1-lengthVec*0.8f).toPointF(), (centerVec-widthVec+lengthVec).toPointF());
         painter->drawPath(path);
         break;
       }
@@ -14635,12 +14635,12 @@ void QCPItemBracket::draw(QCPPainter *painter)
         QPainterPath path;
         path.moveTo((centerVec+widthVec+lengthVec).toPointF());
         
-        path.cubicTo((centerVec+widthVec*1-lengthVec*0.8).toPointF(), (centerVec+0.4*widthVec+0.8*lengthVec).toPointF(), centerVec.toPointF());
-        path.cubicTo((centerVec-0.4*widthVec+0.8*lengthVec).toPointF(), (centerVec-widthVec*1-lengthVec*0.8).toPointF(), (centerVec-widthVec+lengthVec).toPointF());
+        path.cubicTo((centerVec+widthVec*1-lengthVec*0.8f).toPointF(), (centerVec+0.4f*widthVec+0.8f*lengthVec).toPointF(), centerVec.toPointF());
+        path.cubicTo((centerVec-0.4f*widthVec+0.8f*lengthVec).toPointF(), (centerVec-widthVec*1-lengthVec*0.8f).toPointF(), (centerVec-widthVec+lengthVec).toPointF());
         
-        path.cubicTo((centerVec-widthVec*1-lengthVec*0.5).toPointF(), (centerVec-0.2*widthVec+1.2*lengthVec).toPointF(), (centerVec+lengthVec*0.2).toPointF());
-        path.cubicTo((centerVec+0.2*widthVec+1.2*lengthVec).toPointF(), (centerVec+widthVec*1-lengthVec*0.5).toPointF(), (centerVec+widthVec+lengthVec).toPointF());
-        
+        path.cubicTo((centerVec-widthVec*1-lengthVec*0.5f).toPointF(), (centerVec-0.2f*widthVec+1.2f*lengthVec).toPointF(), (centerVec+lengthVec*0.2f).toPointF());
+        path.cubicTo((centerVec+0.2f*widthVec+1.2f*lengthVec).toPointF(), (centerVec+widthVec*1-lengthVec*0.5f).toPointF(), (centerVec+widthVec+lengthVec).toPointF());
+                
         painter->drawPath(path);
         break;
       }
