@@ -630,9 +630,11 @@ public:
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field)
 	{
 		if (from.size() == _sec_only) // 19981231-23:59:59
-			Poco::DateTimeParser::parse(_fmt_sec, from, _value, _tzdiff);
+			//Poco::DateTimeParser::parse(_fmt_sec, from, _value, _tzdiff);
+			DateTimeParse(from, _value, WithoutMillisecond);
 		else if (from.size() == _with_ms) // 19981231-23:59:59.123
-			Poco::DateTimeParser::parse(_fmt_ms, from, _value, _tzdiff);
+			//Poco::DateTimeParser::parse(_fmt_ms, from, _value, _tzdiff);
+			DateTimeParse(from, _value, WithMillisecond);
 	}
 
 	/// Assignment operator.
@@ -683,8 +685,9 @@ public:
 	  \param sz current size of buffer payload stream */
 	void print(char *to, size_t& sz) const
 	{
-		f8String res(Poco::DateTimeFormatter::format(_value, _fmt_sec));
-		sz += res.copy(to, res.size());
+		//f8String res(Poco::DateTimeFormatter::format(_value, _fmt_sec));
+        //sz += res.copy(to, res.size());
+        sz += DateTimeFormat(_value, to, WithMillisecond);
 	}
 };
 
