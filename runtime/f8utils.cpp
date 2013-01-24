@@ -165,5 +165,91 @@ const string& trim(string& source, const string& ws)
 		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
 }
 
+//----------------------------------------------------------------------------------------
+inline void format0(short data, char *to, int width)
+{
+    while(width-- > 0)
+    {
+        to[width] = data % 10 + '0';
+        data /= 10;
+    }
+}
+
+const size_t DateTimeFormat(const Poco::DateTime& dateTime, char *to, const MillisecondIndicator ind)
+{
+    format0(dateTime.year(), to, 4);
+    format0(dateTime.month(), to + 4, 2);
+    format0(dateTime.day(), to + 6, 2);
+    to[8]='-';
+
+    format0(dateTime.hour(), to + 9, 2);
+    to[11]=':';
+
+    format0(dateTime.minute(), to + 12, 2);
+    to[14]=':';
+
+    format0(dateTime.second(), to + 15, 2);
+
+    if(ind != WithMillisecond)
+    {
+        //length of "YYYYMMDD-HH:MM:SS"
+        return 17;
+    }
+
+    to[17]='.';
+    format0(dateTime.millisecond(), to + 18, 3);
+
+    //length of "YYYYMMDD-HH:MM:SS.MMM"
+    return 21;
+}
+
+//----------------------------------------------------------------------------------------
+
+inline void parseDate(std::string::const_iterator &begin, size_t len , short &to)
+{
+    while(len-- > 0)
+    {
+        to = (to << 3) + (to << 1) + ((*begin++) - '0');
+    }
+}
+
+void DateTimeParse(const std::string& from, Poco::DateTime& dateTime, const MillisecondIndicator ind)
+{
+    string::const_iterator it   = from.begin();
+
+    short year = 0;
+    parseDate( it, 4, year);
+
+    short month = 0;
+    parseDate( it, 2, month);
+
+    short day = 0;
+    parseDate( it, 2, day);
+
+    ++it;
+    short hour = 0;
+    parseDate( it, 2, hour);
+
+    ++it;
+    short minute = 0;
+    parseDate( it, 2, minute);
+
+    ++it;
+    short second = 0;
+    parseDate( it, 2, second);
+
+    short millisecond = 0;
+    if(ind == WithMillisecond)
+    {
+        ++it;
+        parseDate( it, 3, millisecond);
+    }
+
+    if (Poco::DateTime::isValid(year, month, day, hour, minute, second, millisecond))
+    {
+        dateTime.assign(year, month, day, hour, minute, second, millisecond);
+    }
+}
+
 } // namespace FIX8
 

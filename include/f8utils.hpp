@@ -40,6 +40,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #include <tbb/atomic.h>
 #include <tbb/mutex.h>
+#include <Poco/DateTime.h>
 #include <sys/ioctl.h>
 #include <termios.h>
 
@@ -86,6 +87,28 @@ const std::string& GetTimeAsStringMS(std::string& result, class Tickval *tv=0, c
   \param ws string containing whitespace characters to trim out
   \return trimmed string */
 const std::string& trim(std::string& source, const std::string& ws = " \t");
+
+enum MillisecondIndicator
+{
+    WithMillisecond,
+    WithoutMillisecond
+};
+
+/*! Format Poco::DateTime into a string.
+    With millisecond, the format string will be "YYYYMMDD-HH:MM:SS.MMM"
+    Without millisecond, the format string will be "YYYYMMDD-HH:MM:SS"
+  \param dateTime input Poco::DateTime object
+  \param to output buffer, should make sure there is enough space reserved
+  \param ind indicating whether need millisecond or not
+  \return length of formatted string */
+const size_t DateTimeFormat(const Poco::DateTime& dateTime, char *to, const MillisecondIndicator ind = WithoutMillisecond);
+
+/*! Decode a DateTime string into a Poco::DateTime
+  \param from input DateTime string
+  \param dateTime output Poco::DateTime object
+  \param ind indicating whether the string has millisecond or not */
+void DateTimeParse(const std::string& from, Poco::DateTime& dateTime, const MillisecondIndicator ind = WithoutMillisecond);
+
 
 //----------------------------------------------------------------------------------------
 /*! Rotate a value by the specified number of bits
