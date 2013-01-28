@@ -1,4 +1,4 @@
-# [Fix8](http://www.fix8.org) Open Source C++ FIX Framework
+# [Fix8](http://www.fix8.org) Open Source C++ FIX Engine
 
 The system is comprised of a compiler for generating C++ message and field encoders,
 decoders and instantiation tables; a runtime library to support the generated code
