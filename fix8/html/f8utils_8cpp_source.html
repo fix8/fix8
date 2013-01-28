@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.6</span>
+   &#160;<span id="projectnumber">version  0.6.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -109,85 +109,85 @@ $(document).ready(function(){initNavTree('f8utils_8cpp_source.html','');});
 <a href="f8utils_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#if 0</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;Fix8 Open Source FIX Engine.</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;Copyright (C) 2010-12 David L. Dight &lt;fix@fix8.org&gt;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;Copyright (C) 2010-13 David L. Dight &lt;fix@fix8.org&gt;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;General Public License as  published by the Free Software Foundation,  either version 3  of</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;the License, or (at your option) any later version.</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;version 3 of the License, or (at your option) any later version.</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;GNU General Public License <span class="keywordflow">for</span> more details.</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;You should have received a copy of the GNU General Public License along with Fix8.  If not,</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;see &lt;http:<span class="comment">//www.gnu.org/licenses/&gt;.</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM <span class="stringliteral">&quot;AS IS&quot;</span> WITHOUT WARRANTY OF ANY</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;#endif</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;sys/time.h&gt;</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;errno.h&gt;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;netdb.h&gt;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;signal.h&gt;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;syslog.h&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;strings.h&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &lt;sys/socket.h&gt;</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &lt;netinet/in.h&gt;</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#include &lt;arpa/inet.h&gt;</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &lt;alloca.h&gt;</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#ifndef HAVE_GMTOFF</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor"></span><span class="keyword">extern</span> <span class="keywordtype">long</span> <a class="code" href="f8utils_8cpp.html#a3e348024a4a098ce0b8b51edba679a16">timezone</a>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a9c9529e1c2083057811f47a2435ce5d3">   80</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#a208707a0f000f8ba8059636ba89de746">GetTimeAsStringMS</a>(<span class="keywordtype">string</span>&amp; result, <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> *tv, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> dplaces)</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;{</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;   <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> *startTime, gotTime;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;You should  have received a copy of the GNU Lesser General Public  License along with Fix8.</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;If not, see &lt;http:<span class="comment">//www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM <span class="stringliteral">&quot;AS IS&quot;</span> WITHOUT WARRANTY OF ANY</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;#endif</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;sys/time.h&gt;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;errno.h&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;netdb.h&gt;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;signal.h&gt;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;syslog.h&gt;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;strings.h&gt;</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;sys/socket.h&gt;</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &lt;netinet/in.h&gt;</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &lt;arpa/inet.h&gt;</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &lt;alloca.h&gt;</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#ifndef HAVE_GMTOFF</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor"></span><span class="keyword">extern</span> <span class="keywordtype">long</span> <a class="code" href="f8utils_8cpp.html#a3e348024a4a098ce0b8b51edba679a16">timezone</a>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a7313e34944fa1ffd53b5f7d7f6d79586">   79</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#a21bce0769809df7d55f39cd67e6b22a0">GetTimeAsStringMS</a>(<span class="keywordtype">string</span>&amp; result, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> *tv, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> dplaces)</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;   <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> *startTime;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;   <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> gotTime;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;   <span class="keywordflow">if</span> (tv)</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      startTime = tv;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;   <span class="keywordflow">else</span></div>
@@ -278,7 +278,7 @@ $(document).ready(function(){initNavTree('f8utils_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:45. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:12. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

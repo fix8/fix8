@@ -1721,6 +1721,7 @@ var hierarchy =
       [ "FIX8::PipeLogger", "classFIX8_1_1PipeLogger.html", null ]
     ] ],
     [ "FIX8::Logger::LogElement", "structFIX8_1_1Logger_1_1LogElement.html", null ],
+    [ "FIX8::LoginParameters", "structFIX8_1_1LoginParameters.html", null ],
     [ "FIX8::MemoryPool", "classFIX8_1_1MemoryPool.html", null ],
     [ "FIX8::MessageBase", "classFIX8_1_1MessageBase.html", [
       [ "FIX8::Message", "classFIX8_1_1Message.html", [

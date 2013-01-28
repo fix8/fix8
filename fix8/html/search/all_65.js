@@ -287,7 +287,7 @@ var searchData=
   ['expiredate',['ExpireDate',['../namespaceFIX8_1_1TEX.html#afa4be33cf18b3dd1f5c0e00ffb1b168f',1,'FIX8::TEX']]],
   ['expiretime',['ExpireTime',['../namespaceFIX8_1_1TEX.html#abf0a73143d4b8d8c9aea6e5a54f021b2',1,'FIX8::TEX']]],
   ['expqty',['ExpQty',['../namespaceFIX8_1_1TEX.html#a4f26f5bd8a657f2a1ff2ecce316236a5',1,'FIX8::TEX']]],
-  ['extract_5felement',['extract_element',['../classFIX8_1_1MessageBase.html#a93b21de2c222aff5f3c31fb5f93cfe95',1,'FIX8::MessageBase']]],
+  ['extract_5felement',['extract_element',['../classFIX8_1_1MessageBase.html#a4834ee4e156a54ba08d4e2e9278c433b',1,'FIX8::MessageBase::extract_element(const char *from, const unsigned sz, char *tag, char *val)'],['../classFIX8_1_1MessageBase.html#a93b21de2c222aff5f3c31fb5f93cfe95',1,'FIX8::MessageBase::extract_element(const char *from, const unsigned sz, f8String &amp;tag, f8String &amp;val)']]],
   ['extract_5fheader',['extract_header',['../classFIX8_1_1MessageBase.html#aa4fb49f4020c560d62ff30c8a4a0fe58',1,'FIX8::MessageBase']]],
   ['extract_5ftrailer',['extract_trailer',['../classFIX8_1_1MessageBase.html#a9e14fbd1c185ea0ace2fabfbd8c82761',1,'FIX8::MessageBase']]]
 ];

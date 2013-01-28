@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.6</span>
+   &#160;<span id="projectnumber">version  0.6.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -145,8 +145,9 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ae5ad5cbeccaedc03a48d3c7eaa803e79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hftest_8cpp.html#ae5ad5cbeccaedc03a48d3c7eaa803e79">print_usage</a> ()</td></tr>
-<tr class="memitem:a340691cd65c322a21c56f968c714c830"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hftest_8cpp.html#a340691cd65c322a21c56f968c714c830">GETARGLIST</a> (&quot;hl:svqc:R:S:r&quot;)</td></tr>
+<tr class="memitem:afed7c184504691d5c7898ab7508f9ca3"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hftest_8cpp.html#afed7c184504691d5c7898ab7508f9ca3">GETARGLIST</a> (&quot;hl:svqc:R:S:rb:&quot;)</td></tr>
 <tr class="memitem:a53950f1d1b31e114560c2b9b5b57b01e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hftest_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received</a> (false)</td></tr>
+<tr class="memitem:aa5018caf4a3a83165b8605a65d8fd537"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hftest_8cpp.html#aa5018caf4a3a83165b8605a65d8fd537">batch_size</a> (1000)</td></tr>
 <tr class="memitem:a9920dd2864cfeebc628662eb001ffd93"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hftest_8cpp.html#a9920dd2864cfeebc628662eb001ffd93">quiet</a> (true)</td></tr>
 <tr class="memitem:a5054c36923934387c6f7605dd1a2f3c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hftest_8cpp.html#a5054c36923934387c6f7605dd1a2f3c9">sig_handler</a> (int sig)</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hftest_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
@@ -196,14 +197,32 @@ Functions</h2></td></tr>
 
 <p>Definition in file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 </div><h2>Function Documentation</h2>
-<a class="anchor" id="a340691cd65c322a21c56f968c714c830"></a>
+<a class="anchor" id="aa5018caf4a3a83165b8605a65d8fd537"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned batch_size </td>
+          <td>(</td>
+          <td class="paramtype">1000&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="hftest_8cpp_source.html#l00323">MyMenu::batch_preload_new_order_single()</a>, and <a class="el" href="hftest_8cpp_source.html#l00176">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afed7c184504691d5c7898ab7508f9ca3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">const string GETARGLIST </td>
           <td>(</td>
-          <td class="paramtype">&quot;hl:svqc:R:S:r&quot;&#160;</td>
+          <td class="paramtype">&quot;hl:svqc:R:S:rb:&quot;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -236,9 +255,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00175">175</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00176">176</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00478">FIX8::Session::control()</a>, <a class="el" href="Myfix__classes_8hpp_source.html#l00049">FIX8::TEX::ctx</a>, <a class="el" href="hftest_8hpp_source.html#l00192">MyMenu::get_tty()</a>, <a class="el" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <a class="el" href="hftest_8hpp_source.html#l00201">RandDev::init()</a>, <a class="el" href="session_8hpp_source.html#l00482">FIX8::Session::is_shutdown()</a>, <a class="el" href="f8config_8h_source.html#l00437">PACKAGE</a>, <a class="el" href="f8cutils_8cpp_source.html#l00331">print_usage()</a>, <a class="el" href="harness_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00118">FIX8::ClientSession&lt; T &gt;::session_ptr()</a>, <a class="el" href="f8utils_8hpp_source.html#l01037">FIX8::tty_save_state::set_raw_mode()</a>, <a class="el" href="harness_8cpp_source.html#l00162">sig_handler()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00156">FIX8::ReliableClientSession&lt; T &gt;::start()</a>, <a class="el" href="session_8cpp_source.html#l00211">FIX8::Session::stop()</a>, <a class="el" href="harness_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received()</a>, <a class="el" href="f8config_8h_source.html#l00496">VERSION</a>, and <a class="el" href="f8exception_8hpp_source.html#l00077">FIX8::f8Exception::what()</a>.</p>
+<p>References <a class="el" href="hftest_8cpp.html#aa5018caf4a3a83165b8605a65d8fd537">batch_size()</a>, <a class="el" href="session_8hpp_source.html#l00504">FIX8::Session::control()</a>, <a class="el" href="Myfix__classes_8hpp_source.html#l00058">FIX8::TEX::ctx</a>, <a class="el" href="hftest_8hpp_source.html#l00192">MyMenu::get_tty()</a>, <a class="el" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <a class="el" href="hftest_8hpp_source.html#l00201">RandDev::init()</a>, <a class="el" href="session_8hpp_source.html#l00508">FIX8::Session::is_shutdown()</a>, <a class="el" href="f8config_8h_source.html#l00418">PACKAGE</a>, <a class="el" href="f8cutils_8cpp_source.html#l00330">print_usage()</a>, <a class="el" href="harness_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00122">FIX8::ClientSession&lt; T &gt;::session_ptr()</a>, <a class="el" href="f8utils_8hpp_source.html#l01037">FIX8::tty_save_state::set_raw_mode()</a>, <a class="el" href="harness_8cpp_source.html#l00161">sig_handler()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00158">FIX8::ReliableClientSession&lt; T &gt;::start()</a>, <a class="el" href="session_8cpp_source.html#l00208">FIX8::Session::stop()</a>, <a class="el" href="harness_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received()</a>, <a class="el" href="f8config_8h_source.html#l00480">VERSION</a>, and <a class="el" href="f8exception_8hpp_source.html#l00076">FIX8::f8Exception::what()</a>.</p>
 
 </div>
 </div>
@@ -255,7 +274,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00331">331</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00330">330</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
 
 </div>
 </div>
@@ -289,9 +308,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00158">158</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="hftest_8cpp_source.html#l00159">159</a> of file <a class="el" href="hftest_8cpp_source.html">hftest.cpp</a>.</p>
 
-<p>References <a class="el" href="harness_8cpp_source.html#l00162">sig_handler()</a>, and <a class="el" href="harness_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received()</a>.</p>
+<p>References <a class="el" href="harness_8cpp_source.html#l00161">sig_handler()</a>, and <a class="el" href="harness_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received()</a>.</p>
 
 </div>
 </div>
@@ -314,7 +333,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:56. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:23. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

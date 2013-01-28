@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.6</span>
+   &#160;<span id="projectnumber">version  0.6.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -107,6 +107,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1Field_3_01UTCTimestamp_00
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pri-types">Private Types</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a> &#124;
@@ -147,6 +148,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac66dcc43d5456f611e0fe749c8829eea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#ac66dcc43d5456f611e0fe749c8829eea">set</a> (const Poco::DateTime &amp;<a class="el" href="classFIX8_1_1BaseField.html#a93538fc19a4f590509f7e60cc655e927">from</a>)</td></tr>
 <tr class="memitem:af3e3d2f8e839b7bf8f2eb5631b135786"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Field.html">Field</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#af3e3d2f8e839b7bf8f2eb5631b135786">copy</a> ()</td></tr>
 <tr class="memitem:a334d08d9736bcdcc9a8a3caab2b20773"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a334d08d9736bcdcc9a8a3caab2b20773">print</a> (std::ostream &amp;os) const </td></tr>
+<tr class="memitem:ad7d6897f542cc655d02afa69bbcc33a0"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#ad7d6897f542cc655d02afa69bbcc33a0">DateTimeFormat</a> (const Poco::DateTime &amp;dateTime, char *to, const <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5">MillisecondIndicator</a> ind=<a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5a2f7c6d486f1bd40042b4bafd9c4a7dd6">_sec_only</a>) const </td></tr>
+<tr class="memitem:a30b4779f95b4be4aeb9653ea27057e6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a30b4779f95b4be4aeb9653ea27057e6b">DateTimeParse</a> (const std::string &amp;<a class="el" href="classFIX8_1_1BaseField.html#a93538fc19a4f590509f7e60cc655e927">from</a>, Poco::DateTime &amp;dateTime, const <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5">MillisecondIndicator</a> ind=<a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5a2f7c6d486f1bd40042b4bafd9c4a7dd6">_sec_only</a>) const </td></tr>
 <tr class="memitem:a1236e682f0bc2edbc5efbd33f8bad3fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a1236e682f0bc2edbc5efbd33f8bad3fb">print</a> (char *to, size_t &amp;sz) const </td></tr>
 <tr class="inherit_header pub_methods_classFIX8_1_1BaseField"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classFIX8_1_1BaseField')"><img src="closed.png" alt="-"/>&nbsp;Public Member Functions inherited from <a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td></tr>
 <tr class="memitem:a90be0d13ed9a58ce88a17c0be7796174 inherit pub_methods_classFIX8_1_1BaseField"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1BaseField.html#a90be0d13ed9a58ce88a17c0be7796174">BaseField</a> (const unsigned short fnum, const <a class="el" href="structFIX8_1_1RealmBase.html">RealmBase</a> *rlm=0)</td></tr>
@@ -165,10 +168,15 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ac14b97c465c8d77a0484e7ffd4f7ad19"><td class="memItemLeft" align="right" valign="top">static unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#ac14b97c465c8d77a0484e7ffd4f7ad19">get_field_id</a> ()</td></tr>
 <tr class="memdesc:ac14b97c465c8d77a0484e7ffd4f7ad19"><td class="mdescLeft">&#160;</td><td class="mdescRight">The FIX fieldID (tag number).  <a href="#ac14b97c465c8d77a0484e7ffd4f7ad19"></a><br/></td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a91ac317575ed9e404fb7989560b39982"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a91ac317575ed9e404fb7989560b39982">format0</a> (short <a class="el" href="namespaceFIX8.html#ab11f68f3e9c06fa6309b75faa9e9dae9">data</a>, char *to, int width) const </td></tr>
+<tr class="memitem:a08ed1910d37c7ec5e1ff183c38ae0794"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a08ed1910d37c7ec5e1ff183c38ae0794">parseDate</a> (std::string::const_iterator &amp;begin, size_t len, short &amp;to) const </td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-types"></a>
 Private Types</h2></td></tr>
-<tr class="memitem:a8666a10e50babd45dd21c65ddbc451cf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8666a10e50babd45dd21c65ddbc451cfa2f7c6d486f1bd40042b4bafd9c4a7dd6">_sec_only</a> =  17, 
-<a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8666a10e50babd45dd21c65ddbc451cfad1149aa2df651cc019c235594cabfb22">_with_ms</a> =  21
+<tr class="memitem:a8ae35b358d689b6c04c80e40cf0082b5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5">MillisecondIndicator</a> { <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5a2f7c6d486f1bd40042b4bafd9c4a7dd6">_sec_only</a> =  17, 
+<a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5ad1149aa2df651cc019c235594cabfb22">_with_ms</a> =  21
  }</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-attribs"></a>
@@ -198,9 +206,9 @@ class FIX8::Field&lt; UTCTimestamp, field &gt;</h3>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00604">604</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00603">603</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 </div><h2>Member Enumeration Documentation</h2>
-<a class="anchor" id="a8666a10e50babd45dd21c65ddbc451cf"></a>
+<a class="anchor" id="a8ae35b358d689b6c04c80e40cf0082b5"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -210,7 +218,7 @@ template&lt;const unsigned short field&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; <a class="el" href="namespaceFIX8.html#a452baded688c6d53e44fdca5debab51a">UTCTimestamp</a>, field &gt;::<a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5">MillisecondIndicator</a></td>
         </tr>
       </table>
   </td>
@@ -220,15 +228,15 @@ template&lt;const unsigned short field&gt; </div>
 </table>
 </div><div class="memdoc">
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em><a class="anchor" id="a8666a10e50babd45dd21c65ddbc451cfa2f7c6d486f1bd40042b4bafd9c4a7dd6"></a>_sec_only</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a8ae35b358d689b6c04c80e40cf0082b5a2f7c6d486f1bd40042b4bafd9c4a7dd6"></a>_sec_only</em>&nbsp;</td><td>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a8666a10e50babd45dd21c65ddbc451cfad1149aa2df651cc019c235594cabfb22"></a>_with_ms</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a8ae35b358d689b6c04c80e40cf0082b5ad1149aa2df651cc019c235594cabfb22"></a>_with_ms</em>&nbsp;</td><td>
 </td></tr>
 </table>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00607">607</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00606">606</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -258,7 +266,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Ctor. </p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00616">616</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00631">631</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -293,7 +301,7 @@ template&lt;const unsigned short field&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00620">620</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00635">635</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -339,7 +347,7 @@ template&lt;const unsigned short field&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00625">625</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00640">640</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -385,7 +393,7 @@ template&lt;const unsigned short field&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00630">630</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00645">645</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -414,7 +422,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00652">652</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00667">667</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -446,7 +454,158 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Implements <a class="el" href="classFIX8_1_1BaseField.html#adae06a72a6d6f1d2e3f9f2b87c5a5840">FIX8::BaseField</a>.</p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00673">673</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00688">688</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad7d6897f542cc655d02afa69bbcc33a0"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;const unsigned short field&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; <a class="el" href="namespaceFIX8.html#a452baded688c6d53e44fdca5debab51a">UTCTimestamp</a>, field &gt;::DateTimeFormat </td>
+          <td>(</td>
+          <td class="paramtype">const Poco::DateTime &amp;&#160;</td>
+          <td class="paramname"><em>dateTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>to</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5">MillisecondIndicator</a>&#160;</td>
+          <td class="paramname"><em>ind</em> = <code><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5a2f7c6d486f1bd40042b4bafd9c4a7dd6">_sec_only</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Format Poco::DateTime into a string. With millisecond, the format string will be "YYYYMMDD-HH:MM:SS.MMM" Without millisecond, the format string will be "YYYYMMDD-HH:MM:SS" </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dateTime</td><td>input Poco::DateTime object </td></tr>
+    <tr><td class="paramname">to</td><td>output buffer, should make sure there is enough space reserved </td></tr>
+    <tr><td class="paramname">ind</td><td>indicating whether need millisecond or not </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>length of formatted string </dd></dl>
+
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00718">718</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a30b4779f95b4be4aeb9653ea27057e6b"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;const unsigned short field&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; <a class="el" href="namespaceFIX8.html#a452baded688c6d53e44fdca5debab51a">UTCTimestamp</a>, field &gt;::DateTimeParse </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Poco::DateTime &amp;&#160;</td>
+          <td class="paramname"><em>dateTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5">MillisecondIndicator</a>&#160;</td>
+          <td class="paramname"><em>ind</em> = <code><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5a2f7c6d486f1bd40042b4bafd9c4a7dd6">_sec_only</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Decode a DateTime string into a Poco::DateTime </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">from</td><td>input DateTime string </td></tr>
+    <tr><td class="paramname">dateTime</td><td>output Poco::DateTime object </td></tr>
+    <tr><td class="paramname">ind</td><td>indicating whether the string has millisecond or not </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00742">742</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a91ac317575ed9e404fb7989560b39982"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;const unsigned short field&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; <a class="el" href="namespaceFIX8.html#a452baded688c6d53e44fdca5debab51a">UTCTimestamp</a>, field &gt;::format0 </td>
+          <td>(</td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>to</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00611">611</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -475,7 +634,7 @@ template&lt;const unsigned short field&gt; </div>
 <p>Get field value. </p>
 <dl class="section return"><dt>Returns</dt><dd>value (Poco::DateTime) </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00656">656</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00671">671</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -504,7 +663,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>The FIX fieldID (tag number). </p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00613">613</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00628">628</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -533,7 +692,7 @@ template&lt;const unsigned short field&gt; </div>
 <p>Get field value. </p>
 <dl class="section return"><dt>Returns</dt><dd>value (Poco::DateTime) </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00660">660</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00675">675</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -570,7 +729,51 @@ template&lt;const unsigned short field&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>field </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00641">641</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00656">656</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a08ed1910d37c7ec5e1ff183c38ae0794"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;const unsigned short field&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; <a class="el" href="namespaceFIX8.html#a452baded688c6d53e44fdca5debab51a">UTCTimestamp</a>, field &gt;::parseDate </td>
+          <td>(</td>
+          <td class="paramtype">std::string::const_iterator &amp;&#160;</td>
+          <td class="paramname"><em>begin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short &amp;&#160;</td>
+          <td class="paramname"><em>to</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00620">620</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -608,7 +811,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Implements <a class="el" href="classFIX8_1_1BaseField.html#a68b4265a14ab3ec76ef65ce8298c5b9c">FIX8::BaseField</a>.</p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00678">678</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00693">693</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -656,7 +859,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Implements <a class="el" href="classFIX8_1_1BaseField.html#af2d6310c69207763bc70450972301572">FIX8::BaseField</a>.</p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00684">684</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00714">714</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -692,9 +895,9 @@ template&lt;const unsigned short field&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the new value (Poco::DateTime) </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00665">665</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00680">680</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>References <a class="el" href="field_8hpp_source.html#l00151">FIX8::BaseField::from()</a>.</p>
+<p>References <a class="el" href="field_8hpp_source.html#l00150">FIX8::BaseField::from()</a>.</p>
 
 </div>
 </div>
@@ -729,9 +932,9 @@ template&lt;const unsigned short field&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00669">669</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00684">684</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>References <a class="el" href="field_8hpp_source.html#l00151">FIX8::BaseField::from()</a>.</p>
+<p>References <a class="el" href="field_8hpp_source.html#l00150">FIX8::BaseField::from()</a>.</p>
 
 </div>
 </div>
@@ -756,7 +959,7 @@ template&lt;const unsigned short field&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00606">606</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00605">605</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -780,7 +983,7 @@ template&lt;const unsigned short field&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00606">606</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00605">605</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -804,7 +1007,7 @@ template&lt;const unsigned short field&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00609">609</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00608">608</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -828,7 +1031,7 @@ template&lt;const unsigned short field&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00608">608</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00607">607</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -838,7 +1041,7 @@ template&lt;const unsigned short field&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:57. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:24. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

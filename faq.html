@@ -27,13 +27,19 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+	 <link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+	 <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+	 <script type="text/javascript" src="css/prettify.js"></script>
   </head>
 
-  <body>
+  <body onload="prettyPrint()" bgcolor="white">
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -48,14 +54,16 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li><a href="index.html">Home</a></li>
-              <li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
-              <li><a href="http://blog.fix8.org">News</a></li>
-              <li><a href="fix8/html">API Documentation</a></li>
+				  <li><a href="howitworks.html">How It Works</a></li>
               <li class="active"><a href="#">FAQ</a></li>
+              <li><a href="http://blog.fix8.org">News</a></li>
+              <li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
               <li><a href="support.html">Support</a></li>
               <li><a href="issues.html">Issues</a></li>
               <li><a href="https://github.com/dakka/fix8">Project</a></li>
 				  <li><a href="performance.html">Performance</a></li>
+              <li><a href="fix8/html">API Documentation</a></li>
+				  <li><a href="aboutus.html">About Us</a></li>
               <li><a href="contact.html">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
@@ -77,11 +85,10 @@
 		</div>
 		<br>
 
-
+		<div class="hero-divider"></div>
+		<br>
 		<div class="container">
-			<div class="span12 columns">
-				<div class="hero-unit"></div>
-				<div class="accordion" id="mainheads">
+			<div class="accordion" id="mainheads">
 				<div class="accordion-group">
 					<div class="accordion-heading">
 						<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsOne"><h2>1. General</h2></a>
@@ -123,12 +130,57 @@
 							</div>
 							<div class="accordion-group">
 								<div class="accordion-heading">
-									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleFour">d) What license is fix8 release under?</a>
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleFour">d) What do all those logos mean at the bottom of your main page?</a>
 								</div>
 								<div id="generaleFour" class="accordion-body collapse">
 									<div class="accordion-inner">
-										Fix8 is open source and is released under the <a href="http://www.gnu.org/licenses/lgpl.html">GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.</a>
-										<p>This license <i>does not</i> require you to release your propriatry source code or Fix8 generated code when you release software that links against the Fix8 runtime library.</p>
+										<p>These logos refer to organisations, companies and components that Fix8 uses, supports or is supported by.</p>
+										<table class="table table-condensed center-table">
+											<thead>
+												<tr class="success">
+													<th>Logo</th>
+													<th>What</th>
+													<th>Why</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="success">
+													<td><img src="fix8/octocat.png" alt="Github" width="50" height="50" /></td>
+													<td><a href="http://www.github.com">Github</a></td>
+													<td>Hosts our source repository and website.</td>
+												</tr>
+												<tr class="success">
+													<td><img src="fix8/OSI-logo.png" alt="Open Source Initiative" width="50" height="50"/></td>
+													<td><a href="http://www.opensource.org">Open Source Initiative</a></td>
+													<td>We use an OSI approved license (LGPL).</td>
+												</tr>
+												<tr class="success">
+													<td><img src="fix8/linux-logo.jpg" alt="Open Source Initiative" width="50" height="50"/></td>
+													<td><a href="http://en.wikipedia.org/wiki/Linux">Linux</a></td>
+													<td>Fix8 runs on Linux.</td>
+												</tr>
+												<tr class="success">
+													<td><img src="fix8/lgplv3-147x51.png" alt="GNU Lesser General Public License" width="50" height="50"/></td>
+													<td><a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a></td>
+													<td>The open source license we use.</td>
+												</tr>
+												<tr class="success">
+													<td><img src="fix8/fpl_logo.png" alt="Fix Protocol" width="50" height="50" /></td>
+													<td><a href="http://www.fixprotocol.org">Fix Protocol Limited</a></td>
+													<td>Organisation advocating the FIX protocol.</td>
+												</tr>
+												<tr class="success">
+													<td><img src="fix8/logoAtlassianPNG.png" alt="Atlassian" width="70" height="70" /></td>
+													<td><a href="http://www.atlassian.com">Atlassian</a></td>
+													<td>Provide us with community licenses for Jira, Confluence and Bamboo. Also host our Jira and Confluence instances.</td>
+												</tr>
+												<tr class="success">
+													<td><img src="fix8/quantlabslogo210x50.png" alt="Quantlabs.net" width="70" height="70" /></a></td>
+													<td><a href="http://www.quantlabs.net">Quantlabs</a></td>
+													<td>We are collaborating to promote bespoke solutions for trading.</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
@@ -137,7 +189,85 @@
 					</div>
 					<div class="accordion-group">
 						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsTwo"><h2>2. Requirements</h2></a>
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#licensing"><h2>2. Licensing</h2></a>
+						</div>
+						<div id="licensing" class="accordion-body collapse">
+							<div class="accordion" id="accordion9">
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion9" href="#licensingOne">a) What license is fix8 release under?</a>
+									</div>
+									<div id="licensingOne" class="accordion-body collapse">
+										<div class="accordion-inner">
+											Fix8 is open source and is released under the <a href="http://www.gnu.org/licenses/lgpl.html">GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.</a>
+											<p>This license <b><i>does not</i></b> require you to release your proprietary source code or Fix8 generated code when you release software that links dynamically against the Fix8 runtime library. If you wish to statically link you are required to release the Fix8 object files with your software.</p>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion9" href="#licensingTwo">b) Why this license and not another?</a>
+									</div>
+									<div id="licensingTwo" class="accordion-body collapse">
+										<div class="accordion-inner">
+											We chose the LGPL because we believe this license strikes the right balance between promoting <a href="http://en.wikipedia.org/wiki/Free_and_Open_Source_Software">FOSS</a>
+											and protecting free software while providing the most flexibility for 3rd party software developers. We decided against GPL because
+											we felt it is too restrictive and against BSD style licenses because we felt these are too permissive.
+										</div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion9" href="#licensingFive">c) Am I permitted to sell software that uses Fix8?</a>
+									</div>
+									<div id="licensingFive" class="accordion-body collapse">
+										<div class="accordion-inner">
+											Software that only links dynamically against the Fix8 library is not covered by the LGPL license. You are free to sell such software.
+										</div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion9" href="#licensingThree">d) Am I required to release my source code?</a>
+									</div>
+									<div id="licensingThree" class="accordion-body collapse">
+										<div class="accordion-inner">
+											This answer only applies if you intend on publishing your software. If your software only uses the Fix8 library by dynamically
+											linking against it, you are not required to release your code.  If your software is based upon <i>modifications</i> to
+											the Fix8 library, it is considered a <i>derivative work</i> and you are required to release the modified source to the
+											public. This definition of derivative excludes software that inherits from Fix8 classes.
+										</div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion9" href="#licensingFour">e) What about the code generated by the Fix8 compiler?</a>
+									</div>
+									<div id="licensingFour" class="accordion-body collapse">
+										<div class="accordion-inner">
+											Binary works that are the results of compilation of code that is generated by the Fix8 compiler can be published without
+											releasing your source code as long as your binary links dynamically against an unmodified version of the Fix8 library.
+											However you are required to leave the copyright text in the generated code.
+										</div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion9" href="#licensingTen">f) Is there a commercially licensed version of Fix8?</a>
+									</div>
+									<div id="licensingTen" class="accordion-body collapse">
+										<div class="accordion-inner">
+											The is currently no commercial version. Depending on demand we may fork the project and create a commercially licensed
+											version. If you would like to discuss this please <a href="mailto:consult@fix8.org">contact us</a>.
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+							<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsTwo"><h2>3. Requirements</h2></a>
 						</div>
 						<div id="mainheadsTwo" class="accordion-body collapse">
 							<div class="accordion" id="accordion3">
@@ -149,8 +279,8 @@
 										<div class="accordion-inner">
 											Fix8 is currently only supported on <a href="http://en.wikipedia.org/wiki/Linux">Linux.</a> Both 32 and 64 bit builds have
 											been tested.  Fix8 uses <a href="http://en.wikipedia.org/wiki/Posix">POSIX</a> system calls and should work on
-											other <a href="http://en.wikipedia.org/wiki/*NIX">*NIX</a> variants too.  If you get fix8 working on another *NIX
-											please let us know.
+											other <a href="http://en.wikipedia.org/wiki/*NIX">*NIX</a> variants too. If you get fix8 working on another *NIX
+											please let us know. Fix8 is not currently supported on Windows although it should be portable to that platform.
 										</div>
 									</div>
 								</div>
@@ -163,8 +293,6 @@
 											Fix8 requires the standard set of <a href="http://www.gnu.org/gnu/linux-and-gnu.html">GNU/Linux</a> dev tools,
 											including <a href="http://http://gcc.gnu.org">gcc</a>,
 											<a href="http://www.gnu.org/software/libtool">libtool</a>,
-											<a href="http://www.gnu.org/software/autoconf">autoconf</a>,
-											<a href="http://www.gnu.org/s/automake">automake</a>.  Fix8 also requires the
 											<a href="http://pocoproject.org/">Poco</a> library, Intel <a href="http://threadingbuildingblocks.org/">TBB</a> and
 											Oracle <a href="http://www.oracle.com/technetwork/database/berkeleydb/overview/index.html">Berkeley DB</a>. If
 											you want to generate the API documentation you will also need <a href="http://www.doxygen.org">doxygen</a>.
@@ -177,7 +305,9 @@
 									</div>
 									<div id="platformeThree" class="accordion-body collapse">
 										<div class="accordion-inner">
-											Since fix8 uses Intel <a href="http://threadingbuildingblocks.org/">TBB</a> only Intel IA32, Intel64 and IA64 and compatible
+											Since fix8 uses Intel <a href="http://threadingbuildingblocks.org/">TBB</a> only
+											Intel <a href="http://en.wikipedia.org/wiki/Ia32">IA32</a>, <a href="http://en.wikipedia.org/wiki/X86-64">x86-64</a>,
+											<a href="http://en.wikipedia.org/wiki/Ia64">Itanium</a> and compatible
 											hardware is supported (including AMD). There are however other non-supported patches for TBB to run on different hardware, including SPARC.
 										</div>
 									</div>
@@ -188,9 +318,9 @@
 									</div>
 									<div id="platformeFour" class="accordion-body collapse">
 										<div class="accordion-inner">
-											fix8 requires an <a href="http://en.wikipedia.org/wiki/xml">XML</a> schema document which describes the exact specifications
-											of the messages and fields that will be supported by your application. You can use any of the standard schemas supplied with the
-											package or supply your own.
+											Fix8 requires an <a href="http://en.wikipedia.org/wiki/xml">XML</a> schema document which describes the exact specifications
+											of the messages and fields that will be supported by your application. You can use any of the standard schemas
+											<a href="https://github.com/dakka/fix8/tree/master/schema">supplied</a> with the package or supply your own.
 										</div>
 									</div>
 								</div>
@@ -199,7 +329,7 @@
 						</div>
 						<div class="accordion-group">
 							<div class="accordion-heading">
-								<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsThree"><h2>3. The Fix8 API</h2></a>
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsThree"><h2>4. The Fix8 API</h2></a>
 							</div>
 							<div id="mainheadsThree" class="accordion-body collapse">
 								<div class="accordion" id="accordion4">
@@ -211,14 +341,15 @@
 											<div class="accordion-inner">
 												What you need to to do is override <code>Session::generate_logon()</code> in your session class.  In that method, the first
 												thing you need to do is call the base class method. Then add your extra fields...
-												<pre>
+												<!--pre class="prettyprint linenums languague-css"-->
+												<pre class="prettyprint">
 Message *my_sess::generate_logon()
 {
 	Message *msg(Session::generate_logon());
 	// now add your raw data
 	string rawstuff("blah");
-	*msg += new TEX::RawDataLength(rawstuff.size());
-	*msg += new TEX::RawData(rawstuff);
+	*msg << new TEX::RawDataLength(rawstuff.size());
+	*msg << new TEX::RawData(rawstuff);
 	return msg;
 }</pre>
 												The same approach applies to all session level messages.
@@ -258,68 +389,85 @@ Message *my_sess::generate_logon()
 												Nested repeating groups are easy to use. The following example creates multiple nested groups. Using <code>find_group</code>
 												and then <code>create_group</code> you can locate the group you wish to add, create an instance, populate the fields
 												and then add it to the message.
-												<pre>
-*nos += new TEX::NoUnderlyings(3);
+												<pre class="prettyprint">
+*nos << new TEX::NoUnderlyings(3);
 GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
 
 // repeating groups
 MessageBase *gr1(noul->create_group());
-*gr1 += new TEX::UnderlyingSymbol("BLAH");
-*gr1 += new TEX::UnderlyingQty(1 + RandDev::getrandom(999));
-*noul += gr1;
+*gr1 << new TEX::UnderlyingSymbol("BLAH");
+*gr1 << new TEX::UnderlyingQty(1 + RandDev::getrandom(999));
+*noul << gr1;
 
 MessageBase *gr2(noul->create_group());
-*gr2 += new TEX::UnderlyingSymbol("FOO");
+*gr2 << new TEX::UnderlyingSymbol("FOO");
 // nested repeating groups
-*gr2 += new TEX::NoUnderlyingSecurityAltID(2);
-*noul += gr2;
+*gr2 << new TEX::NoUnderlyingSecurityAltID(2);
+*noul << gr2;
 GroupBase *nosai(gr2->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingSecurityAltID>());
 MessageBase *gr3(nosai->create_group());
-*gr3 += new TEX::UnderlyingSecurityAltID("UnderBlah");
-*nosai += gr3;
+*gr3 << new TEX::UnderlyingSecurityAltID("UnderBlah");
+*nosai << gr3;
 MessageBase *gr4(nosai->create_group());
-*gr4 += new TEX::UnderlyingSecurityAltID("OverFoo");
-*nosai += gr4;
+*gr4 << new TEX::UnderlyingSecurityAltID("OverFoo");
+*nosai << gr4;
 
 MessageBase *gr5(noul->create_group());
-*gr5 += new TEX::UnderlyingSymbol("BOOM");
+*gr5 << new TEX::UnderlyingSymbol("BOOM");
 // nested repeating groups
 GroupBase *nus(gr5->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>());
 static const char *secIDs[] = { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
-*gr5 += new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
+*gr5 << new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
 for (size_t ii(0); ii < sizeof(secIDs)/sizeof(char *); ++ii)
 {
 	MessageBase *gr(nus->create_group());
-	*gr += new TEX::UnderlyingStipType(secIDs[ii]);
-	*nus += gr;
+	*gr << new TEX::UnderlyingStipType(secIDs[ii]);
+	*nus << gr;
 }
-*noul += gr5;
+*noul << gr5;
 
 // multiply nested repeating groups
-*nos += new TEX::NoAllocs(1);
+*nos << new TEX::NoAllocs(1);
 GroupBase *noall(nos->find_group<TEX::NewOrderSingle::NoAllocs>());
 MessageBase *gr9(noall->create_group());
-*gr9 += new TEX::AllocAccount("Account1");
-*gr9 += new TEX::NoNestedPartyIDs(1);
-*noall += gr9;
+*gr9 << new TEX::AllocAccount("Account1");
+*gr9 << new TEX::NoNestedPartyIDs(1);
+*noall << gr9;
 GroupBase *nonp(gr9->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs>());
 MessageBase *gr10(nonp->create_group());
-*gr10 += new TEX::NestedPartyID("nestedpartyID1");
-*gr10 += new TEX::NoNestedPartySubIDs(1);
-*nonp += gr10;
+*gr10 << new TEX::NestedPartyID("nestedpartyID1");
+*gr10 << new TEX::NoNestedPartySubIDs(1);
+*nonp << gr10;
 GroupBase *nonpsid(gr10->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs>());
 MessageBase *gr11(nonpsid->create_group());
-*gr11 += new TEX::NestedPartySubID("subnestedpartyID1");
-*nonpsid += gr11; </pre>
+*gr11 << new TEX::NestedPartySubID("subnestedpartyID1");
+*nonpsid << gr11; </pre>
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#testFive">e) Does fix8 support custom fields?</a>
+												</div>
+												<div id="testFive" class="accordion-body collapse">
+													<div class="accordion-inner">
+														Yes. In two ways. Firstly, since you have complete control over the shape and nature of all FIX messages in your
+														application by supplying the schema to the compiler, you can fine tune the FIX spoken to include any field you wish.
+														Alternatively, fix8 supports the addition of FIX fields in your application directly (without requiring the fix8
+														compiler to regenerate any code). For speed and efficiency, you should always aim to use the former method.
+														In fix8, the term 'custom field' really means additional fields not
+														defined in your schema. To use these, custom fields must be enabled when you run configure.
+								<pre>
+% ./configure --enable-customfields</pre>
+													</div>
+												</div>
 											</div>
 										</div>
-									</div>
-									</div>
 									</div>
 								</div>
 								<div class="accordion-group">
 									<div class="accordion-heading">
-										<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsFour"><h2>4. Building</h2></a>
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsFour"><h2>5. Building</h2></a>
 									</div>
 									<div id="mainheadsFour" class="accordion-body collapse">
 										<div class="accordion" id="accordion5">
@@ -331,8 +479,7 @@ MessageBase *gr11(nonpsid->create_group());
 													<div class="accordion-inner">
 														From the <code>fix8</code> directory, do the following...
 														<pre>
-% rm -rf autom4te.cache
-% ./bootstrap
+% make clean
 % ./configure [with your options here]
 % make; make install</pre>
 													</div>
@@ -381,24 +528,7 @@ MessageBase *gr11(nonpsid->create_group());
 											</div>
 											<div class="accordion-group">
 												<div class="accordion-heading">
-													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testFive">e) Does fix8 support custom fields?</a>
-												</div>
-												<div id="testFive" class="accordion-body collapse">
-													<div class="accordion-inner">
-														Yes. In two ways. Firstly, since you have complete control over the shape and nature of all FIX messages in your
-														application by supplying the schema to the compiler, you can fine tune the FIX spoken to include any field you wish.
-														Alternatively, fix8 supports the addition of FIX fields in your application directly (without requiring the fix8
-														compiler to regenerate any code). For speed and efficiency, you should always aim to use the former method.
-														In fix8, the term 'custom field' really means additional fields not
-														defined in your schema. To use these, custom fields must be enabled when you run configure.
-								<pre>
-% ./configure --enable-customfields</pre>
-													</div>
-												</div>
-											</div>
-											<div class="accordion-group">
-												<div class="accordion-heading">
-													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSix">f) When I run ./configure I get lots of errors</a>
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSix">e) When I run ./configure I get lots of errors</a>
 												</div>
 												<div id="testSix" class="accordion-body collapse">
 													<div class="accordion-inner">
@@ -414,21 +544,23 @@ MessageBase *gr11(nonpsid->create_group());
 											</div>
 											<div class="accordion-group">
 												<div class="accordion-heading">
-													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSeven">g) When linking, Fix8 reports that PocoXML.so is missing. What do I do?</a>
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSeven">f) When linking, Fix8 reports that PocoXML.so is missing. What do I do?</a>
 												</div>
 												<div id="testSeven" class="accordion-body collapse">
 													<div class="accordion-inner">
 													This problem is usually because you have built the poco library yourself. PocoXML is built in by default which leads to some
-													cross-dependencies. The fix is to modify <code>compiler/Makefile.am</code> and replace the first line below with the second:
+													cross-dependencies. The fix is to modify <code>compiler/Makefile.am</code> and replace:
 								<pre>
-POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
+POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil</pre>
+													with the following:
+								<pre>
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML</pre>
 													</div>
 												</div>
 											</div>
 											<div class="accordion-group">
 												<div class="accordion-heading">
-													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testEight">h) When I compile my schema I get a "Could not locate MsgType realm defintions" error</a>
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testEight">g) When I compile my schema I get a "Could not locate MsgType realm defintions" error</a>
 												</div>
 												<div id="testEight" class="accordion-body collapse">
 													<div class="accordion-inner">
@@ -456,41 +588,69 @@ POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML</pre>
 											</div>
 											<div class="accordion-group">
 												<div class="accordion-heading">
-													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testNine">i) How do I build Fix8 with clang (LLVM) ?</a>
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testNine">h) How do I build Fix8 with clang (LLVM) ?</a>
 												</div>
 												<div id="testNine" class="accordion-body collapse">
 													<div class="accordion-inner">
 														By default, gcc is chosen by configure to build Fix8. You can override this by passing an environment variable to configure, as follows:
 <pre>
-./bootstrap
 CXX=clang ./configure [with your options here]
 make; make install
 </pre>
-													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testTen">i) When I try and build, I get a pthread link error</a>
+												</div>
+												<div id="testTen" class="accordion-body collapse">
+													<div class="accordion-inner">
+														If you are receiving something like the following when you try and build...
+<pre>
+/bin/sh ../libtool --tag=CXX --mode=link g++ -g -O2 -Wall -rdynamic -lrt -lfix8 -lPocoFoundation -lPocoNet -lPocoUtil -ltbb -ldb_cxx -L../runtime -lmyfix -lz -o f8test myfix.o -ldb
+libtool: link: g++ -g -O2 -Wall -rdynamic -o .libs/f8test myfix.o -lrt ./fix8-0.6.6/runtime/.libs/libfix8.so -lcrypt -lPocoFoundation -lPocoNet -lPocoUtil -ltbb -ldb_cxx -L../runtime ./fix8-0.6.6/test/.libs/libmyfix.so -lz -ldb -Wl,-rpath -Wl,/usr/local/lib
+/usr/bin/ld: myfix.o: undefined reference to symbol 'pthread_kill@@GLIBC_2.2.5'
+/usr/bin/ld: note: 'pthread_kill@@GLIBC_2.2.5' is defined in DSO /usr/lib64/libpthread.so.0 so try adding it to the linker command line
+/usr/lib64/libpthread.so.0: could not read symbols: Invalid operation
+collect2: error: ld returned 1 exit status
+make[1]: *** [f8test] Error 1
+make[1]: Leaving directory `./fix8-0.6.6/test'
+make: *** [all-recursive] Error 1
+</pre>
+													the cause appears to be some conflict between 32 and 64 bit libraries. To fix, prefix your configure command as follows and then rebuild:
+<pre>
+LDFLAGS='-L/lib64 -lpthread' ./configure [your usual options here]
+
+e.g.
+
+LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=no
+</pre>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+							</div>
 						</div>
-					</div>
 						<br>
 						<br>
 				</div>
 			<div class="pager">
 				<li><a href="index.html">Home</a></li>
-				<li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
+				<li><a href="howitworks.html">How It Works</a></li>
+				<li><a href="faq.html">FAQ</a></li>
 				<li><a href="http://blog.fix8.org">News</a></li>
-				<li><a href="fix8/html">API Documentation</a></li>
-				<li class="active"><a href="#">FAQ</a></li>
+				<li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
 				<li><a href="support.html">Support</a></li>
 				<li><a href="issues.html">Issues</a></li>
-            <li><a href="https://github.com/dakka/fix8">Project</a></li>
-			   <li><a href="performance.html">Performance</a></li>
-            <li><a href="contact.html">Contact</a></li>
+				<li><a href="https://github.com/dakka/fix8">Project</a></li>
+				<li><a href="performance.html">Performance</a></li>
+				<li><a href="fix8/html">API Documentation</a></li>
+				<li><a href="aboutus.html">About Us</a></li>
+				<li><a href="contact.html">Contact</a></li>
 			</div>
 			<div class="modal-footer">
-			  <p>&copy; <a href="mailto:fix@fix8.org">David L. Dight. </a>2010-12</p>
+			  <p>&copy; <a href="mailto:fix@fix8.org">The Fix8 Team. </a>2010-13</p>
 			</div>
 
 		 </div> <!-- /container -->
@@ -510,6 +670,17 @@ make; make install
 		 <script src="js/bootstrap-button.js"></script>
 		 <script src="js/bootstrap-collapse.js"></script>
 		 <script src="js/bootstrap-typeahead.js"></script>
+		 <script type="text/javascript">
+				var _gaq = _gaq || [];
+				_gaq.push(['_setAccount', 'UA-37054507-1']);
+				_gaq.push(['_trackPageview']);
+				(function()
+				{
+					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				})();
+		 </script>
 
   </body>
 </html>

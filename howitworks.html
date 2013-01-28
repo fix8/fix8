@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>How It Works</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Modern open source FIX framework featuring complete schema driven customisation, high performance and fast application development.">
+    <meta name="author" content="David L. Dight">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+	 <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+	 <script type="text/javascript" src="css/prettify.js"></script>
+  </head>
+
+  <body onload="prettyPrint()" bgcolor="white">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#"><img src="fix8/fix8_Logo_RGB.png" width="28" height="28" /a></a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li class="active"><a href="#">How It Works</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="http://blog.fix8.org">News</a></li>
+              <li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
+              <li><a href="support.html">Support</a></li>
+              <li><a href="issues.html">Issues</a></li>
+              <li><a href="https://github.com/dakka/fix8">Project</a></li>
+              <li><a href="performance.html">Performance</a></li>
+              <li><a href="fix8/html">API Documentation</a></li>
+				  <li><a href="aboutus.html">About Us</a></li>
+				  <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+	<div class="container">
+
+		<div class="container">
+			<div class="row">
+				<div class="span6 offset5">
+					<br>
+					<img src="fix8/fix8_Logo_RGB.png"/>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+
+		<!--a href="http://groups.google.com/group/fix8-support"><img src="fix8/googlegroups_logo.gif"/></a-->
+		<br>
+
+		<div class="hero-unit">
+			<div class="container">
+				<div class="row">
+					<div class="span11">
+						<p><h3>Fix8 offers a unique approach to developing your FIX interface. The following diagram and description summarise the steps required to
+						build your application.</h3></p>
+						<br>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="span6">
+				<br>
+				<img src="fix8/hiw01.png"/>
+			</div>
+			<div class="span5">
+				<form class="well form-inline" action="">
+				<h4>1. Prepare your XML</h4>Use one of the <a href="https://github.com/dakka/fix8/tree/master/schema">supplied</a> standard XML
+				<a href="http://www.fixprotocol.org">FIX</a> schemas or create or modify your
+				own custom schema. You have complete control over every message and field that will be spoken by your interface.</h4>
+				</form>
+				<form class="well form-inline" action="">
+				<h4>2. Compile the XML</h4>Run the Fix8 compiler <code>f8c</code>over your XML to generate a set of <code>cpp</code> and <code>hpp</code>
+				source files.  You can control the <code>c++</code> namespace, class prefix and so forth to neatly frame the code in your application.</h4>
+				</form>
+				<form class="well form-inline" action="">
+				<h4>3. Use the generated code</h4>Integrate the generated code into your application. The Fix8 compiler can even generate the session and
+				dispatcher class stubs for you to fill in. Fix8 can support multiple FIX variants within one application if required.</h4>
+				</form>
+				<form class="well form-inline" action="">
+				<h4>4. Implement your application</h4>Your business code goes here. Fix8 provides a robust application framework on which you can build your
+				interface. Fix8 provides all the necessary services to establish a session, send and receive messages, create logs and so forth.
+				Fix8 supports client or server modes.</h4>
+				</form>
+				<form class="well form-inline" action="">
+				<h4>5. Compile your application</h4>Compile all the source in your application. Your compiler will optimise the generated code.</h4>
+				</form>
+				<form class="well form-inline" action="">
+				<h4>6. Link against the Fix8 Runtime Library</h4>Your application is then dynamically linked against the Fix8 Runtime library. Want to publish
+				your software? Under the terms of <a href="http://www.gnu.org/licenses/lgpl.html">LGPL</a> license your code remains yours and
+				<i>does not have to be released</i>.</h4>
+				</form>
+				<form class="well form-inline" action="">
+				<h4>7. Your final application</h4>Use the supported XML configuration system to prepare your interface for connection.</h3>
+				</form>
+			</div>
+			<div class="span12">
+				<p><i class="icon-arrow-right"></i> Take a look at the supplied examples in
+				<a href="http://fix8.org/fix8/html/myfix_8cpp_source.html">myfix.cpp</a>,
+				<a href="http://fix8.org/fix8/html/hftest_8cpp_source.html">hftest.cpp</a> and
+				<a href="http://fix8.org/fix8/html/harness_8cpp_source.html">harness.cpp</a> to see how this is done.</p>
+				<br>
+			</div>
+		</div>
+		<br>
+		<br>
+
+		<div class="pager">
+			<li><a href="index.html">Home</a></li>
+			<li><a href="howitworks.html">How It Works</a></li>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="http://blog.fix8.org">News</a></li>
+			<li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
+			<li><a href="support.html">Support</a></li>
+			<li><a href="issues.html">Issues</a></li>
+			<li><a href="https://github.com/dakka/fix8">Project</a></li>
+			<li><a href="performance.html">Performance</a></li>
+			<li><a href="fix8/html">API Documentation</a></li>
+			<li><a href="aboutus.html">About Us</a></li>
+			<li><a href="contact.html">Contact</a></li>
+		</div>
+
+		<div class="modal-footer">
+		  <p>&copy; <a href="mailto:fix@fix8.org">The Fix8 Team. </a>2010-13</p>
+		</div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-transition.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-button.js"></script>
+    <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
+	 <script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-37054507-1']);
+			_gaq.push(['_trackPageview']);
+			(function()
+			{
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+	 </script>
+
+  </body>
+</html>

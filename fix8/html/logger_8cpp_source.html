@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.6</span>
+   &#160;<span id="projectnumber">version  0.6.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -109,303 +109,301 @@ $(document).ready(function(){initNavTree('logger_8cpp_source.html','');});
 <a href="logger_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#if 0</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;Fix8 Open Source FIX Engine.</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;Copyright (C) 2010-12 David L. Dight &lt;fix@fix8.org&gt;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;Copyright (C) 2010-13 David L. Dight &lt;fix@fix8.org&gt;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;General Public License as  published by the Free Software Foundation,  either version 3  of</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;the License, or (at your option) any later version.</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;version 3 of the License, or (at your option) any later version.</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;GNU General Public License <span class="keywordflow">for</span> more details.</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;You should have received a copy of the GNU General Public License along with Fix8.  If not,</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;see &lt;http:<span class="comment">//www.gnu.org/licenses/&gt;.</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM <span class="stringliteral">&quot;AS IS&quot;</span> WITHOUT WARRANTY OF ANY</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;#endif</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;iterator&gt;</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;numeric&gt;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;bitset&gt;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;strings.h&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;You should  have received a copy of the GNU Lesser General Public  License along with Fix8.</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;If not, see &lt;http:<span class="comment">//www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM <span class="stringliteral">&quot;AS IS&quot;</span> WITHOUT WARRANTY OF ANY</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;#endif</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;iterator&gt;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;numeric&gt;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;bitset&gt;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;strings.h&gt;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">using namespace </span>FIX8;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">namespace </span>FIX8</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;{</div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">   63</a></span>&#160;   <span class="keywordtype">char</span> <a class="code" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a>[<a class="code" href="namespaceFIX8.html#a7f7a23dae0e782516c8c41d280c6f731">max_global_filename_length</a>] = { <span class="stringliteral">&quot;global_filename_not_set.log&quot;</span> };</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;   <span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;   tbb::atomic&lt;SingleLogger&lt;glob_log0&gt; *&gt; <a class="code" href="classFIX8_1_1Singleton.html" title="A lockfree Singleton.">Singleton&lt;SingleLogger&lt;glob_log0&gt;</a> &gt;::_instance</div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">   67</a></span>&#160;      = tbb::atomic&lt;SingleLogger&lt;glob_log0&gt; *&gt;();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;   <span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#a869f9079fbb2a0134233c51fb13fc285">   69</a></span>&#160;   tbb::mutex <a class="code" href="classFIX8_1_1Singleton.html" title="A lockfree Singleton.">Singleton&lt;SingleLogger&lt;glob_log0&gt;</a> &gt;::_mutex = tbb::mutex();</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">string</span> <a class="code" href="classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c" title="string representation of logflags">Logger::_bit_names</a>[] = { <span class="stringliteral">&quot;append&quot;</span>, <span class="stringliteral">&quot;timestamp&quot;</span>, <span class="stringliteral">&quot;sequence&quot;</span>, <span class="stringliteral">&quot;compress&quot;</span>, <span class="stringliteral">&quot;pipe&quot;</span>, <span class="stringliteral">&quot;broadcast&quot;</span>, <span class="stringliteral">&quot;thread&quot;</span>, <span class="stringliteral">&quot;direction&quot;</span>, <span class="stringliteral">&quot;buffer&quot;</span> };</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="code" href="classFIX8_1_1Logger.html#aa11f47142886e4dd38230ad63ce0377f">   75</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1Logger.html#aa11f47142886e4dd38230ad63ce0377f">Logger::operator()</a>()</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;{</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;   <span class="keywordtype">unsigned</span> received(0);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;   <span class="keywordtype">bool</span> stopping(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;   <span class="keywordflow">for</span> (;;)</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;   {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html">LogElement</a> msg;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      <span class="keywordflow">if</span> (stopping)  <span class="comment">// make sure we dequeue any pending msgs before exiting</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;         <span class="keywordflow">if</span> (!_msg_queue.try_pop(msg))</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;         _msg_queue.pop (msg); <span class="comment">// will block</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">using namespace </span>FIX8;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">namespace </span>FIX8</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;{</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">   61</a></span>&#160;   <span class="keywordtype">char</span> <a class="code" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a>[<a class="code" href="namespaceFIX8.html#a7f7a23dae0e782516c8c41d280c6f731">max_global_filename_length</a>] = { <span class="stringliteral">&quot;global_filename_not_set.log&quot;</span> };</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   <span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   tbb::atomic&lt;SingleLogger&lt;glob_log0&gt; *&gt; <a class="code" href="classFIX8_1_1Singleton.html" title="A lockfree Singleton.">Singleton&lt;SingleLogger&lt;glob_log0&gt;</a> &gt;::_instance</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">   65</a></span>&#160;      = tbb::atomic&lt;SingleLogger&lt;glob_log0&gt; *&gt;();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;   <span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="code" href="classFIX8_1_1Singleton.html#a869f9079fbb2a0134233c51fb13fc285">   67</a></span>&#160;   tbb::mutex <a class="code" href="classFIX8_1_1Singleton.html" title="A lockfree Singleton.">Singleton&lt;SingleLogger&lt;glob_log0&gt;</a> &gt;::_mutex = tbb::mutex();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">string</span> <a class="code" href="classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c" title="string representation of logflags">Logger::_bit_names</a>[] = { <span class="stringliteral">&quot;append&quot;</span>, <span class="stringliteral">&quot;timestamp&quot;</span>, <span class="stringliteral">&quot;sequence&quot;</span>, <span class="stringliteral">&quot;compress&quot;</span>, <span class="stringliteral">&quot;pipe&quot;</span>, <span class="stringliteral">&quot;broadcast&quot;</span>, <span class="stringliteral">&quot;thread&quot;</span>, <span class="stringliteral">&quot;direction&quot;</span>, <span class="stringliteral">&quot;buffer&quot;</span> };</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="classFIX8_1_1Logger.html#aa11f47142886e4dd38230ad63ce0377f">   73</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1Logger.html#aa11f47142886e4dd38230ad63ce0377f">Logger::operator()</a>()</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;{</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;   <span class="keywordtype">unsigned</span> received(0);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   <span class="keywordtype">bool</span> stopping(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;   <span class="keywordflow">for</span> (;;)</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;   {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      <a class="code" href="structFIX8_1_1Logger_1_1LogElement.html">LogElement</a> msg;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      <span class="keywordflow">if</span> (stopping)  <span class="comment">// make sure we dequeue any pending msgs before exiting</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;         <span class="keywordflow">if</span> (!_msg_queue.try_pop(msg))</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;         _msg_queue.pop (msg); <span class="comment">// will block</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      ++received;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      ++received;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <span class="keywordflow">if</span> (msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ac73291f8e309afde96e2ccb705f59582">_str</a>.empty())  <span class="comment">// means exit</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;         stopping = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <span class="keywordflow">if</span> (msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ac73291f8e309afde96e2ccb705f59582">_str</a>.empty())  <span class="comment">// means exit</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      {</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;         stopping = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;         <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      ostringstream ostr;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      ostringstream ostr;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <span class="keywordflow">if</span> (_flags &amp; sequence)</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;         ostr &lt;&lt; setw(7) &lt;&lt; right &lt;&lt; setfill(<span class="charliteral">&#39;0&#39;</span>);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;         <span class="keywordflow">if</span> (_flags &amp; direction)</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            ostr &lt;&lt; (msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a88cb8f4c070be040298afd0530ed5206">_val</a> ? ++_sequence  : ++_osequence) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            ostr &lt;&lt; ++_sequence &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      }</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      <span class="keywordflow">if</span> (_flags &amp; thread)</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;         ostr &lt;&lt; get_thread_code(msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a8a6352174a852019fbc56474e6260ccf">_tid</a>) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      <span class="keywordflow">if</span> (_flags &amp; direction)</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;         ostr &lt;&lt; (msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a88cb8f4c070be040298afd0530ed5206">_val</a> ? <span class="stringliteral">&quot; in&quot;</span> : <span class="stringliteral">&quot;out&quot;</span>) &lt;&lt; <span class="charliteral">&#39; &#39;</span> ;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      <span class="keywordflow">if</span> (_flags &amp; timestamp)</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      {</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;         <span class="keywordtype">string</span> ts;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;         ostr &lt;&lt; <a class="code" href="namespaceFIX8.html#a208707a0f000f8ba8059636ba89de746">GetTimeAsStringMS</a>(ts, &amp;msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ae61f658def107ef819ed03232ccf8d47">_when</a>, 9) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      }</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      <span class="keywordflow">if</span> (_flags &amp; buffer)</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      {</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;         <span class="keywordtype">string</span> result(ostr.str());</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;         result += msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ac73291f8e309afde96e2ccb705f59582">_str</a>;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;         _buffer.push_back(result);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      }</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      {</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;         tbb::mutex::scoped_lock guard(_mutex);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;         get_stream() &lt;&lt; ostr.str() &lt;&lt; msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ac73291f8e309afde96e2ccb705f59582">_str</a> &lt;&lt; endl;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      }</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;   }</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;}</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00139"></a><span class="lineno"><a class="code" href="classFIX8_1_1Logger.html#a5cc08473729523bb4bde48459f2ac468">  139</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1Logger.html#a5cc08473729523bb4bde48459f2ac468" title="Flush the buffer.">Logger::flush</a>()</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;{</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;   tbb::mutex::scoped_lock guard(_mutex);</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;   <span class="keywordflow">for</span> (std::list&lt;std::string&gt;::const_iterator itr(_buffer.begin()); itr != _buffer.end(); ++itr)</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;      get_stream() &lt;&lt; *itr &lt;&lt; endl;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;   _buffer.clear();</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;   _lines = 0;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;}</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00149"></a><span class="lineno"><a class="code" href="classFIX8_1_1Logger.html#a8175e14a66ef836973ac504cf04170ef">  149</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1Logger.html#a8175e14a66ef836973ac504cf04170ef" title="Remove dead threads from the thread code cache.">Logger::purge_thread_codes</a>()</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;{</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;   tbb::mutex::scoped_lock guard(_mutex);</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;   <span class="keywordflow">for</span> (ThreadCodes::iterator itr(_thread_codes.begin()); itr != _thread_codes.end();)</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;   {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="comment">// a little trick to see if a thread is still alive</span></div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      clockid_t clock_id;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      <span class="keywordflow">if</span> (pthread_getcpuclockid(itr-&gt;first, &amp;clock_id) == ESRCH)</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      {</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;         _rev_thread_codes.erase(itr-&gt;second);</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;         _thread_codes.erase(itr++); <span class="comment">// post inc, takes copy before incr;</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      }</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;         ++itr;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;   }</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;}</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00168"></a><span class="lineno"><a class="code" href="classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81">  168</a></span>&#160;<span class="keywordtype">char</span> <a class="code" href="classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81">Logger::get_thread_code</a>(pthread_t tid)</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;{</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;   tbb::mutex::scoped_lock guard(_mutex);</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;   ThreadCodes::const_iterator itr(_thread_codes.find(tid));</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;   <span class="keywordflow">if</span> (itr != _thread_codes.end())</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;      <span class="keywordflow">return</span> itr-&gt;second;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;   for (<span class="keywordtype">char</span> acode(<span class="charliteral">&#39;A&#39;</span>); acode &lt; 127; ++acode)  <span class="comment">// A-~ will allow for 86 threads</span></div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;   {</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      RevThreadCodes::const_iterator itr(_rev_thread_codes.find(acode));</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;      <span class="keywordflow">if</span> (itr == _rev_thread_codes.end())</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      {</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;         _thread_codes.insert(ThreadCodes::value_type(tid, acode));</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;         _rev_thread_codes.insert(ThreadCodes::value_type(acode, tid));</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;         <span class="keywordflow">return</span> acode;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;      }</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;   }</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;   <span class="keywordflow">return</span> <span class="charliteral">&#39;?&#39;</span>;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;}</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno"><a class="code" href="classFIX8_1_1FileLogger.html#a79c39a625f39fdf863850a0289f414c4">  191</a></span>&#160;<a class="code" href="classFIX8_1_1FileLogger.html#a79c39a625f39fdf863850a0289f414c4">FileLogger::FileLogger</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; fname, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1ebitset.html">ebitset&lt;Flags&gt;</a> flags, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> rotnum)</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;   : <a class="code" href="classFIX8_1_1Logger.html" title="Thread delegated async logging class.">Logger</a>(flags), _rotnum(rotnum)</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;{</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;   <span class="keywordflow">if</span> (!fname.empty())</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;   {</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;      <a class="code" href="classFIX8_1_1FileLogger.html#ab4942b7cc9376b9e42756beedb7ba43f">_pathname</a> = fname;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;      <a class="code" href="classFIX8_1_1FileLogger.html#afc44ff8fb3c39044085b18a14ee64cc3">rotate</a>();</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;   }</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;}</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00202"></a><span class="lineno"><a class="code" href="classFIX8_1_1FileLogger.html#afc44ff8fb3c39044085b18a14ee64cc3">  202</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1FileLogger.html#afc44ff8fb3c39044085b18a14ee64cc3">FileLogger::rotate</a>(<span class="keywordtype">bool</span> force)</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;{</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;   tbb::mutex::scoped_lock guard(<a class="code" href="classFIX8_1_1Logger.html#a638053a7d2ef91150b1d84f50793796e">_mutex</a>);</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;   <span class="keywordtype">string</span> thislFile(<a class="code" href="classFIX8_1_1FileLogger.html#ab4942b7cc9376b9e42756beedb7ba43f">_pathname</a>);</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor">#ifdef HAVE_COMPRESSION</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="preprocessor"></span>   <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> &amp; <a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca413204368f98ffce9776895b0dac4b81">compress</a>)</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;      thislFile += <span class="stringliteral">&quot;.gz&quot;</span>;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor"></span>   <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1FileLogger.html#ad2264ec855ba387216b6469f6eb7c011">_rotnum</a> &gt; 0 &amp;&amp; (!<a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a>.<a class="code" href="classFIX8_1_1ebitset.html#a057847be416de2837cc543c766b4a4cb">has</a>(<a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca3d3bb2cf8aa48d1149f998933b2aa443">append</a>) || force))</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;   {</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;      vector&lt;string&gt; rlst(<a class="code" href="classFIX8_1_1FileLogger.html#ad2264ec855ba387216b6469f6eb7c011">_rotnum</a>);</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;      rlst.push_back(thislFile);</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> ii(0); ii &lt; <a class="code" href="classFIX8_1_1FileLogger.html#ad2264ec855ba387216b6469f6eb7c011">_rotnum</a> &amp;&amp; ii &lt; <a class="code" href="classFIX8_1_1Logger.html#a3869d2d1d2ce355a0462f385c08bb2eaaca181bd419c261d0dde6df584a079025">max_rotation</a>; ++ii)</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;      {</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;         ostringstream ostr;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;         ostr &lt;&lt; <a class="code" href="classFIX8_1_1FileLogger.html#ab4942b7cc9376b9e42756beedb7ba43f">_pathname</a> &lt;&lt; <span class="charliteral">&#39;.&#39;</span> &lt;&lt; (ii + 1);</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> &amp; compress)</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            ostr &lt;&lt; <span class="stringliteral">&quot;.gz&quot;</span>;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;         rlst.push_back(ostr.str());</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;      }</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> ii(<a class="code" href="classFIX8_1_1FileLogger.html#ad2264ec855ba387216b6469f6eb7c011">_rotnum</a>); ii; --ii)</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;         rename (rlst[ii - 1].c_str(), rlst[ii].c_str());   <span class="comment">// ignore errors</span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;   }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <span class="keywordflow">if</span> (_flags &amp; sequence)</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;         ostr &lt;&lt; setw(7) &lt;&lt; right &lt;&lt; setfill(<span class="charliteral">&#39;0&#39;</span>);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;         <span class="keywordflow">if</span> (_flags &amp; direction)</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            ostr &lt;&lt; (msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a88cb8f4c070be040298afd0530ed5206">_val</a> ? ++_sequence  : ++_osequence) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;         <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            ostr &lt;&lt; ++_sequence &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <span class="keywordflow">if</span> (_flags &amp; thread)</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;         ostr &lt;&lt; get_thread_code(msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a8a6352174a852019fbc56474e6260ccf">_tid</a>) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <span class="keywordflow">if</span> (_flags &amp; direction)</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;         ostr &lt;&lt; (msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#a88cb8f4c070be040298afd0530ed5206">_val</a> ? <span class="stringliteral">&quot; in&quot;</span> : <span class="stringliteral">&quot;out&quot;</span>) &lt;&lt; <span class="charliteral">&#39; &#39;</span> ;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <span class="keywordflow">if</span> (_flags &amp; timestamp)</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      {</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;         <span class="keywordtype">string</span> ts;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;         ostr &lt;&lt; <a class="code" href="namespaceFIX8.html#a21bce0769809df7d55f39cd67e6b22a0">GetTimeAsStringMS</a>(ts, &amp;msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ae61f658def107ef819ed03232ccf8d47">_when</a>, 9) &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      <span class="keywordflow">if</span> (_flags &amp; buffer)</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      {</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;         <span class="keywordtype">string</span> result(ostr.str());</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;         result += msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ac73291f8e309afde96e2ccb705f59582">_str</a>;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;         _buffer.push_back(result);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      {</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;         tbb::mutex::scoped_lock guard(_mutex);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;         get_stream() &lt;&lt; ostr.str() &lt;&lt; msg.<a class="code" href="structFIX8_1_1Logger_1_1LogElement.html#ac73291f8e309afde96e2ccb705f59582">_str</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;   }</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno"><a class="code" href="classFIX8_1_1Logger.html#a5cc08473729523bb4bde48459f2ac468">  137</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1Logger.html#a5cc08473729523bb4bde48459f2ac468" title="Flush the buffer.">Logger::flush</a>()</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;{</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;   tbb::mutex::scoped_lock guard(_mutex);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;   <span class="keywordflow">for</span> (std::list&lt;std::string&gt;::const_iterator itr(_buffer.begin()); itr != _buffer.end(); ++itr)</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      get_stream() &lt;&lt; *itr &lt;&lt; endl;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;   _buffer.clear();</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;   _lines = 0;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;}</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="code" href="classFIX8_1_1Logger.html#a8175e14a66ef836973ac504cf04170ef">  147</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1Logger.html#a8175e14a66ef836973ac504cf04170ef" title="Remove dead threads from the thread code cache.">Logger::purge_thread_codes</a>()</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;{</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;   tbb::mutex::scoped_lock guard(_mutex);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;   <span class="keywordflow">for</span> (ThreadCodes::iterator itr(_thread_codes.begin()); itr != _thread_codes.end();)</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;   {</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      <span class="comment">// a little trick to see if a thread is still alive</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      clockid_t clock_id;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="keywordflow">if</span> (pthread_getcpuclockid(itr-&gt;first, &amp;clock_id) == ESRCH)</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      {</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;         _rev_thread_codes.erase(itr-&gt;second);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;         _thread_codes.erase(itr++); <span class="comment">// post inc, takes copy before incr;</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      }</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;         ++itr;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;   }</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;}</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno"><a class="code" href="classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81">  166</a></span>&#160;<span class="keywordtype">char</span> <a class="code" href="classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81">Logger::get_thread_code</a>(pthread_t tid)</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;{</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;   tbb::mutex::scoped_lock guard(_mutex);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;   ThreadCodes::const_iterator itr(_thread_codes.find(tid));</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;   <span class="keywordflow">if</span> (itr != _thread_codes.end())</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      <span class="keywordflow">return</span> itr-&gt;second;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;   for (<span class="keywordtype">char</span> acode(<span class="charliteral">&#39;A&#39;</span>); acode &lt; 127; ++acode)  <span class="comment">// A-~ will allow for 86 threads</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;   {</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      RevThreadCodes::const_iterator itr(_rev_thread_codes.find(acode));</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      <span class="keywordflow">if</span> (itr == _rev_thread_codes.end())</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      {</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;         _thread_codes.insert(ThreadCodes::value_type(tid, acode));</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;         _rev_thread_codes.insert(ThreadCodes::value_type(acode, tid));</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;         <span class="keywordflow">return</span> acode;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      }</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;   }</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;   <span class="keywordflow">return</span> <span class="charliteral">&#39;?&#39;</span>;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;}</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno"><a class="code" href="classFIX8_1_1FileLogger.html#a79c39a625f39fdf863850a0289f414c4">  189</a></span>&#160;<a class="code" href="classFIX8_1_1FileLogger.html#a79c39a625f39fdf863850a0289f414c4">FileLogger::FileLogger</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; fname, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1ebitset.html">ebitset&lt;Flags&gt;</a> flags, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> rotnum)</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;   : <a class="code" href="classFIX8_1_1Logger.html" title="Thread delegated async logging class.">Logger</a>(flags), _rotnum(rotnum)</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;{</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;   <span class="keywordflow">if</span> (!fname.empty())</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;   {</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;      <a class="code" href="classFIX8_1_1FileLogger.html#ab4942b7cc9376b9e42756beedb7ba43f">_pathname</a> = fname;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;      <a class="code" href="classFIX8_1_1FileLogger.html#afc44ff8fb3c39044085b18a14ee64cc3">rotate</a>();</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;   }</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;}</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno"><a class="code" href="classFIX8_1_1FileLogger.html#afc44ff8fb3c39044085b18a14ee64cc3">  200</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1FileLogger.html#afc44ff8fb3c39044085b18a14ee64cc3">FileLogger::rotate</a>(<span class="keywordtype">bool</span> force)</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;{</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;   tbb::mutex::scoped_lock guard(<a class="code" href="classFIX8_1_1Logger.html#a638053a7d2ef91150b1d84f50793796e">_mutex</a>);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;   <span class="keywordtype">string</span> thislFile(<a class="code" href="classFIX8_1_1FileLogger.html#ab4942b7cc9376b9e42756beedb7ba43f">_pathname</a>);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="preprocessor">#ifdef HAVE_COMPRESSION</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="preprocessor"></span>   <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> &amp; <a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca413204368f98ffce9776895b0dac4b81">compress</a>)</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;      thislFile += <span class="stringliteral">&quot;.gz&quot;</span>;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor"></span>   <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1FileLogger.html#ad2264ec855ba387216b6469f6eb7c011">_rotnum</a> &gt; 0 &amp;&amp; (!<a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a>.<a class="code" href="classFIX8_1_1ebitset.html#a057847be416de2837cc543c766b4a4cb">has</a>(<a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca3d3bb2cf8aa48d1149f998933b2aa443">append</a>) || force))</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;   {</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;      vector&lt;string&gt; rlst(<a class="code" href="classFIX8_1_1FileLogger.html#ad2264ec855ba387216b6469f6eb7c011">_rotnum</a>);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;      rlst.push_back(thislFile);</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> ii(0); ii &lt; <a class="code" href="classFIX8_1_1FileLogger.html#ad2264ec855ba387216b6469f6eb7c011">_rotnum</a> &amp;&amp; ii &lt; <a class="code" href="classFIX8_1_1Logger.html#aa0db957030531a706605fc5f3bdf2d57aca181bd419c261d0dde6df584a079025">max_rotation</a>; ++ii)</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;      {</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;         ostringstream ostr;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;         ostr &lt;&lt; <a class="code" href="classFIX8_1_1FileLogger.html#ab4942b7cc9376b9e42756beedb7ba43f">_pathname</a> &lt;&lt; <span class="charliteral">&#39;.&#39;</span> &lt;&lt; (ii + 1);</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> &amp; compress)</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            ostr &lt;&lt; <span class="stringliteral">&quot;.gz&quot;</span>;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;         rlst.push_back(ostr.str());</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      }</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> ii(<a class="code" href="classFIX8_1_1FileLogger.html#ad2264ec855ba387216b6469f6eb7c011">_rotnum</a>); ii; --ii)</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;         rename (rlst[ii - 1].c_str(), rlst[ii].c_str());   <span class="comment">// ignore errors</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;   }</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;   <span class="keyword">delete</span> <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a>;</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;   <span class="keyword">delete</span> <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a>;</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;   <span class="keyword">const</span> ios_base::openmode mode (<a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> &amp; <a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca3d3bb2cf8aa48d1149f998933b2aa443">append</a> ? ios_base::out | ios_base::app : ios_base::out);</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="preprocessor">#ifdef HAVE_COMPRESSION</span></div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor"></span>   <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> &amp; compress)</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a> = <span class="keyword">new</span> <a class="code" href="classogzstream.html">ogzstream</a>(thislFile.c_str(), mode);</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor"></span>      <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a> = <span class="keyword">new</span> ofstream(thislFile.c_str(), mode);</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;}</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno"><a class="code" href="classFIX8_1_1PipeLogger.html#aac153f6d111be43d805e0e56f35ddd60">  243</a></span>&#160;<a class="code" href="classFIX8_1_1PipeLogger.html#aac153f6d111be43d805e0e56f35ddd60">PipeLogger::PipeLogger</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; fname, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1ebitset.html">ebitset&lt;Flags&gt;</a> flags) : <a class="code" href="classFIX8_1_1Logger.html" title="Thread delegated async logging class.">Logger</a>(flags)</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;{</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">string</span> pathname(fname.substr(1));</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;   <span class="comment">// | uses IFS safe cfpopen; ! uses old popen if available</span></div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;   FILE *pcmd(</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;#ifdef <a class="code" href="f8config_8h.html#a42f2de81cc9398f23045b483488d082d">HAVE_POPEN</a></div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      fname[0] == <span class="charliteral">&#39;!&#39;</span> ? popen(pathname.c_str(), <span class="stringliteral">&quot;w&quot;</span>) :</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;#endif</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;                        <a class="code" href="namespaceFIX8.html#a61fa3919d0614bd1b99e4864af719428">cfpopen</a>(const_cast&lt;char*&gt;(pathname.c_str()), const_cast&lt;char*&gt;(<span class="stringliteral">&quot;w&quot;</span>)));</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;   <span class="keywordflow">if</span> (pcmd == 0)</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="preprocessor">#ifdef DEBUG</span></div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor"></span>      *errofs &lt;&lt; pathname &lt;&lt; <span class="stringliteral">&quot; failed to execute&quot;</span> &lt;&lt; endl</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="preprocessor"></span>      ;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ferror(pcmd))</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor">#ifdef DEBUG</span></div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="preprocessor"></span>      *errofs &lt;&lt; pathname &lt;&lt; <span class="stringliteral">&quot; shows ferror&quot;</span> &lt;&lt; endl</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="preprocessor"></span>      ;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;   {</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a> = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1fptrostream.html" title="File pointer stream.">fptrostream</a>(pcmd, fname[0] == <span class="charliteral">&#39;|&#39;</span>);</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      <a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> |= <a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cae42b3dd21e40c3477a3e57889bc9f222">pipe</a>;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;   }</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;}</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="comment">// nc -lu 127.0.0.1 -p 51000</span></div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<a class="code" href="classFIX8_1_1BCLogger.html#aa19d4cd0c133cd379461440f16b7e423">BCLogger::BCLogger</a>(Poco::Net::DatagramSocket *sock, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1ebitset.html">ebitset&lt;Flags&gt;</a> flags) : <a class="code" href="classFIX8_1_1Logger.html" title="Thread delegated async logging class.">Logger</a>(flags), _init_ok(true)</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;{</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;   <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a> = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1bcostream.html" title="udp stream">bcostream</a>(sock);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;   <a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> |= <a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca111961a483ad2b35ec93c3c5c8ff4f9e">broadcast</a>;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;}</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<a class="code" href="classFIX8_1_1BCLogger.html#aa19d4cd0c133cd379461440f16b7e423">BCLogger::BCLogger</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; ip, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> port, <span class="keyword">const</span> LogFlags flags) : <a class="code" href="classFIX8_1_1Logger.html" title="Thread delegated async logging class.">Logger</a>(flags), _init_ok()</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;{</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;   Poco::Net::IPAddress ipaddr;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;   <span class="keywordflow">if</span> (Poco::Net::IPAddress::tryParse(ip, ipaddr)</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      &amp;&amp; (ipaddr.isGlobalMC() || ipaddr.isMulticast() || ipaddr.isBroadcast()</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;      || ipaddr.isLinkLocalMC() || ipaddr.isUnicast() || ipaddr.isWellKnownMC()</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      || ipaddr.isSiteLocalMC() || ipaddr.isOrgLocalMC()))</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;   {</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;      Poco::Net::SocketAddress saddr(ipaddr, port);</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;      Poco::Net::DatagramSocket *dgs(<span class="keyword">new</span> Poco::Net::DatagramSocket);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;      <span class="keywordflow">if</span> (ipaddr.isBroadcast())</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;         dgs-&gt;setBroadcast(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;      dgs-&gt;connect(saddr);</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;      <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a> = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1bcostream.html" title="udp stream">bcostream</a>(dgs);</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;      <a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> |= <a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca111961a483ad2b35ec93c3c5c8ff4f9e">broadcast</a>;</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;      _init_ok = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;   }</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;}</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;   <span class="keyword">const</span> ios_base::openmode mode (<a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> &amp; <a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca3d3bb2cf8aa48d1149f998933b2aa443">append</a> ? ios_base::out | ios_base::app : ios_base::out);</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="preprocessor">#ifdef HAVE_COMPRESSION</span></div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="preprocessor"></span>   <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> &amp; compress)</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a> = <span class="keyword">new</span> <a class="code" href="classogzstream.html">ogzstream</a>(thislFile.c_str(), mode);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor"></span>      <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a> = <span class="keyword">new</span> ofstream(thislFile.c_str(), mode);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno"><a class="code" href="classFIX8_1_1PipeLogger.html#aac153f6d111be43d805e0e56f35ddd60">  241</a></span>&#160;<a class="code" href="classFIX8_1_1PipeLogger.html#aac153f6d111be43d805e0e56f35ddd60">PipeLogger::PipeLogger</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; fname, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1ebitset.html">ebitset&lt;Flags&gt;</a> flags) : <a class="code" href="classFIX8_1_1Logger.html" title="Thread delegated async logging class.">Logger</a>(flags)</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;{</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">string</span> pathname(fname.substr(1));</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;   <span class="comment">// | uses IFS safe cfpopen; ! uses old popen if available</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;   FILE *pcmd(</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;#ifdef <a class="code" href="f8config_8h.html#a42f2de81cc9398f23045b483488d082d">HAVE_POPEN</a></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      fname[0] == <span class="charliteral">&#39;!&#39;</span> ? popen(pathname.c_str(), <span class="stringliteral">&quot;w&quot;</span>) :</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;#endif</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;                        <a class="code" href="namespaceFIX8.html#a61fa3919d0614bd1b99e4864af719428">cfpopen</a>(const_cast&lt;char*&gt;(pathname.c_str()), const_cast&lt;char*&gt;(<span class="stringliteral">&quot;w&quot;</span>)));</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;   <span class="keywordflow">if</span> (pcmd == 0)</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="preprocessor">#ifdef DEBUG</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="preprocessor"></span>      *errofs &lt;&lt; pathname &lt;&lt; <span class="stringliteral">&quot; failed to execute&quot;</span> &lt;&lt; endl</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor"></span>      ;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ferror(pcmd))</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="preprocessor">#ifdef DEBUG</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="preprocessor"></span>      *errofs &lt;&lt; pathname &lt;&lt; <span class="stringliteral">&quot; shows ferror&quot;</span> &lt;&lt; endl</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="preprocessor"></span>      ;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;   {</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a> = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1fptrostream.html" title="File pointer stream.">fptrostream</a>(pcmd, fname[0] == <span class="charliteral">&#39;|&#39;</span>);</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;      <a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> |= <a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cae42b3dd21e40c3477a3e57889bc9f222">pipe</a>;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   }</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;}</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="comment">// nc -lu 127.0.0.1 -p 51000</span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<a class="code" href="classFIX8_1_1BCLogger.html#aa19d4cd0c133cd379461440f16b7e423">BCLogger::BCLogger</a>(Poco::Net::DatagramSocket *sock, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1ebitset.html">ebitset&lt;Flags&gt;</a> flags) : <a class="code" href="classFIX8_1_1Logger.html" title="Thread delegated async logging class.">Logger</a>(flags), _init_ok(true)</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;{</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;   <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a> = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1bcostream.html" title="udp stream">bcostream</a>(sock);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;   <a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> |= <a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca111961a483ad2b35ec93c3c5c8ff4f9e">broadcast</a>;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;}</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<a class="code" href="classFIX8_1_1BCLogger.html#aa19d4cd0c133cd379461440f16b7e423">BCLogger::BCLogger</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; ip, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> port, <span class="keyword">const</span> LogFlags flags) : <a class="code" href="classFIX8_1_1Logger.html" title="Thread delegated async logging class.">Logger</a>(flags), _init_ok()</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;{</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;   Poco::Net::IPAddress ipaddr;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;   <span class="keywordflow">if</span> (Poco::Net::IPAddress::tryParse(ip, ipaddr)</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      &amp;&amp; (ipaddr.isGlobalMC() || ipaddr.isMulticast() || ipaddr.isBroadcast()</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;      || ipaddr.isLinkLocalMC() || ipaddr.isUnicast() || ipaddr.isWellKnownMC()</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      || ipaddr.isSiteLocalMC() || ipaddr.isOrgLocalMC()))</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;   {</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      Poco::Net::SocketAddress saddr(ipaddr, port);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;      Poco::Net::DatagramSocket *dgs(<span class="keyword">new</span> Poco::Net::DatagramSocket);</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;      <span class="keywordflow">if</span> (ipaddr.isBroadcast())</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;         dgs-&gt;setBroadcast(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;      dgs-&gt;connect(saddr);</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      <a class="code" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a> = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1bcostream.html" title="udp stream">bcostream</a>(dgs);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;      <a class="code" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a> |= <a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca111961a483ad2b35ec93c3c5c8ff4f9e">broadcast</a>;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;      _init_ok = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;   }</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;}</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:45. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:12. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.6</span>
+   &#160;<span id="projectnumber">version  0.6.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -113,6 +113,7 @@ $(document).ready(function(){initNavTree('f8utils_8hpp.html','');});
 <div class="contents">
 <div class="textblock"><code>#include &lt;tbb/atomic.h&gt;</code><br/>
 <code>#include &lt;tbb/mutex.h&gt;</code><br/>
+<code>#include &lt;Poco/DateTime.h&gt;</code><br/>
 <code>#include &lt;sys/ioctl.h&gt;</code><br/>
 <code>#include &lt;termios.h&gt;</code><br/>
 </div>
@@ -167,7 +168,7 @@ Functions</h2></td></tr>
 <tr class="memitem:aa425fec2bfd5904c8599debe9e6adc9c"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aa425fec2bfd5904c8599debe9e6adc9c">FIX8::CheckAddTrailingSlash</a> (std::string &amp;source)</td></tr>
 <tr class="memitem:a6990067429b01a85d2d95a15675d1e31"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a6990067429b01a85d2d95a15675d1e31">FIX8::InPlaceReplaceInSet</a> (const std::string &amp;iset, std::string &amp;src, const char repl='_')</td></tr>
 <tr class="memitem:a7a2717c5631879023e7924bdc42eb235"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">FIX8::Str_error</a> (const int err, const char *str=0)</td></tr>
-<tr class="memitem:a208707a0f000f8ba8059636ba89de746"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a208707a0f000f8ba8059636ba89de746">FIX8::GetTimeAsStringMS</a> (std::string &amp;result, class Tickval *tv=0, const unsigned dplaces=6)</td></tr>
+<tr class="memitem:a21bce0769809df7d55f39cd67e6b22a0"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a21bce0769809df7d55f39cd67e6b22a0">FIX8::GetTimeAsStringMS</a> (std::string &amp;result, const class Tickval *tv=0, const unsigned dplaces=6)</td></tr>
 <tr class="memitem:ab83fe73ed9b4e13c4f2c6084f6fbbe20"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim</a> (std::string &amp;source, const std::string &amp;ws=&quot; \t&quot;)</td></tr>
 <tr class="memitem:a9a1bb6144e06782716374e53763d1bd5"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a9a1bb6144e06782716374e53763d1bd5"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a9a1bb6144e06782716374e53763d1bd5">FIX8::rotl</a> (const T val, const int bits)</td></tr>
@@ -209,14 +210,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00039">39</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00038">38</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:56. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:23. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

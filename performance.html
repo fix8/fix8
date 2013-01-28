@@ -28,13 +28,17 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
 	 <link rel="stylesheet" type="text/css" href="css/fam-icons.css" />
+	 <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+	 <script type="text/javascript" src="css/prettify.js"></script>
   </head>
 
-  <body>
+  <body onload="prettyPrint()" bgcolor="white">
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -50,14 +54,16 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li><a href="index.html">Home</a></li>
-              <li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
+				  <li><a href="howitworks.html">How It Works</a></li>
               <li><a href="http://blog.fix8.org">News</a></li>
-              <li><a href="fix8/html">API Documentation</a></li>
+              <li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
               <li><a href="faq.html">FAQ</a></li>
               <li><a href="support.html">Support</a></li>
               <li><a href="issues.html">Issues</a></li>
               <li><a href="https://github.com/dakka/fix8">Project</a></li>
               <li class="active"><a href="#">Performance</a></li>
+              <li><a href="fix8/html">API Documentation</a></li>
+				  <li><a href="aboutus.html">About Us</a></li>
 				  <li><a href="contact.html">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
@@ -85,8 +91,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="span11">
-						<p><h3>We believe performance is one of the distinguishing features of Fix8. Here we will present our current <i>encode</i> and <i>decode</i>
-						performance stats along
+						<p><h3>We believe performance is one of the distinguishing features of Fix8. Here we will present our comparison test between
+						Fix8 and Quickfix and also our current <i>encode</i> and <i>decode</i> performance stats along
 						with a description of our test environment and test methodology. We have also recently added a short test script so that you can analyse
 						your own results for comparison. </h3></p>
 						<br>
@@ -98,35 +104,440 @@
 		<div class="container">
 			<div class="row">
 				<div class="span12">
-					<h2>1. Our test environment</h2>
+					<h1 class="green">1. Our test environment</h1>
 					<p>We have a dedicated test platform with the following specifications:</p>
 <pre>
 Ubuntu 12.10 quantal
-Linux Version 3.5.0-18-generic x86_64 GNU/Linux
-Compiled #29-Ubuntu SMP Fri Oct 19 10:26:51 UTC 2012
+Linux Version 3.5.0-22-generic x86_64 GNU/Linux
+Compiled #34-Ubuntu SMP Tue Jan 8 21:47:00 UTC 2013
 Eight (4x2 HT) 2GHz Intel i7 Processors (Intel(R) Core(TM) i7-2635QM CPU @ 2.00GHz)
 6144 KB Cache; 15.9GB RAM
 31927 Bogomips Total
 </pre>
-				<br>
 				<p>And we are building with the following two compilers:</p>
 <pre>
 gcc version 4.7.2 (Ubuntu/Linaro 4.7.2-2ubuntu1)
 clang version 3.0-6ubuntu3 (tags/RELEASE_30/final) (based on LLVM 3.0)
 </pre>
+				<p>We are testing against the following versions:</p>
+<pre>
+quickfix version 1.13.3
+poco version 1.4.6
+tbb version 4.1 (tbb41_20121003oss)
+</pre>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="hero-divider"></div>
+		<br>
+		<br>
+
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<h1 class="green">2. Comparison With Quickfix</h1>
+					<p>This is perhaps the most commonly asked question about Fix8. We thought we'd present how we compared the two
+					frameworks, how we tested Fix8 and QuickFix and demonstrate that Fix8 outperforms.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span12">
-					<h2>2. The test client/server</h2>
-					<p>Before you begin you need to pass the codec timing switch to configure <code>--enable-codectiming</code>
-						and cleanly build fix8.
+					<h2>Our test applications</h2>
+					<p>We have two almost identical applications - one Fix8 and one QuickFix - that generate 100000 <code>NewOrderSingle(D)</code> messages. The encode and
+					decode times are accumulated for each test and reported at test completion.</p>
+				</div>
+			</div>
+			<div class="accordion" id="codehead">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#codehead" href="#codeheadOne"><h3>Quickfix test code</h3></a>
+					</div>
+					<div id="codeheadOne" class="accordion-body collapse">
+							<div class="accordion-inner">
+<pre class="prettyprint">
+#include "quickfix/Field.h"
+#include "quickfix/Values.h"
+#include "quickfix/Message.h"
+#include "tbb/tick_count.h"
+
+//-------------------------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    FIX::Message msg;
+    msg.getHeader().setField( FIX::BeginString( "FIX.4.4" ) );
+    msg.getHeader().setField( FIX::MsgType( FIX::MsgType_NewOrderSingle ) );
+    msg.getHeader().setField( FIX::MsgSeqNum(78));
+    msg.getHeader().setField(FIX::SenderCompID("A12345B"));
+    msg.getHeader().setField(FIX::SenderSubID("2DEFGH4"));
+    msg.getHeader().setField(FIX::SendingTime(FIX::UtcTimeStamp()));
+    msg.getHeader().setField(FIX::TargetCompID("COMPARO"));
+    msg.getHeader().setField(FIX::TargetSubID("G"));
+    msg.getHeader().setField(FIX::SenderLocationID("AU,SY"));
+
+    msg.setField( FIX::Account( "01234567") );
+    msg.setField( FIX::ClOrdID( "4" ) );
+    msg.setField( FIX::OrderQty( 50 ) );
+    msg.setField( FIX::OrdType( FIX::OrdType_LIMIT) );
+    msg.setField( FIX::Price( 400.5) );
+    msg.setField( FIX::HandlInst( '1' ) );
+    msg.setField( FIX::Symbol( "OC") );
+    msg.setField( FIX::Text( "NIGEL") );
+    msg.setField( FIX::Side( FIX::Side_BUY ) );
+    msg.setField( FIX::SecurityDesc( "AOZ3 C02000") );
+    msg.setField( FIX::TimeInForce( FIX::TimeInForce_DAY ) );
+    msg.setField( FIX::TransactTime() );
+    msg.setField( FIX::SecurityType( FIX::SecurityType_OPTION ) );
+
+    std::string output;
+    double tt = 0;
+    for(int i = 0 ; i < 100000; ++i)
+    {
+        FIX::Message msg;
+        msg.getHeader().setField( FIX::BeginString( "FIX.4.4" ) );
+        msg.getHeader().setField( FIX::MsgType( FIX::MsgType_NewOrderSingle ) );
+        msg.getHeader().setField( FIX::MsgSeqNum(78));
+        msg.getHeader().setField(FIX::SenderCompID("A12345B"));
+        msg.getHeader().setField(FIX::SenderSubID("2DEFGH4"));
+        msg.getHeader().setField(FIX::SendingTime(FIX::UtcTimeStamp()));
+        msg.getHeader().setField(FIX::TargetCompID("COMPARO"));
+        msg.getHeader().setField(FIX::TargetSubID("G"));
+        msg.getHeader().setField(FIX::SenderLocationID("AU,SY"));
+
+        msg.setField( FIX::Account( "01234567") );
+        msg.setField( FIX::ClOrdID( "4" ) );
+        msg.setField( FIX::OrderQty( 50 ) );
+        msg.setField( FIX::OrdType( FIX::OrdType_LIMIT) );
+        msg.setField( FIX::Price( 400.5) );
+        msg.setField( FIX::HandlInst( '1' ) );
+        msg.setField( FIX::Symbol( "OC") );
+        msg.setField( FIX::Text( "NIGEL") );
+        msg.setField( FIX::Side( FIX::Side_BUY ) );
+        msg.setField( FIX::SecurityDesc( "AOZ3 C02000") );
+        msg.setField( FIX::TimeInForce( FIX::TimeInForce_DAY ) );
+        msg.setField( FIX::TransactTime() );
+        msg.setField( FIX::SecurityType( FIX::SecurityType_OPTION ) );
+
+        tbb::tick_count start = tbb::tick_count::now();
+        msg.toString(output);
+        tbb::tick_count end = tbb::tick_count::now();
+
+        tt += (end-start).seconds();
+    }
+    std::cout << "to string - " << tt << std::endl;
+
+    FIX::DataDictionary dict("/usr/local/share/quickfix/FIX44.xml");
+    tbb::tick_count start = tbb::tick_count::now();
+    for(int i = 0 ; i < 100000; ++i)
+    {
+        FIX::Message * tmp = new FIX::Message(output, dict);
+        delete tmp;
+    }
+    tbb::tick_count end = tbb::tick_count::now();
+    std::cout << "from string - " << (end-start).seconds() << std::endl;
+    return 0;
+}
+</pre>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#codehead" href="#codeheadTwo"><h3>Fix8 test code</h3></a>
+					</div>
+					<div id="codeheadTwo" class="accordion-body collapse">
+							<div class="accordion-inner">
+<pre class="prettyprint">
+// f8 headers
+#include "f8includes.hpp"
+#include "message.hpp"
+#include "tbb/tick_count.h"
+#include "COMPAROFIX_types.hpp"
+#include "COMPAROFIX_router.hpp"
+#include "COMPAROFIX_classes.hpp"
+
+using namespace FIX8::COMPAROFIX;
+using namespace FIX8;
+
+//-------------------------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    NewOrderSingle *nos(new NewOrderSingle);
+    *nos->Header() << new msg_seq_num(78)
+                   << new sender_comp_id("A12345B")
+                   << new SenderSubID("2DEFGH4")
+                   << new sending_time
+                   << new target_comp_id("COMPARO")
+                   << new TargetSubID("G")
+                   << new SenderLocationID("AU,SY");
+
+    *nos << new TransactTime
+         << new Account("01234567")
+         << new OrderQty(50)
+         << new Price(400.5)
+         << new ClOrdID("4")
+         << new HandlInst(HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE)
+         << new OrdType(OrdType_LIMIT)
+         << new Side(Side_BUY)
+         << new Symbol("OC")
+         << new Text("NIGEL")
+         << new TimeInForce(TimeInForce_DAY)
+         << new SecurityDesc("AOZ3 C02000")
+         << new SecurityType(SecurityType_OPTION);
+
+    std::string output, tmp;
+    nos->encode(output);
+    double tt = 0;
+
+    for(int i = 0 ; i < 100000; ++i)
+    {
+        NewOrderSingle *nos(new NewOrderSingle);
+        *nos->Header() << new msg_seq_num(78)
+                       << new sender_comp_id("A12345B")
+                       << new SenderSubID("2DEFGH4")
+                       << new sending_time
+                       << new target_comp_id("COMPARO")
+                       << new TargetSubID("G")
+                       << new SenderLocationID("AU,SY");
+
+        *nos  << new TransactTime
+              << new Account("01234567")
+              << new OrderQty(50)
+              << new Price(400.5)
+              << new ClOrdID("4")
+              << new HandlInst(HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE)
+              << new OrdType(OrdType_LIMIT)
+              << new Side(Side_BUY)
+              << new Symbol("OC")
+              << new Text("NIGEL")
+              << new TimeInForce(TimeInForce_DAY)
+              << new SecurityDesc("AOZ3 C02000")
+              << new SecurityType(SecurityType_OPTION);
+
+        tbb::tick_count start = tbb::tick_count::now();
+        nos->encode(tmp);
+        tbb::tick_count end = tbb::tick_count::now();
+        tt += (end-start).seconds();
+
+        delete nos;
+    }
+    std::cout  << "to string- " << tt << std::endl;
+
+    FIX8::Message * msg = NULL;
+    tbb::tick_count start = tbb::tick_count::now();
+    for(int i = 0 ; i < 100000; ++i)
+    {
+        msg = FIX8::Message::factory(FIX8::COMPAROFIX::ctx, output);
+        delete msg;
+    }
+
+    tbb::tick_count end = tbb::tick_count::now();
+    std::cout << "from string - " <<  (end-start).seconds() << std::endl;
+    return 0;
+}
+</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="span12">
+					<h2>The results</h2>
+					<p>We ran the test 10 times with each version and averaged the result.</p>
+					<table class="table table-striped table-bordered table-condensed">
+						<thead>
+							<tr class="success">
+								<th>Framework</th>
+								<th>Operation</th>
+								<th>Msgs processed</th>
+								<th>Time secs</th>
+								<th>Msgs/sec</th>
+								<th>Average &#xb5;s/msg</th>
+								<th>% Improvement</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="success">
+								<td>Quickfix</td>
+								<td>encode</td>
+								<td>100000</td>
+								<td>0.61</td>
+								<td>163934</td>
+								<td>0.0000061</td>
+								<td>-</td>
+							</tr>
+							<tr class="success">
+								<td></td>
+								<td>decode</td>
+								<td>100000</td>
+								<td>1.77</td>
+								<td>56497</td>
+								<td>0.0000177</td>
+								<td>-</td>
+							</tr>
+							<tr class="success">
+								<td>Fix8</td>
+								<td>encode</td>
+								<td>100000</td>
+								<td>0.44</td>
+								<td>227273</td>
+								<td>0.0000044</td>
+								<td><h4>28.9</h4></td>
+							</tr>
+							<tr class="success">
+								<td></td>
+								<td>decode</td>
+								<td>100000</td>
+								<td>1.28</td>
+								<td>78125</td>
+								<td>0.0000128</td>
+								<td><h4>28.7</h4></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="span12">
+					<h2>Conclusion</h2>
+					<p>For the same message, Fix8 encodes and decodes around <em><b>29% faster</b></em> than Quickfix.</p>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="hero-divider"></div>
+		<br>
+		<br>
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<h1 class="green">3. Encode/Decode Performance Test</h1>
+					<p>This section describes the supplied test client/server that <em>you can build and test to compare your performance</em> wth our published
+					results.</p>
+					<p><i class="icon-exclamation-sign"></i> You will need at least <b>16GB</b> of RAM to run the full test. If you have <b>8GB</b>,
+						limit the number of preloaded messages to 200000. For <b>4GB</b> you will need to limit the number of messages to 100000.</p>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="span12">
+					<h2>The message set</h2>
+					<p>The test client sends a simple <code>NewOrderSingle(D)</code> message for a Fill or Kill buy order with a random quantity bwtween 1 and 10000
+					and a random price between 1.0 and 500.0. Each order will have a unique ClOrderID. The following is a typical order.</p>
+<pre>
+header ("header")
+   BeginString (8): FIX.4.2
+   BodyLength (9): 146
+   MsgType (35): ORDER_SINGLE (D)
+   SenderCompID (49): DLD_TEX
+   TargetCompID (56): TEX_DLD
+   MsgSeqNum (34): 499650
+   SendingTime (52): 20121227-11:20:43
+NewOrderSingle ("D")
+   ClOrdID (11): ord509647-500000
+   HandlInst (21): AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION (1)
+   Symbol (55): BHP
+   Side (54): BUY (1)
+   TransactTime (60): 20121227-11:20:14
+   OrderQty (38): 57
+   OrdType (40): LIMIT (2)
+   Price (44): 298.075
+   TimeInForce (59): FILL_OR_KILL (4)
+trailer ("trailer")
+   CheckSum (10):
+</pre>
+					<p>When the test server receives a <code>NewOrderSingle</code> message it sends either an <code>ExecutionReport(8)</code> with order reject,
+						order cancel or order confirmation (randomly selected). The following is a typical order confirmation.</p>
+<pre>
+header ("header")
+   BeginString (8): FIX.4.2
+   BodyLength (9): 224
+   MsgType (35): EXECUTION_REPORT (8)
+   SenderCompID (49): TEX_DLD
+   TargetCompID (56): DLD_TEX
+   MsgSeqNum (34): 1962926
+   SendingTime (52): 20121227-11:22:07
+ExecutionReport ("8")
+   OrderID (37): ord499647
+   ClOrdID (11): ord509647-500000
+   ExecID (17): ord499647
+   ExecTransType (20): NEW (0)
+   ExecType (150): NEW (0)
+   OrdStatus (39): NEW (0)
+   Symbol (55): BHP
+   Side (54): BUY (1)
+   OrderQty (38): 57
+   OrdType (40): LIMIT (2)
+   Price (44): 298.07
+   TimeInForce (59): FILL_OR_KILL (4)
+   LastCapacity (29): 5
+   LeavesQty (151): 57
+   CumQty (14): 0
+   AvgPx (6): 0
+   TransactTime (60): 20121227-11:20:14
+   ReportToExch (113): YES (Y)
+   HandlInst (21): AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION (1)
+trailer ("trailer")
+   CheckSum (10):
+</pre>
+					<p>Followed by one or more fills.</p>
+<pre>
+header ("header")
+   BeginString (8): FIX.4.2
+   BodyLength (9): 217
+   MsgType (35): EXECUTION_REPORT (8)
+   SenderCompID (49): TEX_DLD
+   TargetCompID (56): DLD_TEX
+   MsgSeqNum (34): 1962929
+   SendingTime (52): 20121227-11:22:07
+ExecutionReport ("8")
+   OrderID (37): ord499647
+   ClOrdID (11): ord509647-500000
+   ExecID (17): exec1463279
+   ExecTransType (20): NEW (0)
+   ExecType (150): NEW (0)
+   OrdStatus (39): FILLED (2)
+   Symbol (55): BHP
+   Side (54): BUY (1)
+   OrderQty (38): 57
+   OrdType (40): LIMIT (2)
+   Price (44): 298.07
+   TimeInForce (59): FILL_OR_KILL (4)
+   LeavesQty (151): 0
+   CumQty (14): 57
+   AvgPx (6): 298.07
+   TransactTime (60): 20121227-11:20:14
+   HandlInst (21): AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION (1)
+trailer ("trailer")
+   CheckSum (10):
+</pre>
+					<br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<h2>The test client/server</h2>
+					<p>Before you begin, set your compiler optimisation to <code>-O3</code>
+<pre>
+% export CXXFLAGS=-O3
+</pre>
+						You then need to pass the codec timing switch <code>--enable-codectiming</code>, the buffered logging switch
+						<code>--enable-bufgloblogging</code> and the no fill message metadata switch<br><code>--enable-fillmetadata=no</code>
+						to configure and cleanly build fix8.
+<pre>
+% ./configure --prefix=[your target directory] --enable-codectiming --enable-bufgloblogging --enable-doxygen=no --enable-fillmetadata=no
+% make clean; make install
+</pre>
 						For our test, we will simulate an HF client preloading and sending 500000 orders to a server. We will measure the encode and
 						decode timings for both the client and the server. The test client and server <code>hftest</code> are built by default when you build fix8.
 						Also by default, the xml configuration files <code>hf_server.xml, hf_client.xml, hf_client_include.xml</code> needed are supplied
 						already preconfigured.</p>
-						<p>To run the server, execute the following command (assuming the xml config files are in the current directory, and the subdirectory
-						<code>run</code> exists):</p>
+						<p><i class="icon-exclamation-sign"></i> Do not use the configure switches shown above when building the other supplied test applications.</p>
+						<p>To run the server, execute the following command (assuming the xml config files are in the current directory):</p>
 <pre>
 % ./hftest -sl server
 </pre>
@@ -143,8 +554,9 @@ clang version 3.0-6ubuntu3 (tags/RELEASE_30/final) (based on LLVM 3.0)
 Key     Command
 ===     =======
 ?       Help
+N       Send n NewOrderSingle msgs
 a       Send all Preloaded NewOrderSingle msgs
-f       Flush global log
+b       Batch preload and send n NewOrderSingle msgs
 l       Logout
 n       Send a NewOrderSingle msg
 p       Preload n NewOrderSingle msgs
@@ -162,16 +574,17 @@ Enter number of NewOrderSingle msgs to preload:500000
 0 NewOrderSingle msgs remaining.
 1967000 ExecutionReport msgs received
 </pre>
-					<p>When all the execution reports have been received, press <code>'f'</code> to flush the global log. A few moments later you
-					can press <code>'x'</code> to exit. Occasionally you may get a core dump on exit - you can ignore this for now. Switch to your
-					server and press <code>^C</code> to terminate the server.
+					<p>When all the execution reports have been received (in the client window), press <code>'x'</code> to exit. Wait a few moments for the
+					logging buffer to empty. When the client has disconnected the server will also flush its logging buffer so wait a bit longer for this as well.
+					Occasionally you may get a core dump on exit - you can ignore this for now. Switch to your server and press <code>^C</code> to terminate the server.
 					</p>
+					<p>You can use the supplied printer application <code>hfprint</code> to examine the protocol log output (you will need to enable the file protocol target in the xml configuration).<p>
 					<br>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span12">
-					<h2>3. Preparing the results</h2>
+					<h2>Preparing the results</h2>
 					<p>
 						If all has gone to plan you should have two log files, <code>server</code> and <code>client</code>. Now we need to run the
 						test result analysis script. In <code>./fix8/test</code> you will find a script called <code>f8_hf_test</code>. Run
@@ -179,156 +592,172 @@ Enter number of NewOrderSingle msgs to preload:500000
 					</p>
 <pre>
 % ./f8_hf_test server client
-av. decode(client): 0.00001808 sec/msg, 35.58 secs, 1967357 msgs
-av. encode(client): 0.00001578 sec/msg, 7.78 secs, 500027 msgs
-av. decode(server): 0.00001708 sec/msg, 8.54 secs, 500027 msgs
-av. encode(server): 0.00001799 sec/msg, 35.40 secs, 1967360 msgs
-%
+av. decode(client): 0.00001161 sec/msg, 22.77 secs, 1960616 msgs
+av. encode(client): 0.00000988 sec/msg, 4.94 secs, 500020 msgs
+av. decode(server): 0.00001075 sec/msg, 5.38 secs, 500020 msgs
+av. encode(server): 0.00001282 sec/msg, 25.13 secs, 1960616 msgs
 </pre>
 					<br>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span12">
-					<h2>4. The results</h2>
-					<p>
-						Here are the results for gcc and clang tabulated.
-					</p>
+					<h2>The results</h2>
+					<p>Here are the results for gcc and clang tabulated.</p>
 					<br>
-						<table class="span6 table table-striped table-bordered table-condensed center-table">
-							<thead>
-								<tr class="success">
-									<th>Compiler</th>
-									<th>Mode</th>
-									<th>Operation</th>
-									<th>Msgs processed</th>
-									<th>Time secs</th>
-									<th>Average &#xb5;s/msg</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="success">
-									<td>gcc</td>
-									<td>client</td>
-									<td>encode</td>
-									<td>500027</td>
-									<td>7.78</td>
-									<td>15.78</td>
-								</tr>
-								<tr class="success">
-									<td></td>
-									<td></td>
-									<td>decode</td>
-									<td>1967357</td>
-									<td>35.58</td>
-									<td>18.08</td>
-								</tr>
-								<tr class="success">
-									<td></td>
-									<td>server</td>
-									<td>encode</td>
-									<td>1967360</td>
-									<td>35.40</td>
-									<td>17.99</td>
-								</tr>
-								<tr class="success">
-									<td></td>
-									<td></td>
-									<td>decode</td>
-									<td>500027</td>
-									<td>8.54</td>
-									<td>17.08</td>
-								</tr>
-								<tr class="success">
-									<td>clang</td>
-									<td>client</td>
-									<td>encode</td>
-									<td>500023</td>
-									<td>7.83</td>
-									<td>15.67</td>
-								</tr>
-								<tr class="success">
-									<td></td>
-									<td></td>
-									<td>decode</td>
-									<td>1964133</td>
-									<td>38.01</td>
-									<td>19.35</td>
-								</tr>
-								<tr class="success">
-									<td></td>
-									<td>server</td>
-									<td>encode</td>
-									<td>1964134</td>
-									<td>36.05</td>
-									<td>18.35</td>
-								</tr>
-								<tr class="success">
-									<td></td>
-									<td></td>
-									<td>decode</td>
-									<td>500023</td>
-									<td>8.85</td>
-									<td>17.71</td>
-								</tr>
-							</tbody>
-						</table>
-						<br>
-						<p>Averaged across client and server...</p>
-						<table class="span3 table table-striped table-bordered table-condensed center-table">
-							<thead>
-								<tr class="success">
-									<th>Compiler</th>
-									<th>Operation</th>
-									<th>Average &#xb5;s/msg</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="success">
-									<td>gcc</td>
-									<td>encode</td>
-									<td>16.88</td>
-								</tr>
-								<tr class="success">
-									<td></td>
-									<td>decode</td>
-									<td>17.58</td>
-								</tr>
-								<tr class="success">
-									<td>clang</td>
-									<td>encode</td>
-									<td>17.01</td>
-								</tr>
-								<tr class="success">
-									<td></td>
-									<td>decode</td>
-									<td>18.53</td>
-								</tr>
-							</tbody>
-						</table>
-						<br>
-						</table>
-					</div>
+					<table class="table table-striped table-bordered table-condensed center-table">
+						<thead>
+							<tr class="success">
+								<th>Compiler</th>
+								<th>Mode</th>
+								<th>Operation</th>
+								<th>Msgs processed</th>
+								<th>Time secs</th>
+								<th>Msgs/sec</th>
+								<th>Average &#xb5;s/msg</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="success">
+								<td>gcc</td>
+								<td>client</td>
+								<td>encode</td>
+								<td>500020</td>
+								<td>4.94</td>
+								<td>101219</td>
+								<td><b>9.88</b></td>
+							</tr>
+							<tr class="success">
+								<td></td>
+								<td></td>
+								<td>decode</td>
+								<td>1960616</td>
+								<td>22.77</td>
+								<td>86105</td>
+								<td><b>11.61</b></td>
+							</tr>
+							<tr class="success">
+								<td></td>
+								<td>server</td>
+								<td>encode</td>
+								<td>1960616</td>
+								<td>25.13</td>
+								<td>78019</td>
+								<td><b>12.82</b></td>
+							</tr>
+							<tr class="success">
+								<td></td>
+								<td></td>
+								<td>decode</td>
+								<td>500020</td>
+								<td>5.38</td>
+								<td>92941</td>
+								<td><b>10.75</b></td>
+							</tr>
+							<tr class="success">
+								<td>clang</td>
+								<td>client</td>
+								<td>encode</td>
+								<td>500010</td>
+								<td>4.91</td>
+								<td>101835</td>
+								<td><b>9.82</b></td>
+							</tr>
+							<tr class="success">
+								<td></td>
+								<td></td>
+								<td>decode</td>
+								<td>1959609</td>
+								<td>24.25</td>
+								<td>80809</td>
+								<td><b>12.37</b></td>
+							</tr>
+							<tr class="success">
+								<td></td>
+								<td>server</td>
+								<td>encode</td>
+								<td>1959609</td>
+								<td>26.12</td>
+								<td>75023</td>
+								<td><b>13.33</b></td>
+							</tr>
+							<tr class="success">
+								<td></td>
+								<td></td>
+								<td>decode</td>
+								<td>500010</td>
+								<td>5.63</td>
+								<td>88812</td>
+								<td><b>11.25</b></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<p>Averaged across client and server...</p>
+					<table class="span6 table table-striped table-bordered table-condensed center-table">
+						<thead>
+							<tr class="success">
+								<th>Compiler</th>
+								<th>Operation</th>
+								<th>Average &#xb5;s/msg</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="success">
+								<td>gcc</td>
+								<td>encode</td>
+								<td><b>11.35</b></td>
+							</tr>
+							<tr class="success">
+								<td></td>
+								<td>decode</td>
+								<td><b>11.18</b></td>
+							</tr>
+							<tr class="success">
+								<td>clang</td>
+								<td>encode</td>
+								<td><b>11.58</b></td>
+							</tr>
+							<tr class="success">
+								<td></td>
+								<td>decode</td>
+								<td><b>11.81</b></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
 				</div>
 			</div>
+			<div class="row">
+				<div class="span12">
+					<h2>Conclusion</h2>
+					<p>Most users will be interested in client encode and decode. On our test hardware, Fix8 encodes a <code>NewOrderSingle(D)</code> in
+					<em><b>9.88 &#xb5;s</b></em> and decodes an <code>ExecutionReport(8)</code> in <em><b>11.61 &#xb5;s</b></em> when compiled with gcc.
+					When averaged across client and server, the differences between encode and decode and between gcc and clang seem to even out with
+					gcc just a little better than clang.
+				</div>
+			</div>
+		</div>
 		<br>
 		<br>
 
-      <div class="pager">
+		<div class="pager">
 			<li><a href="index.html">Home</a></li>
-			<li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
-		   <li><a href="http://blog.fix8.org">News</a></li>
-			<li><a href="fix8/html">API Documentation</a></li>
+			<li><a href="howitworks.html">How It Works</a></li>
 			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="http://blog.fix8.org">News</a></li>
+			<li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
 			<li><a href="support.html">Support</a></li>
-         <li><a href="issues.html">Issues</a></li>
-         <li><a href="https://github.com/dakka/fix8">Project</a></li>
+			<li><a href="issues.html">Issues</a></li>
+			<li><a href="https://github.com/dakka/fix8">Project</a></li>
 			<li><a href="performance.html">Performance</a></li>
+			<li><a href="fix8/html">API Documentation</a></li>
+			<li><a href="aboutus.html">About Us</a></li>
 			<li><a href="contact.html">Contact</a></li>
 		</div>
 
 		<div class="modal-footer">
-		  <p>&copy; <a href="mailto:fix@fix8.org">David L. Dight. </a>2010-12</p>
+		  <p>&copy; <a href="mailto:fix@fix8.org">The Fix8 Team. </a>2010-13</p>
 		</div>
 
     </div> <!-- /container -->
@@ -348,6 +777,17 @@ av. encode(server): 0.00001799 sec/msg, 35.40 secs, 1967360 msgs
     <script src="js/bootstrap-button.js"></script>
     <script src="js/bootstrap-collapse.js"></script>
     <script src="js/bootstrap-typeahead.js"></script>
+	 <script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-37054507-1']);
+			_gaq.push(['_trackPageview']);
+			(function()
+			{
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+	 </script>
 
   </body>
 </html>

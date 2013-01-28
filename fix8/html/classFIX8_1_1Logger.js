@@ -4,8 +4,8 @@ var classFIX8_1_1Logger =
     [ "LogFlags", "classFIX8_1_1Logger.html#a478225c58aaf0244c2b1ada179d61eb4", null ],
     [ "RevThreadCodes", "classFIX8_1_1Logger.html#a288d6d01354fe848f48150f3e656076e", null ],
     [ "ThreadCodes", "classFIX8_1_1Logger.html#aba11dcf2790930d9868d3ea025fc1802", null ],
-    [ "rotation_default", "classFIX8_1_1Logger.html#a3869d2d1d2ce355a0462f385c08bb2eaac734d9dd38106ba8e9b80a243b251fe2", null ],
-    [ "max_rotation", "classFIX8_1_1Logger.html#a3869d2d1d2ce355a0462f385c08bb2eaaca181bd419c261d0dde6df584a079025", null ],
+    [ "rotation_default", "classFIX8_1_1Logger.html#aa0db957030531a706605fc5f3bdf2d57ac734d9dd38106ba8e9b80a243b251fe2", null ],
+    [ "max_rotation", "classFIX8_1_1Logger.html#aa0db957030531a706605fc5f3bdf2d57aca181bd419c261d0dde6df584a079025", null ],
     [ "Flags", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736c", [
       [ "append", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca3d3bb2cf8aa48d1149f998933b2aa443", null ],
       [ "timestamp", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca1ef54871de8a1398f024ad2f6376e8eb", null ],

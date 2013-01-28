@@ -361,6 +361,11 @@ h1 {
   font-size: 30px;
   line-height: 36px;
 }
+h1.green {
+  font-size: 30px;
+  line-height: 36px;
+  color: #12887d
+}
 h1 small {
   font-size: 18px;
 }
@@ -3963,6 +3968,14 @@ a.thumbnail:hover {
 .carousel-caption p {
   color: #ffffff;
 }
+.hero-divider {
+  padding: 30px;
+  margin-bottom: 15;
+  background-color: #12887d;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
 .hero-unit {
   padding: 60px;
   margin-bottom: 30px;
@@ -4004,6 +4017,13 @@ a.thumbnail:hover {
   font-weight: 200;
   line-height: 27px;
   color: inherit;
+}
+.hero-unit a.alt-link-color{
+	color: #f58220;
+	background-color: #12887d;
+}
+.hero-unit a.alt-link{
+	color: white
 }
 .pull-right {
   float: right;

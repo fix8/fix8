@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Fix8 Open Source FIX Engine</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Modern open source FIX framework featuring complete schema driven customisation, high performance and fast application development.">
+    <meta name="description" content="Modern open source C++ FIX framework featuring complete schema driven customisation, high performance and fast application development. Typical client encode latency is 9.8us, decode 11.7us.">
     <meta name="author" content="David L. Dight">
 
     <!-- Le styles -->
@@ -54,19 +54,23 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </a>
           <a class="brand" href="#"><img src="fix8/fix8_Logo_RGB.png" width="28" height="28" /></a>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
-              <li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
-              <li><a href="http://blog.fix8.org">News</a></li>
-              <li><a href="fix8/html">API Documentation</a></li>
+				  <li><a href="howitworks.html">How It Works</a></li>
               <li><a href="faq.html">FAQ</a></li>
+              <li><a href="http://blog.fix8.org">News</a></li>
+              <li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
               <li><a href="support.html">Support</a></li>
               <li><a href="issues.html">Issues</a></li>
               <li><a href="https://github.com/dakka/fix8">Project</a></li>
               <li><a href="performance.html">Performance</a></li>
+              <li><a href="fix8/html">API Documentation</a></li>
+              <li><a href="aboutus.html">About Us</a></li>
               <li><a href="contact.html">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
@@ -100,23 +104,25 @@
 						<br>
 					</div>
 					<div class="span11">
-						<p><h3>...with the Fix8<sup>*</sup> <i>open source</i> C++ framework. We've done most of the hard work leaving you to focus on the real task - the business layer!</h3></p>
+						<p><h3>...with the Fix8<sup>*</sup> <i>open source</i> C++ framework. We've done the hard work on the FIX layer, leaving you to
+						focus on the critical task - implementing your business code! Find out <a class="alt-link" href="howitworks.html">how.</a></h3></p>
 						<br>
 						<br>
 					</div>
 				</div>
 			</div>
 			<div class="pager">
-				<k2>Version 0.6.6</k2><br>
-				<a class="btn btn-primary btn-large" href="https://github.com/dakka/fix8/tarball/master"><h2>Download Tar &raquo;</h2></a>
-				<a class="btn btn-primary btn-large" href="https://github.com/dakka/fix8/zipball/master"><h2>Download Zip &raquo;</h2></a>
+				<k2>Version 0.6.7</k2><br>
+				<a class="btn btn-primary btn-large" href="https://github.com/dakka/fix8/archive/0.6.7.tar.gz"><h2>Download Tar &raquo;</h2></a>
+				<a class="btn btn-primary btn-large" href="https://github.com/dakka/fix8/archive/0.6.7.zip"><h2>Download Zip &raquo;</h2></a>
 			</div>
       </div>
 
       <div class="row">
         <div class="span4 centered">
-          <h2>Speedy development</h2>
-           <p>Fix8 helps you get your <a href="http://www.fixprotocol.org">FIX</a> <b>client</b> or <b>server</b> up and running quickly. Using one of the standard FIX schemas you can have a FIX client or server up and running in next to no time.</p>
+          <h2>The Fastest Open Source FIX</h2>
+           <p>Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average <em><b>29% faster</b></em> encoding/decoding
+				the same message than Quickfix. See <a href="performance.html">Performance.</a></p>
         </div>
         <div class="span4 centered">
           <h2>Static compilation</h2>
@@ -130,32 +136,33 @@
 		  <br>
        </div>
         <div class="span4 centered">
-          <h2>Special features</h2>
-           <p>Fix8 offers run-time custom fields, message recycling and a meta-data aware test harness. Incorporates lock free queues, atomics and many other modern techniques.</p>
+          <h2>Speedy development</h2>
+           <p>Fix8 helps you get your <a href="http://www.fixprotocol.org">FIX</a> <b>client</b> or <b>server</b> up and running quickly. Using one of the standard FIX schemas you can have a FIX client or server up and running in next to no time.</p>
         </div>
         <div class="span4 centered">
-          <h2>A complete framework</h2>
-          <p>Fix8 is a complete <code>C++</code> <a href="http://www.fixprotocol.org">FIX</a> framework, including client/server session and connection classes; support for the standard FIX field types; FIX printer, async logger, async message persister and XML configuration classes.</p>
+          <h2>Runs on Linux</h2>
+           <p>Fix8 runs under industry standard Linux on IA32, x86-64 and Itanium. Other <code>*NIX</code> variants may work too.</p>
         </div>
         <div class="span4 centered">
           <h2>Components and groups</h2>
-          <p>Fix8 statically supports nested components and groups. The Fix8 compiler and runtime library takes the pain out of using repeating groups.</p>
+          <p>Fix8 statically supports nested components and repeating groups to all depths. The Fix8 compiler and runtime library takes the pain out of using repeating groups.</p>
 		  <br>
 		  <br>
         </div>
         <div class="span4 centered">
           <h2>High performance</h2>
            <p>The code generated by Fix8 is compiled by your compiler offering the best opportunity for optimisation.
-			  Fix8 applications are fast. Typical <em>encode latency is now 16us, and decode 17us. This is being improved further.</em> See
+			  Fix8 applications are fast. Typical client <tt>NewOrderSingle</tt> <em>encode latency is now <b>9.8&#xb5;s</b>, and <tt>ExecutionReport</tt> decode <b>11.6&#xb5;s</b>. This is being continually improved.</em> See
 			  <a href="performance.html">Performance.</a></p>
         </div>
         <div class="span4 centered">
-          <h2>Extensible</h2>
-           <p>Fix8 has been designed to be extended, customised or enhanced. If you have special requirements, Fix8 provides a flexible platform to develop your application on.</p>
+          <h2>FIX Functionality</h2>
+           <p>Fix8 supports field and value domain validation, mandatory/optional field assertion, field ordering, well-formedness testing, retransmission and
+			  standard session semantics.
         </div>
         <div class="span4 centered">
-          <h2>Runs on Linux</h2>
-           <p>Fix8 runs on industry standard Linux. Other <code>*NIX</code> variants may work too.</p>
+          <h2>A complete framework</h2>
+          <p>Fix8 is a complete <code>C++</code> <a href="http://www.fixprotocol.org">FIX</a> framework, including client/server session and connection classes; support for the standard FIX field types; FIX printer, async logger, async message persister and XML configuration classes. If you have special requirements Fix8 can easily be extended, customised or enhanced.
         </div>
       </div>
 		<br>
@@ -175,26 +182,29 @@
 
 		<div class="pager">
 			<div class="fb-like" data-href="http://www.fix8.org" data-send="true" data-width="1" data-show-faces="false"></div>
+		   <a href="http://blog.fix8.org/feeds/posts/default"><img src="fix8/large_rss_button_transparent.gif" align="left" alt="Blog RSS" width="20" height="20"/></a>
 			<a href="https://twitter.com/Fix8Engine" class="twitter-follow-button" data-show-count="false">Follow @Fix8Engine</a>
 			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			<a href="http://www.tumblr.com/share" title="Share on Tumblr" style="display:inline-block; text-indent:-9999px; overflow:hidden; width:81px; height:20px; background:url('http://platform.tumblr.com/v1/share_1.png') top right no-repeat transparent;">Share on Tumblr</a>
 		</div>
 
-      <div class="pager">
-			<li class="active"><a href="#">Home</a></li>
-			<li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
-		   <li><a href="http://blog.fix8.org">News</a></li>
-			<li><a href="fix8/html">API Documentation</a></li>
+		<div class="pager">
+			<li><a href="index.html">Home</a></li>
+			<li><a href="howitworks.html">How It Works</a></li>
 			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="http://blog.fix8.org">News</a></li>
+			<li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
 			<li><a href="support.html">Support</a></li>
 			<li><a href="issues.html">Issues</a></li>
 			<li><a href="https://github.com/dakka/fix8">Project</a></li>
 			<li><a href="performance.html">Performance</a></li>
-         <li><a href="contact.html">Contact</a></li>
+			<li><a href="fix8/html">API Documentation</a></li>
+			<li><a href="aboutus.html">About Us</a></li>
+			<li><a href="contact.html">Contact</a></li>
 		</div>
 
       <div class="modal-footer">
-			<p>&copy; <a href="mailto:fix@fix8.org">David L. Dight. </a>2010-12. Logo by<em> <a href="http://www.swivel.com.au">Swivel.</a></em></p>
+		  <p>&copy; <a href="mailto:fix@fix8.org">The Fix8 Team. </a>2010-13</p>
       </div>
 
     </div> <!-- /container -->

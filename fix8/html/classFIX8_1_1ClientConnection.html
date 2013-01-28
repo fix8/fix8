@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.6</span>
+   &#160;<span id="projectnumber">version  0.6.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -150,6 +150,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aefab997da9ecf3529a3a997e58ccc1cf inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#aefab997da9ecf3529a3a997e58ccc1cf">get_hb_interval20pc</a> () const </td></tr>
 <tr class="memitem:ae626e72310afa1b0ef4ca9b4e6c3630b inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#ae626e72310afa1b0ef4ca9b4e6c3630b">join</a> ()</td></tr>
 <tr class="memitem:a9731f230011390e087e59b05753987a7 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a9731f230011390e087e59b05753987a7">is_socket_error</a> () const </td></tr>
+<tr class="memitem:a4c4b1dcb9561db6c1eeef6c25e7ac3c7 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a4c4b1dcb9561db6c1eeef6c25e7ac3c7">set_recv_buf_sz</a> (const unsigned sz) const </td></tr>
+<tr class="memitem:a405268dd993f89ad97d83653bde6a6fe inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a405268dd993f89ad97d83653bde6a6fe">set_send_buf_sz</a> (const unsigned sz) const </td></tr>
 <tr class="memitem:a10936aa571fd03ceef536387a816d3da inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a10936aa571fd03ceef536387a816d3da">get_session</a> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-attribs"></a>
@@ -165,6 +167,9 @@ Additional Inherited Members</h2></td></tr>
 <a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">cn_unknown</a>
  }</td></tr>
 <tr class="memdesc:ac7c5a73f9b3727fce73c3240bb57e804"><td class="mdescLeft">&#160;</td><td class="mdescRight">Roles: acceptor, initiator or unknown.  <a href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804">More...</a><br/></td></tr>
+<tr class="inherit_header pub_static_methods_classFIX8_1_1Connection"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classFIX8_1_1Connection')"><img src="closed.png" alt="-"/>&nbsp;Static Public Member Functions inherited from <a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td></tr>
+<tr class="memitem:a9cff80bec2b2243a458ab2f939697c6e inherit pub_static_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">set_recv_buf_sz</a> (const unsigned sz, Poco::Net::Socket *sock)</td></tr>
+<tr class="memitem:a95bcc108abf0a366438731b5b81606b2 inherit pub_static_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">set_send_buf_sz</a> (const unsigned sz, Poco::Net::Socket *sock)</td></tr>
 <tr class="inherit_header pro_attribs_classFIX8_1_1Connection"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classFIX8_1_1Connection')"><img src="closed.png" alt="-"/>&nbsp;Protected Attributes inherited from <a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td></tr>
 <tr class="memitem:ab900a2b9c6e1f0b80afd5d40fe0ef5f3 inherit pro_attribs_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">Poco::Net::StreamSocket *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#ab900a2b9c6e1f0b80afd5d40fe0ef5f3">_sock</a></td></tr>
 <tr class="memitem:a6d4411976534b0a0eaa67ad6a2df24bb inherit pro_attribs_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a6d4411976534b0a0eaa67ad6a2df24bb">_connected</a></td></tr>
@@ -178,7 +183,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Client (initiator) specialisation of <a class="el" href="classFIX8_1_1Connection.html" title="Complete Fix connection (reader and writer).">Connection</a>. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00300">300</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00330">330</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7c03e8e4de2430fd2ac345741c94b95a"></a>
 <div class="memitem">
@@ -234,7 +239,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00311">311</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00341">341</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -261,7 +266,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00315">315</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00345">345</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -291,7 +296,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classFIX8_1_1Connection.html#a506c527366cc53efdeeeaf5012573398">FIX8::Connection</a>.</p>
 
-<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00281">281</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00276">276</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
 <p>References <a class="el" href="f8utils_8hpp_source.html#l00858">FIX8::millisleep()</a>.</p>
 
@@ -316,7 +321,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00302">302</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00332">332</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -338,7 +343,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00303">303</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00333">333</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -349,7 +354,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:57. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:24. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

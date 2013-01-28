@@ -102,6 +102,7 @@ var namespaceFIX8 =
     [ "FilePersister", "classFIX8_1_1FilePersister.html", "classFIX8_1_1FilePersister" ],
     [ "SessionID", "classFIX8_1_1SessionID.html", "classFIX8_1_1SessionID" ],
     [ "States", "structFIX8_1_1States.html", "structFIX8_1_1States" ],
+    [ "LoginParameters", "structFIX8_1_1LoginParameters.html", "structFIX8_1_1LoginParameters" ],
     [ "Session", "classFIX8_1_1Session.html", "classFIX8_1_1Session" ],
     [ "SessionConfig", "structFIX8_1_1SessionConfig.html", "structFIX8_1_1SessionConfig" ],
     [ "ClientSession", "classFIX8_1_1ClientSession.html", "classFIX8_1_1ClientSession" ],

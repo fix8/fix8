@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.6</span>
+   &#160;<span id="projectnumber">version  0.6.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -130,7 +130,7 @@ Inheritance diagram for FIX8::FileLogger:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a79c39a625f39fdf863850a0289f414c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1FileLogger.html#a79c39a625f39fdf863850a0289f414c4">FileLogger</a> (const std::string &amp;pathname, const <a class="el" href="classFIX8_1_1Logger.html#a478225c58aaf0244c2b1ada179d61eb4">LogFlags</a> flags, const unsigned rotnum=<a class="el" href="classFIX8_1_1Logger.html#a3869d2d1d2ce355a0462f385c08bb2eaac734d9dd38106ba8e9b80a243b251fe2">rotation_default</a>)</td></tr>
+<tr class="memitem:a79c39a625f39fdf863850a0289f414c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1FileLogger.html#a79c39a625f39fdf863850a0289f414c4">FileLogger</a> (const std::string &amp;pathname, const <a class="el" href="classFIX8_1_1Logger.html#a478225c58aaf0244c2b1ada179d61eb4">LogFlags</a> flags, const unsigned rotnum=<a class="el" href="classFIX8_1_1Logger.html#aa0db957030531a706605fc5f3bdf2d57ac734d9dd38106ba8e9b80a243b251fe2">rotation_default</a>)</td></tr>
 <tr class="memitem:a3ebd0ab0b49d49f8e02dda54db14083d"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1FileLogger.html#a3ebd0ab0b49d49f8e02dda54db14083d">~FileLogger</a> ()</td></tr>
 <tr class="memdesc:a3ebd0ab0b49d49f8e02dda54db14083d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#a3ebd0ab0b49d49f8e02dda54db14083d"></a><br/></td></tr>
 <tr class="memitem:afc44ff8fb3c39044085b18a14ee64cc3"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1FileLogger.html#afc44ff8fb3c39044085b18a14ee64cc3">rotate</a> (bool force=false)</td></tr>
@@ -172,8 +172,8 @@ Additional Inherited Members</h2></td></tr>
 <a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca27fc663d3efa7113258d010e526f6755">num_flags</a>
 <br/>
  }</td></tr>
-<tr class="memitem:a3869d2d1d2ce355a0462f385c08bb2ea inherit pub_types_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classFIX8_1_1Logger.html#a3869d2d1d2ce355a0462f385c08bb2eaac734d9dd38106ba8e9b80a243b251fe2">rotation_default</a> =  5, 
-<a class="el" href="classFIX8_1_1Logger.html#a3869d2d1d2ce355a0462f385c08bb2eaaca181bd419c261d0dde6df584a079025">max_rotation</a> =  64
+<tr class="memitem:aa0db957030531a706605fc5f3bdf2d57 inherit pub_types_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classFIX8_1_1Logger.html#aa0db957030531a706605fc5f3bdf2d57ac734d9dd38106ba8e9b80a243b251fe2">rotation_default</a> =  5, 
+<a class="el" href="classFIX8_1_1Logger.html#aa0db957030531a706605fc5f3bdf2d57aca181bd419c261d0dde6df584a079025">max_rotation</a> =  64
  }</td></tr>
 <tr class="memitem:a478225c58aaf0244c2b1ada179d61eb4 inherit pub_types_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classFIX8_1_1ebitset.html">ebitset</a>&lt; <a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736c">Flags</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a478225c58aaf0244c2b1ada179d61eb4">LogFlags</a></td></tr>
 <tr class="inherit_header pub_static_attribs_classFIX8_1_1Logger"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classFIX8_1_1Logger')"><img src="closed.png" alt="-"/>&nbsp;Static Public Attributes inherited from <a class="el" href="classFIX8_1_1Logger.html">FIX8::Logger</a></td></tr>
@@ -197,7 +197,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>A file logger. </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00260">260</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00259">259</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a79c39a625f39fdf863850a0289f414c4"></a>
 <div class="memitem">
@@ -219,7 +219,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const unsigned&#160;</td>
-          <td class="paramname"><em>rotnum</em> = <code><a class="el" href="classFIX8_1_1Logger.html#a3869d2d1d2ce355a0462f385c08bb2eaac734d9dd38106ba8e9b80a243b251fe2">rotation_default</a></code>&#160;</td>
+          <td class="paramname"><em>rotnum</em> = <code><a class="el" href="classFIX8_1_1Logger.html#aa0db957030531a706605fc5f3bdf2d57ac734d9dd38106ba8e9b80a243b251fe2">rotation_default</a></code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -238,9 +238,9 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00191">191</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00189">189</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00262">_pathname</a>, and <a class="el" href="logger_8cpp_source.html#l00202">rotate()</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00261">_pathname</a>, and <a class="el" href="logger_8cpp_source.html#l00200">rotate()</a>.</p>
 
 </div>
 </div>
@@ -267,7 +267,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00273">273</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00272">272</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -304,11 +304,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classFIX8_1_1Logger.html#a96598126c3eb87a72b3581a223b7b489">FIX8::Logger</a>.</p>
 
-<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00202">202</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00200">200</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00171">FIX8::Logger::_flags</a>, <a class="el" href="logger_8hpp_source.html#l00170">FIX8::Logger::_mutex</a>, <a class="el" href="logger_8hpp_source.html#l00172">FIX8::Logger::_ofs</a>, <a class="el" href="logger_8hpp_source.html#l00262">_pathname</a>, <a class="el" href="logger_8hpp_source.html#l00263">_rotnum</a>, <a class="el" href="logger_8hpp_source.html#l00165">FIX8::Logger::append</a>, <a class="el" href="logger_8hpp_source.html#l00165">FIX8::Logger::compress</a>, <a class="el" href="f8utils_8hpp_source.html#l00654">FIX8::ebitset&lt; T, B &gt;::has()</a>, and <a class="el" href="logger_8hpp_source.html#l00166">FIX8::Logger::max_rotation</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00170">FIX8::Logger::_flags</a>, <a class="el" href="logger_8hpp_source.html#l00169">FIX8::Logger::_mutex</a>, <a class="el" href="logger_8hpp_source.html#l00171">FIX8::Logger::_ofs</a>, <a class="el" href="logger_8hpp_source.html#l00261">_pathname</a>, <a class="el" href="logger_8hpp_source.html#l00262">_rotnum</a>, <a class="el" href="logger_8hpp_source.html#l00164">FIX8::Logger::append</a>, <a class="el" href="logger_8hpp_source.html#l00164">FIX8::Logger::compress</a>, <a class="el" href="f8utils_8hpp_source.html#l00654">FIX8::ebitset&lt; T, B &gt;::has()</a>, and <a class="el" href="logger_8hpp_source.html#l00165">FIX8::Logger::max_rotation</a>.</p>
 
-<p>Referenced by <a class="el" href="logger_8cpp_source.html#l00191">FileLogger()</a>.</p>
+<p>Referenced by <a class="el" href="logger_8cpp_source.html#l00189">FileLogger()</a>.</p>
 
 </div>
 </div>
@@ -331,9 +331,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00262">262</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00261">261</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="logger_8cpp_source.html#l00191">FileLogger()</a>, and <a class="el" href="logger_8cpp_source.html#l00202">rotate()</a>.</p>
+<p>Referenced by <a class="el" href="logger_8cpp_source.html#l00189">FileLogger()</a>, and <a class="el" href="logger_8cpp_source.html#l00200">rotate()</a>.</p>
 
 </div>
 </div>
@@ -355,9 +355,9 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00263">263</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00262">262</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="logger_8cpp_source.html#l00202">rotate()</a>.</p>
+<p>Referenced by <a class="el" href="logger_8cpp_source.html#l00200">rotate()</a>.</p>
 
 </div>
 </div>
@@ -368,7 +368,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:57. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:24. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

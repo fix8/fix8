@@ -7,6 +7,7 @@ var classFIX8_1_1GroupBase =
     [ "create_group", "classFIX8_1_1GroupBase.html#a2d214f4c4fc87184e42a494c929c6ee6", null ],
     [ "get_element", "classFIX8_1_1GroupBase.html#a19263af54f3f445925034ea0298d5de5", null ],
     [ "operator+=", "classFIX8_1_1GroupBase.html#a350dac1ebbd79168a9b88e507c4e2793", null ],
+    [ "operator<<", "classFIX8_1_1GroupBase.html#a3ef822ca05dc271e51e0ea60354e802d", null ],
     [ "operator[]", "classFIX8_1_1GroupBase.html#ab440a14b144fa2c5c9c842c10a4942f4", null ],
     [ "size", "classFIX8_1_1GroupBase.html#ab6703c76e42e7cef1f74dd8d3726f908", null ],
     [ "MessageBase", "classFIX8_1_1GroupBase.html#a139cd168bbc5193327f4459beb465d83", null ],

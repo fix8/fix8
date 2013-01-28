@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.6</span>
+   &#160;<span id="projectnumber">version  0.6.7</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -109,108 +109,107 @@ $(document).ready(function(){initNavTree('usage_8hpp_source.html','');});
 <a href="usage_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#if 0</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;Fix8 Open Source FIX Engine.</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;Copyright (C) 2010-12 David L. Dight &lt;fix@fix8.org&gt;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;Copyright (C) 2010-13 David L. Dight &lt;fix@fix8.org&gt;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;General Public License as  published by the Free Software Foundation,  either version 3  of</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;the License, or (at your option) any later version.</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;version 3 of the License, or (at your option) any later version.</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;GNU General Public License <span class="keywordflow">for</span> more details.</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;You should have received a copy of the GNU General Public License along with Fix8.  If not,</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;see &lt;http:<span class="comment">//www.gnu.org/licenses/&gt;.</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM <span class="stringliteral">&quot;AS IS&quot;</span> WITHOUT WARRANTY OF ANY</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;#endif</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#ifndef _USAGE_HPP_</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="usage_8hpp.html#a13b2716bf28157aeccd29fa6bb0d7a71">   39</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _USAGE_HPP_</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="code" href="classUsageMan.html">   43</a></span>&#160;<span class="comment"></span><span class="keyword">class </span><a class="code" href="classUsageMan.html" title="Convenient program help/usage wrapper. Generates a standardised usage message.">UsageMan</a></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">   45</a></span>&#160;   <span class="keyword">const</span> std::string <a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">prognm_</a>, <a class="code" href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">params_</a>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">   46</a></span>&#160;   std::string <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>, <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="classUsageMan.html#a429fabeec72b3dc813fc3188e2807df0">   47</a></span>&#160;   <span class="keyword">typedef</span> std::map&lt;const char, const std::pair&lt;const std::string, const std::string&gt; &gt; <a class="code" href="classUsageMan.html#a429fabeec72b3dc813fc3188e2807df0">OPTEL</a>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">   48</a></span>&#160;   <a class="code" href="classUsageMan.html#a429fabeec72b3dc813fc3188e2807df0">OPTEL</a> <a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">   49</a></span>&#160;   std::list&lt;std::string&gt; <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">   50</a></span>&#160;   <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <a class="code" href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">argoptlen_</a>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="code" href="classUsageMan.html#a4f7c623a7a61ace8859b46b7695e5379">   59</a></span>&#160;   <a class="code" href="classUsageMan.html#a4f7c623a7a61ace8859b46b7695e5379">UsageMan</a>(<span class="keyword">const</span> std::string&amp; prognm, <span class="keyword">const</span> std::string&amp; argstr, <span class="keyword">const</span> std::string&amp; params,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      <span class="keywordtype">int</span> splen=3, <span class="keywordtype">int</span> argoptlen=23)</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      : <a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">prognm_</a>(prognm), <a class="code" href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">params_</a>(params), <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>(argstr), <a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>(splen), <a class="code" href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">argoptlen_</a>(argoptlen)</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      std::sort(<a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.begin(), <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.end());</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="code" href="classUsageMan.html#ad77f88bfb1c272c7d898310bff489dd2">   67</a></span>&#160;   <span class="keyword">virtual</span> <a class="code" href="classUsageMan.html#ad77f88bfb1c272c7d898310bff489dd2" title="Dtor.">~UsageMan</a>() {}</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">   74</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> sw, <span class="keyword">const</span> std::string&amp; lsw, <span class="keyword">const</span> std::string&amp; help)</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;   {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.insert(OPTEL::value_type(sw,</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;         std::pair&lt;const std::string, const std::string&gt;(lsw, help))).second;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;   }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="code" href="classUsageMan.html#aa366b62c393d3dbfaf9fd575aa68c562">   82</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="keyword">const</span> std::string&amp; xtr)</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;   {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      std::string topush(xtr);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      std::string::size_type spos;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      <span class="keywordflow">while</span> ((spos = topush.find_first_of(<span class="charliteral">&#39;@&#39;</span>)) != std::string::npos)</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;         topush.replace(spos, 1, std::string(<a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <span class="charliteral">&#39; &#39;</span>));</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.push_back(topush);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;   }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="code" href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">   93</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">setdesc</a>(<span class="keyword">const</span> std::string&amp; desc) { <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a> = desc; }</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="code" href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">   97</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">print</a>(std::ostream&amp; os)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keyword">   </span>{</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a>.empty())</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;         os &lt;&lt; <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a> &lt;&lt; std::endl &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;Usage: &quot;</span> &lt;&lt; <a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">prognm_</a> &lt;&lt; <span class="stringliteral">&quot; [-&quot;</span>;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      <span class="keywordflow">for</span> (std::string::const_iterator itr(<a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.end(); ++itr)</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;         <span class="keywordflow">if</span> (*itr != <span class="charliteral">&#39;:&#39;</span>)</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            os &lt;&lt; *itr;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; <a class="code" href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">params_</a> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      <span class="keyword">const</span> std::string <a class="code" href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a>(<a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <span class="charliteral">&#39; &#39;</span>);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      <span class="keywordflow">for</span> (OPTEL::const_iterator itr(<a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.end(); ++itr)</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      {</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;         std::ostringstream ostr;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;         ostr &lt;&lt; <span class="charliteral">&#39;-&#39;</span> &lt;&lt; itr-&gt;first &lt;&lt; <span class="stringliteral">&quot;,--&quot;</span> &lt;&lt; itr-&gt;second.first;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;         os &lt;&lt; spacer &lt;&lt; std::left &lt;&lt; std::setw(<a class="code" href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">argoptlen_</a>) &lt;&lt; ostr.str()</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; itr-&gt;second.second &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      }</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <span class="keywordflow">for</span> (std::list&lt;std::string&gt;::const_iterator itr(<a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.end(); ++itr)</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;         os &lt;&lt; *itr &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   }</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;};</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#endif // _USAGE_HPP_</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;You should  have received a copy of the GNU Lesser General Public  License along with Fix8.</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;If not, see &lt;http:<span class="comment">//www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM <span class="stringliteral">&quot;AS IS&quot;</span> WITHOUT WARRANTY OF ANY</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;#endif</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef _USAGE_HPP_</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="usage_8hpp.html#a13b2716bf28157aeccd29fa6bb0d7a71">   38</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _USAGE_HPP_</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="code" href="classUsageMan.html">   42</a></span>&#160;<span class="comment"></span><span class="keyword">class </span><a class="code" href="classUsageMan.html" title="Convenient program help/usage wrapper. Generates a standardised usage message.">UsageMan</a></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">   44</a></span>&#160;   <span class="keyword">const</span> std::string <a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">prognm_</a>, <a class="code" href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">params_</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">   45</a></span>&#160;   std::string <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>, <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="classUsageMan.html#a429fabeec72b3dc813fc3188e2807df0">   46</a></span>&#160;   <span class="keyword">typedef</span> std::map&lt;const char, const std::pair&lt;const std::string, const std::string&gt; &gt; <a class="code" href="classUsageMan.html#a429fabeec72b3dc813fc3188e2807df0">OPTEL</a>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">   47</a></span>&#160;   <a class="code" href="classUsageMan.html#a429fabeec72b3dc813fc3188e2807df0">OPTEL</a> <a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">   48</a></span>&#160;   std::list&lt;std::string&gt; <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">   49</a></span>&#160;   <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <a class="code" href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">argoptlen_</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="code" href="classUsageMan.html#a4f7c623a7a61ace8859b46b7695e5379">   58</a></span>&#160;   <a class="code" href="classUsageMan.html#a4f7c623a7a61ace8859b46b7695e5379">UsageMan</a>(<span class="keyword">const</span> std::string&amp; prognm, <span class="keyword">const</span> std::string&amp; argstr, <span class="keyword">const</span> std::string&amp; params,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      <span class="keywordtype">int</span> splen=3, <span class="keywordtype">int</span> argoptlen=23)</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      : <a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">prognm_</a>(prognm), <a class="code" href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">params_</a>(params), <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>(argstr), <a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>(splen), <a class="code" href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">argoptlen_</a>(argoptlen)</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      std::sort(<a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.begin(), <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.end());</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="classUsageMan.html#ad77f88bfb1c272c7d898310bff489dd2">   66</a></span>&#160;   <span class="keyword">virtual</span> <a class="code" href="classUsageMan.html#ad77f88bfb1c272c7d898310bff489dd2" title="Dtor.">~UsageMan</a>() {}</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">   73</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> sw, <span class="keyword">const</span> std::string&amp; lsw, <span class="keyword">const</span> std::string&amp; help)</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;   {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.insert(OPTEL::value_type(sw,</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;         std::pair&lt;const std::string, const std::string&gt;(lsw, help))).second;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;   }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="code" href="classUsageMan.html#aa366b62c393d3dbfaf9fd575aa68c562">   81</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a300f3be13eec793f815e06549fcafdf9">add</a>(<span class="keyword">const</span> std::string&amp; xtr)</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;   {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      std::string topush(xtr);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      std::string::size_type spos;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      <span class="keywordflow">while</span> ((spos = topush.find_first_of(<span class="charliteral">&#39;@&#39;</span>)) != std::string::npos)</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;         topush.replace(spos, 1, std::string(<a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <span class="charliteral">&#39; &#39;</span>));</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.push_back(topush);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;   }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="code" href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">   92</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a12499b81599f674e728a1e15e31edf8b">setdesc</a>(<span class="keyword">const</span> std::string&amp; desc) { <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a> = desc; }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="code" href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">   96</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classUsageMan.html#a9399c7c9c595777c8065264bd40b1009">print</a>(std::ostream&amp; os)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keyword">   </span>{</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a>.empty())</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;         os &lt;&lt; <a class="code" href="classUsageMan.html#a46432651448ab48dface52dfbbd92977">description_</a> &lt;&lt; std::endl &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;Usage: &quot;</span> &lt;&lt; <a class="code" href="classUsageMan.html#a2017c3dd570bf1fc8d07200a18e67146">prognm_</a> &lt;&lt; <span class="stringliteral">&quot; [-&quot;</span>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <span class="keywordflow">for</span> (std::string::const_iterator itr(<a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a69df0ec6e67eceb23302a50c05ee0a68">argstr_</a>.end(); ++itr)</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;         <span class="keywordflow">if</span> (*itr != <span class="charliteral">&#39;:&#39;</span>)</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            os &lt;&lt; *itr;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; <a class="code" href="classUsageMan.html#a0b4394654be8eba6a54cbec99a6ea84c">params_</a> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      <span class="keyword">const</span> std::string <a class="code" href="f8c_8cpp.html#ace2465f840cdd8763c991859ffe224ce">spacer</a>(<a class="code" href="classUsageMan.html#ac623dc89a037aac508b8118a5eeaa00d">splen_</a>, <span class="charliteral">&#39; &#39;</span>);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      <span class="keywordflow">for</span> (OPTEL::const_iterator itr(<a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a91d6ccc4fbbb0b240377baacf7aa25d6">optels_</a>.end(); ++itr)</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      {</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;         std::ostringstream ostr;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;         ostr &lt;&lt; <span class="charliteral">&#39;-&#39;</span> &lt;&lt; itr-&gt;first &lt;&lt; <span class="stringliteral">&quot;,--&quot;</span> &lt;&lt; itr-&gt;second.first;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;         os &lt;&lt; spacer &lt;&lt; std::left &lt;&lt; std::setw(<a class="code" href="classUsageMan.html#a153b1c2d85310c3ebcb7dc4f3d63a562">argoptlen_</a>) &lt;&lt; ostr.str()</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; itr-&gt;second.second &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      }</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      <span class="keywordflow">for</span> (std::list&lt;std::string&gt;::const_iterator itr(<a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.begin()); itr != <a class="code" href="classUsageMan.html#a81757aece90fa8e4f235a81a17fd3f76">xtrlines_</a>.end(); ++itr)</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;         os &lt;&lt; *itr &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   }</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;};</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#endif // _USAGE_HPP_</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Dec 16 2012 16:28:56. Copyright &copy; 2010-12, <a href=mailto:fix@fix8.org><b>David L. Dight.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:23. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

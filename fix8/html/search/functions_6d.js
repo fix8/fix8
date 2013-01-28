@@ -432,6 +432,7 @@ var searchData=
   ['msgtype_5fuserrequest',['MsgType_USERREQUEST',['../namespaceFIX8_1_1TEX.html#a9940a88b9408010e45a8e2b7836e805d',1,'FIX8::TEX']]],
   ['msgtype_5fuserresponse',['MsgType_USERRESPONSE',['../namespaceFIX8_1_1TEX.html#aa8cf3d77d3e0b30a41f2595e10f58d18',1,'FIX8::TEX']]],
   ['msgtype_5fxml_5fnon_5ffix',['MsgType_XML_NON_FIX',['../namespaceFIX8_1_1TEX.html#a44ee50a814068eb740e83331251d1193',1,'FIX8::TEX']]],
+  ['multi_5fnew_5forder_5fsingle',['multi_new_order_single',['../classMyMenu.html#a75d847d983e05e6727a0b7b0a5e18bf3',1,'MyMenu']]],
   ['multilegmodel_5fpredefined_5fmultileg_5fsecurity',['MultilegModel_PREDEFINED_MULTILEG_SECURITY',['../namespaceFIX8_1_1TEX.html#a95224e69de09175b1360f929e025af1c',1,'FIX8::TEX']]],
   ['multilegmodel_5frealm_5fels',['MultilegModel_realm_els',['../namespaceFIX8_1_1TEX.html#a54e1b58d0a7c234273164b0afab744d6',1,'FIX8::TEX']]],
   ['multilegmodel_5fuser_5fdefined_5fmultleg_5fsecurity',['MultilegModel_USER_DEFINED_MULTLEG_SECURITY',['../namespaceFIX8_1_1TEX.html#aba545e0542ef7d6a2d2c84d3bf8d3207',1,'FIX8::TEX']]],
