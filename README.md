@@ -1,4 +1,4 @@
-<br><center><img src="http://fix8.org/fix8/fix8_Logo_RGB.png"></center>
+<p align="center"><img src="http://fix8.org/fix8/fix8_Logo_RGB.png"></p>
 
 # [Fix8](http://www.fix8.org) Open Source C++ FIX Engine
 
