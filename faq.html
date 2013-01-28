@@ -342,7 +342,7 @@
 												What you need to to do is override <code>Session::generate_logon()</code> in your session class.  In that method, the first
 												thing you need to do is call the base class method. Then add your extra fields...
 												<!--pre class="prettyprint linenums languague-css"-->
-												<pre class="prettyprint">
+												<pre>
 Message *my_sess::generate_logon()
 {
 	Message *msg(Session::generate_logon());
@@ -389,7 +389,7 @@ Message *my_sess::generate_logon()
 												Nested repeating groups are easy to use. The following example creates multiple nested groups. Using <code>find_group</code>
 												and then <code>create_group</code> you can locate the group you wish to add, create an instance, populate the fields
 												and then add it to the message.
-												<pre class="prettyprint">
+												<pre>
 *nos << new TEX::NoUnderlyings(3);
 GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
 
