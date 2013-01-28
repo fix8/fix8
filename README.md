@@ -1,5 +1,7 @@
 # [Fix8](http://www.fix8.org) Open Source C++ FIX Engine
 
+A modern open source C++ FIX framework featuring complete schema driven customisation, high performance and fast application development.
+
 The system is comprised of a compiler for generating C++ message and field encoders,
 decoders and instantiation tables; a runtime library to support the generated code
 and framework; and a set of complete client/server test applications.
@@ -10,7 +12,7 @@ and framework; and a set of complete client/server test applications.
 
 * Statically compile your FIX xml schema and quickly build your FIX application on top. If you need to add customised messages or fields, simply update the schema and recompile.
 
-* Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average 29% faster encoding/decoding the same message than Quickfix.
+* Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average 29% faster encoding/decoding the same message than Quickfix. See [Performance](http://fix8.org/performance.html) to see how we substantiate this shameless bragging.
 
 * Fix8 supports standard `FIX4.X` to `FIX5.X` and `FIXT1.X`. If you have a custom FIX variant Fix8 can use that too. New FIX versions will be supported.
 
@@ -93,7 +95,7 @@ If you wish to build the html documentation, you will need:
 ## Building on Linux/UNIX/OSX
 
 The build system is based on automake/autoconf/libtool.
-You **must** have [libtool](www.gnu.org/software/libtool/) installed to build.
+You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
     % tar xvzf fix8-0.6.7.tar.gz
     % cd fix8-0.6.7
