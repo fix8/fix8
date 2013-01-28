@@ -11,7 +11,7 @@
 				protocol_log="protocol_log"
 				login_retry_interval="15000"
 				reset_sequence_numbers="false"
-				default_appl_ver_id="9"
+				default_appl_ver_id="8"
 				heartbeat_interval="10"
 				tcp_nodelay="true"
 				login_retries="100"

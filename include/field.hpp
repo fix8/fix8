@@ -1,21 +1,20 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -604,9 +603,25 @@ template<const unsigned short field>
 class Field<UTCTimestamp, field> : public BaseField
 {
 	static const std::string _fmt_sec, _fmt_ms;
-	enum { _sec_only = 17, _with_ms = 21 };
+	enum MillisecondIndicator { _sec_only = 17, _with_ms = 21 };
 	Poco::DateTime _value;
 	int _tzdiff;
+
+protected:
+	void format0(short data, char *to, int width) const
+	{
+		while(width-- > 0)
+		{
+			to[width] = data % 10 + '0';
+			data /= 10;
+		}
+	}
+
+	void parseDate(std::string::const_iterator &begin, size_t len , short &to) const
+	{
+		while(len-- > 0)
+			to = (to << 3) + (to << 1) + (*begin++ - '0');
+	}
 
 public:
 	/// The FIX fieldID (tag number).
@@ -630,9 +645,9 @@ public:
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field)
 	{
 		if (from.size() == _sec_only) // 19981231-23:59:59
-			Poco::DateTimeParser::parse(_fmt_sec, from, _value, _tzdiff);
+			DateTimeParse(from, _value, _sec_only);
 		else if (from.size() == _with_ms) // 19981231-23:59:59.123
-			Poco::DateTimeParser::parse(_fmt_ms, from, _value, _tzdiff);
+			DateTimeParse(from, _value, _with_ms);
 	}
 
 	/// Assignment operator.
@@ -678,15 +693,70 @@ public:
 	std::ostream& print(std::ostream& os) const
 		{ return os << Poco::DateTimeFormatter::format(_value, _fmt_sec); }
 
+	/*! Format Poco::DateTime into a string.
+		 With millisecond, the format string will be "YYYYMMDD-HH:MM:SS.MMM"
+		 Without millisecond, the format string will be "YYYYMMDD-HH:MM:SS"
+	  \param dateTime input Poco::DateTime object
+	  \param to output buffer, should make sure there is enough space reserved
+	  \param ind indicating whether need millisecond or not
+	  \return length of formatted string */
+	size_t DateTimeFormat(const Poco::DateTime& dateTime, char *to, const MillisecondIndicator ind=_sec_only) const;
+
+	/*! Decode a DateTime string into a Poco::DateTime
+	  \param from input DateTime string
+	  \param dateTime output Poco::DateTime object
+	  \param ind indicating whether the string has millisecond or not */
+	void DateTimeParse(const std::string& from, Poco::DateTime& dateTime, const MillisecondIndicator ind=_sec_only) const;
+
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const
-	{
-		f8String res(Poco::DateTimeFormatter::format(_value, _fmt_sec));
-		sz += res.copy(to, res.size());
-	}
+	void print(char *to, size_t& sz) const { sz += DateTimeFormat(_value, to, _with_ms); }
 };
+
+template<const unsigned short field>
+inline size_t Field<UTCTimestamp, field>::DateTimeFormat(const Poco::DateTime& dateTime, char *to, const MillisecondIndicator ind) const
+{
+	format0(dateTime.year(), to, 4);
+	format0(dateTime.month(), to + 4, 2);
+	format0(dateTime.day(), to + 6, 2);
+	to[8] = '-';
+
+	format0(dateTime.hour(), to + 9, 2);
+	to[11] = ':';
+
+	format0(dateTime.minute(), to + 12, 2);
+	to[14] = ':';
+
+	format0(dateTime.second(), to + 15, 2);
+
+	if(ind != _with_ms)
+		return _sec_only; //length of "YYYYMMDD-HH:MM:SS"
+
+	to[17] = '.';
+	format0(dateTime.millisecond(), to + 18, 3);
+	return _with_ms; //length of "YYYYMMDD-HH:MM:SS.MMM"
+}
+
+template<const unsigned short field>
+inline void Field<UTCTimestamp, field>::DateTimeParse(const std::string& from, Poco::DateTime& dateTime, const MillisecondIndicator ind) const
+{
+	std::string::const_iterator it(from.begin());
+	short year(0), month(0), day(0), hour(0), minute(0), second(0), millisecond(0);
+
+	parseDate(it, 4, year);
+	parseDate(it, 2, month);
+	parseDate(it, 2, day);
+	parseDate(++it, 2, hour);
+	parseDate(++it, 2, minute);
+	parseDate(++it, 2, second);
+
+	if(ind == _with_ms)
+		parseDate(++it, 3, millisecond);
+
+	if (Poco::DateTime::isValid(year, month, day, hour, minute, second, millisecond))
+		dateTime.assign(year, month, day, hour, minute, second, millisecond);
+}
 
 template<const unsigned short field>
 const std::string Field<UTCTimestamp, field>::_fmt_sec("%Y%m%d-%H:%M:%S");

@@ -1,21 +1,20 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -128,8 +127,9 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:r");
+const string GETARGLIST("hl:svqc:R:S:rb:");
 bool term_received(false);
+unsigned batch_size(1000);
 
 //-----------------------------------------------------------------------------------------
 namespace FIX8
@@ -139,8 +139,9 @@ namespace FIX8
 	{
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "Send a NewOrderSingle msg"), &MyMenu::new_order_single),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Preload n NewOrderSingle msgs"), &MyMenu::preload_new_order_single),
+		MyMenu::Handlers::TypePair(MyMenu::MenuItem('b', "Batch preload and send n NewOrderSingle msgs"), &MyMenu::batch_preload_new_order_single),
+		MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "Send n NewOrderSingle msgs"), &MyMenu::multi_new_order_single),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('a', "Send all Preloaded NewOrderSingle msgs"), &MyMenu::send_all_preloaded),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('f', "Flush global log"), &MyMenu::flush_log),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
@@ -187,6 +188,7 @@ int main(int argc, char **argv)
 		{ "log",			1,	0,	'l' },
 		{ "config",		1,	0,	'c' },
 		{ "server",		0,	0,	's' },
+		{ "batch",		1,	0,	'b' },
 		{ "send",		1,	0,	'S' },
 		{ "receive",	1,	0,	'R' },
 		{ "quiet",		0,	0,	'q' },
@@ -203,12 +205,13 @@ int main(int argc, char **argv)
 		{
 		case 'v':
 			cout << argv[0] << " for "PACKAGE" version "VERSION << endl;
-			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007. See <http://fsf.org/> for details." << endl;
+			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
+		case 'b': batch_size = GetValue<unsigned>(optarg); break;
 		case 's': server = true; break;
 		case 'S': next_send = GetValue<unsigned>(optarg); break;
 		case 'R': next_receive = GetValue<unsigned>(optarg); break;
@@ -249,6 +252,9 @@ int main(int argc, char **argv)
 				inst->start(true, next_send, next_receive);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
+#if defined BUFFERED_GLOBAL_LOGGING
+				GlobalLogger::flush_log();
+#endif
 			}
 		}
 		else if (reliable)
@@ -265,6 +271,9 @@ int main(int argc, char **argv)
 				;
 			// don't explicitly call mc->session_ptr()->stop() with reliable sessions
 			// before checking if the session is already shutdown - the framework will generally do this for you
+#if defined BUFFERED_GLOBAL_LOGGING
+			GlobalLogger::flush_log();
+#endif
 			if (!mc->session_ptr()->is_shutdown())
 				mc->session_ptr()->stop();
 			mymenu.get_tty().unset_raw_mode();
@@ -275,16 +284,16 @@ int main(int argc, char **argv)
 				mc(new ClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
-			bool reset_sequence_numbers;
-			unsigned login_retry_interval, login_retries;
-			default_appl_ver_id davi;
-			mc->session_ptr()->get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);
-			mc->start(false, next_send, next_receive, davi());
+			const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
+			mc->start(false, next_send, next_receive, lparam._davi());
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
 			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
 				;
+#if defined BUFFERED_GLOBAL_LOGGING
+			GlobalLogger::flush_log();
+#endif
 			if (!mc->session_ptr()->is_shutdown())
 				mc->session_ptr()->stop();
 			mymenu.get_tty().unset_raw_mode();
@@ -292,6 +301,16 @@ int main(int argc, char **argv)
 	}
 	catch (f8Exception& e)
 	{
+#if defined BUFFERED_GLOBAL_LOGGING
+		GlobalLogger::flush_log();
+#endif
+		cerr << "exception: " << e.what() << endl;
+	}
+	catch (exception& e)	// also catches Poco::Net::NetException
+	{
+#if defined BUFFERED_GLOBAL_LOGGING
+			GlobalLogger::flush_log();
+#endif
 		cerr << "exception: " << e.what() << endl;
 	}
 
@@ -301,21 +320,80 @@ int main(int argc, char **argv)
 }
 
 //-----------------------------------------------------------------------------------------
+bool MyMenu::batch_preload_new_order_single()
+{
+	cout << "Enter number of NewOrderSingle msgs to batch preload:";
+	cout.flush();
+	unsigned num(0);
+	_tty.unset_raw_mode();
+	cin >> num;
+	_tty.set_raw_mode();
+	while (num > 0)
+	{
+		unsigned cnt(0);
+		for (; cnt < num && cnt < batch_size; ++cnt)
+		{
+			static unsigned oid(10000);
+			ostringstream oistr;
+			oistr << "ord" << ++oid << '-' << num;
+
+			TEX::NewOrderSingle *ptr(new TEX::NewOrderSingle);
+			TEX::Price *prc(new TEX::Price(1. + RandDev::getrandom(500.)));
+			prc->set_precision(3);
+
+			*ptr << new TEX::Symbol("BHP")
+				  << new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
+				  << new TEX::OrdType(TEX::OrdType_LIMIT)
+				  << new TEX::Side(TEX::Side_BUY)
+				  << new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL)
+				  << new TEX::TransactTime
+				  << new TEX::ClOrdID(oistr.str())
+				  << prc
+				  << new TEX::OrderQty(1 + RandDev::getrandom(10000));
+
+			_session.push(ptr);
+		}
+		cout << _session.cached() << " NewOrderSingle msgs preloaded." << endl;
+		num -= cnt;
+		send_all_preloaded();
+	}
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::multi_new_order_single()
+{
+	cout << "Enter number of NewOrderSingle msgs to send:";
+	cout.flush();
+	unsigned num(0);
+	_tty.unset_raw_mode();
+	cin >> num;
+	_tty.set_raw_mode();
+	for (unsigned ii(0); ii < num; ++ii)
+		new_order_single();
+	cout << endl << num << " NewOrderSingle msgs sent." << endl;
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
 bool MyMenu::new_order_single()
 {
-	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
-	*nos += new TEX::TransactTime;
-	*nos += new TEX::OrderQty(1 + RandDev::getrandom(10000));
-	*nos += new TEX::Price(1. + RandDev::getrandom(500.));
 	static unsigned oid(0);
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
-	*nos += new TEX::ClOrdID(oistr.str());
-	*nos += new TEX::Symbol("BHP");
-	*nos += new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION);
-	*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
-	*nos += new TEX::Side(TEX::Side_BUY);
-	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+
+	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
+	*nos  << new TEX::TransactTime
+			<< new TEX::OrderQty(1 + RandDev::getrandom(10000))
+			<< new TEX::Price(1. + RandDev::getrandom(500.))
+			<< new TEX::ClOrdID(oistr.str())
+			<< new TEX::Symbol("BHP")
+			<< new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
+			<< new TEX::OrdType(TEX::OrdType_LIMIT)
+			<< new TEX::Side(TEX::Side_BUY)
+			<< new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
 
 	_session.send(nos);
 
@@ -354,21 +432,24 @@ bool MyMenu::preload_new_order_single()
 	_tty.set_raw_mode();
 	for (int ii(0); ii < num; ++ii)
 	{
-		TEX::NewOrderSingle *ptr(new TEX::NewOrderSingle);
-		*ptr += new TEX::Symbol("BHP");
-		*ptr += new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION);
-		*ptr += new TEX::OrdType(TEX::OrdType_LIMIT);
-		*ptr += new TEX::Side(TEX::Side_BUY);
-		*ptr += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
-		*ptr += new TEX::TransactTime;
-		*ptr += new TEX::OrderQty(1 + RandDev::getrandom(10000));
-		TEX::Price *prc(new TEX::Price(1. + RandDev::getrandom(500.)));
-		prc->set_precision(3);
-		*ptr += prc;
 		static unsigned oid(10000);
 		ostringstream oistr;
 		oistr << "ord" << ++oid << '-' << num;
-		*ptr += new TEX::ClOrdID(oistr.str());
+
+		TEX::NewOrderSingle *ptr(new TEX::NewOrderSingle);
+		TEX::Price *prc(new TEX::Price(1. + RandDev::getrandom(500.)));
+		prc->set_precision(3);
+
+		*ptr  << new TEX::Symbol("BHP")
+				<< new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
+				<< new TEX::OrdType(TEX::OrdType_LIMIT)
+				<< new TEX::Side(TEX::Side_BUY)
+				<< new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL)
+				<< new TEX::TransactTime
+				<< prc
+				<< new TEX::ClOrdID(oistr.str())
+				<< new TEX::OrderQty(1 + RandDev::getrandom(10000));
+
 		_session.push(ptr);
 	}
 
@@ -387,13 +468,6 @@ bool MyMenu::help()
 		get_ostr() << itr->first._key << '\t' << itr->first._help << endl;
 	get_ostr() << endl;
 	return true;
-}
-
-//-----------------------------------------------------------------------------------------
-bool MyMenu::flush_log()
-{
-	GlobalLogger::flush_log();
-	return true; // will exit
 }
 
 //-----------------------------------------------------------------------------------------
@@ -442,29 +516,31 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
-	*er += new TEX::OrderID(oistr.str());
-	*er += new TEX::ExecType(TEX::ExecType_NEW);
+	*er << new TEX::OrderID(oistr.str())
+		 << new TEX::ExecType(TEX::ExecType_NEW);
 	unsigned ordResult(RandDev::getrandom(3));
 	switch (ordResult)
 	{
 	default:
 	case 0:
-		*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
+		*er << new TEX::OrdStatus(TEX::OrdStatus_NEW);
 		break;
 	case 1:
-		*er += new TEX::OrdStatus(TEX::OrdStatus_CANCELED);
+		*er << new TEX::OrdStatus(TEX::OrdStatus_CANCELED);
 		break;
 	case 2:
-		*er += new TEX::OrdStatus(TEX::OrdStatus_REJECTED);
+		*er << new TEX::OrdStatus(TEX::OrdStatus_REJECTED);
 		break;
 	}
-	*er += new TEX::LeavesQty(qty());
-	*er += new TEX::CumQty(0);
-	*er += new TEX::AvgPx(0);
-	*er += new TEX::LastCapacity('5');
-	*er += new TEX::ReportToExch('Y');
-	*er += new TEX::ExecTransType(TEX::ExecTransType_NEW);
-	*er += new TEX::ExecID(oistr.str());
+
+	*er   << new TEX::LeavesQty(qty())
+			<< new TEX::CumQty(0)
+			<< new TEX::AvgPx(0)
+			<< new TEX::LastCapacity('5')
+			<< new TEX::ReportToExch('Y')
+			<< new TEX::ExecTransType(TEX::ExecTransType_NEW)
+			<< new TEX::ExecID(oistr.str());
+
 	_session.send(er);
 
 	if (ordResult == 0)
@@ -473,20 +549,22 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		while (remaining_qty > 0)
 		{
 			unsigned trdqty(1 + RandDev::getrandom(remaining_qty));
+			remaining_qty -= trdqty;
+			cum_qty += trdqty;
 			TEX::ExecutionReport *ner(new TEX::ExecutionReport);
 			msg->copy_legal(ner);
 			ostringstream eistr;
 			eistr << "exec" << ++eoid;
-			*ner += new TEX::ExecID(eistr.str());
-			*ner += new TEX::OrderID(oistr.str());
-			*ner += new TEX::ExecType(TEX::ExecType_NEW);
-			*ner += new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED);
-			remaining_qty -= trdqty;
-			cum_qty += trdqty;
-			*ner += new TEX::LeavesQty(remaining_qty);
-			*ner += new TEX::CumQty(cum_qty);
-			*ner += new TEX::ExecTransType(TEX::ExecTransType_NEW);
-			*ner += new TEX::AvgPx(price());
+
+			*ner  << new TEX::ExecID(eistr.str())
+					<< new TEX::OrderID(oistr.str())
+					<< new TEX::ExecType(TEX::ExecType_NEW)
+					<< new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED)
+					<< new TEX::LeavesQty(remaining_qty)
+					<< new TEX::CumQty(cum_qty)
+					<< new TEX::ExecTransType(TEX::ExecTransType_NEW)
+					<< new TEX::AvgPx(price());
+
 			_session.send(ner);
 		}
 	}
@@ -498,7 +576,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 {
 	static int exrecv(0);
-	if (++exrecv % 1000 == 0)
+	if (++exrecv % 5000 == 0)
 	{
 		cout << '\r' << exrecv << " ExecutionReport msgs received";
 		cout.flush();

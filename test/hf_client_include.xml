@@ -28,4 +28,8 @@
 				filename="./run/hf_client2_protocol.log"
 				rotation="5"
 				flags="append"/>
+
+	<log 		name="protocol_log_null"
+				type="protocol"
+				filename="/dev/null"/>
 </tng>

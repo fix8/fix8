@@ -1,21 +1,20 @@
 //-------------------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -289,6 +288,37 @@ public:
 	/*! Check to see if the socket is in error
 	    \return true if there was a socket error */
 	bool is_socket_error() const { return _reader.is_socket_error(); }
+
+	/*! Set the socket recv buffer sz
+	    \param sock socket to operate on
+	    \param sz new size */
+	static void set_recv_buf_sz(const unsigned sz, Poco::Net::Socket *sock)
+	{
+		const unsigned current_sz(sock->getReceiveBufferSize());
+		sock->setReceiveBufferSize(sz);
+		std::ostringstream ostr;
+		ostr << "ReceiveBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getReceiveBufferSize();
+		GlobalLogger::log(ostr.str());
+	}
+
+	/*! Set the socket send buffer sz
+	    \param sock socket to operate on
+	    \param sz new size */
+	static void set_send_buf_sz(const unsigned sz, Poco::Net::Socket *sock)
+	{
+		const unsigned current_sz(sock->getSendBufferSize());
+		sock->setSendBufferSize(sz);
+		std::ostringstream ostr;
+		ostr << "SendBufferSize old:" << current_sz << " requested:" << sz << " new:" << sock->getSendBufferSize();
+		GlobalLogger::log(ostr.str());
+	}
+	/*! Set the socket recv buffer sz
+	    \param sz new size */
+	void set_recv_buf_sz(const unsigned sz) const { set_recv_buf_sz(sz, _sock); }
+
+	/*! Set the socket send buffer sz
+	    \param sz new size */
+	void set_send_buf_sz(const unsigned sz) const { set_send_buf_sz(sz, _sock); }
 
 	/*! Get the session associated with this connection.
 	    \return the session */

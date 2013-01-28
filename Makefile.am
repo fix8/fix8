@@ -1,19 +1,18 @@
 #############################################################################################
-# Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+# Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
 # Fix8 Open Source FIX Engine.
-# Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+# Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 #
-# Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-# General Public License as  published by the Free Software Foundation,  either version 3  of
-# the License, or (at your option) any later version.
+# Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+# GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+# version 3 of the License, or (at your option) any later version.
 #
 # Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-# even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #
-# You should have received a copy of the GNU General Public License along with Fix8.  If not,
-# see <http://www.gnu.org/licenses/>.
+# You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+# If not, see <http://www.gnu.org/licenses/>.
 #
 # BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 # THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -58,4 +57,28 @@ src-release:
 
 check-release:
 	md5sum -c $(distdir).md5sum
+
+pkgincludedir = ${prefix}/include/fix8
+pkginclude_HEADERS = include/*.hpp include/f8config.h
+
+sharedir = ${prefix}/share/fix8
+testdir = ${sharedir}/test
+fix8htmldir = $(sharedir)/html
+schemadir = ${sharedir}/schema
+
+INSTALL_DATA_LOCAL_TEST = \
+	test/hf_client.xml test/myfix_client.xml test/hf_client_include.xml test/hf_server.xml test/myfix_server.xml \
+	test/f8_hf_test
+
+INSTALL_DATA_LOCAL_SCHEMA = schema/*.xml schema/QUICKFIX-LICENCE
+
+install-data-local:
+	@$(mkinstalldirs) $(testdir) $(schemadir)
+	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_TEST) $(testdir)
+	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_SCHEMA) $(schemadir)
+if USEDOXYGEN
+	@$(mkinstalldirs) $(fix8htmldir) $(fix8htmldir)/search
+	$(INSTALL_DATA) doc/html/*.js doc/html/*.html doc/html/*.png doc/html/*.css $(fix8htmldir)
+	$(INSTALL_DATA) doc/html/search/*.js doc/html/search/*.html doc/html/search/*.png doc/html/search/*.css $(fix8htmldir)/search
+endif
 

@@ -1,21 +1,20 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -206,7 +205,7 @@ int main(int argc, char **argv)
 		{
 		case 'v':
 			cout << argv[0] << " for "PACKAGE" version "VERSION << endl;
-			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007. See <http://fsf.org/> for details." << endl;
+			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
@@ -281,11 +280,8 @@ int main(int argc, char **argv)
 				mc(new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
-			bool reset_sequence_numbers;
-			unsigned login_retry_interval, login_retries;
-			default_appl_ver_id davi;
-			mc->session_ptr()->get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);
-			mc->start(false, next_send, next_receive, davi());
+			const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
+			mc->start(false, next_send, next_receive, lparam._davi());
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
@@ -296,6 +292,10 @@ int main(int argc, char **argv)
 		}
 	}
 	catch (f8Exception& e)
+	{
+		cerr << "exception: " << e.what() << endl;
+	}
+	catch (exception& e)	// also catches Poco::Net::NetException
 	{
 		cerr << "exception: " << e.what() << endl;
 	}

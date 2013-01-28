@@ -9,11 +9,14 @@
            sender_comp_id="DLD_TEX"
            target_comp_id="TEX_DLD"
            login_retry_interval="15000"
-			  heartbeat_interval="5"
-           protocol_log="protocol_log"
+			  heartbeat_interval="10"
+           protocol_log="protocol_log_null"
            reset_sequence_numbers="false"
            tcp_nodelay="true"
            login_retries="100"
+			  tcp_recv_buffer="0"
+			  tcp_send_buffer="0"
+			  session_log="session_log"
            persist="mem0" />
 
   <persist name="bdb0"

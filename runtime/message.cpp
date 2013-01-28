@@ -1,21 +1,20 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -66,22 +65,22 @@ unsigned MessageBase::extract_header(const f8String& from, f8String& len, f8Stri
 {
 	const char *dptr(from.data());
 
-	f8String tag, val;
+	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
 	unsigned s_offset(0), result;
 	if ((result = extract_element(dptr, from.size(), tag, val)))
 	{
-		if (tag != "8")
+		if (*tag != '8')
 			return 0;
 		s_offset += result;
 		if ((result = extract_element(dptr + s_offset, from.size() - s_offset, tag, val)))
 		{
-			if (tag != "9")
+			if (*tag != '9')
 				return 0;
 			len = val;
 			s_offset += result;
 			if ((result = extract_element(dptr + s_offset, from.size() - s_offset, tag, val)))
 			{
-				if (tag != "35")
+				if (*tag != '3' || *(tag + 1) != '5')
 					return 0;
 				mtype = val;
 				s_offset += result;
@@ -110,11 +109,11 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 	unsigned s_offset(offset), result;
 	const unsigned fsize(from.size());
 	const char *dptr(from.data());
-	f8String tag, val;
+	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
 
 	for (unsigned pos(_pos.size()); s_offset <= fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 	{
-		const unsigned tv(fast_atoi<unsigned>(tag.c_str()));
+		const unsigned tv(fast_atoi<unsigned>(tag));
 		const BaseEntry *be(_ctx._be.find_ptr(tv));
 #if defined PERMIT_CUSTOM_FIELDS
 		if (!be && (!_ctx._ube || (be = _ctx._ube->find_ptr(tv)) == 0))
@@ -160,7 +159,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 		throw InvalidRepeatingGroup(fnum);
 	const unsigned fsize(from.size());
 	const char *dptr(from.data());
-	f8String tag, val;
+	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
 
 	for (bool ok(true); ok && s_offset < fsize; )
 	{
@@ -168,7 +167,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 
 		for (unsigned pos(0); s_offset < fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 		{
-			const unsigned tv(fast_atoi<unsigned>(tag.c_str()));
+			const unsigned tv(fast_atoi<unsigned>(tag));
 			Presence::const_iterator itr(grp->_fp.get_presence().end());
 			if (grp->_fp.get(tv, itr, FieldTrait::present))	// already present; next group?
 				break;
@@ -240,7 +239,9 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 		static_cast<body_length *>(fitr->second)->set(mlen);
 		fitr = msg->_header->_fields.find(Common_MsgType);
 		static_cast<msg_type *>(fitr->second)->set(mtype);
+#if defined POPULATE_METADATA
 		msg->check_set_rlm(fitr->second);
+#endif
 
 		f8String chksum;
 		if (extract_trailer(from, chksum))
@@ -286,7 +287,9 @@ unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 			}
 
 			BaseField *nf(get_field(itr->_fnum)->copy());
+#if defined POPULATE_METADATA
 			to->check_set_rlm(nf);
+#endif
 			Presence::const_iterator fpitr(_fp.get_presence().end());
 			if (force && to->_fp.get(itr->_fnum, fpitr, FieldTrait::present))
 				delete to->replace(itr->_fnum, fpitr, nf);
@@ -305,7 +308,9 @@ unsigned MessageBase::encode(char *to, size_t& sz) const
 	const size_t where(sz);
 	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
 	{
+#if defined POPULATE_METADATA
 		check_set_rlm(itr->second);
+#endif
 		Presence::const_iterator fpitr(_fp.get_presence().end());
 		if (!_fp.get(itr->second->_fnum, fpitr, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
 		{
@@ -324,7 +329,9 @@ unsigned MessageBase::encode(ostream& to) const
 	const std::ios::pos_type where(to.tellp());
 	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
 	{
+#if defined POPULATE_METADATA
 		check_set_rlm(itr->second);
+#endif
 		Presence::const_iterator fpitr(_fp.get_presence().end());
 		if (!_fp.get(itr->second->_fnum, fpitr, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
 		{
