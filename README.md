@@ -1,3 +1,5 @@
+<br><center><img src="http://fix8.org/fix8/fix8_Logo_RGB.png"></center>
+
 # [Fix8](http://www.fix8.org) Open Source C++ FIX Engine
 
 A modern open source C++ FIX framework featuring complete schema driven customisation, high performance and fast application development.
@@ -74,8 +76,7 @@ and framework; and a set of complete client/server test applications.
 
 ## Documentation
 
-Documentation is available at [API Documentation](http://fix8.org/fix8/html/)
-All the source code is self-documenting using doxygen.
+Documentation is available at [API Documentation](http://fix8.org/fix8/html/). All the source code is self-documenting using doxygen.
 
 ## External Dependencies
 
