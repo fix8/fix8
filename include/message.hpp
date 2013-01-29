@@ -1,21 +1,20 @@
 //-------------------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -92,6 +91,11 @@ public:
 	/*! Add a message to a repeating group
 	  \param what message to add */
 	void operator+=(MessageBase *what) { add(what); }
+
+	/*! Add a message to repeating group
+	    \param what pointer to field
+	    \return reference to GroupBase on success */
+	GroupBase& operator<<(MessageBase *what) { add(what); return *this; }
 
 	/*! Return number of elements in a repeating group.
 	  \return number of elements */
@@ -225,13 +229,10 @@ struct F8MetaCntx
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef std::
-#if defined HAS_TR1_UNORDERED_MAP
-	tr1::unordered_map
-#else
-	map
+typedef std::map<unsigned short, BaseField *> Fields;
+#if 0 // defined HAS_TR1_UNORDERED_MAP
+typedef std::tr1::unordered_map <unsigned short, BaseField *> Fields;
 #endif
-	<unsigned short, BaseField *> Fields;
 
 typedef std::multimap<unsigned short, BaseField *> Positions;
 
@@ -429,6 +430,11 @@ public:
 	    \return true on success; throws InvalidField if not valid */
 	bool operator+=(BaseField *what) { return add_field(what); }
 
+	/*! Add fix field to this message.
+	    \param what pointer to field
+	    \return reference to MessageBase on success */
+	MessageBase& operator<<(BaseField *what) { add_field(what); return *this; }
+
 	/*! Populate supplied field with value from message.
 	    \tparam T type of field to get
 	    \param to field to populate
@@ -549,6 +555,11 @@ public:
 	void add_group(GroupBase *what) { _groups.insert(Groups::value_type(what->_fnum, what)); }
 
 	/*! Add a repeating group to a message.
+	    \param what pointer to field
+	    \return reference to MessageBase on success */
+	MessageBase& operator<<(GroupBase *what) { add_group(what); return *this; }
+
+	/*! Add a repeating group to a message.
 	    \param what pointer to group to add */
 	void operator+=(GroupBase *what) { add_group(what); }
 
@@ -588,6 +599,47 @@ public:
 	/*! Get the FieldTraits
 	   \return reference to FieldTraits object */
 	const FieldTraits& get_fp() const { return _fp; }
+
+	/*! Extract a tag/value element from a char buffer. ULL version.
+	    \param from source buffer
+	    \param sz size of string
+	    \param tag tag to extract to
+	    \param val value to extract to
+	    \return number of bytes consumed */
+	static unsigned extract_element(const char *from, const unsigned sz, char *tag, char *val)
+	{
+		enum { get_tag, get_value } state(get_tag);
+
+		for (unsigned ii(0); ii < sz; ++ii)
+		{
+			switch (state)
+			{
+			case get_tag:
+				if (!isdigit(from[ii]))
+				{
+					if (from[ii] != '=')
+					{
+						*val = *tag = 0;
+						return 0;
+					}
+					state = get_value;
+				}
+				else
+					*tag++ = from[ii];
+				break;
+			case get_value:
+				if (from[ii] == default_field_separator)
+				{
+					*val = *tag = 0;
+					return ++ii;
+				}
+				*val++ = from[ii];
+				break;
+			}
+		}
+		*val = *tag = 0;
+		return 0;
+	}
 
 	/*! Extract a tag/value element from a char buffer.
 	    \param from source buffer

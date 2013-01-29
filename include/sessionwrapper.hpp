@@ -1,21 +1,20 @@
 //-------------------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -49,6 +48,7 @@ struct SessionConfig : public Configuration
 {
 	const F8MetaCntx& _ctx;
 	const XmlElement *_ses;
+	LoginParameters _loginParameters;
 
 	/// Ctor. Loads configuration, obtains session details, sets up logfile flags.
 	SessionConfig (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
@@ -58,6 +58,11 @@ struct SessionConfig : public Configuration
 	{
 		if (!_ses)
 			throw InvalidConfiguration(session_name);
+
+		LoginParameters lparam(get_retry_interval(_ses), get_retry_count(_ses),
+			get_default_appl_ver_id(_ses), get_reset_sequence_number_flag(_ses),
+			get_tcp_recvbuf_sz(_ses), get_tcp_sendbuf_sz(_ses));
+		_loginParameters = lparam;
 	}
 
 	/// Dtor.
@@ -100,8 +105,7 @@ public:
 		_addr(get_address(_ses)),
 		_cc(init_con_later ? 0 : new ClientConnection(_sock, _addr, *_session))
 	{
-		_session->set_login_parameters(get_retry_interval(_ses), get_retry_count(_ses),
-			get_default_appl_ver_id(_ses), get_reset_sequence_number_flag(_ses));
+		_session->set_login_parameters(_loginParameters);
 	}
 
 	/// Dtor.
@@ -141,9 +145,7 @@ class ReliableClientSession : public ClientSession<T>
 public:
 	/// Ctor. Prepares session for connection as an initiator.
 	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
-		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this)), _send_seqnum(), _recv_seqnum()
-	{
-	}
+		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this)), _send_seqnum(), _recv_seqnum() {}
 
 	/// Dtor.
 	virtual ~ReliableClientSession () {}
@@ -167,12 +169,9 @@ public:
 	    \return 0 on success */
 	int operator()()
 	{
-		bool reset_sequence_numbers;
-		unsigned attempts(0), login_retry_interval, login_retries;
-		default_appl_ver_id davi;
-		this->_session->get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);
+		unsigned attempts(0);
 
-		for (; ++attempts < login_retries; )
+		for (; ++attempts < this->_loginParameters._login_retries; )
 		{
 			try
 			{
@@ -180,7 +179,7 @@ public:
 
 				this->_sock = new Poco::Net::StreamSocket,
 				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session);
-				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, davi());
+				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, this->_loginParameters._davi());
 				_send_seqnum = _recv_seqnum = 0; // only set seqnums for the first time round
 			}
 			catch(f8Exception& e)
@@ -188,12 +187,17 @@ public:
 				//std::cout << "ReliableClientSession: f8exception" << std::endl;
 				this->_session->log(e.what());
 			}
+			catch (std::exception& e)	// also catches Poco::Net::NetException
+			{
+				//cout << "process:: std::exception" << endl;
+				this->_session->log(e.what());
+			}
 
 			//std::cout << "operator()():out of try" << std::endl;
 			this->_session->stop();
 			delete this->_cc;
 			delete this->_sock;
-			millisleep(login_retry_interval);
+			millisleep(this->_loginParameters._login_retry_interval);
 		}
 
 		return 0;
@@ -218,7 +222,12 @@ public:
 		SessionConfig(ctx, conf_file, session_name),
 		_addr(get_address(_ses)),
 		_server_sock(_addr)
-	{}
+	{
+		if (_loginParameters._recv_buf_sz)
+			Connection::set_recv_buf_sz(_loginParameters._recv_buf_sz, &_server_sock);
+		if (_loginParameters._send_buf_sz)
+			Connection::set_send_buf_sz(_loginParameters._send_buf_sz, &_server_sock);
+	}
 
 	/// Dtor.
 	virtual ~ServerSession () {}
@@ -258,7 +267,9 @@ public:
 		_sock(new Poco::Net::StreamSocket(sf.accept(_claddr))),
 		_session(new T(sf._ctx, _persist, _log, _plog)),
 		_sc(_sock, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_tcp_nodelay(sf._ses))
-	{}
+	{
+		_session->set_login_parameters(sf._loginParameters);
+	}
 
 	/// Dtor.
 	virtual ~SessionInstance ()

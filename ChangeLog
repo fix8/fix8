@@ -1,3 +1,6 @@
+0.6.7 	28/01/2013		<fix@fix8.org>
+Fixed jira issues: FX-17, FX-19, FX-20, FX-21, FX-24, FX-26, FX-27; Reduction in encode/decode latency by around 29%
+
 0.6.6 	16/12/2012		<fix@fix8.org>
 Fixed jira issues: FX-17, FX-18
 

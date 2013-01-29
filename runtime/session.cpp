@@ -1,21 +1,20 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -121,8 +120,7 @@ void SessionID::from_string(const f8String& from)
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
-	_sid(sid), _login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
-	_reset_sequence_numbers(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
+	_sid(sid), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
@@ -131,8 +129,7 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
-	_login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
-	_reset_sequence_numbers(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
+	_persist(persist), _logger(logger), _plogger(plogger),	// acceptor
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
@@ -176,7 +173,7 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
 		atomic_init(States::st_not_logged_in);
-		if (_reset_sequence_numbers)
+		if (_loginParamaters._reset_sequence_numbers)
 			_next_send_seq = _next_receive_seq = 1;
 		else
 		{
@@ -210,6 +207,9 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 //-------------------------------------------------------------------------------------------------
 void Session::stop()
 {
+	if (_control & shutdown)
+		return;
+
 	_control |= shutdown;
 	if (_connection->get_role() == Connection::cn_initiator)
 		_timer.clear();
@@ -371,6 +371,9 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		msg->get(hbi);
 		_connection->set_hb_interval(hbi());
 		_state = States::st_continuous;
+		ostringstream ostr;
+		ostr << "Client setting heartbeat interval to " << hbi();
+		log(ostr.str());
 	}
 	else // acceptor
 	{
@@ -546,6 +549,8 @@ bool Session::heartbeat_service()
 	if (is_shutdown())
 		return false;
 
+	//cerr << "heartbeat_service" << endl;
+
 	Tickval now(true);
 	if ((now - _last_sent).secs() >= _connection->get_hb_interval())
 	{
@@ -565,7 +570,14 @@ bool Session::heartbeat_service()
 			ostringstream ostr;
 			ostr << "Remote has ignored my test request. Aborting session...";
 			log(ostr.str());
-			stop();
+			try
+			{
+				stop();
+			}
+			catch (exception& e)	// also catches Poco::Net::NetException
+			{
+				log(e.what());
+			}
 			return true;
 		}
 		else
@@ -631,7 +643,7 @@ Message *Session::generate_logon(const unsigned heartbtint, const f8String davi)
 	*msg += new encrypt_method(0); // FIXME
 	if (!davi.empty())
 		*msg += new default_appl_ver_id(davi);
-	if (_reset_sequence_numbers)
+	if (_loginParamaters._reset_sequence_numbers)
 		*msg += new reset_seqnum_flag(true);
 
 	return msg;

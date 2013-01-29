@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
-AC_COPYRIGHT([Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+AC_COPYRIGHT([Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 All rights reserved.])
 
 AC_PREREQ(2.61)
@@ -10,21 +10,20 @@ AM_INIT_AUTOMAKE
 AH_TOP([//-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Lesser General Public License as  published by the Free Software Foundation, either version
+3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -146,11 +145,19 @@ esac])
 AM_CONDITIONAL([USEDOXYGEN],
 	[test -n "$DOXYGEN" && test $oktodox = yes])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
 
-AC_CHECK_FUNCS([scandir getopt_long sysconf getaddrinfo getnameinfo \
-	daemon popen waitpid setlogmask alarm dup2 ftruncate \
+AC_CHECK_FUNCS([scandir getopt_long sysconf popen waitpid alarm \
 	getcwd gettimeofday localtime_r pow regcomp socket strcasecmp strchr strdup strerror \
 	strncasecmp strspn strtol strtoul random srandom
 	])
+
+fillmetadata=yes
+AC_ARG_ENABLE([fillmetadata],
+[AC_HELP_STRING([--enable-fillmetadata],[enable metadata population (default=yes)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(POPULATE_METADATA, 1, [Define to 1 to enable metatdata population in encode/decodes]) ;;
+	no)  fillmetadata=no;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-fillmetadata) ;;
+esac])
 
 AC_CHECK_LIB(rt, clock_gettime, [AC_DEFINE(HAVE_CLOCK_GETTIME, 1, [Define if you have clock_gettime()])])
 AC_CHECK_LIB(rt, clock_nanosleep, [AC_DEFINE(HAVE_CLOCK_NANOSLEEP, 1, [Define if you have clock_nanosleep()])])
@@ -197,6 +204,13 @@ AC_ARG_WITH(maxmsglen,
   AC_HELP_STRING([--with-maxmsglen=VALUE],[Maximum length of a FIX message (default=8192)]),
 [
 	AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, ${withval}, [Maximum length of a FIX message (default=8192)])
+],[])
+
+AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, 1024, [Maximum length of a FIX field in bytes])
+AC_ARG_WITH(maxfldlen,
+  AC_HELP_STRING([--with-maxfldlen=VALUE],[Maximum length of a FIX field (default=1024)]),
+[
+	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=1024)])
 ],[])
 
 AC_ARG_WITH(poco,

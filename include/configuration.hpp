@@ -1,21 +1,20 @@
 //-------------------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -172,6 +171,18 @@ public:
 	  \return the retry count or 10 if not found */
 	unsigned get_retry_count(const XmlElement *from, const unsigned def=10) const
 		{ if (from) return from->FindAttr("login_retries", def); return def; }
+
+	/*! Extract the tcp recv buffer size
+	  \param from xml entity to search
+	  \return the recv buffer size count or 0 if the default should be used */
+	unsigned get_tcp_recvbuf_sz(const XmlElement *from) const
+		{ if (from) return from->FindAttr("tcp_recv_buffer", 0); return 0; }
+
+	/*! Extract the tcp send buffer size
+	  \param from xml entity to search
+	  \return the send buffer size count or 0 if the default should be used */
+	unsigned get_tcp_sendbuf_sz(const XmlElement *from) const
+		{ if (from) return from->FindAttr("tcp_send_buffer", 0); return 0; }
 
 	/*! Extract the FIX version from a session entity.
 	  \param from xml entity to search

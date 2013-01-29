@@ -1,21 +1,20 @@
 //-------------------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -149,6 +148,44 @@ class Logger;
 class Connection;
 
 //-------------------------------------------------------------------------------------------------
+struct LoginParameters
+{
+	enum { default_retry_interval=5000, default_login_retries=100 };
+
+	LoginParameters() : _login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
+		_reset_sequence_numbers(), _recv_buf_sz(), _send_buf_sz() {}
+
+	LoginParameters(const unsigned login_retry_interval, const unsigned login_retries,
+		const default_appl_ver_id& davi, const bool reset_seqnum=false, unsigned recv_buf_sz=0, unsigned send_buf_sz=0)
+		: _login_retry_interval(login_retry_interval), _login_retries(login_retries),
+		_reset_sequence_numbers(reset_seqnum), _davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz) {}
+
+	LoginParameters(const LoginParameters& from)
+		: _login_retry_interval(from._login_retry_interval), _login_retries(from._login_retries),
+		_reset_sequence_numbers(from._reset_sequence_numbers), _davi(from._davi),
+		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz) {}
+
+	LoginParameters& operator=(const LoginParameters& that)
+	{
+		if (this != &that)
+		{
+			_login_retry_interval = that._login_retry_interval;
+			_login_retries = that._login_retries;
+			_reset_sequence_numbers = that._reset_sequence_numbers;
+			_davi = that._davi;
+			_recv_buf_sz = that._recv_buf_sz;
+			_send_buf_sz = that._send_buf_sz;
+		}
+		return *this;
+	}
+
+	unsigned _login_retry_interval, _login_retries;
+	bool _reset_sequence_numbers;
+	default_appl_ver_id _davi;
+	unsigned _recv_buf_sz, _send_buf_sz;
+};
+
+//-------------------------------------------------------------------------------------------------
 /// Fix8 Base Session. User sessions derive from this class.
 class Session
 {
@@ -176,10 +213,7 @@ protected:
 	unsigned _req_next_send_seq, _req_next_receive_seq;
 	SessionID _sid;
 
-	enum { default_retry_interval=5000, default_login_retries=100 };
-	unsigned _login_retry_interval, _login_retries;
-	bool _reset_sequence_numbers;
-	default_appl_ver_id _davi;
+	LoginParameters _loginParamaters;
 
 	Persister *_persist;
 	Logger *_logger, *_plogger;
@@ -410,6 +444,14 @@ public:
 	    \return true on success */
 	bool plog(const std::string& what, const unsigned direction=0) const { return _plogger ? _plogger->send(what, direction) : false; }
 
+	/*! Return the last received timstamp
+	    \return Tickval on success */
+	const Tickval& get_last_received() const { return _last_received; }
+
+	/*! Return the last sent timstamp
+	    \return Tickval on success */
+	const Tickval& get_last_sent() const { return _last_sent; }
+
 	/// Update the last sent time.
 	void update_sent() { _last_sent.now(); }
 
@@ -441,33 +483,17 @@ public:
 	    \return next sender sequence number */
 	unsigned get_next_send_seq() const { return _next_send_seq; }
 
-	/*! Set the login_retry_interval and login_retries settings.
-	    \param login_retry_interval time in ms to wait before retrying login
-	    \param login_retries max login retries to attempt
-	    \param davi default appl version id (FIXT)
-	    \param reset_seqnum reset the session sequence numbers on login */
-	void set_login_parameters(const unsigned login_retry_interval, const unsigned login_retries,
-		const default_appl_ver_id& davi, const bool reset_seqnum=false)
-	{
-		_login_retry_interval = login_retry_interval;
-		_login_retries = login_retries;
-		_reset_sequence_numbers = reset_seqnum;
-		_davi = davi;
-	}
+	/*! Set the LoginParameters
+	    \param loginParamaters to populate from */
+	void set_login_parameters(const LoginParameters& loginParamaters) { _loginParamaters = loginParamaters; }
 
-	/*! Get the login_retry_interval and login_retries settings.
-	    \param login_retry_interval time in ms to wait before retrying login
-	    \param login_retries max login retries to attempt
-	    \param davi default appl version id (FIXT)
-	    \param reset_seqnum_flag get the reset sequence number flag */
-	void get_login_parameters(unsigned& login_retry_interval, unsigned& login_retries,
-		default_appl_ver_id& davi, bool& reset_seqnum_flag)
-	{
-		login_retry_interval = _login_retry_interval;
-		login_retries = _login_retries;
-		davi = _davi;
-		reset_seqnum_flag = _reset_sequence_numbers;
-	}
+	/*! Get the LoginParameters
+	    \param loginParamaters to populate */
+	void get_login_parameters(LoginParameters& loginParamaters) const { loginParamaters = _loginParamaters; }
+
+	/*! Get the LoginParameters
+	    \return loginParamaters */
+	const LoginParameters& get_login_parameters() const { return  _loginParamaters; }
 
 	/*! Set the persister.
 	    \param pst pointer to persister object  */

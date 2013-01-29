@@ -1,21 +1,20 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-12 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
@@ -197,6 +196,8 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 
 				to.append(msg_buf, mlen + _chksum_sz);
 				_session.update_received();
+				//string ts;
+				//cerr << GetTimeAsStringMS(ts, &_session.get_last_received(), 9) << endl;
 				return true;
 			}
 		}
@@ -263,12 +264,6 @@ void Connection::start()
 void Connection::stop()
 {
 	//cerr << "Connection::stop()" << endl;
-#if 0
-	//_reader.stop();
-	//_writer.stop();
-	_reader.quit();
-	_writer.quit();
-#endif
 	_writer.stop();
 	_writer.join();
 	_reader.stop();
@@ -280,14 +275,11 @@ void Connection::stop()
 //-------------------------------------------------------------------------------------------------
 bool ClientConnection::connect()
 {
-	unsigned login_retry_interval, login_retries, attempts(0);
-	bool reset_sequence_numbers;
-	default_appl_ver_id davi;
-	_session.get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);
-
+	unsigned attempts(0);
+	const LoginParameters& lparam(_session.get_login_parameters());
 	Poco::Timespan timeout(1000000);
 
-	while (attempts < login_retries)
+	while (attempts < lparam._login_retries)
 	{
 		ostringstream ostr;
 
@@ -296,7 +288,12 @@ bool ClientConnection::connect()
 			ostr.str("");
 			ostr << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')';
 			_session.log(ostr.str());
+			const LoginParameters& lparam(_session.get_login_parameters());
 			_sock->connect(_addr, timeout);
+			if (lparam._recv_buf_sz)
+				set_recv_buf_sz(lparam._recv_buf_sz);
+			if (lparam._send_buf_sz)
+				set_send_buf_sz(lparam._send_buf_sz);
 			_sock->setLinger(false, 0);
 			_sock->setNoDelay(_no_delay);
 			_session.log("Connection successful");
@@ -311,7 +308,7 @@ bool ClientConnection::connect()
 			else
 				ostr << e.what();
 			_session.log(ostr.str());
-			millisleep(login_retry_interval);
+			millisleep(lparam._login_retry_interval);
 		}
 	}
 

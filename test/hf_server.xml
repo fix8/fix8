@@ -4,12 +4,14 @@
 				role="acceptor"
 				fix_version="1100"
 				active="true"
-				heartbeat_interval="5"
+				heartbeat_interval="10"
 				session_log="session_log"
-            protocol_log="protocol_log"
+            protocol_log="protocol_log_null"
 				ip="127.0.0.1" port="11002"
 				sender_comp_id="TEX_DLD"
 				tcp_nodelay="true"
+			   tcp_recv_buffer="1572864"
+			   tcp_send_buffer="1572864"
 				persist="mem0" />
 
 	<persist name="bdb0"
@@ -31,4 +33,8 @@
 				filename="./run/hf_server_protocol.log"
 				rotation="5"
 				flags="sequence|append|direction"/>
+
+	<log 		name="protocol_log_null"
+				type="protocol"
+				filename="/dev/null"/>
 </fix8>

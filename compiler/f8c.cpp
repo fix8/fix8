@@ -1,21 +1,20 @@
 //-----------------------------------------------------------------------------------------
 #if 0
 
-Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
 Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
-General Public License as  published by the Free Software Foundation,  either version 3  of
-the License, or (at your option) any later version.
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
 Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
-even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-You should have received a copy of the GNU General Public License along with Fix8.  If not,
-see <http://www.gnu.org/licenses/>.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
 COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
@@ -116,7 +115,7 @@ string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"
 bool verbose(false), error_ignore(false), gen_fields(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:Nc:f");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:Nc:fb");
 extern string spacer, shortName;
 
 //-----------------------------------------------------------------------------------------
@@ -149,6 +148,7 @@ int precomp(XmlElement& xf, ostream& outf);
 int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique);
 void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int depth,
 	const string& msname, ostream& outp, ostream& outh, const string cls_prefix=string());
+void binary_report();
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
@@ -170,6 +170,7 @@ int main(int argc, char **argv)
 		{ "fields",			0,	0,	'f' },
 		{ "keep",			0,	0,	'k' },
 		{ "retain",			0,	0,	'r' },
+		{ "binary",			0,	0,	'b' },
 		{ "classes",		1,	0,	'c' },
 		{ "second",			0,	0,	's' },
 		{ "prefix",			1,	0,	'p' },
@@ -190,7 +191,7 @@ int main(int argc, char **argv)
 			cout << "f8c for "PACKAGE" version "VERSION << endl;
 			cout << _csMap.find_ref(cs_copyright_short) << insert_year()
 				  << _csMap.find_ref(cs_copyright_short2) << endl;
-			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007. See <http://fsf.org/> for details." << endl;
+			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case 'V': verbose = true; break;
 		case 'f': gen_fields = true; break;
@@ -206,6 +207,7 @@ int main(int argc, char **argv)
 		case 's': second_only = true; break;
 		case 't': tabsize = GetValue<unsigned>(optarg); break;
 		case 'p': prefix = optarg; break;
+		case 'b': binary_report(); return 0;
 		case 'x': fixt = optarg; break;
 		case 'n': ctxt._fixns = optarg; break;
 		default: break;
@@ -794,8 +796,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 #if !defined PERMIT_CUSTOM_FIELDS
 			osc_hpp << spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
 #endif
-			osc_hpp << spacer << "static const MsgType _msgtype;" << endl << endl;
+			osc_hpp << spacer << "static const MsgType _msgtype;" << endl;
 		}
+
+		osc_hpp << endl;
 
 		osc_hpp << "public:" << endl;
 		osc_hpp << spacer << mitr->second._name << "()";
@@ -1122,5 +1126,30 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		cout << cnt << " of " << fspec.size() << " fields used in messages." << endl;
 	}
 	return result;
+}
+
+//-------------------------------------------------------------------------------------------------
+void binary_report()
+{
+#if defined __GNUG__
+#if defined __GNUC_MINOR__ && __GNUC_PATCHLEVEL__
+	cout << "Compiled with gcc version " << __GNUG__ << '.' << __GNUC_MINOR__ << '.' <<__GNUC_PATCHLEVEL__ << endl;
+#endif
+	const size_t confbufsz(256);
+	char confbuf[confbufsz];
+	if (confstr(_CS_GNU_LIBC_VERSION, confbuf, confbufsz))
+	{
+		cout << "GNU glibc version is " << confbuf << endl;
+	}
+	if (confstr(_CS_GNU_LIBPTHREAD_VERSION, confbuf, confbufsz))
+	{
+		cout << "GNU libpthread version is " << confbuf << endl;
+	}
+#if defined __GXX_ABI_VERSION
+	cout << "GXX ABI version is " <<  __GXX_ABI_VERSION << endl;
+#endif
+#else
+	cout << "GCC not used. No information available." << endl;
+#endif
 }
 
