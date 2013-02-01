@@ -227,6 +227,14 @@ AC_ARG_WITH(tbb,
 	LDFLAGS="$LDFLAGS -L${withval}/lib"
 ],[])
 
+AC_ARG_WITH(gtest,
+  AC_HELP_STRING([--with-gtest=DIR],[location of gtest]),
+[
+	CPPFLAGS="$CPPFLAGS -I${withval}/include"
+	LDFLAGS="$LDFLAGS -L${withval}/lib"
+],[])
+
+
 AC_MSG_CHECKING(for TBB)
 	AC_TRY_COMPILE([
 		#include <tbb/atomic.h>
@@ -266,6 +274,20 @@ AC_MSG_CHECKING(for Poco)
 		 echo
 		 exit 1
 	fi
+
+AC_MSG_CHECKING(for gtest)
+    AC_TRY_COMPILE([
+        #include <gtest/gtest.h>
+        ],[;],
+        have_gtest=yes, have_gtest=no)
+    if test "$have_gtest" = yes; then
+        AC_MSG_RESULT(yes)
+        AC_DEFINE(HAS_GTEST, 1, [Define to 1 if gtest available])
+    else
+        AC_MSG_RESULT(no)
+    fi
+AM_CONDITIONAL(USEGTEST, [test x$have_gtest = xyes])
+
 
 AC_MSG_CHECKING(for tr1/unordered_map)
 	AC_TRY_COMPILE([
@@ -536,7 +558,7 @@ AC_SUBST(BRAND_DESCRIPTION)
 AC_SUBST(BRAND_COMPANY_SHORTNAME)
 AC_SUBST(BRAND_COMPANY_LONGNAME)
 
-AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile doc/fix8.doxygen])
+AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile doc/fix8.doxygen])
 AC_CONFIG_HEADERS(include/f8config.h)
 AC_OUTPUT
 
