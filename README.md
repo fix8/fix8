@@ -47,6 +47,10 @@ and framework; and a set of complete client/server test applications.
              <td>root directory with configure</td>
           </tr>
           <tr>
+             <td>m4/</td>
+             <td>additional m4 macros needed by configure</td>
+          </tr>
+          <tr>
              <td>compiler/</td>
              <td>the f8c compiler source</td>
           </tr>
@@ -85,7 +89,6 @@ libraries) being installed to build properly:
 
 - Poco C++ Libraries [basic edition](http://pocoproject.org/download/index.html)
 - Intel Threading Building Blocks [OSS edition](http://threadingbuildingblocks.org/download.php)
-- [Berkeley DB C++](http://www.oracle.com/technetwork/products/berkeleydb/downloads/index.html)
 
 ## Optional Dependencies
 
@@ -93,13 +96,17 @@ If you wish to build the html documentation, you will need:
 
 - [Doxygen](www.doxygen.org)
 
+If you wish to use BerkeleyDB for message persistence:
+
+- [Berkeley DB C++](http://www.oracle.com/technetwork/products/berkeleydb/downloads/index.html)
+
 ## Building on Linux/UNIX/OSX
 
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-    % tar xvzf fix8-0.6.7.tar.gz
-    % cd fix8-0.6.7
+    % tar xvzf fix8-0.7.0.tar.gz
+    % cd fix8-0.7.0
     % ./configure
     % make
     % make install

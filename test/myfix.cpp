@@ -141,6 +141,7 @@ namespace FIX8
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('T', "1000 New Order Singles"), &MyMenu::new_order_single_1000),
+		MyMenu::Handlers::TypePair(MyMenu::MenuItem('R', "Resend request"), &MyMenu::resend_request),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
@@ -427,6 +428,20 @@ bool MyMenu::do_logout()
 	_session.send(new TEX::Logout);
 	sleep(1);
 	return false; // will exit
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::resend_request()
+{
+	unsigned bnum(0), bend(0);
+	cout << "Enter BeginSeqNo:" << flush;
+	_tty.unset_raw_mode();
+	cin >> bnum;
+	cout << "Enter EndSeqNo(0=all):" << flush;
+	cin >> bend;
+	_tty.set_raw_mode();
+	_session.send(_session.generate_resend_request(bnum, bend));
+	return true;
 }
 
 //-----------------------------------------------------------------------------------------

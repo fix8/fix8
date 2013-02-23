@@ -1,74 +1,85 @@
-0.6.7 	28/01/2013		<fix@fix8.org>
+* Sun Feb 17 2013 David L. Dight <fix@fix8.org> 0.7.0
+File based persistence now implemented and default. Dependence on BerekelyDB removed.
+rpmbuild will now create an rpm from fix8.spec
+Fixed jira tickets FX-34, FX-33, FX-32, FX-30, FX-29, FX-28
+XML parser accepts embedded spaces between attribute, '=' and attribute value
+Provide mechanism for client or server to set next expected send/receive sequence number
+Client correctly handling sequence_reset from server
+Multiple server sessions write to different logs and persistence files
+Permit applications to by-pass chksum checking
+Chksum logic correctly comparing calculated to passed value
+
+* Mon Jan 28 2013 David L. Dight <fix@fix8.org> 0.6.7
 Fixed jira issues: FX-17, FX-19, FX-20, FX-21, FX-24, FX-26, FX-27; Reduction in encode/decode latency by around 29%
 
-0.6.6 	16/12/2012		<fix@fix8.org>
+* Sun Dec 16 2012 David L. Dight <fix@fix8.org> 0.6.6
 Fixed jira issues: FX-17, FX-18
 
-0.6.5 	09/12/2012		<fix@fix8.org>
+* Sun Dec 09 2012 David L. Dight <fix@fix8.org> 0.6.5
 Changed to LGPL; added performance script; fixed jira issues: FX-11, FX-12, FX-13, FX-14, FX-15, FX-16
 
-0.6.04 	22/11/2012		<fix@fix8.org>
+* Thu Nov 22 2012 David L. Dight <fix@fix8.org> 0.6.4
 Fixed jira issues: FX-4, FX-10
 
-0.6.03 	18/11/2012		<fix@fix8.org>
+* Sun Nov 18 2012 David L. Dight <fix@fix8.org> 0.6.3
 Fixed jira issues: FX-1, FX-4, FX-5, FX-6, FX-7, FX-8, FX-9
 
-0.6.02 	23/10/2012		<fix@fix8.org>
+* Tue Oct 23 2012 David L. Dight <fix@fix8.org> 0.6.2
 Changed to GPLv2; added shell command pipe variable import to XML; added xi:include to XML;
 
-0.6.01 	07/09/2012		<fix@fix8.org>
+* Fri Sep 07 2012 David L. Dight <fix@fix8.org> 0.6.1
 Added configurable max message length(maxmsglen); xml xpath permits absolute xpaths; fixed issue with compiler and msgtype;
 
-0.6.00 	21/07/2012		<fix@fix8.org>
+* Sat Jul 21 2012 David L. Dight <fix@fix8.org> 0.6.0
 Added buffered logging; redesigned and improved field and message encoding and decoding performance, field lookups and static jump tables; added simple console based metadata driven test harness; compiler optimisations including pruning of unused fields;
 
-0.5.70 	25/05/2012		<fix@fix8.org>
+* Fri May 25 2012 David L. Dight <fix@fix8.org> 0.5.7
 Added HF test client demonstrating preload and bulk transmit capabilities; encode/decode performance improvements with cached lookups;
 optimised field generation; fast ascii to int/double;
 
-0.5.50 	12/05/2012		<fix@fix8.org>
+* Sat May 12 2012 David L. Dight <fix@fix8.org> 0.5.5
 Added support to compiler to generate user session class permitting quicker startup development;
 added presorted_set which significantly reduces Message contruction time; added codec and profile compilation switches;
 
-0.5.01 	29/04/2012		<fix@fix8.org>
+* Sun Apr 29 2012 David L. Dight <fix@fix8.org> 0.5.1
 Optimsed compiler, enforce unique fields; updated schemas and documentation.
 Myfix.cpp now uses FIX5.0SP2.
 
-0.5.00 	22/04/2012		<fix@fix8.org>
+* Sun Apr 22 2012 David L. Dight <fix@fix8.org> 0.5.0
 Support for FIX5.X and FIXT1.1; Support for nested components and repeating groups; Numerous bug fixes;
 Myfix.cpp now uses FIX5.0SP2.
 
-0.4.17 	20/03/2012		<fix@fix8.org>
+* Tue Mar 20 2012 David L. Dight <fix@fix8.org> 0.4.17
 Postmessage ctor automatically called;
 
-0.4.16 	08/03/2012		<fix@fix8.org>
+* Thu Mar 08 2012 David L. Dight <fix@fix8.org> 0.4.16
 reliable nanosleep;pipelogger,bclogger;gzstream append;bug fixes
 
-0.4.15 	01/03/2012		<fix@fix8.org>
+* Thu Mar 01 2012 David L. Dight <fix@fix8.org> 0.4.15
 Fixed static const in class definition storage linker error; fixed superfluous const level return warnings on functions;
 sequence reset flag support; log entries timestamped at creation; threadcode purging; seqnum seeding;
 numerous bugfixes;
 
-0.4.12 	19/02/2012		<fix@fix8.org>
+* Sun Feb 19 2012 David L. Dight <fix@fix8.org> 0.4.12
 Config updated - separate out log files into their own entity; added addiitonal log flags;
 retransmission improved; socket conditioning; sequence number enforcement on login; sequence
 number control at message level; session wrappers; reliable client wrapper; improved multithreading;
 updated myfix to use session wrapper; myfix supports seqnum cmd line args;
 
-0.4.10 	05/02/2012     <fix@fix8.org>
+* Sun Feb 05 2012 David L. Dight <fix@fix8.org> 0.4.10
 Added custom seqnum support; Fixed retransmission behaviour; Added SessionWrapper classes
 to simplify client/server session setup; client connect will retry configurable number of times with interval;
 fixed message field replace, remove and copy_legal; myfix.cpp uses new session wrappers;
 added new config extract methods;
 
-0.4.04 	27/01/2012     <fix@fix8.org>
+* Fri Jan 27 2012 David L. Dight <fix@fix8.org> 0.4.4
 Fixed checksum and bodylength calculation bugs on encode and decode;
 Test server permits reconnects and detects logout;
 Connection classes shutdown properly, gracefully;
 
-0.4.02 	23/01/2012     <fix@fix8.org>
+* Mon Jan 23 2012 David L. Dight <fix@fix8.org> 0.4.2
 Moved to github; numerous fixes; documentation and wiki;
 
-0.3.580 	07/01/2012     <fix@fix8.org>
+* Sat Jan 07 2012 David L. Dight <fix@fix8.org> 0.3.580
 Initial release on sourceforge
 

@@ -233,7 +233,7 @@ public:
 	virtual ~ServerSession () {}
 
 	/*! Check to see if there are any waiting inbound connections.
-	  \param span timespan (us) to wait before returning (will return immediately if connection available)
+	  \param span timespan (us, default 250 ms) to wait before returning (will return immediately if connection available)
 	  \return true if a connection is avaialble */
 	bool poll(const Poco::Timespan& span=Poco::Timespan(250000)) const { return _server_sock.poll(span, Poco::Net::Socket::SELECT_READ); }
 
@@ -251,8 +251,6 @@ public:
 template<typename T>
 class SessionInstance
 {
-	Logger *_log, *_plog;
-	Persister *_persist;
 	Poco::Net::SocketAddress _claddr;
 	Poco::Net::StreamSocket *_sock;
 	T *_session;
@@ -261,24 +259,19 @@ class SessionInstance
 public:
 	/// Ctor. Prepares session instance with inbound connection.
 	SessionInstance (ServerSession<T>& sf) :
-		_log(sf.create_logger(sf._ses, Configuration::session_log)),
-		_plog(sf.create_logger(sf._ses, Configuration::protocol_log)),
-		_persist(sf.create_persister(sf._ses)),
 		_sock(new Poco::Net::StreamSocket(sf.accept(_claddr))),
-		_session(new T(sf._ctx, _persist, _log, _plog)),
+		_session(new T(sf._ctx)),
 		_sc(_sock, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_tcp_nodelay(sf._ses))
 	{
 		_session->set_login_parameters(sf._loginParameters);
+		_session->set_session_config(&sf);
 	}
 
 	/// Dtor.
 	virtual ~SessionInstance ()
 	{
-		delete _persist;
 		delete _session;
 		delete _sock;
-		delete _log;
-		delete _plog;
 	}
 
 	/*! Get a pointer to the session

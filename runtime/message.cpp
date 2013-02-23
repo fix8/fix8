@@ -93,14 +93,8 @@ unsigned MessageBase::extract_header(const f8String& from, f8String& len, f8Stri
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::extract_trailer(const f8String& from, f8String& chksum)
 {
-	unsigned result(0);
-	const size_t res(from.find_last_of("10"));
-	if (res != f8String::npos)
-	{
-		f8String tag;
-		result = extract_element(from.data() + res - 1, from.size() - res - 1, tag, chksum);
-	}
-	return result;
+	f8String tag;
+	return extract_element(from.data() + from.size() - 7, 6, tag, chksum);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -235,21 +229,21 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 		GlobalLogger::log(gerr.str());
 #endif
 
-		Fields::const_iterator fitr(msg->_header->_fields.find(Common_BodyLength));
-		static_cast<body_length *>(fitr->second)->set(mlen);
-		fitr = msg->_header->_fields.find(Common_MsgType);
+		static_cast<body_length *>(msg->_header->_fields.find(Common_BodyLength)->second)->set(mlen);
+		Fields::const_iterator fitr(msg->_header->_fields.find(Common_MsgType));
 		static_cast<msg_type *>(fitr->second)->set(mtype);
 #if defined POPULATE_METADATA
 		msg->check_set_rlm(fitr->second);
 #endif
 
-		f8String chksum;
-		if (extract_trailer(from, chksum))
+		const char *pp(from.data() + from.size() - 7);
+		if (*pp != '1' || *(pp + 1) != '0') // 10=XXX^A
+			throw InvalidMessage(from);
+		if (!ctx.has_flag(F8MetaCntx::noverifychksum)) // permit chksum calculation to be skipped
 		{
-			Fields::const_iterator fitr(msg->_trailer->_fields.find(Common_CheckSum));
-			static_cast<check_sum *>(fitr->second)->set(chksum);
-			const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), // chksum value
-				mchkval(calc_chksum(from, 0)); // chksum pos
+			const f8String chksum(pp + 3, 3);
+			static_cast<check_sum *>(msg->_trailer->_fields.find(Common_CheckSum)->second)->set(chksum);
+			const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), mchkval(calc_chksum(from, 0, from.size() - 7));
 			if (chkval != mchkval)
 				throw BadCheckSum(mchkval);
 		}

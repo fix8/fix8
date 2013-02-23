@@ -189,19 +189,16 @@ struct LoginParameters
 /// Fix8 Base Session. User sessions derive from this class.
 class Session
 {
-	static RegExp _seq;
-
-public:
-	enum SessionControl { shutdown, print, debug, count };
-	typedef ebitset_r<SessionControl> Control;
-
-private:
 	typedef StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)> Handlers;
 	Handlers _handlers;
 
 	/*! Initialise atomic members.
 	  \param st the initial session state */
 	void atomic_init(States::SessionStates st);
+
+public:
+	enum SessionControl { shutdown, print, debug, count };
+	typedef ebitset_r<SessionControl> Control;
 
 protected:
 	Control _control;
@@ -212,6 +209,7 @@ protected:
 	Connection *_connection;
 	unsigned _req_next_send_seq, _req_next_receive_seq;
 	SessionID _sid;
+	class SessionConfig *_sf;
 
 	LoginParameters _loginParamaters;
 
@@ -242,20 +240,11 @@ protected:
 	    \return true on success */
 	virtual bool handle_logout(const unsigned seqnum, const Message *msg);
 
-	/*! Generate a logout message.
-	    \return new Message */
-	virtual Message *generate_logout();
-
 	/*! Heartbeat callback.
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
 	virtual bool handle_heartbeat(const unsigned seqnum, const Message *msg);
-
-	/*! Generate a heartbeat message.
-	    \param testReqID test request id
-	    \return new Message */
-	virtual Message *generate_heartbeat(const f8String& testReqID);
 
 	/*! Resend request callback.
 	    \param seqnum message sequence number
@@ -263,23 +252,11 @@ protected:
 	    \return true on success */
 	virtual bool handle_resend_request(const unsigned seqnum, const Message *msg);
 
-	/*! Generate a resend request message.
-	    \param begin begin sequence number
-	    \param end sequence number
-	    \return new Message */
-	virtual Message *generate_resend_request(const unsigned begin, const unsigned end=0);
-
 	/*! Sequence reset callback.
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
 	virtual bool handle_sequence_reset(const unsigned seqnum, const Message *msg);
-
-	/*! Generate a sequence reset message.
-	    \param newseqnum new sequence number
-	    \param gapfillflag gap fill flag
-	    \return new Message */
-	virtual Message *generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag=false);
 
 	/*! Test request callback.
 	    \param seqnum message sequence number
@@ -287,22 +264,11 @@ protected:
 	    \return true on success */
 	virtual bool handle_test_request(const unsigned seqnum, const Message *msg);
 
-	/*! Generate a test request message.
-	    \param testReqID test request id
-	    \return new Message */
-	virtual Message *generate_test_request(const f8String& testReqID);
-
 	/*! Reject callback.
 	    \param seqnum message sequence number
 	    \param msg Message
 	    \return true on success */
 	virtual bool handle_reject(const unsigned seqnum, const Message *msg) { return false; }
-
-	/*! Generate a reject message.
-	    \param seqnum message sequence number
-	    \param what rejection text
-	    \return new Message */
-	virtual Message *generate_reject(const unsigned seqnum, const char *what);
 
 	/*! Administrative message callback. Called on receipt of all admin messages.
 	    \param seqnum message sequence number
@@ -506,6 +472,42 @@ public:
 	/*! See if this session is being shutdown.
 	    \return true if shutdown is underway */
 	bool is_shutdown() { return _control.has(shutdown); }
+
+	/* ! Set the SessionConfig object - only for server sessions
+		\param sf pointer to SessionConfig object */
+	void set_session_config(class SessionConfig *sf) { _sf = sf; }
+
+	/*! Generate a logout message.
+	    \return new Message */
+	virtual Message *generate_logout();
+
+	/*! Generate a heartbeat message.
+	    \param testReqID test request id
+	    \return new Message */
+	virtual Message *generate_heartbeat(const f8String& testReqID);
+
+	/*! Generate a resend request message.
+	    \param begin begin sequence number
+	    \param end sequence number
+	    \return new Message */
+	virtual Message *generate_resend_request(const unsigned begin, const unsigned end=0);
+
+	/*! Generate a sequence reset message.
+	    \param newseqnum new sequence number
+	    \param gapfillflag gap fill flag
+	    \return new Message */
+	virtual Message *generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag=false);
+
+	/*! Generate a test request message.
+	    \param testReqID test request id
+	    \return new Message */
+	virtual Message *generate_test_request(const f8String& testReqID);
+
+	/*! Generate a reject message.
+	    \param seqnum message sequence number
+	    \param what rejection text
+	    \return new Message */
+	virtual Message *generate_reject(const unsigned seqnum, const char *what);
 
 	friend struct StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)>;
 };

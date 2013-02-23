@@ -216,6 +216,12 @@ struct F8MetaCntx
 	/// Fix header beginstring
 	const f8String _beginStr;
 
+	enum MsgFlags { noverifychksum, count };
+	mutable ebitset<MsgFlags, unsigned> _msg_flags;
+	bool has_flag(MsgFlags flg) const { return _msg_flags.has(flg); }
+	void set_flag(MsgFlags flg) { _msg_flags.set(flg); }
+	void clear_flag(MsgFlags flg) { _msg_flags.set(flg, false); }
+
 	F8MetaCntx(const unsigned version, const MsgTable& bme, const FieldTable& be, const f8String& bg)
 		: _version(version), _bme(bme), _be(be),
 #if defined PERMIT_CUSTOM_FIELDS

@@ -96,37 +96,38 @@ Poco::Net::SocketAddress Configuration::get_address(const XmlElement *from) cons
 }
 
 //-------------------------------------------------------------------------------------------------
-Persister *Configuration::create_persister(const XmlElement *from) const
+Persister *Configuration::create_persister(const XmlElement *from, const SessionID *sid) const
 {
-	string name;
-	if (from && from->GetAttr("persist", name))
+	string name, type;
+	const XmlElement *which;
+	if (from && from->GetAttr("persist", name) && (which = find_persister(name)) && which->GetAttr("type", type))
 	{
-		const XmlElement *which(find_persister(name));
-		if (which)
-		{
-			string type;
-			if (which->GetAttr("type", type))
-			{
-				string dir, db;
-				bool has_dir(which->GetAttr("dir", dir)), has_db(which->GetAttr("db", db));
+		if (type == "mem")
+			return new MemoryPersister;
 
-				if (type == "bdb" && has_dir && has_db)
-				{
-					scoped_ptr<BDBPersister> result(new BDBPersister);
-					if (result->initialise(dir, db))
-						return result.release();
-				}
-#if 0
-				else if (type == "file" && has_dir && has_db)
-				{
-					scoped_ptr<FilePersister> result(new FilePersister);
-					if (result->initialise(dir, db))
-						return result.release();
-				}
+		string dir("./"), db("persist_db");
+		which->GetAttr("dir", dir);
+		which->GetAttr("db", db);
+
+		if (sid)
+			db += ('.' + sid->get_senderCompID()() + '.' + sid->get_targetCompID()());
+		else if (which->FindAttr("use_session_id", false))
+			db += ('.' + get_sender_comp_id(from)() + '.' + get_target_comp_id(from)());
+
+#if defined HAVE_BDB
+		if (type == "bdb")
+		{
+			scoped_ptr<BDBPersister> result(new BDBPersister);
+			if (result->initialise(dir, db))
+				return result.release();
+		}
+		else
 #endif
-				else if (type == "mem")
-					return new MemoryPersister;
-			}
+		if (type == "file")
+		{
+			scoped_ptr<FilePersister> result(new FilePersister);
+			if (result->initialise(dir, db))
+				return result.release();
 		}
 	}
 
@@ -134,7 +135,7 @@ Persister *Configuration::create_persister(const XmlElement *from) const
 }
 
 //-------------------------------------------------------------------------------------------------
-Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype) const
+Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid) const
 {
 	string name;
 	if (from && from->GetAttr(ltype == session_log ? "session_log" : "protocol_log", name))
@@ -147,7 +148,7 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 				&& ((type % "session" && ltype == session_log) || (type % "protocol" && ltype == protocol_log)))
 			{
 				string logname("logname_not_set.log");
-				trim(get_logname(which, logname));
+				trim(get_logname(which, logname, sid));
 
 				if (logname[0] == '|' || logname[0] == '!')
 					return new PipeLogger(logname, get_logflags(which));
@@ -169,6 +170,20 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 	}
 
 	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+string& Configuration::get_logname(const XmlElement *from, string& to, const SessionID *sid) const
+{
+	if (from)
+		from->FindAttrRef("filename", to);
+
+	if (sid)
+		to += ('.' + sid->get_senderCompID()() + '.' + sid->get_targetCompID()());
+	else if (from && from->FindAttr("use_session_id", false))
+		to += ('.' + get_sender_comp_id(from)() + '.' + get_target_comp_id(from)());
+
+	return to;
 }
 
 //-------------------------------------------------------------------------------------------------

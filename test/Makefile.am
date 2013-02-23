@@ -60,9 +60,11 @@ $(libmyfix_la_SOURCES): $(XML_SCHEMA)
 
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
 GEN_LIBS = -lrt -lfix8
+if BDBSUPPORT
+GEN_LIBS += -ldb_cxx
+endif
 TBB_LIBS = -ltbb
-BDB_LIBS = -ldb_cxx
-ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) $(BDB_LIBS) -L$(top_srcdir)/runtime
+ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) -L$(top_srcdir)/runtime
 
 if TOGGLETRACKINGASSIGNMENTS
 libmyfix_la_CXXFLAGS = -fvar-tracking-assignments-toggle

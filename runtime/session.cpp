@@ -58,7 +58,6 @@ using namespace std;
 
 //-------------------------------------------------------------------------------------------------
 RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
-RegExp Session::_seq("34=([^\x01]+)\x01");
 
 //-------------------------------------------------------------------------------------------------
 const Tickval::ticks Tickval::noticks;
@@ -129,7 +128,7 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
-	_persist(persist), _logger(logger), _plogger(plogger),	// acceptor
+	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
@@ -150,6 +149,13 @@ Session::~Session()
 		log("Session terminating");
 		_logger->stop();
 	}
+
+	if (_connection->get_role() == Connection::cn_acceptor)
+	{
+		delete _plogger;
+		delete _logger;
+		delete _persist;
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -165,7 +171,7 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 	_connection = connection; // takes owership
 	if (!_connection->connect()) // if already connected returns true
 		return -1;;
-	if (_connection->get_role() != Connection::cn_initiator)
+	if (_connection->get_role() == Connection::cn_acceptor)
 		atomic_init(States::st_wait_for_logon); // important for server that this is done before connect
 	_connection->start();
 	log("Session connected");
@@ -244,17 +250,30 @@ bool Session::process(const f8String& from)
 
 	try
 	{
-		RegMatch match;
-		if (_seq.SearchString(match, from, 2, 0) != 2)
+		const f8String::size_type fpos(from.find("34="));
+		if (fpos == f8String::npos)
 		{
 			//cerr << "Session::process throwing for " << from << endl;
 			throw InvalidMessage(from);
 		}
-		f8String seqstr;
-		_seq.SubExpr(match, from, seqstr, 0, 1);
-		seqnum = fast_atoi<unsigned>(seqstr.c_str());
 
-		plog(from, 1);
+#if 0
+		const char *pp_end(from.data() + from.size());
+		const size_t seqsz(16);
+		char seqstr[seqsz] = {}, *sptr(seqstr);
+		for (const char *pp(from.data() + fpos + 3); *pp != default_field_separator && isdigit(*pp) && pp < pp_end; )
+			*sptr++ = *pp++;
+		*sptr = 0;
+#endif
+
+		seqnum = fast_atoi<unsigned>(from.data() + fpos + 3, default_field_separator);
+
+		bool retry_plog(false);
+		if (_state != States::st_wait_for_logon)
+			plog(from, 1);
+		else
+			retry_plog = true;
+
 		scoped_ptr<Message> msg(Message::factory(_ctx, from));
 		if (!msg.get())
 		{
@@ -267,6 +286,8 @@ bool Session::process(const f8String& from)
 		bool result((msg->is_admin() ? handle_admin(seqnum, msg.get()) : true)
 			&& (this->*_handlers.find_ref(msg->get_msgtype()))(seqnum, msg.get()));
 		++_next_receive_seq;
+		if (retry_plog)
+			plog(from, 1);
 		if (_persist)
 		{
 			_persist->put(_next_send_seq, _next_receive_seq);
@@ -377,6 +398,23 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 	}
 	else // acceptor
 	{
+		default_appl_ver_id davi;
+		msg->get(davi);
+
+		sender_comp_id sci;
+		msg->Header()->get(sci);
+		target_comp_id tci;
+		msg->Header()->get(tci);
+		SessionID id(_ctx._beginStr, tci(), sci());
+
+		// important - these objects can't be created until we have a valid SessionID
+		if (!_logger)
+			_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id);
+		if (!_plogger)
+			_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id);
+		if (!_persist)
+			_persist = _sf->create_persister(_sf->_ses, &id);
+
 		if (_ctx.version() >= 4100 && msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get())
 		{
 			log("Resetting sequence numbers");
@@ -391,13 +429,6 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 				_next_receive_seq = _req_next_receive_seq;
 		}
 
-		sender_comp_id sci;
-		msg->Header()->get(sci);
-		target_comp_id tci;
-		msg->Header()->get(tci);
-		SessionID id(_ctx._beginStr, tci(), sci());
-		default_appl_ver_id davi;
-		msg->get(davi);
 		if (authenticate(id, msg))
 		{
 			_sid = id;
@@ -446,8 +477,8 @@ bool Session::handle_sequence_reset(const unsigned seqnum, const Message *msg)
 	new_seq_num nsn;
 	if (msg->get(nsn))
 	{
-		//cerr << "newseqnum = " << nsn() << ", _next_receive_seq = " << _next_receive_seq << endl;
-		if (nsn() > static_cast<int>(_next_receive_seq))
+		//cerr << "newseqnum = " << nsn() << ", _next_receive_seq = " << _next_receive_seq << " seqnum:" << seqnum << endl;
+		if (nsn() >= static_cast<int>(_next_receive_seq))
 			_next_receive_seq = nsn() - 1;
 		else if (nsn() < static_cast<int>(_next_receive_seq))
 			throw MsgSequenceTooLow(nsn(), _next_receive_seq);
