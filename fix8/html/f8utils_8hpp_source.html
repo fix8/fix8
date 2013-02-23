@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.7</span>
+   &#160;<span id="projectnumber">version  0.7.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -403,15 +403,14 @@ $(document).ready(function(){initNavTree('f8utils_8hpp_source.html','');});
 <div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;}</div>
 <div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;</div>
 <div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;<span class="comment"></span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00473"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a522b95edc3502db3288130f3cfd1743c">  473</a></span>&#160;T <a class="code" href="namespaceFIX8.html#a522b95edc3502db3288130f3cfd1743c">fast_atoi</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *str)</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;{</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;   T retval(0);</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;   <span class="keywordflow">for</span> (; *str; ++str)</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;      retval = (retval &lt;&lt; 3) + (retval &lt;&lt; 1) + *str - <span class="charliteral">&#39;0&#39;</span>;</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;   <span class="keywordflow">return</span> retval;</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;}</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;<span class="comment"></span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00474"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a8293aacd018aa6e9bfcb81c0786b6ec9">  474</a></span>&#160;T <a class="code" href="namespaceFIX8.html#a8293aacd018aa6e9bfcb81c0786b6ec9">fast_atoi</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *str, <span class="keyword">const</span> <span class="keywordtype">char</span> term=<span class="charliteral">&#39;\0&#39;</span>)</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;{</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;   T retval(0);</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;   <span class="keywordflow">for</span> (; *str != term; ++str)</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;      retval = (retval &lt;&lt; 3) + (retval &lt;&lt; 1) + *str - <span class="charliteral">&#39;0&#39;</span>;</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;   <span class="keywordflow">return</span> retval;</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;}</div>
 <div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;</div>
 <div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00489"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a7c2009dc0b1b420da3204dc4af33daf8">  489</a></span>&#160;<span class="comment"></span><span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespaceFIX8.html#a7c2009dc0b1b420da3204dc4af33daf8">itoa</a>(<span class="keywordtype">int</span> value, <span class="keywordtype">char</span> *result, <span class="keyword">const</span> <span class="keywordtype">int</span> base=10)</div>
@@ -850,7 +849,7 @@ $(document).ready(function(){initNavTree('f8utils_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:12. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 14:10:12. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

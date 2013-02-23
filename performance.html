@@ -525,13 +525,14 @@ trailer ("trailer")
 </pre>
 						You then need to pass the codec timing switch <code>--enable-codectiming</code>, the buffered logging switch
 						<code>--enable-bufgloblogging</code> and the no fill message metadata switch<br><code>--enable-fillmetadata=no</code>
-						to configure and cleanly build fix8.
+						to configure and cleanly build Fix8.
 <pre>
 % ./configure --prefix=[your target directory] --enable-codectiming --enable-bufgloblogging --enable-doxygen=no --enable-fillmetadata=no
 % make clean; make install
 </pre>
+						<p><i class="icon-exclamation-sign"></i> If you have installed Fix8 from a release rpm, the supplied hftest will not be configured for this test. Please rebuild it following these instructions.</p>
 						For our test, we will simulate an HF client preloading and sending 500000 orders to a server. We will measure the encode and
-						decode timings for both the client and the server. The test client and server <code>hftest</code> are built by default when you build fix8.
+						decode timings for both the client and the server. The test client and server <code>hftest</code> are built by default when you build Fix8.
 						Also by default, the xml configuration files <code>hf_server.xml, hf_client.xml, hf_client_include.xml</code> needed are supplied
 						already preconfigured.</p>
 						<p><i class="icon-exclamation-sign"></i> Do not use the configure switches shown above when building the other supplied test applications.</p>

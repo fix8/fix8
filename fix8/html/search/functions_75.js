@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['ubuf',['Ubuf',['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#a23b8bebb7e81c350c7d654a8dd760ce4',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf()'],['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#af1170eb0e7576216cb676c694244e8bb',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf(const unsigned val)'],['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#a17247a02467e079909414ebe9cc3c926',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf(const Ubuf &amp;from)']]],
   ['underflow',['underflow',['../classFIX8_1_1fdinbuf.html#ab8c0e928fbc8b1152dbf356dc1d5bdef',1,'FIX8::fdinbuf::underflow()'],['../classgzstreambuf.html#a84ab99df5fd4df27425573757973e3f4',1,'gzstreambuf::underflow()']]],
   ['underlyingcashtype_5fdiff',['UnderlyingCashType_DIFF',['../namespaceFIX8_1_1TEX.html#a9a9fd6fe63cf65dfb4d3257e910298ad',1,'FIX8::TEX']]],
   ['underlyingcashtype_5ffixed',['UnderlyingCashType_FIXED',['../namespaceFIX8_1_1TEX.html#abeda0f4850caf46a6891938c98dc676d',1,'FIX8::TEX']]],

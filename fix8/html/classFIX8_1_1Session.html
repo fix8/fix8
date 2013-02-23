@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.7</span>
+   &#160;<span id="projectnumber">version  0.7.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -113,7 +113,6 @@ $(document).ready(function(){initNavTree('classFIX8_1_1Session.html','');});
 <a href="#pri-types">Private Types</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
-<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classFIX8_1_1Session-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -189,6 +188,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a21f474b3d3f88cad446c2ce39ae35c9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a21f474b3d3f88cad446c2ce39ae35c9f">set_persister</a> (<a class="el" href="classFIX8_1_1Persister.html">Persister</a> *pst)</td></tr>
 <tr class="memitem:aa983adcf0b53b341a1bddab23861964f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Session.html#a62154bc440eb551ea00ed63b7b55d3fc">Control</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#aa983adcf0b53b341a1bddab23861964f">control</a> ()</td></tr>
 <tr class="memitem:a1b8130aa0570ae4398028e428861e709"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a1b8130aa0570ae4398028e428861e709">is_shutdown</a> ()</td></tr>
+<tr class="memitem:ab8256249d3d558f8b5827848a61f0ba3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ab8256249d3d558f8b5827848a61f0ba3">set_session_config</a> (class <a class="el" href="structFIX8_1_1SessionConfig.html">SessionConfig</a> *sf)</td></tr>
+<tr class="memitem:abc1e0fa8b9619aa66d6c59b21e25da78"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#abc1e0fa8b9619aa66d6c59b21e25da78">generate_logout</a> ()</td></tr>
+<tr class="memitem:ac440b00a9d7b93e5b37e5cd78a60bb43"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ac440b00a9d7b93e5b37e5cd78a60bb43">generate_heartbeat</a> (const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;testReqID)</td></tr>
+<tr class="memitem:aa625ec518594d5aef3eb499497ae31b4"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#aa625ec518594d5aef3eb499497ae31b4">generate_resend_request</a> (const unsigned begin, const unsigned end=0)</td></tr>
+<tr class="memitem:a7670d7d518853e323a6d9006c4256b5b"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a7670d7d518853e323a6d9006c4256b5b">generate_sequence_reset</a> (const unsigned newseqnum, const bool gapfillflag=false)</td></tr>
+<tr class="memitem:a06a794d133478efaa9d08af9e78f0552"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a06a794d133478efaa9d08af9e78f0552">generate_test_request</a> (const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;testReqID)</td></tr>
+<tr class="memitem:a2c1493ab549b191101c95bb8bb6d0afa"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a2c1493ab549b191101c95bb8bb6d0afa">generate_reject</a> (const unsigned seqnum, const char *what)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -197,17 +203,11 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a5dc4147c372c8f3a05f2bc29b1d8c1c5"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a5dc4147c372c8f3a05f2bc29b1d8c1c5">handle_logon</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
 <tr class="memitem:af6a1b902be5e2e2d282317bfc7c76110"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#af6a1b902be5e2e2d282317bfc7c76110">generate_logon</a> (const unsigned <a class="el" href="namespaceFIX8.html#a4f85ab9749c27019b9b0fe00e16421e6">heartbeat_interval</a>, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> davi=<a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>())</td></tr>
 <tr class="memitem:a29bd6e9852f4af85a6ecd22ef4ae2dcb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a29bd6e9852f4af85a6ecd22ef4ae2dcb">handle_logout</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
-<tr class="memitem:abc1e0fa8b9619aa66d6c59b21e25da78"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#abc1e0fa8b9619aa66d6c59b21e25da78">generate_logout</a> ()</td></tr>
 <tr class="memitem:ae5bf54b50e2ef6ef06532e7bbe535604"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ae5bf54b50e2ef6ef06532e7bbe535604">handle_heartbeat</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
-<tr class="memitem:ac440b00a9d7b93e5b37e5cd78a60bb43"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ac440b00a9d7b93e5b37e5cd78a60bb43">generate_heartbeat</a> (const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;testReqID)</td></tr>
 <tr class="memitem:a3225a1c0290539638f2051a6c63b39a5"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a3225a1c0290539638f2051a6c63b39a5">handle_resend_request</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
-<tr class="memitem:aa625ec518594d5aef3eb499497ae31b4"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#aa625ec518594d5aef3eb499497ae31b4">generate_resend_request</a> (const unsigned begin, const unsigned end=0)</td></tr>
 <tr class="memitem:aa9c2ec078b93b45b4b8a591ea676881b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#aa9c2ec078b93b45b4b8a591ea676881b">handle_sequence_reset</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
-<tr class="memitem:a7670d7d518853e323a6d9006c4256b5b"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a7670d7d518853e323a6d9006c4256b5b">generate_sequence_reset</a> (const unsigned newseqnum, const bool gapfillflag=false)</td></tr>
 <tr class="memitem:ae26764de9f1b7da26f1659de8b146aeb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ae26764de9f1b7da26f1659de8b146aeb">handle_test_request</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
-<tr class="memitem:a06a794d133478efaa9d08af9e78f0552"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a06a794d133478efaa9d08af9e78f0552">generate_test_request</a> (const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;testReqID)</td></tr>
 <tr class="memitem:ae07d7722b70256b6fa83739e2ec4f77e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ae07d7722b70256b6fa83739e2ec4f77e">handle_reject</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
-<tr class="memitem:a2c1493ab549b191101c95bb8bb6d0afa"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a2c1493ab549b191101c95bb8bb6d0afa">generate_reject</a> (const unsigned seqnum, const char *what)</td></tr>
 <tr class="memitem:ad5a50d4f7dd946ffa8c55165d56b99e0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#ad5a50d4f7dd946ffa8c55165d56b99e0">handle_admin</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
 <tr class="memitem:a5821c2539f58e91fc4b2724a1d04eb5f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a5821c2539f58e91fc4b2724a1d04eb5f">handle_application</a> (const unsigned seqnum, const <a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
 <tr class="memitem:af24127d02e1e6083789a5b1e1e2c78d8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#af24127d02e1e6083789a5b1e1e2c78d8">modify_outbound</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> *msg)</td></tr>
@@ -230,6 +230,7 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a24fd154f8f9d60dc5326c7be6be17aa7"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a24fd154f8f9d60dc5326c7be6be17aa7">_req_next_send_seq</a></td></tr>
 <tr class="memitem:a91cdc6cbdb2d43cce4d16d73706be6e9"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a91cdc6cbdb2d43cce4d16d73706be6e9">_req_next_receive_seq</a></td></tr>
 <tr class="memitem:a99cd14ef90155a250f4bd721d9e798c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1SessionID.html">SessionID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a99cd14ef90155a250f4bd721d9e798c4">_sid</a></td></tr>
+<tr class="memitem:af4ee20f637e43089dcc2329ec0af2c5f"><td class="memItemLeft" align="right" valign="top">class <a class="el" href="structFIX8_1_1SessionConfig.html">SessionConfig</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#af4ee20f637e43089dcc2329ec0af2c5f">_sf</a></td></tr>
 <tr class="memitem:a0901319e632dbac1d0c5f22de3a425f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structFIX8_1_1LoginParameters.html">LoginParameters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a0901319e632dbac1d0c5f22de3a425f3">_loginParamaters</a></td></tr>
 <tr class="memitem:acb236bba1eca3b8c6a636b74425aa574"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Persister.html">Persister</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#acb236bba1eca3b8c6a636b74425aa574">_persist</a></td></tr>
 <tr class="memitem:a005ce624dc6ec4042f7a114d231663c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html">Logger</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a005ce624dc6ec4042f7a114d231663c5">_logger</a></td></tr>
@@ -251,10 +252,6 @@ Private Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a965be60f1abf9e3f7674fc3d84910eda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Session.html#a3d8362f1256c51bbc7d79da9ec559d78">Handlers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a965be60f1abf9e3f7674fc3d84910eda">_handlers</a></td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2><a name="pri-static-attribs"></a>
-Static Private Attributes</h2></td></tr>
-<tr class="memitem:aabfb501796d918107c99bdbb48ff1219"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classFIX8_1_1RegExp.html">RegExp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#aabfb501796d918107c99bdbb48ff1219">_seq</a></td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:a77a8b472014a429664281807366d0026"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Session.html#a77a8b472014a429664281807366d0026">StaticTable&lt; const f8String, bool(Session::*)(const unsigned, const Message *)&gt;</a></td></tr>
@@ -274,7 +271,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00196">196</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00201">201</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
 </div>
 </div>
@@ -296,7 +293,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00199">199</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00192">192</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
 </div>
 </div>
@@ -310,7 +307,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00395">395</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00361">361</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
 </div>
 </div>
@@ -337,7 +334,7 @@ Friends</h2></td></tr>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00195">195</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00200">200</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
 </div>
 </div>
@@ -395,9 +392,9 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00121">121</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00120">120</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00221">_timer</a>, and <a class="el" href="timer_8hpp_source.html#l00122">FIX8::Timer&lt; T &gt;::start()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00219">_timer</a>, and <a class="el" href="timer_8hpp_source.html#l00122">FIX8::Timer&lt; T &gt;::start()</a>.</p>
 
 </div>
 </div>
@@ -447,9 +444,9 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00130">130</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00129">129</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00221">_timer</a>, and <a class="el" href="timer_8hpp_source.html#l00122">FIX8::Timer&lt; T &gt;::start()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00219">_timer</a>, and <a class="el" href="timer_8hpp_source.html#l00122">FIX8::Timer&lt; T &gt;::start()</a>.</p>
 
 </div>
 </div>
@@ -476,9 +473,9 @@ Friends</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00146">146</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00145">145</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00219">_logger</a>, <a class="el" href="session_8hpp_source.html#l00439">log()</a>, and <a class="el" href="logger_8hpp_source.html#l00232">FIX8::Logger::stop()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00209">_connection</a>, <a class="el" href="session_8hpp_source.html#l00217">_logger</a>, <a class="el" href="session_8hpp_source.html#l00216">_persist</a>, <a class="el" href="session_8hpp_source.html#l00217">_plogger</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_acceptor</a>, <a class="el" href="connection_8hpp_source.html#l00249">FIX8::Connection::get_role()</a>, <a class="el" href="session_8hpp_source.html#l00405">log()</a>, and <a class="el" href="logger_8hpp_source.html#l00232">FIX8::Logger::stop()</a>.</p>
 
 </div>
 </div>
@@ -512,11 +509,11 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00139">139</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00138">138</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00208">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00208">_next_send_seq</a>, and <a class="el" href="session_8hpp_source.html#l00209">_state</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00205">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00205">_next_send_seq</a>, and <a class="el" href="session_8hpp_source.html#l00206">_state</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00156">start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00162">start()</a>.</p>
 
 </div>
 </div>
@@ -561,9 +558,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00327">327</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00293">293</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>.</p>
 
 </div>
 </div>
@@ -599,11 +596,11 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00309">309</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00330">330</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00214">_sid</a>, <a class="el" href="message_8hpp_source.html#l00443">FIX8::MessageBase::get()</a>, <a class="el" href="message_8hpp_source.html#l00749">FIX8::Message::Header()</a>, <a class="el" href="session_8hpp_source.html#l00111">FIX8::SessionID::same_sender_comp_id()</a>, and <a class="el" href="session_8hpp_source.html#l00115">FIX8::SessionID::same_target_comp_id()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00211">_sid</a>, <a class="el" href="message_8hpp_source.html#l00449">FIX8::MessageBase::get()</a>, <a class="el" href="message_8hpp_source.html#l00755">FIX8::Message::Header()</a>, <a class="el" href="session_8hpp_source.html#l00111">FIX8::SessionID::same_sender_comp_id()</a>, and <a class="el" href="session_8hpp_source.html#l00115">FIX8::SessionID::same_target_comp_id()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00227">enforce()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00233">enforce()</a>.</p>
 
 </div>
 </div>
@@ -630,9 +627,9 @@ Friends</h2></td></tr>
 <p>Get the control object for this session. </p>
 <dl class="section return"><dt>Returns</dt><dd>the control object </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00504">504</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00470">470</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00207">_control</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00204">_control</a>.</p>
 
 <p>Referenced by <a class="el" href="harness_8cpp_source.html#l00175">main()</a>.</p>
 
@@ -668,11 +665,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>new <a class="el" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00335">335</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00301">301</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00207">FIX8::F8MetaCntx::_bme</a>, <a class="el" href="session_8hpp_source.html#l00211">_ctx</a>, and <a class="el" href="f8types_8hpp_source.html#l00123">FIX8::GeneratedTable&lt; Key, Val &gt;::find_ptr()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00207">FIX8::F8MetaCntx::_bme</a>, <a class="el" href="session_8hpp_source.html#l00208">_ctx</a>, and <a class="el" href="f8types_8hpp_source.html#l00123">FIX8::GeneratedTable&lt; Key, Val &gt;::find_ptr()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00610">generate_heartbeat()</a>, <a class="el" href="session_8cpp_source.html#l00639">generate_logon()</a>, <a class="el" href="session_8cpp_source.html#l00653">generate_logout()</a>, <a class="el" href="session_8cpp_source.html#l00620">generate_reject()</a>, <a class="el" href="session_8cpp_source.html#l00660">generate_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00670">generate_sequence_reset()</a>, and <a class="el" href="session_8cpp_source.html#l00630">generate_test_request()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00641">generate_heartbeat()</a>, <a class="el" href="session_8cpp_source.html#l00670">generate_logon()</a>, <a class="el" href="session_8cpp_source.html#l00684">generate_logout()</a>, <a class="el" href="session_8cpp_source.html#l00651">generate_reject()</a>, <a class="el" href="session_8cpp_source.html#l00691">generate_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00701">generate_sequence_reset()</a>, and <a class="el" href="session_8cpp_source.html#l00661">generate_test_request()</a>.</p>
 
 </div>
 </div>
@@ -709,11 +706,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if message FAILS enforce ruless </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00227">227</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00233">233</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00209">_state</a>, <a class="el" href="namespaceFIX8.html#a77cd307386bbd382d44d0872ee70a7b5">FIX8::Common_MsgType_SEQUENCE_RESET()</a>, <a class="el" href="session_8cpp_source.html#l00309">compid_check()</a>, <a class="el" href="message_8hpp_source.html#l00365">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="session_8hpp_source.html#l00141">FIX8::States::is_established()</a>, <a class="el" href="session_8cpp_source.html#l00322">sequence_check()</a>, and <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logon_received</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00206">_state</a>, <a class="el" href="namespaceFIX8.html#a77cd307386bbd382d44d0872ee70a7b5">FIX8::Common_MsgType_SEQUENCE_RESET()</a>, <a class="el" href="session_8cpp_source.html#l00330">compid_check()</a>, <a class="el" href="message_8hpp_source.html#l00371">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="session_8hpp_source.html#l00141">FIX8::States::is_established()</a>, <a class="el" href="session_8cpp_source.html#l00343">sequence_check()</a>, and <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logon_received</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00600">handle_heartbeat()</a>, <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00430">handle_logout()</a>, <a class="el" href="session_8cpp_source.html#l00463">handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00442">handle_sequence_reset()</a>, and <a class="el" href="session_8cpp_source.html#l00535">handle_test_request()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00631">handle_heartbeat()</a>, <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00461">handle_logout()</a>, <a class="el" href="session_8cpp_source.html#l00494">handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00473">handle_sequence_reset()</a>, and <a class="el" href="session_8cpp_source.html#l00566">handle_test_request()</a>.</p>
 
 </div>
 </div>
@@ -734,7 +731,7 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -747,11 +744,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>new <a class="el" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00610">610</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00641">641</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="namespaceFIX8.html#aa30604797b7d0eb424f057eea0d40120">FIX8::Common_MsgType_HEARTBEAT()</a>, and <a class="el" href="session_8hpp_source.html#l00335">create_msg()</a>.</p>
+<p>References <a class="el" href="namespaceFIX8.html#aa30604797b7d0eb424f057eea0d40120">FIX8::Common_MsgType_HEARTBEAT()</a>, and <a class="el" href="session_8hpp_source.html#l00301">create_msg()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00535">handle_test_request()</a>, and <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00566">handle_test_request()</a>, and <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>.</p>
 
 </div>
 </div>
@@ -796,11 +793,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>new <a class="el" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00639">639</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00670">670</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00216">_loginParamaters</a>, <a class="el" href="session_8hpp_source.html#l00183">FIX8::LoginParameters::_reset_sequence_numbers</a>, <a class="el" href="namespaceFIX8.html#a35904f2126893066927ae534f6bc95ed">FIX8::Common_MsgType_LOGON()</a>, and <a class="el" href="session_8hpp_source.html#l00335">create_msg()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00214">_loginParamaters</a>, <a class="el" href="session_8hpp_source.html#l00183">FIX8::LoginParameters::_reset_sequence_numbers</a>, <a class="el" href="namespaceFIX8.html#a35904f2126893066927ae534f6bc95ed">FIX8::Common_MsgType_LOGON()</a>, and <a class="el" href="session_8hpp_source.html#l00301">create_msg()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, and <a class="el" href="session_8cpp_source.html#l00156">start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, and <a class="el" href="session_8cpp_source.html#l00162">start()</a>.</p>
 
 </div>
 </div>
@@ -820,18 +817,18 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>Generate a logout message. </p>
 <dl class="section return"><dt>Returns</dt><dd>new <a class="el" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00653">653</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00684">684</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="namespaceFIX8.html#a7b0993ad8aff8a082fff252e62222475">FIX8::Common_MsgType_LOGOUT()</a>, and <a class="el" href="session_8hpp_source.html#l00335">create_msg()</a>.</p>
+<p>References <a class="el" href="namespaceFIX8.html#a7b0993ad8aff8a082fff252e62222475">FIX8::Common_MsgType_LOGOUT()</a>, and <a class="el" href="session_8hpp_source.html#l00301">create_msg()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00241">process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00247">process()</a>.</p>
 
 </div>
 </div>
@@ -862,7 +859,7 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -876,11 +873,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>new <a class="el" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00620">620</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00651">651</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="namespaceFIX8.html#ac50be7cf0a144e9b4caff37eae3b3d53">FIX8::Common_MsgType_REJECT()</a>, and <a class="el" href="session_8hpp_source.html#l00335">create_msg()</a>.</p>
+<p>References <a class="el" href="namespaceFIX8.html#ac50be7cf0a144e9b4caff37eae3b3d53">FIX8::Common_MsgType_REJECT()</a>, and <a class="el" href="session_8hpp_source.html#l00301">create_msg()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00463">handle_resend_request()</a>, and <a class="el" href="session_8cpp_source.html#l00241">process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00494">handle_resend_request()</a>, and <a class="el" href="session_8cpp_source.html#l00247">process()</a>.</p>
 
 </div>
 </div>
@@ -911,7 +908,7 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -925,11 +922,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>new <a class="el" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00660">660</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00691">691</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="namespaceFIX8.html#a335f1df36e788ddcb1019dbc7c3fd0ce">FIX8::Common_MsgType_RESEND_REQUEST()</a>, and <a class="el" href="session_8hpp_source.html#l00335">create_msg()</a>.</p>
+<p>References <a class="el" href="namespaceFIX8.html#a335f1df36e788ddcb1019dbc7c3fd0ce">FIX8::Common_MsgType_RESEND_REQUEST()</a>, and <a class="el" href="session_8hpp_source.html#l00301">create_msg()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00322">sequence_check()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00343">sequence_check()</a>.</p>
 
 </div>
 </div>
@@ -960,7 +957,7 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -974,11 +971,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>new <a class="el" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00670">670</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00701">701</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="namespaceFIX8.html#a77cd307386bbd382d44d0872ee70a7b5">FIX8::Common_MsgType_SEQUENCE_RESET()</a>, and <a class="el" href="session_8hpp_source.html#l00335">create_msg()</a>.</p>
+<p>References <a class="el" href="namespaceFIX8.html#a77cd307386bbd382d44d0872ee70a7b5">FIX8::Common_MsgType_SEQUENCE_RESET()</a>, and <a class="el" href="session_8hpp_source.html#l00301">create_msg()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00463">handle_resend_request()</a>, and <a class="el" href="session_8cpp_source.html#l00489">retrans_callback()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00494">handle_resend_request()</a>, and <a class="el" href="session_8cpp_source.html#l00520">retrans_callback()</a>.</p>
 
 </div>
 </div>
@@ -999,7 +996,7 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1012,11 +1009,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>new <a class="el" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00630">630</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00661">661</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="namespaceFIX8.html#ab81da725128a9689b97c5db7fa6c1a0e">FIX8::Common_MsgType_TEST_REQUEST()</a>, and <a class="el" href="session_8hpp_source.html#l00335">create_msg()</a>.</p>
+<p>References <a class="el" href="namespaceFIX8.html#ab81da725128a9689b97c5db7fa6c1a0e">FIX8::Common_MsgType_TEST_REQUEST()</a>, and <a class="el" href="session_8hpp_source.html#l00301">create_msg()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>.</p>
 
 </div>
 </div>
@@ -1043,9 +1040,9 @@ Friends</h2></td></tr>
 <p>Get the connection object. </p>
 <dl class="section return"><dt>Returns</dt><dd>the connection object </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00429">429</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00395">395</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00212">_connection</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00209">_connection</a>.</p>
 
 </div>
 </div>
@@ -1072,9 +1069,9 @@ Friends</h2></td></tr>
 <p>Get the metadata context object. </p>
 <dl class="section return"><dt>Returns</dt><dd>the context object </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00433">433</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00399">399</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00211">_ctx</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00208">_ctx</a>.</p>
 
 </div>
 </div>
@@ -1101,9 +1098,9 @@ Friends</h2></td></tr>
 <p>Return the last received timstamp </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00449">449</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00415">415</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00210">_last_received</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00207">_last_received</a>.</p>
 
 </div>
 </div>
@@ -1130,9 +1127,9 @@ Friends</h2></td></tr>
 <p>Return the last sent timstamp </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00453">453</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00419">419</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00210">_last_sent</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00207">_last_sent</a>.</p>
 
 </div>
 </div>
@@ -1165,9 +1162,9 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00492">492</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00458">458</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00216">_loginParamaters</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00214">_loginParamaters</a>.</p>
 
 </div>
 </div>
@@ -1194,9 +1191,9 @@ Friends</h2></td></tr>
 <p>Get the <a class="el" href="structFIX8_1_1LoginParameters.html">LoginParameters</a> </p>
 <dl class="section return"><dt>Returns</dt><dd>loginParamaters </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00496">496</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00462">462</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00216">_loginParamaters</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00214">_loginParamaters</a>.</p>
 
 </div>
 </div>
@@ -1223,11 +1220,11 @@ Friends</h2></td></tr>
 <p>Get the next sender sequence number </p>
 <dl class="section return"><dt>Returns</dt><dd>next sender sequence number </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00484">484</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00450">450</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00208">_next_send_seq</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00205">_next_send_seq</a>.</p>
 
-<p>Referenced by <a class="el" href="persist_8cpp_source.html#l00160">FIX8::BDBPersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00336">FIX8::MemoryPersister::get()</a>, and <a class="el" href="filepersist_8cpp_source.html#l00162">FIX8::FilePersister::get()</a>.</p>
+<p>Referenced by <a class="el" href="persist_8cpp_source.html#l00340">FIX8::MemoryPersister::get()</a>, and <a class="el" href="filepersist_8cpp_source.html#l00176">FIX8::FilePersister::get()</a>.</p>
 
 </div>
 </div>
@@ -1254,9 +1251,9 @@ Friends</h2></td></tr>
 <p>Get the session id for this session. </p>
 <dl class="section return"><dt>Returns</dt><dd>the session id </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00480">480</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00446">446</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00214">_sid</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00211">_sid</a>.</p>
 
 </div>
 </div>
@@ -1301,9 +1298,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00311">311</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00277">277</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00241">process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00247">process()</a>.</p>
 
 </div>
 </div>
@@ -1350,7 +1347,7 @@ Friends</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classhf__session__server.html#a371b46b3c69154afecf9e37077ddfb46">hf_session_server</a>, <a class="el" href="classmyfix__session__server.html#ac1319edb4d79c5a2d2493d4dfa5f2df1">myfix_session_server</a>, <a class="el" href="classhf__session__client.html#aefa9af6f093143e9f6e321967cee2518">hf_session_client</a>, and <a class="el" href="classmyfix__session__client.html#ab9437fd76fdcf20e4b16b2ea5a29272a">myfix_session_client</a>.</p>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00084">84</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00083">83</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
 </div>
 </div>
@@ -1395,9 +1392,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00600">600</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00631">631</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00209">_state</a>, <a class="el" href="session_8cpp_source.html#l00227">enforce()</a>, <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_continuous</a>, and <a class="el" href="session_8hpp_source.html#l00137">FIX8::States::st_test_request_sent</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00206">_state</a>, <a class="el" href="session_8cpp_source.html#l00233">enforce()</a>, <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_continuous</a>, and <a class="el" href="session_8hpp_source.html#l00137">FIX8::States::st_test_request_sent</a>.</p>
 
 </div>
 </div>
@@ -1442,9 +1439,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00363">363</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00384">384</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00217">FIX8::F8MetaCntx::_beginStr</a>, <a class="el" href="session_8hpp_source.html#l00212">_connection</a>, <a class="el" href="session_8hpp_source.html#l00211">_ctx</a>, <a class="el" href="session_8hpp_source.html#l00222">_hb_processor</a>, <a class="el" href="session_8hpp_source.html#l00208">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00208">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00213">_req_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00213">_req_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00214">_sid</a>, <a class="el" href="session_8hpp_source.html#l00209">_state</a>, <a class="el" href="session_8hpp_source.html#l00221">_timer</a>, <a class="el" href="session_8hpp_source.html#l00327">authenticate()</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_initiator</a>, <a class="el" href="namespaceFIX8.html#a9d1f42c6256644b8e93a93722070b94b">FIX8::Common_ResetSeqNumFlag()</a>, <a class="el" href="session_8cpp_source.html#l00227">enforce()</a>, <a class="el" href="session_8cpp_source.html#l00639">generate_logon()</a>, <a class="el" href="message_8hpp_source.html#l00443">FIX8::MessageBase::get()</a>, <a class="el" href="connection_8hpp_source.html#l00278">FIX8::Connection::get_hb_interval()</a>, <a class="el" href="connection_8hpp_source.html#l00249">FIX8::Connection::get_role()</a>, <a class="el" href="message_8hpp_source.html#l00486">FIX8::MessageBase::have()</a>, <a class="el" href="message_8hpp_source.html#l00749">FIX8::Message::Header()</a>, <a class="el" href="session_8hpp_source.html#l00439">log()</a>, <a class="el" href="session_8cpp_source.html#l00784">recover_seqnums()</a>, <a class="el" href="timer_8hpp_source.html#l00195">FIX8::Timer&lt; T &gt;::schedule()</a>, <a class="el" href="session_8cpp_source.html#l00682">send()</a>, <a class="el" href="connection_8hpp_source.html#l00273">FIX8::Connection::set_hb_interval()</a>, <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_continuous</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logon_received</a>, <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_session_terminated</a>, <a class="el" href="session_8cpp_source.html#l00208">stop()</a>, and <a class="el" href="message_8hpp_source.html#l00228">FIX8::F8MetaCntx::version()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00217">FIX8::F8MetaCntx::_beginStr</a>, <a class="el" href="session_8hpp_source.html#l00209">_connection</a>, <a class="el" href="session_8hpp_source.html#l00208">_ctx</a>, <a class="el" href="session_8hpp_source.html#l00220">_hb_processor</a>, <a class="el" href="session_8hpp_source.html#l00217">_logger</a>, <a class="el" href="session_8hpp_source.html#l00205">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00205">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00216">_persist</a>, <a class="el" href="session_8hpp_source.html#l00217">_plogger</a>, <a class="el" href="session_8hpp_source.html#l00210">_req_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00210">_req_next_send_seq</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00050">FIX8::SessionConfig::_ses</a>, <a class="el" href="session_8hpp_source.html#l00212">_sf</a>, <a class="el" href="session_8hpp_source.html#l00211">_sid</a>, <a class="el" href="session_8hpp_source.html#l00206">_state</a>, <a class="el" href="session_8hpp_source.html#l00219">_timer</a>, <a class="el" href="session_8hpp_source.html#l00293">authenticate()</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_initiator</a>, <a class="el" href="namespaceFIX8.html#a9d1f42c6256644b8e93a93722070b94b">FIX8::Common_ResetSeqNumFlag()</a>, <a class="el" href="configuration_8cpp_source.html#l00138">FIX8::Configuration::create_logger()</a>, <a class="el" href="configuration_8cpp_source.html#l00099">FIX8::Configuration::create_persister()</a>, <a class="el" href="session_8cpp_source.html#l00233">enforce()</a>, <a class="el" href="session_8cpp_source.html#l00670">generate_logon()</a>, <a class="el" href="message_8hpp_source.html#l00449">FIX8::MessageBase::get()</a>, <a class="el" href="connection_8hpp_source.html#l00278">FIX8::Connection::get_hb_interval()</a>, <a class="el" href="connection_8hpp_source.html#l00249">FIX8::Connection::get_role()</a>, <a class="el" href="message_8hpp_source.html#l00492">FIX8::MessageBase::have()</a>, <a class="el" href="message_8hpp_source.html#l00755">FIX8::Message::Header()</a>, <a class="el" href="session_8hpp_source.html#l00405">log()</a>, <a class="el" href="configuration_8hpp_source.html#l00113">FIX8::Configuration::protocol_log</a>, <a class="el" href="session_8cpp_source.html#l00815">recover_seqnums()</a>, <a class="el" href="timer_8hpp_source.html#l00195">FIX8::Timer&lt; T &gt;::schedule()</a>, <a class="el" href="session_8cpp_source.html#l00713">send()</a>, <a class="el" href="configuration_8hpp_source.html#l00113">FIX8::Configuration::session_log</a>, <a class="el" href="connection_8hpp_source.html#l00273">FIX8::Connection::set_hb_interval()</a>, <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_continuous</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logon_received</a>, <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_session_terminated</a>, <a class="el" href="session_8cpp_source.html#l00214">stop()</a>, and <a class="el" href="message_8hpp_source.html#l00234">FIX8::F8MetaCntx::version()</a>.</p>
 
 </div>
 </div>
@@ -1489,9 +1486,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00430">430</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00461">461</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8cpp_source.html#l00227">enforce()</a>, <a class="el" href="session_8hpp_source.html#l00439">log()</a>, and <a class="el" href="session_8cpp_source.html#l00208">stop()</a>.</p>
+<p>References <a class="el" href="session_8cpp_source.html#l00233">enforce()</a>, <a class="el" href="session_8hpp_source.html#l00405">log()</a>, and <a class="el" href="session_8cpp_source.html#l00214">stop()</a>.</p>
 
 </div>
 </div>
@@ -1536,7 +1533,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00299">299</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00271">271</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
 </div>
 </div>
@@ -1581,9 +1578,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00463">463</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00494">494</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00208">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00218">_persist</a>, <a class="el" href="session_8hpp_source.html#l00209">_state</a>, <a class="el" href="session_8cpp_source.html#l00227">enforce()</a>, <a class="el" href="session_8cpp_source.html#l00620">generate_reject()</a>, <a class="el" href="session_8cpp_source.html#l00670">generate_sequence_reset()</a>, <a class="el" href="classFIX8_1_1Persister.html#a3e2bdbad7444ae43e26a3fb82bcaf613">FIX8::Persister::get()</a>, <a class="el" href="message_8hpp_source.html#l00443">FIX8::MessageBase::get()</a>, <a class="el" href="session_8cpp_source.html#l00489">retrans_callback()</a>, <a class="el" href="session_8cpp_source.html#l00682">send()</a>, and <a class="el" href="session_8hpp_source.html#l00138">FIX8::States::st_resend_request_received</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00205">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00216">_persist</a>, <a class="el" href="session_8hpp_source.html#l00206">_state</a>, <a class="el" href="session_8cpp_source.html#l00233">enforce()</a>, <a class="el" href="session_8cpp_source.html#l00651">generate_reject()</a>, <a class="el" href="session_8cpp_source.html#l00701">generate_sequence_reset()</a>, <a class="el" href="classFIX8_1_1Persister.html#a3e2bdbad7444ae43e26a3fb82bcaf613">FIX8::Persister::get()</a>, <a class="el" href="message_8hpp_source.html#l00449">FIX8::MessageBase::get()</a>, <a class="el" href="session_8cpp_source.html#l00520">retrans_callback()</a>, <a class="el" href="session_8cpp_source.html#l00713">send()</a>, and <a class="el" href="session_8hpp_source.html#l00138">FIX8::States::st_resend_request_received</a>.</p>
 
 </div>
 </div>
@@ -1628,9 +1625,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00442">442</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00473">473</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00208">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00209">_state</a>, <a class="el" href="session_8cpp_source.html#l00227">enforce()</a>, <a class="el" href="message_8hpp_source.html#l00443">FIX8::MessageBase::get()</a>, <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_continuous</a>, and <a class="el" href="session_8hpp_source.html#l00138">FIX8::States::st_resend_request_sent</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00205">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00206">_state</a>, <a class="el" href="session_8cpp_source.html#l00233">enforce()</a>, <a class="el" href="message_8hpp_source.html#l00449">FIX8::MessageBase::get()</a>, <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_continuous</a>, and <a class="el" href="session_8hpp_source.html#l00138">FIX8::States::st_resend_request_sent</a>.</p>
 
 </div>
 </div>
@@ -1675,9 +1672,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00535">535</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00566">566</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8cpp_source.html#l00227">enforce()</a>, <a class="el" href="session_8cpp_source.html#l00610">generate_heartbeat()</a>, <a class="el" href="message_8hpp_source.html#l00443">FIX8::MessageBase::get()</a>, and <a class="el" href="session_8cpp_source.html#l00682">send()</a>.</p>
+<p>References <a class="el" href="session_8cpp_source.html#l00233">enforce()</a>, <a class="el" href="session_8cpp_source.html#l00641">generate_heartbeat()</a>, <a class="el" href="message_8hpp_source.html#l00449">FIX8::MessageBase::get()</a>, and <a class="el" href="session_8cpp_source.html#l00713">send()</a>.</p>
 
 </div>
 </div>
@@ -1704,9 +1701,9 @@ Friends</h2></td></tr>
 
 <p>Heartbeat generation service thread. </p>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00547">547</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00578">578</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00212">_connection</a>, <a class="el" href="session_8hpp_source.html#l00222">_hb_processor</a>, <a class="el" href="session_8hpp_source.html#l00210">_last_received</a>, <a class="el" href="session_8hpp_source.html#l00210">_last_sent</a>, <a class="el" href="session_8hpp_source.html#l00209">_state</a>, <a class="el" href="session_8hpp_source.html#l00221">_timer</a>, <a class="el" href="session_8cpp_source.html#l00610">generate_heartbeat()</a>, <a class="el" href="session_8cpp_source.html#l00653">generate_logout()</a>, <a class="el" href="session_8cpp_source.html#l00630">generate_test_request()</a>, <a class="el" href="connection_8hpp_source.html#l00278">FIX8::Connection::get_hb_interval()</a>, <a class="el" href="connection_8hpp_source.html#l00282">FIX8::Connection::get_hb_interval20pc()</a>, <a class="el" href="session_8hpp_source.html#l00508">is_shutdown()</a>, <a class="el" href="session_8hpp_source.html#l00439">log()</a>, <a class="el" href="tickval_8hpp_source.html#l00100">FIX8::Tickval::now()</a>, <a class="el" href="timer_8hpp_source.html#l00195">FIX8::Timer&lt; T &gt;::schedule()</a>, <a class="el" href="session_8cpp_source.html#l00682">send()</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logoff_sent</a>, <a class="el" href="session_8hpp_source.html#l00137">FIX8::States::st_test_request_sent</a>, and <a class="el" href="session_8cpp_source.html#l00208">stop()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00209">_connection</a>, <a class="el" href="session_8hpp_source.html#l00220">_hb_processor</a>, <a class="el" href="session_8hpp_source.html#l00207">_last_received</a>, <a class="el" href="session_8hpp_source.html#l00207">_last_sent</a>, <a class="el" href="session_8hpp_source.html#l00206">_state</a>, <a class="el" href="session_8hpp_source.html#l00219">_timer</a>, <a class="el" href="session_8cpp_source.html#l00641">generate_heartbeat()</a>, <a class="el" href="session_8cpp_source.html#l00684">generate_logout()</a>, <a class="el" href="session_8cpp_source.html#l00661">generate_test_request()</a>, <a class="el" href="connection_8hpp_source.html#l00278">FIX8::Connection::get_hb_interval()</a>, <a class="el" href="connection_8hpp_source.html#l00282">FIX8::Connection::get_hb_interval20pc()</a>, <a class="el" href="session_8hpp_source.html#l00474">is_shutdown()</a>, <a class="el" href="session_8hpp_source.html#l00405">log()</a>, <a class="el" href="tickval_8hpp_source.html#l00100">FIX8::Tickval::now()</a>, <a class="el" href="timer_8hpp_source.html#l00195">FIX8::Timer&lt; T &gt;::schedule()</a>, <a class="el" href="session_8cpp_source.html#l00713">send()</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logoff_sent</a>, <a class="el" href="session_8hpp_source.html#l00137">FIX8::States::st_test_request_sent</a>, and <a class="el" href="session_8cpp_source.html#l00214">stop()</a>.</p>
 
 </div>
 </div>
@@ -1733,11 +1730,11 @@ Friends</h2></td></tr>
 <p>See if this session is being shutdown. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if shutdown is underway </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00508">508</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00474">474</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00207">_control</a>, <a class="el" href="f8utils_8hpp_source.html#l00748">FIX8::ebitset_r&lt; T, B &gt;::has()</a>, and <a class="el" href="session_8hpp_source.html#l00195">shutdown</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00204">_control</a>, <a class="el" href="f8utils_8hpp_source.html#l00748">FIX8::ebitset_r&lt; T, B &gt;::has()</a>, and <a class="el" href="session_8hpp_source.html#l00200">shutdown</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>, and <a class="el" href="hftest_8cpp_source.html#l00176">main()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>, and <a class="el" href="hftest_8cpp_source.html#l00176">main()</a>.</p>
 
 </div>
 </div>
@@ -1782,11 +1779,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00439">439</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00405">405</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00219">_logger</a>, and <a class="el" href="logger_8hpp_source.html#l00228">FIX8::Logger::send()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00217">_logger</a>, and <a class="el" href="logger_8hpp_source.html#l00228">FIX8::Logger::send()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00430">handle_logout()</a>, <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00241">process()</a>, <a class="el" href="session_8cpp_source.html#l00784">recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00706">send_process()</a>, <a class="el" href="session_8cpp_source.html#l00322">sequence_check()</a>, <a class="el" href="session_8cpp_source.html#l00156">start()</a>, and <a class="el" href="session_8cpp_source.html#l00146">~Session()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00461">handle_logout()</a>, <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00247">process()</a>, <a class="el" href="session_8cpp_source.html#l00815">recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00737">send_process()</a>, <a class="el" href="session_8cpp_source.html#l00343">sequence_check()</a>, <a class="el" href="session_8cpp_source.html#l00162">start()</a>, and <a class="el" href="session_8cpp_source.html#l00145">~Session()</a>.</p>
 
 </div>
 </div>
@@ -1819,9 +1816,9 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00321">321</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00287">287</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00706">send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00737">send_process()</a>.</p>
 
 </div>
 </div>
@@ -1866,11 +1863,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00445">445</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00411">411</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00219">_plogger</a>, and <a class="el" href="logger_8hpp_source.html#l00228">FIX8::Logger::send()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00217">_plogger</a>, and <a class="el" href="logger_8hpp_source.html#l00228">FIX8::Logger::send()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00241">process()</a>, and <a class="el" href="session_8cpp_source.html#l00706">send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00247">process()</a>, and <a class="el" href="session_8cpp_source.html#l00737">send_process()</a>.</p>
 
 </div>
 </div>
@@ -1904,9 +1901,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00241">241</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00247">247</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00207">_control</a>, <a class="el" href="session_8hpp_source.html#l00211">_ctx</a>, <a class="el" href="session_8hpp_source.html#l00200">_handlers</a>, <a class="el" href="session_8hpp_source.html#l00208">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00208">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00218">_persist</a>, <a class="el" href="session_8hpp_source.html#l00192">_seq</a>, <a class="el" href="session_8hpp_source.html#l00209">_state</a>, <a class="el" href="message_8hpp_source.html#l00825">FIX8::Message::factory()</a>, <a class="el" href="f8types_8hpp_source.html#l00189">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="f8exception_8hpp_source.html#l00080">FIX8::f8Exception::force_logoff()</a>, <a class="el" href="session_8cpp_source.html#l00653">generate_logout()</a>, <a class="el" href="session_8cpp_source.html#l00620">generate_reject()</a>, <a class="el" href="f8utils_8hpp_source.html#l00242">FIX8::scoped_ptr&lt; T &gt;::get()</a>, <a class="el" href="message_8hpp_source.html#l00365">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="session_8hpp_source.html#l00311">handle_admin()</a>, <a class="el" href="message_8hpp_source.html#l00777">FIX8::Message::is_admin()</a>, <a class="el" href="session_8hpp_source.html#l00439">log()</a>, <a class="el" href="session_8hpp_source.html#l00445">plog()</a>, <a class="el" href="session_8hpp_source.html#l00195">print</a>, <a class="el" href="classFIX8_1_1Persister.html#a2318928465e09f9c0b8973258e8f3add">FIX8::Persister::put()</a>, <a class="el" href="f8utils_8hpp_source.html#l00316">FIX8::RegExp::SearchString()</a>, <a class="el" href="session_8cpp_source.html#l00682">send()</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logoff_sent</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logon_received</a>, <a class="el" href="session_8cpp_source.html#l00208">stop()</a>, <a class="el" href="f8utils_8hpp_source.html#l00332">FIX8::RegExp::SubExpr()</a>, and <a class="el" href="f8exception_8hpp_source.html#l00076">FIX8::f8Exception::what()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00204">_control</a>, <a class="el" href="session_8hpp_source.html#l00208">_ctx</a>, <a class="el" href="session_8hpp_source.html#l00193">_handlers</a>, <a class="el" href="session_8hpp_source.html#l00205">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00205">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00216">_persist</a>, <a class="el" href="session_8hpp_source.html#l00206">_state</a>, <a class="el" href="namespaceFIX8.html#a25dd5007a5a971fe43a58df371e1db34">FIX8::default_field_separator()</a>, <a class="el" href="message_8hpp_source.html#l00831">FIX8::Message::factory()</a>, <a class="el" href="f8types_8hpp_source.html#l00189">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="f8exception_8hpp_source.html#l00080">FIX8::f8Exception::force_logoff()</a>, <a class="el" href="session_8cpp_source.html#l00684">generate_logout()</a>, <a class="el" href="session_8cpp_source.html#l00651">generate_reject()</a>, <a class="el" href="f8utils_8hpp_source.html#l00242">FIX8::scoped_ptr&lt; T &gt;::get()</a>, <a class="el" href="message_8hpp_source.html#l00371">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="session_8hpp_source.html#l00277">handle_admin()</a>, <a class="el" href="message_8hpp_source.html#l00783">FIX8::Message::is_admin()</a>, <a class="el" href="session_8hpp_source.html#l00405">log()</a>, <a class="el" href="session_8hpp_source.html#l00411">plog()</a>, <a class="el" href="session_8hpp_source.html#l00200">print</a>, <a class="el" href="classFIX8_1_1Persister.html#a2318928465e09f9c0b8973258e8f3add">FIX8::Persister::put()</a>, <a class="el" href="session_8cpp_source.html#l00713">send()</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logoff_sent</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logon_received</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_wait_for_logon</a>, <a class="el" href="session_8cpp_source.html#l00214">stop()</a>, and <a class="el" href="f8exception_8hpp_source.html#l00076">FIX8::f8Exception::what()</a>.</p>
 
 </div>
 </div>
@@ -1933,11 +1930,11 @@ Friends</h2></td></tr>
 
 <p>Recover next expected and next to send sequence numbers from persitence layer. </p>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00784">784</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00815">815</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00208">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00208">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00218">_persist</a>, <a class="el" href="classFIX8_1_1Persister.html#a3e2bdbad7444ae43e26a3fb82bcaf613">FIX8::Persister::get()</a>, and <a class="el" href="session_8hpp_source.html#l00439">log()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00205">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00205">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00216">_persist</a>, <a class="el" href="classFIX8_1_1Persister.html#a3e2bdbad7444ae43e26a3fb82bcaf613">FIX8::Persister::get()</a>, and <a class="el" href="session_8hpp_source.html#l00405">log()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, and <a class="el" href="session_8cpp_source.html#l00156">start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, and <a class="el" href="session_8cpp_source.html#l00162">start()</a>.</p>
 
 </div>
 </div>
@@ -1982,11 +1979,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00489">489</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00520">520</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00380">FIX8::Session::RetransmissionContext::_begin</a>, <a class="el" href="session_8hpp_source.html#l00211">_ctx</a>, <a class="el" href="session_8hpp_source.html#l00380">FIX8::Session::RetransmissionContext::_end</a>, <a class="el" href="session_8hpp_source.html#l00380">FIX8::Session::RetransmissionContext::_interrupted_seqnum</a>, <a class="el" href="session_8hpp_source.html#l00381">FIX8::Session::RetransmissionContext::_last</a>, <a class="el" href="session_8hpp_source.html#l00208">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00382">FIX8::Session::RetransmissionContext::_no_more_records</a>, <a class="el" href="session_8hpp_source.html#l00209">_state</a>, <a class="el" href="message_8hpp_source.html#l00825">FIX8::Message::factory()</a>, <a class="el" href="session_8cpp_source.html#l00670">generate_sequence_reset()</a>, <a class="el" href="session_8cpp_source.html#l00682">send()</a>, and <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_continuous</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00346">FIX8::Session::RetransmissionContext::_begin</a>, <a class="el" href="session_8hpp_source.html#l00208">_ctx</a>, <a class="el" href="session_8hpp_source.html#l00346">FIX8::Session::RetransmissionContext::_end</a>, <a class="el" href="session_8hpp_source.html#l00346">FIX8::Session::RetransmissionContext::_interrupted_seqnum</a>, <a class="el" href="session_8hpp_source.html#l00347">FIX8::Session::RetransmissionContext::_last</a>, <a class="el" href="session_8hpp_source.html#l00205">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00348">FIX8::Session::RetransmissionContext::_no_more_records</a>, <a class="el" href="session_8hpp_source.html#l00206">_state</a>, <a class="el" href="message_8hpp_source.html#l00831">FIX8::Message::factory()</a>, <a class="el" href="session_8cpp_source.html#l00701">generate_sequence_reset()</a>, <a class="el" href="session_8cpp_source.html#l00713">send()</a>, and <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_continuous</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00463">handle_resend_request()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00494">handle_resend_request()</a>.</p>
 
 </div>
 </div>
@@ -2038,11 +2035,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00682">682</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00713">713</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00212">_connection</a>, <a class="el" href="message_8hpp_source.html#l00839">FIX8::Message::set_custom_seqnum()</a>, <a class="el" href="message_8hpp_source.html#l00847">FIX8::Message::set_no_increment()</a>, and <a class="el" href="connection_8hpp_source.html#l00264">FIX8::Connection::write()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00209">_connection</a>, <a class="el" href="message_8hpp_source.html#l00845">FIX8::Message::set_custom_seqnum()</a>, <a class="el" href="message_8hpp_source.html#l00853">FIX8::Message::set_no_increment()</a>, and <a class="el" href="connection_8hpp_source.html#l00264">FIX8::Connection::write()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00463">handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00535">handle_test_request()</a>, <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00241">process()</a>, <a class="el" href="session_8cpp_source.html#l00489">retrans_callback()</a>, <a class="el" href="session_8cpp_source.html#l00692">send_wait()</a>, <a class="el" href="session_8cpp_source.html#l00322">sequence_check()</a>, and <a class="el" href="session_8cpp_source.html#l00156">start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00494">handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00566">handle_test_request()</a>, <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00247">process()</a>, <a class="el" href="session_8cpp_source.html#l00520">retrans_callback()</a>, <a class="el" href="session_8cpp_source.html#l00723">send_wait()</a>, <a class="el" href="session_8cpp_source.html#l00343">sequence_check()</a>, and <a class="el" href="session_8cpp_source.html#l00162">start()</a>.</p>
 
 </div>
 </div>
@@ -2068,9 +2065,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00706">706</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00737">737</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00212">_connection</a>, <a class="el" href="session_8hpp_source.html#l00210">_last_sent</a>, <a class="el" href="session_8hpp_source.html#l00208">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00208">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00218">_persist</a>, <a class="el" href="session_8hpp_source.html#l00214">_sid</a>, <a class="el" href="namespaceFIX8.html#a553ab7c89eaaff1d81511fa35c7b0e56">FIX8::Common_MsgSeqNum()</a>, <a class="el" href="namespaceFIX8.html#a77cd307386bbd382d44d0872ee70a7b5">FIX8::Common_MsgType_SEQUENCE_RESET()</a>, <a class="el" href="namespaceFIX8.html#a94b18f42f9cfee61baeae57edcc6446e">FIX8::Common_PossDupFlag()</a>, <a class="el" href="namespaceFIX8.html#af4f083668b39eb05601f70760add99dd">FIX8::Common_SenderCompID()</a>, <a class="el" href="namespaceFIX8.html#ae954b6d79778b6006f9fb8fccfb52a3b">FIX8::Common_TargetCompID()</a>, <a class="el" href="message_8cpp_source.html#l00372">FIX8::Message::encode()</a>, <a class="el" href="message_8hpp_source.html#l00443">FIX8::MessageBase::get()</a>, <a class="el" href="message_8hpp_source.html#l00843">FIX8::Message::get_custom_seqnum()</a>, <a class="el" href="message_8hpp_source.html#l00365">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="message_8hpp_source.html#l00851">FIX8::Message::get_no_increment()</a>, <a class="el" href="session_8hpp_source.html#l00099">FIX8::SessionID::get_senderCompID()</a>, <a class="el" href="session_8hpp_source.html#l00103">FIX8::SessionID::get_targetCompID()</a>, <a class="el" href="message_8hpp_source.html#l00486">FIX8::MessageBase::have()</a>, <a class="el" href="message_8hpp_source.html#l00749">FIX8::Message::Header()</a>, <a class="el" href="message_8hpp_source.html#l00777">FIX8::Message::is_admin()</a>, <a class="el" href="session_8hpp_source.html#l00439">log()</a>, <a class="el" href="session_8hpp_source.html#l00321">modify_outbound()</a>, <a class="el" href="tickval_8hpp_source.html#l00100">FIX8::Tickval::now()</a>, <a class="el" href="session_8hpp_source.html#l00445">plog()</a>, <a class="el" href="classFIX8_1_1Persister.html#a2318928465e09f9c0b8973258e8f3add">FIX8::Persister::put()</a>, <a class="el" href="connection_8hpp_source.html#l00269">FIX8::Connection::send()</a>, and <a class="el" href="f8exception_8hpp_source.html#l00076">FIX8::f8Exception::what()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00209">_connection</a>, <a class="el" href="session_8hpp_source.html#l00207">_last_sent</a>, <a class="el" href="session_8hpp_source.html#l00205">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00205">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00216">_persist</a>, <a class="el" href="session_8hpp_source.html#l00211">_sid</a>, <a class="el" href="namespaceFIX8.html#a553ab7c89eaaff1d81511fa35c7b0e56">FIX8::Common_MsgSeqNum()</a>, <a class="el" href="namespaceFIX8.html#a77cd307386bbd382d44d0872ee70a7b5">FIX8::Common_MsgType_SEQUENCE_RESET()</a>, <a class="el" href="namespaceFIX8.html#a94b18f42f9cfee61baeae57edcc6446e">FIX8::Common_PossDupFlag()</a>, <a class="el" href="namespaceFIX8.html#af4f083668b39eb05601f70760add99dd">FIX8::Common_SenderCompID()</a>, <a class="el" href="namespaceFIX8.html#ae954b6d79778b6006f9fb8fccfb52a3b">FIX8::Common_TargetCompID()</a>, <a class="el" href="message_8cpp_source.html#l00366">FIX8::Message::encode()</a>, <a class="el" href="message_8hpp_source.html#l00449">FIX8::MessageBase::get()</a>, <a class="el" href="message_8hpp_source.html#l00849">FIX8::Message::get_custom_seqnum()</a>, <a class="el" href="message_8hpp_source.html#l00371">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="message_8hpp_source.html#l00857">FIX8::Message::get_no_increment()</a>, <a class="el" href="session_8hpp_source.html#l00099">FIX8::SessionID::get_senderCompID()</a>, <a class="el" href="session_8hpp_source.html#l00103">FIX8::SessionID::get_targetCompID()</a>, <a class="el" href="message_8hpp_source.html#l00492">FIX8::MessageBase::have()</a>, <a class="el" href="message_8hpp_source.html#l00755">FIX8::Message::Header()</a>, <a class="el" href="message_8hpp_source.html#l00783">FIX8::Message::is_admin()</a>, <a class="el" href="session_8hpp_source.html#l00405">log()</a>, <a class="el" href="session_8hpp_source.html#l00287">modify_outbound()</a>, <a class="el" href="tickval_8hpp_source.html#l00100">FIX8::Tickval::now()</a>, <a class="el" href="session_8hpp_source.html#l00411">plog()</a>, <a class="el" href="classFIX8_1_1Persister.html#a2318928465e09f9c0b8973258e8f3add">FIX8::Persister::put()</a>, <a class="el" href="connection_8hpp_source.html#l00269">FIX8::Connection::send()</a>, and <a class="el" href="f8exception_8hpp_source.html#l00076">FIX8::f8Exception::what()</a>.</p>
 
 </div>
 </div>
@@ -2122,9 +2119,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00692">692</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00723">723</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00735">FIX8::Message::get_in_use()</a>, <a class="el" href="f8utils_8hpp_source.html#l00868">FIX8::microsleep()</a>, and <a class="el" href="session_8cpp_source.html#l00682">send()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00741">FIX8::Message::get_in_use()</a>, <a class="el" href="f8utils_8hpp_source.html#l00868">FIX8::microsleep()</a>, and <a class="el" href="session_8cpp_source.html#l00713">send()</a>.</p>
 
 </div>
 </div>
@@ -2161,11 +2158,11 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00322">322</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00343">343</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00208">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00209">_state</a>, <a class="el" href="session_8cpp_source.html#l00660">generate_resend_request()</a>, <a class="el" href="message_8hpp_source.html#l00443">FIX8::MessageBase::get()</a>, <a class="el" href="message_8hpp_source.html#l00749">FIX8::Message::Header()</a>, <a class="el" href="session_8hpp_source.html#l00439">log()</a>, <a class="el" href="classFIX8_1_1BaseField.html#a68b4265a14ab3ec76ef65ce8298c5b9c">FIX8::BaseField::print()</a>, <a class="el" href="session_8cpp_source.html#l00682">send()</a>, <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_continuous</a>, and <a class="el" href="session_8hpp_source.html#l00138">FIX8::States::st_resend_request_sent</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00205">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00206">_state</a>, <a class="el" href="session_8cpp_source.html#l00691">generate_resend_request()</a>, <a class="el" href="message_8hpp_source.html#l00449">FIX8::MessageBase::get()</a>, <a class="el" href="message_8hpp_source.html#l00755">FIX8::Message::Header()</a>, <a class="el" href="session_8hpp_source.html#l00405">log()</a>, <a class="el" href="classFIX8_1_1BaseField.html#a68b4265a14ab3ec76ef65ce8298c5b9c">FIX8::BaseField::print()</a>, <a class="el" href="session_8cpp_source.html#l00713">send()</a>, <a class="el" href="session_8hpp_source.html#l00135">FIX8::States::st_continuous</a>, and <a class="el" href="session_8hpp_source.html#l00138">FIX8::States::st_resend_request_sent</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00227">enforce()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00233">enforce()</a>.</p>
 
 </div>
 </div>
@@ -2198,9 +2195,9 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00488">488</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00454">454</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00216">_loginParamaters</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00214">_loginParamaters</a>.</p>
 
 </div>
 </div>
@@ -2233,9 +2230,37 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00500">500</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00466">466</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00218">_persist</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00216">_persist</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab8256249d3d558f8b5827848a61f0ba3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FIX8::Session::set_session_config </td>
+          <td>(</td>
+          <td class="paramtype">class <a class="el" href="structFIX8_1_1SessionConfig.html">SessionConfig</a> *&#160;</td>
+          <td class="paramname"><em>sf</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00478">478</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+
+<p>References <a class="el" href="session_8hpp_source.html#l00212">_sf</a>.</p>
 
 </div>
 </div>
@@ -2293,9 +2318,9 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>-1 on error, 0 on success </dd></dl>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00156">156</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00162">162</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00212">_connection</a>, <a class="el" href="session_8hpp_source.html#l00207">_control</a>, <a class="el" href="session_8hpp_source.html#l00219">_logger</a>, <a class="el" href="session_8hpp_source.html#l00216">_loginParamaters</a>, <a class="el" href="session_8hpp_source.html#l00208">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00208">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00219">_plogger</a>, <a class="el" href="session_8hpp_source.html#l00213">_req_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00213">_req_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00183">FIX8::LoginParameters::_reset_sequence_numbers</a>, <a class="el" href="session_8hpp_source.html#l00209">_state</a>, <a class="el" href="session_8cpp_source.html#l00139">atomic_init()</a>, <a class="el" href="f8utils_8hpp_source.html#l00780">FIX8::ebitset_r&lt; T, B &gt;::clear()</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_initiator</a>, <a class="el" href="connection_8hpp_source.html#l00259">FIX8::Connection::connect()</a>, <a class="el" href="session_8cpp_source.html#l00639">generate_logon()</a>, <a class="el" href="connection_8hpp_source.html#l00278">FIX8::Connection::get_hb_interval()</a>, <a class="el" href="connection_8hpp_source.html#l00249">FIX8::Connection::get_role()</a>, <a class="el" href="connection_8hpp_source.html#l00286">FIX8::Connection::join()</a>, <a class="el" href="session_8hpp_source.html#l00439">log()</a>, <a class="el" href="logger_8cpp_source.html#l00147">FIX8::Logger::purge_thread_codes()</a>, <a class="el" href="session_8cpp_source.html#l00784">recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00682">send()</a>, <a class="el" href="session_8hpp_source.html#l00195">shutdown</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logon_sent</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_not_logged_in</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_wait_for_logon</a>, and <a class="el" href="connection_8cpp_source.html#l00257">FIX8::Connection::start()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00209">_connection</a>, <a class="el" href="session_8hpp_source.html#l00204">_control</a>, <a class="el" href="session_8hpp_source.html#l00217">_logger</a>, <a class="el" href="session_8hpp_source.html#l00214">_loginParamaters</a>, <a class="el" href="session_8hpp_source.html#l00205">_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00205">_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00217">_plogger</a>, <a class="el" href="session_8hpp_source.html#l00210">_req_next_receive_seq</a>, <a class="el" href="session_8hpp_source.html#l00210">_req_next_send_seq</a>, <a class="el" href="session_8hpp_source.html#l00183">FIX8::LoginParameters::_reset_sequence_numbers</a>, <a class="el" href="session_8hpp_source.html#l00206">_state</a>, <a class="el" href="session_8cpp_source.html#l00138">atomic_init()</a>, <a class="el" href="f8utils_8hpp_source.html#l00780">FIX8::ebitset_r&lt; T, B &gt;::clear()</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_acceptor</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_initiator</a>, <a class="el" href="connection_8hpp_source.html#l00259">FIX8::Connection::connect()</a>, <a class="el" href="session_8cpp_source.html#l00670">generate_logon()</a>, <a class="el" href="connection_8hpp_source.html#l00278">FIX8::Connection::get_hb_interval()</a>, <a class="el" href="connection_8hpp_source.html#l00249">FIX8::Connection::get_role()</a>, <a class="el" href="connection_8hpp_source.html#l00286">FIX8::Connection::join()</a>, <a class="el" href="session_8hpp_source.html#l00405">log()</a>, <a class="el" href="logger_8cpp_source.html#l00147">FIX8::Logger::purge_thread_codes()</a>, <a class="el" href="session_8cpp_source.html#l00815">recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00713">send()</a>, <a class="el" href="session_8hpp_source.html#l00200">shutdown</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_logon_sent</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_not_logged_in</a>, <a class="el" href="session_8hpp_source.html#l00136">FIX8::States::st_wait_for_logon</a>, and <a class="el" href="connection_8cpp_source.html#l00257">FIX8::Connection::start()</a>.</p>
 
 </div>
 </div>
@@ -2314,11 +2339,11 @@ Friends</h2></td></tr>
 
 <p>stop the session. </p>
 
-<p>Definition at line <a class="el" href="session_8cpp_source.html#l00208">208</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8cpp_source.html#l00214">214</a> of file <a class="el" href="session_8cpp_source.html">session.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00212">_connection</a>, <a class="el" href="session_8hpp_source.html#l00207">_control</a>, <a class="el" href="session_8hpp_source.html#l00222">_hb_processor</a>, <a class="el" href="session_8hpp_source.html#l00218">_persist</a>, <a class="el" href="session_8hpp_source.html#l00221">_timer</a>, <a class="el" href="timer_8hpp_source.html#l00179">FIX8::Timer&lt; T &gt;::clear()</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_initiator</a>, <a class="el" href="connection_8hpp_source.html#l00249">FIX8::Connection::get_role()</a>, <a class="el" href="f8utils_8hpp_source.html#l00858">FIX8::millisleep()</a>, <a class="el" href="timer_8hpp_source.html#l00195">FIX8::Timer&lt; T &gt;::schedule()</a>, <a class="el" href="session_8hpp_source.html#l00195">shutdown</a>, <a class="el" href="persist_8hpp_source.html#l00111">FIX8::Persister::stop()</a>, and <a class="el" href="connection_8cpp_source.html#l00264">FIX8::Connection::stop()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00209">_connection</a>, <a class="el" href="session_8hpp_source.html#l00204">_control</a>, <a class="el" href="session_8hpp_source.html#l00220">_hb_processor</a>, <a class="el" href="session_8hpp_source.html#l00216">_persist</a>, <a class="el" href="session_8hpp_source.html#l00219">_timer</a>, <a class="el" href="timer_8hpp_source.html#l00179">FIX8::Timer&lt; T &gt;::clear()</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_initiator</a>, <a class="el" href="connection_8hpp_source.html#l00249">FIX8::Connection::get_role()</a>, <a class="el" href="f8utils_8hpp_source.html#l00858">FIX8::millisleep()</a>, <a class="el" href="timer_8hpp_source.html#l00195">FIX8::Timer&lt; T &gt;::schedule()</a>, <a class="el" href="session_8hpp_source.html#l00200">shutdown</a>, <a class="el" href="persist_8hpp_source.html#l00114">FIX8::Persister::stop()</a>, and <a class="el" href="connection_8cpp_source.html#l00264">FIX8::Connection::stop()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00430">handle_logout()</a>, <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>, <a class="el" href="hftest_8cpp_source.html#l00176">main()</a>, and <a class="el" href="session_8cpp_source.html#l00241">process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00461">handle_logout()</a>, <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>, <a class="el" href="hftest_8cpp_source.html#l00176">main()</a>, and <a class="el" href="session_8cpp_source.html#l00247">process()</a>.</p>
 
 </div>
 </div>
@@ -2345,9 +2370,9 @@ Friends</h2></td></tr>
 
 <p>Update the last received time. </p>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00459">459</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00425">425</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00210">_last_received</a>, and <a class="el" href="tickval_8hpp_source.html#l00100">FIX8::Tickval::now()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00207">_last_received</a>, and <a class="el" href="tickval_8hpp_source.html#l00100">FIX8::Tickval::now()</a>.</p>
 
 </div>
 </div>
@@ -2374,9 +2399,9 @@ Friends</h2></td></tr>
 
 <p>Update the last sent time. </p>
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00456">456</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00422">422</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00210">_last_sent</a>, and <a class="el" href="tickval_8hpp_source.html#l00100">FIX8::Tickval::now()</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00207">_last_sent</a>, and <a class="el" href="tickval_8hpp_source.html#l00100">FIX8::Tickval::now()</a>.</p>
 
 </div>
 </div>
@@ -2399,7 +2424,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00510">510</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00512">512</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
 </div>
 </div>
@@ -2422,9 +2447,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00212">212</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00209">209</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00429">get_connection()</a>, <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00682">send()</a>, <a class="el" href="session_8cpp_source.html#l00706">send_process()</a>, <a class="el" href="session_8cpp_source.html#l00156">start()</a>, and <a class="el" href="session_8cpp_source.html#l00208">stop()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00395">get_connection()</a>, <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00713">send()</a>, <a class="el" href="session_8cpp_source.html#l00737">send_process()</a>, <a class="el" href="session_8cpp_source.html#l00162">start()</a>, <a class="el" href="session_8cpp_source.html#l00214">stop()</a>, and <a class="el" href="session_8cpp_source.html#l00145">~Session()</a>.</p>
 
 </div>
 </div>
@@ -2446,9 +2471,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00207">207</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00204">204</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00504">control()</a>, <a class="el" href="session_8hpp_source.html#l00508">is_shutdown()</a>, <a class="el" href="session_8cpp_source.html#l00241">process()</a>, <a class="el" href="session_8cpp_source.html#l00156">start()</a>, and <a class="el" href="session_8cpp_source.html#l00208">stop()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00470">control()</a>, <a class="el" href="session_8hpp_source.html#l00474">is_shutdown()</a>, <a class="el" href="session_8cpp_source.html#l00247">process()</a>, <a class="el" href="session_8cpp_source.html#l00162">start()</a>, and <a class="el" href="session_8cpp_source.html#l00214">stop()</a>.</p>
 
 </div>
 </div>
@@ -2470,9 +2495,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00211">211</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00208">208</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00335">create_msg()</a>, <a class="el" href="session_8hpp_source.html#l00433">get_ctx()</a>, <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00241">process()</a>, and <a class="el" href="session_8cpp_source.html#l00489">retrans_callback()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00301">create_msg()</a>, <a class="el" href="session_8hpp_source.html#l00399">get_ctx()</a>, <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00247">process()</a>, and <a class="el" href="session_8cpp_source.html#l00520">retrans_callback()</a>.</p>
 
 </div>
 </div>
@@ -2494,9 +2519,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00200">200</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00193">193</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00241">process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00247">process()</a>.</p>
 
 </div>
 </div>
@@ -2518,9 +2543,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00222">222</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00220">220</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00208">stop()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00214">stop()</a>.</p>
 
 </div>
 </div>
@@ -2542,9 +2567,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00210">210</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00207">207</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00449">get_last_received()</a>, <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>, and <a class="el" href="session_8hpp_source.html#l00459">update_received()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00415">get_last_received()</a>, <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>, and <a class="el" href="session_8hpp_source.html#l00425">update_received()</a>.</p>
 
 </div>
 </div>
@@ -2566,9 +2591,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00210">210</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00207">207</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00453">get_last_sent()</a>, <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00706">send_process()</a>, and <a class="el" href="session_8hpp_source.html#l00456">update_sent()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00419">get_last_sent()</a>, <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00737">send_process()</a>, and <a class="el" href="session_8hpp_source.html#l00422">update_sent()</a>.</p>
 
 </div>
 </div>
@@ -2590,9 +2615,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00219">219</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00217">217</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00439">log()</a>, <a class="el" href="session_8cpp_source.html#l00156">start()</a>, and <a class="el" href="session_8cpp_source.html#l00146">~Session()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8hpp_source.html#l00405">log()</a>, <a class="el" href="session_8cpp_source.html#l00162">start()</a>, and <a class="el" href="session_8cpp_source.html#l00145">~Session()</a>.</p>
 
 </div>
 </div>
@@ -2614,9 +2639,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00216">216</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00214">214</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00639">generate_logon()</a>, <a class="el" href="session_8hpp_source.html#l00492">get_login_parameters()</a>, <a class="el" href="session_8hpp_source.html#l00488">set_login_parameters()</a>, and <a class="el" href="session_8cpp_source.html#l00156">start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00670">generate_logon()</a>, <a class="el" href="session_8hpp_source.html#l00458">get_login_parameters()</a>, <a class="el" href="session_8hpp_source.html#l00454">set_login_parameters()</a>, and <a class="el" href="session_8cpp_source.html#l00162">start()</a>.</p>
 
 </div>
 </div>
@@ -2638,9 +2663,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00208">208</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00205">205</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00139">atomic_init()</a>, <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00442">handle_sequence_reset()</a>, <a class="el" href="session_8cpp_source.html#l00241">process()</a>, <a class="el" href="session_8cpp_source.html#l00784">recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00706">send_process()</a>, <a class="el" href="session_8cpp_source.html#l00322">sequence_check()</a>, and <a class="el" href="session_8cpp_source.html#l00156">start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00138">atomic_init()</a>, <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00473">handle_sequence_reset()</a>, <a class="el" href="session_8cpp_source.html#l00247">process()</a>, <a class="el" href="session_8cpp_source.html#l00815">recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00737">send_process()</a>, <a class="el" href="session_8cpp_source.html#l00343">sequence_check()</a>, and <a class="el" href="session_8cpp_source.html#l00162">start()</a>.</p>
 
 </div>
 </div>
@@ -2662,9 +2687,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00208">208</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00205">205</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00139">atomic_init()</a>, <a class="el" href="session_8hpp_source.html#l00484">get_next_send_seq()</a>, <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00463">handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00241">process()</a>, <a class="el" href="session_8cpp_source.html#l00784">recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00489">retrans_callback()</a>, <a class="el" href="session_8cpp_source.html#l00706">send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00156">start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00138">atomic_init()</a>, <a class="el" href="session_8hpp_source.html#l00450">get_next_send_seq()</a>, <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00494">handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00247">process()</a>, <a class="el" href="session_8cpp_source.html#l00815">recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00520">retrans_callback()</a>, <a class="el" href="session_8cpp_source.html#l00737">send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00162">start()</a>.</p>
 
 </div>
 </div>
@@ -2686,9 +2711,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00218">218</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00216">216</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00463">handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00241">process()</a>, <a class="el" href="session_8cpp_source.html#l00784">recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00706">send_process()</a>, <a class="el" href="session_8hpp_source.html#l00500">set_persister()</a>, and <a class="el" href="session_8cpp_source.html#l00208">stop()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00494">handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00247">process()</a>, <a class="el" href="session_8cpp_source.html#l00815">recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00737">send_process()</a>, <a class="el" href="session_8hpp_source.html#l00466">set_persister()</a>, <a class="el" href="session_8cpp_source.html#l00214">stop()</a>, and <a class="el" href="session_8cpp_source.html#l00145">~Session()</a>.</p>
 
 </div>
 </div>
@@ -2710,9 +2735,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00219">219</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00217">217</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00445">plog()</a>, and <a class="el" href="session_8cpp_source.html#l00156">start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8hpp_source.html#l00411">plog()</a>, <a class="el" href="session_8cpp_source.html#l00162">start()</a>, and <a class="el" href="session_8cpp_source.html#l00145">~Session()</a>.</p>
 
 </div>
 </div>
@@ -2734,9 +2759,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00213">213</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00210">210</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, and <a class="el" href="session_8cpp_source.html#l00156">start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, and <a class="el" href="session_8cpp_source.html#l00162">start()</a>.</p>
 
 </div>
 </div>
@@ -2758,13 +2783,13 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00213">213</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00210">210</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, and <a class="el" href="session_8cpp_source.html#l00156">start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, and <a class="el" href="session_8cpp_source.html#l00162">start()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aabfb501796d918107c99bdbb48ff1219"></a>
+<a class="anchor" id="af4ee20f637e43089dcc2329ec0af2c5f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2772,19 +2797,19 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1RegExp.html">RegExp</a> Session::_seq</td>
+          <td class="memname">class <a class="el" href="structFIX8_1_1SessionConfig.html">SessionConfig</a>* FIX8::Session::_sf</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00192">192</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00212">212</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00241">process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, and <a class="el" href="session_8hpp_source.html#l00478">set_session_config()</a>.</p>
 
 </div>
 </div>
@@ -2806,9 +2831,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00214">214</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00211">211</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00309">compid_check()</a>, <a class="el" href="session_8hpp_source.html#l00480">get_sid()</a>, <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, and <a class="el" href="session_8cpp_source.html#l00706">send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00330">compid_check()</a>, <a class="el" href="session_8hpp_source.html#l00446">get_sid()</a>, <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, and <a class="el" href="session_8cpp_source.html#l00737">send_process()</a>.</p>
 
 </div>
 </div>
@@ -2830,9 +2855,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00209">209</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00206">206</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00139">atomic_init()</a>, <a class="el" href="session_8cpp_source.html#l00227">enforce()</a>, <a class="el" href="session_8cpp_source.html#l00600">handle_heartbeat()</a>, <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00463">handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00442">handle_sequence_reset()</a>, <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00241">process()</a>, <a class="el" href="session_8cpp_source.html#l00489">retrans_callback()</a>, <a class="el" href="session_8cpp_source.html#l00322">sequence_check()</a>, and <a class="el" href="session_8cpp_source.html#l00156">start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00138">atomic_init()</a>, <a class="el" href="session_8cpp_source.html#l00233">enforce()</a>, <a class="el" href="session_8cpp_source.html#l00631">handle_heartbeat()</a>, <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00494">handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00473">handle_sequence_reset()</a>, <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00247">process()</a>, <a class="el" href="session_8cpp_source.html#l00520">retrans_callback()</a>, <a class="el" href="session_8cpp_source.html#l00343">sequence_check()</a>, and <a class="el" href="session_8cpp_source.html#l00162">start()</a>.</p>
 
 </div>
 </div>
@@ -2854,9 +2879,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00221">221</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00219">219</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00547">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00121">Session()</a>, and <a class="el" href="session_8cpp_source.html#l00208">stop()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00578">heartbeat_service()</a>, <a class="el" href="session_8cpp_source.html#l00120">Session()</a>, and <a class="el" href="session_8cpp_source.html#l00214">stop()</a>.</p>
 
 </div>
 </div>
@@ -2867,7 +2892,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:27. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 14:10:27. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.7</span>
+   &#160;<span id="projectnumber">version  0.7.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -107,6 +107,7 @@ $(document).ready(function(){initNavTree('structFIX8_1_1FilePersister_1_1Prec.ht
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="structFIX8_1_1FilePersister_1_1Prec-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">FIX8::FilePersister::Prec Struct Reference</div>  </div>
@@ -115,19 +116,24 @@ $(document).ready(function(){initNavTree('structFIX8_1_1FilePersister_1_1Prec.ht
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad285d9dae9b0ac2c41d276f39b625d22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html#ad285d9dae9b0ac2c41d276f39b625d22">Prec</a> (const uint32_t offset, const uint32_t size)</td></tr>
+<tr class="memitem:ae263e5fdaf4412a6009e55c717748792"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html#ae263e5fdaf4412a6009e55c717748792">Prec</a> (const off_t offset, const uint32_t size)</td></tr>
 <tr class="memitem:a46d8d3d81dad0af85a8aca84b146cff9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html#a46d8d3d81dad0af85a8aca84b146cff9">Prec</a> ()</td></tr>
+<tr class="memitem:a8e14b76e7132e871523c2de0fea38898"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html">Prec</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html#a8e14b76e7132e871523c2de0fea38898">operator=</a> (const <a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html">Prec</a> &amp;that)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a62fe0420a34cbb92e8949b6572d154d0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html#a62fe0420a34cbb92e8949b6572d154d0">_offset</a></td></tr>
+<tr class="memitem:a75340ea9e35b2ca505b7a7186374cba3"><td class="memItemLeft" align="right" valign="top">off_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html#a75340ea9e35b2ca505b7a7186374cba3">_offset</a></td></tr>
 <tr class="memitem:aea7acadd1f5af3cb1c2840fd9ae9b277"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html#aea7acadd1f5af3cb1c2840fd9ae9b277">_size</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a3612d521538d0f2bcab0eb0f894a0810"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html#a3612d521538d0f2bcab0eb0f894a0810">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html">Prec</a> &amp;what)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00312">312</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00319">319</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ad285d9dae9b0ac2c41d276f39b625d22"></a>
+<a class="anchor" id="ae263e5fdaf4412a6009e55c717748792"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -137,7 +143,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">FIX8::FilePersister::Prec::Prec </td>
           <td>(</td>
-          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramtype">const off_t&#160;</td>
           <td class="paramname"><em>offset</em>, </td>
         </tr>
         <tr>
@@ -159,7 +165,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00314">314</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00321">321</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -184,22 +190,90 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00315">315</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00322">322</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+
+</div>
+</div>
+<h2>Member Function Documentation</h2>
+<a class="anchor" id="a8e14b76e7132e871523c2de0fea38898"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html">Prec</a>&amp; FIX8::FilePersister::Prec::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html">Prec</a> &amp;&#160;</td>
+          <td class="paramname"><em>that</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00326">326</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+
+<p>References <a class="el" href="persist_8hpp_source.html#l00323">_offset</a>, and <a class="el" href="persist_8hpp_source.html#l00324">_size</a>.</p>
+
+</div>
+</div>
+<h2>Friends And Related Function Documentation</h2>
+<a class="anchor" id="a3612d521538d0f2bcab0eb0f894a0810"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html">Prec</a> &amp;&#160;</td>
+          <td class="paramname"><em>what</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00336">336</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
 <h2>Member Data Documentation</h2>
-<a class="anchor" id="a62fe0420a34cbb92e8949b6572d154d0"></a>
+<a class="anchor" id="a75340ea9e35b2ca505b7a7186374cba3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t FIX8::FilePersister::Prec::_offset</td>
+          <td class="memname">off_t FIX8::FilePersister::Prec::_offset</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00316">316</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00323">323</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="persist_8hpp_source.html#l00326">operator=()</a>.</p>
 
 </div>
 </div>
@@ -213,7 +287,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00316">316</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00324">324</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="persist_8hpp_source.html#l00326">operator=()</a>.</p>
 
 </div>
 </div>
@@ -223,7 +299,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:27. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 14:10:27. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

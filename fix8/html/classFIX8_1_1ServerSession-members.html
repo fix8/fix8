@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.7</span>
+   &#160;<span id="projectnumber">version  0.7.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -118,8 +118,8 @@ $(document).ready(function(){initNavTree('classFIX8_1_1ServerSession.html','');}
   <tr class="even"><td class="entry"><a class="el" href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">_ses</a></td><td class="entry"><a class="el" href="structFIX8_1_1SessionConfig.html">FIX8::SessionConfig</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1ServerSession.html#a662275b3dc7be48c0b16d91fc9cc4807">accept</a>(Poco::Net::SocketAddress &amp;claddr)</td><td class="entry"><a class="el" href="classFIX8_1_1ServerSession.html">FIX8::ServerSession&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#a16a94169784d5c3c98092ddc0edf552a">Configuration</a>(const std::string &amp;xmlfile, bool do_process=false)</td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#accd1c699ae043053cc5bd7edc4979d7f">create_logger</a>(const XmlElement *from, const Logtype ltype) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#ad8298c3594e29d4d3bb94f39c4293f21">create_persister</a>(const XmlElement *from) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4">create_logger</a>(const XmlElement *from, const Logtype ltype, const SessionID *sid=0) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#aca423ae19c16258163e746a588003f6f">create_persister</a>(const XmlElement *from, const SessionID *sid=0) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#ac3e825f73abbf5158e68bd65e67b9107">find_session</a>(const std::string &amp;tag) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#ace764895c637f1ceb7d466505a6687df">get_address</a>(const XmlElement *from) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28">get_all_sessions</a>(std::vector&lt; const XmlElement * &gt; &amp;target, const Connection::Role role=Connection::cn_unknown) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"></td></tr>
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1ServerSession.html','');}
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#ab5e71fcd3c960ca2819eebc950905605">get_heartbeat_interval</a>(const XmlElement *from) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#a8dd08aba00b3d263115dcb2018ff8365">get_logfile_rotation</a>(const XmlElement *from, const unsigned def=5) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#a63edde694857230cc0a1f26d0cf7b861">get_logflags</a>(const XmlElement *from) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#a8c62d1f769e93992331fe7de9e706d07">get_logname</a>(const XmlElement *from, std::string &amp;to) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#ab68e04de2c9527e5ea8546e90fd4457e">get_logname</a>(const XmlElement *from, std::string &amp;to, const SessionID *sid=0) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#a9b1317e143879bdc346df7ad98d39cfe">get_reset_sequence_number_flag</a>(const XmlElement *from)</td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#a8f8f0922f008d43825a09fda5657d063">get_retry_count</a>(const XmlElement *from, const unsigned def=10) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html#a96776f7b6c4cc02dba1c9c7aeb19bbee">get_retry_interval</a>(const XmlElement *from, const unsigned def=5000) const </td><td class="entry"><a class="el" href="classFIX8_1_1Configuration.html">FIX8::Configuration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -154,7 +154,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1ServerSession.html','');}
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:27. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 14:10:27. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

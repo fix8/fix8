@@ -21,7 +21,7 @@ var f8utils_8hpp =
     [ "CopyString", "f8utils_8hpp.html#a8fd1dad50dfe91621755bf3029d0cb56", null ],
     [ "exist", "f8utils_8hpp.html#a4226474a0829e2de4e8025a1a2007f86", null ],
     [ "fast_atof", "f8utils_8hpp.html#a3c7dd7af00a6358afbfa053cfdf4dbb4", null ],
-    [ "fast_atoi", "f8utils_8hpp.html#a522b95edc3502db3288130f3cfd1743c", null ],
+    [ "fast_atoi", "f8utils_8hpp.html#a8293aacd018aa6e9bfcb81c0786b6ec9", null ],
     [ "GetTimeAsStringMS", "f8utils_8hpp.html#a21bce0769809df7d55f39cd67e6b22a0", null ],
     [ "GetValue", "f8utils_8hpp.html#ac96d648dbd809edefcc89b677c61a205", null ],
     [ "GetValue", "f8utils_8hpp.html#a667716a0a146c6a524f970d4c22efb35", null ],

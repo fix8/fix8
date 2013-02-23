@@ -57,6 +57,7 @@ var classFIX8_1_1Session =
     [ "sequence_check", "classFIX8_1_1Session.html#a633b4c067941d09112acaa7efc452272", null ],
     [ "set_login_parameters", "classFIX8_1_1Session.html#a3a26cd24ab28ea6c3af830a37bb4edaa", null ],
     [ "set_persister", "classFIX8_1_1Session.html#a21f474b3d3f88cad446c2ce39ae35c9f", null ],
+    [ "set_session_config", "classFIX8_1_1Session.html#ab8256249d3d558f8b5827848a61f0ba3", null ],
     [ "start", "classFIX8_1_1Session.html#afaa979ddebd207aa19bf8f71f5f50e63", null ],
     [ "stop", "classFIX8_1_1Session.html#ae4c637cd36d88ddac5a1db2565f82ef1", null ],
     [ "update_received", "classFIX8_1_1Session.html#a6d286478114fb22af35f6d7f0c74887a", null ],
@@ -77,7 +78,7 @@ var classFIX8_1_1Session =
     [ "_plogger", "classFIX8_1_1Session.html#a69391e7124d24a35f0c7b33addcf0826", null ],
     [ "_req_next_receive_seq", "classFIX8_1_1Session.html#a91cdc6cbdb2d43cce4d16d73706be6e9", null ],
     [ "_req_next_send_seq", "classFIX8_1_1Session.html#a24fd154f8f9d60dc5326c7be6be17aa7", null ],
-    [ "_seq", "classFIX8_1_1Session.html#aabfb501796d918107c99bdbb48ff1219", null ],
+    [ "_sf", "classFIX8_1_1Session.html#af4ee20f637e43089dcc2329ec0af2c5f", null ],
     [ "_sid", "classFIX8_1_1Session.html#a99cd14ef90155a250f4bd721d9e798c4", null ],
     [ "_state", "classFIX8_1_1Session.html#acc1d774f3e3e612ff83b0879ebc0f065", null ],
     [ "_timer", "classFIX8_1_1Session.html#a913639843c4d5fec356c564d69235717", null ]

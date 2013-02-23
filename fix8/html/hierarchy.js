@@ -46,9 +46,6 @@ var hierarchy =
     [ "FIX8::BaseMsgEntry", "structFIX8_1_1BaseMsgEntry.html", null ],
     [ "FIX8::bcostream", "classFIX8_1_1bcostream.html", null ],
     [ "FIX8::bcoutbuf", "classFIX8_1_1bcoutbuf.html", null ],
-    [ "FIX8::BDBPersister::KeyDataBuffer", "structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html", null ],
-    [ "FIX8::BDBPersister::KeyDataBuffer::Ubuf", "unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html", null ],
-    [ "FIX8::BDBPersister::KeyDataPair", "structFIX8_1_1BDBPersister_1_1KeyDataPair.html", null ],
     [ "FIX8::Configuration", "classFIX8_1_1Configuration.html", [
       [ "FIX8::SessionConfig", "structFIX8_1_1SessionConfig.html", [
         [ "FIX8::ClientSession< T >", "classFIX8_1_1ClientSession.html", [
@@ -1865,7 +1862,6 @@ var hierarchy =
     ] ],
     [ "FIX8::MessageSpec", "structFIX8_1_1MessageSpec.html", null ],
     [ "FIX8::Persister", "classFIX8_1_1Persister.html", [
-      [ "FIX8::BDBPersister", "classFIX8_1_1BDBPersister.html", null ],
       [ "FIX8::FilePersister", "classFIX8_1_1FilePersister.html", null ],
       [ "FIX8::MemoryPersister", "classFIX8_1_1MemoryPersister.html", null ]
     ] ],

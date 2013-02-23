@@ -5,7 +5,6 @@ var searchData=
   ['tex_5frouter_5fserver',['tex_router_server',['../classtex__router__server.html',1,'']]],
   ['thread',['Thread',['../classFIX8_1_1Thread.html',1,'FIX8']]],
   ['thread_3c_20asyncsocket_20_3e',['Thread&lt; AsyncSocket &gt;',['../classFIX8_1_1Thread.html',1,'FIX8']]],
-  ['thread_3c_20bdbpersister_20_3e',['Thread&lt; BDBPersister &gt;',['../classFIX8_1_1Thread.html',1,'FIX8']]],
   ['thread_3c_20fixreader_20_3e',['Thread&lt; FIXReader &gt;',['../classFIX8_1_1Thread.html',1,'FIX8']]],
   ['thread_3c_20logger_20_3e',['Thread&lt; Logger &gt;',['../classFIX8_1_1Thread.html',1,'FIX8']]],
   ['thread_3c_20reliableclientsession_3c_20t_20_3e_20_3e',['Thread&lt; ReliableClientSession&lt; T &gt; &gt;',['../classFIX8_1_1Thread.html',1,'FIX8']]],

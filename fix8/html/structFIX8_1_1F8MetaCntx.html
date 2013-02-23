@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.7</span>
+   &#160;<span id="projectnumber">version  0.7.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -105,6 +105,7 @@ $(document).ready(function(){initNavTree('structFIX8_1_1F8MetaCntx.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structFIX8_1_1F8MetaCntx-members.html">List of all members</a>  </div>
@@ -118,9 +119,18 @@ $(document).ready(function(){initNavTree('structFIX8_1_1F8MetaCntx.html','');});
 
 <p><code>#include &lt;<a class="el" href="message_8hpp_source.html">message.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a2f4f5cf42a6154040c7eeb9b565c72aa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aa">MsgFlags</a> { <a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aaaea64fe7b349214d6fd8a945a22b10a85">noverifychksum</a>, 
+<a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aaaa08946901a0e2e26de94058926b1a52b">count</a>
+ }</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac7a668e487c4111f1020b6843bd63651"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html#ac7a668e487c4111f1020b6843bd63651">set_ube</a> (<a class="el" href="classFIX8_1_1CustomFields.html">CustomFields</a> *ube)</td></tr>
+<tr class="memitem:af3dee3504cf1a05f271da1a28ceb9c44"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html#af3dee3504cf1a05f271da1a28ceb9c44">has_flag</a> (<a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aa">MsgFlags</a> flg) const </td></tr>
+<tr class="memitem:a9733b55dc579d6a6788e9c63856db8ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html#a9733b55dc579d6a6788e9c63856db8ac">set_flag</a> (<a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aa">MsgFlags</a> flg)</td></tr>
+<tr class="memitem:a0d7b01dc0ea92775739187621406b654"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html#a0d7b01dc0ea92775739187621406b654">clear_flag</a> (<a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aa">MsgFlags</a> flg)</td></tr>
 <tr class="memitem:ad2ee0baf8e9c3a32f068db3352e652f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html#ad2ee0baf8e9c3a32f068db3352e652f3">F8MetaCntx</a> (const unsigned <a class="el" href="structFIX8_1_1F8MetaCntx.html#ab1fc890f19e70e7391e8dbbd82367f39">version</a>, const <a class="el" href="namespaceFIX8.html#a0645c021f7723c1311e406ab1616e2d9">MsgTable</a> &amp;bme, const <a class="el" href="namespaceFIX8.html#adb952d45f30f04ab75c31d53fcc22956">FieldTable</a> &amp;be, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;bg)</td></tr>
 <tr class="memitem:ab1fc890f19e70e7391e8dbbd82367f39"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html#ab1fc890f19e70e7391e8dbbd82367f39">version</a> () const </td></tr>
 <tr class="memdesc:ab1fc890f19e70e7391e8dbbd82367f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 digit fix version &lt;Major:1&gt;&lt;Minor:1&gt;&lt;Revision:2&gt; eg. 4.2r10 is 4210  <a href="#ab1fc890f19e70e7391e8dbbd82367f39"></a><br/></td></tr>
@@ -138,12 +148,36 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:af013244d09339b399dfb070b1dae3fc6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Message.html">Message</a> *(*)*(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html#af013244d09339b399dfb070b1dae3fc6">_mk_trl</a> )()</td></tr>
 <tr class="memitem:ab60edf3bab787ab4d6447cc3b2cd2439"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html#ab60edf3bab787ab4d6447cc3b2cd2439">_beginStr</a></td></tr>
 <tr class="memdesc:ab60edf3bab787ab4d6447cc3b2cd2439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fix header beginstring.  <a href="#ab60edf3bab787ab4d6447cc3b2cd2439"></a><br/></td></tr>
+<tr class="memitem:a5daaec3b3c02ae373f8c5912b6692813"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1ebitset.html">ebitset</a>&lt; <a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aa">MsgFlags</a>, unsigned &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html#a5daaec3b3c02ae373f8c5912b6692813">_msg_flags</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Static metadata context class - one per FIX xml schema. </p>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00202">202</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
-</div><h2>Constructor &amp; Destructor Documentation</h2>
+</div><h2>Member Enumeration Documentation</h2>
+<a class="anchor" id="a2f4f5cf42a6154040c7eeb9b565c72aa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aa">FIX8::F8MetaCntx::MsgFlags</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a2f4f5cf42a6154040c7eeb9b565c72aaaea64fe7b349214d6fd8a945a22b10a85"></a>noverifychksum</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a2f4f5cf42a6154040c7eeb9b565c72aaaa08946901a0e2e26de94058926b1a52b"></a>count</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00219">219</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+
+</div>
+</div>
+<h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ad2ee0baf8e9c3a32f068db3352e652f3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -188,11 +222,97 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00219">219</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00225">225</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 </div>
 </div>
 <h2>Member Function Documentation</h2>
+<a class="anchor" id="a0d7b01dc0ea92775739187621406b654"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FIX8::F8MetaCntx::clear_flag </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aa">MsgFlags</a>&#160;</td>
+          <td class="paramname"><em>flg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00223">223</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+
+<p>References <a class="el" href="message_8hpp_source.html#l00220">_msg_flags</a>, and <a class="el" href="f8utils_8hpp_source.html#l00664">FIX8::ebitset&lt; T, B &gt;::set()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af3dee3504cf1a05f271da1a28ceb9c44"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FIX8::F8MetaCntx::has_flag </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aa">MsgFlags</a>&#160;</td>
+          <td class="paramname"><em>flg</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00221">221</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+
+<p>References <a class="el" href="message_8hpp_source.html#l00220">_msg_flags</a>, and <a class="el" href="f8utils_8hpp_source.html#l00654">FIX8::ebitset&lt; T, B &gt;::has()</a>.</p>
+
+<p>Referenced by <a class="el" href="message_8cpp_source.html#l00206">FIX8::Message::factory()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9733b55dc579d6a6788e9c63856db8ac"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FIX8::F8MetaCntx::set_flag </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aa">MsgFlags</a>&#160;</td>
+          <td class="paramname"><em>flg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00222">222</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+
+<p>References <a class="el" href="message_8hpp_source.html#l00220">_msg_flags</a>, and <a class="el" href="f8utils_8hpp_source.html#l00664">FIX8::ebitset&lt; T, B &gt;::set()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ac7a668e487c4111f1020b6843bd63651"></a>
 <div class="memitem">
 <div class="memproto">
@@ -246,11 +366,11 @@ Public Attributes</h2></td></tr>
 
 <p>4 digit fix version &lt;Major:1&gt;&lt;Minor:1&gt;&lt;Revision:2&gt; eg. 4.2r10 is 4210 </p>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00228">228</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00234">234</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 <p>References <a class="el" href="message_8hpp_source.html#l00204">_version</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00363">FIX8::Session::handle_logon()</a>, and <a class="el" href="hfprint_8cpp_source.html#l00134">main()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">FIX8::Session::handle_logon()</a>, and <a class="el" href="hfprint_8cpp_source.html#l00134">main()</a>.</p>
 
 </div>
 </div>
@@ -269,7 +389,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00209">209</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00353">FIX8::MessageBase::check_set_rlm()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00359">FIX8::MessageBase::check_set_rlm()</a>.</p>
 
 </div>
 </div>
@@ -287,7 +407,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00217">217</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l30645">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="session_8cpp_source.html#l00363">FIX8::Session::handle_logon()</a>, and <a class="el" href="hfprint_8cpp_source.html#l00134">main()</a>.</p>
+<p>Referenced by <a class="el" href="Myfix__classes_8hpp_source.html#l30645">FIX8::TEX::header::add_preamble()</a>, <a class="el" href="session_8cpp_source.html#l00384">FIX8::Session::handle_logon()</a>, and <a class="el" href="hfprint_8cpp_source.html#l00134">main()</a>.</p>
 
 </div>
 </div>
@@ -305,7 +425,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00207">207</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00335">FIX8::Session::create_msg()</a>, and <a class="el" href="message_8cpp_source.html#l00212">FIX8::Message::factory()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00301">FIX8::Session::create_msg()</a>, and <a class="el" href="message_8cpp_source.html#l00206">FIX8::Message::factory()</a>.</p>
 
 </div>
 </div>
@@ -337,6 +457,30 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a5daaec3b3c02ae373f8c5912b6692813"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFIX8_1_1ebitset.html">ebitset</a>&lt;<a class="el" href="structFIX8_1_1F8MetaCntx.html#a2f4f5cf42a6154040c7eeb9b565c72aa">MsgFlags</a>, unsigned&gt; FIX8::F8MetaCntx::_msg_flags</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00220">220</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00223">clear_flag()</a>, <a class="el" href="message_8hpp_source.html#l00221">has_flag()</a>, and <a class="el" href="message_8hpp_source.html#l00222">set_flag()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a0487b2955e03ea191c3c561da3f220e6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -351,7 +495,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00212">212</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8cpp_source.html#l00212">FIX8::Message::factory()</a>, <a class="el" href="message_8hpp_source.html#l00713">FIX8::Message::Message()</a>, and <a class="el" href="message_8hpp_source.html#l00213">set_ube()</a>.</p>
+<p>Referenced by <a class="el" href="message_8cpp_source.html#l00206">FIX8::Message::factory()</a>, <a class="el" href="message_8hpp_source.html#l00719">FIX8::Message::Message()</a>, and <a class="el" href="message_8hpp_source.html#l00213">set_ube()</a>.</p>
 
 </div>
 </div>
@@ -367,7 +511,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="message_8hpp_source.html#l00204">204</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00228">version()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00234">version()</a>.</p>
 
 </div>
 </div>
@@ -377,7 +521,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:27. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 14:10:27. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

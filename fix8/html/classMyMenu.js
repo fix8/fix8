@@ -34,6 +34,7 @@ var classMyMenu =
     [ "process", "classMyMenu.html#a37e125c2bc030fed0d595357c9a9590d", null ],
     [ "process", "classMyMenu.html#a37e125c2bc030fed0d595357c9a9590d", null ],
     [ "read_msgs", "classMyMenu.html#ab64647226fa0f4566edcdb477c90cbdf", null ],
+    [ "resend_request", "classMyMenu.html#a9a33db2a1336cd06ce895d574e7ed579", null ],
     [ "send_all_preloaded", "classMyMenu.html#ae8b731aa4bfcff89e1a9f16afaaf3e2a", null ],
     [ "send_msgs", "classMyMenu.html#a7e584e8b4c1ed049712cdd31bdfa6d8d", null ],
     [ "write_msgs", "classMyMenu.html#aa702d8304303510898b9938e1dc15c07", null ],

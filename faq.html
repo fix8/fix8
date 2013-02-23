@@ -95,7 +95,7 @@
 						<div class="accordion" id="accordion2">
 							<div class="accordion-group">
 								<div class="accordion-heading">
-									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleOne">a) What is fix8?</a>
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#generaleOne">a) What is Fix8?</a>
 								</div>
 								<div id="generaleOne" class="accordion-body collapse">
 									<div class="accordion-inner">
@@ -193,7 +193,7 @@
 							<div class="accordion" id="accordion9">
 								<div class="accordion-group">
 									<div class="accordion-heading">
-										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion9" href="#licensingOne">a) What license is fix8 released under?</a>
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion9" href="#licensingOne">a) What license is Fix8 released under?</a>
 									</div>
 									<div id="licensingOne" class="accordion-body collapse">
 										<div class="accordion-inner">
@@ -277,22 +277,23 @@
 										<div class="accordion-inner">
 											Fix8 is currently only supported on <a href="http://en.wikipedia.org/wiki/Linux">Linux.</a> Both 32 and 64 bit builds have
 											been tested.  Fix8 uses <a href="http://en.wikipedia.org/wiki/Posix">POSIX</a> system calls and should work on
-											other <a href="http://en.wikipedia.org/wiki/*NIX">*NIX</a> variants too. If you get fix8 working on another *NIX
+											other <a href="http://en.wikipedia.org/wiki/*NIX">*NIX</a> variants too. If you get Fix8 working on another *NIX
 											please let us know. Fix8 is not currently supported on Windows although it should be portable to that platform.
 										</div>
 									</div>
 								</div>
 								<div class="accordion-group">
 									<div class="accordion-heading">
-										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeTwo">b) What libraries are required to build fix8?</a>
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeTwo">b) What libraries are required to build Fix8?</a>
 									</div>
 									<div id="platformeTwo" class="accordion-body collapse">
 										<div class="accordion-inner">
 											Fix8 requires the standard set of <a href="http://www.gnu.org/gnu/linux-and-gnu.html">GNU/Linux</a> dev tools,
 											including <a href="http://http://gcc.gnu.org">gcc</a>,
-											<a href="http://www.gnu.org/software/libtool">libtool</a>,
-											<a href="http://pocoproject.org/">Poco</a> library, Intel <a href="http://threadingbuildingblocks.org/">TBB</a> and
-											Oracle <a href="http://www.oracle.com/technetwork/database/berkeleydb/overview/index.html">Berkeley DB</a>. If
+											<a href="http://www.gnu.org/software/libtool">libtool</a>. Also required is the
+											<a href="http://pocoproject.org/">Poco</a> library and Intel <a href="http://threadingbuildingblocks.org/">TBB</a>.
+											<p>Optionally you
+											can use Oracle <a href="http://www.oracle.com/technetwork/database/berkeleydb/overview/index.html">Berkeley DB</a>. If
 											you want to generate the API documentation you will also need <a href="http://www.doxygen.org">doxygen</a>.
 										</div>
 									</div>
@@ -303,7 +304,7 @@
 									</div>
 									<div id="platformeThree" class="accordion-body collapse">
 										<div class="accordion-inner">
-											Since fix8 uses Intel <a href="http://threadingbuildingblocks.org/">TBB</a> only
+											Since Fix8 uses Intel <a href="http://threadingbuildingblocks.org/">TBB</a> only
 											Intel <a href="http://en.wikipedia.org/wiki/Ia32">IA32</a>, <a href="http://en.wikipedia.org/wiki/X86-64">x86-64</a>,
 											<a href="http://en.wikipedia.org/wiki/Ia64">Itanium</a> and compatible
 											hardware is supported (including AMD). There are however other non-supported patches for TBB to run on different hardware, including SPARC.
@@ -445,15 +446,15 @@ MessageBase *gr11(nonpsid->create_group());
 											</div>
 											<div class="accordion-group">
 												<div class="accordion-heading">
-													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#testFive">e) Does fix8 support custom fields?</a>
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#testFive">e) Does Fix8 support custom fields?</a>
 												</div>
 												<div id="testFive" class="accordion-body collapse">
 													<div class="accordion-inner">
 														Yes. In two ways. Firstly, since you have complete control over the shape and nature of all FIX messages in your
 														application by supplying the schema to the compiler, you can fine tune the FIX spoken to include any field you wish.
-														Alternatively, fix8 supports the addition of FIX fields in your application directly (without requiring the fix8
+														Alternatively, Fix8 supports the addition of FIX fields in your application directly (without requiring the Fix8
 														compiler to regenerate any code). For speed and efficiency, you should always aim to use the former method.
-														In fix8, the term 'custom field' really means additional fields not
+														In Fix8, the term 'custom field' really means additional fields not
 														defined in your schema. To use these, custom fields must be enabled when you run configure.
 								<pre>
 % ./configure --enable-customfields</pre>
@@ -562,7 +563,7 @@ POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil -lPocoXML</pre>
 												</div>
 												<div id="testEight" class="accordion-body collapse">
 													<div class="accordion-inner">
-														The fix8 compiler requires that your schema declare each FIX msgtype referred to in your Message section in the field type 35 (Msgtype)
+														The Fix8 compiler requires that your schema declare each FIX msgtype referred to in your Message section in the field type 35 (Msgtype)
 														in the fields element. The compiler needs these to verify your message definitions. You should have something like the following...
 <pre>&lt;fields&gt;
 .

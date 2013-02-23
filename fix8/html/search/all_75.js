@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['ubuf',['Ubuf',['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html',1,'FIX8::BDBPersister::KeyDataBuffer']]],
-  ['ubuf',['Ubuf',['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#a23b8bebb7e81c350c7d654a8dd760ce4',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf()'],['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#af1170eb0e7576216cb676c694244e8bb',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf(const unsigned val)'],['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#a17247a02467e079909414ebe9cc3c926',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf(const Ubuf &amp;from)']]],
   ['underflow',['underflow',['../classFIX8_1_1fdinbuf.html#ab8c0e928fbc8b1152dbf356dc1d5bdef',1,'FIX8::fdinbuf::underflow()'],['../classgzstreambuf.html#a84ab99df5fd4df27425573757973e3f4',1,'gzstreambuf::underflow()']]],
   ['underlyingadjustedquantity',['UnderlyingAdjustedQuantity',['../namespaceFIX8_1_1TEX.html#a9eb641780c3a28692ac86de2d8911d44',1,'FIX8::TEX']]],
   ['underlyingallocationpercent',['UnderlyingAllocationPercent',['../namespaceFIX8_1_1TEX.html#a13d857abbd22dc1b709ff7735e2bb61b',1,'FIX8::TEX']]],

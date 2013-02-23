@@ -7,9 +7,6 @@ var classFIX8_1_1SessionInstance =
     [ "start", "classFIX8_1_1SessionInstance.html#a9109f4b0cc403c34d2ce9ae9c82258ea", null ],
     [ "stop", "classFIX8_1_1SessionInstance.html#aef953e6aa6afaad446e2ccaa69447960", null ],
     [ "_claddr", "classFIX8_1_1SessionInstance.html#a52611feb4d3926a22f9f0a0b9632b673", null ],
-    [ "_log", "classFIX8_1_1SessionInstance.html#ac172a4d505aaaff3ce5f5039a09ff215", null ],
-    [ "_persist", "classFIX8_1_1SessionInstance.html#a43b900a784435f86098404ffc0429fbf", null ],
-    [ "_plog", "classFIX8_1_1SessionInstance.html#ab0b524589bef69c70a3a248275a44807", null ],
     [ "_sc", "classFIX8_1_1SessionInstance.html#a208db0e2a63e3ff4e6a59a529663022d", null ],
     [ "_session", "classFIX8_1_1SessionInstance.html#a3a80ddc043cbf13acf6490c7a62cc982", null ],
     [ "_sock", "classFIX8_1_1SessionInstance.html#a2ac7c299d1099dd67aadb401fb005932", null ]

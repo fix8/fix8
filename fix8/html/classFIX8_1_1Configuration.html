@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.7</span>
+   &#160;<span id="projectnumber">version  0.7.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -151,7 +151,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a36a52fd4fa27e1ce343590ce56f69d19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804">Connection::Role</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a36a52fd4fa27e1ce343590ce56f69d19">get_role</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
 <tr class="memitem:ace764895c637f1ceb7d466505a6687df"><td class="memItemLeft" align="right" valign="top">Poco::Net::SocketAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ace764895c637f1ceb7d466505a6687df">get_address</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
 <tr class="memitem:a63edde694857230cc0a1f26d0cf7b861"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html#a478225c58aaf0244c2b1ada179d61eb4">Logger::LogFlags</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a63edde694857230cc0a1f26d0cf7b861">get_logflags</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
-<tr class="memitem:a8c62d1f769e93992331fe7de9e706d07"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a8c62d1f769e93992331fe7de9e706d07">get_logname</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, std::string &amp;to) const </td></tr>
+<tr class="memitem:ab68e04de2c9527e5ea8546e90fd4457e"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ab68e04de2c9527e5ea8546e90fd4457e">get_logname</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, std::string &amp;to, const <a class="el" href="classFIX8_1_1SessionID.html">SessionID</a> *sid=0) const </td></tr>
 <tr class="memitem:a96776f7b6c4cc02dba1c9c7aeb19bbee"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a96776f7b6c4cc02dba1c9c7aeb19bbee">get_retry_interval</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=5000) const </td></tr>
 <tr class="memitem:a8f8f0922f008d43825a09fda5657d063"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a8f8f0922f008d43825a09fda5657d063">get_retry_count</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=10) const </td></tr>
 <tr class="memitem:a2d675522e61200acf84d6c924103bbcf"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a2d675522e61200acf84d6c924103bbcf">get_tcp_recvbuf_sz</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
@@ -164,8 +164,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aae45bd1594aa91931eff6a0fa4ed9288"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#a69fe800cc26bea9e90d65c92e5509b95">default_appl_ver_id</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#aae45bd1594aa91931eff6a0fa4ed9288">get_default_appl_ver_id</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
 <tr class="memitem:a00d8d606b3ec33836fa64397fcca2b1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#a3814ce0293e9d5fd61fb398aaa383369">sender_comp_id</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a00d8d606b3ec33836fa64397fcca2b1c">get_sender_comp_id</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
 <tr class="memitem:aee6c01563c11821c57992e3719149206"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#a24883f3659515b6e800735c3123cf68e">target_comp_id</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#aee6c01563c11821c57992e3719149206">get_target_comp_id</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
-<tr class="memitem:ad8298c3594e29d4d3bb94f39c4293f21"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Persister.html">Persister</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ad8298c3594e29d4d3bb94f39c4293f21">create_persister</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
-<tr class="memitem:accd1c699ae043053cc5bd7edc4979d7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html">Logger</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#accd1c699ae043053cc5bd7edc4979d7f">create_logger</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const <a class="el" href="classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2">Logtype</a> ltype) const </td></tr>
+<tr class="memitem:aca423ae19c16258163e746a588003f6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Persister.html">Persister</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#aca423ae19c16258163e746a588003f6f">create_persister</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const <a class="el" href="classFIX8_1_1SessionID.html">SessionID</a> *sid=0) const </td></tr>
+<tr class="memitem:a3b2c1c237254fa4edd1ce48069f5ebc4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html">Logger</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4">create_logger</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const <a class="el" href="classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2">Logtype</a> ltype, const <a class="el" href="classFIX8_1_1SessionID.html">SessionID</a> *sid=0) const </td></tr>
 <tr class="memitem:ad78d4276318213ebf19c1ce4ed6d6d28"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28">get_all_sessions</a> (std::vector&lt; const <a class="el" href="classXmlElement.html">XmlElement</a> * &gt; &amp;target, const <a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804">Connection::Role</a> role=<a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">Connection::cn_unknown</a>) const </td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-types"></a>
@@ -322,7 +322,7 @@ Static Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2>Member Function Documentation</h2>
-<a class="anchor" id="accd1c699ae043053cc5bd7edc4979d7f"></a>
+<a class="anchor" id="a3b2c1c237254fa4edd1ce48069f5ebc4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -336,7 +336,13 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2">Logtype</a>&#160;</td>
-          <td class="paramname"><em>ltype</em>&#160;</td>
+          <td class="paramname"><em>ltype</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classFIX8_1_1SessionID.html">SessionID</a> *&#160;</td>
+          <td class="paramname"><em>sid</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -346,15 +352,25 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Create a new logger object from a session entity. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">from</td><td>xml entity to search </td></tr>
+    <tr><td class="paramname">ltype</td><td>log type </td></tr>
+    <tr><td class="paramname">sid</td><td>optional session id to build name from </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>new logger or 0 if unable to create </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00137">137</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00138">138</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00566">XmlElement::GetAttr()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00572">XmlElement::GetAttr()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
+
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">FIX8::Session::handle_logon()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad8298c3594e29d4d3bb94f39c4293f21"></a>
+<a class="anchor" id="aca423ae19c16258163e746a588003f6f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -362,17 +378,36 @@ Static Private Attributes</h2></td></tr>
           <td class="memname"><a class="el" href="classFIX8_1_1Persister.html">Persister</a> * Configuration::create_persister </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td>
-          <td class="paramname"><em>from</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classFIX8_1_1SessionID.html">SessionID</a> *&#160;</td>
+          <td class="paramname"><em>sid</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Create a new persister object from a session entity. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">from</td><td>xml entity to search </td></tr>
+    <tr><td class="paramname">sid</td><td>optional session id to build name from </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>new persister or 0 if unable to create </dd></dl>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00099">99</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00566">XmlElement::GetAttr()</a>, <a class="el" href="persist_8cpp_source.html#l00063">FIX8::BDBPersister::initialise()</a>, <a class="el" href="filepersist_8cpp_source.html#l00065">FIX8::FilePersister::initialise()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00234">FIX8::scoped_ptr&lt; T &gt;::release()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00161">XmlElement::FindAttr()</a>, <a class="el" href="session_8hpp_source.html#l00099">FIX8::SessionID::get_senderCompID()</a>, <a class="el" href="session_8hpp_source.html#l00103">FIX8::SessionID::get_targetCompID()</a>, <a class="el" href="xml_8cpp_source.html#l00572">XmlElement::GetAttr()</a>, <a class="el" href="filepersist_8cpp_source.html#l00065">FIX8::FilePersister::initialise()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00234">FIX8::scoped_ptr&lt; T &gt;::release()</a>.</p>
+
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">FIX8::Session::handle_logon()</a>.</p>
 
 </div>
 </div>
@@ -557,7 +592,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00088">88</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00566">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00572">XmlElement::GetAttr()</a>.</p>
 
 </div>
 </div>
@@ -594,7 +629,7 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of sessions found </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00193">193</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00208">208</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
 <p>References <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_unknown</a>.</p>
 
@@ -743,21 +778,18 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>LogFLags object </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00175">175</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00190">190</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00244">FIX8::Logger::_bit_names</a>, <a class="el" href="xml_8cpp_source.html#l00566">XmlElement::GetAttr()</a>, <a class="el" href="logger_8hpp_source.html#l00164">FIX8::Logger::num_flags</a>, <a class="el" href="f8utils_8hpp_source.html#l00664">FIX8::ebitset&lt; T, B &gt;::set()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00244">FIX8::Logger::_bit_names</a>, <a class="el" href="xml_8cpp_source.html#l00572">XmlElement::GetAttr()</a>, <a class="el" href="logger_8hpp_source.html#l00164">FIX8::Logger::num_flags</a>, <a class="el" href="f8utils_8hpp_source.html#l00664">FIX8::ebitset&lt; T, B &gt;::set()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8c62d1f769e93992331fe7de9e706d07"></a>
+<a class="anchor" id="ab68e04de2c9527e5ea8546e90fd4457e"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string&amp; FIX8::Configuration::get_logname </td>
+          <td class="memname">string &amp; Configuration::get_logname </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td>
           <td class="paramname"><em>from</em>, </td>
@@ -766,7 +798,13 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string &amp;&#160;</td>
-          <td class="paramname"><em>to</em>&#160;</td>
+          <td class="paramname"><em>to</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classFIX8_1_1SessionID.html">SessionID</a> *&#160;</td>
+          <td class="paramname"><em>sid</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -774,25 +812,21 @@ Static Private Attributes</h2></td></tr>
           <td></td><td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Extract the session log filename address from a session entity. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">from</td><td>xml entity to search </td></tr>
     <tr><td class="paramname">to</td><td>target logfile string </td></tr>
+    <tr><td class="paramname">sid</td><td>optional session id to build name from </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>target string </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00158">158</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00176">176</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00179">XmlElement::FindAttrRef()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00161">XmlElement::FindAttr()</a>, <a class="el" href="xml_8hpp_source.html#l00179">XmlElement::FindAttrRef()</a>, <a class="el" href="session_8hpp_source.html#l00099">FIX8::SessionID::get_senderCompID()</a>, and <a class="el" href="session_8hpp_source.html#l00103">FIX8::SessionID::get_targetCompID()</a>.</p>
 
 </div>
 </div>
@@ -956,7 +990,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00080">80</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_acceptor</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_initiator</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_unknown</a>, and <a class="el" href="xml_8cpp_source.html#l00566">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_acceptor</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_initiator</a>, <a class="el" href="connection_8hpp_source.html#l00215">FIX8::Connection::cn_unknown</a>, and <a class="el" href="xml_8cpp_source.html#l00572">XmlElement::GetAttr()</a>.</p>
 
 </div>
 </div>
@@ -1090,7 +1124,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00079">79</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00566">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00572">XmlElement::GetAttr()</a>.</p>
 
 <p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00221">get_default_appl_ver_id()</a>, <a class="el" href="configuration_8hpp_source.html#l00227">get_sender_comp_id()</a>, and <a class="el" href="configuration_8hpp_source.html#l00233">get_target_comp_id()</a>.</p>
 
@@ -1529,7 +1563,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:24. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 14:10:23. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

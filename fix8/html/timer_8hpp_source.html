@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.6.7</span>
+   &#160;<span id="projectnumber">version  0.7.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -229,7 +229,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;               <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            }</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            <span class="keywordflow">if</span> (op._t &lt; <a class="code" href="classFIX8_1_1Tickval.html#a0543385fc89162739f2159e1fc1bdc89">Tickval::get_tickval</a>())  <span class="comment">// has elapsed</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            <span class="keywordflow">if</span> (op._t &lt;= <a class="code" href="classFIX8_1_1Tickval.html#a0543385fc89162739f2159e1fc1bdc89">Tickval::get_tickval</a>())  <span class="comment">// has elapsed</span></div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            {</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;               <span class="keyword">const</span> <a class="code" href="classFIX8_1_1TimerEvent.html" title="Timer event object to provide callback context with Timer.">TimerEvent&lt;T&gt;</a> rop(_event_queue.top()); <span class="comment">// take a copy</span></div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;               _event_queue.pop(); <span class="comment">// remove from queue</span></div>
@@ -334,7 +334,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Mon Jan 28 2013 15:32:23. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 14:10:23. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>
