@@ -1,4 +1,4 @@
-* Sun Feb 17 2013 David L. Dight <fix@fix8.org> 0.7.0
+* Sat Feb 23 2013 David L. Dight <fix@fix8.org> 0.7.0
 File based persistence now implemented and default. Dependence on BerekelyDB removed.
 rpmbuild will now create an rpm from fix8.spec
 Fixed jira tickets FX-34, FX-33, FX-32, FX-30, FX-29, FX-28
