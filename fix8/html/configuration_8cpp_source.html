@@ -225,8 +225,8 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">#if defined HAVE_BDB</span></div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor"></span>      <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;bdb&quot;</span>)</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;BDBPersister&gt;</a> result(<span class="keyword">new</span> BDBPersister);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;         <span class="keywordflow">if</span> (result-&gt;initialise(dir, db))</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;BDBPersister&gt;</a> result(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1BDBPersister.html" title="BerkeleyDB backed message persister.">BDBPersister</a>);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;         <span class="keywordflow">if</span> (result-&gt;<a class="code" href="classFIX8_1_1BDBPersister.html#ac5d837dd642f0a5f5991b8b7d1804c26">initialise</a>(dir, db))</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            <span class="keywordflow">return</span> result.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      }</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      <span class="keywordflow">else</span></div>
@@ -324,7 +324,7 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:24:56. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:03. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

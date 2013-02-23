@@ -1,6 +1,8 @@
 var searchData=
 [
   ['data',['data',['../namespaceFIX8.html#ab11f68f3e9c06fa6309b75faa9e9dae9',1,'FIX8']]],
+  ['databuf_5f',['dataBuf_',['../structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html#aa3171ffe459e5c760a03aa1bc9cd1d0c',1,'FIX8::BDBPersister::KeyDataBuffer']]],
+  ['databuflen_5f',['dataBufLen_',['../structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html#a2ac3a5f0857b35341c8d82112eea7c7a',1,'FIX8::BDBPersister::KeyDataBuffer']]],
   ['dateddate',['DatedDate',['../namespaceFIX8_1_1TEX.html#a4a3d814c5c284b9562934b00a81deaf2',1,'FIX8::TEX']]],
   ['dateofbirth',['DateOfBirth',['../namespaceFIX8_1_1TEX.html#a9372b62a8caa79ea94b715ad69d737af',1,'FIX8::TEX']]],
   ['datetimeformat',['DateTimeFormat',['../classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#ad7d6897f542cc655d02afa69bbcc33a0',1,'FIX8::Field&lt; UTCTimestamp, field &gt;']]],
@@ -122,8 +124,8 @@ var searchData=
   ['derivativesecuritygroup',['DerivativeSecurityGroup',['../namespaceFIX8_1_1TEX.html#a34dca3cb5e0da8dd1abe151a77c670a0',1,'FIX8::TEX']]],
   ['derivativesecurityid',['DerivativeSecurityID',['../namespaceFIX8_1_1TEX.html#a9239f453a5fafaa48a8fc43e22231067',1,'FIX8::TEX']]],
   ['derivativesecurityidsource',['DerivativeSecurityIDSource',['../namespaceFIX8_1_1TEX.html#aba8f9fa9c2a2e5e29a0ca451750f3c19',1,'FIX8::TEX']]],
-  ['derivativesecuritylist',['DerivativeSecurityList',['../classFIX8_1_1TEX_1_1DerivativeSecurityList.html#a281fc26185b01f7cf11daa0666acb34c',1,'FIX8::TEX::DerivativeSecurityList']]],
   ['derivativesecuritylist',['DerivativeSecurityList',['../classFIX8_1_1TEX_1_1DerivativeSecurityList.html',1,'FIX8::TEX']]],
+  ['derivativesecuritylist',['DerivativeSecurityList',['../classFIX8_1_1TEX_1_1DerivativeSecurityList.html#a281fc26185b01f7cf11daa0666acb34c',1,'FIX8::TEX::DerivativeSecurityList']]],
   ['derivativesecuritylistrequest',['DerivativeSecurityListRequest',['../classFIX8_1_1TEX_1_1DerivativeSecurityListRequest.html#a64d3bd1099a7ea02ef13b7ea09ab9834',1,'FIX8::TEX::DerivativeSecurityListRequest']]],
   ['derivativesecuritylistrequest',['DerivativeSecurityListRequest',['../classFIX8_1_1TEX_1_1DerivativeSecurityListRequest.html',1,'FIX8::TEX']]],
   ['derivativesecuritylistupdatereport',['DerivativeSecurityListUpdateReport',['../classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport.html',1,'FIX8::TEX']]],
@@ -290,6 +292,6 @@ var searchData=
   ['duetorelated_5fno',['DueToRelated_NO',['../namespaceFIX8_1_1TEX.html#aa2807312184afc7ff980ff973751b2c4',1,'FIX8::TEX']]],
   ['duetorelated_5frealm_5fels',['DueToRelated_realm_els',['../namespaceFIX8_1_1TEX.html#aafe5060479c6891994139d5a222eefc4',1,'FIX8::TEX']]],
   ['duetorelated_5fyes',['DueToRelated_YES',['../namespaceFIX8_1_1TEX.html#a9014839ff009d1ad965d9a36660a3cfe',1,'FIX8::TEX']]],
-  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html#ab1df1a8ca0df0ef108b6149d6d960d9a',1,'FIX8::DuplicateField']]],
-  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html',1,'FIX8']]]
+  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html',1,'FIX8']]],
+  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html#ab1df1a8ca0df0ef108b6149d6d960d9a',1,'FIX8::DuplicateField']]]
 ];

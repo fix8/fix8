@@ -97,6 +97,7 @@ var namespaceFIX8 =
     [ "MessageBase", "classFIX8_1_1MessageBase.html", "classFIX8_1_1MessageBase" ],
     [ "Message", "classFIX8_1_1Message.html", "classFIX8_1_1Message" ],
     [ "Persister", "classFIX8_1_1Persister.html", "classFIX8_1_1Persister" ],
+    [ "BDBPersister", "classFIX8_1_1BDBPersister.html", "classFIX8_1_1BDBPersister" ],
     [ "MemoryPersister", "classFIX8_1_1MemoryPersister.html", "classFIX8_1_1MemoryPersister" ],
     [ "FilePersister", "classFIX8_1_1FilePersister.html", "classFIX8_1_1FilePersister" ],
     [ "SessionID", "classFIX8_1_1SessionID.html", "classFIX8_1_1SessionID" ],

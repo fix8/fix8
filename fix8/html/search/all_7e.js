@@ -17,6 +17,7 @@ var searchData=
   ['_7ebclogger',['~BCLogger',['../classFIX8_1_1BCLogger.html#a04a6d5349b484e40fe7680f69bc8909a',1,'FIX8::BCLogger']]],
   ['_7ebcostream',['~bcostream',['../classFIX8_1_1bcostream.html#a5d2ad611df4f7356e24e2694fec6e59a',1,'FIX8::bcostream']]],
   ['_7ebcoutbuf',['~bcoutbuf',['../classFIX8_1_1bcoutbuf.html#aaf92675000d2ce7d839710a61a54cea7',1,'FIX8::bcoutbuf']]],
+  ['_7ebdbpersister',['~BDBPersister',['../classFIX8_1_1BDBPersister.html#ae22dd401eae325a26539c48ea8cd0819',1,'FIX8::BDBPersister']]],
   ['_7ebidrequest',['~BidRequest',['../classFIX8_1_1TEX_1_1BidRequest.html#aba9e3a0f93e91af26d405ecbef1af5d7',1,'FIX8::TEX::BidRequest']]],
   ['_7ebidresponse',['~BidResponse',['../classFIX8_1_1TEX_1_1BidResponse.html#aa0a0e88a89bdc5256d8f909aa13ebab9',1,'FIX8::TEX::BidResponse']]],
   ['_7ebusinessmessagereject',['~BusinessMessageReject',['../classFIX8_1_1TEX_1_1BusinessMessageReject.html#a712f6df314f583fa42af213c44680121',1,'FIX8::TEX::BusinessMessageReject::~BusinessMessageReject()'],['../classFIX8_1_1TEX_1_1BusinessMessageReject.html#a712f6df314f583fa42af213c44680121',1,'FIX8::TEX::BusinessMessageReject::~BusinessMessageReject()']]],
