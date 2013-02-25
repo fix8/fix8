@@ -94,7 +94,7 @@ libraries) being installed to build properly:
 
 If you wish to build the html documentation, you will need:
 
-- [Doxygen](www.doxygen.org)
+- [Doxygen](http://www.doxygen.org)
 
 If you wish to use BerkeleyDB for message persistence:
 
