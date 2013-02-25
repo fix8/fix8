@@ -539,7 +539,7 @@ AC_SUBST(BRAND_DESCRIPTION)
 AC_SUBST(BRAND_COMPANY_SHORTNAME)
 AC_SUBST(BRAND_COMPANY_LONGNAME)
 
-AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile doc/fix8.doxygen fix8.spec])
+AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile util/Makefile doc/fix8.doxygen fix8.spec])
 AC_CONFIG_HEADERS(include/f8config.h)
 AC_OUTPUT
 

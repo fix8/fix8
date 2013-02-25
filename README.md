@@ -111,6 +111,11 @@ You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to b
     % make
     % make install
 
+## License
+
+Fix8 is released under the [GNU LESSER GENERAL PUBLIC LICENSE Version 3](http://www.gnu.org/licenses/lgpl.html).
+See [License](http://fix8.org/faq.html#licensing) for more information.
+
 ## More Information
 
 For more information, see the [Fix8 website.](http://www.fix8.org)

@@ -1,9 +1,8 @@
-#!/bin/bash
 #############################################################################################
 # Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
 # Fix8 Open Source FIX Engine.
-# Copyright (C) 2010,2011,2012,2013 David L. Dight <fix@fix8.org>
+# Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 #
 # Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 # GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -32,13 +31,23 @@
 # HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #
 #############################################################################################
-#
-# This is the master version file, called by configure
-#
-# If building from a source tarball, the embedded revision will be used.
-#
-#############################################################################################
-MAJOR_VERSION_NUM=0
-MINOR_VERSION_NUM=7
-PATCH_VERSION_NUM=1
-echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$PATCH_VERSION_NUM
+bin_PROGRAMS = seqedit
+seqedit_SOURCES = seqedit.cpp
+
+CLEANFILES =
+INCLUDES = -I$(top_srcdir)/include
+
+POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
+GEN_LIBS = -lrt -lfix8
+if BDBSUPPORT
+GEN_LIBS += -ldb_cxx
+endif
+TBB_LIBS = -ltbb
+ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) -L$(top_srcdir)/runtime
+
+seqedit_LDFLAGS = -rdynamic $(ALL_LIBS)
+
+if USECOMPRESSION
+seqedit_LDFLAGS += -lz
+endif
+

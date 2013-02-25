@@ -62,6 +62,7 @@ Fix8 runs on industry standard Linux. Other NIX variants may work too.
 %{_bindir}/f8test
 %{_bindir}/harness
 %{_bindir}/hfprint
+%{_bindir}/seqedit
 %{_bindir}/hftest
 %{_libdir}/libfix8.la
 %{_libdir}/libfix8.so
