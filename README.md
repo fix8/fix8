@@ -67,6 +67,10 @@ and framework; and a set of complete client/server test applications.
              <td>runtime library source</td>
           </tr>
           <tr>
+             <td>util/</td>
+             <td>additional utilities source</td>
+          </tr>
+          <tr>
              <td>schema/</td>
              <td>quickfix FIX xml schemas</td>
           </tr>
