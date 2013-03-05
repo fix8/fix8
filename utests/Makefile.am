@@ -32,4 +32,35 @@
 #
 #############################################################################################
 
-SUBDIRS = fix4.x fix5.x
+if USEGTEST
+bin_PROGRAMS = utests
+lib_LTLIBRARIES = libutest.la
+INCLUDES = -I$(top_srcdir)/include
+
+utests_SOURCES = message_test.cpp
+libutest_la_SOURCES = utest_types.hpp utest_types.cpp utest_traits.cpp \
+                                                         utest_router.hpp utest_classes.hpp utest_classes.cpp
+
+CLEANFILES = $(libutest_la_SOURCES)
+
+XML_42_SCHEMA = $(top_srcdir)/schema/FIX42.xml
+
+$(libutest_la_SOURCES): $(XML_42_SCHEMA)
+	$(top_srcdir)/compiler/f8c -sVp utest -n UTEST $(XML_42_SCHEMA)
+
+
+POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
+
+GEN_LIBS = -rdynamic -lrt -lfix8
+if BDBSUPPORT
+  GEN_LIBS += -ldb_cxx
+endif
+
+utests_LDFLAGS = $(GEN_LIBS) $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime -lgtest -lgtest_main -lutest
+
+if USECOMPRESSION
+utests_LDFLAGS += -lz
+endif
+
+endif
+
