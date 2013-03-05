@@ -37,8 +37,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _FIX8_PERSIST_HPP_
 #define _FIX8_PERSIST_HPP_
 
-#include <db_cxx.h>
 #include <tbb/concurrent_queue.h>
+
+#if defined HAVE_BDB
+#include <db_cxx.h>
+#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
@@ -85,7 +88,7 @@ public:
 	    \param from start at sequence number
 	    \param to end sequence number
 	    \param session session containing callback method
-	    \param callback method it call with each retrieved message
+	    \param callback method to call with each retrieved message
 	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*callback)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const = 0;
@@ -112,6 +115,8 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+#if defined HAVE_BDB
+
 /// BerkeleyDB backed message persister.
 class BDBPersister : public Persister
 {
@@ -243,6 +248,8 @@ public:
 	int operator()();	// write thread
 };
 
+#endif // HAVE_BDB
+
 //-------------------------------------------------------------------------------------------------
 /// Memory based message persister.
 class MemoryPersister : public Persister
@@ -303,34 +310,52 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 /// File persister
+struct Prec
+{
+	Prec(const off_t offset, const uint32_t size) : _offset(offset), _size(size) {}
+	Prec() : _offset(), _size() {}
+	off_t _offset;
+	uint32_t _size;
+
+	Prec& operator=(const Prec& that)
+	{
+		if (this != &that)
+		{
+			_offset = that._offset;
+			_size = that._size;
+		}
+		return *this;
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, const Prec& what)
+		{ return os << "offset:" << what._offset << " size:" << what._size; }
+};
+
+struct IPrec
+{
+	IPrec(const uint32_t seq, const off_t offset, const uint32_t size)
+		: _seq(seq), _prec(offset, size) {}
+	IPrec() : _seq() {}
+	uint32_t _seq;
+	Prec _prec;
+
+	friend std::ostream& operator<<(std::ostream& os, const IPrec& what)
+		{ return os << "seq:" << what._seq << ' ' << what._prec; }
+};
+
 class FilePersister : public Persister
 {
 	f8String _dbFname, _dbIname;
 	int _fod, _iod;
 	bool _wasCreated;
 
-	struct Prec
-	{
-		Prec(const uint32_t offset, const uint32_t size) : _offset(offset), _size(size) {}
-		Prec() : _offset(), _size() {}
-		uint32_t _offset, _size;
-	};
-
 	typedef std::map<uint32_t, Prec> Index;
 	Index _index;
-
-	struct IPrec
-	{
-		IPrec(const uint32_t seq, const uint32_t offset, const uint32_t size)
-			: _seq(seq), _prec(offset, size) {}
-		IPrec() : _seq() {}
-		uint32_t _seq;
-		Prec _prec;
-	};
 
 public:
 	/// Ctor.
 	FilePersister() : _fod(-1), _iod(-1), _wasCreated() {}
+
 	/// Dtor.
 	virtual ~FilePersister();
 

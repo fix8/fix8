@@ -403,7 +403,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 int XmlElement::ParseAttrs(const string& attlst)
 {
 	istringstream istr(attlst);
-	enum { ews, tag, oq, value } state(ews);
+	enum { ews, tag, es, oq, value } state(ews);
 	string tmptag, tmpval;
 	char comchar(0);
 
@@ -422,10 +422,16 @@ int XmlElement::ParseAttrs(const string& attlst)
 			}
 			break;
 		case tag:
-			if (c == '=')
+			if (isspace(c))
+				state = es;
+			else if (c == '=')
 				state = oq;
 			else
 				tmptag += c;
+			break;
+		case es:
+			if (c == '=')
+				state = oq;
 			break;
 		case oq:
 			if (c == '"' || c == '\'')

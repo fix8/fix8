@@ -172,6 +172,7 @@ public:
 	bool new_order_single();
 	bool new_order_single_50();
 	bool new_order_single_1000();
+	bool resend_request();
 	bool help();
 	bool nothing() { return true; }
 	bool do_exit() { return false; }

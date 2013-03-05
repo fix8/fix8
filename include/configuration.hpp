@@ -154,9 +154,9 @@ public:
 	/*! Extract the session log filename address from a session entity.
 	  \param from xml entity to search
 	  \param to target logfile string
+	  \param sid optional session id to build name from
 	  \return target string */
-	std::string& get_logname(const XmlElement *from, std::string& to) const
-		{ if (from) return from->FindAttrRef("filename", to); return to; }
+	std::string& get_logname(const XmlElement *from, std::string& to, const SessionID *sid=0) const;
 
 	/*! Extract the login retry wait interval (ms) from a session entity.
 	  \param from xml entity to search
@@ -234,12 +234,17 @@ public:
 		{ target_comp_id to; return get_string_field(from, "target_comp_id", to); }
 
 	/*! Create a new persister object from a session entity.
+	  \param from xml entity to search
+	  \param sid optional session id to build name from
 	  \return new persister or 0 if unable to create */
-	Persister *create_persister(const XmlElement *from) const;
+	Persister *create_persister(const XmlElement *from, const SessionID *sid=0) const;
 
 	/*! Create a new logger object from a session entity.
+	  \param from xml entity to search
+	  \param ltype log type
+	  \param sid optional session id to build name from
 	  \return new logger or 0 if unable to create */
-	Logger *create_logger(const XmlElement *from, const Logtype ltype) const;
+	Logger *create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid=0) const;
 
 	/*! Get all active sessions that have been read; filter by role if desired.
 	  \param target vector to place results

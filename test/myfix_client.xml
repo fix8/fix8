@@ -15,7 +15,12 @@
 				heartbeat_interval="10"
 				tcp_nodelay="true"
 				login_retries="100"
-				persist="bdb0" />
+				persist="file0" />
+
+	<persist name="file0"
+            type="file" dir="./run"
+            use_session_id="true"
+            db="client" />
 
 	<persist name="bdb0"
 				type="bdb" dir="./run"

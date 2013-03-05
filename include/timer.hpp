@@ -148,7 +148,7 @@ int Timer<T>::operator()()
                break;
             }
 
-            if (op._t < Tickval::get_tickval())  // has elapsed
+            if (op._t <= Tickval::get_tickval())  // has elapsed
             {
 					const TimerEvent<T> rop(_event_queue.top()); // take a copy
                _event_queue.pop(); // remove from queue

@@ -60,6 +60,8 @@ using namespace std;
 extern char glob_log0[max_global_filename_length];
 
 //-------------------------------------------------------------------------------------------------
+#if defined HAVE_BDB
+
 bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
 {
    if (_opened)
@@ -330,6 +332,8 @@ int BDBPersister::operator()()
 
    return 0;
 }
+
+#endif // HAVE_BDB
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

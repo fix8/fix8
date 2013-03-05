@@ -31,20 +31,23 @@
 # HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #
 #############################################################################################
+bin_PROGRAMS = seqedit
+seqedit_SOURCES = seqedit.cpp
 
-bin_PROGRAMS = f8c
+CLEANFILES =
 INCLUDES = -I$(top_srcdir)/include
 
-f8c_SOURCES = 	f8c.cpp f8cutils.cpp f8cstatic.hpp f8c.hpp f8precomp.cpp
-
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
-
-f8c_LDFLAGS = -rdynamic -lrt -lfix8 $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime
+GEN_LIBS = -lrt -lfix8
 if BDBSUPPORT
-f8c_LDFLAGS += -ldb_cxx
+GEN_LIBS += -ldb_cxx
 endif
+TBB_LIBS = -ltbb
+ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) -L$(top_srcdir)/runtime
+
+seqedit_LDFLAGS = -rdynamic $(ALL_LIBS)
 
 if USECOMPRESSION
-f8c_LDFLAGS += -lz
+seqedit_LDFLAGS += -lz
 endif
 

@@ -32,7 +32,7 @@
 #
 #############################################################################################
 
-SUBDIRS = runtime compiler utests
+SUBDIRS = runtime compiler test utests util
 
 if USEDOXYGEN
 SUBDIRS += doc
@@ -40,9 +40,6 @@ endif
 
 #############################################################################################
 ACLOCAL_AMFLAGS = -I m4
-
-EXTRA_DIST = doc/fix8.doxygen doc/mainpage.doxygen \
-				 schema/*.xml schema/QUICKFIX-LICENCE include/*.hpp
 
 $(distdir).tar.gz:
 	make dist
@@ -70,6 +67,11 @@ INSTALL_DATA_LOCAL_TEST = \
 	test/hf_client.xml test/myfix_client.xml test/hf_client_include.xml test/hf_server.xml test/myfix_server.xml \
 	test/f8_hf_test
 
+INSTALL_DATA_HTML_DOC = doc/html/*.js doc/html/*.html doc/html/*.png doc/html/*.css \
+	doc/fix8.doxygen doc/mainpage.doxygen doc/fix8.footer.html
+
+INSTALL_DATA_HTML_SEARCH_DOC = doc/html/search/*.js doc/html/search/*.html doc/html/search/*.png doc/html/search/*.css
+
 INSTALL_DATA_LOCAL_SCHEMA = schema/*.xml schema/QUICKFIX-LICENCE
 
 install-data-local:
@@ -78,7 +80,10 @@ install-data-local:
 	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_SCHEMA) $(schemadir)
 if USEDOXYGEN
 	@$(mkinstalldirs) $(fix8htmldir) $(fix8htmldir)/search
-	$(INSTALL_DATA) doc/html/*.js doc/html/*.html doc/html/*.png doc/html/*.css $(fix8htmldir)
-	$(INSTALL_DATA) doc/html/search/*.js doc/html/search/*.html doc/html/search/*.png doc/html/search/*.css $(fix8htmldir)/search
+	$(INSTALL_DATA) $(INSTALL_DATA_HTML_DOC) $(fix8htmldir)
+	$(INSTALL_DATA) $(INSTALL_DATA_HTML_SEARCH_DOC) $(fix8htmldir)/search
 endif
+
+EXTRA_DIST = fix8.spec doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen \
+	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST)
 

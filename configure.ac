@@ -314,18 +314,18 @@ AM_CONDITIONAL(USECCRYPT, [test x$havecrypt = xyes])
 m4_include(m4/ax_compare_version.m4)
 m4_include(m4/ax_path_bdb.m4)
 
-AX_PATH_BDB([3],[ LIBS="$BDB_LIBS $LIBS"
-LDFLAGS="$BDB_LDFLAGS $LDFLAGS"
-CPPFLAGS="$CPPFLAGS $BDB_CPPFLAGS"
-AC_DEFINE(HAVE_BDB, 1, [Define to 1 if you have berkeley DB])
-	])
+oktobdb=no
+AC_ARG_ENABLE([bdb],
+[AC_HELP_STRING([--enable-bdb],[enable support for Oracle Berkeley DB persistence (default=no)])],
+[case "${enableval}" in
+	yes) oktobdb=yes
+		AX_PATH_BDB([3],[ LIBS="$BDB_LIBS $LIBS" LDFLAGS="$BDB_LDFLAGS $LDFLAGS" CPPFLAGS="$CPPFLAGS $BDB_CPPFLAGS"
+			AC_DEFINE(HAVE_BDB, 1, [Define to 1 if you have berkeley DB])]) ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-bdb) ;;
+esac])
 
-if test "$have_bdb" = "no"; then
-		echo
-		echo "ERROR: Oracle Berkeley DB development libraries are required. Install and try again (see wiki:prerequisites)."
-		echo
-		exit 1
-fi
+AM_CONDITIONAL(BDBSUPPORT, [test x$oktobdb = xyes])
 
 # Check for timersub macro in sys/time.h
 AC_CACHE_CHECK([for timersub macro in sys/time.h], ac_cv_timersubmacro,
@@ -512,6 +512,8 @@ fi
 
 AC_DEFINE_UNQUOTED([CONFIGURE_TIME],["`date`"],[Date system was configured])
 CONFIGURE_SDATE=`date +%d/%m/%Y`
+BUILD_NUMBER_DATE=`date +%d%m%y`
+
 AC_DEFINE_UNQUOTED([CONFIGURE_SDATE],["$CONFIGURE_SDATE"],[Short Date system was configured])
 AC_DEFINE_UNQUOTED([CONFIGURE_TIME_NUM],[`date +%s`],[date/time as seconds since start epoch])
 AC_DEFINE_UNQUOTED([HOST_SYSTEM],["$host_cpu-$host_vendor-$host_os"],[Default system])
@@ -544,6 +546,7 @@ AC_SUBST(INTSYSCONF)
 AC_SUBST(CONFIGURE_TIME)
 AC_SUBST(CONFIGURE_SDATE)
 AC_SUBST(CONFIGURE_TIME_NUM)
+AC_SUBST(BUILD_NUMBER_DATE)
 AC_SUBST(LIBS)
 AC_SUBST(VERSION_DASHED)
 AC_SUBST(MAJOR_VERSION)
@@ -558,7 +561,7 @@ AC_SUBST(BRAND_DESCRIPTION)
 AC_SUBST(BRAND_COMPANY_SHORTNAME)
 AC_SUBST(BRAND_COMPANY_LONGNAME)
 
-AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile doc/fix8.doxygen])
+AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen fix8.spec])
 AC_CONFIG_HEADERS(include/f8config.h)
 AC_OUTPUT
 

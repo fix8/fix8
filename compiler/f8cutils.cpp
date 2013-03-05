@@ -331,7 +331,7 @@ void print_usage()
 {
 	UsageMan um("f8c", GETARGLIST, "<input xml schema>");
 	um.setdesc("f8c -- compile FIX xml schema");
-	um.add('o', "odir <file>", "output target directory (default ./)");
+	um.add('o', "odir <dir>", "output target directory (default ./)");
 	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
 	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
 	um.add('f', "fields", "generate code for all defined fields even if they are not used in any message (default no)");

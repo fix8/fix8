@@ -124,6 +124,13 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname)
 			else if (blrd == 0)
 				break; // eof
 
+			if (iprec._seq == 0)
+			{
+				ostringstream eostr;
+				eostr << iprec;
+				GlobalLogger::log(eostr.str());
+			}
+
 			if (!_index.insert(Index::value_type(iprec._seq, iprec._prec)).second)
 			{
 				ostringstream eostr;
@@ -131,6 +138,13 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname)
 				GlobalLogger::log(eostr.str());
 				return false;
 			}
+		}
+
+		if (_index.size())
+		{
+			ostringstream eostr;
+			eostr << "Database " << _dbFname << " indexed " << _index.size() << " records.";
+			GlobalLogger::log(eostr.str());
 		}
 
 		unsigned last;
@@ -227,10 +241,11 @@ bool FilePersister::put(const unsigned sender_seqnum, const unsigned target_seqn
 	if (!_opened)
 		return false;
 	IPrec iirec(0, sender_seqnum, target_seqnum);
-	if (_index.empty())
+	Index::iterator itr(_index.find(0));
+	if (itr == _index.end())
 		_index.insert(Index::value_type(0, iirec._prec));
 	else
-		_index[0] = iirec._prec;
+		itr->second = iirec._prec;
 
 	if (lseek(_iod, 0, SEEK_SET) < 0)
 	{
@@ -278,7 +293,7 @@ bool FilePersister::put(const unsigned seqnum, const f8String& what)
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
-	if (write (_fod, what.data(), sizeof(what.size())) != sizeof(what.size()))
+	if (write (_fod, what.data(), what.size()) != static_cast<ssize_t>(what.size()))
 	{
 		ostringstream eostr;
 		eostr << "Error could not write record for seqnum " << seqnum << " to: " << _dbFname;

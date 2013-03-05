@@ -490,16 +490,16 @@ inline const std::string& PutValue(const T& a, std::string& target)
 /*! Decode a string into an int or unsigned.
   \tparam typename
   \param str source string
+  \param term terminating character, default = 0
   \return the converted value */
 template<typename T>
-T fast_atoi(const char *str)
+T fast_atoi(const char *str, const char term='\0')
 {
 	T retval(0);
-	for (; *str; ++str)
+	for (; *str != term; ++str)
 		retval = (retval << 3) + (retval << 1) + *str - '0';
 	return retval;
 }
-
 
 //----------------------------------------------------------------------------------------
 /**
