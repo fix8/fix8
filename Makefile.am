@@ -32,7 +32,7 @@
 #
 #############################################################################################
 
-SUBDIRS = runtime compiler test
+SUBDIRS = runtime compiler utests
 
 if USEDOXYGEN
 SUBDIRS += doc

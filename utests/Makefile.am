@@ -32,19 +32,4 @@
 #
 #############################################################################################
 
-if USEGTEST
-bin_PROGRAMS = utests
-INCLUDES = -I$(top_srcdir)/include -I/home/jsu/develop/gtest-1.6.0/include/
-
-utests_SOURCES = betested.cpp test.cpp
-
-POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
-
-utests_LDFLAGS = -rdynamic -lrt -lfix8 $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime -ldb_cxx -L/home/jsu/develop/gtest-1.6.0/lib/.libs -lgtest -lgtest_main
-
-if USECOMPRESSION
-utests_LDFLAGS += -lz
-endif
-
-endif
-
+SUBDIRS = fix4.x fix5.x
