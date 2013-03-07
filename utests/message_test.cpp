@@ -18,7 +18,7 @@ TEST(message, logon_decode)
 {
     Message * logon = Message::factory(ctx, "8=FIX.4.2\0019=12\00135=A\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\00198=0\00110=185\001");
 
-    EXPECT_EQ(logon->get_msgtype(),"A");
+    EXPECT_EQ("A", logon->get_msgtype());
     EXPECT_TRUE(logon->is_admin());
     EXPECT_TRUE(logon->Header() != NULL);
     EXPECT_TRUE(logon->Trailer() != NULL);
@@ -30,14 +30,14 @@ TEST(message, logon_decode)
 #define FIELD_TEST(field, expect, message, test_fun) {\
     UTEST::field value; \
     message->get(value); \
-    test_fun(value(), expect); \
+    test_fun(expect, value()); \
 }
 
 TEST(message, neworder_decode)
 {
     Message * neworder = Message::factory(ctx, "8=FIX.4.2\0019=190\00135=D\00149=CLIENT\00156=SERVER\00134=78\00150=S\001142=US,IL\00157=G\00152=20130304-05:06:14\00111=4\0011=54129\00121=1\00155=OC\001167=OPT\001107=TEST SYMBOL\00154=1\00160=20130304-05:06:14\00138=50.00\00140=2\00144=400.50\00159=0\00158=TEST\00110=077\001");
 
-    EXPECT_EQ(neworder->get_msgtype(),"D");
+    EXPECT_EQ("D", neworder->get_msgtype());
     EXPECT_FALSE(neworder->is_admin());
     EXPECT_TRUE(neworder->Header() != NULL);
     EXPECT_TRUE(neworder->Trailer() != NULL);
@@ -98,7 +98,7 @@ TEST(message, neworder_group_decode)
 
     const GroupBase *grnoul(neworder->find_group<NewOrderSingle::NoAllocs>());
     EXPECT_TRUE(grnoul != NULL);
-    EXPECT_EQ(grnoul->size(), size_t(2));
+    EXPECT_EQ(size_t(2), grnoul->size());
 
     FIELD_TEST(AllocAccount, "FIRST", grnoul->get_element(0), EXPECT_EQ);
     FIELD_TEST(AllocShares, 20, grnoul->get_element(0), EXPECT_EQ);
@@ -115,26 +115,27 @@ TEST(message, calc_chksum)
 {
     f8String msg("8=FIX.4.2\0019=117\00135=5\00134=3725\001369=617\00152=20130304-07:25:37.403\00149=CME\00150=G\00156=1G9125N\00157=ADMIN\001143=US,IL\00158=Logout confirmed.\001789=618\00110=121\001");
 
-    EXPECT_EQ(Message::calc_chksum(msg), unsigned(172));
-    EXPECT_EQ(Message::calc_chksum(msg, 0, msg.length()-7), unsigned(121));
-    EXPECT_EQ(Message::calc_chksum(msg, 10, 5), unsigned(15));
-    EXPECT_EQ(Message::calc_chksum(msg, 10, 6), unsigned(16));
+    EXPECT_EQ(unsigned(172), Message::calc_chksum(msg));
+    EXPECT_EQ(unsigned(121), Message::calc_chksum(msg, 0, msg.length()-7));
+    EXPECT_EQ(unsigned(15), Message::calc_chksum(msg, 10, 5));
+    EXPECT_EQ(unsigned(16), Message::calc_chksum(msg, 10, 6));
 
     f8String empty;
-    EXPECT_EQ(Message::calc_chksum(empty), unsigned(0));
+    EXPECT_EQ(unsigned(0),Message::calc_chksum(empty));
 
-    EXPECT_EQ(Message::calc_chksum(msg.c_str(), msg.length()), unsigned(172));
-    EXPECT_EQ(Message::calc_chksum(msg.c_str(), msg.length(), 0, msg.length()-7), unsigned(121));
-    EXPECT_EQ(Message::calc_chksum(msg.c_str(), msg.length(), 10, 5), unsigned(15));
-    EXPECT_EQ(Message::calc_chksum(msg.c_str(), msg.length(), 10, 6), unsigned(16));
-    EXPECT_EQ(Message::calc_chksum(empty.c_str()), unsigned(0));
+    EXPECT_EQ(unsigned(172), Message::calc_chksum(msg.c_str(), msg.length()));
+    EXPECT_EQ(unsigned(121), Message::calc_chksum(msg.c_str(), msg.length(), 0, msg.length()-7));
+    EXPECT_EQ(unsigned(15), Message::calc_chksum(msg.c_str(), msg.length(), 10, 5));
+    EXPECT_EQ(unsigned(16), Message::calc_chksum(msg.c_str(), msg.length(), 10, 6));
+    EXPECT_EQ(unsigned(0), Message::calc_chksum(empty.c_str()));
 }
 
 TEST(message, fmt_chksum)
 {
-    EXPECT_EQ(Message::fmt_chksum(0), "000");
-    EXPECT_EQ(Message::fmt_chksum(1), "001");
-    EXPECT_EQ(Message::fmt_chksum(999), "999");
+    EXPECT_EQ("000", Message::fmt_chksum(0));
+    EXPECT_EQ("001", Message::fmt_chksum(1));
+    EXPECT_EQ("023", Message::fmt_chksum(23));
+    EXPECT_EQ("999", Message::fmt_chksum(999));
 }
 
 void extract_element_test(f8String msg, f8String expect_tag, f8String expect_val)
@@ -142,14 +143,14 @@ void extract_element_test(f8String msg, f8String expect_tag, f8String expect_val
     char cVal[MAX_FLD_LENGTH];
     char cTag[MAX_FLD_LENGTH];
     MessageBase::extract_element(msg.c_str(), msg.length(), cTag, cVal);
-    EXPECT_EQ(f8String(cVal), expect_val);
-    EXPECT_EQ(f8String(cTag), expect_tag);
+    EXPECT_EQ(expect_val, f8String(cVal));
+    EXPECT_EQ(expect_tag, f8String(cTag));
 
     f8String sVal;
     f8String sTag;
     MessageBase::extract_element(msg.c_str(), msg.length(), sTag, sVal);
-    EXPECT_EQ(sVal, expect_val);
-    EXPECT_EQ(sTag, expect_tag);
+    EXPECT_EQ(expect_val, sVal);
+    EXPECT_EQ(expect_tag, sTag);
 }
 
 TEST(message, extract_element)
@@ -167,7 +168,7 @@ TEST(message, logon_encode)
     logon->encode(output);
 
     f8String expect("8=FIX.4.2\0019=5\00135=A\00110=178\001");
-    EXPECT_EQ(output, expect);
+    EXPECT_EQ(expect, output);
 
     delete logon;
     logon = NULL;
@@ -203,7 +204,7 @@ TEST(message, neworder_encode)
 
     f8String expect("8=FIX.4.2\0019=203\00135=D\00149=A12345B\00156=COMPARO\00134=78\00150=2DEFGH4\001142=AU,SY\00157=G\00152=20130305-02:19:46.108\00111=4\0011=01234567\00121=1\00155=OC\001167=OPT\001107=AOZ3 C02000\00154=1\00160=20130305-02:19:46.108\00138=50.00\00140=2\00144=400.50\00159=0\00158=NIGEL\00110=089\001");
 
-    EXPECT_EQ(output, expect);
+    EXPECT_EQ(expect, output);
 
     delete nos;
     nos = NULL;
@@ -253,11 +254,12 @@ TEST(message, nestedGroup_encode)
 
     f8String expect("8=FIX.4.2\0019=176\00135=E\00149=A12345B\00156=COMPARO\00134=78\00150=2DEFGH4\001142=AU,SY\00157=G\00152=20130305-02:19:46.108\00166=123\001394=1\00168=2\00173=2\00111=1\00167=1\0011=TEST\00111=2\00167=2\00178=2\00179=first\00180=10.00\00179=second\00180=20.00\00110=162\001");
 
-    EXPECT_EQ(output, expect);
+    EXPECT_EQ(expect, output);
 
     delete nol;
     nol = NULL;
 
 }
+
 
 

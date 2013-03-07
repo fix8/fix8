@@ -37,7 +37,7 @@ bin_PROGRAMS = utests
 lib_LTLIBRARIES = libutest.la
 INCLUDES = -I$(top_srcdir)/include
 
-utests_SOURCES = message_test.cpp
+utests_SOURCES = message_test.cpp filePersister_test.cpp
 libutest_la_SOURCES = utest_types.hpp utest_types.cpp utest_traits.cpp \
                                                          utest_router.hpp utest_classes.hpp utest_classes.cpp
 
@@ -63,4 +63,5 @@ utests_LDFLAGS += -lz
 endif
 
 endif
+
 
