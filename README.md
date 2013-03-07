@@ -8,6 +8,14 @@ The system is comprised of a compiler for generating C++ message and field encod
 decoders and instantiation tables; a runtime library to support the generated code
 and framework; and a set of complete client/server test applications.
 
+## Note
+
+This is a developing branch.
+
+Sometimes, you even can't got the project built.
+
+Please go to http://www.fix8.org for a stable version. 
+
 ## Features
 
 * [Fix8](http://www.fix8.org) helps you get your [FIX protocol](http://www.fixprotocol.org/) client or server up and running quickly. Using one of the standard FIX schemas you can have a FIX client or server up and running in next to no time.
