@@ -879,7 +879,7 @@ inline int rnanosleep (const timespec& tspec)
     \return 0 on success */
 inline int millisleep (const unsigned ms)
 {
-	const timespec tspec = { ms / 1000, 1000 * 1000 * (ms % 1000) };
+	const timespec tspec = { static_cast<time_t>(ms / 1000), static_cast<long>(1000 * 1000 * (ms % 1000)) };
 	return rnanosleep(tspec);
 }
 
@@ -889,7 +889,7 @@ inline int millisleep (const unsigned ms)
     \return 0 on success */
 inline int microsleep (const unsigned us)
 {
-	const timespec tspec = { us / (1000 * 1000), 1000 * (us % (1000 * 1000)) };
+	const timespec tspec = { static_cast<time_t>(us / (1000 * 1000)), static_cast<long>(1000 * (us % (1000 * 1000))) };
 	return rnanosleep(tspec);
 }
 
