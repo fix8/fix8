@@ -37,6 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <list>
 #include <vector>
 #include <map>
 #include <set>
@@ -120,7 +121,7 @@ void SessionID::from_string(const f8String& from)
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 1), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
 }
@@ -129,7 +130,7 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 1), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
 }
@@ -147,7 +148,10 @@ Session::~Session()
 	if (_logger)
 	{
 		log("Session terminating");
+//#if (MPMC_SYSTEM == MPMC_FF)
 		_logger->stop();
+//#endif
+		hypersleep<h_seconds>(1);
 	}
 
 	if (_connection->get_role() == Connection::cn_acceptor)
@@ -226,7 +230,7 @@ void Session::stop()
 			_persist->stop();
 	}
 	_connection->stop();
-	millisleep(250); // let the thread shutdowns finish
+	hypersleep<h_milliseconds>(250);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -256,15 +260,6 @@ bool Session::process(const f8String& from)
 			//cerr << "Session::process throwing for " << from << endl;
 			throw InvalidMessage(from);
 		}
-
-#if 0
-		const char *pp_end(from.data() + from.size());
-		const size_t seqsz(16);
-		char seqstr[seqsz] = {}, *sptr(seqstr);
-		for (const char *pp(from.data() + fpos + 3); *pp != default_field_separator && isdigit(*pp) && pp < pp_end; )
-			*sptr++ = *pp++;
-		*sptr = 0;
-#endif
 
 		seqnum = fast_atoi<unsigned>(from.data() + fpos + 3, default_field_separator);
 
@@ -725,7 +720,7 @@ bool Session::send_wait(Message *msg, const unsigned custom_seqnum, const int wa
 	if (send(msg, custom_seqnum))
 	{
 		while(msg->get_in_use())
-			microsleep(waitval);
+			hypersleep<h_microseconds>(waitval);
 		return true;
 	}
 	return false;
@@ -734,7 +729,7 @@ bool Session::send_wait(Message *msg, const unsigned custom_seqnum, const int wa
 #endif
 
 //-------------------------------------------------------------------------------------------------
-bool Session::send_process(Message *msg) // called from the connection thread
+bool Session::send_process(Message *msg) // called from the connection (possibly on separate thread)
 {
 	bool is_dup(msg->Header()->have(Common_PossDupFlag));
 

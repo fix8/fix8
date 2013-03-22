@@ -10,8 +10,9 @@
 				ip="127.0.0.1" port="11002"
 				sender_comp_id="TEX_DLD"
 				tcp_nodelay="true"
-			   tcp_recv_buffer="1572864"
-			   tcp_send_buffer="1572864"
+			   tcp_recv_buffer="100663296"
+			   tcp_send_buffer="100663296"
+			   pipelined="false"
 				persist="mem0" />
 
 	<persist name="bdb0"

@@ -37,8 +37,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _F8_UTILS_HPP_
 #define _F8_UTILS_HPP_
 
-#include <tbb/atomic.h>
-#include <tbb/mutex.h>
 #include <Poco/DateTime.h>
 #include <sys/ioctl.h>
 #include <termios.h>
@@ -714,7 +712,7 @@ template<typename T, typename B=unsigned int>
 class ebitset_r
 {
 	typedef B integral_type;
-	tbb::atomic<integral_type> a_;
+	f8_atomic<integral_type> a_;
 
 public:
 	/// Ctor.
@@ -829,47 +827,6 @@ inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
    return target;
 }
 
-//----------------------------------------------------------------------------------------
-/*! A more reliable nanosleep.
-    \param tspec timespec to sleep
-    \return 0 on success */
-inline int rnanosleep (const timespec& tspec)
-{
-#if defined HAVE_CLOCK_NANOSLEEP
-   timespec ts;
-   clock_gettime(CLOCK_REALTIME, &ts);
-   ts.tv_sec += tspec.tv_sec;
-   ts.tv_nsec += tspec.tv_nsec;
-   if (ts.tv_nsec >= 1000000000)
-   {
-      ++ts.tv_sec;
-      ts.tv_nsec -= 1000000000;
-   }
-	return clock_nanosleep(CLOCK_REALTIME, TIMER_ABSTIME, &ts, 0);
-#else
-	return nanosleep(&tspec, 0);
-#endif
-}
-
-//----------------------------------------------------------------------------------------
-/*! Sleep the specified number of milliseconds.
-    \param ms time to sleep in milliseconds
-    \return 0 on success */
-inline int millisleep (const unsigned ms)
-{
-	const timespec tspec = { ms / 1000, 1000 * 1000 * (ms % 1000) };
-	return rnanosleep(tspec);
-}
-
-//----------------------------------------------------------------------------------------
-/*! Sleep the specified number of microseconds.
-    \param us time to sleep in microseconds
-    \return 0 on success */
-inline int microsleep (const unsigned us)
-{
-	const timespec tspec = { us / (1000 * 1000), 1000 * (us % (1000 * 1000)) };
-	return rnanosleep(tspec);
-}
 
 //----------------------------------------------------------------------------------------
 /// Delete ptr.
@@ -932,18 +889,38 @@ struct free_ptr
 template <typename T>
 class Singleton
 {
-	static tbb::atomic<T*> _instance;
-	static tbb::mutex _mutex;
+	static f8_atomic<T*> _instance;
+	static f8_mutex _mutex;
 
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
+
+	static T *_replace(const T* with)
+	{
+#if (MPMC_SYSTEM == MPMC_TBB)
+		return _instance.fetch_and_store(with);
+#else
+		T *was(_instance);
+		_instance = with;
+		return was;
+#endif
+	}
 
 public:
 	/// Ctor.
 	Singleton() {}
 
 	/// Dtor.
-	virtual ~Singleton() { delete _instance.fetch_and_store(0); }
+	virtual ~Singleton()
+	{
+#if (MPMC_SYSTEM == MPMC_TBB)
+		delete _instance.fetch_and_store(0);
+#else
+		T *was(_instance);
+		delete was;
+		_instance = 0;
+#endif
+	}
 
 	/*! Get the instance of the underlying object. If not created, create.
 	    \return the instance */
@@ -952,7 +929,7 @@ public:
 		if (_instance) // cast operator performs atomic load with acquire
 			return _instance;
 
-		tbb::mutex::scoped_lock guard(_mutex);
+		f8_scoped_lock guard(_mutex);
 		if (_instance == 0)
 			_instance = new T;
 		return _instance;
@@ -966,11 +943,11 @@ public:
 	/*! Replace the instance object with a new instance.
 	    \param what the new instance
 	    \return the original instance */
-	static T *reset(T *what) { return _instance.fetch_and_store(what); }
+	static T *reset(T *what) { return _replace(what); }
 
 	/*! Get the instance of the underlying object removing it from the singleton.
 	    \return the instance */
-	static T *release() { return _instance.fetch_and_store(0); }
+	static T *release() { return _replace(0); }
 };
 
 //---------------------------------------------------------------------------------------------------
@@ -990,7 +967,7 @@ protected:
       int put_back_cnt(gptr() - eback());
       if (put_back_cnt > 4)
          put_back_cnt = 4;
-		std::memcpy(_buffer + (4 - put_back_cnt), gptr() - put_back_cnt, put_back_cnt);
+		memcpy(_buffer + (4 - put_back_cnt), gptr() - put_back_cnt, put_back_cnt);
       int num_read(read (_fd, _buffer + 4, _buffer_size - 4));
       if (num_read <= 0)
          return -1;

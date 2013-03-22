@@ -42,10 +42,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 #include <vector>
 
-#if defined MSGRECYCLING
-#include <tbb/atomic.h>
-#endif
-
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
@@ -696,11 +692,26 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+#if defined CODECTIMING
+struct codec_timings
+{
+	double _cpu_used;
+	unsigned _msg_count;
+
+	codec_timings() : _cpu_used(), _msg_count() {}
+};
+
+#endif
+//-------------------------------------------------------------------------------------------------
 /// A complete Fix message with header, body and trailer
 class Message : public MessageBase
 {
 #if defined MSGRECYCLING
-	tbb::atomic<bool> _in_use;
+	f8_atomic<bool> _in_use;
+#endif
+
+#if defined CODECTIMING
+	static codec_timings _encode_timings, _decode_timings;
 #endif
 
 protected:
@@ -806,6 +817,12 @@ public:
 		return val % 256;
 	}
 
+	/*! Generate a checksum from an encoded buffer. ULL version.
+	    \param from char *buffer encoded Fix message
+	    \param sz size of msg
+	    \param offset starting offset
+	    \param len maximum length
+	    \return calculated checknum */
 	static unsigned calc_chksum(const char *from, const size_t sz, const unsigned offset=0, const int len=-1)
 	{
 		unsigned val(0);
@@ -866,6 +883,11 @@ public:
 	    \param what message
 	    \return stream */
 	friend std::ostream& operator<<(std::ostream& os, const Message& what) { what.print(os); return os; }
+
+#if defined CODECTIMING
+	static void format_codec_timings(const f8String&, std::ostream&, codec_timings&);
+	static void report_codec_timings();
+#endif
 };
 
 //-------------------------------------------------------------------------------------------------

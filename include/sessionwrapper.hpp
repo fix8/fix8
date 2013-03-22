@@ -103,7 +103,7 @@ public:
 		_session(new T(_ctx, _id, _persist, _log, _plog)),
 		_sock(init_con_later ? 0 : new Poco::Net::StreamSocket),
 		_addr(get_address(_ses)),
-		_cc(init_con_later ? 0 : new ClientConnection(_sock, _addr, *_session))
+		_cc(init_con_later ? 0 : new ClientConnection(_sock, _addr, *_session, get_pipelined(_ses)))
 	{
 		_session->set_login_parameters(_loginParameters);
 	}
@@ -139,7 +139,7 @@ public:
 template<typename T>
 class ReliableClientSession : public ClientSession<T>
 {
-	Thread<ReliableClientSession<T> > _thread;
+	dthread<ReliableClientSession<T> > _thread;
 	unsigned _send_seqnum, _recv_seqnum;
 
 public:
@@ -160,7 +160,7 @@ public:
 		_send_seqnum = send_seqnum;
 		_recv_seqnum = recv_seqnum;
 		if (!wait)
-			_thread.Start();
+			_thread.start();
 		else
 			(*this)();
 	}
@@ -178,7 +178,7 @@ public:
 				//std::cout << "operator()():try" << std::endl;
 
 				this->_sock = new Poco::Net::StreamSocket,
-				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session);
+				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session, this->get_pipelined(this->_ses));
 				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, this->_loginParameters._davi());
 				_send_seqnum = _recv_seqnum = 0; // only set seqnums for the first time round
 			}
@@ -197,7 +197,7 @@ public:
 			this->_session->stop();
 			delete this->_cc;
 			delete this->_sock;
-			millisleep(this->_loginParameters._login_retry_interval);
+			hypersleep<h_milliseconds>(this->_loginParameters._login_retry_interval);
 		}
 
 		return 0;
@@ -261,7 +261,7 @@ public:
 	SessionInstance (ServerSession<T>& sf) :
 		_sock(new Poco::Net::StreamSocket(sf.accept(_claddr))),
 		_session(new T(sf._ctx)),
-		_sc(_sock, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_tcp_nodelay(sf._ses))
+		_sc(_sock, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_pipelined(sf._ses), sf.get_tcp_nodelay(sf._ses))
 	{
 		_session->set_login_parameters(sf._loginParameters);
 		_session->set_session_config(&sf);

@@ -672,6 +672,8 @@ BDBSUPPORT_FALSE
 BDBSUPPORT_TRUE
 USECCRYPT_FALSE
 USECCRYPT_TRUE
+TBBSUPPORT_FALSE
+TBBSUPPORT_TRUE
 USEDOXYGEN_FALSE
 USEDOXYGEN_TRUE
 TOGGLETRACKINGASSIGNMENTS_FALSE
@@ -810,15 +812,15 @@ enable_fillmetadata
 with_reservepercent
 with_maxmsglen
 with_maxfldlen
-with_poco
 with_tbb
+with_mpmc
+with_poco
 enable_bdb
 with_bdb
 enable_xmlstrictbool
 enable_bufgloblogging
 enable_valgrind
 enable_gprof
-enable_poolalloc
 enable_msgrecycle
 enable_codectiming
 enable_customfields
@@ -1472,7 +1474,6 @@ Optional Features:
                           (default=no)
   --enable-valgrind       enable internal support for valgrind (default=no)
   --enable-gprof          enable internal support for gprof (default=no)
-  --enable-poolalloc      enable Memory Pool Allocator (default=no)
   --enable-msgrecycle     enable Message Recycling (default=no)
   --enable-codectiming    enable CODEC timing testing code (default=no)
   --enable-customfields   enable User defined fields (default=no)
@@ -1492,8 +1493,9 @@ Optional Packages:
                           additional fields
   --with-maxmsglen=VALUE  Maximum length of a FIX message (default=8192)
   --with-maxfldlen=VALUE  Maximum length of a FIX field (default=1024)
-  --with-poco=DIR         location of Poco
   --with-tbb=DIR          location of TBB
+  --with-mpmc=VAL         select which mpmc system will be used (default=ff)
+  --with-poco=DIR         location of Poco
   --with-bdb=DIR          Berkeley DB installation directory
 
 Some influential environment variables:
@@ -19024,16 +19026,6 @@ fi
 
 
 
-# Check whether --with-poco was given.
-if test "${with_poco+set}" = set; then :
-  withval=$with_poco;
-	CPPFLAGS="$CPPFLAGS -I${withval}/include"
-	LDFLAGS="$LDFLAGS -L${withval}/lib"
-
-fi
-
-
-
 # Check whether --with-tbb was given.
 if test "${with_tbb+set}" = set; then :
   withval=$with_tbb;
@@ -19043,19 +19035,31 @@ if test "${with_tbb+set}" = set; then :
 fi
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for TBB" >&5
+
+$as_echo "#define MPMC_TBB 1" >>confdefs.h
+
+
+$as_echo "#define MPMC_FF 2" >>confdefs.h
+
+
+mpmc_set=no
+
+# Check whether --with-mpmc was given.
+if test "${with_mpmc+set}" = set; then :
+  withval=$with_mpmc; case "${withval}" in
+	tbb) { $as_echo "$as_me:${as_lineno-$LINENO}: checking for TBB" >&5
 $as_echo_n "checking for TBB... " >&6; }
-	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
-		#include <tbb/atomic.h>
-		#include <tbb/mutex.h>
-		#include <tbb/concurrent_queue.h>
+					#include <tbb/atomic.h>
+					#include <tbb/mutex.h>
+					#include <tbb/concurrent_queue.h>
 
 int
 main ()
 {
-;
+
   ;
   return 0;
 }
@@ -19066,20 +19070,54 @@ else
   have_tbb=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-	if test "$have_tbb" = yes; then
-	    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+				if test "$have_tbb" = yes; then
+					 { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 
-$as_echo "#define HAS_TBB 1" >>confdefs.h
+$as_echo "#define MPMC_SYSTEM MPMC_TBB" >>confdefs.h
 
-	else
-	    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+				else
+					 { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-		 echo
-		 echo "ERROR: TBB development libraries are required. Install and try again (see wiki:prerequisites)."
-		 echo
-		 exit 1
-	fi
+					 echo
+					 echo "ERROR: TBB development libraries not found. Install and try again."
+					 echo
+					 exit 1
+				fi
+		 mpmc_set=yes ;;
+	ff) ;;
+	*) echo
+		echo "ERROR: Unknown value ${withval} for MPMC given."
+		echo
+		exit 1
+esac
+fi
+
+
+if test "$mpmc_set" = no; then
+
+$as_echo "#define MPMC_SYSTEM MPMC_FF" >>confdefs.h
+
+fi
+
+ if test x$have_tbb = xyes; then
+  TBBSUPPORT_TRUE=
+  TBBSUPPORT_FALSE='#'
+else
+  TBBSUPPORT_TRUE='#'
+  TBBSUPPORT_FALSE=
+fi
+
+
+
+# Check whether --with-poco was given.
+if test "${with_poco+set}" = set; then :
+  withval=$with_poco;
+	CPPFLAGS="$CPPFLAGS -I${withval}/include"
+	LDFLAGS="$LDFLAGS -L${withval}/lib"
+
+fi
+
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Poco" >&5
 $as_echo_n "checking for Poco... " >&6; }
@@ -19097,7 +19135,7 @@ $as_echo_n "checking for Poco... " >&6; }
 int
 main ()
 {
-;
+
   ;
   return 0;
 }
@@ -22039,18 +22077,6 @@ esac
 fi
 
 
-# Check whether --enable-poolalloc was given.
-if test "${enable_poolalloc+set}" = set; then :
-  enableval=$enable_poolalloc; case "${enableval}" in
-	yes)
-$as_echo "#define POOLALLOC 1" >>confdefs.h
- ;;
-	no)  ;;
-	*) as_fn_error $? "bad value ${enableval} for --enable-poolalloc" "$LINENO" 5 ;;
-esac
-fi
-
-
 # Check whether --enable-msgrecycle was given.
 if test "${enable_msgrecycle+set}" = set; then :
   enableval=$enable_msgrecycle; case "${enableval}" in
@@ -22320,7 +22346,7 @@ fi
 
 
 
-ac_config_files="$ac_config_files Makefile runtime/Makefile compiler/Makefile test/Makefile util/Makefile doc/fix8.doxygen fix8.spec"
+ac_config_files="$ac_config_files Makefile runtime/Makefile compiler/Makefile test/Makefile util/Makefile doc/fix8.doxygen fix8.spec doc/man/f8c.8.xml doc/man/seqedit.8.xml"
 
 ac_config_headers="$ac_config_headers include/f8config.h"
 
@@ -22464,6 +22490,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USEDOXYGEN_TRUE}" && test -z "${USEDOXYGEN_FALSE}"; then
   as_fn_error $? "conditional \"USEDOXYGEN\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${TBBSUPPORT_TRUE}" && test -z "${TBBSUPPORT_FALSE}"; then
+  as_fn_error $? "conditional \"TBBSUPPORT\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USECCRYPT_TRUE}" && test -z "${USECCRYPT_FALSE}"; then
@@ -23466,6 +23496,8 @@ do
     "util/Makefile") CONFIG_FILES="$CONFIG_FILES util/Makefile" ;;
     "doc/fix8.doxygen") CONFIG_FILES="$CONFIG_FILES doc/fix8.doxygen" ;;
     "fix8.spec") CONFIG_FILES="$CONFIG_FILES fix8.spec" ;;
+    "doc/man/f8c.8.xml") CONFIG_FILES="$CONFIG_FILES doc/man/f8c.8.xml" ;;
+    "doc/man/seqedit.8.xml") CONFIG_FILES="$CONFIG_FILES doc/man/seqedit.8.xml" ;;
     "include/f8config.h") CONFIG_HEADERS="$CONFIG_HEADERS include/f8config.h" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

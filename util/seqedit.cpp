@@ -148,6 +148,7 @@ int main(int argc, char **argv)
 	struct fdset
 	{
 		int fod, iod;
+		fdset() : fod(), iod() {}
 		~fdset() { close(iod); close(fod); }
 	}
 	fds;

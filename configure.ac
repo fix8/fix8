@@ -213,13 +213,6 @@ AC_ARG_WITH(maxfldlen,
 	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=1024)])
 ],[])
 
-AC_ARG_WITH(poco,
-  AC_HELP_STRING([--with-poco=DIR],[location of Poco]),
-[
-	CPPFLAGS="$CPPFLAGS -I${withval}/include"
-	LDFLAGS="$LDFLAGS -L${withval}/lib"
-],[])
-
 AC_ARG_WITH(tbb,
   AC_HELP_STRING([--with-tbb=DIR],[location of TBB]),
 [
@@ -227,23 +220,50 @@ AC_ARG_WITH(tbb,
 	LDFLAGS="$LDFLAGS -L${withval}/lib"
 ],[])
 
-AC_MSG_CHECKING(for TBB)
-	AC_TRY_COMPILE([
-		#include <tbb/atomic.h>
-		#include <tbb/mutex.h>
-		#include <tbb/concurrent_queue.h>
-		],[;],
-		have_tbb=yes, have_tbb=no)
-	if test "$have_tbb" = yes; then
-	    AC_MSG_RESULT(yes)
-	    AC_DEFINE(HAS_TBB, 1, [Define to 1 if TBB available])
-	else
-	    AC_MSG_RESULT(no)
-		 echo
-		 echo "ERROR: TBB development libraries are required. Install and try again (see wiki:prerequisites)."
-		 echo
-		 exit 1
-	fi
+AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
+AC_DEFINE(MPMC_FF, 2, [FF MPMC])
+
+mpmc_set=no
+AC_ARG_WITH([mpmc],
+[AC_HELP_STRING([--with-mpmc=VAL],[select which mpmc system will be used (default=ff)])],
+[case "${withval}" in
+	tbb) AC_MSG_CHECKING(for TBB)
+				AC_TRY_COMPILE([
+					#include <tbb/atomic.h>
+					#include <tbb/mutex.h>
+					#include <tbb/concurrent_queue.h>
+					],,
+					have_tbb=yes, have_tbb=no)
+				if test "$have_tbb" = yes; then
+					 AC_MSG_RESULT(yes)
+					 AC_DEFINE(MPMC_SYSTEM, MPMC_TBB, [MPMC system used])
+				else
+					 AC_MSG_RESULT(no)
+					 echo
+					 echo "ERROR: TBB development libraries not found. Install and try again."
+					 echo
+					 exit 1
+				fi
+		 mpmc_set=yes ;;
+	ff) ;;
+	*) echo
+		echo "ERROR: Unknown value ${withval} for MPMC given."
+		echo
+		exit 1
+esac])
+
+if test "$mpmc_set" = no; then
+	AC_DEFINE(MPMC_SYSTEM, MPMC_FF, [MPMC system used])
+fi
+
+AM_CONDITIONAL(TBBSUPPORT, [test x$have_tbb = xyes])
+
+AC_ARG_WITH(poco,
+  AC_HELP_STRING([--with-poco=DIR],[location of Poco]),
+[
+	CPPFLAGS="$CPPFLAGS -I${withval}/include"
+	LDFLAGS="$LDFLAGS -L${withval}/lib"
+],[])
 
 AC_MSG_CHECKING(for Poco)
 	AC_TRY_COMPILE([
@@ -254,7 +274,7 @@ AC_MSG_CHECKING(for Poco)
 		#include <Poco/DateTimeParser.h>
 		#include <Poco/DateTimeFormatter.h>
 		#include <Poco/Net/NetException.h>
-		],[;],
+		],,
 		have_poco=yes, have_poco=no)
 	if test "$have_poco" = yes; then
 	    AC_MSG_RESULT(yes)
@@ -386,14 +406,6 @@ AC_ARG_ENABLE([gprof],
 			fi ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-gprof) ;;
-esac])
-
-AC_ARG_ENABLE([poolalloc],
-[AC_HELP_STRING([--enable-poolalloc],[enable Memory Pool Allocator (default=no)])],
-[case "${enableval}" in
-	yes) AC_DEFINE(POOLALLOC, 1, [Define to 1 for Memory Pool Allocator]) ;;
-	no)  ;;
-	*) AC_MSG_ERROR(bad value ${enableval} for --enable-poolalloc) ;;
 esac])
 
 AC_ARG_ENABLE([msgrecycle],
@@ -539,7 +551,8 @@ AC_SUBST(BRAND_DESCRIPTION)
 AC_SUBST(BRAND_COMPANY_SHORTNAME)
 AC_SUBST(BRAND_COMPANY_LONGNAME)
 
-AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile util/Makefile doc/fix8.doxygen fix8.spec])
+AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile util/Makefile doc/fix8.doxygen \
+						fix8.spec doc/man/f8c.8.xml doc/man/seqedit.8.xml])
 AC_CONFIG_HEADERS(include/f8config.h)
 AC_OUTPUT
 

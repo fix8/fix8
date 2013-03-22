@@ -39,6 +39,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <vector>
 #include <map>
 #include <set>
+#include <list>
 #include <iterator>
 #include <memory>
 #include <iomanip>

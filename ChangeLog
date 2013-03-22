@@ -1,3 +1,8 @@
+* Sat Mar 23 2013 David L. Dight <fix@fix8.org> 0.7.2
+Fixed jira tickets FX-23, FX-35, FX-36, FX-37, FX-38, FX-39, FX-40
+Partial implemntation of stack based messages.
+TBB optional; Fastflow no used; pipelining options; codec timings improvements;
+
 * Sat Feb 23 2013 David L. Dight <fix@fix8.org> 0.7.0
 File based persistence now implemented and default. Dependence on BerekelyDB removed.
 rpmbuild will now create an rpm from fix8.spec

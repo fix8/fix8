@@ -14,9 +14,10 @@
            reset_sequence_numbers="false"
            tcp_nodelay="true"
            login_retries="100"
-			  tcp_recv_buffer="0"
-			  tcp_send_buffer="0"
+			  tcp_recv_buffer="100663296"
+			  tcp_send_buffer="100663296"
 			  session_log="session_log"
+			  pipelined="false"
            persist="mem0" />
 
   <persist name="bdb0"

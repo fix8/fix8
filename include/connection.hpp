@@ -40,7 +40,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Poco/Net/StreamSocket.h>
 #include <Poco/Timespan.h>
 #include <Poco/Net/NetException.h>
-#include <tbb/concurrent_queue.h>
 
 //----------------------------------------------------------------------------------------
 namespace FIX8 {
@@ -53,21 +52,21 @@ class Session;
 template <typename T>
 class AsyncSocket
 {
-	Thread<AsyncSocket> _thread;
+	dthread<AsyncSocket> _thread;
 
 protected:
 	Poco::Net::StreamSocket *_sock;
-	tbb::concurrent_bounded_queue<T> _msg_queue;
+	f8_concurrent_queue<T> _msg_queue;
 	Session& _session;
+	bool _pipelined;
 
 public:
 	/*! Ctor.
 	    \param sock connected socket
-	    \param session session */
-	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session)
-		: _thread(ref(*this)), _sock(sock), _session(session)
-	{
-	}
+	    \param session session
+	    \param pipelined true is pipelined */
+	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const bool pipelined=true)
+		: _thread(ref(*this)), _sock(sock), _session(session), _pipelined(pipelined) {}
 
 	/// Dtor.
 	virtual ~AsyncSocket() {}
@@ -81,10 +80,10 @@ public:
 	virtual int operator()() = 0;
 
 	/// Start the processing thread.
-	virtual void start() { _thread.Start(); }
+	virtual void start() { _thread.start(); }
 
 	/// Stop the processing thread and quit.
-	virtual void quit() { _thread.Kill(1); }
+	virtual void quit() { _thread.kill(1); }
 
 	/*! Get the underlying socket object.
 	    \return the socket */
@@ -92,17 +91,17 @@ public:
 
 	/*! Wait till processing thead has finished.
 	    \return 0 on success */
-	int join() { return _thread.Join(); }
+	int join() { return _pipelined ? _thread.join() : -1; }
 };
 
 //----------------------------------------------------------------------------------------
 /// Fix message reader
 class FIXReader : public AsyncSocket<f8String>
 {
-	enum { _max_msg_len = 1024, _chksum_sz = 7 };
-	tbb::atomic<bool> _socket_error;
+	enum { _max_msg_len = MAX_MSG_LENGTH, _chksum_sz = 7 };
+	f8_atomic<bool> _socket_error;
 
-	Thread<FIXReader> _callback_thread;
+	dthread<FIXReader> _callback_thread;
 
 	/*! Process messages from inbound queue, calls session process method.
 	    \return number of messages processed */
@@ -121,10 +120,23 @@ class FIXReader : public AsyncSocket<f8String>
 	    \return number of bytes read */
 	int sockRead(char *where, size_t sz)
 	{
-		const int result(_sock->receiveBytes(where, sz));
-		if (result == 0)
-			throw PeerResetConnection("connection gone");
-		return result;
+		int rdSz(0);
+		unsigned remaining(sz), rddone(0);
+
+		while (remaining > 0)
+		{
+			if ((rdSz = _sock->receiveBytes(where + rddone, remaining)) <= 0)
+			{
+				if (errno == EAGAIN)
+					continue;
+				throw PeerResetConnection("connection gone");
+			}
+
+			rddone += rdSz;
+			remaining -= rdSz;
+		}
+
+		return rddone;
 	}
 
 protected:
@@ -135,9 +147,10 @@ protected:
 public:
 	/*! Ctor.
 	    \param sock connected socket
-	    \param session session */
-	FIXReader(Poco::Net::StreamSocket *sock, Session& session)
-		: AsyncSocket<f8String>(sock, session), _callback_thread(ref(*this), &FIXReader::callback_processor), _bg_sz()
+	    \param session session
+	    \param pipelined true is pipelined */
+	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const bool pipelined=true)
+		: AsyncSocket<f8String>(sock, session, pipelined), _callback_thread(ref(*this), &FIXReader::callback_processor), _bg_sz()
 	{
 		set_preamble_sz();
 	}
@@ -150,15 +163,30 @@ public:
 	{
 		_socket_error = false;
 		AsyncSocket<f8String>::start();
-		if (_callback_thread.Start())
-			_socket_error = true;
+		if (_pipelined)
+		{
+			if (_callback_thread.start())
+				_socket_error = true;
+		}
 	}
 
 	/// Stop the processing threads and quit.
-	virtual void quit() { _callback_thread.Kill(1); AsyncSocket<f8String>::quit(); }
+	virtual void quit()
+	{
+		if (_pipelined)
+			_callback_thread.kill(1);
+		AsyncSocket<f8String>::quit();
+	}
 
 	/// Send a message to the processing method instructing it to quit.
-	virtual void stop() { const f8String from; _msg_queue.try_push(from); }
+	virtual void stop()
+	{
+		if (_pipelined)
+		{
+			const f8String from;
+			_msg_queue.try_push(from);
+		}
+	}
 
 	/// Calculate the length of the Fix message preamble, e.g. "8=FIX.4.4^A9=".
 	void set_preamble_sz();
@@ -180,8 +208,10 @@ protected:
 public:
 	/*! Ctor.
 	    \param sock connected socket
-	    \param session session */
-	FIXWriter(Poco::Net::StreamSocket *sock, Session& session) : AsyncSocket<Message *>(sock, session) {}
+	    \param session session
+	    \param pipelined true is pipelined */
+	FIXWriter(Poco::Net::StreamSocket *sock, Session& session, const bool pipelined=true)
+		: AsyncSocket<Message *>(sock, session, pipelined) {}
 
 	/// Dtor.
 	virtual ~FIXWriter() {}
@@ -189,17 +219,65 @@ public:
 	/*! Place Fix message on outbound message queue.
 	    \param from message to send
 	    \return true in success */
-	bool write(Message *from) { return _msg_queue.try_push(from); }
+	bool write(Message *from)
+	{
+		if (_pipelined)
+			return _msg_queue.try_push(from);
+#if defined MSGRECYCLING
+		const bool result(_session.send_process(from));
+		from->set_in_use(false);
+#else
+		scoped_ptr<Message> msg(from);
+		const bool result(_session.send_process(msg.get()));
+#endif
+		return result;
+	}
+
+	/*! Send Fix message directly
+	    \param from message to send
+	    \return true in success */
+	bool write(Message& from)
+	{
+		if (_pipelined) // not permitted if pipeling
+			throw f8Exception("cannot send message directly if pipelining");
+#if defined MSGRECYCLING
+		const bool result(_session.send_process(&from));
+		from.set_in_use(false);
+		return result;
+#else
+		return _session.send_process(&from);
+#endif
+	}
 
 	/*! Send message over socket.
 	    \param msg message string to send
 	    \return number of bytes sent */
 	int send(const f8String& msg)
 	{
-		const int result(_sock->sendBytes(msg.data(), msg.size()));
-		if (result <= 0)
-			throw PeerResetConnection("connection gone");
-		return result;
+		int wrtSz(0);
+		unsigned remaining(msg.size()), wrdone(0);
+
+		while (remaining > 0)
+		{
+			if ((wrtSz = _sock->sendBytes(msg.data() + wrdone, remaining)) < 0)
+			{
+				if (errno == EAGAIN)
+					continue;
+				throw PeerResetConnection("connection gone");
+			}
+
+			wrdone += wrtSz;
+			remaining -= wrtSz;
+		}
+
+		return wrdone;
+	}
+
+	/// Start the processing threads.
+	virtual void start()
+	{
+		if (_pipelined)
+			AsyncSocket<Message *>::start();
 	}
 
 	/// Send a message to the processing method instructing it to quit.
@@ -227,19 +305,21 @@ protected:
 public:
 	/*! Ctor. Initiator.
 	    \param sock connected socket
-	    \param session session */
-	Connection(Poco::Net::StreamSocket *sock, Session &session)	// client
+	    \param session session
+	    \param pipelined if true, reader/writer are in separate pipelined threads */
+	Connection(Poco::Net::StreamSocket *sock, Session &session, const bool pipelined)	// client
 		: _sock(sock), _connected(), _session(session), _role(cn_initiator),
-		_hb_interval(10), _reader(sock, session), _writer(sock, session) {}
+		_hb_interval(10), _reader(sock, session, pipelined), _writer(sock, session, pipelined) {}
 
 	/*! Ctor. Acceptor.
 	    \param sock connected socket
 	    \param session session
-	    \param hb_interval heartbeat interval */
-	Connection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval) // server
+	    \param hb_interval heartbeat interval
+	    \param pipelined if true, reader/writer are in separate pipelined threads */
+	Connection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval, const bool pipelined) // server
 		: _sock(sock), _connected(true), _session(session), _role(cn_acceptor), _hb_interval(hb_interval),
 		_hb_interval20pc(hb_interval + hb_interval / 5),
-		  _reader(sock, session), _writer(sock, session) {}
+		  _reader(sock, session, pipelined), _writer(sock, session, pipelined) {}
 
 	/// Dtor.
 	virtual ~Connection() {}
@@ -337,9 +417,11 @@ public:
 	    \param sock connected socket
 	    \param addr sock address structure
 	    \param session session
+	    \param pipelined if true, reader/writer are in separate pipelined threads
 	    \param no_delay set or clear the tcp no delay flag on the socket */
-	ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, const bool no_delay=true)
-		: Connection(sock, session), _addr(addr), _no_delay(no_delay) {}
+	ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, const bool pipelined=true,
+			const bool no_delay=true)
+		: Connection(sock, session, pipelined), _addr(addr), _no_delay(no_delay) {}
 
 	/// Dtor.
 	virtual ~ClientConnection() {}
@@ -353,15 +435,16 @@ public:
 /// Server (acceptor) specialisation of Connection.
 class ServerConnection : public Connection
 {
-
 public:
 	/*! Ctor. Initiator.
 	    \param sock connected socket
 	    \param session session
 	    \param hb_interval heartbeat interval
+	    \param pipelined if true, reader/writer are in separate pipelined threads
 	    \param no_delay set or clear the tcp no delay flag on the socket */
-	ServerConnection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval, const bool no_delay=true) :
-		Connection(sock, session, hb_interval)
+	ServerConnection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval, const bool pipelined=true,
+			const bool no_delay=true) :
+		Connection(sock, session, hb_interval, pipelined)
 	{
 		_sock->setLinger(false, 0);
 		_sock->setNoDelay(no_delay);

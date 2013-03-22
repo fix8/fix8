@@ -10,12 +10,17 @@
 				ip="127.0.0.1" port="11001"
 				sender_comp_id="TEX_DLD"
 				tcp_nodelay="true"
-				persist="bdb0" />
+				persist="file0" />
 
 	<persist name="bdb0"
 				type="bdb"
 				dir="./run"
 				db="myfix_server.db"/>
+
+	<persist name="file0"
+            type="file" dir="./run"
+            use_session_id="true"
+            db="server" />
 
 	<persist name="mem0"
 				type="mem"/>

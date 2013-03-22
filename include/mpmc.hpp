@@ -34,66 +34,44 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #endif
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_ALLOCATOR_HPP_
-#define _FIX8_ALLOCATOR_HPP_
+#ifndef _FIX8_MPMC_HPP_
+#define _FIX8_MPMC_HPP_
 
 //-------------------------------------------------------------------------------------------------
-#include <limits>
-#include <memory>
+// provide generic names to Multi Producer Multi Consumer queues and mutexes from
+// different libraries
 
 //-------------------------------------------------------------------------------------------------
-namespace FIX8 {
+#if (MPMC_SYSTEM == MPMC_TBB)
+
+#include <tbb/concurrent_queue.h>
+#include <tbb/atomic.h>
+#include <tbb/mutex.h>
+
+// when we move to c++11 we will use proper template type aliases
+#define f8_atomic tbb::atomic
+#define f8_scoped_lock tbb::mutex::scoped_lock
+#define f8_mutex tbb::mutex
+#define f8_concurrent_queue tbb::concurrent_bounded_queue
 
 //-------------------------------------------------------------------------------------------------
-struct BaseAllocator
-{
-	static Region _rpairs[];
-	static RegionManager _mmgr;
-};
+#elif (MPMC_SYSTEM == MPMC_FF)
 
-}
+#include <ff/atomic/atomic.h>
+#include <ff/allocator.hpp>
+#include <ff/buffer.hpp>
+#include <ff/MPMCqueues.hpp>
 
-namespace FIX8 {
+// std wrappers for ff
+#include <pthread.h>
+#include <ff_wrapper.hpp>
 
-template <typename T>
-class f8Allocator : private BaseAllocator
-{
-public:
-	typedef T value_type;
-	typedef T *pointer;
-	typedef const T *const_pointer;
-	typedef T& reference;
-	typedef const T& const_reference;
-	typedef std::size_t size_type;
-	typedef std::ptrdiff_t difference_type;
+#define f8_atomic FIX8::ff_atomic
+#define f8_concurrent_queue FIX8::ff_unbounded_queue
 
-	template <typename U>
-	struct rebind { typedef f8Allocator<U> other; };
+//-------------------------------------------------------------------------------------------------
+#endif // MPMC_SYSTEM
 
-	pointer address (reference value) const { return &value; }
-	const_pointer address (const_reference value) const { return &value; }
+//-------------------------------------------------------------------------------------------------
 
-	f8Allocator() throw() {}
-	f8Allocator(const f8Allocator&) throw() {}
-	template <typename U>
-	f8Allocator (const f8Allocator<U>&) throw() {}
-	~f8Allocator() throw() {}
-
-	size_type max_size () const throw() { return std::numeric_limits<std::size_t>::max() / sizeof(T); }
-
-	pointer allocate (size_type num, const void *hint=0) throw(std::bad_alloc)
-		{ return static_cast<pointer>(_mmgr.alloc(num * sizeof(T))); }
-	void construct (pointer p, const T& value) { new (static_cast<void*>(p))T(value); }
-	void destroy (pointer p) { p->~T(); }
-	void deallocate (pointer p, size_type num) throw(std::bad_alloc)
-		{ _mmgr.release(static_cast<void*>(p)); }
-};
-
-template <typename T1, typename T2>
-inline bool operator== (const f8Allocator<T1>&, const f8Allocator<T2>&) throw() { return true; }
-template <typename T1, typename T2>
-inline bool operator!= (const f8Allocator<T1>&, const f8Allocator<T2>&) throw() { return false; }
-
-}
-
-#endif // _FIX8_ALLOCATOR_HPP_
+#endif // _FIX8_MPMC_HPP_

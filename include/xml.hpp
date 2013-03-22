@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #endif
 //-----------------------------------------------------------------------------------------
-#ifndef _XML_ENTITY_HPP_
-#define _XML_ENTITY_HPP_
+#ifndef _XML_ELEMENT_HPP_
+#define _XML_ELEMENT_HPP_
 
 //----------------------------------------------------------------------------------------
 /// A simple xml parser with Xpath style lookup.
@@ -45,7 +45,6 @@ class XmlElement
 	enum { MaxDepth = 128 };
 	static int errors_, line_, incline_, maxdepth_, seq_;
 	static FIX8::RegExp rCE_, rCX_, rIn_, rEn_, rEv_;
-	static XmlElement *root_;
 	static std::string inclusion_;
 
 	std::string tag_, *value_, *decl_;
@@ -61,6 +60,9 @@ class XmlElement
 public:
 	/*! XmlSet ordering preserved from source file */
 	typedef std::set<const XmlElement *, EntityOrderComp> XmlSet;
+	typedef std::map<std::string, std::string> XmlAttrs;
+	XmlAttrs *attrs_;
+	static XmlAttrs emptyattrs_;
 
 private:
 	typedef std::multimap<std::string, XmlElement *> XmlSubEls;
@@ -72,10 +74,7 @@ private:
 	XmlSet *ordchildren_;
 	static XmlSet emptyset_;
 
-public:
-	typedef std::map<std::string, std::string> XmlAttrs;
-	XmlAttrs *attrs_;
-	static XmlAttrs emptyattrs_;
+	XmlElement *parent_;
 
 	/// Copy Ctor. Non-copyable.
 	XmlElement(const XmlElement&);
@@ -87,10 +86,11 @@ public:
 	/*! Ctor.
 	  \param ifs input file stream
 	  \param subidx the subindex for this child
+	  \param parent parent XmlElement element
 	  \param txtline xml sourcefile line number
 	  \param depth depth nesting level
 	  \param rootAttr root attribute string */
-	XmlElement(std::istream& ifs, int subidx, int txtline=0, int depth=0, const char *rootAttr=0);
+	XmlElement(std::istream& ifs, int subidx, XmlElement *parent=0, int txtline=0, int depth=0, const char *rootAttr=0);
 
 	/// Dtor.
 	virtual ~XmlElement();
@@ -226,6 +226,9 @@ public:
 	  \return the maximum depth */
 	int GetMaxDepth() const { return maxdepth_; }
 
+	/*! Get the full xpath for the element; recursive
+	  \return the path */
+	std::string GetPath() const { return parent_ ? parent_->GetPath() + '/' + tag_ : "//" + tag_; }
 
 	/*! Get the element tag name.
 	  \return the tag */
@@ -240,7 +243,7 @@ public:
 	const std::string *GetDecl() const { return decl_; }
 
 	/// Reset all counters, errors and sequences.
-	static void Reset() { errors_ = maxdepth_ = seq_ = 0; line_ = 1; root_ = 0; }
+	static void Reset() { errors_ = maxdepth_ = seq_ = 0; line_ = 1; }
 
 	/*! Create a new root element (and recursively parse) from a given xml filename.
 	  \param fname the xml filename
@@ -263,6 +266,10 @@ public:
 	  \return const_iterator to last+1 element */
 	XmlSet::const_iterator end() const { return ordchildren_ ? ordchildren_->end() : emptyset_.end(); }
 
+	/*! Get the root element of this tree
+	  \return the root element */
+	const XmlElement *GetRoot() const { return parent_ ? parent_->GetRoot() : this; }
+
 	/*! Inserter friend.
 	    \param os stream to send to
 	    \param en XmlElement REFErence
@@ -270,5 +277,5 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const XmlElement& en);
 };
 
-#endif // _XML_ENTITY_HPP_
+#endif // _XML_ELEMENT_HPP_
 

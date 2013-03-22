@@ -88,16 +88,15 @@ public:
 	void push(FIX8::TEX::NewOrderSingle *nos) { _nos_queue.push(nos); }
 	FIX8::TEX::NewOrderSingle *pop()
 	{
-		if (_nos_queue.size())
-		{
-			FIX8::TEX::NewOrderSingle *nos(_nos_queue.front());
-			_nos_queue.pop();
-			return nos;
-		}
-		return 0;
+		if (_nos_queue.empty())
+			return 0;
+		FIX8::TEX::NewOrderSingle *nos(_nos_queue.front());
+		_nos_queue.pop();
+		return nos;
 	}
 
-	int cached() const { return _nos_queue.size(); }
+	bool cached() const { return !_nos_queue.empty(); }
+	int size() const { return _nos_queue.size(); }
 };
 
 //-----------------------------------------------------------------------------------------

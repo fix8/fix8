@@ -426,7 +426,7 @@ bool MyMenu::help()
 bool MyMenu::do_logout()
 {
 	_session.send(new TEX::Logout);
-	sleep(1);
+	hypersleep<h_seconds>(1);
 	return false; // will exit
 }
 
@@ -589,7 +589,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 			trdqty = 1;
 #if defined MSGRECYCLING
 		while(er->get_in_use())
-			microsleep(10);
+			hypersleep<h_microseconds>(10);
 		er->set_in_use(true);	// indicate this message is in use again
 		delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
 #else
