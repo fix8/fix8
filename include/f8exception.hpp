@@ -235,9 +235,9 @@ struct BadCheckSum : f8Exception
 
 //-------------------------------------------------------------------------------------------------
 /// A pthread attribute error occured.
-struct ThreadException : f8Exception
+struct dthreadException : f8Exception
 {
-	ThreadException(const std::string& reason) { format("Thread error", reason); }
+	dthreadException(const std::string& reason) { format("Thread error", reason); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -245,20 +245,6 @@ struct ThreadException : f8Exception
 struct PeerResetConnection : f8Exception
 {
 	PeerResetConnection(const std::string& reason) { format("Peer reset connection", reason); }
-};
-
-//-------------------------------------------------------------------------------------------------
-/// An attempt was made to free an invalid block of memory.
-struct InvalidMemoryPtr : f8Exception
-{
-	InvalidMemoryPtr(const void *ptr) { format("Invalid Memory pool ptr", ptr); }
-};
-
-//-------------------------------------------------------------------------------------------------
-/// The memory pool free list was unexpectedly full.
-struct FreelistFull : f8Exception
-{
-	FreelistFull() { format("Memory poll freelist", "freelist is full"); }
 };
 
 //-------------------------------------------------------------------------------------------------

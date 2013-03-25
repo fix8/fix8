@@ -74,7 +74,6 @@ XmlElement::XmlAttrs XmlElement::emptyattrs_;
 RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&(amp|lt|gt|apos|quot);"),
 	XmlElement::rIn_("href=\"([^\"]+)\""),
    XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
-XmlElement *XmlElement::root_;
 
 //-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlElement& en)
@@ -143,9 +142,9 @@ string& exec_cmd(const string& cmd, string& result)
 //-----------------------------------------------------------------------------------------
 // finite state machine with simple recursive descent parser
 //-----------------------------------------------------------------------------------------
-XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const char *rootAttr)
+XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline, int depth, const char *rootAttr)
 	: value_(), decl_(), depth_(depth), sequence_(++seq_), txtline_(txtline),
-	chldcnt_(), subidx_(subidx), children_(), _was_include(), ordchildren_(), attrs_()
+	chldcnt_(), subidx_(subidx), attrs_(), children_(), _was_include(), ordchildren_(), parent_(parent)
 {
 	istream *ifsptr(&ifs);
 
@@ -166,9 +165,6 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 
 	if (maxdepth_ < depth)
 		maxdepth_ = depth_;
-
-	if (depth_ == 0)
-		root_ = this;
 
 	while (ifsptr->good() && state != finished)
 	{
@@ -283,7 +279,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 					}
 					else
 					{
-						XmlElement *child(new XmlElement(*ifsptr, chldcnt_ + 1, line_, depth_ + 1));
+						XmlElement *child(new XmlElement(*ifsptr, chldcnt_ + 1, this, line_, depth_ + 1));
 						if (child->GetTag().empty()
 							|| (child->_was_include && (!child->children_ || !child->children_->begin()->second->children_)))
 						{
@@ -493,7 +489,7 @@ const XmlElement *XmlElement::find(const string& what, bool ignorecase, const st
 	if (what.compare(0, 2, "//") == 0) 	// root based
 	{
 		const string rmsl(what, 2);
-		return root_->find(rmsl, ignorecase, atag, aval, delim);
+		return GetRoot()->find(rmsl, ignorecase, atag, aval, delim);
 	}
 
 	if (ignorecase ? what % tag_ : what == tag_)
@@ -525,7 +521,7 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 	if (what.compare(0, 2, "//") == 0) 	// root based
 	{
 		const string rmsl(what, 2);
-		return root_->find(rmsl, eset, ignorecase, atag, aval, delim);
+		return GetRoot()->find(rmsl, eset, ignorecase, atag, aval, delim);
 	}
 
 	if (ignorecase ? what % tag_ : what == tag_)
@@ -655,7 +651,7 @@ XmlElement *XmlElement::Factory(const string& fname)
 {
 	Reset();
 	ifstream ifs(fname.c_str());
-	return ifs ? new XmlElement(ifs, 0, 0, 0, fname.c_str()) : 0;
+	return ifs ? new XmlElement(ifs, 0, 0, 0, 0, fname.c_str()) : 0;
 }
 
 //-----------------------------------------------------------------------------------------

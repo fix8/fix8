@@ -260,7 +260,7 @@ int main(int argc, char **argv)
 			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
-			sleep(1);
+			hypersleep<h_seconds>(1);
 			do
 			{
 				cout << endl << "?=help > " << flush;
@@ -280,7 +280,7 @@ int main(int argc, char **argv)
 			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
-			sleep(1);
+			hypersleep<h_seconds>(1);
 			do
 			{
 				cout << endl << "?=help > " << flush;
@@ -331,7 +331,7 @@ bool MyMenu::help()
 bool MyMenu::do_logout()
 {
 	_session.send(new TEX::Logout);
-	sleep(1);
+	hypersleep<h_seconds>(1);
 	return false; // will exit
 }
 

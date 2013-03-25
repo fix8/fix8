@@ -37,15 +37,11 @@ seqedit_SOURCES = seqedit.cpp
 CLEANFILES =
 INCLUDES = -I$(top_srcdir)/include
 
-POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
-GEN_LIBS = -lrt -lfix8
-if BDBSUPPORT
-GEN_LIBS += -ldb_cxx
-endif
-TBB_LIBS = -ltbb
-ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) $(TBB_LIBS) -L$(top_srcdir)/runtime
+GEN_LIBS = -lrt -lstdc++
 
-seqedit_LDFLAGS = -rdynamic $(ALL_LIBS)
+ALL_LIBS = $(GEN_LIBS) -L$(top_srcdir)/runtime
+
+seqedit_LDFLAGS = $(ALL_LIBS)
 
 if USECOMPRESSION
 seqedit_LDFLAGS += -lz

@@ -46,7 +46,7 @@ namespace FIX8
 {
 
 //----------------------------------------------------------------------------------------
-/// This is a modified and stripped down version of 0x reference_wrapper.
+/// This is a modified and stripped down version of c++11 reference_wrapper.
 /*!  \tparam T class to reference wrap */
 template<typename T>
 class reference_wrapper
@@ -82,109 +82,111 @@ template<typename T>
 inline reference_wrapper<const T> cref(T& _t) { return reference_wrapper<const T>(_t); }
 
 //----------------------------------------------------------------------------------------
-/// Modern POSIX pthread wrapper ABC.
-class _threadbase
+/// pthread wrapper abstract base
+class _dthreadcore
 {
 	pthread_attr_t _attr;
 	pthread_t _tid;
 	int _exitval;
 
 	template<typename T>
-	static void *_Run(void *what)
+	static void *_run(void *what)
 		{ return reinterpret_cast<void *>((*static_cast<T *>(what))()); }
 
-	_threadbase& operator=(const _threadbase&);
+	_dthreadcore& operator=(const _dthreadcore&);
 
 protected:
 
 	template<typename T>
-	int _Start(void *sub)
-		{ return pthread_create(&_tid, &_attr, _Run<T>, sub); }
+	int _start(void *sub) { return pthread_create(&_tid, &_attr, _run<T>, sub); }
 
 public:
 	/*! Ctor.
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	_threadbase(const bool detach, const size_t stacksize) throw(ThreadException) : _attr(), _tid(), _exitval()
+	_dthreadcore(const bool detach, const size_t stacksize) throw(dthreadException) : _attr(), _tid(), _exitval()
 	{
 		if (pthread_attr_init(&_attr))
-			throw ThreadException("pthread_attr_init failure");
+			throw dthreadException("pthread_attr_init failure");
 		if (stacksize && pthread_attr_setstacksize(&_attr, stacksize))
-			throw ThreadException("pthread_attr_setstacksize failure");
+			throw dthreadException("pthread_attr_setstacksize failure");
 		if (detach && pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_DETACHED))
-			throw ThreadException("pthread_attr_setdetachstate failure");
+			throw dthreadException("pthread_attr_setdetachstate failure");
 	}
 
 	/// Dtor.
-	virtual ~_threadbase() { pthread_attr_destroy(&_attr); }
+	virtual ~_dthreadcore() { pthread_attr_destroy(&_attr); }
 
-	/*! Start thread.
+	/*! start thread.
 	  \return function result */
-	virtual int Start() = 0;	// ABC
+	virtual int start() = 0;	// ABC
 
 	/*! Join the thread.
 	  \return result of join */
-	int Join()
+	int join()
 		{ return pthread_join(_tid, reinterpret_cast<void **>(&_exitval)) ? -1 : _exitval; }
 
 	/*! Cause the thread to exit.
 	  \param exitvalue value to return to calling process */
-	void Exit(int exitvalue) const { pthread_exit(reinterpret_cast<void *>(exitvalue)); }
+	void exit(int exitvalue) const { pthread_exit(reinterpret_cast<void *>(exitvalue)); }
 
 	/*! Recover the thread's exit value.
 	  \return exit value from to calling process */
-	int GetExitVal() const { return _exitval; }
+	int getexitval() const { return _exitval; }
+
+	/*! Yield CPU.
+		\return result of yield */
+	int yield() const { return pthread_yield(); }
 
 	/*! Kill the thread.
 	  \param signum signal number to send */
-	void Kill(int signum) const { pthread_kill(_tid, signum); }
+	void kill(int signum) const { pthread_kill(_tid, signum); }
 
 	/*! Kill the thread. Static version.
 	  \param ctxt thread context to kill
 	  \param signal signal number to send
 	  \return true on success */
-	static bool Kill(_threadbase& ctxt, const int signal=SIGTERM)
+	static bool kill(_dthreadcore& ctxt, const int signal=SIGTERM)
 		{ return pthread_kill(ctxt._tid, signal) == 0; }
 
 	/*! Get the thread's thread ID.
 	  \return the thread id */
-	pthread_t GetThreadID() const { return _tid; }
+	pthread_t getdthreadid() const { return _tid; }
 
 	/*! Get the thread's thread ID. Static version.
 	  \return the thread id */
-	static pthread_t GetID() { return pthread_self(); }
+	static pthread_t getid() { return pthread_self(); }
 
-	/*! Thread equivalence operator.
+	/*! dthread equivalence operator.
 	  \param that the other thread id
 	  \return true if the threads are equal */
-	bool operator==(const _threadbase& that) const { return pthread_equal(_tid, that._tid); }
+	bool operator==(const _dthreadcore& that) const { return pthread_equal(_tid, that._tid); }
 
-	/*! Thread inequivalence operator.
+	/*! dthread inequivalence operator.
 	  \param that the other thread id
 	  \return true if the threads are unequal */
-	bool operator!=(const _threadbase& that) const { return !pthread_equal(_tid, that._tid); }
+	bool operator!=(const _dthreadcore& that) const { return !pthread_equal(_tid, that._tid); }
 
 	/*! Set the thread signal mask.
 	  \param how block, unblock or mask
 	  \param newmask new mask
 	  \param oldmask old mask
 	  \return true on success */
-	static bool SetSignalMask(const int how, const sigset_t *newmask, sigset_t *oldmask)
+	static bool setsignalmask(const int how, const sigset_t *newmask, sigset_t *oldmask)
 		{ return pthread_sigmask(how, newmask, oldmask)  == 0; }
 
 	/*! Wait for a specified signal.
 	  \param set signal set
 	  \param sig new mask
 	  \return true on success */
-	static bool SignalWait(const sigset_t *set, int *sig)
-		{ return sigwait(set, sig) == 0; }
+	static bool signalwait(const sigset_t *set, int *sig) { return sigwait(set, sig) == 0; }
 };
 
 //----------------------------------------------------------------------------------------
-/// Modern POSIX pthread wrapper. Thread by pointer to member function.  Ctor provides T instance and specifies ptr to member to call or defaults to operator()
+/// POSIX pthread wrapper. dthread by pointer to member function.  Ctor provides T instance and specifies ptr to member to call or defaults to operator()
 /*! \tparam T class call thread entry functor */
 template<typename T=void *>
-class Thread : public _threadbase
+class dthread : public _dthreadcore
 {
 	class _helper
 	{
@@ -203,29 +205,29 @@ public:
 	  \param method pointer to entry point method
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	Thread(T what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
-		throw(ThreadException) : _threadbase(detach, stacksize), _sub(what, method) {}
+	dthread(T what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
+		throw(dthreadException) : _dthreadcore(detach, stacksize), _sub(what, method) {}
 
 	/*! Ctor. Reference to object, functor version.
 	  \param what reference wrapper of class with entry point
 	  \param method reference to entry point method
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	Thread(reference_wrapper<T> what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
-		throw(ThreadException) : _threadbase(detach, stacksize), _sub(what, method) {}
+	dthread(reference_wrapper<T> what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
+		throw(dthreadException) : _dthreadcore(detach, stacksize), _sub(what, method) {}
 
 	/// Dtor.
-	virtual ~Thread() {}
+	virtual ~dthread() {}
 
-	/*! Start thread.
+	/*! start thread.
 	  \return function result */
-	int Start() { return _Start<_helper>(static_cast<void *>(&_sub)); }
+	int start() { return _start<_helper>(static_cast<void *>(&_sub)); }
 };
 
 //----------------------------------------------------------------------------------------
-/// Modern POSIX pthread wrapper. Conventional thread started by ptr to non member function with void * args
+/// POSIX pthread wrapper. Conventional thread started by ptr to non member function with void * args
 template<>
-class Thread<> : public _threadbase
+class dthread<> : public _dthreadcore
 {
 	class _helper
 	{
@@ -244,15 +246,15 @@ public:
 	  \param args pointer to function arguments
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	Thread(int (*func)(void *), void *args, const bool detach=false, const size_t stacksize=0)
-		throw(ThreadException) : _threadbase(detach, stacksize), _sub(func, args) {}
+	dthread(int (*func)(void *), void *args, const bool detach=false, const size_t stacksize=0)
+		throw(dthreadException) : _dthreadcore(detach, stacksize), _sub(func, args) {}
 
 	/// Dtor.
-	virtual ~Thread() {}
+	virtual ~dthread() {}
 
-	/*! Start thread.
+	/*! start thread.
 	  \return function result */
-	int Start() { return _Start<_helper>(static_cast<void *>(&_sub)); }
+	int start() { return _start<_helper>(static_cast<void *>(&_sub)); }
 };
 
 } // FIX8

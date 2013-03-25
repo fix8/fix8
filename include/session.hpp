@@ -38,7 +38,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define _FIX8_SESSION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
-#include <tbb/atomic.h>
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
@@ -202,14 +201,14 @@ public:
 
 protected:
 	Control _control;
-	tbb::atomic<unsigned> _next_send_seq, _next_receive_seq;
-	tbb::atomic<States::SessionStates> _state;
+	f8_atomic<unsigned> _next_send_seq, _next_receive_seq;
+	f8_atomic<States::SessionStates> _state;
 	Tickval _last_sent, _last_received;
 	const F8MetaCntx& _ctx;
 	Connection *_connection;
 	unsigned _req_next_send_seq, _req_next_receive_seq;
 	SessionID _sid;
-	class SessionConfig *_sf;
+	struct SessionConfig *_sf;
 
 	LoginParameters _loginParamaters;
 
@@ -475,7 +474,7 @@ public:
 
 	/* ! Set the SessionConfig object - only for server sessions
 		\param sf pointer to SessionConfig object */
-	void set_session_config(class SessionConfig *sf) { _sf = sf; }
+	void set_session_config(struct SessionConfig *sf) { _sf = sf; }
 
 	/*! Generate a logout message.
 	    \return new Message */

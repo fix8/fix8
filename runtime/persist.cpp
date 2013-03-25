@@ -39,6 +39,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <vector>
 #include <map>
 #include <set>
+#include <list>
 #include <iterator>
 #include <memory>
 #include <iomanip>
@@ -293,6 +294,9 @@ int BDBPersister::operator()()
 
    for (;;)
    {
+		KeyDataBuffer *msg_ptr(0);
+
+#if (MPMC_SYSTEM == MPMC_TBB)
 		KeyDataBuffer buffer;
 		if (stopping)	// make sure we dequeue any pending msgs before exiting
 		{
@@ -301,28 +305,47 @@ int BDBPersister::operator()()
 		}
 		else
 			_persist_queue.pop (buffer); // will block
+		msg_ptr = &buffer;
 
       if (buffer.empty())  // means exit
 		{
          stopping = true;
 			continue;
 		}
+#else
+		if (_msg_queue.try_pop (msg_ptr)) // will not block
+		{
+			if (msg_ptr->empty())  // means exit
+				break;
+		}
+		else
+		{
+			hypersleep<h_nanoseconds>(250);
+			continue;
+		}
+#endif
 
 		//cout << "persisted..." << endl;
 
 		++received;
 
-		KeyDataPair keyPair(buffer);
-		int retval(_db->put(0, &keyPair._key, &keyPair._data, 0));  // will overwrite if found
-		if (retval)
+		if (msg_ptr)
 		{
-			ostringstream ostr;
-			ostr << "Could not add" << '(' << db_strerror(retval) << ')';
-			GlobalLogger::log(ostr.str());
+			KeyDataPair keyPair(*msg_ptr);
+			int retval(_db->put(0, &keyPair._key, &keyPair._data, 0));  // will overwrite if found
+			if (retval)
+			{
+				ostringstream ostr;
+				ostr << "Could not add" << '(' << db_strerror(retval) << ')';
+				GlobalLogger::log(ostr.str());
+			}
+			else
+				++persisted;
 		}
-		else
-			++persisted;
-   }
+#if (MPMC_SYSTEM == MPMC_FF)
+		_msg_queue.release(msg_ptr);
+#endif
+	}
 
 	//cout << "persister()() exited..." << endl;
 

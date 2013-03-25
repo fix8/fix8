@@ -37,6 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <list>
 #include <map>
 #include <set>
 #include <iterator>
@@ -61,10 +62,10 @@ namespace FIX8
 	char glob_log0[max_global_filename_length] = { "global_filename_not_set.log" };
 
 	template<>
-	tbb::atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
-		= tbb::atomic<SingleLogger<glob_log0> *>();
+	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
+		= f8_atomic<SingleLogger<glob_log0> *>();
 	template<>
-	tbb::mutex Singleton<SingleLogger<glob_log0> >::_mutex = tbb::mutex();
+	f8_mutex Singleton<SingleLogger<glob_log0> >::_mutex = f8_mutex();
 
 	const string Logger::_bit_names[] = { "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer" };
 }
@@ -73,72 +74,92 @@ namespace FIX8
 int Logger::operator()()
 {
    unsigned received(0);
-	bool stopping(false);
 
-   for (;;)
+   for (; !_stopping; )
    {
+		LogElement *msg_ptr(0);
+
+#if (MPMC_SYSTEM == MPMC_FF)
+		if (!_msg_queue.try_pop(msg_ptr))
+		{
+			hypersleep<h_milliseconds>(1);
+			continue;
+		}
+#else
 		LogElement msg;
-		if (stopping)	// make sure we dequeue any pending msgs before exiting
+		if (_stopping)	// make sure we dequeue any pending msgs before exiting
 		{
 			if (!_msg_queue.try_pop(msg))
 				break;
 		}
 		else
 			_msg_queue.pop (msg); // will block
+		msg_ptr = &msg;
+#endif
 
 		++received;
 
-      if (msg._str.empty())  // means exit
-		{
-         stopping = true;
-			continue;
-		}
 
-		ostringstream ostr;
-
-		if (_flags & sequence)
+		if (msg_ptr)
 		{
-			ostr << setw(7) << right << setfill('0');
+			if (msg_ptr->_str.empty())  // means exit
+			{
+#if (MPMC_SYSTEM == MPMC_FF)
+				break;
+#else
+				continue;
+#endif
+			}
+
+			ostringstream ostr;
+
+			if (_flags & sequence)
+			{
+				ostr << setw(7) << right << setfill('0');
+				if (_flags & direction)
+					ostr << (msg_ptr->_val ? ++_sequence  : ++_osequence) << ' ';
+				else
+					ostr << ++_sequence << ' ';
+			}
+
+			if (_flags & thread)
+				ostr << get_thread_code(msg_ptr->_tid) << ' ';
+
 			if (_flags & direction)
-				ostr << (msg._val ? ++_sequence  : ++_osequence) << ' ';
+				ostr << (msg_ptr->_val ? " in" : "out") << ' ' ;
+
+			if (_flags & timestamp)
+			{
+				string ts;
+				ostr << GetTimeAsStringMS(ts, &msg_ptr->_when, 9) << ' ';
+			}
+
+			if (_flags & buffer)
+			{
+				string result(ostr.str());
+				result += msg_ptr->_str;
+				_buffer.push_back(result);
+			}
 			else
-				ostr << ++_sequence << ' ';
+			{
+				f8_scoped_lock guard(_mutex);
+				get_stream() << ostr.str() << msg_ptr->_str << endl;
+			}
 		}
+#if (MPMC_SYSTEM == MPMC_FF)
+		_msg_queue.release(msg_ptr);
+#endif
+	}
 
-		if (_flags & thread)
-			ostr << get_thread_code(msg._tid) << ' ';
-
-		if (_flags & direction)
-			ostr << (msg._val ? " in" : "out") << ' ' ;
-
-		if (_flags & timestamp)
-		{
-			string ts;
-			ostr << GetTimeAsStringMS(ts, &msg._when, 9) << ' ';
-		}
-
-		if (_flags & buffer)
-		{
-			string result(ostr.str());
-			result += msg._str;
-			_buffer.push_back(result);
-		}
-		else
-		{
-			tbb::mutex::scoped_lock guard(_mutex);
-			get_stream() << ostr.str() << msg._str << endl;
-		}
-   }
-
-   return 0;
+	return 0;
 }
 
 //-------------------------------------------------------------------------------------------------
 void Logger::flush()
 {
-	tbb::mutex::scoped_lock guard(_mutex);
+	f8_scoped_lock guard(_mutex);
 	for (std::list<std::string>::const_iterator itr(_buffer.begin()); itr != _buffer.end(); ++itr)
-		get_stream() << *itr << endl;
+			get_stream() << *itr << endl;
 	_buffer.clear();
 	_lines = 0;
 }
@@ -146,7 +167,7 @@ void Logger::flush()
 //-------------------------------------------------------------------------------------------------
 void Logger::purge_thread_codes()
 {
-	tbb::mutex::scoped_lock guard(_mutex);
+	f8_scoped_lock guard(_mutex);
 
 	for (ThreadCodes::iterator itr(_thread_codes.begin()); itr != _thread_codes.end();)
 	{
@@ -165,7 +186,7 @@ void Logger::purge_thread_codes()
 //-------------------------------------------------------------------------------------------------
 char Logger::get_thread_code(pthread_t tid)
 {
-	tbb::mutex::scoped_lock guard(_mutex);
+	f8_scoped_lock guard(_mutex);
 
 	ThreadCodes::const_iterator itr(_thread_codes.find(tid));
 	if (itr != _thread_codes.end())
@@ -199,7 +220,7 @@ FileLogger::FileLogger(const string& fname, const ebitset<Flags> flags, const un
 //-------------------------------------------------------------------------------------------------
 bool FileLogger::rotate(bool force)
 {
-	tbb::mutex::scoped_lock guard(_mutex);
+	f8_scoped_lock guard(_mutex);
 
 	string thislFile(_pathname);
 #ifdef HAVE_COMPRESSION
@@ -208,7 +229,7 @@ bool FileLogger::rotate(bool force)
 #endif
 	if (_rotnum > 0 && (!_flags.has(append) || force))
 	{
-		vector<string> rlst(_rotnum);
+		vector<string> rlst;
 		rlst.push_back(thislFile);
 
 		for (unsigned ii(0); ii < _rotnum && ii < max_rotation; ++ii)

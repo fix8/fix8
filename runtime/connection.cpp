@@ -39,6 +39,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <vector>
 #include <map>
 #include <set>
+#include <list>
 #include <iterator>
 #include <memory>
 #include <iomanip>
@@ -69,13 +70,28 @@ int FIXReader::operator()()
 
 			if (read(msg))	// will block
 			{
-				if (!_msg_queue.try_push (msg))
+				if (_pipelined)
 				{
-					_session.log("FIXReader: message queue is full");
-					++dropped;
+					if (!_msg_queue.try_push (msg))
+					{
+						_session.log("FIXReader: message queue is full");
+						++dropped;
+					}
+					else
+						++processed;
 				}
 				else
-					++processed;
+				{
+					if (!_session.process(msg))
+					{
+						ostringstream ostr;
+						ostr << "Unhandled message: " << msg;
+						_session.log(ostr.str());
+						++invalid;
+					}
+					else
+						++processed;
+				}
 			}
 			else
 				++invalid;
@@ -116,21 +132,38 @@ int FIXReader::callback_processor()
 
    for (; !_session.is_shutdown();)
    {
+		f8String *msg_ptr(0);
+#if (MPMC_SYSTEM == MPMC_TBB)
       f8String msg;
-
 		_msg_queue.pop (msg); // will block
       if (msg.empty())  // means exit
 			break;
+		msg_ptr = &msg;
+#else
+		if (_msg_queue.try_pop (msg_ptr)) // will not block
+		{
+			if (msg_ptr->empty())  // means exit
+				break;
+		}
+		else
+		{
+			hypersleep<h_nanoseconds>(250);
+			continue;
+		}
+#endif
 
-      if (!_session.process(msg))
+      if (!_session.process(*msg_ptr))
 		{
 			ostringstream ostr;
-			ostr << "Unhandled message: " << msg;
-			//_session.log(ostr.str());
+			ostr << "Unhandled message: " << *msg_ptr;
+			_session.log(ostr.str());
 			++ignored;
 		}
 		else
 			++processed;
+#if (MPMC_SYSTEM == MPMC_FF)
+		_msg_queue.release(msg_ptr);
+#endif
    }
 
 	ostringstream ostr;
@@ -209,7 +242,6 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 }
 
 //-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
 int FIXWriter::operator()()
 {
 	int result(0), processed(0), invalid(0);
@@ -219,9 +251,23 @@ int FIXWriter::operator()()
 		try
 		{
 			Message *inmsg(0);
+#if (MPMC_SYSTEM == MPMC_TBB)
 			_msg_queue.pop (inmsg); // will block
 			if (!inmsg)
 				break;
+#else
+			if (_msg_queue.try_pop (inmsg)) // will not block
+			{
+				if (!inmsg)  // means exit
+					break;
+			}
+			else
+			{
+				hypersleep<h_nanoseconds>(250);
+				continue;
+			}
+#endif
+
 #if defined MSGRECYCLING
 			_session.send_process(inmsg);
 			inmsg->set_in_use(false);
@@ -308,7 +354,7 @@ bool ClientConnection::connect()
 			else
 				ostr << e.what();
 			_session.log(ostr.str());
-			millisleep(lparam._login_retry_interval);
+			hypersleep<h_milliseconds>(lparam._login_retry_interval);
 		}
 	}
 

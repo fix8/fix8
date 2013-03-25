@@ -56,7 +56,7 @@ public:
 	static const ticks billion = thousand * million;
 
 private:
-	tbb::atomic<ticks> _value;
+	f8_atomic<ticks> _value;
 
 public:
 	/*! Ctor.

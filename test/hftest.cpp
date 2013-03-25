@@ -127,9 +127,9 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:rb:");
+const string GETARGLIST("hl:svqc:R:S:rb:p:");
 bool term_received(false);
-unsigned batch_size(1000);
+unsigned batch_size(1000), preload_count(0);
 
 //-----------------------------------------------------------------------------------------
 namespace FIX8
@@ -193,6 +193,7 @@ int main(int argc, char **argv)
 		{ "receive",	1,	0,	'R' },
 		{ "quiet",		0,	0,	'q' },
 		{ "reliable",	0,	0,	'r' },
+		{ "preload",	1,	0,	'p' },
 		{ 0 },
 	};
 
@@ -212,6 +213,7 @@ int main(int argc, char **argv)
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
 		case 'b': batch_size = GetValue<unsigned>(optarg); break;
+		case 'p': preload_count = GetValue<unsigned>(optarg); break;
 		case 's': server = true; break;
 		case 'S': next_send = GetValue<unsigned>(optarg); break;
 		case 'R': next_receive = GetValue<unsigned>(optarg); break;
@@ -249,12 +251,19 @@ int main(int argc, char **argv)
 				ostringstream sostr;
 				sostr << "client(" << ++scnt << ") connection established.";
 				GlobalLogger::log(sostr.str());
-				inst->start(true, next_send, next_receive);
+				const bool pipelined(ms->get_pipelined(ms->_ses));
+				inst->start(pipelined, next_send, next_receive);
+				if (!pipelined)
+				{
+					while (!inst->session_ptr()->is_shutdown())
+						hypersleep<h_milliseconds>(100);
+				}
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
 #if defined BUFFERED_GLOBAL_LOGGING
 				GlobalLogger::flush_log();
 #endif
+				Message::report_codec_timings();
 			}
 		}
 		else if (reliable)
@@ -274,6 +283,8 @@ int main(int argc, char **argv)
 #if defined BUFFERED_GLOBAL_LOGGING
 			GlobalLogger::flush_log();
 #endif
+			Message::report_codec_timings();
+
 			if (!mc->session_ptr()->is_shutdown())
 				mc->session_ptr()->stop();
 			mymenu.get_tty().unset_raw_mode();
@@ -294,6 +305,8 @@ int main(int argc, char **argv)
 #if defined BUFFERED_GLOBAL_LOGGING
 			GlobalLogger::flush_log();
 #endif
+			Message::report_codec_timings();
+
 			if (!mc->session_ptr()->is_shutdown())
 				mc->session_ptr()->stop();
 			mymenu.get_tty().unset_raw_mode();
@@ -322,12 +335,15 @@ int main(int argc, char **argv)
 //-----------------------------------------------------------------------------------------
 bool MyMenu::batch_preload_new_order_single()
 {
-	cout << "Enter number of NewOrderSingle msgs to batch preload:";
-	cout.flush();
-	unsigned num(0);
-	_tty.unset_raw_mode();
-	cin >> num;
-	_tty.set_raw_mode();
+	unsigned num(preload_count);
+	if (!num)
+	{
+		cout << "Enter number of NewOrderSingle msgs to batch preload:";
+		cout.flush();
+		_tty.unset_raw_mode();
+		cin >> num;
+		_tty.set_raw_mode();
+	}
 	while (num > 0)
 	{
 		unsigned cnt(0);
@@ -410,27 +426,30 @@ bool MyMenu::send_all_preloaded()
 		if (!ptr)
 			break;
 		_session.send(ptr);
-		if (++snt % 1000 == 0)
+		if (++snt % 5000 == 0)
 		{
 			cout << '\r' << snt << " NewOrderSingle msgs sent";
 			cout.flush();
 		}
 	}
-	cout << endl << _session.cached() << " NewOrderSingle msgs remaining." << endl;
+	cout << endl << _session.size() << " NewOrderSingle msgs remaining." << endl;
 	return true;
 }
 
 //-----------------------------------------------------------------------------------------
 bool MyMenu::preload_new_order_single()
 {
-	cout << endl << _session.cached() << " NewOrderSingle msgs currently preloaded." << endl;
-	cout << "Enter number of NewOrderSingle msgs to preload:";
-	cout.flush();
-	int num(0);
-	_tty.unset_raw_mode();
-	cin >> num;
-	_tty.set_raw_mode();
-	for (int ii(0); ii < num; ++ii)
+	cout << endl << _session.size() << " NewOrderSingle msgs currently preloaded." << endl;
+	unsigned num(preload_count);
+	if (!num)
+	{
+		cout << "Enter number of NewOrderSingle msgs to preload:";
+		cout.flush();
+		_tty.unset_raw_mode();
+		cin >> num;
+		_tty.set_raw_mode();
+	}
+	for (unsigned ii(0); ii < num; ++ii)
 	{
 		static unsigned oid(10000);
 		ostringstream oistr;
@@ -453,7 +472,7 @@ bool MyMenu::preload_new_order_single()
 		_session.push(ptr);
 	}
 
-	cout << _session.cached() << " NewOrderSingle msgs preloaded." << endl;
+	cout << _session.size() << " NewOrderSingle msgs preloaded." << endl;
 
 	return true;
 }
@@ -474,7 +493,7 @@ bool MyMenu::help()
 bool MyMenu::do_logout()
 {
 	_session.send(new TEX::Logout);
-	sleep(1);
+	hypersleep<h_seconds>(1);
 	return false; // will exit
 }
 
@@ -489,6 +508,8 @@ void print_usage()
 	um.add('l', "log", "global log filename");
 	um.add('c', "config", "xml config (default: hf_client.xml or hf_server.xml)");
 	um.add('q', "quiet", "do not print fix output (default yes)");
+	um.add('b', "batch", "if using batch send, number of messages in each batch (default 1000)");
+	um.add('p', "preload", "if batching or preloading, default number of messages to create");
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
 	um.add('r', "reliable", "start in reliable mode");

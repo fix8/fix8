@@ -46,9 +46,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <sys/gmon.h>
 #endif
 
+#include <errno.h>
 #include <f8exception.hpp>
-#include <memory.hpp>
-#include <f8allocator.hpp>
+#include <hypersleep.hpp>
+#include <mpmc.hpp>
 #include <f8types.hpp>
 #include <f8utils.hpp>
 #include <xml.hpp>

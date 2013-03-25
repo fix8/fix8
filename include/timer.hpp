@@ -39,7 +39,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-------------------------------------------------------------------------------------------------
 #include <queue>
-#include <tbb/mutex.h>
 #include <sys/time.h>
 
 //-------------------------------------------------------------------------------------------------
@@ -86,8 +85,8 @@ template<typename T>
 class Timer
 {
    T& _monitor;
-   Thread<Timer> _thread;
-	tbb::mutex _mutex;
+   dthread<Timer> _thread;
+	f8_mutex _mutex;
    unsigned _granularity;
 
    std::priority_queue<TimerEvent<T> > _event_queue;
@@ -113,13 +112,13 @@ public:
 
 	/*! Kill timer thread.
 	  \param sig signal to kill with */
-   void kill(const int sig=SIGKILL) { _thread.Kill(sig); }
+   void kill(const int sig=SIGKILL) { _thread.kill(sig); }
 
 	/// Join timer thread. Wait till exits.
-   void join() { _thread.Join(); }
+   void join() { _thread.join(); }
 
 	/// Start the timer thread.
-	void start() { _thread.Start(); }
+	void start() { _thread.start(); }
 
 	/*! Timer thread entry point.
 	  \return result at timer thread exit */
@@ -130,14 +129,13 @@ public:
 template<typename T>
 int Timer<T>::operator()()
 {
-   const struct timespec tspec = { 0, 1000 * 100 * _granularity }; // if _granularity == 1 : 0.1ms at 1000Hz; 1ms at 100Hz
    unsigned elapsed(0);
 
    while(true)
    {
       bool shouldsleep(false);
       {
-			tbb::mutex::scoped_lock guard(_mutex);
+			f8_scoped_lock guard(_mutex);
 
          if (_event_queue.size())
          {
@@ -165,7 +163,7 @@ int Timer<T>::operator()()
       }	// we want the lock to go out of scope before we sleep
 
       if (shouldsleep)
-			rnanosleep(tspec);
+			hypersleep<h_milliseconds>(_granularity);
    }
 
 	std::ostringstream ostr;
@@ -179,7 +177,7 @@ template<typename T>
 size_t Timer<T>::clear()
 {
 	size_t result(0);
-	tbb::mutex::scoped_lock guard(_mutex);
+	f8_scoped_lock guard(_mutex);
 
 	while (_event_queue.size())
 	{
@@ -204,7 +202,7 @@ bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWait)
    }
 
 	what.set(tofire);
-	tbb::mutex::scoped_lock guard(_mutex);
+	f8_scoped_lock guard(_mutex);
 	_event_queue.push(what);
 
    return true;

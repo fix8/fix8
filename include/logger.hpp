@@ -37,7 +37,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _FIX8_LOGGER_HPP_
 #define _FIX8_LOGGER_HPP_
 
-#include <tbb/concurrent_queue.h>
 #include <Poco/Net/IPAddress.h>
 #include <Poco/Net/DatagramSocket.h>
 
@@ -153,10 +152,10 @@ public:
 //-------------------------------------------------------------------------------------------------
 class Tickval;
 
-/// Thread delegated async logging class
+/// dthread delegated async logging class
 class Logger
 {
-	Thread<Logger> _thread;
+	dthread<Logger> _thread;
 	std::ostringstream _buf;
 	std::list<std::string> _buffer;
 
@@ -166,10 +165,11 @@ public:
 	typedef ebitset<Flags> LogFlags;
 
 protected:
-	tbb::mutex _mutex;
+	f8_mutex _mutex;
 	LogFlags _flags;
 	std::ostream *_ofs;
 	size_t _lines;
+	f8_atomic<bool> _stopping;
 
 	struct LogElement
 	{
@@ -181,6 +181,7 @@ protected:
 		LogElement(const pthread_t tid, const std::string& str, const unsigned val=0)
 			: _tid(tid), _str(str), _val(val), _when(true) {}
 		LogElement() : _tid(), _val(), _when(true) {}
+		LogElement(const LogElement& from) : _tid(from._tid), _str(from._str), _val(from._val), _when(from._when) {}
 		LogElement& operator=(const LogElement& that)
 		{
 			if (this != &that)
@@ -194,7 +195,7 @@ protected:
 		}
 	};
 
-	tbb::concurrent_bounded_queue<LogElement> _msg_queue;
+	f8_concurrent_queue<LogElement> _msg_queue;
 	unsigned _sequence, _osequence;
 
 	typedef std::
@@ -212,7 +213,11 @@ protected:
 public:
 	/*! Ctor.
 	    \param flags ebitset flags */
-	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _ofs(), _lines(), _sequence(), _osequence() { _thread.Start(); }
+	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _ofs(), _lines(), _sequence(), _osequence()
+	{
+		_stopping = false;
+		_thread.start();
+	}
 
 	/// Dtor.
 	virtual ~Logger() { delete _ofs; }
@@ -226,10 +231,13 @@ public:
 	    \param val optional value for the logger to use
 	    \return true on success */
 	bool send(const std::string& what, const unsigned val=0)
-		{ return _msg_queue.try_push (LogElement(pthread_self(), what, val)) == 0; }
+	{
+		const LogElement le(pthread_self(), what, val);
+		return _msg_queue.try_push (le) == 0;
+	}
 
 	/// Stop the logging thread.
-	void stop() { send(std::string()); _thread.Join(); }
+	void stop() { send(std::string()); _stopping = true; _thread.join(); }
 
 	/*! Perform logfile rotation. Only relevant for file-type loggers.
 		\param force the rotation (even if the file is set to append)
@@ -352,6 +360,11 @@ public:
 	static void flush_log()
 	{
 		Singleton<SingleLogger<fn> >::instance()->flush();
+	}
+
+	static void stop()
+	{
+		Singleton<SingleLogger<fn> >::instance()->stop();
 	}
 };
 

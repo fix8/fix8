@@ -37,8 +37,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _FIX8_PERSIST_HPP_
 #define _FIX8_PERSIST_HPP_
 
-#include <tbb/concurrent_queue.h>
-
 #if defined HAVE_BDB
 #include <db_cxx.h>
 #endif
@@ -120,7 +118,7 @@ public:
 /// BerkeleyDB backed message persister.
 class BDBPersister : public Persister
 {
-	Thread<BDBPersister> _thread;
+	dthread<BDBPersister> _thread;
 
 	DbEnv _dbEnv;
 	Db *_db;
@@ -181,8 +179,12 @@ class BDBPersister : public Persister
 		return a < b ? -1 : a > b ? 1 : 0;
 	}
 
-	tbb::concurrent_bounded_queue<KeyDataBuffer> _persist_queue;
-	bool write(const KeyDataBuffer& what) { return _persist_queue.try_push (what) == 0; }
+	f8_concurrent_queue<KeyDataBuffer> _persist_queue;
+
+	bool write(const KeyDataBuffer& what)
+	{
+		return _persist_queue.try_push(what);
+	}
 
 public:
 	/// Ctor.
@@ -241,7 +243,7 @@ public:
 	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
 
 	/// Stop the persister thread.
-	void stop() { write(KeyDataBuffer()); _thread.Join(); }
+	void stop() { write(KeyDataBuffer()); _thread.join(); }
 
 	/*! Persister thread entry point.
 	  \return 0 on success */

@@ -38,6 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <sstream>
 #include <vector>
 #include <map>
+#include <list>
 #include <set>
 #include <iterator>
 #include <memory>
@@ -54,6 +55,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
 using namespace std;
+
+//-------------------------------------------------------------------------------------------------
+#if defined CODECTIMING
+codec_timings Message::_encode_timings, Message::_decode_timings;
+#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace {
@@ -219,14 +225,12 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 			ctx._ube->post_msg_ctor(msg);
 #endif
 #if defined CODECTIMING
-		ostringstream gerr;
-		gerr << "decode(" << mtype << "):";
 		IntervalTimer itm;
 #endif
 		msg->decode(from);
 #if defined CODECTIMING
-		gerr << itm.Calculate();
-		GlobalLogger::log(gerr.str());
+		_decode_timings._cpu_used += itm.Calculate().AsDouble();
+		++_decode_timings._msg_count;
 #endif
 
 		static_cast<body_length *>(msg->_header->_fields.find(Common_BodyLength)->second)->set(mlen);
@@ -369,8 +373,6 @@ unsigned Message::encode(f8String& to) const
 	size_t sz(0), hsz(0);
 
 #if defined CODECTIMING
-	ostringstream gerr;
-	gerr << "encode(" << _msgType << "):";
 	IntervalTimer itm;
 #endif
 
@@ -415,8 +417,8 @@ unsigned Message::encode(f8String& to) const
 #endif
 
 #if defined CODECTIMING
-	gerr << itm.Calculate();
-	GlobalLogger::log(gerr.str());
+	_encode_timings._cpu_used += itm.Calculate().AsDouble();
+	++_encode_timings._msg_count;
 #endif
 
 	to.assign(hmsg, hsz);
@@ -606,4 +608,29 @@ void Message::print(ostream& os, int) const
 	else
 		os << "Null Trailer" << endl;
 }
+
+//-------------------------------------------------------------------------------------------------
+#if defined CODECTIMING
+void Message::format_codec_timings(const f8String& str, ostream& os, codec_timings& ct)
+{
+	os << str << ": " << setprecision(9) << ct._cpu_used << " secs, "
+		<< ct._msg_count << " msgs, "
+		<< (ct._cpu_used / ct._msg_count) << " secs/msg, "
+		<< setprecision(2) << (ct._msg_count / ct._cpu_used) << " msgs/sec";
+}
+
+void Message::report_codec_timings()
+{
+	ostringstream ostr;
+	ostr.setf(std::ios::showpoint);
+	ostr.setf(std::ios::fixed);
+
+	format_codec_timings("Encode", ostr, _encode_timings);
+	GlobalLogger::log(ostr.str());
+
+	ostr.str("");
+	format_codec_timings("Decode", ostr, _decode_timings);
+	GlobalLogger::log(ostr.str());
+}
+#endif
 

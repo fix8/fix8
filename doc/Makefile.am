@@ -44,4 +44,3 @@ clean-local:
 	rm -rf $(top_srcdir)/doc/html
 
 endif
-

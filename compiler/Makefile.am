@@ -39,9 +39,12 @@ f8c_SOURCES = 	f8c.cpp f8cutils.cpp f8cstatic.hpp f8c.hpp f8precomp.cpp
 
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
 
-f8c_LDFLAGS = -rdynamic -lrt -lfix8 $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime
+f8c_LDFLAGS = -rdynamic -lrt -lfix8 $(POCO_LIBS) -L$(top_srcdir)/runtime
 if BDBSUPPORT
 f8c_LDFLAGS += -ldb_cxx
+endif
+if TBBSUPPORT
+f8c_LDFLAGS += -ltbb
 endif
 
 if USECOMPRESSION
