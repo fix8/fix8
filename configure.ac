@@ -591,7 +591,7 @@ AC_SUBST(BRAND_DESCRIPTION)
 AC_SUBST(BRAND_COMPANY_SHORTNAME)
 AC_SUBST(BRAND_COMPANY_LONGNAME)
 
-AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile util/Makefile doc/fix8.doxygen \
+AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen \
 						fix8.spec doc/man/f8c.8.xml doc/man/seqedit.8.xml])
 AC_CONFIG_HEADERS(include/f8config.h)
 AC_OUTPUT

@@ -161,7 +161,7 @@ public:
     check_session(const F8MetaCntx& ctx):
         Session(ctx)
     {
-        _connection = new Connection(NULL, *this);
+        _connection = new Connection(NULL, *this, false);
     };
 
     ~check_session()
@@ -191,7 +191,7 @@ TEST(filePersister, resend_get)
 
 
     check_session session(UTEST::ctx);
-    Connection connection(NULL, session);
+    Connection connection(NULL, session, false);
 
     fixture.filePer.get(1, 5, session, &Session::retrans_callback);
 

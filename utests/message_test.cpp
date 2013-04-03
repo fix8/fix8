@@ -262,4 +262,3 @@ TEST(message, nestedGroup_encode)
 }
 
 
-

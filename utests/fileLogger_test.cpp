@@ -3,6 +3,7 @@
 #include <f8includes.hpp>
 #include <Poco/File.h>
 #include <Poco/Path.h>
+#include <Poco/Thread.h>
 #include <Poco/StringTokenizer.h>
 #include "gtest/gtest.h"
 #include "utest_types.hpp"
@@ -76,8 +77,8 @@ TEST(filelogger, create_logfile)
     logger.send("second_message_out", 0);
     logger.send("third_message_out", 0);
 
-
-    logger.send("");
+    //wait until log file have been written
+    hypersleep<h_milliseconds>(50);
     logger.stop();
 
     std::ifstream reader;
@@ -131,4 +132,6 @@ TEST(filelogger, rotate)
     EXPECT_TRUE(exist("log/utest_log.log.1"));
     EXPECT_TRUE(exist("log/utest_log.log.2"));
     EXPECT_TRUE(exist("log/utest_log.log.3"));
+
+    logger.stop();
 }

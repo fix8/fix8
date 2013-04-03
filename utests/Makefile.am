@@ -33,11 +33,15 @@
 #############################################################################################
 
 if USEGTEST
-bin_PROGRAMS = utests
+bin_PROGRAMS = message_test fileLogger_test filePersister_test session_test
 lib_LTLIBRARIES = libutest.la
 INCLUDES = -I$(top_srcdir)/include
 
-utests_SOURCES = message_test.cpp filePersister_test.cpp fileLogger_test.cpp
+message_test_SOURCES = message_test.cpp
+fileLogger_test_SOURCES = fileLogger_test.cpp
+filePersister_test_SOURCES = filePersister_test.cpp
+session_test_SOURCES = mockConnection.hpp mockConnection.cpp session_test.cpp 
+
 libutest_la_SOURCES = utest_types.hpp utest_types.cpp utest_traits.cpp \
                                                          utest_router.hpp utest_classes.hpp utest_classes.cpp
 
@@ -51,17 +55,38 @@ $(libutest_la_SOURCES): $(XML_42_SCHEMA)
 
 POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
 
-GEN_LIBS = -rdynamic -lrt -lfix8
+GEN_LIBS = 
 if BDBSUPPORT
   GEN_LIBS += -ldb_cxx
 endif
 
-utests_LDFLAGS = $(GEN_LIBS) $(POCO_LIBS) -ltbb -L$(top_srcdir)/runtime -lgtest -lgtest_main -lutest
-
 if USECOMPRESSION
-utests_LDFLAGS += -lz
+  GEN_LIBS += -lz
 endif
 
-endif
+GEN_FLAGS = $(GEN_LIBS) $(POCO_LIBS) -ltbb -lgtest -lgtest_main
+RUNTIME_FOLDER = $(top_srcdir)/runtime/.libs
 
+message_test_LDADD = $(RUNTIME_FOLDER)/message.o 
+message_test_LDFLAGS = $(GEN_FLAGS) -lutest
+
+fileLogger_test_LDADD = $(RUNTIME_FOLDER)/logger.o $(RUNTIME_FOLDER)/f8utils.o \
+                        $(RUNTIME_FOLDER)/gzstream.o $(RUNTIME_FOLDER)/popen.o 
+fileLogger_test_LDFLAGS = $(GEN_FLAGS)
+
+filePersister_test_LDADD = $(RUNTIME_FOLDER)/filepersist.o $(RUNTIME_FOLDER)/f8utils.o \
+                           $(RUNTIME_FOLDER)/connection.o $(RUNTIME_FOLDER)/session.o \
+                           $(RUNTIME_FOLDER)/logger.o $(RUNTIME_FOLDER)/message.o \
+                           $(RUNTIME_FOLDER)/gzstream.o $(RUNTIME_FOLDER)/popen.o \
+                           $(RUNTIME_FOLDER)/configuration.o $(RUNTIME_FOLDER)/xml.o \
+                           $(RUNTIME_FOLDER)/persist.o
+filePersister_test_LDFLAGS = $(GEN_FLAGS) -lutest
+
+session_test_LDADD = $(RUNTIME_FOLDER)/f8utils.o \
+		     $(RUNTIME_FOLDER)/logger.o \
+                     $(RUNTIME_FOLDER)/message.o $(RUNTIME_FOLDER)/configuration.o $(RUNTIME_FOLDER)/xml.o \
+                     $(RUNTIME_FOLDER)/gzstream.o $(RUNTIME_FOLDER)/popen.o \
+                     $(RUNTIME_FOLDER)/persist.o $(RUNTIME_FOLDER)/filepersist.o
+session_test_LDFLAGS = $(GEN_FLAGS) -lutest
+endif
 
