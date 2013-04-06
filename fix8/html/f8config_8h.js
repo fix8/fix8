@@ -1,6 +1,5 @@
 var f8config_8h =
 [
-    [ "CODECTIMING", "f8config_8h.html#a7517bfdc6242fe5186b818774a86efb2", null ],
     [ "CONFIGURE_OPTIONS", "f8config_8h.html#a2c90b46e6c2ae53cbbf439080a01fd91", null ],
     [ "CONFIGURE_SDATE", "f8config_8h.html#ac42e21b7a399c6a4665e84349bca5177", null ],
     [ "CONFIGURE_TIME", "f8config_8h.html#a661078846f76fdf65bb222943a71a844", null ],

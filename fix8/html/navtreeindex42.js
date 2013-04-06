@@ -1,6 +1,6 @@
 var NAVTREEINDEX42 =
 {
-"classFIX8_1_1TEX_1_1DontKnowTrade.html#ab0136d0eccaafc6527ee993dacc21c3c":[2,0,0,0,83,13],
+"classFIX8_1_1TEX_1_1DontKnowTrade.html#ab0136d0eccaafc6527ee993dacc21c3c":[2,0,0,0,83,12],
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#acdc3c1413aa2c943f220117dbfd7d56c":[2,0,0,0,83,6],
 "classFIX8_1_1TEX_1_1DontKnowTrade.html#acdc3c1413aa2c943f220117dbfd7d56c":[2,0,0,0,83,8],
 "classFIX8_1_1TEX_1_1DontKnowTrade_1_1NoComplexEvents.html":[2,0,0,0,83,0],

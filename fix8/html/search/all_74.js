@@ -66,7 +66,7 @@ var searchData=
   ['tests',['Tests',['../structFIX8_1_1States.html#a8164e8453dc8c6156fad3494285933c9',1,'FIX8::States']]],
   ['tex_5frouter_5fclient',['tex_router_client',['../classtex__router__client.html',1,'tex_router_client'],['../classtex__router__client.html#a6abe3d7a088814e7a9d89c77a5d2d8e6',1,'tex_router_client::tex_router_client(hf_session_client &amp;session)'],['../classtex__router__client.html#aadbf0242da4317dcdc693e3eba4dc003',1,'tex_router_client::tex_router_client(myfix_session_client &amp;session)']]],
   ['tex_5frouter_5fserver',['tex_router_server',['../classtex__router__server.html',1,'tex_router_server'],['../classtex__router__server.html#a1a943965c3ac291fd49b6105e7ceff60',1,'tex_router_server::tex_router_server(hf_session_server &amp;session)'],['../classtex__router__server.html#a5f59f85d3c34fba4ea0c1eb34fd96178',1,'tex_router_server::tex_router_server(myfix_session_server &amp;session)']]],
-  ['text',['Text',['../namespaceFIX8_1_1TEX.html#a9e2d9c6a983398c96d5b5c98c467594e',1,'FIX8::TEX::Text()'],['../namespaceFIX8.html#a66c37e12f4ea8b8913cdc5754dba633a',1,'FIX8::text()']]],
+  ['text',['text',['../namespaceFIX8.html#a66c37e12f4ea8b8913cdc5754dba633a',1,'FIX8::text()'],['../namespaceFIX8_1_1TEX.html#a9e2d9c6a983398c96d5b5c98c467594e',1,'FIX8::TEX::Text()']]],
   ['thousand',['thousand',['../classFIX8_1_1Tickval.html#ac1dc112410dfe3cfa507515fe4b0de2a',1,'FIX8::Tickval']]],
   ['thread',['thread',['../classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca5d02a867d0e1dacb801616b8c38c59e6',1,'FIX8::Logger']]],
   ['thread_2ehpp',['thread.hpp',['../thread_8hpp.html',1,'']]],

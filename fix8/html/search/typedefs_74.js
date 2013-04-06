@@ -16,7 +16,7 @@ var searchData=
   ['test_5frequest_5fid',['test_request_id',['../namespaceFIX8.html#af38f8546dd0f7154491b559f13d7830d',1,'FIX8']]],
   ['testmessageindicator',['TestMessageIndicator',['../namespaceFIX8_1_1TEX.html#a5bb404131be8ce39df537f082627b61c',1,'FIX8::TEX']]],
   ['testreqid',['TestReqID',['../namespaceFIX8_1_1TEX.html#a58a4c8acd3c5a3aaf72fb59c51da5b76',1,'FIX8::TEX']]],
-  ['text',['Text',['../namespaceFIX8_1_1TEX.html#a9e2d9c6a983398c96d5b5c98c467594e',1,'FIX8::TEX::Text()'],['../namespaceFIX8.html#a66c37e12f4ea8b8913cdc5754dba633a',1,'FIX8::text()']]],
+  ['text',['text',['../namespaceFIX8.html#a66c37e12f4ea8b8913cdc5754dba633a',1,'FIX8::text()'],['../namespaceFIX8_1_1TEX.html#a9e2d9c6a983398c96d5b5c98c467594e',1,'FIX8::TEX::Text()']]],
   ['threadcodes',['ThreadCodes',['../classFIX8_1_1Logger.html#aba11dcf2790930d9868d3ea025fc1802',1,'FIX8::Logger']]],
   ['thresholdamount',['ThresholdAmount',['../namespaceFIX8_1_1TEX.html#a87f027b9a9b2195478a1f0142186a932',1,'FIX8::TEX']]],
   ['tickdirection',['TickDirection',['../namespaceFIX8_1_1TEX.html#a7e452f1cbdcf0f7d5d1b1fa2e4a95911',1,'FIX8::TEX']]],

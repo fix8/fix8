@@ -103,7 +103,6 @@ var searchData=
   ['cn_5facceptor',['cn_acceptor',['../classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804adc05c6ebe0cec2a136677acf2d60b288',1,'FIX8::Connection']]],
   ['cn_5finitiator',['cn_initiator',['../classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290',1,'FIX8::Connection']]],
   ['cn_5funknown',['cn_unknown',['../classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6',1,'FIX8::Connection']]],
-  ['codectiming',['CODECTIMING',['../f8config_8h.html#a7517bfdc6242fe5186b818774a86efb2',1,'f8config.h']]],
   ['collaction',['CollAction',['../namespaceFIX8_1_1TEX.html#a318a58de0c88a5cf99ac038887a92330',1,'FIX8::TEX']]],
   ['collaction_5fadd',['CollAction_ADD',['../namespaceFIX8_1_1TEX.html#ad56a339ffa742151d22e02859a1fe73c',1,'FIX8::TEX']]],
   ['collaction_5frealm_5fels',['CollAction_realm_els',['../namespaceFIX8_1_1TEX.html#a67938b18599d8614932f22958e619e59',1,'FIX8::TEX']]],

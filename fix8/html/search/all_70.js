@@ -482,7 +482,7 @@ var searchData=
   ['previouslyreported_5fno',['PreviouslyReported_NO',['../namespaceFIX8_1_1TEX.html#a6368eb2746fd332488de4d7a6537df8f',1,'FIX8::TEX']]],
   ['previouslyreported_5frealm_5fels',['PreviouslyReported_realm_els',['../namespaceFIX8_1_1TEX.html#a602b27617bee0ad6639131c4387387ac',1,'FIX8::TEX']]],
   ['previouslyreported_5fyes',['PreviouslyReported_YES',['../namespaceFIX8_1_1TEX.html#aad925f47e3c76ecde4146c904149c071',1,'FIX8::TEX']]],
-  ['price',['price',['../namespaceFIX8.html#a995f7fbb850fb2c8cdbb1b5c26a9dc43',1,'FIX8::price()'],['../namespaceFIX8_1_1TEX.html#a9a4818f3b8fe10c7a68a93eba698ea6c',1,'FIX8::TEX::Price()']]],
+  ['price',['Price',['../namespaceFIX8_1_1TEX.html#a9a4818f3b8fe10c7a68a93eba698ea6c',1,'FIX8::TEX::Price()'],['../namespaceFIX8.html#a995f7fbb850fb2c8cdbb1b5c26a9dc43',1,'FIX8::price()']]],
   ['price2',['Price2',['../namespaceFIX8_1_1TEX.html#a03d3dd7b7e8d7d50ecb5e31161530707',1,'FIX8::TEX']]],
   ['pricedelta',['PriceDelta',['../namespaceFIX8_1_1TEX.html#a8a33384a3f5ba061b546dbfe611bac02',1,'FIX8::TEX']]],
   ['priceimprovement',['PriceImprovement',['../namespaceFIX8_1_1TEX.html#afdd986262556f9e367e5467bda9bb6cf',1,'FIX8::TEX']]],
