@@ -2,7 +2,8 @@ Installation Instructions
 *************************
 
 Copyright (C) 1994, 1995, 1996, 1999, 2000, 2001, 2002, 2004, 2005,
-2006, 2007, 2008 Free Software Foundation, Inc.
+2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013
+Free Software Foundation, Inc.
 
    This file is free documentation; the Free Software Foundation gives
 unlimited permission to copy, distribute and modify it.
@@ -330,12 +331,14 @@ Optional Features:
   --enable-dependency-tracking   do not reject slow dependency extractors
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-doxygen        enable doxygen generation (default=yes if available)
+  --enable-fillmetadata   enable metadata population (default=yes)
+  --enable-bdb            enable support for Oracle Berkeley DB persistence
+                          (default=no)
   --enable-xmlstrictbool  enable xml strict bool behaviour (default=no)
   --enable-bufgloblogging enable buffered global logging behaviour
                           (default=no)
   --enable-valgrind       enable internal support for valgrind (default=no)
   --enable-gprof          enable internal support for gprof (default=no)
-  --enable-poolalloc      enable Memory Pool Allocator (default=no)
   --enable-msgrecycle     enable Message Recycling (default=no)
   --enable-codectiming    enable CODEC timing testing code (default=no)
   --enable-customfields   enable User defined fields (default=no)
@@ -353,9 +356,14 @@ Optional Packages:
   --with-reservepercent=VALUE
                           Percentage of message fields to reserve for
                           additional fields
-  --with-maxmsglen=VALUE  Maximum length of a FIX message (default=1024)
-  --with-poco=DIR         location of Poco
+  --with-maxmsglen=VALUE  Maximum length of a FIX message (default=8192)
+  --with-maxfldlen=VALUE  Maximum length of a FIX field (default=1024)
   --with-tbb=DIR          location of TBB
+  --with-mpmc=VAL         select which mpmc system will be used (tbb|ff,
+                          default=ff)
+  --with-sleep=VAL        If using fastflow, sleep for VAL ns instead of yield
+                          when waiting for input(default=no)
+  --with-poco=DIR         location of Poco
   --with-bdb=DIR          Berkeley DB installation directory
 
 Some influential environment variables:
@@ -375,3 +383,4 @@ Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
 
 Report bugs to <fix@fix8.org>.
+fix8 home page: <http://www.fix8.org>.

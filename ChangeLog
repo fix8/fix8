@@ -1,7 +1,18 @@
-* Sat Mar 23 2013 David L. Dight <fix@fix8.org> 0.7.2
-Fixed jira tickets FX-23, FX-35, FX-36, FX-37, FX-38, FX-39, FX-40
+* Sun Apr 07 2013 David L. Dight <fix@fix8.org> 0.7.2
+Fixed jira tickets FX-23, FX-35, FX-36, FX-37, FX-38, FX-39, FX-40, FX-42, FX-43, FX-44, FX-17
 Partial implemntation of stack based messages.
-TBB optional; Fastflow no used; pipelining options; codec timings improvements;
+TBB optional; Fastflow now used; pipelining options; codec timings improvements;
+Added man-pages for seqedit and f8c
+Fixed under load, server disconnects client reporting it has timed out on receiving messages
+Provide utility to edit next send/expected receive in persistence files
+Investigate and perhaps deploy fastflow lock free containers to replace TBB
+Permit selection of pipelined or non-pipelined operation, through session config
+Change performance test application to provide better measure of codec performance
+Make Intel TBB optional
+Fixed FileLogger::rotate() not working as expected
+Use FastFlow queue processing
+Fixed FIXReader, FIXWriter dropping bytes when buffers full
+Fixed build hftest issue
 
 * Sat Feb 23 2013 David L. Dight <fix@fix8.org> 0.7.0
 File based persistence now implemented and default. Dependence on BerekelyDB removed.

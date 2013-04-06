@@ -121,7 +121,7 @@ void SessionID::from_string(const f8String& from)
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
-	_timer(*this, 1), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
 }
@@ -130,7 +130,7 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
-	_timer(*this, 1), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
 }
@@ -714,12 +714,32 @@ bool Session::send(Message *tosend, const unsigned custom_seqnum, const bool no_
 	return _connection->write(tosend);
 }
 
+bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_increment)
+{
+	if (custom_seqnum)
+		tosend.set_custom_seqnum(custom_seqnum);
+	if (no_increment)
+		tosend.set_no_increment(no_increment);
+	return _connection->write(tosend);
+}
+
 #if defined MSGRECYCLING
 bool Session::send_wait(Message *msg, const unsigned custom_seqnum, const int waitval)
 {
 	if (send(msg, custom_seqnum))
 	{
 		while(msg->get_in_use())
+			hypersleep<h_microseconds>(waitval);
+		return true;
+	}
+	return false;
+}
+
+bool Session::send_wait(Message& msg, const unsigned custom_seqnum, const int waitval)
+{
+	if (send(msg, custom_seqnum))
+	{
+		while(msg.get_in_use())
 			hypersleep<h_microseconds>(waitval);
 		return true;
 	}

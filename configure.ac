@@ -224,8 +224,9 @@ AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
 
 mpmc_set=no
+using_ff=no
 AC_ARG_WITH([mpmc],
-[AC_HELP_STRING([--with-mpmc=VAL],[select which mpmc system will be used (default=ff)])],
+[AC_HELP_STRING([--with-mpmc=VAL],[select which mpmc system will be used (tbb|ff, default=ff)])],
 [case "${withval}" in
 	tbb) AC_MSG_CHECKING(for TBB)
 				AC_TRY_COMPILE([
@@ -245,7 +246,7 @@ AC_ARG_WITH([mpmc],
 					 exit 1
 				fi
 		 mpmc_set=yes ;;
-	ff) ;;
+	ff) using_ff=yes;;
 	*) echo
 		echo "ERROR: Unknown value ${withval} for MPMC given."
 		echo
@@ -253,10 +254,17 @@ AC_ARG_WITH([mpmc],
 esac])
 
 if test "$mpmc_set" = no; then
+	using_ff=yes
 	AC_DEFINE(MPMC_SYSTEM, MPMC_FF, [MPMC system used])
 fi
 
 AM_CONDITIONAL(TBBSUPPORT, [test x$have_tbb = xyes])
+
+AC_ARG_WITH(sleep,
+	AC_HELP_STRING([--with-sleep=VAL],[If using fastflow, sleep for VAL ns instead of yield when waiting for input(default=no)]),
+[
+	AC_DEFINE_UNQUOTED(SLEEP_NO_YIELD, ${withval}, [Define to 1 if when using fastflow, sleep for VAL ns instead of yield when waiting for input])
+],[])
 
 AC_ARG_WITH(poco,
   AC_HELP_STRING([--with-poco=DIR],[location of Poco]),

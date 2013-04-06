@@ -65,15 +65,15 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname)
 {
-   if (_opened)
-      return true;
+	if (_opened)
+		return true;
 
 	f8String odbdir(dbDir);
 	ostringstream ostr;
 	ostr << CheckAddTrailingSlash(odbdir) << dbFname;
-   _dbFname = ostr.str();
+	_dbFname = ostr.str();
 	ostr << ".idx";
-   _dbIname = ostr.str();
+	_dbIname = ostr.str();
 
 	if (!exist(_dbFname))
 	{
@@ -92,7 +92,7 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname)
 			return false;
 		}
 
-      _wasCreated = true;
+		_wasCreated = true;
 	}
 	else
 	{
@@ -149,15 +149,15 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname)
 		}
 
 		unsigned last;
-      if (get_last_seqnum(last))
+		if (get_last_seqnum(last))
 		{
 			ostringstream ostr;
-         ostr << _dbFname << ": Last sequence is " << last;
+			ostr << _dbFname << ": Last sequence is " << last;
 			GlobalLogger::log(ostr.str());
 		}
-   }
+	}
 
-   return _opened = true;
+	return _opened = true;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -175,7 +175,7 @@ unsigned FilePersister::get_last_seqnum(unsigned& sequence) const
 
 //-------------------------------------------------------------------------------------------------
 unsigned FilePersister::get(const unsigned from, const unsigned to, Session& session,
-	bool (Session::*callback)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const
+		bool (Session::*callback)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const
 {
 	unsigned last_seq(0);
 	get_last_seqnum(last_seq);
@@ -309,7 +309,7 @@ bool FilePersister::put(const unsigned seqnum, const f8String& what)
 bool FilePersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) const
 {
 	if (!_opened)
-      return false;
+		return false;
 
 	if (_index.empty())
 	{
@@ -330,14 +330,14 @@ bool FilePersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) const
 
 	sender_seqnum = itr->second._offset;
 	target_seqnum = itr->second._size;
-   return true;
+	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
 bool FilePersister::get(const unsigned seqnum, f8String& to) const
 {
 	if (!_opened || !seqnum || _index.empty())
-      return false;
+		return false;
 	Index::const_iterator itr(_index.find(seqnum));
 	if (itr == _index.end())
 	{
@@ -365,7 +365,7 @@ bool FilePersister::get(const unsigned seqnum, f8String& to) const
 	}
 
 	to.assign(buff, itr->second._size);
-   return true;
+	return true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -381,6 +381,6 @@ unsigned FilePersister::find_nearest_highest_seqnum (const unsigned requested, c
 		}
 	}
 
-   return 0;
+	return 0;
 }
 

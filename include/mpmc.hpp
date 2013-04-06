@@ -38,7 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define _FIX8_MPMC_HPP_
 
 //-------------------------------------------------------------------------------------------------
-// provide generic names to Multi Producer Multi Consumer queues and mutexes from
+// provide generic names to Multi Producer Multi Consumer queues, mutexes and atomic from
 // different libraries
 
 //-------------------------------------------------------------------------------------------------
@@ -61,6 +61,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <ff/allocator.hpp>
 #include <ff/buffer.hpp>
 #include <ff/MPMCqueues.hpp>
+#include <sched.h>
 
 // std wrappers for ff
 #include <pthread.h>

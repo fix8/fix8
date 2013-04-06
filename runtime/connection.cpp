@@ -140,16 +140,9 @@ int FIXReader::callback_processor()
 			break;
 		msg_ptr = &msg;
 #else
-		if (_msg_queue.try_pop (msg_ptr)) // will not block
-		{
-			if (msg_ptr->empty())  // means exit
-				break;
-		}
-		else
-		{
-			hypersleep<h_nanoseconds>(250);
-			continue;
-		}
+		_msg_queue.pop (msg_ptr); // will block
+		if (msg_ptr->empty())  // means exit
+			break;
 #endif
 
       if (!_session.process(*msg_ptr))
@@ -251,23 +244,9 @@ int FIXWriter::operator()()
 		try
 		{
 			Message *inmsg(0);
-#if (MPMC_SYSTEM == MPMC_TBB)
 			_msg_queue.pop (inmsg); // will block
 			if (!inmsg)
 				break;
-#else
-			if (_msg_queue.try_pop (inmsg)) // will not block
-			{
-				if (!inmsg)  // means exit
-					break;
-			}
-			else
-			{
-				hypersleep<h_nanoseconds>(250);
-				continue;
-			}
-#endif
-
 #if defined MSGRECYCLING
 			_session.send_process(inmsg);
 			inmsg->set_in_use(false);
