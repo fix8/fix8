@@ -291,9 +291,12 @@
 											Fix8 requires the standard set of <a href="http://www.gnu.org/gnu/linux-and-gnu.html">GNU/Linux</a> dev tools,
 											including <a href="http://http://gcc.gnu.org">gcc</a>,
 											<a href="http://www.gnu.org/software/libtool">libtool</a>. Also required is the
-											<a href="http://pocoproject.org/">Poco</a> library and Intel <a href="http://threadingbuildingblocks.org/">TBB</a>.
-											<p>Optionally you
-											can use Oracle <a href="http://www.oracle.com/technetwork/database/berkeleydb/overview/index.html">Berkeley DB</a>. If
+											<a href="http://pocoproject.org/">Poco</a> library.
+											Lock free containers and atomics are required for Fix8. Fix8 contains the
+											<a href="http://calvados.di.unipi.it/dokuwiki/doku.php?id=ffnamespace:about">FastFlow</a> distribution which
+											is used by default. Alternatively you can use Intel <a href="http://threadingbuildingblocks.org/">TBB</a>.
+											<p>Optionally you can use
+											Oracle <a href="http://www.oracle.com/technetwork/database/berkeleydb/overview/index.html">Berkeley DB</a>. If
 											you want to generate the API documentation you will also need <a href="http://www.doxygen.org">doxygen</a>.
 										</div>
 									</div>
@@ -304,10 +307,15 @@
 									</div>
 									<div id="platformeThree" class="accordion-body collapse">
 										<div class="accordion-inner">
-											Since Fix8 uses Intel <a href="http://threadingbuildingblocks.org/">TBB</a> only
-											Intel <a href="http://en.wikipedia.org/wiki/Ia32">IA32</a>, <a href="http://en.wikipedia.org/wiki/X86-64">x86-64</a>,
+											Fix8 will run on Intel <a href="http://en.wikipedia.org/wiki/Ia32">IA32</a>,
+											<a href="http://en.wikipedia.org/wiki/X86-64">x86-64</a>,
 											<a href="http://en.wikipedia.org/wiki/Ia64">Itanium</a> and compatible
-											hardware is supported (including AMD). There are however other non-supported patches for TBB to run on different hardware, including SPARC.
+											hardware (including AMD) using <a href="http://threadingbuildingblocks.org/">TBB</a>
+											or <a href="http://calvados.di.unipi.it/dokuwiki/doku.php?id=ffnamespace:about">FastFlow</a>.
+											Fix8 should also run on
+											<a href="http://en.wikipedia.org/wiki/PowerPC">PowerPC</a> and
+											<a href="http://en.wikipedia.org/wiki/ARM_architecture">ARM</a> using
+											<a href="http://calvados.di.unipi.it/dokuwiki/doku.php?id=ffnamespace:about">FastFlow</a>.
 										</div>
 									</div>
 								</div>
@@ -631,9 +639,41 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 								</div>
 							</div>
 						</div>
-						<br>
-						<br>
+			<div class="accordion" id="mainheads">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#mainheads" href="#mainheadsSeven"><h2>6. Running Fix8</h2></a>
+					</div>
+					<div id="mainheadsSeven" class="accordion-body collapse">
+						<div class="accordion" id="accordion6">
+							<div class="accordion-group">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#runningOne">a) Why is my CPU pegged at %100?</a>
+								</div>
+								<div id="runningOne" class="accordion-body collapse">
+									<div class="accordion-inner">
+										If you choose to use
+										<a href="http://calvados.di.unipi.it/dokuwiki/doku.php?id=ffnamespace:about">FastFlow (the default)</a> and configure your session
+										to use <a href="https://fix8engine.atlassian.net/wiki/x/BYBJ">pipelining</a> then you will notice that the pipelined threads will
+										consume a lot of CPU. This is because the concurrent queues provided by FastFlow do not support signalling and do not provide a blocking
+										pop. Fix8 will continually poll queues for input. If no input is available, <code>sched_yield()</code> is called.
+										See <a href="http://en.wikipedia.org/wiki/Producer-consumer_problem">Producer-consumer problem</a> for more details. For applications
+										where edge latency is not critical, you can configure Fix8 to insert a small <code>nanosleep</code> to avoid burning CPU. This may
+										lead to slightly slower response times to message events. To use nanosleep here, pass the <code>--with-sleep=</code> with the
+										number of nanoseconds desired. A value of 100-250 is reasonable, e.g.
+<pre>
+./configure --with-sleep=100 [your usual options]
+</pre>
+										If you are using <a href="http://threadingbuildingblocks.org/">TBB</a> you will not see this problem.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
+			</div>
+				<br>
+				<br>
 			<div class="pager">
 				<li><a href="index.html">Home</a></li>
 				<li><a href="howitworks.html">How It Works</a></li>

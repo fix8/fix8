@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -108,6 +108,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1Singleton.html','');});
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="classFIX8_1_1Singleton-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -138,16 +139,20 @@ Static Public Member Functions</h2></td></tr>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a30e6bf5b133749e90d65d0c596ca876c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a30e6bf5b133749e90d65d0c596ca876c">Singleton</a> (const <a class="el" href="classFIX8_1_1Singleton.html">Singleton</a> &amp;)</td></tr>
 <tr class="memitem:a8fc19b7c46702f67de622e8ca7d92c86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Singleton.html">Singleton</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a8fc19b7c46702f67de622e8ca7d92c86">operator=</a> (const <a class="el" href="classFIX8_1_1Singleton.html">Singleton</a> &amp;)</td></tr>
-<tr class="memitem:a09a07e596f9951567c87437d67aecfd4"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
-<tr class="memitem:a09a07e596f9951567c87437d67aecfd4"><td class="memTemplItemLeft" align="right" valign="top">tbb::atomic&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a><br class="typebreak"/>
-&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; * &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a09a07e596f9951567c87437d67aecfd4">_instance</a></td></tr>
-<tr class="memitem:a869f9079fbb2a0134233c51fb13fc285"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
-<tr class="memitem:a869f9079fbb2a0134233c51fb13fc285"><td class="memTemplItemLeft" align="right" valign="top">tbb::mutex&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a869f9079fbb2a0134233c51fb13fc285">_mutex</a></td></tr>
+<tr class="memitem:af840fcfb5063d4e3a8498bd1b57e4abf"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:af840fcfb5063d4e3a8498bd1b57e4abf"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="mpmc_8hpp.html#a09529314cda4fed23b266afef4c4355c">f8_atomic</a>&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a><br class="typebreak"/>
+&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; * &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#af840fcfb5063d4e3a8498bd1b57e4abf">_instance</a></td></tr>
+<tr class="memitem:a4672f9f55523442e7163d83def6b1187"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:a4672f9f55523442e7163d83def6b1187"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a4672f9f55523442e7163d83def6b1187">_mutex</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a10adae97e17b2015df5a3290ca5ced19"><td class="memItemLeft" align="right" valign="top">static T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a10adae97e17b2015df5a3290ca5ced19">_replace</a> (const T *with)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
-<tr class="memitem:adecf21731e7e87ef04dfd86c69dca50b"><td class="memItemLeft" align="right" valign="top">static tbb::atomic&lt; T * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#adecf21731e7e87ef04dfd86c69dca50b">_instance</a></td></tr>
-<tr class="memitem:af58481bf755f035ef45289d6e8a2e4b5"><td class="memItemLeft" align="right" valign="top">static tbb::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#af58481bf755f035ef45289d6e8a2e4b5">_mutex</a></td></tr>
+<tr class="memitem:a0b264eb9aeae841fdd0eaa4fa83526db"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="mpmc_8hpp.html#a09529314cda4fed23b266afef4c4355c">f8_atomic</a>&lt; T * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a0b264eb9aeae841fdd0eaa4fa83526db">_instance</a></td></tr>
+<tr class="memitem:aab96ad6c99315ddd0c16bea0deaa0e97"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#aab96ad6c99315ddd0c16bea0deaa0e97">_mutex</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br/>
@@ -161,7 +166,7 @@ class FIX8::Singleton&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00933">933</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00890">890</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a30e6bf5b133749e90d65d0c596ca876c"></a>
 <div class="memitem">
@@ -214,7 +219,7 @@ template&lt;typename T&gt; </div>
 
 <p>Ctor. </p>
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00943">943</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00911">911</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -243,12 +248,12 @@ template&lt;typename T&gt; </div>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00946">946</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00914">914</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 </div>
 </div>
 <h2>Member Function Documentation</h2>
-<a class="anchor" id="a09a07e596f9951567c87437d67aecfd4"></a>
+<a class="anchor" id="af840fcfb5063d4e3a8498bd1b57e4abf"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -258,7 +263,7 @@ template&lt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tbb::atomic&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; * &gt; <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton</a>&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; &gt;::_instance </td>
+          <td class="memname"><a class="el" href="mpmc_8hpp.html#a09529314cda4fed23b266afef4c4355c">f8_atomic</a>&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; * &gt; <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton</a>&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; &gt;::_instance </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -271,13 +276,13 @@ template&lt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00065">65</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00066">66</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00950">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>, <a class="el" href="f8utils_8hpp_source.html#l00973">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::release()</a>, <a class="el" href="f8utils_8hpp_source.html#l00969">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::reset()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00946">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::~Singleton()</a>.</p>
+<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00898">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::_replace()</a>, <a class="el" href="f8utils_8hpp_source.html#l00927">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00914">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::~Singleton()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a869f9079fbb2a0134233c51fb13fc285"></a>
+<a class="anchor" id="a4672f9f55523442e7163d83def6b1187"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -287,7 +292,7 @@ template&lt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tbb::mutex <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton</a>&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; &gt;::_mutex </td>
+          <td class="memname"><a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton</a>&lt; <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; <a class="el" href="namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175">glob_log0</a> &gt; &gt;::_mutex </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -300,9 +305,39 @@ template&lt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00067">67</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00068">68</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00950">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
+<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00927">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a10adae97e17b2015df5a3290ca5ced19"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static T* <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton</a>&lt; T &gt;::_replace </td>
+          <td>(</td>
+          <td class="paramtype">const T *&#160;</td>
+          <td class="paramname"><em>with</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00898">898</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00950">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::release()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00946">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::reset()</a>.</p>
 
 </div>
 </div>
@@ -331,9 +366,9 @@ template&lt;typename T&gt; </div>
 <p>Get the instance of the underlying object. If not created, create. </p>
 <dl class="section return"><dt>Returns</dt><dd>the instance </dd></dl>
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00950">950</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00927">927</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00964">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::operator-&gt;()</a>.</p>
+<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l00941">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::operator-&gt;()</a>.</p>
 
 </div>
 </div>
@@ -362,7 +397,7 @@ template&lt;typename T&gt; </div>
 <p>Get the instance of the underlying object. If not created, create. </p>
 <dl class="section return"><dt>Returns</dt><dd>the instance </dd></dl>
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00964">964</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00941">941</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -417,7 +452,7 @@ template&lt;typename T&gt; </div>
 <p>Get the instance of the underlying object removing it from the singleton. </p>
 <dl class="section return"><dt>Returns</dt><dd>the instance </dd></dl>
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00973">973</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00950">950</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -453,12 +488,12 @@ template&lt;typename T&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the original instance </dd></dl>
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00969">969</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00946">946</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 </div>
 </div>
 <h2>Member Data Documentation</h2>
-<a class="anchor" id="adecf21731e7e87ef04dfd86c69dca50b"></a>
+<a class="anchor" id="a0b264eb9aeae841fdd0eaa4fa83526db"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -468,7 +503,7 @@ template&lt;typename T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tbb::atomic&lt;T*&gt; <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton</a>&lt; T &gt;::_instance</td>
+          <td class="memname"><a class="el" href="mpmc_8hpp.html#a09529314cda4fed23b266afef4c4355c">f8_atomic</a>&lt;T*&gt; <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton</a>&lt; T &gt;::_instance</td>
         </tr>
       </table>
   </td>
@@ -478,11 +513,11 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00935">935</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00892">892</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af58481bf755f035ef45289d6e8a2e4b5"></a>
+<a class="anchor" id="aab96ad6c99315ddd0c16bea0deaa0e97"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -492,7 +527,7 @@ template&lt;typename T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tbb::mutex <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton</a>&lt; T &gt;::_mutex</td>
+          <td class="memname"><a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton</a>&lt; T &gt;::_mutex</td>
         </tr>
       </table>
   </td>
@@ -502,7 +537,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00936">936</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l00893">893</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -512,7 +547,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:15. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:30. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

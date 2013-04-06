@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1Timer.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8ca7fabc51131406105b424de5c7da55"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a8ca7fabc51131406105b424de5c7da55">Timer</a> (T &amp;monitor, int granularity=1)</td></tr>
+<tr class="memitem:ac6dd97d4f3e741413267f21f17e6f65c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#ac6dd97d4f3e741413267f21f17e6f65c">Timer</a> (T &amp;monitor, int granularity=10)</td></tr>
 <tr class="memitem:a9dbcccd87c85a483eb47e1d0e23634a4"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a9dbcccd87c85a483eb47e1d0e23634a4">~Timer</a> ()</td></tr>
 <tr class="memdesc:a9dbcccd87c85a483eb47e1d0e23634a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#a9dbcccd87c85a483eb47e1d0e23634a4"></a><br/></td></tr>
 <tr class="memitem:a2597b9463946766f60d5321a5390cd74"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a2597b9463946766f60d5321a5390cd74">schedule</a> (const <a class="el" href="classFIX8_1_1TimerEvent.html">TimerEvent</a>&lt; T &gt; &amp;what, const unsigned timeToWaitMS)</td></tr>
@@ -135,8 +135,8 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a500f5a76dcaa9594bf75af390c23738f"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a500f5a76dcaa9594bf75af390c23738f">_monitor</a></td></tr>
-<tr class="memitem:a7ce1007783a32c87c15335e734302b91"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Thread.html">Thread</a>&lt; <a class="el" href="classFIX8_1_1Timer.html">Timer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a7ce1007783a32c87c15335e734302b91">_thread</a></td></tr>
-<tr class="memitem:ac98ef999b473d4f0a69c1f281062cc52"><td class="memItemLeft" align="right" valign="top">tbb::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#ac98ef999b473d4f0a69c1f281062cc52">_mutex</a></td></tr>
+<tr class="memitem:a0c56d50a47175ad25b6d4f5e01ad26ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1dthread.html">dthread</a>&lt; <a class="el" href="classFIX8_1_1Timer.html">Timer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a0c56d50a47175ad25b6d4f5e01ad26ed">_thread</a></td></tr>
+<tr class="memitem:adec480cd5a2eb6a22203b17a4b897505"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#adec480cd5a2eb6a22203b17a4b897505">_mutex</a></td></tr>
 <tr class="memitem:ac1de2d5afb11067dde9b67d39426d8a1"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#ac1de2d5afb11067dde9b67d39426d8a1">_granularity</a></td></tr>
 <tr class="memitem:a4a3b6d4434a6719c580b7c72e850c044"><td class="memItemLeft" align="right" valign="top">std::priority_queue<br class="typebreak"/>
 &lt; <a class="el" href="classFIX8_1_1TimerEvent.html">TimerEvent</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044">_event_queue</a></td></tr>
@@ -153,9 +153,9 @@ class FIX8::Timer&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00086">86</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00085">85</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a8ca7fabc51131406105b424de5c7da55"></a>
+<a class="anchor" id="ac6dd97d4f3e741413267f21f17e6f65c"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -174,7 +174,7 @@ template&lt;typename T&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>granularity</em> = <code>1</code>&#160;</td>
+          <td class="paramname"><em>granularity</em> = <code>10</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -197,7 +197,7 @@ template&lt;typename T&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00099">99</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00098">98</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -226,7 +226,7 @@ template&lt;typename T&gt; </div>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00102">102</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00101">101</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -248,9 +248,9 @@ template&lt;typename T &gt; </div>
 <p>Empty the scheduler of any pending timer events. </p>
 <dl class="section return"><dt>Returns</dt><dd>number of timer events that were waiting on the queue </dd></dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00179">179</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00177">177</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00214">FIX8::Session::stop()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00218">FIX8::Session::stop()</a>.</p>
 
 </div>
 </div>
@@ -279,7 +279,7 @@ template&lt;typename T&gt; </div>
 
 <p>Join timer thread. Wait till exits. </p>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00119">119</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00118">118</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -314,7 +314,7 @@ template&lt;typename T&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00116">116</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00115">115</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -335,9 +335,9 @@ template&lt;typename T &gt; </div>
 <p><a class="el" href="classFIX8_1_1Timer.html" title="High resolution timer.">Timer</a> thread entry point. </p>
 <dl class="section return"><dt>Returns</dt><dd>result at timer thread exit </dd></dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00131">131</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00130">130</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00124">FIX8::Tickval::get_tickval()</a>, <a class="el" href="f8utils_8hpp_source.html#l00950">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00836">FIX8::rnanosleep()</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00124">FIX8::Tickval::get_tickval()</a>, <a class="el" href="hypersleep_8hpp_source.html#l00093">FIX8::hypersleep&lt; h_milliseconds &gt;()</a>, <a class="el" href="f8utils_8hpp_source.html#l00927">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00239">FIX8::f8_scoped_lock::release()</a>.</p>
 
 </div>
 </div>
@@ -376,11 +376,11 @@ template&lt;typename T&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00195">195</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00193">193</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00124">FIX8::Tickval::get_tickval()</a>, <a class="el" href="tickval_8hpp_source.html#l00055">FIX8::Tickval::million</a>, and <a class="el" href="timer_8hpp_source.html#l00072">FIX8::TimerEvent&lt; T &gt;::set()</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00124">FIX8::Tickval::get_tickval()</a>, <a class="el" href="tickval_8hpp_source.html#l00055">FIX8::Tickval::million</a>, and <a class="el" href="timer_8hpp_source.html#l00071">FIX8::TimerEvent&lt; T &gt;::set()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00384">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00578">FIX8::Session::heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00214">FIX8::Session::stop()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00379">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00573">FIX8::Session::heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00218">FIX8::Session::stop()</a>.</p>
 
 </div>
 </div>
@@ -409,9 +409,9 @@ template&lt;typename T&gt; </div>
 
 <p>Start the timer thread. </p>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00122">122</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00121">121</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00120">FIX8::Session::Session()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00121">FIX8::Session::Session()</a>.</p>
 
 </div>
 </div>
@@ -436,7 +436,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00093">93</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00092">92</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -460,7 +460,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00091">91</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00090">90</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -484,11 +484,11 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00088">88</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00087">87</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac98ef999b473d4f0a69c1f281062cc52"></a>
+<a class="anchor" id="adec480cd5a2eb6a22203b17a4b897505"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -498,31 +498,7 @@ template&lt;typename T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tbb::mutex <a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer</a>&lt; T &gt;::_mutex</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00090">90</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7ce1007783a32c87c15335e734302b91"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1Thread.html">Thread</a>&lt;<a class="el" href="classFIX8_1_1Timer.html">Timer</a>&gt; <a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer</a>&lt; T &gt;::_thread</td>
+          <td class="memname"><a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> <a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer</a>&lt; T &gt;::_mutex</td>
         </tr>
       </table>
   </td>
@@ -534,7 +510,31 @@ template&lt;typename T&gt; </div>
 
 <p>Definition at line <a class="el" href="timer_8hpp_source.html#l00089">89</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00119">FIX8::Timer&lt; Session &gt;::join()</a>, <a class="el" href="timer_8hpp_source.html#l00116">FIX8::Timer&lt; Session &gt;::kill()</a>, and <a class="el" href="timer_8hpp_source.html#l00122">FIX8::Timer&lt; Session &gt;::start()</a>.</p>
+</div>
+</div>
+<a class="anchor" id="a0c56d50a47175ad25b6d4f5e01ad26ed"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFIX8_1_1dthread.html">dthread</a>&lt;<a class="el" href="classFIX8_1_1Timer.html">Timer</a>&gt; <a class="el" href="classFIX8_1_1Timer.html">FIX8::Timer</a>&lt; T &gt;::_thread</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00088">88</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00118">FIX8::Timer&lt; Session &gt;::join()</a>, <a class="el" href="timer_8hpp_source.html#l00115">FIX8::Timer&lt; Session &gt;::kill()</a>, and <a class="el" href="timer_8hpp_source.html#l00121">FIX8::Timer&lt; Session &gt;::start()</a>.</p>
 
 </div>
 </div>
@@ -544,7 +544,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:19. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:33. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

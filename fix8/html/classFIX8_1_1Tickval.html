@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -118,7 +118,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1Tickval.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>High resolution time in nanosecond ticks. <a class="el" href="classFIX8_1_1Thread.html" title="Modern POSIX pthread wrapper. Thread by pointer to member function. Ctor provides T instance and spec...">Thread</a> safe.  
+<p>High resolution time in nanosecond ticks. Thread safe.  
  <a href="classFIX8_1_1Tickval.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>&gt;</code></p>
@@ -165,7 +165,7 @@ Private Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ac4c14a564b343eb11bdbc45459c4ee6e"><td class="memItemLeft" align="right" valign="top">tbb::atomic&lt; <a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#ac4c14a564b343eb11bdbc45459c4ee6e">_value</a></td></tr>
+<tr class="memitem:ad9db6b3b5f5fca63c70c1d5f8b91eb44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mpmc_8hpp.html#a09529314cda4fed23b266afef4c4355c">f8_atomic</a>&lt; <a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#ad9db6b3b5f5fca63c70c1d5f8b91eb44">_value</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
@@ -183,7 +183,7 @@ Friends</h2></td></tr>
 <tr class="memitem:ad4781969035fcc5896d9c7771931bcfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#ad4781969035fcc5896d9c7771931bcfc">operator-=</a> (<a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;oldtime, const <a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a> &amp;ns)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>High resolution time in nanosecond ticks. <a class="el" href="classFIX8_1_1Thread.html" title="Modern POSIX pthread wrapper. Thread by pointer to member function. Ctor provides T instance and spec...">Thread</a> safe. </p>
+<div class="textblock"><p>High resolution time in nanosecond ticks. Thread safe. </p>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00049">49</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 </div><h2>Member Typedef Documentation</h2>
@@ -433,7 +433,7 @@ Friends</h2></td></tr>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00064">Tickval()</a>.</p>
 
-<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00100">now()</a>, <a class="el" href="timer_8hpp_source.html#l00131">FIX8::Timer&lt; T &gt;::operator()()</a>, and <a class="el" href="timer_8hpp_source.html#l00195">FIX8::Timer&lt; T &gt;::schedule()</a>.</p>
+<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00100">now()</a>, <a class="el" href="timer_8hpp_source.html#l00130">FIX8::Timer&lt; T &gt;::operator()()</a>, and <a class="el" href="timer_8hpp_source.html#l00193">FIX8::Timer&lt; T &gt;::schedule()</a>.</p>
 
 </div>
 </div>
@@ -521,7 +521,7 @@ Friends</h2></td></tr>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00124">get_tickval()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00079">FIX8::GetTimeAsStringMS()</a>, <a class="el" href="session_8cpp_source.html#l00578">FIX8::Session::heartbeat_service()</a>, <a class="el" href="timer_8hpp_source.html#l00241">FIX8::IntervalTimer::Reset()</a>, <a class="el" href="session_8cpp_source.html#l00737">FIX8::Session::send_process()</a>, <a class="el" href="tickval_8hpp_source.html#l00064">Tickval()</a>, <a class="el" href="session_8hpp_source.html#l00425">FIX8::Session::update_received()</a>, and <a class="el" href="session_8hpp_source.html#l00422">FIX8::Session::update_sent()</a>.</p>
+<p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00079">FIX8::GetTimeAsStringMS()</a>, <a class="el" href="session_8cpp_source.html#l00573">FIX8::Session::heartbeat_service()</a>, <a class="el" href="timer_8hpp_source.html#l00239">FIX8::IntervalTimer::Reset()</a>, <a class="el" href="session_8cpp_source.html#l00752">FIX8::Session::send_process()</a>, <a class="el" href="tickval_8hpp_source.html#l00064">Tickval()</a>, <a class="el" href="session_8hpp_source.html#l00438">FIX8::Session::update_received()</a>, and <a class="el" href="session_8hpp_source.html#l00435">FIX8::Session::update_sent()</a>.</p>
 
 </div>
 </div>
@@ -795,7 +795,7 @@ Friends</h2></td></tr>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00059">_value</a>, and <a class="el" href="tickval_8hpp_source.html#l00056">billion</a>.</p>
 
-<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00237">FIX8::IntervalTimer::AsDouble()</a>, and <a class="el" href="tickval_8hpp_source.html#l00154">operator double()</a>.</p>
+<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00235">FIX8::IntervalTimer::AsDouble()</a>, and <a class="el" href="tickval_8hpp_source.html#l00154">operator double()</a>.</p>
 
 </div>
 </div>
@@ -1370,7 +1370,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2>Member Data Documentation</h2>
-<a class="anchor" id="ac4c14a564b343eb11bdbc45459c4ee6e"></a>
+<a class="anchor" id="ad9db6b3b5f5fca63c70c1d5f8b91eb44"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1378,7 +1378,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tbb::atomic&lt;<a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a>&gt; FIX8::Tickval::_value</td>
+          <td class="memname"><a class="el" href="mpmc_8hpp.html#a09529314cda4fed23b266afef4c4355c">f8_atomic</a>&lt;<a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">ticks</a>&gt; FIX8::Tickval::_value</td>
         </tr>
       </table>
   </td>
@@ -1438,7 +1438,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00055">55</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00195">FIX8::Timer&lt; T &gt;::schedule()</a>, and <a class="el" href="tickval_8hpp_source.html#l00112">usecs()</a>.</p>
+<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00193">FIX8::Timer&lt; T &gt;::schedule()</a>, and <a class="el" href="tickval_8hpp_source.html#l00112">usecs()</a>.</p>
 
 </div>
 </div>
@@ -1497,7 +1497,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:19. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:33. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

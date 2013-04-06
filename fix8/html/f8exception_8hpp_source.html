@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -298,9 +298,9 @@ $(document).ready(function(){initNavTree('f8exception_8hpp_source.html','');});
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;};</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno"><a class="code" href="structFIX8_1_1ThreadException.html">  238</a></span>&#160;<span class="comment"></span><span class="keyword">struct </span><a class="code" href="structFIX8_1_1ThreadException.html" title="A pthread attribute error occured.">ThreadException</a> : <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a></div>
+<div class="line"><a name="l00238"></a><span class="lineno"><a class="code" href="structFIX8_1_1dthreadException.html">  238</a></span>&#160;<span class="comment"></span><span class="keyword">struct </span><a class="code" href="structFIX8_1_1dthreadException.html" title="A pthread attribute error occured.">dthreadException</a> : <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a></div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;{</div>
-<div class="line"><a name="l00240"></a><span class="lineno"><a class="code" href="structFIX8_1_1ThreadException.html#a8d20fc847a90c61bde4d1ade984e3ac2">  240</a></span>&#160;   <a class="code" href="structFIX8_1_1ThreadException.html#a8d20fc847a90c61bde4d1ade984e3ac2">ThreadException</a>(<span class="keyword">const</span> std::string&amp; reason) { <a class="code" href="classFIX8_1_1f8Exception.html#aaa3e7f40aa390e3769e21e1dcce51304">format</a>(<span class="stringliteral">&quot;Thread error&quot;</span>, reason); }</div>
+<div class="line"><a name="l00240"></a><span class="lineno"><a class="code" href="structFIX8_1_1dthreadException.html#a86b77a8561a50a67b02209dd583dd9fe">  240</a></span>&#160;   <a class="code" href="structFIX8_1_1dthreadException.html#a86b77a8561a50a67b02209dd583dd9fe">dthreadException</a>(<span class="keyword">const</span> std::string&amp; reason) { <a class="code" href="classFIX8_1_1f8Exception.html#aaa3e7f40aa390e3769e21e1dcce51304">format</a>(<span class="stringliteral">&quot;Thread error&quot;</span>, reason); }</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;};</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
@@ -310,32 +310,20 @@ $(document).ready(function(){initNavTree('f8exception_8hpp_source.html','');});
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;};</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00252"></a><span class="lineno"><a class="code" href="structFIX8_1_1InvalidMemoryPtr.html">  252</a></span>&#160;<span class="comment"></span><span class="keyword">struct </span><a class="code" href="structFIX8_1_1InvalidMemoryPtr.html" title="An attempt was made to free an invalid block of memory.">InvalidMemoryPtr</a> : <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a></div>
+<div class="line"><a name="l00252"></a><span class="lineno"><a class="code" href="structFIX8_1_1InvalidConfiguration.html">  252</a></span>&#160;<span class="comment"></span><span class="keyword">struct </span><a class="code" href="structFIX8_1_1InvalidConfiguration.html" title="An invalid configuration parameter was passed.">InvalidConfiguration</a> : <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a></div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;{</div>
-<div class="line"><a name="l00254"></a><span class="lineno"><a class="code" href="structFIX8_1_1InvalidMemoryPtr.html#a35b4a455da95515b259350dcdfc1015e">  254</a></span>&#160;   <a class="code" href="structFIX8_1_1InvalidMemoryPtr.html#a35b4a455da95515b259350dcdfc1015e">InvalidMemoryPtr</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *ptr) { <a class="code" href="classFIX8_1_1f8Exception.html#aaa3e7f40aa390e3769e21e1dcce51304">format</a>(<span class="stringliteral">&quot;Invalid Memory pool ptr&quot;</span>, ptr); }</div>
+<div class="line"><a name="l00254"></a><span class="lineno"><a class="code" href="structFIX8_1_1InvalidConfiguration.html#a0ae87454fce4fc14bbf478bcc052592f">  254</a></span>&#160;   <a class="code" href="structFIX8_1_1InvalidConfiguration.html#a0ae87454fce4fc14bbf478bcc052592f">InvalidConfiguration</a>(<span class="keyword">const</span> std::string&amp; str) { <a class="code" href="classFIX8_1_1f8Exception.html#aaa3e7f40aa390e3769e21e1dcce51304">format</a>(<span class="stringliteral">&quot;Invalid configuration setting in&quot;</span>, str); }</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;};</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00259"></a><span class="lineno"><a class="code" href="structFIX8_1_1FreelistFull.html">  259</a></span>&#160;<span class="comment"></span><span class="keyword">struct </span><a class="code" href="structFIX8_1_1FreelistFull.html" title="The memory pool free list was unexpectedly full.">FreelistFull</a> : <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a></div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;{</div>
-<div class="line"><a name="l00261"></a><span class="lineno"><a class="code" href="structFIX8_1_1FreelistFull.html#a7fa8edfff8068d32125f237a9bac0829">  261</a></span>&#160;   <a class="code" href="structFIX8_1_1FreelistFull.html#a7fa8edfff8068d32125f237a9bac0829">FreelistFull</a>() { <a class="code" href="classFIX8_1_1f8Exception.html#aaa3e7f40aa390e3769e21e1dcce51304">format</a>(<span class="stringliteral">&quot;Memory poll freelist&quot;</span>, <span class="stringliteral">&quot;freelist is full&quot;</span>); }</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;};</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00266"></a><span class="lineno"><a class="code" href="structFIX8_1_1InvalidConfiguration.html">  266</a></span>&#160;<span class="comment"></span><span class="keyword">struct </span><a class="code" href="structFIX8_1_1InvalidConfiguration.html" title="An invalid configuration parameter was passed.">InvalidConfiguration</a> : <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a></div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;{</div>
-<div class="line"><a name="l00268"></a><span class="lineno"><a class="code" href="structFIX8_1_1InvalidConfiguration.html#a0ae87454fce4fc14bbf478bcc052592f">  268</a></span>&#160;   <a class="code" href="structFIX8_1_1InvalidConfiguration.html#a0ae87454fce4fc14bbf478bcc052592f">InvalidConfiguration</a>(<span class="keyword">const</span> std::string&amp; str) { <a class="code" href="classFIX8_1_1f8Exception.html#aaa3e7f40aa390e3769e21e1dcce51304">format</a>(<span class="stringliteral">&quot;Invalid configuration setting in&quot;</span>, str); }</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;};</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;} <span class="comment">// FIX8</span></div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="preprocessor">#endif // _F8_EXCEPTION_HPP_</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;} <span class="comment">// FIX8</span></div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#endif // _F8_EXCEPTION_HPP_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:03. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

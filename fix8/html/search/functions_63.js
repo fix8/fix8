@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['cached',['cached',['../classhf__session__client.html#a622b1ee834cc1cd91b1de6c4e4e5973f',1,'hf_session_client']]],
+  ['cached',['cached',['../classhf__session__client.html#a9447a71c6799f820cefff496bc12597c',1,'hf_session_client']]],
   ['calc_5fchksum',['calc_chksum',['../classFIX8_1_1Message.html#aa16a3a2e631a4eafaa71f7134dd9da76',1,'FIX8::Message::calc_chksum(const f8String &amp;from, const unsigned offset=0, const int len=-1)'],['../classFIX8_1_1Message.html#ad97d16c176c9eb301549f81a8d8ff4cb',1,'FIX8::Message::calc_chksum(const char *from, const size_t sz, const unsigned offset=0, const int len=-1)']]],
   ['calc_5freserve',['calc_reserve',['../classFIX8_1_1presorted__set.html#a8f9bcca3bab1083dcf2cd51482e16f5a',1,'FIX8::presorted_set::calc_reserve()'],['../classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a305de00b43f5ee137434f95a5b4a39f5',1,'FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::calc_reserve()']]],
   ['calculate',['Calculate',['../classFIX8_1_1IntervalTimer.html#a0aa09b40c3fa1d9ebe45cf6e63c8f654',1,'FIX8::IntervalTimer']]],
@@ -53,7 +53,7 @@ var searchData=
   ['clearinginstruction_5frealm_5fels',['ClearingInstruction_realm_els',['../namespaceFIX8_1_1TEX.html#a5603f5b2854196225b51e23a4f44a142',1,'FIX8::TEX']]],
   ['clearinginstruction_5fself_5fclearing',['ClearingInstruction_SELF_CLEARING',['../namespaceFIX8_1_1TEX.html#a1f1d246bbbcf940ce14382d19973d8d8',1,'FIX8::TEX']]],
   ['clearinginstruction_5fspecial_5ftrade',['ClearingInstruction_SPECIAL_TRADE',['../namespaceFIX8_1_1TEX.html#abdc2690e3985b2ed8d2d2b3552d58022',1,'FIX8::TEX']]],
-  ['clientconnection',['ClientConnection',['../classFIX8_1_1ClientConnection.html#a7c03e8e4de2430fd2ac345741c94b95a',1,'FIX8::ClientConnection']]],
+  ['clientconnection',['ClientConnection',['../classFIX8_1_1ClientConnection.html#a0e406b733b96499eea9e30b90d2179e3',1,'FIX8::ClientConnection']]],
   ['clientsession',['ClientSession',['../classFIX8_1_1ClientSession.html#a612e21e2688547c14cd09d1ec0e7df5e',1,'FIX8::ClientSession']]],
   ['clone',['clone',['../classFIX8_1_1Message.html#aa6ef2ef7ee1145847201db0b21a8f146',1,'FIX8::Message']]],
   ['close',['close',['../classgzstreambuf.html#ac47e68029383ac04ded54dedae5c930d',1,'gzstreambuf::close()'],['../classgzstreambase.html#aec08e42d554bbe919acd44eba0c40057',1,'gzstreambase::close()']]],
@@ -216,9 +216,8 @@ var searchData=
   ['confirmtype_5frealm_5fels',['ConfirmType_realm_els',['../namespaceFIX8_1_1TEX.html#a9a0d16e9adee63ab6a595eece1f6070c',1,'FIX8::TEX']]],
   ['confirmtype_5fstatus',['ConfirmType_STATUS',['../namespaceFIX8_1_1TEX.html#a86c2c88bb8ab452da25f0281ecb305b3',1,'FIX8::TEX']]],
   ['connect',['connect',['../classFIX8_1_1Connection.html#a506c527366cc53efdeeeaf5012573398',1,'FIX8::Connection::connect()'],['../classFIX8_1_1ClientConnection.html#af4f8e04fc19787d8b18c25d7262b4451',1,'FIX8::ClientConnection::connect()']]],
-  ['connection',['Connection',['../classFIX8_1_1Connection.html#a4e0c9669d92c74c2ee96f2c8ab71cd59',1,'FIX8::Connection::Connection(Poco::Net::StreamSocket *sock, Session &amp;session)'],['../classFIX8_1_1Connection.html#adb377b5c1730618b258d04085e0ee657',1,'FIX8::Connection::Connection(Poco::Net::StreamSocket *sock, Session &amp;session, const unsigned hb_interval)']]],
+  ['connection',['Connection',['../classFIX8_1_1Connection.html#ab856f7008385f21ba80d1e9b917db760',1,'FIX8::Connection::Connection(Poco::Net::StreamSocket *sock, Session &amp;session, const bool pipelined)'],['../classFIX8_1_1Connection.html#ae017ddcb0cee93123f6ef645683235ab',1,'FIX8::Connection::Connection(Poco::Net::StreamSocket *sock, Session &amp;session, const unsigned hb_interval, const bool pipelined)']]],
   ['consolemenu',['ConsoleMenu',['../classFIX8_1_1ConsoleMenu.html#ada483b1d9c0d18d3935a39da930fa546',1,'FIX8::ConsoleMenu']]],
-  ['construct',['construct',['../classFIX8_1_1f8Allocator.html#a8e88dbd1036112a4fbec34c24148a25d',1,'FIX8::f8Allocator']]],
   ['contamttype_5fcommission_5famount',['ContAmtType_COMMISSION_AMOUNT',['../namespaceFIX8_1_1TEX.html#ad6cfe7b73093a43690af3626f3e42bf7',1,'FIX8::TEX']]],
   ['contamttype_5fcommission_5fpercent',['ContAmtType_COMMISSION_PERCENT',['../namespaceFIX8_1_1TEX.html#a86a49ac5df3588f92bcc94e7733f08cb',1,'FIX8::TEX']]],
   ['contamttype_5fdilution_5flevy_5famount',['ContAmtType_DILUTION_LEVY_AMOUNT',['../namespaceFIX8_1_1TEX.html#adbf218da7a3c8599b568089ad6d5a845',1,'FIX8::TEX']]],

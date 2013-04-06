@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -483,7 +483,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 <div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classMyMenu.html#a2db3de9a9680bfe1b042eb12933b79e8">MyMenu::do_logout</a>()</div>
 <div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;{</div>
 <div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;   _session.send(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1TEX_1_1Logout.html" title="Logout (5), admin, 3 fields, 0 groups.">TEX::Logout</a>);</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;   sleep(1);</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;   <a class="code" href="namespaceFIX8.html#a0262d06ebae9b3c0acbe90578aa6e6d6">hypersleep&lt;h_seconds&gt;</a>(1);</div>
 <div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// will exit</span></div>
 <div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;}</div>
 <div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;</div>
@@ -646,7 +646,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 <div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;         trdqty = 1;</div>
 <div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;<span class="preprocessor">#if defined MSGRECYCLING</span></div>
 <div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;<span class="preprocessor"></span>      <span class="keywordflow">while</span>(er-&gt;get_in_use())</div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;         <a class="code" href="namespaceFIX8.html#aa1b06f6428a6ffeff42a14d0fee0d17f">microsleep</a>(10);</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;         <a class="code" href="namespaceFIX8.html#a0a6aaa0459e6c5f52e5b9964bd676f95">hypersleep&lt;h_microseconds&gt;</a>(10);</div>
 <div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;      er-&gt;set_in_use(<span class="keyword">true</span>);   <span class="comment">// indicate this message is in use again</span></div>
 <div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;      <span class="keyword">delete</span> er-&gt;Header()-&gt;remove(<a class="code" href="namespaceFIX8.html#a553ab7c89eaaff1d81511fa35c7b0e56">Common_MsgSeqNum</a>); <span class="comment">// we want to reuse, not resend</span></div>
 <div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;<span class="preprocessor">#else</span></div>
@@ -690,7 +690,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:04. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:19. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

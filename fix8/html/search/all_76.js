@@ -10,7 +10,7 @@ var searchData=
   ['valuationmethod_5fpremium_5fstyle',['ValuationMethod_PREMIUM_STYLE',['../namespaceFIX8_1_1TEX.html#a06f6130ea4f4a0383eca54d230bb24a7',1,'FIX8::TEX']]],
   ['valuationmethod_5frealm_5fels',['ValuationMethod_realm_els',['../namespaceFIX8_1_1TEX.html#abe551c9915a828c28fea9724f85c7c9b',1,'FIX8::TEX']]],
   ['value_5f',['value_',['../classXmlElement.html#abec81c91dcda1ceedc63b7a957ce57cc',1,'XmlElement']]],
-  ['value_5ftype',['value_type',['../classFIX8_1_1f8Allocator.html#a04b984ff01c55cee9ab1500d8d93c8d0',1,'FIX8::f8Allocator']]],
+  ['value_5ftype',['value_type',['../classFIX8_1_1ff__unbounded__queue.html#a7461e16bdf2b84dfb7ef39f260a9c2dc',1,'FIX8::ff_unbounded_queue::value_type()'],['../classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html#aeed616a83fd29949b18787602a036771',1,'FIX8::ff_unbounded_queue&lt; T * &gt;::value_type()'],['../classFIX8_1_1ff__atomic.html#a46c0752155ed2377594cce5944f3ab7c',1,'FIX8::ff_atomic::value_type()'],['../classFIX8_1_1ff__atomic_3_01T_01_5_01_4.html#a8b3328849aea8190eff4106b8ec2768f',1,'FIX8::ff_atomic&lt; T * &gt;::value_type()']]],
   ['valueoffutures',['ValueOfFutures',['../namespaceFIX8_1_1TEX.html#a480c723ebb842ef2807574ec1fbf68e4',1,'FIX8::TEX']]],
   ['venuetype',['VenueType',['../namespaceFIX8_1_1TEX.html#a9b3b1978af24a687d20abd289212db1f',1,'FIX8::TEX']]],
   ['venuetype_5felectronic',['VenueType_ELECTRONIC',['../namespaceFIX8_1_1TEX.html#a55ccc86759c4b032159a3d83e1415179',1,'FIX8::TEX']]],

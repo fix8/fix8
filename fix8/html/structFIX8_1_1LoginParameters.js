@@ -1,7 +1,7 @@
 var structFIX8_1_1LoginParameters =
 [
-    [ "default_retry_interval", "structFIX8_1_1LoginParameters.html#a629c11367c650bae041be46cbb53869eab4b33a240b0f31bf72f6377671ba7f19", null ],
-    [ "default_login_retries", "structFIX8_1_1LoginParameters.html#a629c11367c650bae041be46cbb53869ea1a8fcc55bc5771a6eaab9ad9f12a6f34", null ],
+    [ "default_retry_interval", "structFIX8_1_1LoginParameters.html#a28e2f7cd8b977d47c98b72d91b8d52eaab4b33a240b0f31bf72f6377671ba7f19", null ],
+    [ "default_login_retries", "structFIX8_1_1LoginParameters.html#a28e2f7cd8b977d47c98b72d91b8d52eaa1a8fcc55bc5771a6eaab9ad9f12a6f34", null ],
     [ "LoginParameters", "structFIX8_1_1LoginParameters.html#a73da2512c53dbc0ecdd22f19be05b9b7", null ],
     [ "LoginParameters", "structFIX8_1_1LoginParameters.html#aa8df44857f6f1c50b206fe5f6c507cc1", null ],
     [ "LoginParameters", "structFIX8_1_1LoginParameters.html#a2aa7085b17417ed3696ebd826dea313a", null ],

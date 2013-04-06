@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1AsyncSocket.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aaeeeb1a244d78c9cd1da58a9e2f27747"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1AsyncSocket.html#aaeeeb1a244d78c9cd1da58a9e2f27747">AsyncSocket</a> (Poco::Net::StreamSocket *sock, <a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;session)</td></tr>
+<tr class="memitem:a3efbb9b2951f4a003f184c5da9b0c085"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1AsyncSocket.html#a3efbb9b2951f4a003f184c5da9b0c085">AsyncSocket</a> (Poco::Net::StreamSocket *sock, <a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;session, const bool pipelined=true)</td></tr>
 <tr class="memitem:ac6a13f090b85f01a42af091abe22a45b"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1AsyncSocket.html#ac6a13f090b85f01a42af091abe22a45b">~AsyncSocket</a> ()</td></tr>
 <tr class="memdesc:ac6a13f090b85f01a42af091abe22a45b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#ac6a13f090b85f01a42af091abe22a45b"></a><br/></td></tr>
 <tr class="memitem:a324f323586a49e9086934b6c9a2fca91"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1AsyncSocket.html#a324f323586a49e9086934b6c9a2fca91">queued</a> () const </td></tr>
@@ -136,12 +136,13 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ae5040119022950e65597c0159c19c3c1"><td class="memItemLeft" align="right" valign="top">Poco::Net::StreamSocket *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1AsyncSocket.html#ae5040119022950e65597c0159c19c3c1">_sock</a></td></tr>
-<tr class="memitem:a804ee7fd60822827070e274fff51ac49"><td class="memItemLeft" align="right" valign="top">tbb::concurrent_bounded_queue&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1AsyncSocket.html#a804ee7fd60822827070e274fff51ac49">_msg_queue</a></td></tr>
+<tr class="memitem:acf00e6f0363973453a9043ef1d0890f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mpmc_8hpp.html#a86434e873a3410dba0d42e677288465f">f8_concurrent_queue</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1AsyncSocket.html#acf00e6f0363973453a9043ef1d0890f5">_msg_queue</a></td></tr>
 <tr class="memitem:a8ab8f034fe13cf89370423a0d05485f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1AsyncSocket.html#a8ab8f034fe13cf89370423a0d05485f7">_session</a></td></tr>
+<tr class="memitem:a72957d0d18911277a6c7e674e9aabe38"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1AsyncSocket.html#a72957d0d18911277a6c7e674e9aabe38">_pipelined</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ad10dabf99f2ded29c28e66c42694fdab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Thread.html">Thread</a>&lt; <a class="el" href="classFIX8_1_1AsyncSocket.html">AsyncSocket</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1AsyncSocket.html#ad10dabf99f2ded29c28e66c42694fdab">_thread</a></td></tr>
+<tr class="memitem:a6ea30ba6a898736524c8d06bacdca7e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1dthread.html">dthread</a>&lt; <a class="el" href="classFIX8_1_1AsyncSocket.html">AsyncSocket</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1AsyncSocket.html#a6ea30ba6a898736524c8d06bacdca7e2">_thread</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br/>
@@ -155,9 +156,9 @@ class FIX8::AsyncSocket&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00054">54</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00053">53</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aaeeeb1a244d78c9cd1da58a9e2f27747"></a>
+<a class="anchor" id="a3efbb9b2951f4a003f184c5da9b0c085"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -176,7 +177,13 @@ template&lt;typename T&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;&#160;</td>
-          <td class="paramname"><em>session</em>&#160;</td>
+          <td class="paramname"><em>session</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool&#160;</td>
+          <td class="paramname"><em>pipelined</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -195,11 +202,12 @@ template&lt;typename T&gt; </div>
   <table class="params">
     <tr><td class="paramname">sock</td><td>connected socket </td></tr>
     <tr><td class="paramname">session</td><td>session </td></tr>
+    <tr><td class="paramname">pipelined</td><td>true is pipelined </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00067">67</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00068">68</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -228,7 +236,7 @@ template&lt;typename T&gt; </div>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00073">73</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00072">72</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -258,9 +266,9 @@ template&lt;typename T&gt; </div>
 <p>Wait till processing thead has finished. </p>
 <dl class="section return"><dt>Returns</dt><dd>0 on success </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00095">95</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00094">94</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00286">FIX8::Connection::join()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00386">FIX8::Connection::join()</a>.</p>
 
 </div>
 </div>
@@ -318,7 +326,7 @@ template&lt;typename T&gt; </div>
 <p>Get the number of messages queued on this socket. </p>
 <dl class="section return"><dt>Returns</dt><dd>number of queued messages </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00077">77</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00076">76</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -349,7 +357,7 @@ template&lt;typename T&gt; </div>
 
 <p>Reimplemented in <a class="el" href="classFIX8_1_1FIXReader.html#a99c674abad3c6a569b1a0aba8f9d4f0c">FIX8::FIXReader</a>.</p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00087">87</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00086">86</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -378,7 +386,7 @@ template&lt;typename T&gt; </div>
 <p>Get the underlying socket object. </p>
 <dl class="section return"><dt>Returns</dt><dd>the socket </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00091">91</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00090">90</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -407,14 +415,14 @@ template&lt;typename T&gt; </div>
 
 <p>Start the processing thread. </p>
 
-<p>Reimplemented in <a class="el" href="classFIX8_1_1FIXReader.html#a3a61fad7bb4692dc7b1b7191e3f36d12">FIX8::FIXReader</a>.</p>
+<p>Reimplemented in <a class="el" href="classFIX8_1_1FIXWriter.html#a92503dc513d2c24021e89dceaa879acc">FIX8::FIXWriter</a>, and <a class="el" href="classFIX8_1_1FIXReader.html#a3a61fad7bb4692dc7b1b7191e3f36d12">FIX8::FIXReader</a>.</p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00084">84</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00083">83</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
 <h2>Member Data Documentation</h2>
-<a class="anchor" id="a804ee7fd60822827070e274fff51ac49"></a>
+<a class="anchor" id="acf00e6f0363973453a9043ef1d0890f5"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -424,7 +432,7 @@ template&lt;typename T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tbb::concurrent_bounded_queue&lt;T&gt; <a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket</a>&lt; T &gt;::_msg_queue</td>
+          <td class="memname"><a class="el" href="mpmc_8hpp.html#a86434e873a3410dba0d42e677288465f">f8_concurrent_queue</a>&lt;T&gt; <a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket</a>&lt; T &gt;::_msg_queue</td>
         </tr>
       </table>
   </td>
@@ -434,9 +442,35 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00060">60</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00059">59</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00077">FIX8::AsyncSocket&lt; f8String &gt;::queued()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00076">FIX8::AsyncSocket&lt; f8String &gt;::queued()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a72957d0d18911277a6c7e674e9aabe38"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket</a>&lt; T &gt;::_pipelined</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00061">61</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00094">FIX8::AsyncSocket&lt; f8String &gt;::join()</a>.</p>
 
 </div>
 </div>
@@ -460,7 +494,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00061">61</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00060">60</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -484,13 +518,13 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00059">59</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00058">58</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00091">FIX8::AsyncSocket&lt; f8String &gt;::socket()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00090">FIX8::AsyncSocket&lt; f8String &gt;::socket()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad10dabf99f2ded29c28e66c42694fdab"></a>
+<a class="anchor" id="a6ea30ba6a898736524c8d06bacdca7e2"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -500,7 +534,7 @@ template&lt;typename T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1Thread.html">Thread</a>&lt;<a class="el" href="classFIX8_1_1AsyncSocket.html">AsyncSocket</a>&gt; <a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket</a>&lt; T &gt;::_thread</td>
+          <td class="memname"><a class="el" href="classFIX8_1_1dthread.html">dthread</a>&lt;<a class="el" href="classFIX8_1_1AsyncSocket.html">AsyncSocket</a>&gt; <a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket</a>&lt; T &gt;::_thread</td>
         </tr>
       </table>
   </td>
@@ -510,9 +544,9 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00056">56</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00055">55</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00095">FIX8::AsyncSocket&lt; f8String &gt;::join()</a>, <a class="el" href="connection_8hpp_source.html#l00087">FIX8::AsyncSocket&lt; f8String &gt;::quit()</a>, and <a class="el" href="connection_8hpp_source.html#l00084">FIX8::AsyncSocket&lt; f8String &gt;::start()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00094">FIX8::AsyncSocket&lt; f8String &gt;::join()</a>, <a class="el" href="connection_8hpp_source.html#l00086">FIX8::AsyncSocket&lt; f8String &gt;::quit()</a>, and <a class="el" href="connection_8hpp_source.html#l00083">FIX8::AsyncSocket&lt; f8String &gt;::start()</a>.</p>
 
 </div>
 </div>
@@ -522,7 +556,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:15. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:30. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

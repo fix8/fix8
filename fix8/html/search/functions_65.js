@@ -183,7 +183,7 @@ var searchData=
   ['exercisestyle_5feuropean',['ExerciseStyle_EUROPEAN',['../namespaceFIX8_1_1TEX.html#aa14a1c4b391baed1f5671f9444a02331',1,'FIX8::TEX']]],
   ['exercisestyle_5frealm_5fels',['ExerciseStyle_realm_els',['../namespaceFIX8_1_1TEX.html#a8bebf04a569cbe6f4b8557e842ca72e7',1,'FIX8::TEX']]],
   ['exist',['exist',['../namespaceFIX8.html#a4226474a0829e2de4e8025a1a2007f86',1,'FIX8']]],
-  ['exit',['Exit',['../classFIX8_1_1__threadbase.html#a7bf902053fb716cb2abef763f48e7048',1,'FIX8::_threadbase']]],
+  ['exit',['exit',['../classFIX8_1_1__dthreadcore.html#aa26a1fe0022cb06b29bd4418779745e1',1,'FIX8::_dthreadcore']]],
   ['expirationcycle_5fexpire_5fon_5ftrading_5fsession_5fclose',['ExpirationCycle_EXPIRE_ON_TRADING_SESSION_CLOSE',['../namespaceFIX8_1_1TEX.html#a1f6c81ee27c310bf8940196ebee76f28',1,'FIX8::TEX']]],
   ['expirationcycle_5fexpire_5fon_5ftrading_5fsession_5fopen',['ExpirationCycle_EXPIRE_ON_TRADING_SESSION_OPEN',['../namespaceFIX8_1_1TEX.html#afff2f5b6f42f587c67d55dbb756f7a66',1,'FIX8::TEX']]],
   ['expirationcycle_5frealm_5fels',['ExpirationCycle_realm_els',['../namespaceFIX8_1_1TEX.html#a799d045bd72af79a3fbd0d453e0b8f5d',1,'FIX8::TEX']]],

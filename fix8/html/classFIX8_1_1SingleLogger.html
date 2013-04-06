@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -125,7 +125,7 @@ Inheritance diagram for FIX8::SingleLogger&lt; fn &gt;:</div>
   <map id="FIX8::SingleLogger&lt; fn &gt;_map" name="FIX8::SingleLogger&lt; fn &gt;_map">
 <area href="classFIX8_1_1Singleton.html" alt="FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;" shape="rect" coords="0,56,231,80"/>
 <area href="classFIX8_1_1FileLogger.html" title="A file logger." alt="FIX8::FileLogger" shape="rect" coords="241,56,472,80"/>
-<area href="classFIX8_1_1Logger.html" title="Thread delegated async logging class." alt="FIX8::Logger" shape="rect" coords="241,0,472,24"/>
+<area href="classFIX8_1_1Logger.html" title="dthread delegated async logging class" alt="FIX8::Logger" shape="rect" coords="241,0,472,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -150,8 +150,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad970bc9c6ab4a80b42bda329eb4376c6 inherit pub_methods_classFIX8_1_1Logger"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#ad970bc9c6ab4a80b42bda329eb4376c6"></a><br/></td></tr>
 <tr class="memitem:a8aee5d01bebcad62a5eae8f613233369 inherit pub_methods_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">virtual std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a8aee5d01bebcad62a5eae8f613233369">get_stream</a> () const </td></tr>
 <tr class="memitem:a41aff49ccaf67b09eee5e2991949b98b inherit pub_methods_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a41aff49ccaf67b09eee5e2991949b98b">send</a> (const std::string &amp;what, const unsigned val=0)</td></tr>
-<tr class="memitem:a858c1ea1f37e54d330c5ab05b4fb80a3 inherit pub_methods_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a858c1ea1f37e54d330c5ab05b4fb80a3">stop</a> ()</td></tr>
-<tr class="memdesc:a858c1ea1f37e54d330c5ab05b4fb80a3 inherit pub_methods_classFIX8_1_1Logger"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the logging thread.  <a href="#a858c1ea1f37e54d330c5ab05b4fb80a3"></a><br/></td></tr>
 <tr class="memitem:aa11f47142886e4dd38230ad63ce0377f inherit pub_methods_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#aa11f47142886e4dd38230ad63ce0377f">operator()</a> ()</td></tr>
 <tr class="memitem:a7d54594857fa5bbd58f465476e1c6a81 inherit pub_methods_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81">get_thread_code</a> (pthread_t tid)</td></tr>
 <tr class="memitem:a8175e14a66ef836973ac504cf04170ef inherit pub_methods_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a8175e14a66ef836973ac504cf04170ef">purge_thread_codes</a> ()</td></tr>
@@ -164,6 +162,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:afa184f1db92e2ac80086c6c715b9f0b5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1SingleLogger.html#afa184f1db92e2ac80086c6c715b9f0b5">set_global_filename</a> (const std::string &amp;from)</td></tr>
 <tr class="memitem:a497f1e0548017c7d610b5e4876661d6c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1SingleLogger.html#a497f1e0548017c7d610b5e4876661d6c">log</a> (const std::string &amp;what)</td></tr>
 <tr class="memitem:aafdd1ded14845326b5a5c5f306f59fe7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1SingleLogger.html#aafdd1ded14845326b5a5c5f306f59fe7">flush_log</a> ()</td></tr>
+<tr class="memitem:a67141e88dbc7d1237ff1f8712b27709e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1SingleLogger.html#a67141e88dbc7d1237ff1f8712b27709e">stop</a> ()</td></tr>
+<tr class="memdesc:a67141e88dbc7d1237ff1f8712b27709e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the logging thread.  <a href="#a67141e88dbc7d1237ff1f8712b27709e"></a><br/></td></tr>
 <tr class="inherit_header pub_static_methods_classFIX8_1_1Singleton"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classFIX8_1_1Singleton')"><img src="closed.png" alt="-"/>&nbsp;Static Public Member Functions inherited from <a class="el" href="classFIX8_1_1Singleton.html">FIX8::Singleton< SingleLogger< fn > ></a></td></tr>
 <tr class="memitem:a4126bed417aa223a55989694f938e51e inherit pub_static_methods_classFIX8_1_1Singleton"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; fn &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#a4126bed417aa223a55989694f938e51e">instance</a> ()</td></tr>
 <tr class="memitem:af4b944c4dfa35a0e61f274c9920c6ab9 inherit pub_static_methods_classFIX8_1_1Singleton"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; fn &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Singleton.html#af4b944c4dfa35a0e61f274c9920c6ab9">reset</a> (<a class="el" href="classFIX8_1_1SingleLogger.html">SingleLogger</a>&lt; fn &gt; *what)</td></tr>
@@ -198,12 +198,12 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:aba11dcf2790930d9868d3ea025fc1802 inherit pro_types_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; pthread_t, char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#aba11dcf2790930d9868d3ea025fc1802">ThreadCodes</a></td></tr>
 <tr class="memitem:a288d6d01354fe848f48150f3e656076e inherit pro_types_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; char, pthread_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a288d6d01354fe848f48150f3e656076e">RevThreadCodes</a></td></tr>
 <tr class="inherit_header pro_attribs_classFIX8_1_1Logger"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classFIX8_1_1Logger')"><img src="closed.png" alt="-"/>&nbsp;Protected Attributes inherited from <a class="el" href="classFIX8_1_1Logger.html">FIX8::Logger</a></td></tr>
-<tr class="memitem:a638053a7d2ef91150b1d84f50793796e inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">tbb::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a638053a7d2ef91150b1d84f50793796e">_mutex</a></td></tr>
+<tr class="memitem:a7c2bb62b92f3f93a5287c05d907082b2 inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a7c2bb62b92f3f93a5287c05d907082b2">_mutex</a></td></tr>
 <tr class="memitem:ae8d1712deee374edc53e6cd280212387 inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html#a478225c58aaf0244c2b1ada179d61eb4">LogFlags</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387">_flags</a></td></tr>
 <tr class="memitem:a44859ec24a17660efa7afed958fc82aa inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">std::ostream *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa">_ofs</a></td></tr>
 <tr class="memitem:aa61df4b32128917a7a26e9af8163e67b inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#aa61df4b32128917a7a26e9af8163e67b">_lines</a></td></tr>
-<tr class="memitem:a1856cdc07cfd20899f5ccc6f39c3016e inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">tbb::concurrent_bounded_queue<br class="typebreak"/>
-&lt; <a class="el" href="structFIX8_1_1Logger_1_1LogElement.html">LogElement</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a1856cdc07cfd20899f5ccc6f39c3016e">_msg_queue</a></td></tr>
+<tr class="memitem:a7f67dc0117481b760c6c62b04f6a98de inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mpmc_8hpp.html#a09529314cda4fed23b266afef4c4355c">f8_atomic</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a7f67dc0117481b760c6c62b04f6a98de">_stopping</a></td></tr>
+<tr class="memitem:a591696933a435f48467bd68ad639e67f inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mpmc_8hpp.html#a86434e873a3410dba0d42e677288465f">f8_concurrent_queue</a>&lt; <a class="el" href="structFIX8_1_1Logger_1_1LogElement.html">LogElement</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a591696933a435f48467bd68ad639e67f">_msg_queue</a></td></tr>
 <tr class="memitem:ab8da984b4ce7f89a11653dcff6222b6b inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#ab8da984b4ce7f89a11653dcff6222b6b">_sequence</a></td></tr>
 <tr class="memitem:ac82651d126acdac512113beee695bb11 inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#ac82651d126acdac512113beee695bb11">_osequence</a></td></tr>
 <tr class="memitem:a476ab5cc45fc17d77fcf89b94c296970 inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html#aba11dcf2790930d9868d3ea025fc1802">ThreadCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a476ab5cc45fc17d77fcf89b94c296970">_thread_codes</a></td></tr>
@@ -222,7 +222,7 @@ class FIX8::SingleLogger&lt; fn &gt;</h3>
 </dl>
 <p>Create a static instance of this template and set the template parameter to the desired logfile pathname </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00327">327</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00335">335</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a3cdccda5cb169dfefed83adb309cf908"></a>
 <div class="memitem">
@@ -249,7 +249,7 @@ template&lt;char * fn&gt; </div>
 
 <p>Ctor. </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00331">331</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00339">339</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -277,9 +277,9 @@ template&lt;char * fn&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00352">352</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00360">360</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l00950">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00927">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
 
 </div>
 </div>
@@ -315,11 +315,11 @@ template&lt;char * fn&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00347">347</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00355">355</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l00950">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00927">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8cpp_source.html#l00366">FIX8::Message::encode()</a>, <a class="el" href="message_8cpp_source.html#l00206">FIX8::Message::factory()</a>, <a class="el" href="persist_8cpp_source.html#l00162">FIX8::BDBPersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00340">FIX8::MemoryPersister::get()</a>, <a class="el" href="filepersist_8cpp_source.html#l00176">FIX8::FilePersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00142">FIX8::BDBPersister::get_last_seqnum()</a>, <a class="el" href="persist_8cpp_source.html#l00065">FIX8::BDBPersister::initialise()</a>, <a class="el" href="filepersist_8cpp_source.html#l00065">FIX8::FilePersister::initialise()</a>, <a class="el" href="persist_8cpp_source.html#l00289">FIX8::BDBPersister::operator()()</a>, <a class="el" href="filepersist_8cpp_source.html#l00239">FIX8::FilePersister::put()</a>, <a class="el" href="connection_8hpp_source.html#l00295">FIX8::Connection::set_recv_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00307">FIX8::Connection::set_send_buf_sz()</a>.</p>
+<p>Referenced by <a class="el" href="persist_8cpp_source.html#l00163">FIX8::BDBPersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00355">FIX8::MemoryPersister::get()</a>, <a class="el" href="filepersist_8cpp_source.html#l00177">FIX8::FilePersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00143">FIX8::BDBPersister::get_last_seqnum()</a>, <a class="el" href="persist_8cpp_source.html#l00066">FIX8::BDBPersister::initialise()</a>, <a class="el" href="filepersist_8cpp_source.html#l00066">FIX8::FilePersister::initialise()</a>, <a class="el" href="persist_8cpp_source.html#l00290">FIX8::BDBPersister::operator()()</a>, <a class="el" href="filepersist_8cpp_source.html#l00240">FIX8::FilePersister::put()</a>, <a class="el" href="connection_8hpp_source.html#l00395">FIX8::Connection::set_recv_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00407">FIX8::Connection::set_send_buf_sz()</a>.</p>
 
 </div>
 </div>
@@ -354,9 +354,42 @@ template&lt;char * fn&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00339">339</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00347">347</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l00822">FIX8::CopyString()</a>, and <a class="el" href="namespaceFIX8.html#a7f7a23dae0e782516c8c41d280c6f731">FIX8::max_global_filename_length()</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00820">FIX8::CopyString()</a>, and <a class="el" href="namespaceFIX8.html#a7f7a23dae0e782516c8c41d280c6f731">FIX8::max_global_filename_length()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a67141e88dbc7d1237ff1f8712b27709e"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;char * fn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void <a class="el" href="classFIX8_1_1SingleLogger.html">FIX8::SingleLogger</a>&lt; fn &gt;::stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stop the logging thread. </p>
+
+<p>Reimplemented from <a class="el" href="classFIX8_1_1Logger.html#a858c1ea1f37e54d330c5ab05b4fb80a3">FIX8::Logger</a>.</p>
+
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00365">365</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00927">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
 
 </div>
 </div>
@@ -366,7 +399,7 @@ template&lt;char * fn&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:15. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:30. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

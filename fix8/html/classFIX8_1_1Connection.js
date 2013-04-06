@@ -5,8 +5,8 @@ var classFIX8_1_1Connection =
       [ "cn_initiator", "classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a70ed88dfc473fbf4b1c8b48a8d8df290", null ],
       [ "cn_unknown", "classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6", null ]
     ] ],
-    [ "Connection", "classFIX8_1_1Connection.html#a4e0c9669d92c74c2ee96f2c8ab71cd59", null ],
-    [ "Connection", "classFIX8_1_1Connection.html#adb377b5c1730618b258d04085e0ee657", null ],
+    [ "Connection", "classFIX8_1_1Connection.html#ab856f7008385f21ba80d1e9b917db760", null ],
+    [ "Connection", "classFIX8_1_1Connection.html#ae017ddcb0cee93123f6ef645683235ab", null ],
     [ "~Connection", "classFIX8_1_1Connection.html#a8b5e9ade90396694c34c2d10f5ec7321", null ],
     [ "connect", "classFIX8_1_1Connection.html#a506c527366cc53efdeeeaf5012573398", null ],
     [ "get_hb_interval", "classFIX8_1_1Connection.html#a4ef6dd0e741a007bf9261cb44f8e5de1", null ],
@@ -24,6 +24,7 @@ var classFIX8_1_1Connection =
     [ "start", "classFIX8_1_1Connection.html#a47c25a31352a71e2a6902d37fc5fa2ba", null ],
     [ "stop", "classFIX8_1_1Connection.html#a9a584ddd21bf93a9d721c0be9f87ab59", null ],
     [ "write", "classFIX8_1_1Connection.html#a2daf511c15cdfdb04bcade284e63292b", null ],
+    [ "write", "classFIX8_1_1Connection.html#a4df0059db3ffccabd58c1b0ad367ff03", null ],
     [ "_connected", "classFIX8_1_1Connection.html#a6d4411976534b0a0eaa67ad6a2df24bb", null ],
     [ "_hb_interval", "classFIX8_1_1Connection.html#a01e20e90a2e621335c85463f58323d64", null ],
     [ "_hb_interval20pc", "classFIX8_1_1Connection.html#abfa5da77be082c11451100876890ac9d", null ],

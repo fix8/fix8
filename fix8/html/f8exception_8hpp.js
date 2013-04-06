@@ -18,10 +18,8 @@ var f8exception_8hpp =
     [ "MissingMessageComponent", "structFIX8_1_1MissingMessageComponent.html", "structFIX8_1_1MissingMessageComponent" ],
     [ "MissingMandatoryField", "structFIX8_1_1MissingMandatoryField.html", "structFIX8_1_1MissingMandatoryField" ],
     [ "BadCheckSum", "structFIX8_1_1BadCheckSum.html", "structFIX8_1_1BadCheckSum" ],
-    [ "ThreadException", "structFIX8_1_1ThreadException.html", "structFIX8_1_1ThreadException" ],
+    [ "dthreadException", "structFIX8_1_1dthreadException.html", "structFIX8_1_1dthreadException" ],
     [ "PeerResetConnection", "structFIX8_1_1PeerResetConnection.html", "structFIX8_1_1PeerResetConnection" ],
-    [ "InvalidMemoryPtr", "structFIX8_1_1InvalidMemoryPtr.html", "structFIX8_1_1InvalidMemoryPtr" ],
-    [ "FreelistFull", "structFIX8_1_1FreelistFull.html", "structFIX8_1_1FreelistFull" ],
     [ "InvalidConfiguration", "structFIX8_1_1InvalidConfiguration.html", "structFIX8_1_1InvalidConfiguration" ],
     [ "_F8_EXCEPTION_HPP_", "f8exception_8hpp.html#a6adf9c2e993d15b65f7b7c4a64f25b14", null ]
 ];

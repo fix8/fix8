@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -128,12 +128,12 @@ Inheritance diagram for FIX8::ServerConnection:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3e26e5afe2725838d2e82a374b4f7bbb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ServerConnection.html#a3e26e5afe2725838d2e82a374b4f7bbb">ServerConnection</a> (Poco::Net::StreamSocket *sock, <a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;session, const unsigned hb_interval, const bool no_delay=true)</td></tr>
+<tr class="memitem:a5c69a9e94a57027fbee7e0c18b885267"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ServerConnection.html#a5c69a9e94a57027fbee7e0c18b885267">ServerConnection</a> (Poco::Net::StreamSocket *sock, <a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;session, const unsigned hb_interval, const bool pipelined=true, const bool no_delay=true)</td></tr>
 <tr class="memitem:a624f820257bd118ee2088f9741429baa"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ServerConnection.html#a624f820257bd118ee2088f9741429baa">~ServerConnection</a> ()</td></tr>
 <tr class="memdesc:a624f820257bd118ee2088f9741429baa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#a624f820257bd118ee2088f9741429baa"></a><br/></td></tr>
 <tr class="inherit_header pub_methods_classFIX8_1_1Connection"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classFIX8_1_1Connection')"><img src="closed.png" alt="-"/>&nbsp;Public Member Functions inherited from <a class="el" href="classFIX8_1_1Connection.html">FIX8::Connection</a></td></tr>
-<tr class="memitem:a4e0c9669d92c74c2ee96f2c8ab71cd59 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a4e0c9669d92c74c2ee96f2c8ab71cd59">Connection</a> (Poco::Net::StreamSocket *sock, <a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;session)</td></tr>
-<tr class="memitem:adb377b5c1730618b258d04085e0ee657 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#adb377b5c1730618b258d04085e0ee657">Connection</a> (Poco::Net::StreamSocket *sock, <a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;session, const unsigned hb_interval)</td></tr>
+<tr class="memitem:ab856f7008385f21ba80d1e9b917db760 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#ab856f7008385f21ba80d1e9b917db760">Connection</a> (Poco::Net::StreamSocket *sock, <a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;session, const bool pipelined)</td></tr>
+<tr class="memitem:ae017ddcb0cee93123f6ef645683235ab inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#ae017ddcb0cee93123f6ef645683235ab">Connection</a> (Poco::Net::StreamSocket *sock, <a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;session, const unsigned hb_interval, const bool pipelined)</td></tr>
 <tr class="memitem:a8b5e9ade90396694c34c2d10f5ec7321 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a8b5e9ade90396694c34c2d10f5ec7321">~Connection</a> ()</td></tr>
 <tr class="memdesc:a8b5e9ade90396694c34c2d10f5ec7321 inherit pub_methods_classFIX8_1_1Connection"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#a8b5e9ade90396694c34c2d10f5ec7321"></a><br/></td></tr>
 <tr class="memitem:a5e55875fe93bcfcae541ddbcb250ac0b inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804">Role</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a5e55875fe93bcfcae541ddbcb250ac0b">get_role</a> () const </td></tr>
@@ -143,6 +143,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a9a584ddd21bf93a9d721c0be9f87ab59 inherit pub_methods_classFIX8_1_1Connection"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the reader and writer threads.  <a href="#a9a584ddd21bf93a9d721c0be9f87ab59"></a><br/></td></tr>
 <tr class="memitem:a506c527366cc53efdeeeaf5012573398 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a506c527366cc53efdeeeaf5012573398">connect</a> ()</td></tr>
 <tr class="memitem:a2daf511c15cdfdb04bcade284e63292b inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a2daf511c15cdfdb04bcade284e63292b">write</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> *from)</td></tr>
+<tr class="memitem:a4df0059db3ffccabd58c1b0ad367ff03 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a4df0059db3ffccabd58c1b0ad367ff03">write</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> &amp;from)</td></tr>
 <tr class="memitem:abfff6f1008357a229125ded4b3946b47 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#abfff6f1008357a229125ded4b3946b47">send</a> (const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;from)</td></tr>
 <tr class="memitem:a62796cd45b362a0e14fbe2d6e0786710 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a62796cd45b362a0e14fbe2d6e0786710">set_hb_interval</a> (const unsigned hb_interval)</td></tr>
 <tr class="memitem:a4ef6dd0e741a007bf9261cb44f8e5de1 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a4ef6dd0e741a007bf9261cb44f8e5de1">get_hb_interval</a> () const </td></tr>
@@ -177,9 +178,9 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Server (acceptor) specialisation of <a class="el" href="classFIX8_1_1Connection.html" title="Complete Fix connection (reader and writer).">Connection</a>. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00354">354</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00456">456</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a3e26e5afe2725838d2e82a374b4f7bbb"></a>
+<a class="anchor" id="a5c69a9e94a57027fbee7e0c18b885267"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -208,6 +209,12 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const bool&#160;</td>
+          <td class="paramname"><em>pipelined</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool&#160;</td>
           <td class="paramname"><em>no_delay</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
@@ -228,14 +235,15 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramname">sock</td><td>connected socket </td></tr>
     <tr><td class="paramname">session</td><td>session </td></tr>
     <tr><td class="paramname">hb_interval</td><td>heartbeat interval </td></tr>
+    <tr><td class="paramname">pipelined</td><td>if true, reader/writer are in separate pipelined threads </td></tr>
     <tr><td class="paramname">no_delay</td><td>set or clear the tcp no delay flag on the socket </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00363">363</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00465">465</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00218">FIX8::Connection::_sock</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00311">FIX8::Connection::_sock</a>.</p>
 
 </div>
 </div>
@@ -262,7 +270,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00371">371</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00474">474</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -272,7 +280,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:15. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:30. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -25,7 +25,7 @@ var classFIX8_1_1Message =
     [ "operator<<", "classFIX8_1_1Message.html#a2504e9ef602040d181c571a055726116", null ],
     [ "_custom_seqnum", "classFIX8_1_1Message.html#a54a1790f783e645a66f22f59073a9b2e", null ],
     [ "_header", "classFIX8_1_1Message.html#ab29d37142e1569c14c8032081ecfc5df", null ],
-    [ "_in_use", "classFIX8_1_1Message.html#a6c55066400df118f0920bfa0ece337cf", null ],
+    [ "_in_use", "classFIX8_1_1Message.html#af766ac609079c5cf36b0eafd18c1f7be", null ],
     [ "_no_increment", "classFIX8_1_1Message.html#aa4249dd336c6bd7252f5b2a33ae233f2", null ],
     [ "_trailer", "classFIX8_1_1Message.html#abb271c46b31a7dfae8ceba388cc31e89", null ]
 ];

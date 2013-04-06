@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -317,7 +317,7 @@ $(document).ready(function(){initNavTree('harness_8cpp_source.html','');});
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;         <a class="code" href="classMyMenu.html" title="Simple menu system that will work with most term types.">MyMenu</a> mymenu(*mc-&gt;<a class="code" href="classFIX8_1_1ClientSession.html#a497d0d92a7dd4a2ddd8273e793ba874c">session_ptr</a>(), 0, cout, &amp;cm);</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;         <span class="keywordtype">char</span> ch;</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;         mymenu.<a class="code" href="classMyMenu.html#a381663b9838cf71aee2307913e1caf04">get_tty</a>().<a class="code" href="classFIX8_1_1tty__save__state.html#a64dbe0f3a2b970a69308bb187909e12a">set_raw_mode</a>();</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;         sleep(1);</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;         <a class="code" href="namespaceFIX8.html#a0262d06ebae9b3c0acbe90578aa6e6d6">hypersleep&lt;h_seconds&gt;</a>(1);</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;         <span class="keywordflow">do</span></div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;         {</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;            cout &lt;&lt; endl &lt;&lt; <span class="stringliteral">&quot;?=help &gt; &quot;</span> &lt;&lt; flush;</div>
@@ -337,7 +337,7 @@ $(document).ready(function(){initNavTree('harness_8cpp_source.html','');});
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;         <a class="code" href="classMyMenu.html" title="Simple menu system that will work with most term types.">MyMenu</a> mymenu(*mc-&gt;session_ptr(), 0, cout, &amp;cm);</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;         <span class="keywordtype">char</span> ch;</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;         mymenu.<a class="code" href="classMyMenu.html#a381663b9838cf71aee2307913e1caf04">get_tty</a>().<a class="code" href="classFIX8_1_1tty__save__state.html#a64dbe0f3a2b970a69308bb187909e12a">set_raw_mode</a>();</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;         sleep(1);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;         <a class="code" href="namespaceFIX8.html#a0262d06ebae9b3c0acbe90578aa6e6d6">hypersleep&lt;h_seconds&gt;</a>(1);</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;         <span class="keywordflow">do</span></div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;         {</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;            cout &lt;&lt; endl &lt;&lt; <span class="stringliteral">&quot;?=help &gt; &quot;</span> &lt;&lt; flush;</div>
@@ -388,7 +388,7 @@ $(document).ready(function(){initNavTree('harness_8cpp_source.html','');});
 <div class="line"><a name="l00331"></a><span class="lineno"><a class="code" href="classMyMenu.html#a2db3de9a9680bfe1b042eb12933b79e8">  331</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classMyMenu.html#a2db3de9a9680bfe1b042eb12933b79e8">MyMenu::do_logout</a>()</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;{</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;   _session.send(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1TEX_1_1Logout.html" title="Logout (5), admin, 3 fields, 0 groups.">TEX::Logout</a>);</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;   sleep(1);</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;   <a class="code" href="namespaceFIX8.html#a0262d06ebae9b3c0acbe90578aa6e6d6">hypersleep&lt;h_seconds&gt;</a>(1);</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// will exit</span></div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;}</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;</div>
@@ -552,7 +552,7 @@ $(document).ready(function(){initNavTree('harness_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:04. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:19. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

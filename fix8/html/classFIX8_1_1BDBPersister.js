@@ -20,7 +20,7 @@ var classFIX8_1_1BDBPersister =
     [ "_dbDir", "classFIX8_1_1BDBPersister.html#a9c4b9e092e51b6b73ef9695d14644dc2", null ],
     [ "_dbEnv", "classFIX8_1_1BDBPersister.html#a140c61c4308673cd251ea6deb524c891", null ],
     [ "_dbFname", "classFIX8_1_1BDBPersister.html#ae7e2268281cf0c3b28d92ece3e6fe653", null ],
-    [ "_persist_queue", "classFIX8_1_1BDBPersister.html#a0e3264ecd1d46c6ba9fa9ee715022d36", null ],
-    [ "_thread", "classFIX8_1_1BDBPersister.html#a285e68b5459d26b536904c810cd56835", null ],
+    [ "_persist_queue", "classFIX8_1_1BDBPersister.html#aca10e4c078df9c74ec9f7e97cfe47a61", null ],
+    [ "_thread", "classFIX8_1_1BDBPersister.html#a8f5d4a729f232a9caba0d9dec81958cf", null ],
     [ "_wasCreated", "classFIX8_1_1BDBPersister.html#aaf60230241accc00f4733e7e2e102461", null ]
 ];

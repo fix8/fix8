@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['main',['main',['../f8c_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;f8c.cpp'],['../harness_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;harness.cpp'],['../hfprint_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;hfprint.cpp'],['../hftest_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;hftest.cpp'],['../myfix_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;myfix.cpp'],['../myprint_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;myprint.cpp']]],
+  ['main',['main',['../f8c_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;f8c.cpp'],['../harness_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;harness.cpp'],['../hfprint_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;hfprint.cpp'],['../hftest_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;hftest.cpp'],['../myfix_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;myfix.cpp'],['../myprint_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;myprint.cpp'],['../seqedit_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;seqedit.cpp']]],
   ['make_5fid',['make_id',['../classFIX8_1_1SessionID.html#a0ce1f3ba3cf5355bff480325f4acce0a',1,'FIX8::SessionID']]],
   ['marketdataincrementalrefresh',['MarketDataIncrementalRefresh',['../classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh.html#a1dfe7ad6d3aa4f9293d05693f8550874',1,'FIX8::TEX::MarketDataIncrementalRefresh']]],
   ['marketdatarequest',['MarketDataRequest',['../classFIX8_1_1TEX_1_1MarketDataRequest.html#ab8bec6e4e11e8e8cc114d590b42a0c23',1,'FIX8::TEX::MarketDataRequest']]],
@@ -142,7 +142,6 @@ var searchData=
   ['maturitymonthyearincrementunits_5fweeks',['MaturityMonthYearIncrementUnits_WEEKS',['../namespaceFIX8_1_1TEX.html#a4c821eeedbc4db9e8a3ac29c027771e7',1,'FIX8::TEX']]],
   ['maturitymonthyearincrementunits_5fyears',['MaturityMonthYearIncrementUnits_YEARS',['../namespaceFIX8_1_1TEX.html#a4887ac802c724a9e09726d176d89a771',1,'FIX8::TEX']]],
   ['max_5fglobal_5ffilename_5flength',['max_global_filename_length',['../namespaceFIX8.html#a7f7a23dae0e782516c8c41d280c6f731',1,'FIX8']]],
-  ['max_5fsize',['max_size',['../classFIX8_1_1f8Allocator.html#a927ffa56b2d5f25cc19ad79217980dae',1,'FIX8::f8Allocator']]],
   ['mdbooktype_5forder_5fdepth',['MDBookType_ORDER_DEPTH',['../namespaceFIX8_1_1TEX.html#ab7455b86d16456132a3271a904a1750f',1,'FIX8::TEX']]],
   ['mdbooktype_5fprice_5fdepth',['MDBookType_PRICE_DEPTH',['../namespaceFIX8_1_1TEX.html#a32413ae9f0566910f1f6de7e8aa74c05',1,'FIX8::TEX']]],
   ['mdbooktype_5frealm_5fels',['MDBookType_realm_els',['../namespaceFIX8_1_1TEX.html#a3a89dfef29404958c52143f2ffe0e22e',1,'FIX8::TEX']]],
@@ -225,7 +224,6 @@ var searchData=
   ['mdupdatetype_5fincremental_5frefresh',['MDUpdateType_INCREMENTAL_REFRESH',['../namespaceFIX8_1_1TEX.html#a12d14ec8f40fb7defb921833e864d1a4',1,'FIX8::TEX']]],
   ['mdupdatetype_5frealm_5fels',['MDUpdateType_realm_els',['../namespaceFIX8_1_1TEX.html#a0216f1fa288f726e26e3686a5f4e5683',1,'FIX8::TEX']]],
   ['memorypersister',['MemoryPersister',['../classFIX8_1_1MemoryPersister.html#ace0b933f680d10da3f169954ee3f9f21',1,'FIX8::MemoryPersister']]],
-  ['memorypool',['MemoryPool',['../classFIX8_1_1MemoryPool.html#a2b887097d3b1ec96c0a579fc71172314',1,'FIX8::MemoryPool']]],
   ['menuitem',['MenuItem',['../structMyMenu_1_1MenuItem.html#a9f7e2d59464a2ceffd95da065d5a7942',1,'MyMenu::MenuItem::MenuItem(const char key, const std::string &amp;help)'],['../structMyMenu_1_1MenuItem.html#a548724cca1b7af359d1a6be2d61a466e',1,'MyMenu::MenuItem::MenuItem()'],['../structMyMenu_1_1MenuItem.html#a9f7e2d59464a2ceffd95da065d5a7942',1,'MyMenu::MenuItem::MenuItem(const char key, const std::string &amp;help)'],['../structMyMenu_1_1MenuItem.html#a548724cca1b7af359d1a6be2d61a466e',1,'MyMenu::MenuItem::MenuItem()']]],
   ['message',['Message',['../classFIX8_1_1Message.html#a11bdb11fb3eb8c88a183db9153d6a743',1,'FIX8::Message']]],
   ['messagebase',['MessageBase',['../classFIX8_1_1MessageBase.html#adc086e165f4594152c7174b7e87cb8be',1,'FIX8::MessageBase::MessageBase(const struct F8MetaCntx &amp;ctx, const f8String &amp;msgType, const InputIterator begin, const size_t cnt)'],['../classFIX8_1_1MessageBase.html#a4af07392a04a883594f674a7d2929473',1,'FIX8::MessageBase::MessageBase(const MessageBase &amp;from)']]],
@@ -235,8 +233,6 @@ var searchData=
   ['messageencoding_5fshift_5fjis',['MessageEncoding_SHIFT_JIS',['../namespaceFIX8_1_1TEX.html#a1a16dd88caa0483cc79b4853b0ec7df1',1,'FIX8::TEX']]],
   ['messageencoding_5futf_5f8',['MessageEncoding_UTF_8',['../namespaceFIX8_1_1TEX.html#adec24c7a6d5d199551d6ec32e6ec597d',1,'FIX8::TEX']]],
   ['messagespec',['MessageSpec',['../structFIX8_1_1MessageSpec.html#a271b5ca4e612f108aae98f76840970de',1,'FIX8::MessageSpec']]],
-  ['microsleep',['microsleep',['../namespaceFIX8.html#aa1b06f6428a6ffeff42a14d0fee0d17f',1,'FIX8']]],
-  ['millisleep',['millisleep',['../namespaceFIX8.html#a0b4507afd061f00de270d755d3b1e5a7',1,'FIX8']]],
   ['miscfeebasis_5fabsolute',['MiscFeeBasis_ABSOLUTE',['../namespaceFIX8_1_1TEX.html#ae5ddc586048c63c5b9448eef61f432b6',1,'FIX8::TEX']]],
   ['miscfeebasis_5fper_5funit',['MiscFeeBasis_PER_UNIT',['../namespaceFIX8_1_1TEX.html#a7a063aa602c7d74610cad354aac38bb9',1,'FIX8::TEX']]],
   ['miscfeebasis_5fpercentage',['MiscFeeBasis_PERCENTAGE',['../namespaceFIX8_1_1TEX.html#ad8764a469e059e56353dbc53c4fad9b6',1,'FIX8::TEX']]],

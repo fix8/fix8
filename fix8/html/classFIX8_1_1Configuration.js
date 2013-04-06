@@ -20,6 +20,7 @@ var classFIX8_1_1Configuration =
     [ "get_logfile_rotation", "classFIX8_1_1Configuration.html#a8dd08aba00b3d263115dcb2018ff8365", null ],
     [ "get_logflags", "classFIX8_1_1Configuration.html#a63edde694857230cc0a1f26d0cf7b861", null ],
     [ "get_logname", "classFIX8_1_1Configuration.html#ab68e04de2c9527e5ea8546e90fd4457e", null ],
+    [ "get_pipelined", "classFIX8_1_1Configuration.html#a3bf9125760752e5635d832b400e48d9c", null ],
     [ "get_reset_sequence_number_flag", "classFIX8_1_1Configuration.html#a9b1317e143879bdc346df7ad98d39cfe", null ],
     [ "get_retry_count", "classFIX8_1_1Configuration.html#a8f8f0922f008d43825a09fda5657d063", null ],
     [ "get_retry_interval", "classFIX8_1_1Configuration.html#a96776f7b6c4cc02dba1c9c7aeb19bbee", null ],

@@ -1,7 +1,5 @@
 var classFIX8_1_1FilePersister =
 [
-    [ "IPrec", "structFIX8_1_1FilePersister_1_1IPrec.html", "structFIX8_1_1FilePersister_1_1IPrec" ],
-    [ "Prec", "structFIX8_1_1FilePersister_1_1Prec.html", "structFIX8_1_1FilePersister_1_1Prec" ],
     [ "Index", "classFIX8_1_1FilePersister.html#a7eb0a14862baf78381079885c09cf581", null ],
     [ "FilePersister", "classFIX8_1_1FilePersister.html#a792d5fe0e483ea54004467eee5f11ae5", null ],
     [ "~FilePersister", "classFIX8_1_1FilePersister.html#a97b9638102b672c04faa8fc4da0dba1c", null ],

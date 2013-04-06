@@ -122,7 +122,6 @@ var searchData=
   ['sidevalueind',['SideValueInd',['../namespaceFIX8_1_1TEX.html#ab156cfd080abe990070016ec418a1bab',1,'FIX8::TEX']]],
   ['signature',['Signature',['../namespaceFIX8_1_1TEX.html#aa95217b546017e2d80b16ee3d570a5d6',1,'FIX8::TEX']]],
   ['signaturelength',['SignatureLength',['../namespaceFIX8_1_1TEX.html#aa7850efe5bdfff3c1a952b6cb86b6ce0',1,'FIX8::TEX']]],
-  ['size_5ftype',['size_type',['../classFIX8_1_1f8Allocator.html#a2ee69831f9e54be083ef994c8ecc9aff',1,'FIX8::f8Allocator']]],
   ['solicitedflag',['SolicitedFlag',['../namespaceFIX8_1_1TEX.html#ad3ed4a197e257ff4d51b958d2aa5693a',1,'FIX8::TEX']]],
   ['spread',['Spread',['../namespaceFIX8_1_1TEX.html#ae5ca5f0564b67d40a6cb062aaa2d2ea6',1,'FIX8::TEX']]],
   ['standinstdbid',['StandInstDbID',['../namespaceFIX8_1_1TEX.html#a8f78d32b22890581ab5dcf4b741e53ef',1,'FIX8::TEX']]],

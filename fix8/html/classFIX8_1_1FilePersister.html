@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -105,7 +105,6 @@ $(document).ready(function(){initNavTree('classFIX8_1_1FilePersister.html','');}
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-types">Private Types</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
@@ -114,9 +113,6 @@ $(document).ready(function(){initNavTree('classFIX8_1_1FilePersister.html','');}
 <div class="title">FIX8::FilePersister Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>File persister.  
- <a href="classFIX8_1_1FilePersister.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="persist_8hpp_source.html">persist.hpp</a>&gt;</code></p>
 <div class="dynheader">
@@ -129,11 +125,6 @@ Inheritance diagram for FIX8::FilePersister:</div>
 </map>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FilePersister_1_1IPrec.html">IPrec</a></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html">Prec</a></td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a792d5fe0e483ea54004467eee5f11ae5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1FilePersister.html#a792d5fe0e483ea54004467eee5f11ae5">FilePersister</a> ()</td></tr>
@@ -158,7 +149,7 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-types"></a>
 Private Types</h2></td></tr>
-<tr class="memitem:a7eb0a14862baf78381079885c09cf581"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; uint32_t, <a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html">Prec</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1FilePersister.html#a7eb0a14862baf78381079885c09cf581">Index</a></td></tr>
+<tr class="memitem:a7eb0a14862baf78381079885c09cf581"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; uint32_t, <a class="el" href="structFIX8_1_1Prec.html">Prec</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1FilePersister.html#a7eb0a14862baf78381079885c09cf581">Index</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -172,16 +163,15 @@ Private Attributes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classFIX8_1_1Persister"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classFIX8_1_1Persister')"><img src="closed.png" alt="-"/>&nbsp;Public Types inherited from <a class="el" href="classFIX8_1_1Persister.html">FIX8::Persister</a></td></tr>
-<tr class="memitem:a379510286fcabbca5c8707308ed7e937 inherit pub_types_classFIX8_1_1Persister"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classFIX8_1_1Persister.html#a379510286fcabbca5c8707308ed7e937a6671b0b2d47dc4e4d716424be8e95f89">MaxMsgLen</a> =  MAX_MSG_LENGTH
+<tr class="memitem:a42380ce0af51e15cc7492403d9637728 inherit pub_types_classFIX8_1_1Persister"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classFIX8_1_1Persister.html#a42380ce0af51e15cc7492403d9637728a6671b0b2d47dc4e4d716424be8e95f89">MaxMsgLen</a> =  MAX_MSG_LENGTH
  }</td></tr>
-<tr class="memdesc:a379510286fcabbca5c8707308ed7e937"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum length of persisted FIX message.  <a href="classFIX8_1_1Persister.html#a379510286fcabbca5c8707308ed7e937">More...</a><br/></td></tr>
+<tr class="memdesc:a42380ce0af51e15cc7492403d9637728"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum length of persisted FIX message.  <a href="classFIX8_1_1Persister.html#a42380ce0af51e15cc7492403d9637728">More...</a><br/></td></tr>
 <tr class="inherit_header pro_attribs_classFIX8_1_1Persister"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classFIX8_1_1Persister')"><img src="closed.png" alt="-"/>&nbsp;Protected Attributes inherited from <a class="el" href="classFIX8_1_1Persister.html">FIX8::Persister</a></td></tr>
 <tr class="memitem:a098ddaff4058d7f975062b924744a827 inherit pro_attribs_classFIX8_1_1Persister"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Persister.html#a098ddaff4058d7f975062b924744a827">_opened</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>File persister. </p>
-
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00313">313</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<div class="textblock">
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00348">348</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 </div><h2>Member Typedef Documentation</h2>
 <a class="anchor" id="a7eb0a14862baf78381079885c09cf581"></a>
 <div class="memitem">
@@ -191,7 +181,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::map&lt;uint32_t, <a class="el" href="structFIX8_1_1FilePersister_1_1Prec.html">Prec</a>&gt; <a class="el" href="classFIX8_1_1FilePersister.html#a7eb0a14862baf78381079885c09cf581">FIX8::FilePersister::Index</a></td>
+          <td class="memname">typedef std::map&lt;uint32_t, <a class="el" href="structFIX8_1_1Prec.html">Prec</a>&gt; <a class="el" href="classFIX8_1_1FilePersister.html#a7eb0a14862baf78381079885c09cf581">FIX8::FilePersister::Index</a></td>
         </tr>
       </table>
   </td>
@@ -201,7 +191,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00340">340</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00354">354</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -229,7 +219,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Ctor. </p>
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00357">357</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00359">359</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -256,7 +246,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00163">163</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00164">164</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
 
 </div>
 </div>
@@ -304,7 +294,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#a80aebfa8f8e41b7d25ec958f8ccad8fe">FIX8::Persister</a>.</p>
 
-<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00371">371</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00372">372</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
 
 </div>
 </div>
@@ -351,9 +341,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#a3e2bdbad7444ae43e26a3fb82bcaf613">FIX8::Persister</a>.</p>
 
-<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00336">336</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00337">337</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00347">FIX8::SingleLogger&lt; fn &gt;::log()</a>, and <a class="el" href="f8config_8h_source.html#l00409">MAX_MSG_LENGTH</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00355">FIX8::SingleLogger&lt; fn &gt;::log()</a>, and <a class="el" href="f8config_8h_source.html#l00406">MAX_MSG_LENGTH</a>.</p>
 
 </div>
 </div>
@@ -414,9 +404,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#a8237092fb8a194f2b342b13d92e33dbd">FIX8::Persister</a>.</p>
 
-<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00176">176</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00177">177</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00348">FIX8::Session::RetransmissionContext::_no_more_records</a>, <a class="el" href="session_8hpp_source.html#l00450">FIX8::Session::get_next_send_seq()</a>, <a class="el" href="logger_8hpp_source.html#l00347">FIX8::SingleLogger&lt; fn &gt;::log()</a>, and <a class="el" href="f8config_8h_source.html#l00409">MAX_MSG_LENGTH</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00347">FIX8::Session::RetransmissionContext::_no_more_records</a>, <a class="el" href="session_8hpp_source.html#l00463">FIX8::Session::get_next_send_seq()</a>, <a class="el" href="logger_8hpp_source.html#l00355">FIX8::SingleLogger&lt; fn &gt;::log()</a>, and <a class="el" href="f8config_8h_source.html#l00406">MAX_MSG_LENGTH</a>.</p>
 
 </div>
 </div>
@@ -463,9 +453,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#a4c9b3a3362b5b3175909f5656af73c14">FIX8::Persister</a>.</p>
 
-<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00308">308</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00309">309</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00347">FIX8::SingleLogger&lt; fn &gt;::log()</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00355">FIX8::SingleLogger&lt; fn &gt;::log()</a>.</p>
 
 </div>
 </div>
@@ -501,7 +491,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#aad5124d2eed21a7773da2961b5fe3896">FIX8::Persister</a>.</p>
 
-<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00170">170</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00171">171</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
 
 </div>
 </div>
@@ -546,11 +536,11 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00065">65</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00066">66</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
 
-<p>References <a class="el" href="persist_8hpp_source.html#l00349">FIX8::FilePersister::IPrec::_prec</a>, <a class="el" href="persist_8hpp_source.html#l00348">FIX8::FilePersister::IPrec::_seq</a>, <a class="el" href="namespaceFIX8.html#aa425fec2bfd5904c8599debe9e6adc9c">FIX8::CheckAddTrailingSlash()</a>, <a class="el" href="f8utils_8hpp_source.html#l00811">FIX8::exist()</a>, and <a class="el" href="logger_8hpp_source.html#l00347">FIX8::SingleLogger&lt; fn &gt;::log()</a>.</p>
+<p>References <a class="el" href="persist_8hpp_source.html#l00342">FIX8::IPrec::_prec</a>, <a class="el" href="persist_8hpp_source.html#l00341">FIX8::IPrec::_seq</a>, <a class="el" href="namespaceFIX8.html#aa425fec2bfd5904c8599debe9e6adc9c">FIX8::CheckAddTrailingSlash()</a>, <a class="el" href="f8utils_8hpp_source.html#l00809">FIX8::exist()</a>, and <a class="el" href="logger_8hpp_source.html#l00355">FIX8::SingleLogger&lt; fn &gt;::log()</a>.</p>
 
-<p>Referenced by <a class="el" href="configuration_8cpp_source.html#l00099">FIX8::Configuration::create_persister()</a>.</p>
+<p>Referenced by <a class="el" href="configuration_8cpp_source.html#l00100">FIX8::Configuration::create_persister()</a>.</p>
 
 </div>
 </div>
@@ -597,9 +587,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#a2318928465e09f9c0b8973258e8f3add">FIX8::Persister</a>.</p>
 
-<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00261">261</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00262">262</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00347">FIX8::SingleLogger&lt; fn &gt;::log()</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00355">FIX8::SingleLogger&lt; fn &gt;::log()</a>.</p>
 
 </div>
 </div>
@@ -646,9 +636,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classFIX8_1_1Persister.html#a90946f09b6189cfcfbc7457200ad71a3">FIX8::Persister</a>.</p>
 
-<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00239">239</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filepersist_8cpp_source.html#l00240">240</a> of file <a class="el" href="filepersist_8cpp_source.html">filepersist.cpp</a>.</p>
 
-<p>References <a class="el" href="persist_8hpp_source.html#l00349">FIX8::FilePersister::IPrec::_prec</a>, and <a class="el" href="logger_8hpp_source.html#l00347">FIX8::SingleLogger&lt; fn &gt;::log()</a>.</p>
+<p>References <a class="el" href="persist_8hpp_source.html#l00342">FIX8::IPrec::_prec</a>, and <a class="el" href="logger_8hpp_source.html#l00355">FIX8::SingleLogger&lt; fn &gt;::log()</a>.</p>
 
 </div>
 </div>
@@ -671,7 +661,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00315">315</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00350">350</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -693,7 +683,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00315">315</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00350">350</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -715,7 +705,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00316">316</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00351">351</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -737,7 +727,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00341">341</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00355">355</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -759,7 +749,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00316">316</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00351">351</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -781,7 +771,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00317">317</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
+<p>Definition at line <a class="el" href="persist_8hpp_source.html#l00352">352</a> of file <a class="el" href="persist_8hpp_source.html">persist.hpp</a>.</p>
 
 </div>
 </div>
@@ -792,7 +782,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:19. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:33. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

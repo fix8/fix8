@@ -33,12 +33,13 @@ var classFIX8_1_1Logger =
     [ "_buffer", "classFIX8_1_1Logger.html#a24892c6b55cde6cd91e97e0180ddfa39", null ],
     [ "_flags", "classFIX8_1_1Logger.html#ae8d1712deee374edc53e6cd280212387", null ],
     [ "_lines", "classFIX8_1_1Logger.html#aa61df4b32128917a7a26e9af8163e67b", null ],
-    [ "_msg_queue", "classFIX8_1_1Logger.html#a1856cdc07cfd20899f5ccc6f39c3016e", null ],
-    [ "_mutex", "classFIX8_1_1Logger.html#a638053a7d2ef91150b1d84f50793796e", null ],
+    [ "_msg_queue", "classFIX8_1_1Logger.html#a591696933a435f48467bd68ad639e67f", null ],
+    [ "_mutex", "classFIX8_1_1Logger.html#a7c2bb62b92f3f93a5287c05d907082b2", null ],
     [ "_ofs", "classFIX8_1_1Logger.html#a44859ec24a17660efa7afed958fc82aa", null ],
     [ "_osequence", "classFIX8_1_1Logger.html#ac82651d126acdac512113beee695bb11", null ],
     [ "_rev_thread_codes", "classFIX8_1_1Logger.html#a1a7b69255874cb0e2ae4629858c93a02", null ],
     [ "_sequence", "classFIX8_1_1Logger.html#ab8da984b4ce7f89a11653dcff6222b6b", null ],
-    [ "_thread", "classFIX8_1_1Logger.html#ad2e5a1a8e15fa4af8174eb9819a41519", null ],
+    [ "_stopping", "classFIX8_1_1Logger.html#a7f67dc0117481b760c6c62b04f6a98de", null ],
+    [ "_thread", "classFIX8_1_1Logger.html#a38bb01364574b762666b588ebf5b0280", null ],
     [ "_thread_codes", "classFIX8_1_1Logger.html#a476ab5cc45fc17d77fcf89b94c296970", null ]
 ];

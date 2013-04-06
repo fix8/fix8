@@ -1,10 +1,15 @@
 var searchData=
 [
-  ['f8allocator',['f8Allocator',['../classFIX8_1_1f8Allocator.html',1,'FIX8']]],
+  ['f8_5fmutex',['f8_mutex',['../classFIX8_1_1f8__mutex.html',1,'FIX8']]],
+  ['f8_5fscoped_5flock',['f8_scoped_lock',['../classFIX8_1_1f8__scoped__lock.html',1,'FIX8']]],
   ['f8exception',['f8Exception',['../classFIX8_1_1f8Exception.html',1,'FIX8']]],
   ['f8metacntx',['F8MetaCntx',['../structFIX8_1_1F8MetaCntx.html',1,'FIX8']]],
   ['fdinbuf',['fdinbuf',['../classFIX8_1_1fdinbuf.html',1,'FIX8']]],
   ['fdoutbuf',['fdoutbuf',['../classFIX8_1_1fdoutbuf.html',1,'FIX8']]],
+  ['ff_5fatomic',['ff_atomic',['../classFIX8_1_1ff__atomic.html',1,'FIX8']]],
+  ['ff_5fatomic_3c_20t_20_2a_20_3e',['ff_atomic&lt; T * &gt;',['../classFIX8_1_1ff__atomic_3_01T_01_5_01_4.html',1,'FIX8']]],
+  ['ff_5funbounded_5fqueue',['ff_unbounded_queue',['../classFIX8_1_1ff__unbounded__queue.html',1,'FIX8']]],
+  ['ff_5funbounded_5fqueue_3c_20t_20_2a_20_3e',['ff_unbounded_queue&lt; T * &gt;',['../classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html',1,'FIX8']]],
   ['field',['Field',['../classFIX8_1_1Field.html',1,'FIX8']]],
   ['field_3c_20boolean_2c_20field_20_3e',['Field&lt; Boolean, field &gt;',['../classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html',1,'FIX8']]],
   ['field_3c_20char_2c_20field_20_3e',['Field&lt; char, field &gt;',['../classFIX8_1_1Field_3_01char_00_01field_01_4.html',1,'FIX8']]],
@@ -40,6 +45,5 @@ var searchData=
   ['fixreader',['FIXReader',['../classFIX8_1_1FIXReader.html',1,'FIX8']]],
   ['fixwriter',['FIXWriter',['../classFIX8_1_1FIXWriter.html',1,'FIX8']]],
   ['fptrostream',['fptrostream',['../classFIX8_1_1fptrostream.html',1,'FIX8']]],
-  ['free_5fptr',['free_ptr',['../structFIX8_1_1free__ptr.html',1,'FIX8']]],
-  ['freelistfull',['FreelistFull',['../structFIX8_1_1FreelistFull.html',1,'FIX8']]]
+  ['free_5fptr',['free_ptr',['../structFIX8_1_1free__ptr.html',1,'FIX8']]]
 ];

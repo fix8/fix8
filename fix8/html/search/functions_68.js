@@ -28,5 +28,10 @@ var searchData=
   ['heartbeat_5fservice',['heartbeat_service',['../classFIX8_1_1Session.html#abc077cc755603e29b80291c3072a3165',1,'FIX8::Session']]],
   ['help',['help',['../classMyMenu.html#af92fcc82b1b1f684b2ca6c6ebb8e5b1f',1,'MyMenu::help()'],['../classMyMenu.html#af92fcc82b1b1f684b2ca6c6ebb8e5b1f',1,'MyMenu::help()']]],
   ['hf_5fsession_5fclient',['hf_session_client',['../classhf__session__client.html#ae4110a42da40c4bf938c299c1bcf3d25',1,'hf_session_client']]],
-  ['hf_5fsession_5fserver',['hf_session_server',['../classhf__session__server.html#a618be6c9c058902e6705cc06d452c8ba',1,'hf_session_server']]]
+  ['hf_5fsession_5fserver',['hf_session_server',['../classhf__session__server.html#a618be6c9c058902e6705cc06d452c8ba',1,'hf_session_server']]],
+  ['hypersleep',['hypersleep',['../namespaceFIX8.html#a9bbc54ff449ca37b34f5189b15160e43',1,'FIX8::hypersleep(const unsigned amt)'],['../namespaceFIX8.html#a9b814fa13a57602ba106a62c0b0e2eff',1,'FIX8::hypersleep(const unsigned amt, const hyperunits_t units)']]],
+  ['hypersleep_3c_20h_5fmicroseconds_20_3e',['hypersleep&lt; h_microseconds &gt;',['../namespaceFIX8.html#a0a6aaa0459e6c5f52e5b9964bd676f95',1,'FIX8']]],
+  ['hypersleep_3c_20h_5fmilliseconds_20_3e',['hypersleep&lt; h_milliseconds &gt;',['../namespaceFIX8.html#aa5ab254abf3ebbcdf79efa804f1c4266',1,'FIX8']]],
+  ['hypersleep_3c_20h_5fnanoseconds_20_3e',['hypersleep&lt; h_nanoseconds &gt;',['../namespaceFIX8.html#a66f071f031999bd15b1d02749eec1834',1,'FIX8']]],
+  ['hypersleep_3c_20h_5fseconds_20_3e',['hypersleep&lt; h_seconds &gt;',['../namespaceFIX8.html#a0262d06ebae9b3c0acbe90578aa6e6d6',1,'FIX8']]]
 ];

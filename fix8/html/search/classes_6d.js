@@ -10,7 +10,6 @@ var searchData=
   ['massquote',['MassQuote',['../classFIX8_1_1TEX_1_1MassQuote.html',1,'FIX8::TEX']]],
   ['massquoteacknowledgement',['MassQuoteAcknowledgement',['../classFIX8_1_1TEX_1_1MassQuoteAcknowledgement.html',1,'FIX8::TEX']]],
   ['memorypersister',['MemoryPersister',['../classFIX8_1_1MemoryPersister.html',1,'FIX8']]],
-  ['memorypool',['MemoryPool',['../classFIX8_1_1MemoryPool.html',1,'FIX8']]],
   ['menuitem',['MenuItem',['../structMyMenu_1_1MenuItem.html',1,'MyMenu']]],
   ['message',['Message',['../classFIX8_1_1Message.html',1,'FIX8']]],
   ['messagebase',['MessageBase',['../classFIX8_1_1MessageBase.html',1,'FIX8']]],

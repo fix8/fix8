@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -146,37 +146,38 @@ $(document).ready(function(){initNavTree('field_8cpp_source.html','');});
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;iterator&gt;</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;bitset&gt;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;strings.h&gt;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a4a9fef4e2b3b5da0e5169de5b8d29f00">   56</a></span>&#160;<a class="code" href="structFIX8_1_1BaseEntry.html" title="Field metadata structure.">BaseEntry</a> *<a class="code" href="namespaceFIX8.html#a3ce48db02bfd7dd03bf84b38cd528fe8">BaseEntry_ctor</a>(<a class="code" href="structFIX8_1_1BaseEntry.html" title="Field metadata structure.">BaseEntry</a> *be, <a class="code" href="classFIX8_1_1BaseField.html" title="The base field class (ABC) for all fields.">BaseField</a> *(*create)(<span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>&amp;, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1RealmBase.html" title="Domain range/set static metadata base class.">RealmBase</a>*, <span class="keywordtype">int</span> rv),</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1RealmBase.html" title="Domain range/set static metadata base class.">RealmBase</a> *rlm, <span class="keyword">const</span> <span class="keywordtype">char</span> *name, <span class="keyword">const</span> <span class="keywordtype">char</span> *comment)</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;   be-&gt;<a class="code" href="structFIX8_1_1BaseEntry.html#ab7598e0439702454468bd7371ee89b4d">_create</a> = create;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;   be-&gt;<a class="code" href="structFIX8_1_1BaseEntry.html#a07651b9d315d6e919f40602089253d11">_rlm</a> = rlm;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   be-&gt;<a class="code" href="structFIX8_1_1BaseEntry.html#a6174359916ee2ccc3712651591ed736c">_name</a> = name;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   be-&gt;<a class="code" href="structFIX8_1_1BaseEntry.html#ae80974a478ac310337aec16edebf6f5e">_comment</a> = comment;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   <span class="keywordflow">return</span> be;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;} <span class="comment">// namespace FIX8</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;iterator&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;bitset&gt;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;strings.h&gt;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a4a9fef4e2b3b5da0e5169de5b8d29f00">   57</a></span>&#160;<a class="code" href="structFIX8_1_1BaseEntry.html" title="Field metadata structure.">BaseEntry</a> *<a class="code" href="namespaceFIX8.html#a3ce48db02bfd7dd03bf84b38cd528fe8">BaseEntry_ctor</a>(<a class="code" href="structFIX8_1_1BaseEntry.html" title="Field metadata structure.">BaseEntry</a> *be, <a class="code" href="classFIX8_1_1BaseField.html" title="The base field class (ABC) for all fields.">BaseField</a> *(*create)(<span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>&amp;, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1RealmBase.html" title="Domain range/set static metadata base class.">RealmBase</a>*, <span class="keywordtype">int</span> rv),</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <span class="keyword">const</span> <a class="code" href="structFIX8_1_1RealmBase.html" title="Domain range/set static metadata base class.">RealmBase</a> *rlm, <span class="keyword">const</span> <span class="keywordtype">char</span> *name, <span class="keyword">const</span> <span class="keywordtype">char</span> *comment)</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;   be-&gt;<a class="code" href="structFIX8_1_1BaseEntry.html#ab7598e0439702454468bd7371ee89b4d">_create</a> = create;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   be-&gt;<a class="code" href="structFIX8_1_1BaseEntry.html#a07651b9d315d6e919f40602089253d11">_rlm</a> = rlm;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   be-&gt;<a class="code" href="structFIX8_1_1BaseEntry.html#a6174359916ee2ccc3712651591ed736c">_name</a> = name;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   be-&gt;<a class="code" href="structFIX8_1_1BaseEntry.html#ae80974a478ac310337aec16edebf6f5e">_comment</a> = comment;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   <span class="keywordflow">return</span> be;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;} <span class="comment">// namespace FIX8</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:03. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

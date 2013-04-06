@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.7.0</span>
+   &#160;<span id="projectnumber">version  0.7.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -371,7 +371,7 @@ Protected Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a6c55066400df118f0920bfa0ece337cf"><td class="memItemLeft" align="right" valign="top">tbb::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Message.html#a6c55066400df118f0920bfa0ece337cf">_in_use</a></td></tr>
+<tr class="memitem:af766ac609079c5cf36b0eafd18c1f7be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mpmc_8hpp.html#a09529314cda4fed23b266afef4c4355c">f8_atomic</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Message.html#af766ac609079c5cf36b0eafd18c1f7be">_in_use</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
@@ -386,7 +386,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>A complete Fix message with header, body and trailer. </p>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00700">700</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00707">707</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a11bdb11fb3eb8c88a183db9153d6a743"></a>
 <div class="memitem">
@@ -450,9 +450,9 @@ template&lt;typename InputIterator &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00719">719</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00730">730</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00703">_in_use</a>, <a class="el" href="message_8hpp_source.html#l00212">FIX8::F8MetaCntx::_ube</a>, and <a class="el" href="message_8hpp_source.html#l00193">FIX8::CustomFields::post_msg_ctor()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00710">_in_use</a>, <a class="el" href="message_8hpp_source.html#l00208">FIX8::F8MetaCntx::_ube</a>, and <a class="el" href="message_8hpp_source.html#l00189">FIX8::CustomFields::post_msg_ctor()</a>.</p>
 
 </div>
 </div>
@@ -479,9 +479,9 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00751">751</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00762">762</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00707">_header</a>, and <a class="el" href="message_8hpp_source.html#l00707">_trailer</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00718">_header</a>, and <a class="el" href="message_8hpp_source.html#l00718">_trailer</a>.</p>
 
 </div>
 </div>
@@ -534,7 +534,7 @@ template&lt;typename InputIterator &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>calculated checknum </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00801">801</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00812">812</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 </div>
 </div>
@@ -581,8 +581,19 @@ template&lt;typename InputIterator &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Generate a checksum from an encoded buffer. ULL version. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">from</td><td>char *buffer encoded Fix message </td></tr>
+    <tr><td class="paramname">sz</td><td>size of msg </td></tr>
+    <tr><td class="paramname">offset</td><td>starting offset </td></tr>
+    <tr><td class="paramname">len</td><td>maximum length </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>calculated checknum </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00809">809</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00826">826</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 </div>
 </div>
@@ -617,9 +628,9 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classFIX8_1_1MessageBase.html#a3451302a3803372f11f118078a54d789">FIX8::MessageBase</a>.</p>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00787">787</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00798">798</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00707">_header</a>, <a class="el" href="message_8hpp_source.html#l00707">_trailer</a>, and <a class="el" href="message_8hpp_source.html#l00295">FIX8::MessageBase::clear()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00718">_header</a>, <a class="el" href="message_8hpp_source.html#l00718">_trailer</a>, and <a class="el" href="message_8hpp_source.html#l00291">FIX8::MessageBase::clear()</a>.</p>
 
 </div>
 </div>
@@ -638,7 +649,7 @@ template&lt;typename InputIterator &gt; </div>
 <p>Clone this message. Performs a deep copy. </p>
 <dl class="section return"><dt>Returns</dt><dd>pointer to copy of this message </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8cpp_source.html#l00586">586</a> of file <a class="el" href="message_8cpp_source.html">message.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8cpp_source.html#l00588">588</a> of file <a class="el" href="message_8cpp_source.html">message.cpp</a>.</p>
 
 </div>
 </div>
@@ -672,11 +683,11 @@ template&lt;typename InputIterator &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of bytes consumed </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00764">764</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00775">775</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00707">_header</a>, <a class="el" href="message_8hpp_source.html#l00707">_trailer</a>, and <a class="el" href="message_8cpp_source.html#l00101">FIX8::MessageBase::decode()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00718">_header</a>, <a class="el" href="message_8hpp_source.html#l00718">_trailer</a>, and <a class="el" href="message_8cpp_source.html#l00107">FIX8::MessageBase::decode()</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8cpp_source.html#l00206">factory()</a>.</p>
+<p>Referenced by <a class="el" href="message_8cpp_source.html#l00212">factory()</a>.</p>
 
 </div>
 </div>
@@ -702,11 +713,11 @@ template&lt;typename InputIterator &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of bytes encoded </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8cpp_source.html#l00366">366</a> of file <a class="el" href="message_8cpp_source.html">message.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8cpp_source.html#l00370">370</a> of file <a class="el" href="message_8cpp_source.html">message.cpp</a>.</p>
 
-<p>References <a class="el" href="timer_8hpp_source.html#l00228">FIX8::IntervalTimer::Calculate()</a>, <a class="el" href="namespaceFIX8.html#a036113e0823a4e61c612a145bbff047a">FIX8::Common_BeginString()</a>, <a class="el" href="namespaceFIX8.html#a52ff589cac2bf2d52ba15622ccbfb754">FIX8::Common_BodyLength()</a>, <a class="el" href="namespaceFIX8.html#a0285d54102518664179caacd0c2cff13">FIX8::Common_CheckSum()</a>, <a class="el" href="namespaceFIX8.html#a1fbd339871f540994b17250b20251fd0">FIX8::Common_MsgType()</a>, <a class="el" href="field_8hpp_source.html#l00155">FIX8::BaseField::encode()</a>, <a class="el" href="classFIX8_1_1MessageBase.html#a35621eb0f38affb26760f8a42a18e375">FIX8::MessageBase::encode()</a>, <a class="el" href="logger_8hpp_source.html#l00347">FIX8::SingleLogger&lt; fn &gt;::log()</a>, <a class="el" href="f8config_8h_source.html#l00409">MAX_MSG_LENGTH</a>, and <a class="el" href="traits_8hpp_source.html#l00067">FIX8::FieldTrait::suppress</a>.</p>
+<p>References <a class="el" href="timer_8hpp_source.html#l00235">FIX8::IntervalTimer::AsDouble()</a>, <a class="el" href="timer_8hpp_source.html#l00226">FIX8::IntervalTimer::Calculate()</a>, <a class="el" href="namespaceFIX8.html#a036113e0823a4e61c612a145bbff047a">FIX8::Common_BeginString()</a>, <a class="el" href="namespaceFIX8.html#a52ff589cac2bf2d52ba15622ccbfb754">FIX8::Common_BodyLength()</a>, <a class="el" href="namespaceFIX8.html#a0285d54102518664179caacd0c2cff13">FIX8::Common_CheckSum()</a>, <a class="el" href="namespaceFIX8.html#a1fbd339871f540994b17250b20251fd0">FIX8::Common_MsgType()</a>, <a class="el" href="field_8hpp_source.html#l00155">FIX8::BaseField::encode()</a>, <a class="el" href="classFIX8_1_1MessageBase.html#a35621eb0f38affb26760f8a42a18e375">FIX8::MessageBase::encode()</a>, <a class="el" href="f8config_8h_source.html#l00406">MAX_MSG_LENGTH</a>, and <a class="el" href="traits_8hpp_source.html#l00067">FIX8::FieldTrait::suppress</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00737">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00752">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -751,9 +762,9 @@ template&lt;typename InputIterator &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to newly created <a class="el" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> (which will be a super class of the generated type) </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00831">831</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00848">848</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00247">FIX8::Session::process()</a>, and <a class="el" href="session_8cpp_source.html#l00520">FIX8::Session::retrans_callback()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>, and <a class="el" href="session_8cpp_source.html#l00515">FIX8::Session::retrans_callback()</a>.</p>
 
 </div>
 </div>
@@ -798,9 +809,9 @@ template&lt;typename InputIterator &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to newly created <a class="el" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> (which will be a super class of the generated type) </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8cpp_source.html#l00206">206</a> of file <a class="el" href="message_8cpp_source.html">message.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8cpp_source.html#l00212">212</a> of file <a class="el" href="message_8cpp_source.html">message.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00207">FIX8::F8MetaCntx::_bme</a>, <a class="el" href="message_8hpp_source.html#l00249">FIX8::MessageBase::_fields</a>, <a class="el" href="message_8hpp_source.html#l00707">_header</a>, <a class="el" href="message_8hpp_source.html#l00707">_trailer</a>, <a class="el" href="message_8hpp_source.html#l00212">FIX8::F8MetaCntx::_ube</a>, <a class="el" href="timer_8hpp_source.html#l00228">FIX8::IntervalTimer::Calculate()</a>, <a class="el" href="message_8hpp_source.html#l00359">FIX8::MessageBase::check_set_rlm()</a>, <a class="el" href="namespaceFIX8.html#a52ff589cac2bf2d52ba15622ccbfb754">FIX8::Common_BodyLength()</a>, <a class="el" href="namespaceFIX8.html#a0285d54102518664179caacd0c2cff13">FIX8::Common_CheckSum()</a>, <a class="el" href="namespaceFIX8.html#a1fbd339871f540994b17250b20251fd0">FIX8::Common_MsgType()</a>, <a class="el" href="message_8hpp_source.html#l00764">decode()</a>, <a class="el" href="f8types_8hpp_source.html#l00123">FIX8::GeneratedTable&lt; Key, Val &gt;::find_ptr()</a>, <a class="el" href="message_8hpp_source.html#l00221">FIX8::F8MetaCntx::has_flag()</a>, <a class="el" href="logger_8hpp_source.html#l00347">FIX8::SingleLogger&lt; fn &gt;::log()</a>, <a class="el" href="message_8hpp_source.html#l00219">FIX8::F8MetaCntx::noverifychksum</a>, and <a class="el" href="message_8hpp_source.html#l00193">FIX8::CustomFields::post_msg_ctor()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00203">FIX8::F8MetaCntx::_bme</a>, <a class="el" href="message_8hpp_source.html#l00245">FIX8::MessageBase::_fields</a>, <a class="el" href="message_8hpp_source.html#l00718">_header</a>, <a class="el" href="message_8hpp_source.html#l00718">_trailer</a>, <a class="el" href="message_8hpp_source.html#l00208">FIX8::F8MetaCntx::_ube</a>, <a class="el" href="timer_8hpp_source.html#l00235">FIX8::IntervalTimer::AsDouble()</a>, <a class="el" href="timer_8hpp_source.html#l00226">FIX8::IntervalTimer::Calculate()</a>, <a class="el" href="message_8hpp_source.html#l00355">FIX8::MessageBase::check_set_rlm()</a>, <a class="el" href="namespaceFIX8.html#a52ff589cac2bf2d52ba15622ccbfb754">FIX8::Common_BodyLength()</a>, <a class="el" href="namespaceFIX8.html#a0285d54102518664179caacd0c2cff13">FIX8::Common_CheckSum()</a>, <a class="el" href="namespaceFIX8.html#a1fbd339871f540994b17250b20251fd0">FIX8::Common_MsgType()</a>, <a class="el" href="message_8hpp_source.html#l00775">decode()</a>, <a class="el" href="f8types_8hpp_source.html#l00123">FIX8::GeneratedTable&lt; Key, Val &gt;::find_ptr()</a>, <a class="el" href="message_8hpp_source.html#l00217">FIX8::F8MetaCntx::has_flag()</a>, <a class="el" href="message_8hpp_source.html#l00215">FIX8::F8MetaCntx::noverifychksum</a>, and <a class="el" href="message_8hpp_source.html#l00189">FIX8::CustomFields::post_msg_ctor()</a>.</p>
 
 </div>
 </div>
@@ -834,7 +845,7 @@ template&lt;typename InputIterator &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>string containing formatted value </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00820">820</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00837">837</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 </div>
 </div>
@@ -861,11 +872,11 @@ template&lt;typename InputIterator &gt; </div>
 <p>Get the custom sequence number. </p>
 <dl class="section return"><dt>Returns</dt><dd>seqnum the outbound sequence number to use for this message. </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00849">849</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00866">866</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00708">_custom_seqnum</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00719">_custom_seqnum</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00737">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00752">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -892,11 +903,11 @@ template&lt;typename InputIterator &gt; </div>
 <p>Indicate that this message is currently unused. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if message is in use </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00741">741</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00752">752</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00703">_in_use</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00710">_in_use</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00723">FIX8::Session::send_wait()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00727">FIX8::Session::send_wait()</a>.</p>
 
 </div>
 </div>
@@ -923,11 +934,11 @@ template&lt;typename InputIterator &gt; </div>
 <p>Get the no increment flag. </p>
 <dl class="section return"><dt>Returns</dt><dd>value of _no_increment flag </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00857">857</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00874">874</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00709">_no_increment</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00720">_no_increment</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00737">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00752">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -954,11 +965,11 @@ template&lt;typename InputIterator &gt; </div>
 <p>Get a pointer to the message header. </p>
 <dl class="section return"><dt>Returns</dt><dd>pointer to header </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00755">755</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00766">766</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00707">_header</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00718">_header</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00330">FIX8::Session::compid_check()</a>, <a class="el" href="session_8cpp_source.html#l00384">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00737">FIX8::Session::send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00343">FIX8::Session::sequence_check()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00325">FIX8::Session::compid_check()</a>, <a class="el" href="session_8cpp_source.html#l00379">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00752">FIX8::Session::send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00338">FIX8::Session::sequence_check()</a>.</p>
 
 </div>
 </div>
@@ -987,9 +998,9 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classFIX8_1_1TEX_1_1Logon.html#a4c8c5caa689c294ad48d7f518af61d3a">FIX8::TEX::Logon</a>, <a class="el" href="classFIX8_1_1TEX_1_1Logon.html#a4c8c5caa689c294ad48d7f518af61d3a">FIX8::TEX::Logon</a>, <a class="el" href="classFIX8_1_1TEX_1_1Logout.html#aad088359e757c4c863b88db869094705">FIX8::TEX::Logout</a>, <a class="el" href="classFIX8_1_1TEX_1_1Logout.html#aad088359e757c4c863b88db869094705">FIX8::TEX::Logout</a>, <a class="el" href="classFIX8_1_1TEX_1_1SequenceReset.html#a714b9ff71b94b5cc9204facb6252f31a">FIX8::TEX::SequenceReset</a>, <a class="el" href="classFIX8_1_1TEX_1_1SequenceReset.html#a714b9ff71b94b5cc9204facb6252f31a">FIX8::TEX::SequenceReset</a>, <a class="el" href="classFIX8_1_1TEX_1_1Reject.html#a8e8ccd516cd1cfecaa75fb989afef797">FIX8::TEX::Reject</a>, <a class="el" href="classFIX8_1_1TEX_1_1Reject.html#a8e8ccd516cd1cfecaa75fb989afef797">FIX8::TEX::Reject</a>, <a class="el" href="classFIX8_1_1TEX_1_1ResendRequest.html#a0f5068bbb7d2480fc53c580b5c4ea196">FIX8::TEX::ResendRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1ResendRequest.html#a0f5068bbb7d2480fc53c580b5c4ea196">FIX8::TEX::ResendRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1TestRequest.html#adb9df65cf94c291d52ffba99532f03c1">FIX8::TEX::TestRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1TestRequest.html#adb9df65cf94c291d52ffba99532f03c1">FIX8::TEX::TestRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1Heartbeat.html#ac1e0b2d2083fe2c3867a84cb80942cd1">FIX8::TEX::Heartbeat</a>, and <a class="el" href="classFIX8_1_1TEX_1_1Heartbeat.html#ac1e0b2d2083fe2c3867a84cb80942cd1">FIX8::TEX::Heartbeat</a>.</p>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00783">783</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00794">794</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00247">FIX8::Session::process()</a>, and <a class="el" href="session_8cpp_source.html#l00737">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>, and <a class="el" href="session_8cpp_source.html#l00752">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -1035,9 +1046,9 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classFIX8_1_1MessageBase.html#a15cb2983a5279e25870ab7d1a846874f">FIX8::MessageBase</a>.</p>
 
-<p>Definition at line <a class="el" href="message_8cpp_source.html#l00597">597</a> of file <a class="el" href="message_8cpp_source.html">message.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8cpp_source.html#l00599">599</a> of file <a class="el" href="message_8cpp_source.html">message.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8cpp_source.html#l00427">FIX8::MessageBase::print()</a>.</p>
+<p>References <a class="el" href="message_8cpp_source.html#l00429">FIX8::MessageBase::print()</a>.</p>
 
 </div>
 </div>
@@ -1073,9 +1084,9 @@ template&lt;typename InputIterator &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classFIX8_1_1TEX_1_1DerivativeSecurityListRequest.html#a8690b882fd528d671a6ad52e823b8e95">FIX8::TEX::DerivativeSecurityListRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1SecurityList.html#a657003be2357ddc2a26e9544efa11eac">FIX8::TEX::SecurityList</a>, <a class="el" href="classFIX8_1_1TEX_1_1SecurityListRequest.html#a13b2fcbaafd2a816b25b7cf0dc518e4d">FIX8::TEX::SecurityListRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1SecurityTypes.html#ac9720d6768e8ffc3bae926ea6fd23495">FIX8::TEX::SecurityTypes</a>, <a class="el" href="classFIX8_1_1TEX_1_1SecurityTypeRequest.html#af26120de7f229bdc8b63a238b6186954">FIX8::TEX::SecurityTypeRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html#aac60e47397d7c5e97c6778e565614af3">FIX8::TEX::CrossOrderCancelRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest.html#a850c487f82e516dff60fe7a0bb5c3183">FIX8::TEX::CrossOrderCancelReplaceRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1NewOrderCross.html#af59ad07191513138319d6a8e75b776cb">FIX8::TEX::NewOrderCross</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderMassCancelReport.html#afa864faf005561d6346826797c00b843">FIX8::TEX::OrderMassCancelReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderMassCancelRequest.html#acf2d2f010157b0ed745bb7e1df2bc0db">FIX8::TEX::OrderMassCancelRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1RegistrationInstructionsResponse.html#a5f165813bf754bc3181063f0807c25bc">FIX8::TEX::RegistrationInstructionsResponse</a>, <a class="el" href="classFIX8_1_1TEX_1_1RegistrationInstructions.html#a5be16d7385a96dddb4a8db591cb9bbe1">FIX8::TEX::RegistrationInstructions</a>, <a class="el" href="classFIX8_1_1TEX_1_1ListStrikePrice.html#a72821f479be8f70d283fe1ea370117da">FIX8::TEX::ListStrikePrice</a>, <a class="el" href="classFIX8_1_1TEX_1_1BidResponse.html#a045bff7fd9989f604be7bc59ac550bd2">FIX8::TEX::BidResponse</a>, <a class="el" href="classFIX8_1_1TEX_1_1BidRequest.html#ab60a23956d046dec310d624fc46a0752">FIX8::TEX::BidRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1BusinessMessageReject.html#a915e3aa0f2447f659a7dfec5adb3ba74">FIX8::TEX::BusinessMessageReject</a>, <a class="el" href="classFIX8_1_1TEX_1_1MassQuote.html#a427f6ce447a3742e44d01a80e4fd042c">FIX8::TEX::MassQuote</a>, <a class="el" href="classFIX8_1_1TEX_1_1TradingSessionStatus.html#a7b4f5fe95d062e17c3de467bee6895ea">FIX8::TEX::TradingSessionStatus</a>, <a class="el" href="classFIX8_1_1TEX_1_1TradingSessionStatusRequest.html#a025493bde6d25fee7c125250dc6ba1ce">FIX8::TEX::TradingSessionStatusRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1SecurityStatus.html#ae837db971482bc6d8c26d7f2cfa17e7c">FIX8::TEX::SecurityStatus</a>, <a class="el" href="classFIX8_1_1TEX_1_1SecurityStatusRequest.html#aa6129a9497f9cbbc07c05b153f7e4712">FIX8::TEX::SecurityStatusRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1SecurityDefinition.html#a9afb176b6c761d7464ea829b85ce5f7d">FIX8::TEX::SecurityDefinition</a>, <a class="el" href="classFIX8_1_1TEX_1_1SecurityDefinitionRequest.html#abf931052e9e0d0d2da9fb1b63d3ca4b8">FIX8::TEX::SecurityDefinitionRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1MassQuoteAcknowledgement.html#a1c16cb662ca05b3a17a6c7b23f8b3d52">FIX8::TEX::MassQuoteAcknowledgement</a>, <a class="el" href="classFIX8_1_1TEX_1_1QuoteStatusRequest.html#a7a580de01bbf33881e9ff1bb20eec9d9">FIX8::TEX::QuoteStatusRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1QuoteCancel.html#adec59120a1fc96ad053cd7db04528c9c">FIX8::TEX::QuoteCancel</a>, <a class="el" href="classFIX8_1_1TEX_1_1MarketDataRequestReject.html#a084207428155fcd541afd9d397b4b37c">FIX8::TEX::MarketDataRequestReject</a>, <a class="el" href="classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh.html#affcee51633da5d43ce2b2259aa81dcaa">FIX8::TEX::MarketDataIncrementalRefresh</a>, <a class="el" href="classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh.html#ac7a69387bc8c2232a9f90a9ed04346f3">FIX8::TEX::MarketDataSnapshotFullRefresh</a>, <a class="el" href="classFIX8_1_1TEX_1_1MarketDataRequest.html#ae3ea89fc387c6e90b12b148d73d3b01c">FIX8::TEX::MarketDataRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1SettlementInstructions.html#ae0d8ef3cc84e9628adf0c8112118ab43">FIX8::TEX::SettlementInstructions</a>, <a class="el" href="classFIX8_1_1TEX_1_1Quote.html#ad124da66be7381efa390ad8ef9657816">FIX8::TEX::Quote</a>, <a class="el" href="classFIX8_1_1TEX_1_1QuoteRequest.html#a172853cce34822ba509bd1f1b3a4c835">FIX8::TEX::QuoteRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1DontKnowTrade.html#ab0136d0eccaafc6527ee993dacc21c3c">FIX8::TEX::DontKnowTrade</a>, <a class="el" href="classFIX8_1_1TEX_1_1AllocationInstructionAck.html#ab7cbc6e212280c180ba776e8bd840cdf">FIX8::TEX::AllocationInstructionAck</a>, <a class="el" href="classFIX8_1_1TEX_1_1ListStatus.html#abdb26fe0b16af275e110f87145dc0819">FIX8::TEX::ListStatus</a>, <a class="el" href="classFIX8_1_1TEX_1_1ListStatusRequest.html#af59ad2f3aa86afde9e7b3cbfd9c46f7b">FIX8::TEX::ListStatusRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1ListExecute.html#a3cd7f08b48636b414df9faef57c24b78">FIX8::TEX::ListExecute</a>, <a class="el" href="classFIX8_1_1TEX_1_1ListCancelRequest.html#a115f3f82abbba67a53b7dbf399f0b083">FIX8::TEX::ListCancelRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1AllocationInstruction.html#aae51e92cad2ae76cd9b0ef46804dce2a">FIX8::TEX::AllocationInstruction</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderStatusRequest.html#aaa58782f4a49217bd942b0cfb6f348f8">FIX8::TEX::OrderStatusRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderCancelReplaceRequest.html#a729cb3d54930d226b19facfa1b4a74d4">FIX8::TEX::OrderCancelReplaceRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderCancelRequest.html#a66d08b37b83b9abc6979d27565d2873b">FIX8::TEX::OrderCancelRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1NewOrderList.html#adfec7642981cbd464a5f97885276a19e">FIX8::TEX::NewOrderList</a>, <a class="el" href="classFIX8_1_1TEX_1_1NewOrderSingle.html#ae2662c7ae4c7d82316f93cc94641d735">FIX8::TEX::NewOrderSingle</a>, <a class="el" href="classFIX8_1_1TEX_1_1PartyDetailsListReport.html#acdbe829d3eef18e169aa93cd8c92a722">FIX8::TEX::PartyDetailsListReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1PartyDetailsListRequest.html#abb7f3d152db9a1d32be3c78a0f6d97d2">FIX8::TEX::PartyDetailsListRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1StreamAssignmentReportACK.html#a4aefabdd8b6f88aa311cfe4b5e3d94c6">FIX8::TEX::StreamAssignmentReportACK</a>, <a class="el" href="classFIX8_1_1TEX_1_1StreamAssignmentReport.html#a274c53930c5a50d17eed1227ab57dc94">FIX8::TEX::StreamAssignmentReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1StreamAssignmentRequest.html#a738ba99af18eefa66fc3419020fc612e">FIX8::TEX::StreamAssignmentRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1UserNotification.html#af8777c2ed526fb388726ff050b83159e">FIX8::TEX::UserNotification</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderMassActionRequest.html#afd75ca1813f6da52b63ae45914a594ec">FIX8::TEX::OrderMassActionRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1Email.html#a2a5c87e8d16b8731517f62d88488ae34">FIX8::TEX::Email</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderMassActionReport.html#a48ea8a745da432e549c55274b3ad1079">FIX8::TEX::OrderMassActionReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1ApplicationMessageReport.html#a82ea6da8430d0198f96adc874ccda042">FIX8::TEX::ApplicationMessageReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1ApplicationMessageRequestAck.html#a50c9b3e0ff9340bbe0407d8ccfd82a95">FIX8::TEX::ApplicationMessageRequestAck</a>, <a class="el" href="classFIX8_1_1TEX_1_1ApplicationMessageRequest.html#a52e5cef6ad0d72e570b888268d7db48d">FIX8::TEX::ApplicationMessageRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport.html#afb27053f57419cab9acf75cb8a398f8a">FIX8::TEX::MarketDefinitionUpdateReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1MarketDefinition.html#af2f47c71ac70150393c68ef82613e8ec">FIX8::TEX::MarketDefinition</a>, <a class="el" href="classFIX8_1_1TEX_1_1MarketDefinitionRequest.html#a8305f58bc3ab5452e4a8c8070a590c46">FIX8::TEX::MarketDefinitionRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1TradingSessionListUpdateReport.html#a1adba73f76e3328c0b3858713542fede">FIX8::TEX::TradingSessionListUpdateReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport.html#a27a5fcc16f34f9b5af17c5fc17e9bcf7">FIX8::TEX::DerivativeSecurityListUpdateReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1SettlementObligationReport.html#ae2cbc09505c8aae41b1dcb246d0a2e05">FIX8::TEX::SettlementObligationReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport.html#a26436cc1441b42394d0554440b584932">FIX8::TEX::SecurityDefinitionUpdateReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1ContraryIntentionReport.html#aeafb67635db28d6abf9c3878c9578615">FIX8::TEX::ContraryIntentionReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1ExecutionAcknowledgement.html#a2aaf86d61625d336a0ce4acbabd4c67f">FIX8::TEX::ExecutionAcknowledgement</a>, <a class="el" href="classFIX8_1_1TEX_1_1AllocationInstructionAlert.html#a3e9e09e29b447ee00e92d136fdf3e717">FIX8::TEX::AllocationInstructionAlert</a>, <a class="el" href="classFIX8_1_1TEX_1_1AdjustedPositionReport.html#ae65125daea70e9d97c64ab46151e2122">FIX8::TEX::AdjustedPositionReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1SecurityListUpdateReport.html#adb74a3eb228e68c8aeaf600dc736df9d">FIX8::TEX::SecurityListUpdateReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1TradingSessionList.html#aa9b4c5ac486252ba250efe9f1e1f8a5a">FIX8::TEX::TradingSessionList</a>, <a class="el" href="classFIX8_1_1TEX_1_1TradingSessionListRequest.html#ad3a905a9838e32460a112b94e4b5877c">FIX8::TEX::TradingSessionListRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1ConfirmationRequest.html#a656d29d6ddccaf9ab53af74ff96297b4">FIX8::TEX::ConfirmationRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1CollateralInquiryAck.html#a27c12619b0ce4afda82ab956d62183e3">FIX8::TEX::CollateralInquiryAck</a>, <a class="el" href="classFIX8_1_1TEX_1_1UserResponse.html#af7896d6ace4b4bd330bc6fb88d4312af">FIX8::TEX::UserResponse</a>, <a class="el" href="classFIX8_1_1TEX_1_1UserRequest.html#a63d1467016d3cb4a5ece993e041664d8">FIX8::TEX::UserRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusResponse.html#afa6449c65e2c00aa63796d7e1f6866bd">FIX8::TEX::NetworkCounterpartySystemStatusResponse</a>, <a class="el" href="classFIX8_1_1TEX_1_1NetworkCounterpartySystemStatusRequest.html#a27e695ce6dc14c659b35d04629ac9608">FIX8::TEX::NetworkCounterpartySystemStatusRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1CollateralInquiry.html#a76001974e6102e237676c3a1cb903239">FIX8::TEX::CollateralInquiry</a>, <a class="el" href="classFIX8_1_1TEX_1_1CollateralReport.html#a309afe355b6d8ecaabd153680f126435">FIX8::TEX::CollateralReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1News.html#a26877bc51de451f09dc84ef76d1c83e7">FIX8::TEX::News</a>, <a class="el" href="classFIX8_1_1TEX_1_1CollateralResponse.html#a1c5ec3a30a76b94bcb8d491b139a5207">FIX8::TEX::CollateralResponse</a>, <a class="el" href="classFIX8_1_1TEX_1_1CollateralAssignment.html#abfdbf831592b3adb19b4b46a60b78bee">FIX8::TEX::CollateralAssignment</a>, <a class="el" href="classFIX8_1_1TEX_1_1CollateralRequest.html#adcddd25a62958aec41ee41600a8681c5">FIX8::TEX::CollateralRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1AssignmentReport.html#af7be56f03303b67cd006bd5b488f3621">FIX8::TEX::AssignmentReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1SettlementInstructionRequest.html#af1a312ea32d8dfc9588e1e68196dad54">FIX8::TEX::SettlementInstructionRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1ConfirmationAck.html#a9e4df097967d2ea438d47118feb3546f">FIX8::TEX::ConfirmationAck</a>, <a class="el" href="classFIX8_1_1TEX_1_1AllocationReportAck.html#ac56df0751613e17dbad0a9cc4b0b73b2">FIX8::TEX::AllocationReportAck</a>, <a class="el" href="classFIX8_1_1TEX_1_1AllocationReport.html#a057e94fb616bfe05fc4dcd99a8315c3a">FIX8::TEX::AllocationReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1TradeCaptureReportAck.html#a0bd3c837648d7d08cb95c23be8334033">FIX8::TEX::TradeCaptureReportAck</a>, <a class="el" href="classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck.html#ac9bbafd6a9658901db7311ca9ad82c85">FIX8::TEX::TradeCaptureReportRequestAck</a>, <a class="el" href="classFIX8_1_1TEX_1_1PositionReport.html#a69159272fc7be69a6e69c8553e5cf4d2">FIX8::TEX::PositionReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1RequestForPositionsAck.html#a5196390e91722bb35627bc1e3079b538">FIX8::TEX::RequestForPositionsAck</a>, <a class="el" href="classFIX8_1_1TEX_1_1RequestForPositions.html#a1f8aacc39af6a9af5a194086483a6604">FIX8::TEX::RequestForPositions</a>, <a class="el" href="classFIX8_1_1TEX_1_1PositionMaintenanceReport.html#ab134d5f77a4a38f5042874db2f8571a5">FIX8::TEX::PositionMaintenanceReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1PositionMaintenanceRequest.html#a0500229c178818aed3ff95493484248e">FIX8::TEX::PositionMaintenanceRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1Confirmation.html#a39c6fbfcbcdfe0ac38631da36a80ebf5">FIX8::TEX::Confirmation</a>, <a class="el" href="classFIX8_1_1TEX_1_1QuoteResponse.html#a65876ae2fe274d2a13b5a9a2927d2d7a">FIX8::TEX::QuoteResponse</a>, <a class="el" href="classFIX8_1_1TEX_1_1QuoteStatusReport.html#acde0a9942089f9300a70d87570a23edf">FIX8::TEX::QuoteStatusReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1RFQRequest.html#a38fe284151250a334cc4178a05aa4317">FIX8::TEX::RFQRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1QuoteRequestReject.html#ac6dcbc40992ede739497a6a5c7a95414">FIX8::TEX::QuoteRequestReject</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderMassStatusRequest.html#ade9402f0bfeb680d08bdae9bd83ae5d9">FIX8::TEX::OrderMassStatusRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1TradeCaptureReport.html#a92302c5f930b01d62dec3bc67aa6e502">FIX8::TEX::TradeCaptureReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1TradeCaptureReportRequest.html#a081bbdd49003037f9116204197d10377">FIX8::TEX::TradeCaptureReportRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1MultilegOrderCancelReplace.html#aed7fb01c40d7573eb722926a31b6654f">FIX8::TEX::MultilegOrderCancelReplace</a>, <a class="el" href="classFIX8_1_1TEX_1_1NewOrderMultileg.html#a1afe34e19905dd14e486920f4794cdb4">FIX8::TEX::NewOrderMultileg</a>, <a class="el" href="classFIX8_1_1TEX_1_1DerivativeSecurityList.html#af1ff33c9c5cd8072e0d3df0997a127e6">FIX8::TEX::DerivativeSecurityList</a>, <a class="el" href="classFIX8_1_1TEX_1_1Logon.html#ad6095468770b6777b090890047d8af3f">FIX8::TEX::Logon</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderCancelReject.html#ab1af5a8e7bb373dacd7d5fa50c2b5a77">FIX8::TEX::OrderCancelReject</a>, <a class="el" href="classFIX8_1_1TEX_1_1ExecutionReport.html#a0015f63980225375b8f97ccc5ce0c918">FIX8::TEX::ExecutionReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1Advertisement.html#a3f9ee85b4e0383a982f834c66cd76a38">FIX8::TEX::Advertisement</a>, <a class="el" href="classFIX8_1_1TEX_1_1BusinessMessageReject.html#a915e3aa0f2447f659a7dfec5adb3ba74">FIX8::TEX::BusinessMessageReject</a>, <a class="el" href="classFIX8_1_1TEX_1_1DontKnowTrade.html#ab0136d0eccaafc6527ee993dacc21c3c">FIX8::TEX::DontKnowTrade</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderStatusRequest.html#aaa58782f4a49217bd942b0cfb6f348f8">FIX8::TEX::OrderStatusRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderCancelReplaceRequest.html#a729cb3d54930d226b19facfa1b4a74d4">FIX8::TEX::OrderCancelReplaceRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderCancelRequest.html#a66d08b37b83b9abc6979d27565d2873b">FIX8::TEX::OrderCancelRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1NewOrderSingle.html#ae2662c7ae4c7d82316f93cc94641d735">FIX8::TEX::NewOrderSingle</a>, <a class="el" href="classFIX8_1_1TEX_1_1Logon.html#ad6095468770b6777b090890047d8af3f">FIX8::TEX::Logon</a>, <a class="el" href="classFIX8_1_1TEX_1_1OrderCancelReject.html#ab1af5a8e7bb373dacd7d5fa50c2b5a77">FIX8::TEX::OrderCancelReject</a>, <a class="el" href="classFIX8_1_1TEX_1_1IOI.html#afe8214e1a74cdd3d06e60b58853fff2f">FIX8::TEX::IOI</a>, <a class="el" href="classFIX8_1_1TEX_1_1ExecutionReport.html#a0015f63980225375b8f97ccc5ce0c918">FIX8::TEX::ExecutionReport</a>, <a class="el" href="classFIX8_1_1TEX_1_1Logout.html#aed4c6cd34f2ae37a63a706f8e5bbbbd3">FIX8::TEX::Logout</a>, <a class="el" href="classFIX8_1_1TEX_1_1Logout.html#aed4c6cd34f2ae37a63a706f8e5bbbbd3">FIX8::TEX::Logout</a>, <a class="el" href="classFIX8_1_1TEX_1_1SequenceReset.html#a30b58ea4fb9a877f158adfba5f57e5bb">FIX8::TEX::SequenceReset</a>, <a class="el" href="classFIX8_1_1TEX_1_1SequenceReset.html#a30b58ea4fb9a877f158adfba5f57e5bb">FIX8::TEX::SequenceReset</a>, <a class="el" href="classFIX8_1_1TEX_1_1Reject.html#aa3403df6230c51d5408ac6ddd0b80e68">FIX8::TEX::Reject</a>, <a class="el" href="classFIX8_1_1TEX_1_1Reject.html#aa3403df6230c51d5408ac6ddd0b80e68">FIX8::TEX::Reject</a>, <a class="el" href="classFIX8_1_1TEX_1_1ResendRequest.html#a165cfa6761cb62c89d41ef2ddef06677">FIX8::TEX::ResendRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1ResendRequest.html#a165cfa6761cb62c89d41ef2ddef06677">FIX8::TEX::ResendRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1TestRequest.html#a6db17ed86d865296c55312234df40b12">FIX8::TEX::TestRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1TestRequest.html#a6db17ed86d865296c55312234df40b12">FIX8::TEX::TestRequest</a>, <a class="el" href="classFIX8_1_1TEX_1_1Heartbeat.html#a9b36569203b8b7d57a7c6708bbd5c994">FIX8::TEX::Heartbeat</a>, and <a class="el" href="classFIX8_1_1TEX_1_1Heartbeat.html#a9b36569203b8b7d57a7c6708bbd5c994">FIX8::TEX::Heartbeat</a>.</p>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00779">779</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00790">790</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="harness_8cpp_source.html#l00307">myfix_session_client::handle_application()</a>, <a class="el" href="hftest_8cpp_source.html#l00500">hf_session_client::handle_application()</a>, <a class="el" href="harness_8cpp_source.html#l00313">myfix_session_server::handle_application()</a>, and <a class="el" href="hftest_8cpp_source.html#l00588">hf_session_server::handle_application()</a>.</p>
+<p>Referenced by <a class="el" href="harness_8cpp_source.html#l00307">myfix_session_client::handle_application()</a>, <a class="el" href="hftest_8cpp_source.html#l00527">hf_session_client::handle_application()</a>, <a class="el" href="harness_8cpp_source.html#l00313">myfix_session_server::handle_application()</a>, and <a class="el" href="hftest_8cpp_source.html#l00615">hf_session_server::handle_application()</a>.</p>
 
 </div>
 </div>
@@ -1108,11 +1119,11 @@ template&lt;typename InputIterator &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00845">845</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00862">862</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00708">_custom_seqnum</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00719">_custom_seqnum</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00713">FIX8::Session::send()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00708">FIX8::Session::send()</a>.</p>
 
 </div>
 </div>
@@ -1145,11 +1156,11 @@ template&lt;typename InputIterator &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00737">737</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00748">748</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00703">_in_use</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00710">_in_use</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8cpp_source.html#l00213">FIX8::FIXWriter::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8cpp_source.html#l00238">FIX8::FIXWriter::operator()()</a>, and <a class="el" href="connection_8hpp_source.html#l00229">FIX8::FIXWriter::write()</a>.</p>
 
 </div>
 </div>
@@ -1182,11 +1193,11 @@ template&lt;typename InputIterator &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00853">853</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00870">870</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00709">_no_increment</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00720">_no_increment</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00713">FIX8::Session::send()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00708">FIX8::Session::send()</a>.</p>
 
 </div>
 </div>
@@ -1213,9 +1224,9 @@ template&lt;typename InputIterator &gt; </div>
 <p>Get a pointer to the message trailer. </p>
 <dl class="section return"><dt>Returns</dt><dd>pointer to trailer </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00759">759</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00770">770</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00707">_trailer</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00718">_trailer</a>.</p>
 
 </div>
 </div>
@@ -1261,7 +1272,7 @@ template&lt;typename InputIterator &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>stream </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00868">868</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00885">885</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 </div>
 </div>
@@ -1284,9 +1295,9 @@ template&lt;typename InputIterator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00708">708</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00719">719</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00849">get_custom_seqnum()</a>, and <a class="el" href="message_8hpp_source.html#l00845">set_custom_seqnum()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00866">get_custom_seqnum()</a>, and <a class="el" href="message_8hpp_source.html#l00862">set_custom_seqnum()</a>.</p>
 
 </div>
 </div>
@@ -1308,13 +1319,13 @@ template&lt;typename InputIterator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00707">707</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00718">718</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00787">clear()</a>, <a class="el" href="message_8hpp_source.html#l00764">decode()</a>, <a class="el" href="message_8cpp_source.html#l00206">factory()</a>, <a class="el" href="message_8hpp_source.html#l00755">Header()</a>, and <a class="el" href="message_8hpp_source.html#l00751">~Message()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00798">clear()</a>, <a class="el" href="message_8hpp_source.html#l00775">decode()</a>, <a class="el" href="message_8cpp_source.html#l00212">factory()</a>, <a class="el" href="message_8hpp_source.html#l00766">Header()</a>, and <a class="el" href="message_8hpp_source.html#l00762">~Message()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6c55066400df118f0920bfa0ece337cf"></a>
+<a class="anchor" id="af766ac609079c5cf36b0eafd18c1f7be"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1322,7 +1333,7 @@ template&lt;typename InputIterator &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tbb::atomic&lt;bool&gt; FIX8::Message::_in_use</td>
+          <td class="memname"><a class="el" href="mpmc_8hpp.html#a09529314cda4fed23b266afef4c4355c">f8_atomic</a>&lt;bool&gt; FIX8::Message::_in_use</td>
         </tr>
       </table>
   </td>
@@ -1332,9 +1343,9 @@ template&lt;typename InputIterator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00703">703</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00710">710</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00741">get_in_use()</a>, <a class="el" href="message_8hpp_source.html#l00719">Message()</a>, and <a class="el" href="message_8hpp_source.html#l00737">set_in_use()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00752">get_in_use()</a>, <a class="el" href="message_8hpp_source.html#l00730">Message()</a>, and <a class="el" href="message_8hpp_source.html#l00748">set_in_use()</a>.</p>
 
 </div>
 </div>
@@ -1356,9 +1367,9 @@ template&lt;typename InputIterator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00709">709</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00720">720</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00857">get_no_increment()</a>, and <a class="el" href="message_8hpp_source.html#l00853">set_no_increment()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00874">get_no_increment()</a>, and <a class="el" href="message_8hpp_source.html#l00870">set_no_increment()</a>.</p>
 
 </div>
 </div>
@@ -1380,9 +1391,9 @@ template&lt;typename InputIterator &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00707">707</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00718">718</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00787">clear()</a>, <a class="el" href="message_8hpp_source.html#l00764">decode()</a>, <a class="el" href="message_8cpp_source.html#l00206">factory()</a>, <a class="el" href="message_8hpp_source.html#l00759">Trailer()</a>, and <a class="el" href="message_8hpp_source.html#l00751">~Message()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00798">clear()</a>, <a class="el" href="message_8hpp_source.html#l00775">decode()</a>, <a class="el" href="message_8cpp_source.html#l00212">factory()</a>, <a class="el" href="message_8hpp_source.html#l00770">Trailer()</a>, and <a class="el" href="message_8hpp_source.html#l00762">~Message()</a>.</p>
 
 </div>
 </div>
@@ -1393,7 +1404,7 @@ template&lt;typename InputIterator &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Feb 23 2013 15:54:19. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Apr 7 2013 07:31:33. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

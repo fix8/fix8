@@ -99,7 +99,6 @@ var searchData=
   ['desktype',['DeskType',['../namespaceFIX8_1_1TEX.html#acd3b2747f986ae15f9cdd5ddb72cca12',1,'FIX8::TEX']]],
   ['desktypesource',['DeskTypeSource',['../namespaceFIX8_1_1TEX.html#ac1ff848b1597c9f8b1d272dda51684d4',1,'FIX8::TEX']]],
   ['detachmentpoint',['DetachmentPoint',['../namespaceFIX8_1_1TEX.html#a0c590f4e5705023df663534b7cac4711',1,'FIX8::TEX']]],
-  ['difference_5ftype',['difference_type',['../classFIX8_1_1f8Allocator.html#ab1b93cd3804ddd85e8a10c527ac2a21a',1,'FIX8::f8Allocator']]],
   ['discretioninst',['DiscretionInst',['../namespaceFIX8_1_1TEX.html#af2e822d52d3aea5b42954dd81e09636f',1,'FIX8::TEX']]],
   ['discretionlimittype',['DiscretionLimitType',['../namespaceFIX8_1_1TEX.html#a4c75a5343acb951f92f86f4d3d0032f1',1,'FIX8::TEX']]],
   ['discretionmovetype',['DiscretionMoveType',['../namespaceFIX8_1_1TEX.html#a27732972b40a13799f075177233798d8',1,'FIX8::TEX']]],

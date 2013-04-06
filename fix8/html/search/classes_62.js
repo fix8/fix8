@@ -3,7 +3,6 @@ var searchData=
   ['badchecksum',['BadCheckSum',['../structFIX8_1_1BadCheckSum.html',1,'FIX8']]],
   ['badcompidid',['BadCompidId',['../structFIX8_1_1BadCompidId.html',1,'FIX8']]],
   ['badsendingtime',['BadSendingTime',['../structFIX8_1_1BadSendingTime.html',1,'FIX8']]],
-  ['baseallocator',['BaseAllocator',['../structFIX8_1_1BaseAllocator.html',1,'FIX8']]],
   ['baseentry',['BaseEntry',['../structFIX8_1_1BaseEntry.html',1,'FIX8']]],
   ['basefield',['BaseField',['../classFIX8_1_1BaseField.html',1,'FIX8']]],
   ['basemsgentry',['BaseMsgEntry',['../structFIX8_1_1BaseMsgEntry.html',1,'FIX8']]],
