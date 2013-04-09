@@ -371,6 +371,13 @@ public:
 	    \param no_increment if true, don't increment the seqnum after sending
 	    \return true on success */
 	virtual bool send(Message *msg, const unsigned custom_seqnum=0, const bool no_increment=false);
+
+	/*! Send message - non-pipelined version.
+	    \param msg Message
+	    \param custom_seqnum override sequence number with this value
+	    \param no_increment if true, don't increment the seqnum after sending
+	    \return true on success */
+	virtual bool send(Message& msg, const unsigned custom_seqnum=0, const bool no_increment=false);
 #if defined MSGRECYCLING
 
 	/*! Send message and wait till no longer in use.
@@ -379,6 +386,13 @@ public:
 	    \param waitval time to sleep(ms) before rechecking inuse
 	    \return true on success */
 	virtual bool send_wait(Message *msg, const unsigned custom_seqnum=0, const int waitval=10);
+
+	/*! Send message and wait till no longer in use - non-pipelined version
+	    \param msg Message
+	    \param custom_seqnum override sequence number with this value
+	    \param waitval time to sleep(ms) before rechecking inuse
+	    \return true on success */
+	virtual bool send_wait(Message& msg, const unsigned custom_seqnum=0, const int waitval=10);
 #endif
 
 	/*! Process message (encode) and send.

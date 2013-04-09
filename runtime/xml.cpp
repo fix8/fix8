@@ -69,8 +69,8 @@ using namespace std;
 int XmlElement::errors_(0), XmlElement::line_(1), XmlElement::incline_(1),
 	 XmlElement::maxdepth_(0), XmlElement::seq_(0);
 string XmlElement::inclusion_;
-XmlElement::XmlSet XmlElement::emptyset_;
-XmlElement::XmlAttrs XmlElement::emptyattrs_;
+const XmlElement::XmlSet XmlElement::emptyset_;
+const XmlElement::XmlAttrs XmlElement::emptyattrs_;
 RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&(amp|lt|gt|apos|quot);"),
 	XmlElement::rIn_("href=\"([^\"]+)\""),
    XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
@@ -174,9 +174,9 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 		{
 		case '\n':
 			if (!inclusion_.empty())
-				incline_++;
+				++incline_;
 			else
-				line_++; // drop through
+				++line_; // drop through
 		case '\r':
 			continue;
 		default:
@@ -487,10 +487,7 @@ const XmlElement *XmlElement::find(const string& what, bool ignorecase, const st
 	const string *aval, const char delim)	const// find 1st matching entity
 {
 	if (what.compare(0, 2, "//") == 0) 	// root based
-	{
-		const string rmsl(what, 2);
-		return GetRoot()->find(rmsl, ignorecase, atag, aval, delim);
-	}
+		return GetRoot()->find(what.substr(2), ignorecase, atag, aval, delim);
 
 	if (ignorecase ? what % tag_ : what == tag_)
 		return atag && aval && !findAttrByValue(*atag, *aval) ? 0 : this;
@@ -519,10 +516,7 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 	const string *atag, const string *aval, const char delim) const	// find all matching entities
 {
 	if (what.compare(0, 2, "//") == 0) 	// root based
-	{
-		const string rmsl(what, 2);
-		return GetRoot()->find(rmsl, eset, ignorecase, atag, aval, delim);
-	}
+		return GetRoot()->find(what.substr(2), eset, ignorecase, atag, aval, delim);
 
 	if (ignorecase ? what % tag_ : what == tag_)
 	{

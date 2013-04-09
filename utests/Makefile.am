@@ -67,7 +67,8 @@ endif
 GEN_FLAGS = $(GEN_LIBS) $(POCO_LIBS) -ltbb -lgtest -lgtest_main
 RUNTIME_FOLDER = $(top_srcdir)/runtime/.libs
 
-message_test_LDADD = $(RUNTIME_FOLDER)/message.o 
+message_test_LDADD = $(RUNTIME_FOLDER)/message.o $(RUNTIME_FOLDER)/logger.o $(RUNTIME_FOLDER)/f8utils.o \
+                        $(RUNTIME_FOLDER)/gzstream.o $(RUNTIME_FOLDER)/popen.o
 message_test_LDFLAGS = $(GEN_FLAGS) -lutest
 
 fileLogger_test_LDADD = $(RUNTIME_FOLDER)/logger.o $(RUNTIME_FOLDER)/f8utils.o \

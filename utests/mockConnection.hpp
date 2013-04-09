@@ -149,6 +149,15 @@ public:
         return true;
     }
 
+    virtual bool write(Message& from)
+    {
+        f8String output;
+        from.encode(output);
+        _output.push_back(output);
+        return true;
+    }
+
+
     int send(const f8String& from)
     {
         _output.push_back(from);

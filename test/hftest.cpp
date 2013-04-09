@@ -263,7 +263,9 @@ int main(int argc, char **argv)
 #if defined BUFFERED_GLOBAL_LOGGING
 				GlobalLogger::flush_log();
 #endif
+#if defined CODECTIMING
 				Message::report_codec_timings();
+#endif
 			}
 		}
 		else if (reliable)
@@ -283,7 +285,9 @@ int main(int argc, char **argv)
 #if defined BUFFERED_GLOBAL_LOGGING
 			GlobalLogger::flush_log();
 #endif
+#if defined CODECTIMING
 			Message::report_codec_timings();
+#endif
 
 			if (!mc->session_ptr()->is_shutdown())
 				mc->session_ptr()->stop();
@@ -305,7 +309,9 @@ int main(int argc, char **argv)
 #if defined BUFFERED_GLOBAL_LOGGING
 			GlobalLogger::flush_log();
 #endif
+#if defined CODECTIMING
 			Message::report_codec_timings();
+#endif
 
 			if (!mc->session_ptr()->is_shutdown())
 				mc->session_ptr()->stop();

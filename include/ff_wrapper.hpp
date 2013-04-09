@@ -60,19 +60,24 @@ public:
 
 	bool try_push(const T& source)
 		{ return _queue.push(new (::ff::ff_malloc(sizeof(T))) T(source)); }
-
 	void push(const T& source) { try_push(source); }
 	bool try_pop(T* &target) { return _queue.pop(reinterpret_cast<void**>(&target)); }
-	bool pop(T* &target, const unsigned ns=0)
+	bool pop(T* &target)
 	{
+		const unsigned cnt_rnd(3);
+		unsigned cnt(0);
 		for(;;)
 		{
 			if (try_pop(target))
 				return true;
-			if (ns == 0)
-				break;
-			hypersleep<h_nanoseconds>(ns);
+#if defined SLEEP_NO_YIELD
+			if ((++cnt %= cnt_rnd) == 0)
+				hypersleep<h_nanoseconds>(SLEEP_NO_YIELD);
+			else
+#endif
+				sched_yield();
 		}
+
 		return false;
 	}
 	void release(T *source) const { ::ff::ff_free(source); }
@@ -99,16 +104,22 @@ public:
 	bool try_push(T *source) { return _queue.push(source); }
 	void push(T *source) { try_push(source); }
 	bool try_pop(T* &target) { return _queue.pop(reinterpret_cast<void**>(&target)); }
-	bool pop(T* &target, const unsigned ns=0)
+	bool pop(T* &target)
 	{
+		const unsigned cnt_rnd(3);
+		unsigned cnt(0);
 		for(;;)
 		{
 			if (try_pop(target))
 				return true;
-			if (ns == 0)
-				break;
-			hypersleep<h_nanoseconds>(ns);
+#if defined SLEEP_NO_YIELD
+			if ((++cnt %= cnt_rnd) == 0)
+				hypersleep<h_nanoseconds>(SLEEP_NO_YIELD);
+			else
+#endif
+				sched_yield();
 		}
+
 		return false;
 	}
 };
@@ -176,20 +187,20 @@ public:
 // generic pthread_mutex wrapper
 class f8_mutex
 {
-	pthread_mutex_t pmutex;
+	pthread_mutex_t _pmutex;
 
 public:
 	f8_mutex()
 	{
-		if (pthread_mutex_init(&pmutex, 0))
+		if (pthread_mutex_init(&_pmutex, 0))
 			throw f8Exception("pthread_mutex_init failed");
 	}
 
-	~f8_mutex() { pthread_mutex_destroy(&pmutex); };
+	~f8_mutex() { pthread_mutex_destroy(&_pmutex); };
 
-	void lock() { pthread_mutex_lock(&pmutex); }
-	bool try_lock() { return pthread_mutex_trylock(&pmutex) == 0; }
-	void unlock() { pthread_mutex_unlock(&pmutex); }
+	void lock() { pthread_mutex_lock(&_pmutex); }
+	bool try_lock() { return pthread_mutex_trylock(&_pmutex) == 0; }
+	void unlock() { pthread_mutex_unlock(&_pmutex); }
 
 	friend class f8_scoped_lock;
 };
@@ -197,38 +208,38 @@ public:
 //----------------------------------------------------------------------------------------
 class f8_scoped_lock
 {
-	f8_mutex *local_mutex;
+	f8_mutex *_local_mutex;
 
 	f8_scoped_lock(const f8_scoped_lock&);
 	f8_scoped_lock& operator=(const f8_scoped_lock&);
 
 public:
-	f8_scoped_lock() : local_mutex() {}
+	f8_scoped_lock() : _local_mutex() {}
 	f8_scoped_lock(f8_mutex& f8_mutex) { acquire(f8_mutex); }
 	~f8_scoped_lock()
 	{
-		if (local_mutex)
+		if (_local_mutex)
 			release();
 	}
 
 	void acquire(f8_mutex& f8_mutex)
 	{
 		f8_mutex.lock();
-		local_mutex = &f8_mutex;
+		_local_mutex = &f8_mutex;
 	}
 
 	bool try_acquire(f8_mutex& f8_mutex)
 	{
 		bool result(f8_mutex.try_lock());
 		if(result)
-			local_mutex = &f8_mutex;
+			_local_mutex = &f8_mutex;
 		return result;
 	}
 
 	void release()
 	{
-		local_mutex->unlock();
-		local_mutex = 0;
+		_local_mutex->unlock();
+		_local_mutex = 0;
 	}
 
 	friend class f8_mutex;

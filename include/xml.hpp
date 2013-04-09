@@ -62,7 +62,7 @@ public:
 	typedef std::set<const XmlElement *, EntityOrderComp> XmlSet;
 	typedef std::map<std::string, std::string> XmlAttrs;
 	XmlAttrs *attrs_;
-	static XmlAttrs emptyattrs_;
+	static const XmlAttrs emptyattrs_;
 
 private:
 	typedef std::multimap<std::string, XmlElement *> XmlSubEls;
@@ -72,7 +72,7 @@ private:
 
 	/// Set of all child elements in file order
 	XmlSet *ordchildren_;
-	static XmlSet emptyset_;
+	static const XmlSet emptyset_;
 
 	XmlElement *parent_;
 

@@ -714,12 +714,32 @@ bool Session::send(Message *tosend, const unsigned custom_seqnum, const bool no_
 	return _connection->write(tosend);
 }
 
+bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_increment)
+{
+	if (custom_seqnum)
+		tosend.set_custom_seqnum(custom_seqnum);
+	if (no_increment)
+		tosend.set_no_increment(no_increment);
+	return _connection->write(tosend);
+}
+
 #if defined MSGRECYCLING
 bool Session::send_wait(Message *msg, const unsigned custom_seqnum, const int waitval)
 {
 	if (send(msg, custom_seqnum))
 	{
 		while(msg->get_in_use())
+			hypersleep<h_microseconds>(waitval);
+		return true;
+	}
+	return false;
+}
+
+bool Session::send_wait(Message& msg, const unsigned custom_seqnum, const int waitval)
+{
+	if (send(msg, custom_seqnum))
+	{
+		while(msg.get_in_use())
 			hypersleep<h_microseconds>(waitval);
 		return true;
 	}

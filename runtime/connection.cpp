@@ -140,16 +140,9 @@ int FIXReader::callback_processor()
 			break;
 		msg_ptr = &msg;
 #else
-		if (_msg_queue.try_pop (msg_ptr)) // will not block
-		{
-			if (msg_ptr->empty())  // means exit
-				break;
-		}
-		else
-		{
-			hypersleep<h_nanoseconds>(250);
-			continue;
-		}
+		_msg_queue.pop (msg_ptr); // will block
+		if (msg_ptr->empty())  // means exit
+			break;
 #endif
 
       if (!_session.process(*msg_ptr))

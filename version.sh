@@ -35,10 +35,8 @@
 #
 # This is the master version file, called by configure
 #
-# If building from a source tarball, the embedded revision will be used.
-#
 #############################################################################################
 MAJOR_VERSION_NUM=0
 MINOR_VERSION_NUM=7
-PATCH_VERSION_NUM=1
+PATCH_VERSION_NUM=2
 echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$PATCH_VERSION_NUM

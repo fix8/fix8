@@ -313,18 +313,10 @@ int BDBPersister::operator()()
 			continue;
 		}
 #else
-		if (_msg_queue.try_pop (msg_ptr)) // will not block
-		{
-			if (msg_ptr->empty())  // means exit
-				break;
-		}
-		else
-		{
-			hypersleep<h_nanoseconds>(250);
-			continue;
-		}
+		_msg_queue.pop(msg_ptr); // will block
+		if (msg_ptr->empty())  // means exit
+			break;
 #endif
-
 		//cout << "persisted..." << endl;
 
 		++received;

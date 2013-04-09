@@ -118,18 +118,25 @@ class FIXReader : public AsyncSocket<f8String>
 	    \param where buffer to place bytes in
 	    \param sz number of bytes to read
 	    \return number of bytes read */
-	int sockRead(char *where, size_t sz)
+	int sockRead(char *where, const size_t sz)
 	{
-		int rdSz(0);
 		unsigned remaining(sz), rddone(0);
 
 		while (remaining > 0)
 		{
-			if ((rdSz = _sock->receiveBytes(where + rddone, remaining)) <= 0)
+			const int rdSz(_sock->receiveBytes(where + rddone, remaining));
+			if (rdSz <= 0)
 			{
-				if (errno == EAGAIN)
+				switch(errno)
+				{
+				case EAGAIN:
+#if defined EWOULDBLOCK && EAGAIN != EWOULDBLOCK
+				case EWOULDBLOCK:
+#endif
 					continue;
-				throw PeerResetConnection("connection gone");
+				default:
+					throw PeerResetConnection("sockRead: connection gone");
+				}
 			}
 
 			rddone += rdSz;
@@ -254,16 +261,24 @@ public:
 	    \return number of bytes sent */
 	int send(const f8String& msg)
 	{
-		int wrtSz(0);
 		unsigned remaining(msg.size()), wrdone(0);
+		const char *data(msg.data());
 
 		while (remaining > 0)
 		{
-			if ((wrtSz = _sock->sendBytes(msg.data() + wrdone, remaining)) < 0)
+			const int wrtSz(_sock->sendBytes(data + wrdone, remaining));
+			if (wrtSz < 0)
 			{
-				if (errno == EAGAIN)
+				switch(errno)
+				{
+				case EAGAIN:
+#if defined EWOULDBLOCK && EAGAIN != EWOULDBLOCK
+				case EWOULDBLOCK:
+#endif
 					continue;
-				throw PeerResetConnection("connection gone");
+				default:
+					throw PeerResetConnection("send: connection gone");
+				}
 			}
 
 			wrdone += wrtSz;
@@ -342,6 +357,11 @@ public:
 	    \param from Message to write
 	    \return true on success */
 	virtual bool write(Message *from) { return _writer.write(from); }
+
+	/*! Write a message to the underlying socket. Non-pipelined version.
+	    \param from Message to write
+	    \return true on success */
+	virtual bool write(Message& from) { return _writer.write(from); }
 
 	/*! Write a string message to the underlying socket.
 	    \param from Message (string) to write
