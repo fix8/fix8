@@ -278,6 +278,8 @@ bool Session::process(const f8String& from)
 
 		if (_control & print)
 			cout << *msg << endl;
+		else if ((_control & printnohb) && msg->get_msgtype() != Common_MsgType_HEARTBEAT)
+			cout << *msg << endl;
 		bool result((msg->is_admin() ? handle_admin(seqnum, msg.get()) : true)
 			&& (this->*_handlers.find_ref(msg->get_msgtype()))(seqnum, msg.get()));
 		++_next_receive_seq;
@@ -492,8 +494,6 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 
 	if (_state != States::st_resend_request_received)
 	{
-		_state = States::st_resend_request_received;
-
 		begin_seq_num begin;
 		end_seq_num end;
 
@@ -504,6 +504,7 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		else
 		{
 			//cout << "got resend request:" << begin() << " to " << end() << endl;
+			_state = States::st_resend_request_received;
 			_persist->get(begin(), end(), *this, &Session::retrans_callback);
 		}
 	}

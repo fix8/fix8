@@ -26,7 +26,7 @@
   * <li> \link FIX8::Field \endlink manages and provides access to FIX data fields.
   * <li> \link FIX8::FileLogger \endlink is an asynchronous logger.
   * <li> \link FIX8::Message \endlink is a complete Fix message with header, body and trailer.
-  * <li> \link FIX8::Thread \endlink is a modern pthread wrapper.
+  * <li> \link FIX8::dthread \endlink is a modern pthread wrapper.
   * <li> \link FIX8::SessionID \endlink a <A HREF="http://www.quickfixengine.org">Quickfix</A> style session id.
   * <li> \link FIX8::Timer \endlink a high resolution timer with event notification.
   * </ul>

@@ -299,18 +299,15 @@ int ConsoleMenu::CreateMsgs(tty_save_state& tty, MsgList& lst) const
 	for (;;)
 	{
 		const BaseMsgEntry *mc(SelectMsg());
-		if (mc)
-		{
-			Message *msg(mc->_create());
-			const FieldTable::Pair *fld;
-			while((fld = SelectField(msg)))
-				EditMsg(tty, fld, msg);
-			_os << endl << endl << *static_cast<MessageBase *>(msg) << endl;
-			if (get_yn("Add to list? (y/n):", true))
-				lst.push_back(msg);
-		}
-		else
+		if (!mc)
 			break;
+		Message *msg(mc->_create());
+		const FieldTable::Pair *fld;
+		while((fld = SelectField(msg)))
+			EditMsg(tty, fld, msg);
+		_os << endl << endl << *static_cast<MessageBase *>(msg) << endl;
+		if (get_yn("Add to list? (y/n):", true))
+			lst.push_back(msg);
 	}
 
 	return lst.size();
@@ -367,15 +364,12 @@ int ConsoleMenu::EditMsgs(tty_save_state& tty, MsgList& lst) const
 	for (;;)
 	{
 		Message *msg(SelectFromMsg(lst));
-		if (msg)
-		{
-			const FieldTable::Pair *fld;
-			while((fld = SelectField(msg)))
-				EditMsg(tty, fld, msg);
-			_os << endl << endl << *static_cast<MessageBase *>(msg) << endl;
-		}
-		else
+		if (!msg)
 			break;
+		const FieldTable::Pair *fld;
+		while((fld = SelectField(msg)))
+			EditMsg(tty, fld, msg);
+		_os << endl << endl << *static_cast<MessageBase *>(msg) << endl;
 	}
 
 	return lst.size();
@@ -387,23 +381,20 @@ int ConsoleMenu::DeleteMsgs(tty_save_state& tty, MsgList& lst) const
 	for (;;)
 	{
 		Message *msg(SelectFromMsg(lst));
-		if (msg)
+		if (!msg)
+			break;
+		for (MsgList::iterator itr(lst.begin()); itr != lst.end(); ++itr)
 		{
-			for (MsgList::iterator itr(lst.begin()); itr != lst.end(); ++itr)
+			if (*itr == msg)
 			{
-				if (*itr == msg)
+				if (get_yn("Delete msg? (y/n):", true))
 				{
-					if (get_yn("Delete msg? (y/n):", true))
-					{
-						delete *itr;
-						lst.erase(itr);
-					}
-					break;
+					delete *itr;
+					lst.erase(itr);
 				}
+				break;
 			}
 		}
-		else
-			break;
 	}
 
 	return lst.size();

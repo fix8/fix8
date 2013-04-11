@@ -196,7 +196,7 @@ class Session
 	void atomic_init(States::SessionStates st);
 
 public:
-	enum SessionControl { shutdown, print, debug, count };
+	enum SessionControl { shutdown, print, printnohb, debug, count };
 	typedef ebitset_r<SessionControl> Control;
 
 protected:
