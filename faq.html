@@ -207,7 +207,8 @@
 									</div>
 									<div id="licensingOne" class="accordion-body collapse">
 										<div class="accordion-inner">
-											Fix8 is open source and is released under the <a href="http://www.gnu.org/licenses/lgpl.html">GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.</a>
+											Fix8 is <a href="http://en.wikipedia.org/wiki/Open_source">open source</a>
+											and is released under the <a href="http://www.gnu.org/licenses/lgpl.html">GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007.</a>
 											<p>This license <b><i>does not</i></b> require you to release your proprietary source code or Fix8 generated code when you release software that links dynamically against the Fix8 runtime library. If you wish to statically link you are required to release the Fix8 object files with your software.</p>
 										</div>
 									</div>
@@ -678,6 +679,28 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 									</div>
 								</div>
 							</div>
+							<div class="accordion-group">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#runningTwo">b) What is tcmalloc and how do I use it?</a>
+								</div>
+								<div id="runningTwo" class="accordion-body collapse">
+									<div class="accordion-inner">
+										Thread caching malloc (<a href="http://google-perftools.googlecode.com/svn/trunk/doc/tcmalloc.html">tcmalloc</a>)
+										is an alternative heap allocator that you can use instead of the
+										default allocator. It offers dramatically improved performance. The Fix8 performance tests use tcmalloc.
+										To use, download and install google <a href="https://code.google.com/p/gperftools/">gperftools</a>.
+										You can either link your application directly to tcmalloc, as follows:
+<pre>
+%g++ -g -O2 -Wall -rdynamic -lrt -lfix8 -lpthread  -lPocoFoundation -lPocoNet -lPocoUtil -ltcmalloc_minimal -L../runtime -lmyfix -lz  -o hftest hftest.o
+</pre>
+										Alternatively, you can set the following environment variable before you run your application:
+<pre>
+% export LD_PERLOAD=/usr/local/lib/tcmalloc_minimal.so
+</pre>
+									</div>
+								</div>
+							</div>
+						</div>
 						</div>
 					</div>
 				</div>
