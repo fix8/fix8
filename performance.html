@@ -405,10 +405,10 @@ int main(int argc, char *argv[])
 								<td></td>
 								<td>decode</td>
 								<td>100000</td>
-								<td>0.83</td>
-								<td>120138</td>
-								<td>8.3</td>
-								<td><h4>45</h4></td>
+								<td>0.79</td>
+								<td>126582</td>
+								<td>7.9</td>
+								<td><h4>52</h4></td>
 							</tr>
 						</tbody>
 					</table>
@@ -418,7 +418,7 @@ int main(int argc, char *argv[])
 			<div class="row">
 				<div class="span12">
 					<h2>Conclusion</h2>
-					<p>For the same message, Fix8 encodes <em><b>25% faster</b></em> and decodes <em><b>45% faster</b></em> for an average improvement of <em><b>35%</b></em> over Quickfix.</p>
+					<p>For the same message, Fix8 encodes <em><b>25% faster</b></em> and decodes <em><b>52% faster</b></em> for an average improvement of <em><b>38.5%</b></em> over Quickfix.</p>
 				</div>
 			</div>
 		</div>
@@ -564,6 +564,15 @@ trailer ("trailer")
 					restart the client in reliable mode:
 <pre>
 % ./hftest -rl client -p 500000
+0 NewOrderSingle msgs currently preloaded.
+loading...
+0000001 A 2013-04-19 17:19:50.512934156 Starting session
+0000002 A 2013-04-19 17:19:50.513103903 Trying to connect to: 127.0.0.1:11002 (1)
+0000003 A 2013-04-19 17:19:50.513403209 Connection successful
+0000004 A 2013-04-19 17:19:50.513421223 Session connected
+0000005 B 2013-04-19 17:19:50.514467212 Client setting heartbeat interval to 10
+0000006 B 2013-04-19 17:19:50.514470236 Heartbeat interval is 10
+500000 NewOrderSingle msgs preloaded.
 </pre>
 					<p>When the client has connected (there are no on screen messages), press <code>?</code> to see the help menu...
 <pre>
@@ -577,11 +586,6 @@ l       Logout
 n       Send a NewOrderSingle msg
 p       Preload n NewOrderSingle msgs
 x       Exit
-</pre>
-					<p>Now press <code>'p'</code> and you'll see following:
-<pre>
-0 NewOrderSingle msgs currently preloaded.
-500000 NewOrderSingle msgs preloaded.
 </pre>
 					<p>Now press <code>'a'</code> to send the preloaded orders to the server:
 <pre>
@@ -605,10 +609,10 @@ x       Exit
 						two files to see the results.
 <pre>
 % more server client
-0000003 A 2013-04-12 09:40:38.574138491 Encode: 3.487508842 secs, 500007 msgs, 0.000006975 secs/msg, 143370.82 msgs/sec
-0000004 A 2013-04-12 09:40:38.574157467 Decode: 14.331210996 secs, 1959800 msgs, 0.000007313 secs/msg, 136750.48 msgs/sec
-0000005 A 2013-04-12 09:40:37.619707520 Encode: 14.886380043 secs, 1959800 msgs, 0.000007567 secs/msg, 132151.34 msgs/sec
-0000006 A 2013-04-12 09:40:37.619730686 Decode: 2.790846449 secs, 500007 msgs, 0.000005582 secs/msg, 179161.06 msgs/sec
+0000003 A 2013-04-22 10:45:21.438952110 Encode: 3.401137120 secs, 500026 msgs, 0.000006802 secs/msg, 147017.30 msgs/sec
+0000004 A 2013-04-22 10:45:21.438976863 Decode: 13.232596643 secs, 1965737 msgs, 0.000006732 secs/msg, 148552.63 msgs/sec
+0000005 A 2013-04-22 10:45:20.487128304 Encode: 14.243466743 secs, 1965737 msgs, 0.000007246 secs/msg, 138009.73 msgs/sec
+0000006 A 2013-04-22 10:45:20.487153604 Decode: 2.720368959 secs, 500026 msgs, 0.000005440 secs/msg, 183808.16 msgs/sec
 </pre>
 					<br>
 				</div>
@@ -633,34 +637,34 @@ x       Exit
 							<tr class="success">
 								<td>client</td>
 								<td>encode</td>
-								<td>500007</td>
-								<td>3.49</td>
-								<td>143371</td>
-								<td><b>6.97</b></td>
+								<td>500026</td>
+								<td>3.40</td>
+								<td>147017</td>
+								<td><b>6.80</b></td>
 							</tr>
 							<tr class="success">
 								<td></td>
 								<td>decode</td>
-								<td>1959800</td>
-								<td>14.33</td>
-								<td>136750</td>
-								<td><b>7.31</b></td>
+								<td>1965737</td>
+								<td>13.23</td>
+								<td>148552</td>
+								<td><b>6.73</b></td>
 							</tr>
 							<tr class="success">
 								<td>server</td>
 								<td>encode</td>
-								<td>1959800</td>
-								<td>14.89</td>
-								<td>132151</td>
-								<td><b>7.56</b></td>
+								<td>1965737</td>
+								<td>14.24</td>
+								<td>138009</td>
+								<td><b>7.25</b></td>
 							</tr>
 							<tr class="success">
 								<td></td>
 								<td>decode</td>
-								<td>500007</td>
-								<td>2.79</td>
-								<td>179161</td>
-								<td><b>5.58</b></td>
+								<td>500026</td>
+								<td>2.72</td>
+								<td>183808</td>
+								<td><b>5.44</b></td>
 							</tr>
 						</tbody>
 					</table>
@@ -676,11 +680,11 @@ x       Exit
 						<tbody>
 							<tr class="success">
 								<td>encode</td>
-								<td><b>7.27</b></td>
+								<td><b>7.03</b></td>
 							</tr>
 							<tr class="success">
 								<td>decode</td>
-								<td><b>6.44</b></td>
+								<td><b>6.09</b></td>
 							</tr>
 						</tbody>
 					</table>
@@ -691,7 +695,7 @@ x       Exit
 				<div class="span12">
 					<h2>Conclusion</h2>
 					<p>Most users will be interested in client encode and decode. On our test hardware, Fix8 encodes a <code>NewOrderSingle(D)</code> in
-					<em><b>6.97 &#xb5;s</b></em> and decodes an <code>ExecutionReport(8)</code> in <em><b>7.31 &#xb5;s</b></em> when compiled with gcc. It can also be seen that when averaged across client and server, decode performance is better than encode.</p>
+					<em><b>6.80 &#xb5;s</b></em> and decodes an <code>ExecutionReport(8)</code> in <em><b>6.73 &#xb5;s</b></em> when compiled with gcc. It can also be seen that when averaged across client and server, decode performance is better than encode.</p>
 				</div>
 			</div>
 		</div>
