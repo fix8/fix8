@@ -168,6 +168,9 @@ struct MessageSpec
 typedef std::map<const std::string, MessageSpec> MessageSpecMap;
 typedef std::multiset<const FieldTrait *, FieldTrait::PosCompare> FieldTraitOrder;
 
+//-----------------------------------------------------------------------------------------
+typedef std::map<std::string, const XmlElement *> Components;
+
 //-------------------------------------------------------------------------------------------------
 enum comp_str
 {

@@ -95,5 +95,5 @@ if USEDOXYGEN
 endif
 
 EXTRA_DIST = $(xmltoman) fix8.spec doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen \
-	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST)
+	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) version.sh
 

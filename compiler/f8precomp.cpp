@@ -60,9 +60,6 @@ using namespace std;
 using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
-typedef std::map<std::string, const XmlElement *> Components;
-
-//-----------------------------------------------------------------------------------------
 const string doctype("<?xml version='1.0' encoding='ISO-8859-1'?>");
 
 //-----------------------------------------------------------------------------------------
@@ -70,14 +67,17 @@ extern unsigned glob_errors;
 extern string shortName;
 
 //-----------------------------------------------------------------------------------------
-void output_field(const XmlElement& xf, const int depth, ostream& outf);
+void output_field(const XmlElement& xf, const int depth, ostream& outf, const string& compon=string());
 void output_attributes(const XmlElement& xf, ostream& outf);
 void process_component(const XmlElement& xf, const Components& components, const int depth, ostream& outf);
-void process_group(const XmlElement& xf, const Components& components, const int depth, ostream& outf);
+void process_group(const XmlElement& xf, const Components& components, const int depth,
+	ostream& outf, const string& compon=string());
 void process_messages(const XmlElement& xf, const Components& components, const string& tag, const int depth, ostream& outf);
-void process_elements(XmlElement::XmlSet::const_iterator itr, const Components& components, const int depth, ostream& outf);
+void process_elements(XmlElement::XmlSet::const_iterator itr, const Components& components, const int depth,
+	ostream& outf, const string& compon=string());
 void process_fields(const XmlElement::XmlSet& fldlist, const int depth, ostream& outf);
 void load_components(const XmlElement::XmlSet& comlist, Components& components);
+void dump_components(const Components& components, ostream& outf);
 int precomp(XmlElement& xf, ostream& outf);
 int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique);
 void filter_unique(XmlElement::XmlSet& fldlist);
@@ -115,6 +115,8 @@ int precomp(XmlElement& xf, ostream& outf)
 	outf << string(depth * 2, ' ') << "</messages>" << endl;
 
 	process_fields(fldlist, depth, outf);
+
+	dump_components(components, outf);
 
 	outf << "</" << xf.GetTag() << '>' << endl;
 
@@ -164,6 +166,8 @@ int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique)
 	outf << string(depth * 2, ' ') << "</messages>" << endl;
 
 	process_fields(fldlist, depth, outf);
+
+	dump_components(components, outf);
 
 	outf << "</" << xft.GetTag() << '>' << endl;
 
@@ -227,10 +231,12 @@ void process_fields(const XmlElement::XmlSet& fldlist, const int depth, ostream&
 }
 
 //-----------------------------------------------------------------------------------------
-void output_field(const XmlElement& xf, const int depth, ostream& outf)
+void output_field(const XmlElement& xf, const int depth, ostream& outf, const string& compon)
 {
 	outf << string(depth * 2, ' ') << "<field";
 	output_attributes(xf, outf);
+	if (!compon.empty())
+		outf << " component=\'" << compon << '\'';
 	outf << "/>" << endl;
 }
 
@@ -244,14 +250,15 @@ void output_attributes(const XmlElement& xf, ostream& outf)
 }
 
 //-----------------------------------------------------------------------------------------
-void process_elements(XmlElement::XmlSet::const_iterator itr, const Components& components, const int depth, ostream& outf)
+void process_elements(XmlElement::XmlSet::const_iterator itr, const Components& components, const int depth,
+	ostream& outf, const string& compon)
 {
 	if ((*itr)->GetTag() == "field")
-		output_field(**itr, depth, outf);
+		output_field(**itr, depth, outf, compon);
 	else if ((*itr)->GetTag() == "component")
 		process_component(**itr, components, depth, outf);
 	else if ((*itr)->GetTag() == "group")
-		process_group(**itr, components, depth, outf);
+		process_group(**itr, components, depth, outf, compon);
 }
 
 //-----------------------------------------------------------------------------------------
@@ -279,18 +286,40 @@ void process_component(const XmlElement& xf, const Components& components, const
 	}
 	else
 		for(XmlElement::XmlSet::const_iterator itr(citr->second->begin()); itr != citr->second->end(); ++itr)
-			process_elements(itr, components, depth, outf);
+			process_elements(itr, components, depth, outf, name);
 }
 
 //-----------------------------------------------------------------------------------------
-void process_group(const XmlElement& xf, const Components& components, const int depth, ostream& outf)
+void process_group(const XmlElement& xf, const Components& components, const int depth,
+	ostream& outf, const string& compon)
 {
 	outf << string(depth * 2, ' ') << "<group";
 	output_attributes(xf, outf);
+	if (!compon.empty())
+		outf << " component=\'" << compon << '\'';
 	outf << '>' << endl;
 
 	for(XmlElement::XmlSet::const_iterator itr(xf.begin()); itr != xf.end(); ++itr)
 		process_elements(itr, components, depth + 1, outf);
 	outf << string(depth * 2, ' ') << "</group>" << endl;
+}
+
+//-----------------------------------------------------------------------------------------
+void dump_components(const Components& components, ostream& outf)
+{
+	if (components.empty())
+		return;
+
+	int depth(1);
+
+	outf << string(depth * 2, ' ') << "<components>" << endl;
+
+	for (Components::const_iterator citr(components.begin()); citr != components.end(); ++citr)
+	{
+		outf << string((depth + 1) * 2, ' ') << "<component name=\"";
+		outf << citr->first << "\" id=\"" << (1 + distance(components.begin(), citr)) << "\"/>" << endl;
+	}
+
+	outf << string(depth * 2, ' ') << "</components>" << endl;
 }
 

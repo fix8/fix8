@@ -64,8 +64,10 @@ public:
 	bool try_pop(T* &target) { return _queue.pop(reinterpret_cast<void**>(&target)); }
 	bool pop(T* &target)
 	{
+#if defined SLEEP_NO_YIELD
 		const unsigned cnt_rnd(3);
 		unsigned cnt(0);
+#endif
 		for(;;)
 		{
 			if (try_pop(target))
@@ -106,8 +108,10 @@ public:
 	bool try_pop(T* &target) { return _queue.pop(reinterpret_cast<void**>(&target)); }
 	bool pop(T* &target)
 	{
+#if defined SLEEP_NO_YIELD
 		const unsigned cnt_rnd(3);
 		unsigned cnt(0);
+#endif
 		for(;;)
 		{
 			if (try_pop(target))
@@ -141,9 +145,9 @@ public:
 		{ atomic_long_set(&_rep, atomic_long_read(&rhs._rep)); return *this; }
 
 	value_type operator++(int) // postfix
-		{ value_type v = atomic_long_read(&_rep); atomic_long_inc(&_rep); return v; }
+		{ value_type v(atomic_long_read(&_rep)); atomic_long_inc(&_rep); return v; }
 	value_type operator--(int) // postfix
-		{ value_type v = atomic_long_read(&_rep); atomic_long_dec(&_rep); return v; }
+		{ value_type v(atomic_long_read(&_rep)); atomic_long_dec(&_rep); return v; }
 	value_type operator++() // prefix
 		{ return atomic_long_inc_return(&_rep); }
 	value_type operator--() // prefix

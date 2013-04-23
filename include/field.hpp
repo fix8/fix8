@@ -239,11 +239,11 @@ public:
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
-	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
+	bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 
 	/*! Get the realm index of this value in the domain set.
 	  \return the index in the domain set of this value */
-	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	/*! Get field value.
 	  \return value (int) */
@@ -265,7 +265,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -318,11 +318,11 @@ public:
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
-	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
+	bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 
 	/*! Get the realm index of this value in the domain set.
 	  \return the index in the domain set of this value */
-	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	/*! Get field value.
 	  \return value (f8String) */
@@ -344,7 +344,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -413,43 +413,43 @@ public:
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
-	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
+	bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 
 	/*! Get the realm index of this value in the domain set.
 	  \return the index in the domain set of this value */
-	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	/*! Get field value.
 	  \return value (double) */
-	virtual const double& get() const { return _value; }
+	const double& get() const { return _value; }
 
 	/*! Get field value.
 	  \return value (double) */
-	virtual const double& operator()() const { return _value; }
+	const double& operator()() const { return _value; }
 
 	/*! Get field value.
 	  \param from value to set
 	  \return original value (int) */
-	virtual const double& set(const double& from) { return _value = from; }
+	const double& set(const double& from) { return _value = from; }
 
 	/*! Set the value from a string.
 	  \param from value to set
 	  \return original value (double) */
-	virtual const double& set_from_raw(const f8String& from) { return _value = fast_atof(from.c_str()); }
+	const double& set_from_raw(const f8String& from) { return _value = fast_atof(from.c_str()); }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	virtual std::ostream& print(std::ostream& os) const { return os << _value; }
+	std::ostream& print(std::ostream& os) const { return os << _value; }
 
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	virtual void print(char *to, size_t& sz) const { sz += std::sprintf(to, "%.*f", _precision, _value); }
+	void print(char *to, size_t& sz) const { sz += std::sprintf(to, "%.*f", _precision, _value); }
 #if 0
 	virtual void print(char *to, size_t& sz) const
 	{
@@ -501,15 +501,15 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
-	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
+	bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 
 	/*! Get the realm index of this value in the domain set.
 	  \return the index in the domain set of this value */
-	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	/*! Get field value.
 	  \return value (char) */
@@ -531,7 +531,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -566,7 +566,7 @@ public:
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -591,7 +591,7 @@ public:
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -664,7 +664,7 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
 	  \return value (Poco::DateTime) */
@@ -685,7 +685,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -800,7 +800,7 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
 	  \return value (Poco::DateTime) */
@@ -817,7 +817,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -867,7 +867,7 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
 	  \return value (Poco::DateTime) */
@@ -884,7 +884,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -934,7 +934,7 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
 	  \return value (Poco::DateTime) */
@@ -951,7 +951,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -1001,7 +1001,7 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
 	  \return value (Poco::DateTime) */
@@ -1017,7 +1017,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -1067,7 +1067,7 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
 	  \return value (Poco::DateTime) */
@@ -1084,7 +1084,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -1124,7 +1124,7 @@ public:
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1154,7 +1154,7 @@ public:
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1184,7 +1184,7 @@ public:
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1214,7 +1214,7 @@ public:
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1244,7 +1244,7 @@ public:
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1293,7 +1293,7 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
 	  \return value (bool) */
@@ -1305,7 +1305,7 @@ public:
 
 	/*! Get the realm index of this value in the domain set.
 	  \return the index in the domain set of this value */
-	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value ? 'Y' : 'N') : -1; }
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value ? 'Y' : 'N') : -1; }
 
 	/*! Get field value.
 	  \param from value to set
@@ -1319,7 +1319,7 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
@@ -1362,7 +1362,7 @@ public:
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<double, field>(from, rlm) {}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1390,7 +1390,7 @@ public:
 	Field (const f8String& from, const RealmBase *rlm) : Field<f8String, field>(from, rlm) {}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------

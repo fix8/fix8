@@ -56,7 +56,12 @@ public:
 	static const ticks billion = thousand * million;
 
 private:
+	// long long not available in 32 bit ff atomic_long_t
+// #if defined __WORDSIZE && (__WORDSIZE == 32) && (MPMC_SYSTEM == MPMC_FF)
+// 	ticks _value;
+// #else
 	f8_atomic<ticks> _value;
+// #endif
 
 public:
 	/*! Ctor.

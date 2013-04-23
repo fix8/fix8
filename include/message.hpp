@@ -203,6 +203,8 @@ struct F8MetaCntx
 	const MsgTable& _bme;
 	/// Framework generated lookup table to generate Fix fields
 	const FieldTable& _be;
+	/// Framework generated component name table
+	const char **_cn;
 #if defined PERMIT_CUSTOM_FIELDS
 	/// User supplied lookup table to generate Fix fields
 	CustomFields *_ube;
@@ -218,8 +220,8 @@ struct F8MetaCntx
 	void set_flag(MsgFlags flg) { _msg_flags.set(flg); }
 	void clear_flag(MsgFlags flg) { _msg_flags.set(flg, false); }
 
-	F8MetaCntx(const unsigned version, const MsgTable& bme, const FieldTable& be, const f8String& bg)
-		: _version(version), _bme(bme), _be(be),
+	F8MetaCntx(const unsigned version, const MsgTable& bme, const FieldTable& be, const char **cn, const f8String& bg)
+		: _version(version), _bme(bme), _be(be), _cn(cn),
 #if defined PERMIT_CUSTOM_FIELDS
 		_ube(),
 #endif
