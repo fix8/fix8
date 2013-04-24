@@ -240,7 +240,7 @@ int main(int argc, char **argv)
 				SessionInstance<myfix_session_server>::Instance_ptr
 					inst(new SessionInstance<myfix_session_server>(*ms));
 				if (!quiet)
-					inst->session_ptr()->control() |= Session::print;
+					inst->session_ptr()->control() |= Session::printnohb;
 				ostringstream sostr;
 				sostr << "client(" << ++scnt << ") connection established.";
 				GlobalLogger::log(sostr.str());
@@ -254,7 +254,7 @@ int main(int argc, char **argv)
 			ReliableClientSession<myfix_session_client>::Client_ptr
 				mc(new ReliableClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
-				mc->session_ptr()->control() |= Session::print;
+				mc->session_ptr()->control() |= Session::printnohb;
 			mc->start(false);
 			ConsoleMenu cm(TEX::ctx, mc->session_ptr(), cin, cout, 50);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
@@ -273,7 +273,7 @@ int main(int argc, char **argv)
 			ClientSession<myfix_session_client>::Client_ptr
 				mc(new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
-				mc->session_ptr()->control() |= Session::print;
+				mc->session_ptr()->control() |= Session::printnohb;
 			const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
 			mc->start(false, next_send, next_receive, lparam._davi());
 			ConsoleMenu cm(TEX::ctx, mc->session_ptr(), cin, cout, 50);
@@ -355,55 +355,6 @@ void print_usage()
 //-----------------------------------------------------------------------------------------
 bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 {
-	static unsigned oid(0), eoid(0);
-
-	TEX::OrderQty qty;
-	TEX::Price price;
-
-	msg->get(qty);
-	msg->get(price);
-
-	TEX::ExecutionReport *er(new TEX::ExecutionReport);
-	msg->copy_legal(er);
-	if (!quiet)
-		cout << endl;
-
-	ostringstream oistr;
-	oistr << "ord" << ++oid;
-	*er += new TEX::OrderID(oistr.str());
-	*er += new TEX::ExecType(TEX::ExecType_NEW);
-	*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
-	*er += new TEX::LeavesQty(qty());
-	*er += new TEX::CumQty(0);
-	*er += new TEX::AvgPx(0);
-	*er += new TEX::LastCapacity('1');
-	*er += new TEX::ReportToExch('Y');
-	*er += new TEX::ExecID(oistr.str());
-	_session.send(er);
-
-	unsigned remaining_qty(qty()), cum_qty(0);
-	while (remaining_qty > 0)
-	{
-		unsigned trdqty(RandDev::getrandom(remaining_qty));
-		if (!trdqty)
-			trdqty = 1;
-		er = new TEX::ExecutionReport;
-		msg->copy_legal(er);
-		*er += new TEX::OrderID(oistr.str());
-		ostringstream eistr;
-		eistr << "exec" << ++eoid;
-		*er += new TEX::ExecID(eistr.str());
-		*er += new TEX::ExecType(TEX::ExecType_NEW);
-		*er += new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED);
-		remaining_qty -= trdqty;
-		cum_qty += trdqty;
-		*er += new TEX::LeavesQty(remaining_qty);
-		*er += new TEX::CumQty(cum_qty);
-		*er += new TEX::LastQty(trdqty);
-		*er += new TEX::AvgPx(price());
-		_session.send(er);
-	}
-
 	return true;
 }
 
@@ -471,7 +422,6 @@ bool MyMenu::write_msgs()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::read_msgs()
 {
-#if 0
 	cout << "Enter filename: " << flush;
 	string fname;
 	if (!_cm->GetString(_tty, fname).empty())
@@ -484,11 +434,10 @@ bool MyMenu::read_msgs()
 		}
 		for (MsgList::const_iterator itr(_lst.begin()); itr != _lst.end(); ++itr)
 		{
+			f8String buf;
 			(static_cast<MessageBase *>(*itr))->decode(buf, 0);
-			ofs << endl;
 		}
 	}
-#endif
 	return true;
 }
 

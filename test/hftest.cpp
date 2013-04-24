@@ -276,6 +276,8 @@ int main(int argc, char **argv)
 				mc->session_ptr()->control() |= Session::print;
 			mc->start(false, next_send, next_receive);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
+			if (preload_count)
+				mymenu.preload_new_order_single();
 			char ch;
 			mymenu.get_tty().set_raw_mode();
 			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
@@ -302,6 +304,8 @@ int main(int argc, char **argv)
 			const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
 			mc->start(false, next_send, next_receive, lparam._davi());
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
+			if (preload_count)
+				mymenu.preload_new_order_single();
 			char ch;
 			mymenu.get_tty().set_raw_mode();
 			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
@@ -455,6 +459,8 @@ bool MyMenu::preload_new_order_single()
 		cin >> num;
 		_tty.set_raw_mode();
 	}
+	else
+		cout << "loading..." << endl;
 	for (unsigned ii(0); ii < num; ++ii)
 	{
 		static unsigned oid(10000);

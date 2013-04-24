@@ -359,17 +359,19 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 	get_last_seqnum(last_seq);
 	unsigned recs_sent(0), startSeqNum(find_nearest_highest_seqnum (from, last_seq));
 	const unsigned finish(to == 0 ? last_seq : to);
+	Session::RetransmissionContext rctx(from, to, session.get_next_send_seq());
+
 	if (!startSeqNum || from > finish)
 	{
 		GlobalLogger::log("No records found");
+		rctx._no_more_records = true;
+		(session.*callback)(Session::SequencePair(0, ""), rctx);
 		return 0;
 	}
 
 	Store::const_iterator itr(_store.find(startSeqNum));
 	if (itr != _store.end())
 	{
-		Session::RetransmissionContext rctx(from, to, session.get_next_send_seq());
-
 		do
 		{
 			if (!itr->first || itr->first > finish)
@@ -452,6 +454,6 @@ unsigned MemoryPersister::find_nearest_highest_seqnum (const unsigned requested,
 //---------------------------------------------------------------------------------------------------
 unsigned MemoryPersister::get_last_seqnum(unsigned& to) const
 {
-	return _store.empty() ? 0 : _store.rbegin()->first;
+	return to = (_store.empty() ? 0 : _store.rbegin()->first);
 }
 

@@ -314,10 +314,10 @@ public:
 /// File persister
 struct Prec
 {
-	Prec(const off_t offset, const uint32_t size) : _offset(offset), _size(size) {}
+	Prec(const off_t offset, const int32_t size) : _offset(offset), _size(size) {}
 	Prec() : _offset(), _size() {}
 	off_t _offset;
-	uint32_t _size;
+	int32_t _size;
 
 	Prec& operator=(const Prec& that)
 	{
@@ -335,7 +335,7 @@ struct Prec
 
 struct IPrec
 {
-	IPrec(const uint32_t seq, const off_t offset, const uint32_t size)
+	IPrec(const uint32_t seq, const off_t offset, const int32_t size)
 		: _seq(seq), _prec(offset, size) {}
 	IPrec() : _seq() {}
 	uint32_t _seq;

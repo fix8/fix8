@@ -22,7 +22,7 @@ Please go to http://www.fix8.org for a stable version.
 
 * Statically compile your FIX xml schema and quickly build your FIX application on top. If you need to add customised messages or fields, simply update the schema and recompile.
 
-* Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average 29% faster encoding/decoding the same message than Quickfix. See [Performance](http://fix8.org/performance.html) to see how we substantiate this shameless bragging.
+* Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average 36.5% faster encoding/decoding the same message than Quickfix. See [Performance](http://fix8.org/performance.html) to see how we substantiate this shameless bragging.
 
 * Fix8 supports standard `FIX4.X` to `FIX5.X` and `FIXT1.X`. If you have a custom FIX variant Fix8 can use that too. New FIX versions will be supported.
 
@@ -32,7 +32,7 @@ Please go to http://www.fix8.org for a stable version.
 
 * Fix8 statically supports nested components and groups to any depth. The Fix8 compiler and runtime library takes the pain out of using repeating groups.
 
-* Fix8 applications are fast. On production level hardware, client NewOrderSingle encode latency is now 6.8µs, and ExecutionReport decode 9.9µs. Without the framework overhead, NewOrderSingle encode latency is 4.4µs. This is being continually improved.
+* Fix8 applications are fast. On production level hardware, client NewOrderSingle encode latency is now 6.8us, and ExecutionReport decode 6.7us. Without the framework overhead, NewOrderSingle encode latency is 3.9us. This is being continually improved.
 
 * Fix8 has been designed to be extended, customised or enhanced. If you have special requirements, Fix8 provides a flexible platform to develop your application on.
 
@@ -132,8 +132,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-    % tar xvzf fix8-0.7.2.tar.gz
-    % cd fix8-0.7.2
+    % tar xvzf fix8-0.7.3.tar.gz
+    % cd fix8-0.7.3
     % ./configure
     % make
     % make install

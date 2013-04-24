@@ -75,13 +75,14 @@ int load_fix_version (XmlElement& xf, Ctxt& ctxt);
 int load_fields(XmlElement& xf, FieldSpecMap& fspec);
 void process_special_traits(const unsigned short field, FieldTraits& fts);
 int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits& fts,
-	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, const unsigned component);
+	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, const Components& compon);
 int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, FieldSpecMap& fspec);
 void process_ordering(MessageSpecMap& mspec);
 const string flname(const string& from);
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
 void process_group_ordering(const MessageSpec& ms);
+unsigned lookup_component(const Components& compon, const f8String& name);
 
 //-----------------------------------------------------------------------------------------
 namespace
@@ -242,7 +243,7 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 
 //-----------------------------------------------------------------------------------------
 int process_message_fields(const std::string& where, const XmlElement *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
-	FieldSpecMap& fspec, const unsigned subpos)
+	FieldSpecMap& fspec, const Components& compon)
 {
 	unsigned processed(0);
 	XmlElement::XmlSet flist;
@@ -262,8 +263,11 @@ int process_message_fields(const std::string& where, const XmlElement *xt, Field
 					continue;
 				}
 
+				string compname;
+				unsigned compidx((*fitr)->GetAttr("component", compname) ? lookup_component(compon, compname) : 0);
+
 				// add FieldTrait
-				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, subpos)))
+				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, compidx)))
 					cerr << shortName << ':' << recover_line(**fitr) << ": error: Could not add trait object " << fname << endl;
 				else
 				{
@@ -381,7 +385,7 @@ string insert_year()
 }
 
 //-------------------------------------------------------------------------------------------------
-void generate_preamble(ostream& to, bool donotedit)
+void generate_preamble(ostream& to, const string& fname, bool donotedit)
 {
 	to << _csMap.find_ref(cs_divider) << endl;
 	string result;
@@ -391,6 +395,8 @@ void generate_preamble(ostream& to, bool donotedit)
 		to << _csMap.find_ref(cs_divider) << endl;
 	}
 	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
+	to << _csMap.find_ref(cs_divider) << endl;
+	to << "// " << fname << endl;
 	to << _csMap.find_ref(cs_divider) << endl;
 }
 

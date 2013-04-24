@@ -440,7 +440,11 @@ void MessageBase::print(ostream& os, int depth) const
 			if (!_ctx._ube || (tbe = _ctx._ube->find_ptr(itr->second->_fnum)) == 0)
 #endif
 				throw InvalidField(itr->second->_fnum);
-		os << dspacer << tbe->_name << " (" << itr->second->_fnum << "): ";
+		os << dspacer << tbe->_name;
+		const unsigned short comp(_fp.getComp(itr->second->_fnum));
+		if (comp)
+			os << " [" << _ctx._cn[comp] << ']';
+		os << " (" << itr->second->_fnum << "): ";
 		int idx;
 		if (itr->second->_rlm && (idx = (itr->second->get_rlm_idx())) >= 0)
 			os << itr->second->_rlm->_descriptions[idx] << " (" << *itr->second << ')' << endl;

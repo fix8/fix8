@@ -70,7 +70,7 @@ xmltoman=$(mandir)/xmltoman
 PROCESS_MAN_PAGES = $(mandir)/f8c.8 $(mandir)/seqedit.8
 
 INSTALL_DATA_LOCAL_TEST = test/hf_client.xml test/myfix_client.xml test/hf_client_include.xml \
-	test/hf_server.xml test/myfix_server.xml test/f8_hf_test
+	test/hf_server.xml test/myfix_server.xml
 
 INSTALL_DATA_HTML_DOC = doc/html/*.js doc/html/*.html doc/html/*.png doc/html/*.css \
 	doc/fix8.doxygen doc/mainpage.doxygen doc/fix8.footer.html
@@ -81,19 +81,20 @@ INSTALL_DATA_HTML_SEARCH_DOC = doc/html/search/*.js doc/html/search/*.html doc/h
 INSTALL_DATA_LOCAL_SCHEMA = schema/*.xml schema/QUICKFIX-LICENCE
 
 install-data-local:
-	@$(mkinstalldirs) $(testdir) $(schemadir) $(fix8mandir)
-	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_TEST) $(testdir)
-	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_SCHEMA) $(schemadir)
+	@$(mkinstalldirs) $(DESTDIR)$(testdir) $(DESTDIR)$(schemadir) $(DESTDIR)$(fix8mandir)
+	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_TEST) $(DESTDIR)$(testdir)
+	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_SCHEMA) $(DESTDIR)$(schemadir)
 	@for manfile in $(PROCESS_MAN_PAGES) ; do \
 		$(xmltoman) $$manfile.xml | gzip > $$manfile.gz ; \
-		$(INSTALL_DATA) $$manfile.gz $(fix8mandir); \
+		$(INSTALL_DATA) $$manfile.gz $(DESTDIR)$(fix8mandir); \
 	done
 if USEDOXYGEN
-	@$(mkinstalldirs) $(fix8htmldir) $(fix8htmldir)/search
-	$(INSTALL_DATA) $(INSTALL_DATA_HTML_DOC) $(fix8htmldir)
-	$(INSTALL_DATA) $(INSTALL_DATA_HTML_SEARCH_DOC) $(fix8htmldir)/search
+	@$(mkinstalldirs) $(DESTDIR)$(fix8htmldir) $(DESTDIR)$(fix8htmldir)/search
+	$(INSTALL_DATA) $(INSTALL_DATA_HTML_DOC) $(DESTDIR)$(fix8htmldir)
+	$(INSTALL_DATA) $(INSTALL_DATA_HTML_SEARCH_DOC) $(DESTDIR)$(fix8htmldir)/search
 endif
 
 EXTRA_DIST = $(xmltoman) fix8.spec doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen \
-	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST)
+	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) version.sh
+
 

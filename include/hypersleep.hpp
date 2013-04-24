@@ -47,7 +47,7 @@ namespace
 {
 	const unsigned thousand(1000);
 	const unsigned million(thousand * thousand);
-	const unsigned billion(thousand * million);
+	const int billion(thousand * million);
 
 #if defined HAVE_CLOCK_NANOSLEEP
 	inline int execute_clock_nanosleep(timespec ts)

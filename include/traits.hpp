@@ -89,10 +89,10 @@ struct FieldTrait
 	FieldTrait() {}
 
 	FieldTrait(const FieldTrait& from) : _fnum(from._fnum), _ftype(from._ftype), _pos(from._pos),
-		_subpos(from._subpos), _field_traits(from._field_traits) {}
+		_component(from._component), _field_traits(from._field_traits) {}
 
-	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, short field_traits)
-		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _subpos(), _field_traits(field_traits | (pos ? 1 : 0) << position)  {}
+	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, unsigned short compon, short field_traits)
+		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _component(compon), _field_traits(field_traits)  {}
 
 	/*! Ctor.
 	  \param field field num (tag number)
@@ -100,17 +100,17 @@ struct FieldTrait
 	  \param pos field position (in FIX message)
 	  \param ismandatory true if mandatory
 	  \param isgroup true if this is a group
-	  \param subpos field sub-position (in FIX message)
+	  \param compon component idx
 	  \param ispresent true if field is present (should be false until set). */
 	FieldTrait(const unsigned short field, const FieldType ftype=ft_untyped, const unsigned short pos=0,
-		bool ismandatory=false, bool isgroup=false, const unsigned subpos=0, bool ispresent=false) :
-		_fnum(field), _ftype(ftype), _pos(pos), _subpos(subpos),
+		bool ismandatory=false, bool isgroup=false, const unsigned compon=0, bool ispresent=false) :
+		_fnum(field), _ftype(ftype), _pos(pos), _component(compon),
 		_field_traits((ismandatory ? 1 : 0) | (ispresent ? 1 : 0) << present
-		| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group | (subpos ? 1 : 0) << component) {}
+		| (pos ? 1 : 0) << position | (isgroup ? 1 : 0) << group | (compon ? 1 : 0) << component) {}
 
 	unsigned short _fnum;
 	FieldType _ftype;
-	mutable unsigned short _pos, _subpos;
+	mutable unsigned short _pos, _component;
 	mutable ebitset<TraitTypes, unsigned short> _field_traits;
 
 	/// Binary comparitor functor.
@@ -129,9 +129,9 @@ struct FieldTrait
 		/*! Comparitor operator.
 		  \param p1 lhs to compare
 		  \param p2 rhs to compare
-		  \return true if p1 position not equal to p2 position; will use subpos if necessary */
+		  \return true if p1 position not equal to p2 position */
 		bool operator()(const FieldTrait* p1, const FieldTrait* p2) const
-			{ return p1->_pos < p2->_pos || (p1->_pos == p2->_pos && p1->_subpos < p2->_subpos); }
+			{ return p1->_pos < p2->_pos; }
 	};
 
 	/*! Inserter friend.
@@ -150,10 +150,9 @@ struct FieldTrait_Hash_Array
    FieldTrait_Hash_Array(const FieldTrait *from, const size_t els)
       : _els(els), _sz((from + _els - 1)->_fnum + 1), _arr(new unsigned short [_sz])
    {
-		for (unsigned ii(0); ii < _sz; _arr[ii++] = 0)
-			;
+		std::fill(_arr, _arr + _sz, 0);
       for (unsigned offset(0); offset < _els; ++offset)
-         _arr[from[offset]._fnum] = offset;
+			*(_arr + (from + offset)->_fnum) = offset;
    }
 
    ~FieldTrait_Hash_Array() { delete[] _arr; }
@@ -541,6 +540,27 @@ public:
 	  \param field field to check
 	  \return true if a component */
 	bool is_component(const unsigned short field) const { return get(field, FieldTrait::component); }
+
+	/*! Get the field component index of a specified field.
+	  \param field field to get
+	  \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
+	  \return index of component of field, 0 if not found */
+	unsigned short getComp(const unsigned short field, Presence::const_iterator& itr) const
+	{
+		if (itr != _presence.end())
+			return itr->_component;
+		itr = _presence.find(field);
+		return itr != _presence.end() ? itr->_component : 0;
+	}
+
+	/*! Get the field component index of a specified field.
+	  \param field field to get
+	  \return index of component of field, 0 if not found */
+	unsigned short getComp(const unsigned short field) const
+	{
+		Presence::const_iterator itr(_presence.find(field));
+		return itr != _presence.end() ? itr->_component : 0;
+	}
 
 	/*! Get the field position of a specified field.
 	  \param field field to get

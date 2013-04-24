@@ -133,21 +133,24 @@ int load_fix_version (XmlElement& xf, Ctxt& ctxt);
 int load_fields(XmlElement& xf, FieldSpecMap& fspec);
 void process_special_traits(const unsigned short field, FieldTraits& fts);
 int process_message_fields(const std::string& where, const XmlElement *xt, FieldTraits& fts,
-	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, const unsigned component);
-int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, FieldSpecMap& fspec);
+	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, const Components& compon);
+int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec,
+	FieldSpecMap& fspec, Components& compon);
 void process_ordering(MessageSpecMap& mspec);
 ostream *open_ofile(const string& odir, const string& fname, string& target);
 const string flname(const string& from);
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
 const string& filepart(const string& source, string& where);
-void generate_preamble(ostream& to, bool donotedit=true);
+void generate_preamble(ostream& to, const string& fname, bool donotedit=true);
 unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr, const string& name,
-	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist);
+	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist, const Components& compon);
 int precomp(XmlElement& xf, ostream& outf);
 int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique);
 void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int depth,
 	const string& msname, ostream& outp, ostream& outh, const string cls_prefix=string());
+void load_components(const XmlElement::XmlSet& comlist, Components& components);
+unsigned lookup_component(const Components& compon, const f8String& name);
 void binary_report();
 
 //-----------------------------------------------------------------------------------------
@@ -428,7 +431,8 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 }
 
 //-----------------------------------------------------------------------------------------
-int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, FieldSpecMap& fspec)
+int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec,
+	FieldSpecMap& fspec, Components& compon)
 {
 	int msgssLoaded(0), grpsparsed(0);
 
@@ -504,11 +508,11 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 		string elpart;
 		XmlElement::XmlSet grplist;
 		if ((*itr)->find(mkel(elname, "group", elpart), grplist))
-			grpsparsed += parse_groups(result.first->second, itr, name, ftonSpec, fspec, grplist);
+			grpsparsed += parse_groups(result.first->second, itr, name, ftonSpec, fspec, grplist, compon);
 
 		(*itr)->GetAttr("comment", result.first->second._comment);
 
-		process_message_fields(mkel(elname, "field", elpart), *itr, result.first->second._fields, ftonSpec, fspec, 0);
+		process_message_fields(mkel(elname, "field", elpart), *itr, result.first->second._fields, ftonSpec, fspec, compon);
 
 		++msgssLoaded;
 	}
@@ -521,7 +525,7 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 
 //-----------------------------------------------------------------------------------------
 unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr, const string& name,
-	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist)
+	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist, const Components& compon)
 {
 	unsigned result(0);
 
@@ -530,13 +534,16 @@ unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr
 		string gname, required;
 		if ((*gitr)->GetAttr("name", gname) && (*gitr)->GetAttr("required", required))
 		{
+			string compname;
+			unsigned compidx((*gitr)->GetAttr("component", compname) ? lookup_component(compon, compname) : 0);
+
 			// add group FieldTrait
 			FieldToNumMap::const_iterator ftonItr(ftonSpec.find(gname));
 			FieldSpecMap::const_iterator fs_itr;
 			if (ftonItr != ftonSpec.end() && (fs_itr = fspec.find(ftonItr->second)) != fspec.end())
 			{
 				if (!ritr._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
-					required == "Y", true, 0)))
+					required == "Y", true, compidx)))
 				{
 					cerr << "error: Could not add group trait object " << gname << endl;
 					++glob_errors;
@@ -546,11 +553,11 @@ unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr
 					fs_itr->second._used = true; 	// we always assume group count fields are used
 					pair<GroupMap::iterator, bool> gresult(
 						ritr._groups.insert(GroupMap::value_type(fs_itr->first, MessageSpec(gname))));
-					process_message_fields("group/field", *gitr, gresult.first->second._fields, ftonSpec, fspec, 0);
+					process_message_fields("group/field", *gitr, gresult.first->second._fields, ftonSpec, fspec, compon);
 					XmlElement::XmlSet comlist;
 					++result;
 					if ((*gitr)->find("group/group", comlist))
-						result += parse_groups(gresult.first->second, gitr, gname, ftonSpec, fspec, comlist);
+						result += parse_groups(gresult.first->second, gitr, gname, ftonSpec, fspec, comlist, compon);
 				}
 			}
 			else
@@ -601,10 +608,11 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 			}
 
 			ostringstream tostr;
-			tostr << "0x" << setfill('0') << hex << flitr->_field_traits.get();
+			tostr << "0x" << setfill('0') << setw(2) << hex << flitr->_field_traits.get();
 			outp << (spaceme ? spacer : " ");
-			outp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ", " << setw(3)
-				<< right << flitr->_ftype << ", " << setw(3) << right << flitr->_pos << ", " << tostr.str() << ')';
+			outp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ',' << setw(2)
+				<< right << flitr->_ftype << ',' << setw(3) << right << flitr->_pos <<
+				',' << setw(3) << right << flitr->_component << ',' << tostr.str() << ')';
 		}
 		outp << endl << "};" << endl;
 #if !defined PERMIT_CUSTOM_FIELDS
@@ -632,7 +640,7 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		outh << dspacer << "public:" << endl;
 		outh << d2spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl << endl;
 		outh << d2spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
-		outh << d2spacer << "virtual ~" << gsitr->second._name << "() {}" << endl;
+		outh << d2spacer << "~" << gsitr->second._name << "() {}" << endl;
 		if (gitr->second._groups.empty())
 			outh << d2spacer << "MessageBase *create_group() const { return new MessageBase(ctx, _msgtype(), _traits, "
 				<< gitr->second._fields.get_presence().size()
@@ -693,25 +701,34 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	for (FieldSpecMap::const_iterator fs_itr(fspec.begin()); fs_itr != fspec.end(); ++fs_itr)
 		ftonSpec.insert(FieldToNumMap::value_type(fs_itr->second._name, fs_itr->first));
 
+	XmlElement::XmlSet comlist;
+	Components components;
+	xf.find("fix/components/component", comlist);
+	load_components(comlist, components);
+
 	MessageSpecMap mspec;
 
-	int msgsloaded(load_messages(xf, mspec, ftonSpec, fspec));
+	int msgsloaded(load_messages(xf, mspec, ftonSpec, fspec, components));
 	if (!msgsloaded)
 		return result;
 	if (verbose)
+	{
 		cout << msgsloaded << " messages processed" << endl;
+		if (components.size())
+			cout << components.size() << " components processed" << endl;
+	}
 
 	process_ordering(mspec);
 
 	// output file preambles
-	generate_preamble(osu_hpp);
+	generate_preamble(osu_hpp, ctxt._out[Ctxt::router_hpp].first.second);
 	osu_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::router_hpp].first.second) << '_' << endl;
 	osu_hpp << "#define _" << flname(ctxt._out[Ctxt::router_hpp].first.second) << '_' << endl << endl;
 	osu_hpp << _csMap.find_ref(cs_start_namespace) << endl;
 	osu_hpp << "namespace " << ctxt._fixns << " {" << endl;
 	osu_hpp << endl << _csMap.find_ref(cs_divider) << endl;
 
-	generate_preamble(osc_hpp);
+	generate_preamble(osc_hpp, ctxt._out[Ctxt::classes_hpp].first.second);
 	osc_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::classes_hpp].first.second) << '_' << endl;
 	osc_hpp << "#define _" << flname(ctxt._out[Ctxt::classes_hpp].first.second) << '_' << endl << endl;
 	osc_hpp << _csMap.find_ref(cs_start_namespace) << endl;
@@ -723,7 +740,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_hpp << "class " << ctxt._clname << "_Router;" << endl;
 	osc_hpp << endl << _csMap.find_ref(cs_divider) << endl;
 
-	generate_preamble(osc_cpp);
+	generate_preamble(osc_cpp, ctxt._out[Ctxt::classes_cpp].first.second);
 	osc_cpp << _csMap.find_ref(cs_generated_includes) << endl;
 	osc_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first.second << '"' << endl;
 	osc_cpp << "#include \"" << ctxt._out[Ctxt::router_hpp].first.second << '"' << endl;
@@ -734,7 +751,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_cpp << _csMap.find_ref(cs_start_anon_namespace) << endl << endl;
 	osc_cpp << _csMap.find_ref(cs_divider) << endl;
 
-	generate_preamble(osr_cpp);
+	generate_preamble(osr_cpp, ctxt._out[Ctxt::traits_cpp].first.second);
 	osr_cpp << _csMap.find_ref(cs_generated_includes) << endl;
 	osr_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first.second << '"' << endl;
 	osr_cpp << "#include \"" << ctxt._out[Ctxt::router_hpp].first.second << '"' << endl;
@@ -780,11 +797,11 @@ int process(XmlElement& xf, Ctxt& ctxt)
 				}
 
 				ostringstream tostr;
-				tostr << "0x" << setfill('0') << hex << flitr->_field_traits.get();
+				tostr << "0x" << setfill('0') << setw(2) << hex << flitr->_field_traits.get();
 				osr_cpp << (spaceme ? spacer : " ");
-				osr_cpp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ", "
-					<< setw(3) << right << flitr->_ftype << ", " << setw(3) << right
-					<< flitr->_pos << ", " << tostr.str() << ')';
+				osr_cpp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ','
+					<< setw(2) << right << flitr->_ftype << ',' << setw(3) << right
+					<< flitr->_pos << ',' << setw(3) << right << flitr->_component << ',' << tostr.str() << ')';
 			}
 			osr_cpp << endl << "};" << endl;
 #if !defined PERMIT_CUSTOM_FIELDS
@@ -828,13 +845,13 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		else
 			osc_hpp << " {}" << endl;
 
-		osc_hpp << spacer << "virtual ~" << mitr->second._name << "() {}" << endl;
+		osc_hpp << spacer << "~" << mitr->second._name << "() {}" << endl;
 		if (!isHeader && !isTrailer)
 		{
-			osc_hpp << spacer << "virtual bool process(Router& rt) const { return (static_cast<"
+			osc_hpp << spacer << "bool process(Router& rt) const { return (static_cast<"
 				<< ctxt._clname << "_Router&>(rt))(this); }" << endl;
 			if (mitr->second._is_admin)
-				osc_hpp << spacer << "virtual bool is_admin() const { return true; }" << endl;
+				osc_hpp << spacer << "bool is_admin() const { return true; }" << endl;
 		}
 
 		osc_hpp << endl << spacer << "static const " << fsitr->second._name << "& get_msgtype() { return _msgtype; }" << endl;
@@ -864,6 +881,13 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_cpp << endl;
 	osc_cpp << "const " << ctxt._clname << "_BaseMsgEntry bme;" << endl;
 	osc_cpp << "const " << ctxt._clname << "_BaseEntry be;" << endl;
+
+	osc_cpp << "const char *cn[] = // Component names" << endl << '{' << endl;
+	osc_cpp << spacer << "\"\"," << endl;
+	for (Components::iterator citr(components.begin()); citr != components.end(); ++citr)
+		osc_cpp << spacer << '"' << citr->first << "\", // " << (1 + distance(components.begin(), citr)) << endl;
+	osc_cpp << "};" << endl;
+
 	osc_cpp << endl << _csMap.find_ref(cs_end_anon_namespace) << endl;
 	osc_cpp << endl << "} // namespace " << ctxt._fixns << endl;
 
@@ -888,7 +912,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		<< ctxt._clname << "_BaseMsgEntry::Pair));" << endl;
 	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::NotFoundType "
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = {0, 0};" << endl;
-	osc_cpp << "namespace " << ctxt._fixns << " { F8MetaCntx ctx(" << ctxt._version << ", bme, be, \"" << ctxt._beginstr << "\"); }" << endl;
+	osc_cpp << "namespace " << ctxt._fixns << " { F8MetaCntx ctx(" << ctxt._version << ", bme, be, cn, \"" << ctxt._beginstr << "\"); }" << endl;
 
 // ==================================== Message router ==================================
 
@@ -922,7 +946,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	if (!gen_classes.empty())
 	{
 		bool is_server(gen_classes == "server");
-		generate_preamble(oss_hpp, false);
+		generate_preamble(oss_hpp, ctxt._out[Ctxt::session_hpp].first.second, false);
 		oss_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::session_hpp].first.second) << '_' << endl;
 		oss_hpp << "#define _" << flname(ctxt._out[Ctxt::session_hpp].first.second) << '_' << endl;
 		oss_hpp << endl << _csMap.find_ref(cs_divider) << endl;
@@ -1000,14 +1024,14 @@ int process(XmlElement& xf, Ctxt& ctxt)
 // ================================= Field processing =====================================
 
 	// output file preambles
-	generate_preamble(ost_hpp);
+	generate_preamble(ost_hpp, ctxt._out[Ctxt::types_hpp].first.second);
 	ost_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::types_hpp].first.second) << '_' << endl;
 	ost_hpp << "#define _" << flname(ctxt._out[Ctxt::types_hpp].first.second) << '_' << endl << endl;
 	ost_hpp << _csMap.find_ref(cs_start_namespace) << endl;
 	ost_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	ost_hpp << endl << _csMap.find_ref(cs_divider) << endl;
-	generate_preamble(ost_cpp);
+	generate_preamble(ost_cpp, ctxt._out[Ctxt::types_cpp].first.second);
 	ost_cpp << _csMap.find_ref(cs_generated_includes) << endl;
 	ost_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first.second << '"' << endl;
 	ost_cpp << _csMap.find_ref(cs_divider) << endl;
@@ -1151,5 +1175,12 @@ void binary_report()
 #else
 	cout << "GCC not used. No information available." << endl;
 #endif
+}
+
+//-------------------------------------------------------------------------------------------------
+unsigned lookup_component(const Components& compon, const f8String& name)
+{
+	Components::const_iterator citr(compon.find(name));
+	return citr != compon.end() ? 1 + distance(compon.begin(), citr) : 0;
 }
 

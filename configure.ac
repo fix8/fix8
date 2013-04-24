@@ -276,7 +276,6 @@ AC_ARG_WITH(sleep,
 
 AC_ARG_WITH(poco,
   AC_HELP_STRING([--with-poco=DIR],[location of Poco]),
-
 [
 	CPPFLAGS="$CPPFLAGS -I${withval}/include"
 	LDFLAGS="$LDFLAGS -L${withval}/lib"
