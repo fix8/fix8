@@ -13,8 +13,11 @@
 using namespace FIX8;
 using namespace FIX8::UTEST;
 
+/// A helper class to create/remove log directory
 class log_fixture
 {
+    Poco::File directory;
+
     void unlink_directory()
     {
         if ( directory.exists() && directory.isDirectory() )
@@ -31,6 +34,9 @@ class log_fixture
     }
 
 public:
+
+    /*! Ctor
+        \param curPath log file directory path */
     log_fixture(f8String& curPath):
     directory(curPath + "/"+ "log")
     {
@@ -38,13 +44,19 @@ public:
         directory.createDirectory();
     }
 
+    /// Dtor
     ~log_fixture()
     {
         unlink_directory();
     }
-    Poco::File directory;
 };
 
+/*! helper function to test log line
+    \param str actual result string
+    \param seq expected seq
+    \param thread expected thread number
+    \param direction expected direction
+    \param message expected log string*/
 void test_log_line(f8String& str, f8String seq, f8String thread, f8String direction,
                    f8String message)
 {
@@ -57,6 +69,10 @@ void test_log_line(f8String& str, f8String seq, f8String thread, f8String direct
     EXPECT_EQ(size_t(18), token[4].length());
     EXPECT_EQ(message, token[5]);
 }
+
+/*! log file creation test
+    \param filelogger test suit name
+    \param create_logfile test case name*/
 
 TEST(filelogger, create_logfile)
 {
@@ -97,6 +113,10 @@ TEST(filelogger, create_logfile)
     test_log_line(lines[2], "0000002", "A", "out", "second_message_out");
     test_log_line(lines[3], "0000003", "A", "out", "third_message_out");
 }
+
+/*! log file rotate test
+    \param filelogger test suit name
+    \param rotate test case name*/
 
 TEST(filelogger, rotate)
 {

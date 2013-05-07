@@ -14,6 +14,7 @@
 using namespace FIX8;
 using namespace FIX8::UTEST;
 
+/// A helper class to create/remove persist file directory
 class persist_fixture
 {
     bool before, after;
@@ -34,6 +35,12 @@ class persist_fixture
     }
 
 public:
+
+    /*! Ctor
+        \param curPath log persist directory path
+        \param before_clear will remove existed persist files and folder in Ctor when it is set to true
+        \param after_clear will remove existed persist files and folder in Dtor when it is set to true*/
+
     persist_fixture(f8String& curPath, bool before_clear = true, bool after_clear = false):
     before(before_clear),
     after(after_clear),
@@ -47,6 +54,7 @@ public:
         filePer.initialise(curPath + "/" + "store", "utest_log");
     }
 
+    /// Dtor
     ~persist_fixture()
     {
         if (after)
@@ -55,10 +63,17 @@ public:
         }
     }
 
+    /// file persister
     FilePersister filePer;
 };
 
+/// current working path
 f8String curPath = Poco::Path::current();
+
+
+/*! persist file creation test
+    \param filePersister test suit name
+    \param create_file test case name*/
 
 TEST(filePersister, create_file)
 {
@@ -66,6 +81,10 @@ TEST(filePersister, create_file)
     EXPECT_TRUE(exist("store/utest_log.idx"));
     EXPECT_TRUE(exist("store/utest_log"));
 }
+
+/*! sequence number test
+    \param filePersister test suit name
+    \param seq_control test case name*/
 
 TEST(filePersister, seq_control)
 {
@@ -92,6 +111,11 @@ TEST(filePersister, seq_control)
     EXPECT_EQ(max, target_seq);
 }
 
+/*! message persist test
+    \param filePersister test suit name
+    \param message_store test case name*/
+
+
 TEST(filePersister, message_store)
 {
     persist_fixture fixture(curPath, true, true);
@@ -116,6 +140,10 @@ TEST(filePersister, message_store)
     EXPECT_FALSE(fixture.filePer.get(0, to));
 }
 
+/*! last sequence number test
+    \param filePersister test suit name
+    \param get_last_seqnum test case name*/
+
 TEST(filePersister, get_last_seqnum)
 {
     persist_fixture fixture(curPath, true, true);
@@ -139,6 +167,10 @@ TEST(filePersister, get_last_seqnum)
     EXPECT_EQ(max, fixture.filePer.get_last_seqnum(last));
 }
 
+/*! test function FilePersister::find_nearest_highest_seq
+    \param filePersister test suit name
+    \param find_nearest_highest_seq test case name*/
+
 TEST(filePersister, find_nearest_highest_seq)
 {
     persist_fixture fixture(curPath, true, true);
@@ -155,15 +187,20 @@ TEST(filePersister, find_nearest_highest_seq)
     EXPECT_EQ(unsigned(0), fixture.filePer.find_nearest_highest_seqnum(max, 10));
 }
 
+/// A helper session to check retransmitted messages
+
 class check_session : public Session
 {
 public:
+
+    /// Ctor
     check_session(const F8MetaCntx& ctx):
         Session(ctx)
     {
         _connection = new Connection(NULL, *this, false);
     };
 
+    /// Dtor
     ~check_session()
     {
         _timer.clear();
@@ -171,6 +208,8 @@ public:
         _timer.join();
     };
 
+    /*! retrans_callback overload
+            add resent messages to a local map for future check*/
     virtual bool retrans_callback(const SequencePair& with, RetransmissionContext& rctx)
     {
         _resends.insert(std::make_pair(with.first, with.second));
@@ -179,6 +218,10 @@ public:
 
     std::map<unsigned, f8String> _resends;
 };
+
+/*!test for getting a bundle of persisted messages.
+    \param filePersister test suit name
+    \param resend_get test case name*/
 
 TEST(filePersister, resend_get)
 {
@@ -206,7 +249,10 @@ TEST(filePersister, resend_get)
 
 }
 
-//read from persist file
+/*!persist file read test
+    \param filePersister test suit name
+    \param read_from_file test case name*/
+
 TEST(filePersister, read_from_file)
 {
     {

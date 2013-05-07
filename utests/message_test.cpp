@@ -9,10 +9,18 @@
 using namespace FIX8;
 using namespace FIX8::UTEST;
 
+/*!message missing mandatory field
+    \param message test suit name
+    \param missing_field test case name*/
+
 TEST(message, missing_field)
 {
     EXPECT_THROW(Message::factory(ctx, "8=FIX.4.2\0019=12\001\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\00198=0\00110=098\001"), std::exception);
 }
+
+/*!logon decoding test
+    \param message test suit name
+    \param logon_decode test case name*/
 
 TEST(message, logon_decode)
 {
@@ -32,6 +40,10 @@ TEST(message, logon_decode)
     message->get(value); \
     test_fun(expect, value()); \
 }
+
+/*!new order entry decoding test
+    \param message test suit name
+    \param neworder_decode test case name*/
 
 TEST(message, neworder_decode)
 {
@@ -92,6 +104,11 @@ TEST(message, neworder_decode)
     neworder = NULL;
 }
 
+
+/*!new order entry (with repeating groups) decoding test
+    \param message test suit name
+    \param neworder_group_decode test case name*/
+
 TEST(message, neworder_group_decode)
 {
     Message * neworder = Message::factory(ctx, "8=FIX.4.2\0019=190\00135=D\00149=CLIENT\00156=SERVER\00134=78\00150=S\001142=US,IL\00157=G\00152=20130304-05:06:14\00111=4\0011=54129\00121=1\00155=OC\001167=OPT\001107=TEST SYMBOL\00154=1\00160=20130304-05:06:14\00138=50.00\00140=2\00144=400.50\00159=0\00158=TEST\00178=2\00179=FIRST\00180=20\00179=SECOND\00180=30\00110=221\001");
@@ -110,6 +127,9 @@ TEST(message, neworder_group_decode)
     neworder = NULL;
 }
 
+/*!checksum test
+    \param message test suit name
+    \param calc_chksum test case name*/
 
 TEST(message, calc_chksum)
 {
@@ -130,6 +150,10 @@ TEST(message, calc_chksum)
     EXPECT_EQ(unsigned(0), Message::calc_chksum(empty.c_str()));
 }
 
+/*!checksum formating test
+    \param message test suit name
+    \param fmt_chksum test case name*/
+
 TEST(message, fmt_chksum)
 {
     EXPECT_EQ("000", Message::fmt_chksum(0));
@@ -137,6 +161,11 @@ TEST(message, fmt_chksum)
     EXPECT_EQ("023", Message::fmt_chksum(23));
     EXPECT_EQ("999", Message::fmt_chksum(999));
 }
+
+/*!helper to test MessageBase::extract_element
+    \param msg field string
+    \param expect_tag expected field tag
+    \param expect_val expected field val*/
 
 void extract_element_test(f8String msg, f8String expect_tag, f8String expect_val)
 {
@@ -153,6 +182,10 @@ void extract_element_test(f8String msg, f8String expect_tag, f8String expect_val
     EXPECT_EQ(expect_tag, sTag);
 }
 
+/*!MessageBase::extract_element test
+    \param message test suit name
+    \param extract_element test case name*/
+
 TEST(message, extract_element)
 {
     extract_element_test("8=FIX.4.2", "8", "FIX.4.2");
@@ -160,6 +193,10 @@ TEST(message, extract_element)
     extract_element_test("=FIX.4.2", "", "FIX.4.2");
     extract_element_test("", "", "");
 }
+
+/*!logon encoding test
+    \param message test suit name
+    \param logon_encode test case name*/
 
 TEST(message, logon_encode)
 {
@@ -173,6 +210,10 @@ TEST(message, logon_encode)
     delete logon;
     logon = NULL;
 }
+
+/*!new order entry encoding test
+    \param message test suit name
+    \param neworder_encode test case name*/
 
 TEST(message, neworder_encode)
 {
@@ -209,6 +250,10 @@ TEST(message, neworder_encode)
     delete nos;
     nos = NULL;
 }
+
+/*!new order entry (with repeating groups) encoding test
+    \param message test suit name
+    \param nestedGroup_encode test case name*/
 
 TEST(message, nestedGroup_encode)
 {

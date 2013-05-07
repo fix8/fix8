@@ -45,6 +45,10 @@
 using namespace FIX8;
 using namespace FIX8::UTEST;
 
+/*!class SessionID test
+    \param sessionId test suit name
+    \param sessionId test case name*/
+
 TEST(sessionId, sessionId)
 {
     //only well formated string supported
@@ -70,11 +74,14 @@ TEST(sessionId, sessionId)
     EXPECT_TRUE(part_id.get_targetCompID()().empty());
 }
 
+/// a test session
 class test_session : public FIX8::Session
 {
     utest_Router  _router;
 
 public:
+
+    /// Ctor
     test_session(const FIX8::F8MetaCntx& ctx, const FIX8::SessionID& sid, FIX8::Persister *persist=0,
         FIX8::Logger *logger=0, FIX8::Logger *plogger=0) : Session(ctx, sid, persist, logger, plogger)
     {
@@ -83,6 +90,7 @@ public:
         _timer.join();
     }
 
+    /// Dtor
     ~test_session(){}
 
     bool handle_application(const unsigned seqnum, const FIX8::Message *msg)
@@ -90,13 +98,20 @@ public:
         return enforce(seqnum, msg) || msg->process(_router);
     }
 
-    //helpers
+    /// used to get session state
     States::SessionStates getState() {return _state;}
+
+    /// used to get next receive seq
     unsigned get_next_receive_seq() {return _next_receive_seq;}
+
+    /// used to set last received seq
     void set_last_received(Tickval& val) {_last_received = val;}
+
+    ///start heartbeat service thread
     void kickHBService() {heartbeat_service();}
 };
 
+/// a session fixture to create and destory test session
 class session_fixture
 {
 public:
@@ -105,6 +120,7 @@ public:
     PipeLogger * sLogger;
     test_session * ss;
 
+    /// Ctor, create a test session with memory persister and pipe logger
     session_fixture()
     {
         SessionID id("FIX.4.2:A12345B->COMPARO");
@@ -125,6 +141,7 @@ public:
         ss = new test_session(ctx, id, per, sLogger, pLogger);
     };
 
+    /// Dtor
     ~session_fixture()
     {
         delete ss;
@@ -134,11 +151,13 @@ public:
     };
 };
 
+/// a initiator fixture, inherited from session_fixture
 class initiator_fixture : public session_fixture
 {
 public:
     ClientConnection * initiator;
 
+    /// Ctor, create a test initiator connected to "127.0.0.1:80"
     initiator_fixture()
     {
         Poco::Net::SocketAddress addr("127.0.0.1:80");
@@ -147,6 +166,7 @@ public:
         ss->start(initiator, false);
     };
 
+    /// Dtor
     ~initiator_fixture()
     {
         ss->stop();
@@ -154,6 +174,7 @@ public:
     };
 };
 
+/// gtest test suit event
 class sessionTest : public ::testing::Test
 {
 protected:
@@ -170,9 +191,15 @@ public:
     static unsigned recv_seq;
 };
 
+/// global initiator fixture
 initiator_fixture sessionTest::initiator_test;
+
+/// global incoming sequence number
 unsigned sessionTest::recv_seq;
 
+/*!helper to fill incoming message header
+    \param header message header pointer
+    \param seq sequence number*/
 void fillSendHeader(MessageBase * header, unsigned seq)
 {
     *header << new msg_seq_num(seq)
@@ -183,6 +210,9 @@ void fillSendHeader(MessageBase * header, unsigned seq)
             << new TargetSubID("G")
             << new SenderLocationID("AU,SY");
 }
+
+/*!helper to fill output message header
+    \param header message header pointer*/
 
 void fillRecvHeader(MessageBase * header)
 {
@@ -195,6 +225,7 @@ void fillRecvHeader(MessageBase * header)
             << new SenderLocationID("AU,SY");
 }
 
+///helper to get the last output message
 f8String getSingleMsg()
 {
     if(sessionTest::initiator_test.initiator->_output.empty())
@@ -207,6 +238,7 @@ f8String getSingleMsg()
     return output;
 }
 
+///helper to get all output messages
 std::vector<f8String> getMsgs()
 {
     std::vector<f8String> ret = sessionTest::initiator_test.initiator->_output;
@@ -214,10 +246,15 @@ std::vector<f8String> getMsgs()
     return ret;
 }
 
+///helper to clear cached output messages
 void clearOutputs()
 {
     sessionTest::initiator_test.initiator->_output.clear();
 }
+
+/*!helper to create a single new order and encode it to string
+    \param seq sequence number
+    \return new order entry in string format*/
 
 f8String composeOrder(unsigned seq)
 {
@@ -242,6 +279,10 @@ f8String composeOrder(unsigned seq)
     delete nos;
     return tmp;
 }
+
+/*!session logon test
+    \param sessionTest test suit name
+    \param logon test case name*/
 
 TEST_F(sessionTest, logon)
 {
@@ -269,9 +310,13 @@ TEST_F(sessionTest, logon)
     clearOutputs();
 }
 
+/*!session resend request test
+    \param sessionTest test suit name
+    \param handle_resend_request test case name*/
+
 TEST_F(sessionTest, handle_resend_request)
 {
-    //no mess.ge available
+    //no message available
     ResendRequest * resend = new ResendRequest;
     fillRecvHeader(resend->Header());
     *resend << new BeginSeqNo(1) << new EndSeqNo(4);
@@ -373,6 +418,10 @@ TEST_F(sessionTest, handle_resend_request)
     clearOutputs();
 }
 
+/*!session sequence rest test
+    \param sessionTest test suit name
+    \param handle_seq_reset test case name*/
+
 TEST_F(sessionTest, handle_seq_reset)
 {
     SequenceReset * reset = new SequenceReset;
@@ -388,6 +437,10 @@ TEST_F(sessionTest, handle_seq_reset)
     EXPECT_EQ(unsigned(100), initiator_test.ss->get_next_receive_seq());
     recv_seq = 100;
 }
+
+/*!incoming test request test
+    \param sessionTest test suit name
+    \param handle_test_request test case name*/
 
 TEST_F(sessionTest, handle_test_request)
 {
@@ -408,6 +461,10 @@ TEST_F(sessionTest, handle_test_request)
 
     clearOutputs();
 }
+
+/*!output test request test
+    \param sessionTest test suit name
+    \param send_test_request test case name*/
 
 TEST_F(sessionTest, send_test_request)
 {
