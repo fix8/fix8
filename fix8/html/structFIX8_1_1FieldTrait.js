@@ -56,16 +56,16 @@ var structFIX8_1_1FieldTrait =
     ] ],
     [ "FieldTrait", "structFIX8_1_1FieldTrait.html#ab7783c7a6b1cfbd20ae49b24cace1ba1", null ],
     [ "FieldTrait", "structFIX8_1_1FieldTrait.html#af875cf9805ef3aac9a9b8f17732ebf0b", null ],
-    [ "FieldTrait", "structFIX8_1_1FieldTrait.html#a075d1df62b285730da008f424a3ce176", null ],
-    [ "FieldTrait", "structFIX8_1_1FieldTrait.html#a9d5a17d5b237c567bf483c16d68ac4ae", null ],
+    [ "FieldTrait", "structFIX8_1_1FieldTrait.html#ace0f6f94885f78eac83c094628e15aec", null ],
+    [ "FieldTrait", "structFIX8_1_1FieldTrait.html#a46ccefdb0ec688b1fe40691b2e94e287", null ],
     [ "is_char", "structFIX8_1_1FieldTrait.html#a80e16274daadef511f70f23668f9070f", null ],
     [ "is_float", "structFIX8_1_1FieldTrait.html#abed859f080e54c91ef5584e8902092cc", null ],
     [ "is_int", "structFIX8_1_1FieldTrait.html#abd4c514c4bca06aa8fbeda03fa056ebe", null ],
     [ "is_string", "structFIX8_1_1FieldTrait.html#a7ed482ef813060151fdd6e6a27cc9528", null ],
     [ "operator<<", "structFIX8_1_1FieldTrait.html#a4234c29e411096c724398de0d1ce1ae0", null ],
+    [ "_component", "structFIX8_1_1FieldTrait.html#a95fc0738aa9838b003d951fff7f23ab8", null ],
     [ "_field_traits", "structFIX8_1_1FieldTrait.html#aefce017fe6bffd0cd896f4326778d2d8", null ],
     [ "_fnum", "structFIX8_1_1FieldTrait.html#aa024cc9be8a8d656409280d6816e74cb", null ],
     [ "_ftype", "structFIX8_1_1FieldTrait.html#a2a832687fe650074fc14671a540b450c", null ],
-    [ "_pos", "structFIX8_1_1FieldTrait.html#a906ef6f37676ffe9c1652f150a543489", null ],
-    [ "_subpos", "structFIX8_1_1FieldTrait.html#ab303d64670a3d304ad15ed2eb26774bf", null ]
+    [ "_pos", "structFIX8_1_1FieldTrait.html#a906ef6f37676ffe9c1652f150a543489", null ]
 ];

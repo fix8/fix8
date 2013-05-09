@@ -15,6 +15,7 @@ var classFIX8_1_1Configuration =
     [ "find_session", "classFIX8_1_1Configuration.html#ac3e825f73abbf5158e68bd65e67b9107", null ],
     [ "get_address", "classFIX8_1_1Configuration.html#ace764895c637f1ceb7d466505a6687df", null ],
     [ "get_all_sessions", "classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28", null ],
+    [ "get_always_seqnum_assign", "classFIX8_1_1Configuration.html#a8859935c271ff239ab4d093a4549c7bf", null ],
     [ "get_default_appl_ver_id", "classFIX8_1_1Configuration.html#aae45bd1594aa91931eff6a0fa4ed9288", null ],
     [ "get_heartbeat_interval", "classFIX8_1_1Configuration.html#ab5e71fcd3c960ca2819eebc950905605", null ],
     [ "get_logfile_rotation", "classFIX8_1_1Configuration.html#a8dd08aba00b3d263115dcb2018ff8365", null ],

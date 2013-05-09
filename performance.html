@@ -48,6 +48,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </a>
           <a class="brand" href="#"><img src="fix8/fix8_Logo_RGB.png" width="28" height="28" /a></a>
           <div class="nav-collapse">
@@ -63,6 +64,7 @@
               <li class="active"><a href="#">Performance</a></li>
               <li><a href="fix8/html">API Documentation</a></li>
 				  <li><a href="aboutus.html">About Us</a></li>
+              <li><a href="http://eepurl.com/yNdzX">Register</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -123,8 +125,8 @@
 					<p>Our test platform has the following specifications:</p>
 <pre>
 Fedora release 18 (Spherical Cow)
-Linux Version 3.8.1-201.fc18 x86_64 GNU/Linux
-Compiled #1 SMP Thu Feb 28 19:23:08 UTC 2013
+Linux Version 3.8.9-200.fc18.x86_64 GNU/Linux
+Compiled #1 SMP Fri Apr 26 12:50:07 UTC 2013
 Thirty-two (16x2 HT) Intel(R) Xeon(R) CPU E5-2690 @ 2.90GHz
 20480 KB Cache; 128GB RAM
 185691 BogoMIPS Total
@@ -378,37 +380,37 @@ int main(int argc, char *argv[])
 								<td>Quickfix</td>
 								<td>encode</td>
 								<td>100000</td>
-								<td>0.52</td>
-								<td>193800</td>
-								<td>5.2</td>
+								<td>0.529</td>
+								<td>188695.409</td>
+								<td>5.29</td>
 								<td>-</td>
 							</tr>
 							<tr class="success">
 								<td></td>
 								<td>decode</td>
 								<td>100000</td>
-								<td>1.51</td>
-								<td>66249</td>
-								<td>15.1</td>
+								<td>1.527</td>
+								<td>65499.295</td>
+								<td>15.27</td>
 								<td>-</td>
 							</tr>
 							<tr class="success">
 								<td>Fix8</td>
 								<td>encode</td>
 								<td>100000</td>
-								<td>0.39</td>
-								<td>254154</td>
-								<td>3.9</td>
-								<td><h4>25</h4></td>
+								<td>0.192</td>
+								<td>520827.366</td>
+								<td>1.92</td>
+								<td><h4>63.8</h4></td>
 							</tr>
 							<tr class="success">
 								<td></td>
 								<td>decode</td>
 								<td>100000</td>
-								<td>0.79</td>
-								<td>126582</td>
-								<td>7.9</td>
-								<td><h4>48</h4></td>
+								<td>0.975</td>
+								<td>102578.748</td>
+								<td>9.75</td>
+								<td><h4>36.2</h4></td>
 							</tr>
 						</tbody>
 					</table>
@@ -418,7 +420,7 @@ int main(int argc, char *argv[])
 			<div class="row">
 				<div class="span12">
 					<h2>Conclusion</h2>
-					<p>For the same message, Fix8 encodes <em><b>25% faster</b></em> and decodes <em><b>48% faster</b></em> for an average improvement of <em><b>36.5%</b></em> over Quickfix.</p>
+					<p>For the same message, Fix8 encodes <em><b>64% faster</b></em> and decodes <em><b>36% faster</b></em> for an average improvement of close to <em><b>50%</b></em> over Quickfix.</p>
 				</div>
 			</div>
 		</div>
@@ -608,11 +610,11 @@ x       Exit
 						If all has gone to plan you should have two log files, <code>server</code> and <code>client</code>. Examine the contents of these
 						two files to see the results.
 <pre>
-% more server client
-0000003 A 2013-04-22 10:45:21.438952110 Encode: 3.401137120 secs, 500026 msgs, 0.000006802 secs/msg, 147017.30 msgs/sec
-0000004 A 2013-04-22 10:45:21.438976863 Decode: 13.232596643 secs, 1965737 msgs, 0.000006732 secs/msg, 148552.63 msgs/sec
-0000005 A 2013-04-22 10:45:20.487128304 Encode: 14.243466743 secs, 1965737 msgs, 0.000007246 secs/msg, 138009.73 msgs/sec
-0000006 A 2013-04-22 10:45:20.487153604 Decode: 2.720368959 secs, 500026 msgs, 0.000005440 secs/msg, 183808.16 msgs/sec
+% cat client server|egrep "Encode|Decode"
+0000003 A 2013-05-03 20:15:00.855875931 Encode: 1.372111365 secs, 500005 msgs, 0.000002744 secs/msg, 364405.55 msgs/sec
+0000004 A 2013-05-03 20:15:00.855901905 Decode: 13.087327673 secs, 1963246 msgs, 0.000006666 secs/msg, 150011.22 msgs/sec
+0000005 A 2013-05-03 20:14:57.462742499 Encode: 5.719571982 secs, 1967623 msgs, 0.000002907 secs/msg, 344015.78 msgs/sec
+0000006 A 2013-05-03 20:14:57.909708719 Decode: 2.238811756 secs, 500004 msgs, 0.000004478 secs/msg, 223334.54 msgs/sec
 </pre>
 					<br>
 				</div>
@@ -637,34 +639,34 @@ x       Exit
 							<tr class="success">
 								<td>client</td>
 								<td>encode</td>
-								<td>500026</td>
-								<td>3.40</td>
-								<td>147017</td>
-								<td><b>6.80</b></td>
+								<td>500005</td>
+								<td>1.37</td>
+								<td>364405</td>
+								<td><b>2.74</b></td>
 							</tr>
 							<tr class="success">
 								<td></td>
 								<td>decode</td>
-								<td>1965737</td>
-								<td>13.23</td>
-								<td>148552</td>
-								<td><b>6.73</b></td>
+								<td>1963246</td>
+								<td>13.09</td>
+								<td>150011</td>
+								<td><b>6.67</b></td>
 							</tr>
 							<tr class="success">
 								<td>server</td>
 								<td>encode</td>
-								<td>1965737</td>
-								<td>14.24</td>
-								<td>138009</td>
-								<td><b>7.25</b></td>
+								<td>1963246</td>
+								<td>5.72</td>
+								<td>344015</td>
+								<td><b>2.91</b></td>
 							</tr>
 							<tr class="success">
 								<td></td>
 								<td>decode</td>
-								<td>500026</td>
-								<td>2.72</td>
-								<td>183808</td>
-								<td><b>5.44</b></td>
+								<td>500005</td>
+								<td>2.24</td>
+								<td>223334</td>
+								<td><b>4.48</b></td>
 							</tr>
 						</tbody>
 					</table>
@@ -680,11 +682,11 @@ x       Exit
 						<tbody>
 							<tr class="success">
 								<td>encode</td>
-								<td><b>7.03</b></td>
+								<td><b>2.83</b></td>
 							</tr>
 							<tr class="success">
 								<td>decode</td>
-								<td><b>6.09</b></td>
+								<td><b>5.57</b></td>
 							</tr>
 						</tbody>
 					</table>
@@ -695,7 +697,7 @@ x       Exit
 				<div class="span12">
 					<h2>Conclusion</h2>
 					<p>Most users will be interested in client encode and decode. On our test hardware, Fix8 encodes a <code>NewOrderSingle(D)</code> in
-					<em><b>6.80 &#xb5;s</b></em> and decodes an <code>ExecutionReport(8)</code> in <em><b>6.73 &#xb5;s</b></em> when compiled with gcc. It can also be seen that when averaged across client and server, decode performance is better than encode.</p>
+					<em><b>2.74 &#xb5;s</b></em> and decodes an <code>ExecutionReport(8)</code> in <em><b>6.67 &#xb5;s</b></em> when compiled with gcc. It can also be seen that when averaged across client and server, encode performance is better than decode.</p>
 				</div>
 			</div>
 		</div>
@@ -716,6 +718,7 @@ x       Exit
 			<li><a href="performance.html">Performance</a></li>
 			<li><a href="fix8/html">API Documentation</a></li>
 			<li><a href="aboutus.html">About Us</a></li>
+		   <li><a href="http://eepurl.com/yNdzX">Register</a></li>
 		</div>
 
 		<div class="modal-footer">

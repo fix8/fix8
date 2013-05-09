@@ -13,6 +13,8 @@ var classFIX8_1_1SessionID =
     [ "get_targetCompID", "classFIX8_1_1SessionID.html#a9cdbc97fa63ccff7bfbbb244fed06887", null ],
     [ "make_id", "classFIX8_1_1SessionID.html#a0ce1f3ba3cf5355bff480325f4acce0a", null ],
     [ "same_sender_comp_id", "classFIX8_1_1SessionID.html#a1bf9f1d4481a8f1fdcac77cceefa1367", null ],
+    [ "same_side_sender_comp_id", "classFIX8_1_1SessionID.html#a16e72dc46d81e80c5e7cd886e6da831d", null ],
+    [ "same_side_target_comp_id", "classFIX8_1_1SessionID.html#a9fc169dda1d473a5fbc5b7c0637f2633", null ],
     [ "same_target_comp_id", "classFIX8_1_1SessionID.html#a0973dc2e178dfbf64236fe27dab0190b", null ],
     [ "operator<<", "classFIX8_1_1SessionID.html#af3393e7c2e5215759a18d7ab166d33f7", null ],
     [ "_beginString", "classFIX8_1_1SessionID.html#a1b17296ef04fde9f7b7d0c27b0d9f28d", null ],

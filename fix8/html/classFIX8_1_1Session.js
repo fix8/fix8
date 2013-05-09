@@ -7,6 +7,7 @@ var classFIX8_1_1Session =
     [ "SessionControl", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caa", [
       [ "shutdown", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaa5016fc4b321b44eaa80c39a3736d980e", null ],
       [ "print", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaaa43fb4836277e668cd544a67c08cace7", null ],
+      [ "printnohb", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaa8c04699813bd889bf8bcc14ee9e78676", null ],
       [ "debug", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaa607f8c76c40e25275ff49a321241deff", null ],
       [ "count", "classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaac1a79fd8b7456de519547acba0066c25", null ]
     ] ],

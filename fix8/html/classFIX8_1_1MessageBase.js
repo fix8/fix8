@@ -1,6 +1,6 @@
 var classFIX8_1_1MessageBase =
 [
-    [ "MessageBase", "classFIX8_1_1MessageBase.html#adc086e165f4594152c7174b7e87cb8be", null ],
+    [ "MessageBase", "classFIX8_1_1MessageBase.html#ab9a9383222840d67734eea13bf39f276", null ],
     [ "MessageBase", "classFIX8_1_1MessageBase.html#a4af07392a04a883594f674a7d2929473", null ],
     [ "~MessageBase", "classFIX8_1_1MessageBase.html#ad427dadfefc45b8222ad53217df02c1b", null ],
     [ "add_field", "classFIX8_1_1MessageBase.html#af9a792a046a67021b4f77e79c59edc19", null ],
@@ -22,7 +22,7 @@ var classFIX8_1_1MessageBase =
     [ "encode_group", "classFIX8_1_1MessageBase.html#aa203939c71df2a3cc80f3f7f9f73ce05", null ],
     [ "extract_element", "classFIX8_1_1MessageBase.html#a4834ee4e156a54ba08d4e2e9278c433b", null ],
     [ "extract_element", "classFIX8_1_1MessageBase.html#a93b21de2c222aff5f3c31fb5f93cfe95", null ],
-    [ "extract_header", "classFIX8_1_1MessageBase.html#aa4fb49f4020c560d62ff30c8a4a0fe58", null ],
+    [ "extract_header", "classFIX8_1_1MessageBase.html#a84995000a9c39b0ab3795b977f575d88", null ],
     [ "extract_trailer", "classFIX8_1_1MessageBase.html#a9e14fbd1c185ea0ace2fabfbd8c82761", null ],
     [ "fields_begin", "classFIX8_1_1MessageBase.html#af8a32a1b0f825417e6a7d84af7566f9c", null ],
     [ "fields_end", "classFIX8_1_1MessageBase.html#aade3a679a7a820f5bcd0ac3fb63c8aec", null ],

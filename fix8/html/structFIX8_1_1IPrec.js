@@ -1,6 +1,6 @@
 var structFIX8_1_1IPrec =
 [
-    [ "IPrec", "structFIX8_1_1IPrec.html#a290492a97fed369230bb0c38de60bb3e", null ],
+    [ "IPrec", "structFIX8_1_1IPrec.html#ab214322da55ca3e07da4cef643b3c4fc", null ],
     [ "IPrec", "structFIX8_1_1IPrec.html#a1094760be36b01e0c006e18993dd4e96", null ],
     [ "operator<<", "structFIX8_1_1IPrec.html#a856e31d55dc7cb08738b18ebf043b26e", null ],
     [ "_prec", "structFIX8_1_1IPrec.html#ad09a6752f25dc222418a8aa1ce0c5768", null ],

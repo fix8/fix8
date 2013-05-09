@@ -5,6 +5,7 @@ var field_8hpp =
     [ "BaseField", "classFIX8_1_1BaseField.html", "classFIX8_1_1BaseField" ],
     [ "Field", "classFIX8_1_1Field.html", null ],
     [ "Field< int, field >", "classFIX8_1_1Field_3_01int_00_01field_01_4.html", "classFIX8_1_1Field_3_01int_00_01field_01_4" ],
+    [ "Field< char *, field >", "classFIX8_1_1Field_3_01char_01_5_00_01field_01_4.html", "classFIX8_1_1Field_3_01char_01_5_00_01field_01_4" ],
     [ "Field< f8String, field >", "classFIX8_1_1Field_3_01f8String_00_01field_01_4.html", "classFIX8_1_1Field_3_01f8String_00_01field_01_4" ],
     [ "Field< double, field >", "classFIX8_1_1Field_3_01double_00_01field_01_4.html", "classFIX8_1_1Field_3_01double_00_01field_01_4" ],
     [ "Field< char, field >", "classFIX8_1_1Field_3_01char_00_01field_01_4.html", "classFIX8_1_1Field_3_01char_00_01field_01_4" ],
@@ -101,5 +102,6 @@ var field_8hpp =
     [ "Common_SendingTime", "field_8hpp.html#a1eebc8f43c6af3a04ce9a917b5a35281", null ],
     [ "Common_TargetCompID", "field_8hpp.html#ae954b6d79778b6006f9fb8fccfb52a3b", null ],
     [ "Common_TestReqID", "field_8hpp.html#af44b18408c41e07d3a7e3f46890b2627", null ],
-    [ "Common_Text", "field_8hpp.html#af51f4d61b7ffb8ac325bdf8db7363a0b", null ]
+    [ "Common_Text", "field_8hpp.html#af51f4d61b7ffb8ac325bdf8db7363a0b", null ],
+    [ "MAX_MSGTYPE_FIELD_LEN", "field_8hpp.html#ac850a69853609eac9d0a7db133b5c55a", null ]
 ];

@@ -1,7 +1,7 @@
 var classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoSecurityAltID =
 [
     [ "NoSecurityAltID", "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoSecurityAltID.html#a7c1b02a61033c46dea661e70fd4590c5", null ],
-    [ "~NoSecurityAltID", "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoSecurityAltID.html#a2d366b6e6387dd514fd38124944d3598", null ],
+    [ "~NoSecurityAltID", "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoSecurityAltID.html#a788e68c0a692a189287115657e208486", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoSecurityAltID.html#ad607a03f1519a1fa317383041684ebee", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoSecurityAltID.html#a191c9d99d373ff56549e805c67e16066", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoSecurityAltID.html#a389b3c1062d2e93cccc28c580eea4db6", null ],

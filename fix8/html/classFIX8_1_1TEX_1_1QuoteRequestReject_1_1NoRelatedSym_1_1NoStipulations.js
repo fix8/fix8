@@ -1,7 +1,7 @@
 var classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoStipulations =
 [
     [ "NoStipulations", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoStipulations.html#a52d7a4b90fc59d536312c7237b3a3a57", null ],
-    [ "~NoStipulations", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoStipulations.html#ae2fe6e1706498eca9cbbdfa35ebfa526", null ],
+    [ "~NoStipulations", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoStipulations.html#a73c4dd66bb570f78ded4895dd757b79e", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoStipulations.html#a93168b2ac5450d56ed116772ff154324", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoStipulations.html#a6acf80e18d67f4dcaf371da84909751c", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoStipulations.html#ab1d3787fdc4b63b23b0259bfb3b5b431", null ],

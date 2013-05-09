@@ -259,8 +259,8 @@ var searchData=
   ['exectype_5ftriggered_5for_5factivated_5fby_5fsystem',['ExecType_TRIGGERED_OR_ACTIVATED_BY_SYSTEM',['../namespaceFIX8_1_1TEX.html#ab6bcc616ce11d0a5fa6d54530cb06316',1,'FIX8::TEX']]],
   ['executionacknowledgement',['ExecutionAcknowledgement',['../classFIX8_1_1TEX_1_1ExecutionAcknowledgement.html',1,'FIX8::TEX']]],
   ['executionacknowledgement',['ExecutionAcknowledgement',['../classFIX8_1_1TEX_1_1ExecutionAcknowledgement.html#a65a0e3c33e584524928775a2b4e3cf89',1,'FIX8::TEX::ExecutionAcknowledgement']]],
-  ['executionreport',['ExecutionReport',['../classFIX8_1_1TEX_1_1ExecutionReport.html',1,'FIX8::TEX']]],
   ['executionreport',['ExecutionReport',['../classFIX8_1_1TEX_1_1ExecutionReport.html#a2ebc1cbac333d7445f942d04c6a9ece5',1,'FIX8::TEX::ExecutionReport::ExecutionReport()'],['../classFIX8_1_1TEX_1_1ExecutionReport.html#a2ebc1cbac333d7445f942d04c6a9ece5',1,'FIX8::TEX::ExecutionReport::ExecutionReport()']]],
+  ['executionreport',['ExecutionReport',['../classFIX8_1_1TEX_1_1ExecutionReport.html',1,'FIX8::TEX']]],
   ['execvaluationpoint',['ExecValuationPoint',['../namespaceFIX8_1_1TEX.html#a7b7fd49c21296bee934aa7d15f13d524',1,'FIX8::TEX']]],
   ['exercisemethod',['ExerciseMethod',['../namespaceFIX8_1_1TEX.html#a9bbefcb7ec8a4af3ec9bafd5c360e37c',1,'FIX8::TEX']]],
   ['exercisemethod_5fautomatic',['ExerciseMethod_AUTOMATIC',['../namespaceFIX8_1_1TEX.html#ad74902fb7e5467e00cbaebda890d619e',1,'FIX8::TEX']]],
@@ -289,6 +289,7 @@ var searchData=
   ['expiretime',['ExpireTime',['../namespaceFIX8_1_1TEX.html#abf0a73143d4b8d8c9aea6e5a54f021b2',1,'FIX8::TEX']]],
   ['expqty',['ExpQty',['../namespaceFIX8_1_1TEX.html#a4f26f5bd8a657f2a1ff2ecce316236a5',1,'FIX8::TEX']]],
   ['extract_5felement',['extract_element',['../classFIX8_1_1MessageBase.html#a4834ee4e156a54ba08d4e2e9278c433b',1,'FIX8::MessageBase::extract_element(const char *from, const unsigned sz, char *tag, char *val)'],['../classFIX8_1_1MessageBase.html#a93b21de2c222aff5f3c31fb5f93cfe95',1,'FIX8::MessageBase::extract_element(const char *from, const unsigned sz, f8String &amp;tag, f8String &amp;val)']]],
-  ['extract_5fheader',['extract_header',['../classFIX8_1_1MessageBase.html#aa4fb49f4020c560d62ff30c8a4a0fe58',1,'FIX8::MessageBase']]],
+  ['extract_5felement_5ftest',['extract_element_test',['../message__test_8cpp.html#ae031e021ab532cd93d1a9f85c95df4cf',1,'message_test.cpp']]],
+  ['extract_5fheader',['extract_header',['../classFIX8_1_1MessageBase.html#a84995000a9c39b0ab3795b977f575d88',1,'FIX8::MessageBase']]],
   ['extract_5ftrailer',['extract_trailer',['../classFIX8_1_1MessageBase.html#a9e14fbd1c185ea0ace2fabfbd8c82761',1,'FIX8::MessageBase']]]
 ];

@@ -1,6 +1,6 @@
 var classFIX8_1_1FieldTraits =
 [
-    [ "FieldTraits", "classFIX8_1_1FieldTraits.html#acd72e23fc4d20d52fe232a883883a1dd", null ],
+    [ "FieldTraits", "classFIX8_1_1FieldTraits.html#a9f5c3fd54f8a652dee9b0e85767b54c6", null ],
     [ "FieldTraits", "classFIX8_1_1FieldTraits.html#a0d22358f9df5b13fafbb0190f6137452", null ],
     [ "add", "classFIX8_1_1FieldTraits.html#abf65465635c1ae0cbacccc2baef88c9c", null ],
     [ "add", "classFIX8_1_1FieldTraits.html#acdcba6aa470271e839b940b80e525cf0", null ],
@@ -11,6 +11,8 @@ var classFIX8_1_1FieldTraits =
     [ "get", "classFIX8_1_1FieldTraits.html#a4f46e2039cd035b47e76ba4b9532f073", null ],
     [ "get", "classFIX8_1_1FieldTraits.html#aec851286d5ec5610894bd2950d32d91d", null ],
     [ "get_presence", "classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa", null ],
+    [ "getComp", "classFIX8_1_1FieldTraits.html#a6a384696912278a5f6795ff55986ed27", null ],
+    [ "getComp", "classFIX8_1_1FieldTraits.html#a629cea2d8b5d2ee359c4fc3ba0c5566b", null ],
     [ "getPos", "classFIX8_1_1FieldTraits.html#a36a5f4a94f68491643a65107d4cfe835", null ],
     [ "getPos", "classFIX8_1_1FieldTraits.html#a35ce3522652fc53a477153b96458de43", null ],
     [ "getval", "classFIX8_1_1FieldTraits.html#ad0dd33a47bc2a0fe3ae80b178ac0fbdf", null ],

@@ -48,6 +48,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </a>
           <a class="brand" href="#"><img src="fix8/fix8_Logo_RGB.png" width="28" height="28" /a></a>
           <div class="nav-collapse">
@@ -63,6 +64,7 @@
 				  <li><a href="performance.html">Performance</a></li>
               <li><a href="fix8/html">API Documentation</a></li>
 				  <li><a href="aboutus.html">About Us</a></li>
+              <li><a href="http://eepurl.com/yNdzX">Register</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -100,7 +102,7 @@
 								<div id="generaleOne" class="accordion-body collapse">
 									<div class="accordion-inner">
 										Fix8 is a C++ development toolkit designed to provide <a href="http://www.fixprotocol.org">FIX</a> connectivity to userland applications.
-										Fix8 provides an API framework on which you can quickly develop a FIX interface.
+										Fix8 provides an API framework with which you can quickly develop a FIX interface.
 									</div>
 								</div>
 							</div>
@@ -295,7 +297,7 @@
 								</div>
 								<div class="accordion-group">
 									<div class="accordion-heading">
-										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeTwo">b) What libraries are required to build Fix8?</a>
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#platformeTwo">b) What binaries or libraries are required to build Fix8?</a>
 									</div>
 									<div id="platformeTwo" class="accordion-body collapse">
 										<div class="accordion-inner">
@@ -303,12 +305,15 @@
 											including <a href="http://http://gcc.gnu.org">gcc</a>,
 											<a href="http://www.gnu.org/software/libtool">libtool</a>. Also required is the
 											<a href="http://pocoproject.org/">Poco</a> library.
+											<br><br>
 											Lock free containers and atomics are required for Fix8. Fix8 contains the
 											<a href="http://calvados.di.unipi.it/dokuwiki/doku.php?id=ffnamespace:about">FastFlow</a> distribution which
 											is used by default. Alternatively you can use Intel <a href="http://threadingbuildingblocks.org/">TBB</a>.
-											<p>Optionally you can use
+											<br>Optionally you can use
 											Oracle <a href="http://www.oracle.com/technetwork/database/berkeleydb/overview/index.html">Berkeley DB</a>. If
 											you want to generate the API documentation you will also need <a href="http://www.doxygen.org">doxygen</a>.
+											<br>If you want to run the built-in unit tests, you will also need
+											<a href="https://code.google.com/p/googletest/">Google gtest</a>.
 										</div>
 									</div>
 								</div>
@@ -361,9 +366,9 @@
 												thing you need to do is call the base class method. Then add your extra fields...
 												<!--pre class="prettyprint linenums languague-css"-->
 												<pre>
-Message *my_sess::generate_logon()
+Message *my_sess::generate_logon(const unsigned heartbeat_interval, const f8String davi)
 {
-	Message *msg(Session::generate_logon());
+	Message *msg(Session::generate_logon(heartbeat_interval, davi));
 	// now add your raw data
 	string rawstuff("blah");
 	*msg << new TEX::RawDataLength(rawstuff.size());
@@ -469,14 +474,8 @@ MessageBase *gr11(nonpsid->create_group());
 												</div>
 												<div id="testFive" class="accordion-body collapse">
 													<div class="accordion-inner">
-														Yes. In two ways. Firstly, since you have complete control over the shape and nature of all FIX messages in your
+														Yes. Since you have complete control over the shape and nature of all FIX messages in your
 														application by supplying the schema to the compiler, you can fine tune the FIX spoken to include any field you wish.
-														Alternatively, Fix8 supports the addition of FIX fields in your application directly (without requiring the Fix8
-														compiler to regenerate any code). For speed and efficiency, you should always aim to use the former method.
-														In Fix8, the term 'custom field' really means additional fields not
-														defined in your schema. To use these, custom fields must be enabled when you run configure.
-								<pre>
-% ./configure --enable-customfields</pre>
 													</div>
 												</div>
 											</div>
@@ -546,7 +545,7 @@ MessageBase *gr11(nonpsid->create_group());
 											</div>
 											<div class="accordion-group">
 												<div class="accordion-heading">
-													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSix">e) When I run ./configure I get lots of errors</a>
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSix">e) When I run <tt>./configure</tt> I get lots of errors</a>
 												</div>
 												<div id="testSix" class="accordion-body collapse">
 													<div class="accordion-inner">
@@ -562,7 +561,7 @@ MessageBase *gr11(nonpsid->create_group());
 											</div>
 											<div class="accordion-group">
 												<div class="accordion-heading">
-													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSeven">f) When linking, Fix8 reports that PocoXML.so is missing. What do I do?</a>
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testSeven">f) When linking, Fix8 reports that <tt>PocoXML.so</tt> is missing. What do I do?</a>
 												</div>
 												<div id="testSeven" class="accordion-body collapse">
 													<div class="accordion-inner">
@@ -645,6 +644,20 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 </pre>
 												</div>
 											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testEleven">j) How do I build the built-in unit tests (gtest)?</a>
+												</div>
+												<div id="testEleven" class="accordion-body collapse">
+													<div class="accordion-inner">
+														Configure will by default attempt to locate your gtest installation. gtest recommends that you install this yourself so it is likely you will need to tell confgure where you have gtest installed. Use the following switch:
+<pre>
+% ./configure --with-gtest=/usr/src/gtest-1.6.0 [your usual options here]
+</pre>
+								When gtest is fouind, the test cases will be built.
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -659,7 +672,7 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 						<div class="accordion" id="accordion6">
 							<div class="accordion-group">
 								<div class="accordion-heading">
-									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#runningOne">a) Why is my CPU pegged at %100?</a>
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#runningOne">a) Why is my CPU pegged at 100% ?</a>
 								</div>
 								<div id="runningOne" class="accordion-body collapse">
 									<div class="accordion-inner">
@@ -691,11 +704,24 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 										To use, download and install google <a href="https://code.google.com/p/gperftools/">gperftools</a>.
 										You can either link your application directly to tcmalloc, as follows:
 <pre>
-%g++ -g -O2 -Wall -rdynamic -lrt -lfix8 -lpthread  -lPocoFoundation -lPocoNet -lPocoUtil -ltcmalloc_minimal -L../runtime -lmyfix -lz  -o hftest hftest.o
+% g++ -g -O2 -Wall -rdynamic -lrt -lfix8 -lpthread  -lPocoFoundation -lPocoNet -lPocoUtil -ltcmalloc_minimal -L../runtime -lmyfix -lz  -o hftest hftest.o
 </pre>
 										Alternatively, you can set the following environment variable before you run your application:
 <pre>
-% export LD_PERLOAD=/usr/local/lib/tcmalloc_minimal.so
+% export LD_PRELOAD=/usr/local/lib/tcmalloc_minimal.so
+</pre>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-group">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#runningThree">c) How do I run the unit tests?</a>
+								</div>
+								<div id="runningThree" class="accordion-body collapse">
+									<div class="accordion-inner">
+										Assuming you have successfully built the unit test applications (see above), simply run the following command. The test framework will report all failures. If you receive test failures please contact us (either through the support group or via Jira, see <a href="support.html">Support</a>.
+<pre>
+% make check
 </pre>
 									</div>
 								</div>
@@ -719,6 +745,7 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 				<li><a href="performance.html">Performance</a></li>
 				<li><a href="fix8/html">API Documentation</a></li>
 				<li><a href="aboutus.html">About Us</a></li>
+				<li><a href="http://eepurl.com/yNdzX">Register</a></li>
 			</div>
 			<div class="modal-footer">
 			  <p>&copy; <a href="mailto:fix@fix8.org">The Fix8 Team. </a>2010-13</p>

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['charrealm',['CharRealm',['../structFIX8_1_1CharRealm.html',1,'FIX8']]],
+  ['check_5fsession',['check_session',['../classcheck__session.html',1,'']]],
   ['clientconnection',['ClientConnection',['../classFIX8_1_1ClientConnection.html',1,'FIX8']]],
   ['clientsession',['ClientSession',['../classFIX8_1_1ClientSession.html',1,'FIX8']]],
   ['collateralassignment',['CollateralAssignment',['../classFIX8_1_1TEX_1_1CollateralAssignment.html',1,'FIX8::TEX']]],
@@ -19,6 +20,5 @@ var searchData=
   ['contraryintentionreport',['ContraryIntentionReport',['../classFIX8_1_1TEX_1_1ContraryIntentionReport.html',1,'FIX8::TEX']]],
   ['crossordercancelreplacerequest',['CrossOrderCancelReplaceRequest',['../classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest.html',1,'FIX8::TEX']]],
   ['crossordercancelrequest',['CrossOrderCancelRequest',['../classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html',1,'FIX8::TEX']]],
-  ['ctxt',['Ctxt',['../structFIX8_1_1Ctxt.html',1,'FIX8']]],
-  ['customfields',['CustomFields',['../classFIX8_1_1CustomFields.html',1,'FIX8']]]
+  ['ctxt',['Ctxt',['../structFIX8_1_1Ctxt.html',1,'FIX8']]]
 ];

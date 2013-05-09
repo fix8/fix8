@@ -30,6 +30,7 @@ var f8utils_8hpp =
     [ "InPlaceStrToLower", "f8utils_8hpp.html#adbbb9f9c65c6cbdf4d5a9d7446db7666", null ],
     [ "InPlaceStrToUpper", "f8utils_8hpp.html#a4137a195b29b8ed64119e8f16d040ee9", null ],
     [ "itoa", "f8utils_8hpp.html#a7c2009dc0b1b420da3204dc4af33daf8", null ],
+    [ "modp_dtoa", "f8utils_8hpp.html#aa61ff0a5f826f3c9369d7b27baf295e7", null ],
     [ "operator%", "f8utils_8hpp.html#a8e32a07b35645c5e6ad8b5e690334f55", null ],
     [ "operator%", "f8utils_8hpp.html#a036910d54250d93bbab27fd5138ec7d3", null ],
     [ "operator%", "f8utils_8hpp.html#ac3a510bf84e0bd6ebdc790256419e8ca", null ],

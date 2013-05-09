@@ -2,6 +2,7 @@ var searchData=
 [
   ['rce_5f',['rCE_',['../classXmlElement.html#a19ad3a90ff235dd17343f7f602b4dec0',1,'XmlElement']]],
   ['rcx_5f',['rCX_',['../classXmlElement.html#a67fb445cd0c0cd39982945373942e105',1,'XmlElement']]],
+  ['recv_5fseq',['recv_seq',['../classsessionTest.html#aea12258504af361c8d60ee1b11a8bba6',1,'sessionTest']]],
   ['reg_5f',['reg_',['../classFIX8_1_1RegExp.html#ad3f6b54728e6d3c28f8cef64acbca33b',1,'FIX8::RegExp']]],
   ['ren_5f',['rEn_',['../classXmlElement.html#a1d3e675692a01cff94d0f871611fbf4c',1,'XmlElement']]],
   ['rev_5f',['rEv_',['../classXmlElement.html#adc19c07619a18551e547f7e4115d6a00',1,'XmlElement']]],

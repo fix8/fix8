@@ -12,5 +12,6 @@ var searchData=
   ['pr_5ftarget_5fid',['pr_target_id',['../structFIX8_1_1States.html#a8164e8453dc8c6156fad3494285933c9a2fe12b40d150c8efe127006ffcd09bdd',1,'FIX8::States']]],
   ['present',['present',['../structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a991edcb48aed0a81994bee0ba128e1bc',1,'FIX8::FieldTrait']]],
   ['print',['print',['../classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaaa43fb4836277e668cd544a67c08cace7',1,'FIX8::Session']]],
+  ['printnohb',['printnohb',['../classFIX8_1_1Session.html#a3196cc395f678f1f52fd6498cdea2caaa8c04699813bd889bf8bcc14ee9e78676',1,'FIX8::Session']]],
   ['protocol_5flog',['protocol_log',['../classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2a0596d4c2007a735c0f84ad824f3eb283',1,'FIX8::Configuration']]]
 ];

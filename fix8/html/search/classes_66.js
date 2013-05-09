@@ -12,6 +12,7 @@ var searchData=
   ['ff_5funbounded_5fqueue_3c_20t_20_2a_20_3e',['ff_unbounded_queue&lt; T * &gt;',['../classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html',1,'FIX8']]],
   ['field',['Field',['../classFIX8_1_1Field.html',1,'FIX8']]],
   ['field_3c_20boolean_2c_20field_20_3e',['Field&lt; Boolean, field &gt;',['../classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html',1,'FIX8']]],
+  ['field_3c_20char_20_2a_2c_20field_20_3e',['Field&lt; char *, field &gt;',['../classFIX8_1_1Field_3_01char_01_5_00_01field_01_4.html',1,'FIX8']]],
   ['field_3c_20char_2c_20field_20_3e',['Field&lt; char, field &gt;',['../classFIX8_1_1Field_3_01char_00_01field_01_4.html',1,'FIX8']]],
   ['field_3c_20data_2c_20field_20_3e',['Field&lt; data, field &gt;',['../classFIX8_1_1Field_3_01data_00_01field_01_4.html',1,'FIX8']]],
   ['field_3c_20dayofmonth_2c_20field_20_3e',['Field&lt; DayOfMonth, field &gt;',['../classFIX8_1_1Field_3_01DayOfMonth_00_01field_01_4.html',1,'FIX8']]],

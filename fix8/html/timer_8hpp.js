@@ -1,5 +1,6 @@
 var timer_8hpp =
 [
+    [ "Timer", "classFIX8_1_1Timer.html", "classFIX8_1_1Timer" ],
     [ "TimerEvent", "classFIX8_1_1TimerEvent.html", "classFIX8_1_1TimerEvent" ],
     [ "Timer", "classFIX8_1_1Timer.html", "classFIX8_1_1Timer" ],
     [ "IntervalTimer", "classFIX8_1_1IntervalTimer.html", "classFIX8_1_1IntervalTimer" ],

@@ -1,9 +1,11 @@
 var f8config_8h =
 [
+    [ "CODECTIMING", "f8config_8h.html#a7517bfdc6242fe5186b818774a86efb2", null ],
     [ "CONFIGURE_OPTIONS", "f8config_8h.html#a2c90b46e6c2ae53cbbf439080a01fd91", null ],
     [ "CONFIGURE_SDATE", "f8config_8h.html#ac42e21b7a399c6a4665e84349bca5177", null ],
     [ "CONFIGURE_TIME", "f8config_8h.html#a661078846f76fdf65bb222943a71a844", null ],
     [ "CONFIGURE_TIME_NUM", "f8config_8h.html#aa9f4b710a2fbad8c48c513fd1e654a05", null ],
+    [ "HAS_GTEST", "f8config_8h.html#a818fc31639b2ef683f875d4a372b3138", null ],
     [ "HAS_POCO", "f8config_8h.html#a5dce2e44217226f8c8a4157bcd073c39", null ],
     [ "HAS_TR1_UNORDERED_MAP", "f8config_8h.html#a425e4a7e299e173b7c8aa0c895af5835", null ],
     [ "HAVE__BOOL", "f8config_8h.html#a862ffdbac7ac8323712310a418b7d9a3", null ],

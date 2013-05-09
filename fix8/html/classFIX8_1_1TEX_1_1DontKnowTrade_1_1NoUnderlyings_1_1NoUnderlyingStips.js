@@ -1,7 +1,7 @@
 var classFIX8_1_1TEX_1_1DontKnowTrade_1_1NoUnderlyings_1_1NoUnderlyingStips =
 [
     [ "NoUnderlyingStips", "classFIX8_1_1TEX_1_1DontKnowTrade_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a0820b241ade6445a3cb11683021ab213", null ],
-    [ "~NoUnderlyingStips", "classFIX8_1_1TEX_1_1DontKnowTrade_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a6eaca492e794698551080875c1546e47", null ],
+    [ "~NoUnderlyingStips", "classFIX8_1_1TEX_1_1DontKnowTrade_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a5c99ebcadc640886b7239f8c693fd731", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1DontKnowTrade_1_1NoUnderlyings_1_1NoUnderlyingStips.html#ad26c1674c032292e52158b685bc1a56c", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1DontKnowTrade_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a3d1ffb38b92f81b609edd360a6b03ac6", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1DontKnowTrade_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a4ece9b6da693625d27752bb9e39ae54b", null ],

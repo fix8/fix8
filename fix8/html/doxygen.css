@@ -1,4 +1,4 @@
-/* The standard CSS for doxygen */
+/* The standard CSS for doxygen 1.8.3.1 */
 
 body, table, div, p, dl {
 	font: 400 14px/19px Roboto,sans-serif;
@@ -6,7 +6,7 @@ body, table, div, p, dl {
 
 /* @group Heading Levels */
 
-h1 {
+h1.groupheader {
 	font-size: 150%;
 }
 
@@ -16,7 +16,7 @@ h1 {
 	margin: 10px 2px;
 }
 
-h2 {
+h2.groupheader {
 	border-bottom: 1px solid #66BCB3;
 	color: #24524E;
 	font-size: 150%;
@@ -27,7 +27,7 @@ h2 {
 	width: 100%;
 }
 
-h3 {
+h3.groupheader {
 	font-size: 100%;
 }
 
@@ -455,8 +455,11 @@ table.memberdecls {
 	color: #555;
 }
 
-.memItemLeft, .memItemRight, .memTemplParams {
-	border-bottom: 1px solid #D2EBE9;
+.memSeparator {
+        border-bottom: 1px solid #DEE4F0;
+        line-height: 1px;
+        margin: 0px;
+        padding: 0px;
 }
 
 .memItemLeft, .memTemplItemLeft {
@@ -470,6 +473,7 @@ table.memberdecls {
 .memTemplParams {
 	color: #347972;
         white-space: nowrap;
+	font-size: 80%;
 }
 
 /* @end */
@@ -648,12 +652,13 @@ span.mlabel {
         border-right:1px solid #B1DDD8;
         border-bottom:1px solid #B1DDD8;
 	text-shadow: none;
-        color: white;
-        margin-right: 4px;
-        padding: 2px 3px;
-        border-radius: 3px;
-        font-size: 7pt;
+	color: white;
+	margin-right: 4px;
+	padding: 2px 3px;
+	border-radius: 3px;
+	font-size: 7pt;
 	white-space: nowrap;
+	vertical-align: middle;
 }
 
 
@@ -758,7 +763,7 @@ table.doxtable th {
 }
 
 table.fieldtable {
-        width: 100%;
+        /*width: 100%;*/
         margin-bottom: 10px;
         border: 1px solid #8ECDC7;
         border-spacing: 0px;
@@ -781,9 +786,21 @@ table.fieldtable {
         vertical-align: top;
 }
 
+.fieldtable td.fieldname {
+        padding-top: 5px;
+}
+
 .fieldtable td.fielddoc {
         border-bottom: 1px solid #8ECDC7;
-        width: 100%;
+        /*width: 100%;*/
+}
+
+.fieldtable td.fielddoc p:first-child {
+        margin-top: 2px;
+}       
+        
+.fieldtable td.fielddoc p:last-child {
+        margin-bottom: 2px;
 }
 
 .fieldtable tr:last-child td {
@@ -824,6 +841,7 @@ table.fieldtable {
 	font-size: 11px;
 	background-image:url('tab_b.png');
 	background-repeat:repeat-x;
+	background-position: 0 -5px;
 	height:30px;
 	line-height:30px;
 	color:#69BDB5;
@@ -851,7 +869,10 @@ table.fieldtable {
 	display:block;
 	text-decoration: none;
 	outline: none;
+	color: #183835;
 	font-family: 'Lucida Grande',Geneva,Helvetica,Arial,sans-serif;
+	text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.9);
+	text-decoration: none;        
 }
 
 .navpath li.navelem a:hover

@@ -9,9 +9,9 @@ var classFIX8_1_1TEX_1_1CrossOrderCancelRequest =
     [ "NoSides", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest_1_1NoSides.html", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest_1_1NoSides" ],
     [ "NoUnderlyings", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest_1_1NoUnderlyings.html", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest_1_1NoUnderlyings" ],
     [ "CrossOrderCancelRequest", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html#a8ef447a6cf2f47d844dc60643bfa24e9", null ],
-    [ "~CrossOrderCancelRequest", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html#a69c8d405138c92eba505f99051ce0af7", null ],
+    [ "~CrossOrderCancelRequest", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html#a76c6169e7b152097cfa3091adaab79bd", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html#a40d67b5d29372c84c46d5b988da1d48e", null ],
-    [ "process", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html#aac60e47397d7c5e97c6778e565614af3", null ],
+    [ "process", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html#af85669ad7d748f4831b6a6443e596bb1", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html#a1209443c1792755d32fa06fa879a9faf", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html#a35c98d3afab50c10e6b71feb305dec28", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html#a63290b00417e34b153b9226725946006", null ]

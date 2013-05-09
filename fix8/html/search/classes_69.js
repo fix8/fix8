@@ -1,6 +1,7 @@
 var searchData=
 [
   ['illegalmessage',['IllegalMessage',['../structFIX8_1_1IllegalMessage.html',1,'FIX8']]],
+  ['initiator_5ffixture',['initiator_fixture',['../classinitiator__fixture.html',1,'']]],
   ['intervaltimer',['IntervalTimer',['../classFIX8_1_1IntervalTimer.html',1,'FIX8']]],
   ['invalidbodylength',['InvalidBodyLength',['../structFIX8_1_1InvalidBodyLength.html',1,'FIX8']]],
   ['invalidconfiguration',['InvalidConfiguration',['../structFIX8_1_1InvalidConfiguration.html',1,'FIX8']]],

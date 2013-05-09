@@ -11,9 +11,9 @@ var classFIX8_1_1TEX_1_1QuoteStatusReport =
     [ "NoTargetPartyIDs", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoTargetPartyIDs.html", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoTargetPartyIDs" ],
     [ "NoUnderlyings", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoUnderlyings.html", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoUnderlyings" ],
     [ "QuoteStatusReport", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#a3e55ad650ef931b235ca4e4fe6dd7790", null ],
-    [ "~QuoteStatusReport", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#ab72deaba52a335c646ad6dc65e5e6eb6", null ],
+    [ "~QuoteStatusReport", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#a0a32c1bfb00700976bed0c3ac9530667", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#ac03eb6c1ace2fb759503f26f8567e743", null ],
-    [ "process", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#acde0a9942089f9300a70d87570a23edf", null ],
+    [ "process", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#a94957b07b52bce6dcaabc91d4061f6bb", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#a2e39f84353870ffa8aa481e3129a3fac", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#ab936866dfc8724255560537bfdbf004a", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1QuoteStatusReport.html#ad4eaaad01e807f4b0b7a28cf14964d0d", null ]

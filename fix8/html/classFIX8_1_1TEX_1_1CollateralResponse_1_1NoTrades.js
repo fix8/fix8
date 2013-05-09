@@ -1,7 +1,7 @@
 var classFIX8_1_1TEX_1_1CollateralResponse_1_1NoTrades =
 [
     [ "NoTrades", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoTrades.html#abb28d1c4f21f38e3c1725cf06097cfb9", null ],
-    [ "~NoTrades", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoTrades.html#ae0b6c2e040b3ba0d0bea34bed4fc9c1c", null ],
+    [ "~NoTrades", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoTrades.html#aa3ed850392e4747b418dceedc56462c1", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoTrades.html#aea6e914a7279dbcd5f03821ff2771999", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoTrades.html#a4c058e922db95c9d77f9453f47dc810a", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoTrades.html#aeb4edd88e89df80f7a2e925193f3200b", null ],

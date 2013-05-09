@@ -1,7 +1,7 @@
 var classFIX8_1_1TEX_1_1SecurityStatus_1_1NoLegs_1_1NoLegSecurityAltID =
 [
     [ "NoLegSecurityAltID", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoLegs_1_1NoLegSecurityAltID.html#ac259741b1a63a7a4aa76883d5a80a6a5", null ],
-    [ "~NoLegSecurityAltID", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoLegs_1_1NoLegSecurityAltID.html#aa17c5a1b4cc104587b64dea8c455ed4a", null ],
+    [ "~NoLegSecurityAltID", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoLegs_1_1NoLegSecurityAltID.html#acd5c515808a87d608c7e31462bb06dbf", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoLegs_1_1NoLegSecurityAltID.html#a9c224143f54528e1fe22d170ee2d76f5", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoLegs_1_1NoLegSecurityAltID.html#a3eb112652f3f40d1187c5c9536976405", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityStatus_1_1NoLegs_1_1NoLegSecurityAltID.html#aed3b6da17440bfc76cbc82a1dc10989c", null ],

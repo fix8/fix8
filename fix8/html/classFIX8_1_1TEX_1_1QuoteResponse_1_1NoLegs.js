@@ -4,7 +4,7 @@ var classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs =
     [ "NoLegStipulations", "classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs_1_1NoLegStipulations.html", "classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs_1_1NoLegStipulations" ],
     [ "NoNestedPartyIDs", "classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs_1_1NoNestedPartyIDs.html", "classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs_1_1NoNestedPartyIDs" ],
     [ "NoLegs", "classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs.html#a3a2d9ce95afe4ebc0107efa0ce64a494", null ],
-    [ "~NoLegs", "classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs.html#a7461bf52a454e0236cc90a485ef8ce3c", null ],
+    [ "~NoLegs", "classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs.html#af514329205106f85bc723290ba95dd6d", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs.html#a418c86757449e7dcaa4481a1eedb298f", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs.html#a74d65bdc95387b1b8f30e2577f5937ab", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs.html#a7f3ca5155d555ad4476b9eb38d199141", null ],

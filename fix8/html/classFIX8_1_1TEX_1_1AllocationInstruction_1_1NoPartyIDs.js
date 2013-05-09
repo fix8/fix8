@@ -2,7 +2,7 @@ var classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoPartyIDs =
 [
     [ "NoPartySubIDs", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoPartyIDs_1_1NoPartySubIDs.html", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoPartyIDs_1_1NoPartySubIDs" ],
     [ "NoPartyIDs", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoPartyIDs.html#a7984952483944dede677c3516256081c", null ],
-    [ "~NoPartyIDs", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoPartyIDs.html#a8b548274fb1552e0dc67541c14e95f4f", null ],
+    [ "~NoPartyIDs", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoPartyIDs.html#ac7085ace7135e0d268fcfc4dc9712391", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoPartyIDs.html#a1739841e24468b7d53b94eb8b1ae304e", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoPartyIDs.html#a7ce70be8948e0c6b682755c1128d3073", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoPartyIDs.html#aaea2f03e45f5f3641de8e3a0188e6038", null ],

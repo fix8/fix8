@@ -1,13 +1,14 @@
 var searchData=
 [
+  ['test_5fsession',['test_session',['../classtest__session.html',1,'']]],
   ['testrequest',['TestRequest',['../classFIX8_1_1TEX_1_1TestRequest.html',1,'FIX8::TEX']]],
   ['tex_5frouter_5fclient',['tex_router_client',['../classtex__router__client.html',1,'']]],
   ['tex_5frouter_5fserver',['tex_router_server',['../classtex__router__server.html',1,'']]],
   ['tickval',['Tickval',['../classFIX8_1_1Tickval.html',1,'FIX8']]],
   ['timer',['Timer',['../classFIX8_1_1Timer.html',1,'FIX8']]],
-  ['timer_3c_20session_20_3e',['Timer&lt; Session &gt;',['../classFIX8_1_1Timer.html',1,'FIX8']]],
+  ['timer_3c_20fix8_3a_3asession_20_3e',['Timer&lt; FIX8::Session &gt;',['../classFIX8_1_1Timer.html',1,'FIX8']]],
   ['timerevent',['TimerEvent',['../classFIX8_1_1TimerEvent.html',1,'FIX8']]],
-  ['timerevent_3c_20session_20_3e',['TimerEvent&lt; Session &gt;',['../classFIX8_1_1TimerEvent.html',1,'FIX8']]],
+  ['timerevent_3c_20fix8_3a_3asession_20_3e',['TimerEvent&lt; FIX8::Session &gt;',['../classFIX8_1_1TimerEvent.html',1,'FIX8']]],
   ['tradecapturereport',['TradeCaptureReport',['../classFIX8_1_1TEX_1_1TradeCaptureReport.html',1,'FIX8::TEX']]],
   ['tradecapturereportack',['TradeCaptureReportAck',['../classFIX8_1_1TEX_1_1TradeCaptureReportAck.html',1,'FIX8::TEX']]],
   ['tradecapturereportrequest',['TradeCaptureReportRequest',['../classFIX8_1_1TEX_1_1TradeCaptureReportRequest.html',1,'FIX8::TEX']]],

@@ -1,13 +1,12 @@
 var classFIX8_1_1GeneratedTable =
 [
-    [ "Pair", "structFIX8_1_1GeneratedTable_1_1Pair.html", "structFIX8_1_1GeneratedTable_1_1Pair" ],
     [ "NotFoundType", "classFIX8_1_1GeneratedTable.html#a6fd305759ef9e5ceeb8b21415b89cb14", null ],
-    [ "PResult", "classFIX8_1_1GeneratedTable.html#ae37d78cb42bfe1ffd6acf9d2c3ea93c9", null ],
+    [ "Pair", "classFIX8_1_1GeneratedTable.html#af1ede943d09122eb299f47cf128e2943", null ],
     [ "GeneratedTable", "classFIX8_1_1GeneratedTable.html#ae61fcc9a35ac35343fb1b2922f912361", null ],
     [ "_pairs", "classFIX8_1_1GeneratedTable.html#a77e385e1fc6d23cc42a04fe355da9b82", null ],
-    [ "_pairs", "classFIX8_1_1GeneratedTable.html#ac882639cde15a4fe42a0c5839fa9e7f3", null ],
+    [ "_pairs", "classFIX8_1_1GeneratedTable.html#ad9cd68ee494cdb6c50100899f9616a5d", null ],
     [ "_pairsz", "classFIX8_1_1GeneratedTable.html#aab936cc6a53498cca6b8d13d38d9930e", null ],
-    [ "_pairsz", "classFIX8_1_1GeneratedTable.html#ad0cab49185c38376cf904fb6f9cb98c0", null ],
+    [ "_pairsz", "classFIX8_1_1GeneratedTable.html#aba9b66993a293883e9c927f4b6a47569", null ],
     [ "at", "classFIX8_1_1GeneratedTable.html#a0ddb352221c1ac7b0a1ab72acf61b3f9", null ],
     [ "begin", "classFIX8_1_1GeneratedTable.html#af868045130f535c087abafad134446f9", null ],
     [ "end", "classFIX8_1_1GeneratedTable.html#aa4248f415d30361839ac799e885b89b5", null ],

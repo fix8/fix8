@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['pair',['Pair',['../classFIX8_1_1GeneratedTable.html#af1ede943d09122eb299f47cf128e2943',1,'FIX8::GeneratedTable']]],
   ['parentmktsegmid',['ParentMktSegmID',['../namespaceFIX8_1_1TEX.html#af8d97e2e91a5f0161f15ba19915eb26c',1,'FIX8::TEX']]],
   ['participationrate',['ParticipationRate',['../namespaceFIX8_1_1TEX.html#ab5bd7452dec484651eaa594ec1733f23',1,'FIX8::TEX']]],
   ['partyaltid',['PartyAltID',['../namespaceFIX8_1_1TEX.html#a2785119650fde67004e645715d221801',1,'FIX8::TEX']]],
@@ -63,7 +64,6 @@ var searchData=
   ['postype',['PosType',['../namespaceFIX8_1_1TEX.html#af2564a5241f5d76cb8ef3657f2893d70',1,'FIX8::TEX']]],
   ['preallocmethod',['PreallocMethod',['../namespaceFIX8_1_1TEX.html#a4e1eba9d92464a0957905f28ce1ba7a5',1,'FIX8::TEX']]],
   ['presence',['Presence',['../namespaceFIX8.html#ac20c8163c641bb0ba62d1e9924d2a8bd',1,'FIX8']]],
-  ['presult',['PResult',['../classFIX8_1_1GeneratedTable.html#ae37d78cb42bfe1ffd6acf9d2c3ea93c9',1,'FIX8::GeneratedTable']]],
   ['pretradeanonymity',['PreTradeAnonymity',['../namespaceFIX8_1_1TEX.html#aa53bf45c4cbee789ce2e11c3824905e8',1,'FIX8::TEX']]],
   ['prevclosepx',['PrevClosePx',['../namespaceFIX8_1_1TEX.html#a5b58ba5f9bb7a79f2dc050b7444bae3e',1,'FIX8::TEX']]],
   ['previouslyreported',['PreviouslyReported',['../namespaceFIX8_1_1TEX.html#a991e215d6ba3f3ff9a81367cb669cdd1',1,'FIX8::TEX']]],

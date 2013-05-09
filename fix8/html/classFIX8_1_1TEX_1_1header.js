@@ -2,9 +2,9 @@ var classFIX8_1_1TEX_1_1header =
 [
     [ "NoHops", "classFIX8_1_1TEX_1_1header_1_1NoHops.html", "classFIX8_1_1TEX_1_1header_1_1NoHops" ],
     [ "header", "classFIX8_1_1TEX_1_1header.html#aa646d3f1957a763e3a54dd5e4c720a01", null ],
-    [ "~header", "classFIX8_1_1TEX_1_1header.html#a8781eda565968b2953c3f6b79e698696", null ],
+    [ "~header", "classFIX8_1_1TEX_1_1header.html#ad58fd2a747abf11e3fdc8a422d899f03", null ],
     [ "header", "classFIX8_1_1TEX_1_1header.html#aa646d3f1957a763e3a54dd5e4c720a01", null ],
-    [ "~header", "classFIX8_1_1TEX_1_1header.html#a8781eda565968b2953c3f6b79e698696", null ],
+    [ "~header", "classFIX8_1_1TEX_1_1header.html#ad58fd2a747abf11e3fdc8a422d899f03", null ],
     [ "add_preamble", "classFIX8_1_1TEX_1_1header.html#aca7d8c5d728db017cea28db245159296", null ],
     [ "add_preamble", "classFIX8_1_1TEX_1_1header.html#aca7d8c5d728db017cea28db245159296", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1header.html#a872070d2aa5fef50c609c8b3a3c3c025", null ],

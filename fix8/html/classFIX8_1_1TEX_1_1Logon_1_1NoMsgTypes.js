@@ -1,9 +1,9 @@
 var classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes =
 [
     [ "NoMsgTypes", "classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#af7b190931c1a9e74793a87aff5f0af2e", null ],
-    [ "~NoMsgTypes", "classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#a98f02cec3f8ac5cce16298efd06e4d7f", null ],
+    [ "~NoMsgTypes", "classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#afa551ca3678a5b0d23651a29a11e07a6", null ],
     [ "NoMsgTypes", "classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#af7b190931c1a9e74793a87aff5f0af2e", null ],
-    [ "~NoMsgTypes", "classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#a98f02cec3f8ac5cce16298efd06e4d7f", null ],
+    [ "~NoMsgTypes", "classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#afa551ca3678a5b0d23651a29a11e07a6", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#add127b2527368fbffb27117cee887769", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#add127b2527368fbffb27117cee887769", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#a2c33b689ef05113ee00f817204cecb01", null ],
