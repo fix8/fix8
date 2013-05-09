@@ -221,6 +221,12 @@ public:
 	bool get_reset_sequence_number_flag(const XmlElement *from)
 		{ return from && from->FindAttr("reset_sequence_numbers", false); }
 
+	/*! Extract the always_seqnum_assign flag from a session entity.
+	  \param from xml entity to search
+	  \return true if always_seqnum_assign flag was passed and was true */
+	bool get_always_seqnum_assign(const XmlElement *from)
+		{ return from && from->FindAttr("always_seqnum_assign", false); }
+
 	/*! Extract default_appl_ver_id from a session entity.
 	  \param from xml entity to search
 	  \return target default_appl_ver_id */

@@ -141,59 +141,10 @@ struct BaseMsgEntry
 };
 
 //-------------------------------------------------------------------------------------------------
-#if defined PERMIT_CUSTOM_FIELDS
-/// Custom field wrapper
-class CustomFields
-{
-	typedef std::
-#if defined HAS_TR1_UNORDERED_MAP
-		tr1::unordered_map
-#else
-		map
-#endif
-		<unsigned, BaseEntry *> CustFields;
-	CustFields _custFields;
-	bool _cleanup;
-
-public:
-	/*! Ctor.
-	    \param cleanup if true, delete BaseEntries on destruction */
-	explicit CustomFields(bool cleanup=true) : _cleanup(cleanup) {}
-
-	/// Dtor.
-	virtual ~CustomFields()
-	{
-		if (_cleanup)
-			std::for_each(_custFields.begin(), _custFields.end(), free_ptr<Delete2ndPairObject<> >());
-	}
-
-	/*! Add a new field.
-	    \param fnum field number (tag)
-	    \param be BaseEntry of field
-	    \return true on success */
-	bool add(unsigned fnum, BaseEntry *be)
-		{ return _custFields.insert(CustFields::value_type(fnum, be)).second; }
-
-	/*! Find a field.
-	    \param fnum field number (tag)
-	    \return pointer to BaseEntry or 0 if not found */
-	BaseEntry *find_ptr(unsigned fnum)
-	{
-		CustFields::const_iterator itr(_custFields.find(fnum));
-		return itr == _custFields.end() ? 0 : itr->second;
-	}
-
-	/*! Post message ctor. Called by framework when a message has been constructed, permitting addition of custom fields.
-	    \param msg Message
-	    \return true on success */
-	virtual bool post_msg_ctor(Message *msg) { return true; }
-};
-#endif
-
-//-------------------------------------------------------------------------------------------------
-typedef GeneratedTable<const f8String, BaseMsgEntry> MsgTable;
+typedef GeneratedTable<const char *, BaseMsgEntry> MsgTable;
 typedef GeneratedTable<unsigned, BaseEntry> FieldTable;
 
+//-------------------------------------------------------------------------------------------------
 /// Static metadata context class - one per FIX xml schema
 struct F8MetaCntx
 {
@@ -205,39 +156,64 @@ struct F8MetaCntx
 	const FieldTable& _be;
 	/// Framework generated component name table
 	const char **_cn;
-#if defined PERMIT_CUSTOM_FIELDS
-	/// User supplied lookup table to generate Fix fields
-	CustomFields *_ube;
-	void set_ube(CustomFields *ube) { _ube = ube; }
-#endif
+	/// Number of elements in Hash array
+	const unsigned _flu_sz;
+	/// Hash array for field lookup (built by ctor)
+	const BaseEntry **_flu;
+	/// Pointers to the header and trailer create functions
 	Message *(*_mk_hdr)(), *(*_mk_trl)();
 	/// Fix header beginstring
 	const f8String _beginStr;
 
 	enum MsgFlags { noverifychksum, count };
 	mutable ebitset<MsgFlags, unsigned> _msg_flags;
+
+	/*! Check if flag bit present
+	  \param flg flag to check
+	  \return true if found */
 	bool has_flag(MsgFlags flg) const { return _msg_flags.has(flg); }
+
+	/*! Set flag.
+	  \param flg flag to set */
 	void set_flag(MsgFlags flg) { _msg_flags.set(flg); }
+
+	/*! Clear flag.
+	  \param flg flag to clear */
 	void clear_flag(MsgFlags flg) { _msg_flags.set(flg, false); }
 
+	/*! Ctor.
+	  \param version FIX version
+	  \param bme Generated Message Table
+	  \param be Generated Field Table
+	  \param cn Component name table
+	  \param bg BeginString */
 	F8MetaCntx(const unsigned version, const MsgTable& bme, const FieldTable& be, const char **cn, const f8String& bg)
 		: _version(version), _bme(bme), _be(be), _cn(cn),
-#if defined PERMIT_CUSTOM_FIELDS
-		_ube(),
-#endif
+		_flu_sz(_be.at(_be.size() - 1)->_key + 1), _flu(new const BaseEntry *[_flu_sz]),
 		_mk_hdr(_bme.find_ptr("header")->_create), _mk_trl(_bme.find_ptr("trailer")->_create),
-		_beginStr(bg) {}
+		_beginStr(bg)
+	{
+		std::fill(_flu, _flu + _flu_sz, static_cast<BaseEntry *>(0));
+      for (unsigned offset(0); offset < _be.size(); ++offset)
+			*(_flu + _be.at(offset)->_key) = &_be.at(offset)->_value;
+	}
 
-	/// 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
+	/// Dtor.
+	~F8MetaCntx() { delete[] _flu; }
+
+	/*! Get the field BaseEntry object for this filed number. Will use fast field index lookup.
+	  \param fnum field to get
+	  \return ptr to BaseEntry or 0 if not found */
+	const BaseEntry *find_be(const unsigned short fnum) const
+		{ return fnum < _flu_sz ? _flu[fnum] : 0; }
+
+	/*! 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
+	  \return version */
 	unsigned version() const { return _version; }
 };
 
 //-------------------------------------------------------------------------------------------------
 typedef std::map<unsigned short, BaseField *> Fields;
-#if 0 // defined HAS_TR1_UNORDERED_MAP
-typedef std::tr1::unordered_map <unsigned short, BaseField *> Fields;
-#endif
-
 typedef std::multimap<unsigned short, BaseField *> Positions;
 
 /// Base class for all fix messages
@@ -256,7 +232,7 @@ protected:
 	    \param len length to extract to
 	    \param mtype message type to extract to
 	    \return number of bytes consumed */
-	static unsigned extract_header(const f8String& from, f8String& len, f8String& mtype);
+	static unsigned extract_header(const f8String& from, char *len, char *mtype);
 
 	/*! Extract chksum from a trailer buffer
 	    \param from source buffer
@@ -270,14 +246,11 @@ public:
 	    \param ctx reference to generated metadata
 	    \param msgType - reference to Fix message type
 	    \param begin - InputIterator pointing to begining of field trait table
-	    \param cnt - number of elements in field trait table */
+	    \param cnt - number of elements in field trait table
+	    \param ftha - field trait hash array */
 	template<typename InputIterator>
-	MessageBase(const struct F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt
-#if defined PERMIT_CUSTOM_FIELDS
-		) : _fp(begin, cnt),
-#else
-		, const FieldTrait_Hash_Array *ftha) : _fp(begin, cnt, ftha),
-#endif
+	MessageBase(const struct F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt,
+		const FieldTrait_Hash_Array *ftha) : _fp(begin, cnt, ftha),
 		_msgType(msgType), _ctx(ctx) {}
 
 	/// Copy ctor.
@@ -344,6 +317,8 @@ public:
 	    \return number of bytes encoded */
 	unsigned encode_group(const unsigned short fnum, char *to, size_t& sz) const;
 
+	/*! Check to see if positions of fields are as required.
+	  \return field number of field not in order, 0 if all ok */
 	unsigned check_positions();
 
 	/*! Copy all fields from this message to 'to' where the field is legal for 'to' and it is not already present in 'to'; includes nested repeating groups.
@@ -358,7 +333,7 @@ public:
 	{
 		if (!where->_rlm)
 		{
-			const BaseEntry *tbe(_ctx._be.find_ptr(where->_fnum));
+			const BaseEntry *tbe(_ctx.find_be(where->_fnum));
 			if (tbe && tbe->_rlm)
 				where->_rlm = tbe->_rlm;	// populate realm;
 		}
@@ -727,22 +702,15 @@ public:
 	    \param ctx - reference to generated metadata
 	    \param msgType - reference to Fix message type
 	    \param begin - InputIterator pointing to begining of field trait table
-	    \param cnt - number of elements in field trait table */
+	    \param cnt - number of elements in field trait table
+		 \param ftha field trait hash array */
 	template<typename InputIterator>
-	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt
-#if defined PERMIT_CUSTOM_FIELDS
-		) : MessageBase(ctx, msgType, begin, cnt),
-#else
-		, const FieldTrait_Hash_Array *ftha) : MessageBase(ctx, msgType, begin, cnt, ftha),
-#endif
+	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt,
+		const FieldTrait_Hash_Array *ftha) : MessageBase(ctx, msgType, begin, cnt, ftha),
 		_header(ctx._mk_hdr()), _trailer(ctx._mk_trl()), _custom_seqnum(), _no_increment()
 #if defined MSGRECYCLING
 		{
 			_in_use = true;
-#if defined PERMIT_CUSTOM_FIELDS
-			if (ctx._ube)
-				ctx._ube->post_msg_ctor(this);
-#endif
 		}
 
 	/*! Indicate that this message is currently being used.
@@ -753,12 +721,7 @@ public:
 	    \return true if message is in use */
 	bool get_in_use() const { return _in_use; }
 #else
-		{
-#if defined PERMIT_CUSTOM_FIELDS
-			if (ctx._ube)
-				ctx._ube->post_msg_ctor(this);
-#endif
-		}
+		{}
 #endif
 	/// Dtor.
 	virtual ~Message() { delete _header; delete _trailer; }
@@ -838,9 +801,9 @@ public:
 	    \return string containing formatted value */
 	static f8String fmt_chksum(const unsigned val)
 	{
-		f8ostrstream ostr;
-		ostr << std::setfill('0') << std::setw(3) << val;
-		return ostr.str();
+		char buf[4] = { '0', '0', '0', 0 };
+		itoa(val, buf + (val > 99 ? 0 : val > 9 ? 1 : 2));
+		return f8String(buf);
 	}
 
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message

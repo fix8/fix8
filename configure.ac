@@ -220,6 +220,39 @@ AC_ARG_WITH(tbb,
 	LDFLAGS="$LDFLAGS -L${withval}/lib"
 ],[])
 
+AC_ARG_WITH(gtest,
+  AC_HELP_STRING([--with-gtest=DIR],[location of gtest]),
+[
+	CPPFLAGS="$CPPFLAGS -I${withval}/include"
+	LDFLAGS="$LDFLAGS -L${withval}/lib -L${withval}/lib/.libs"
+],[])
+
+usetcmalloc=yes
+AC_ARG_ENABLE([tcmalloc],
+[AC_HELP_STRING([--enable-tcmalloc],[enable gperftools tcmalloc (default=yes)])],
+[case "${enableval}" in
+	yes) ;;
+	no)  usetcmalloc=no;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-tcmalloc) ;;
+esac])
+
+AC_ARG_WITH(gperf,
+  AC_HELP_STRING([--with-gperf=DIR],[location of gperf libraries]),
+[
+	CPPFLAGS="$CPPFLAGS -I${withval}/include"
+	LDFLAGS="$LDFLAGS -L${withval}/lib"
+],[])
+
+AC_CHECK_LIB(tcmalloc_minimal, malloc, have_tcmalloc_minimal_lib=yes)
+AC_CHECK_LIB(tcmalloc, malloc, have_tcmalloc_lib=yes)
+
+if test "$have_tcmalloc_minimal_lib" = yes && test x$usetcmalloc = xyes; then
+	LIBS="$LIBS -ltcmalloc_minimal"
+else if test "$have_tcmalloc_lib" = yes && test x$usetcmalloc = xyes; then
+	LIBS="$LIBS -ltcmalloc"
+fi
+fi
+
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
 
@@ -294,6 +327,20 @@ AC_MSG_CHECKING(for Poco)
 		 echo
 		 exit 1
 	fi
+
+AC_MSG_CHECKING(for gtest)
+    AC_TRY_COMPILE([
+        #include <gtest/gtest.h>
+        ],[;],
+        have_gtest=yes, have_gtest=no)
+    if test "$have_gtest" = yes; then
+        AC_MSG_RESULT(yes)
+        AC_DEFINE(HAS_GTEST, 1, [Define to 1 if gtest available])
+    else
+        AC_MSG_RESULT(no)
+    fi
+AM_CONDITIONAL(USEGTEST, [test x$have_gtest = xyes])
+
 
 AC_MSG_CHECKING(for tr1/unordered_map)
 	AC_TRY_COMPILE([
@@ -435,9 +482,7 @@ esac])
 AC_ARG_ENABLE([customfields],
 [AC_HELP_STRING([--enable-customfields],[enable User defined fields (default=no)])],
 [case "${enableval}" in
-	yes) AC_DEFINE(PERMIT_CUSTOM_FIELDS, 1, [Define to 1 to enable User Defined Fields]) ;;
-	no)  ;;
-	*) AC_MSG_ERROR(bad value ${enableval} for --enable-customfields) ;;
+	*) AC_MSG_ERROR(custom fields no longer supported) ;;
 esac])
 
 AC_ARG_ENABLE([debug],
@@ -559,8 +604,8 @@ AC_SUBST(BRAND_DESCRIPTION)
 AC_SUBST(BRAND_COMPANY_SHORTNAME)
 AC_SUBST(BRAND_COMPANY_LONGNAME)
 
-AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile util/Makefile doc/fix8.doxygen \
-						fix8.spec doc/man/f8c.8.xml doc/man/seqedit.8.xml])
+AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen \
+						fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
 AC_CONFIG_HEADERS(include/f8config.h)
 AC_OUTPUT
 

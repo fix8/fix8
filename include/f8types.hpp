@@ -45,6 +45,43 @@ typedef std::ostringstream f8ostrstream;
 const unsigned char default_field_separator(0x1);
 
 //-------------------------------------------------------------------------------------------------
+/// Pair abstraction for use with GeneratedTable
+/*! \tparam Key the key
+    \tparam Val the value */
+template<typename Key, typename Val>
+struct _Pair
+{
+	Key _key;
+	Val _value;
+
+	/// Sort functor
+	struct Less
+	{
+		bool operator()(const _Pair& p1, const _Pair& p2) const { return p1._key < p2._key; }
+	};
+
+	/// Equivalence
+	bool operator==(const _Pair& what) const { return _key == what._key; }
+};
+
+/// Partial specialisation of Pair abstraction for use with GeneratedTable
+/*! \tparam Val the value */
+template<typename Val>
+struct _Pair<const char *, Val>
+{
+	const char *_key;
+	Val _value;
+
+	/// Sort functor
+	struct Less
+	{
+		bool operator()(const _Pair& p1, const _Pair& p2) const { return ::strcmp(p1._key, p2._key) < 0; }
+	};
+
+	/// Equivalence
+	bool operator==(const _Pair& what) const { return ::strcmp(_key, what._key) == 0; }
+};
+
 /// Fast map for statically generated data types. Assumes table is sorted. Complexity is O(logN).
 /*! \tparam Key the key
     \tparam Val the value */
@@ -52,24 +89,7 @@ template<typename Key, typename Val>
 class GeneratedTable
 {
 public:
-	/// A pair structure to statically declare the data set
-	struct Pair
-	{
-		Key _key;
-		Val _value;
-
-		/// Sort functor
-		struct Less
-		{
-			bool operator()(const Pair &p1, const Pair &p2) const { return p1._key < p2._key; }
-		};
-
-		/// Equivalence
-		bool operator==(const Pair& what) const
-		{
-			return _key == what._key && _value == what._value;
-		}
-	};
+	typedef _Pair<Key, Val> Pair;
 
 private:
 	/// The actual data set
@@ -82,9 +102,10 @@ private:
 	/// The value to return when the key is not found
 	static const NotFoundType _noval;
 
-	typedef typename std::pair<const Pair *, const Pair *> PResult;
-
 public:
+	///Ctor.
+	GeneratedTable() {}
+
 	/*! Get iterator to start of Pairs
 	  \return pointer to first pair */
 	static const Pair *begin() { return _pairs; }
@@ -99,10 +120,10 @@ public:
 	  \return value found (reference) */
 	static const Val& find_ref(const Key& key)
 	{
-		PResult res(std::equal_range (_pairs, _pairs + _pairsz,
+		const Pair *res(std::lower_bound (_pairs, _pairs + _pairsz,
 			reinterpret_cast<const Pair&>(key), typename Pair::Less()));
-		if (res.first != res.second)
-			return res.first->_value;
+		if (res != end())
+			return res->_value;
 		static const std::string error_str("Invalid metadata or entry not found");
 		throw InvalidMetadata(error_str);
 	}
@@ -112,9 +133,9 @@ public:
 	  \return value found (value) or _noval if not found */
 	static const Val find_val(const Key& key)
 	{
-		PResult res(std::equal_range (_pairs, _pairs + _pairsz,
+		const Pair *res(std::lower_bound (_pairs, _pairs + _pairsz,
 			reinterpret_cast<const Pair&>(key), typename Pair::Less()));
-		return res.first != res.second ? res.first->_value : _noval;
+		return res != end() ? res->_value : _noval;
 	}
 
 	/*! Find a key (pointer).
@@ -122,9 +143,9 @@ public:
 	  \return value found (pointer) or 0 if not found */
 	static const Val *find_ptr(const Key& key)
 	{
-		PResult res(std::equal_range (_pairs, _pairs + _pairsz,
+		const Pair *res(std::lower_bound (_pairs, _pairs + _pairsz,
 			reinterpret_cast<const Pair&>(key), typename Pair::Less()));
-		return res.first != res.second ? &res.first->_value : 0;
+		return res != end() ? &res->_value : 0;
 	}
 
 	/*! Find a key pair record (pointer).
@@ -132,18 +153,15 @@ public:
 	  \return key/value pair (pointer) or 0 if not found */
 	static const Pair *find_pair_ptr(const Key& key)
 	{
-		PResult res(std::equal_range (_pairs, _pairs + _pairsz,
+		const Pair *res(std::lower_bound (_pairs, _pairs + _pairsz,
 			reinterpret_cast<const Pair&>(key), typename Pair::Less()));
-		return res.first != res.second ? res.first : 0;
+		return res != end() ? res : 0;
 	}
 
 	/*! Get the pair at index location
 	  \param idx of the pair to retrieve
 	  \return reference to pair or _noval if not found */
 	static const Pair *at(const size_t idx) { return idx < _pairsz ? _pairs + idx : 0; }
-
-	///Ctor.
-	GeneratedTable() {}
 
 	/*! Get the number of elements in the data set.
 	  \return number of elements */

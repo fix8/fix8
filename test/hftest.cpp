@@ -47,6 +47,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 		-h,--help               help, this screen\n
 		-l,--log                global log filename\n
 		-q,--quiet              do not print fix output\n
+		-u,--update             update interval for console counters (default 5000)\n
 		-r,--reliable           start in reliable mode\n
 		-s,--server             run in server mode (default client mode)\n
 		-v,--version            print version then exit\n
@@ -127,9 +128,9 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:rb:p:");
+const string GETARGLIST("hl:svqc:R:S:rb:p:u:");
 bool term_received(false);
-unsigned batch_size(1000), preload_count(0);
+unsigned batch_size(1000), preload_count(0), update_count(5000);
 
 //-----------------------------------------------------------------------------------------
 namespace FIX8
@@ -194,6 +195,7 @@ int main(int argc, char **argv)
 		{ "quiet",		0,	0,	'q' },
 		{ "reliable",	0,	0,	'r' },
 		{ "preload",	1,	0,	'p' },
+		{ "update",		1,	0,	'u' },
 		{ 0 },
 	};
 
@@ -214,6 +216,7 @@ int main(int argc, char **argv)
 		case 'c': clcf = optarg; break;
 		case 'b': batch_size = GetValue<unsigned>(optarg); break;
 		case 'p': preload_count = GetValue<unsigned>(optarg); break;
+		case 'u': update_count = GetValue<unsigned>(optarg); break;
 		case 's': server = true; break;
 		case 'S': next_send = GetValue<unsigned>(optarg); break;
 		case 'R': next_receive = GetValue<unsigned>(optarg); break;
@@ -268,41 +271,22 @@ int main(int argc, char **argv)
 #endif
 			}
 		}
-		else if (reliable)
-		{
-			ReliableClientSession<hf_session_client>::Client_ptr
-				mc(new ReliableClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1"));
-			if (!quiet)
-				mc->session_ptr()->control() |= Session::print;
-			mc->start(false, next_send, next_receive);
-			MyMenu mymenu(*mc->session_ptr(), 0, cout);
-			if (preload_count)
-				mymenu.preload_new_order_single();
-			char ch;
-			mymenu.get_tty().set_raw_mode();
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
-				;
-			// don't explicitly call mc->session_ptr()->stop() with reliable sessions
-			// before checking if the session is already shutdown - the framework will generally do this for you
-#if defined BUFFERED_GLOBAL_LOGGING
-			GlobalLogger::flush_log();
-#endif
-#if defined CODECTIMING
-			Message::report_codec_timings();
-#endif
-
-			if (!mc->session_ptr()->is_shutdown())
-				mc->session_ptr()->stop();
-			mymenu.get_tty().unset_raw_mode();
-		}
 		else
 		{
-			ClientSession<hf_session_client>::Client_ptr
-				mc(new ClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1"));
+			scoped_ptr<ClientSession<hf_session_client> >
+				mc(reliable ? new ReliableClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1")
+							   : new ClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
-			const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
-			mc->start(false, next_send, next_receive, lparam._davi());
+
+			if (!reliable)
+			{
+				const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
+				mc->start(false, next_send, next_receive, lparam._davi());
+			}
+			else
+				mc->start(false, next_send, next_receive);
+
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
 			if (preload_count)
 				mymenu.preload_new_order_single();
@@ -316,9 +300,9 @@ int main(int argc, char **argv)
 #if defined CODECTIMING
 			Message::report_codec_timings();
 #endif
-
 			if (!mc->session_ptr()->is_shutdown())
 				mc->session_ptr()->stop();
+
 			mymenu.get_tty().unset_raw_mode();
 		}
 	}
@@ -398,7 +382,7 @@ bool MyMenu::multi_new_order_single()
 	_tty.set_raw_mode();
 	for (unsigned ii(0); ii < num; ++ii)
 		new_order_single();
-	cout << endl << num << " NewOrderSingle msgs sent." << endl;
+	cout << endl << num << " NewOrderSingle msgs sent" << endl;
 
 	return true;
 }
@@ -429,6 +413,8 @@ bool MyMenu::new_order_single()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::send_all_preloaded()
 {
+	const unsigned tosend(_session.size());
+	cout << "Sending " << tosend << " NewOrderSingle msgs ..." << flush;
 	unsigned snt(0);
 	while (_session.cached())
 	{
@@ -436,13 +422,13 @@ bool MyMenu::send_all_preloaded()
 		if (!ptr)
 			break;
 		_session.send(ptr);
-		if (++snt % 5000 == 0)
+		if (++snt % update_count == 0)
 		{
-			cout << '\r' << snt << " NewOrderSingle msgs sent";
+			cout << '\r' << snt << " NewOrderSingle msgs sent       ";
 			cout.flush();
 		}
 	}
-	cout << endl << _session.size() << " NewOrderSingle msgs remaining." << endl;
+	cout << endl << snt << " NewOrderSingle msgs sent." << endl;
 	return true;
 }
 
@@ -609,9 +595,9 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 {
 	static int exrecv(0);
-	if (++exrecv % 5000 == 0)
+	if (++exrecv % update_count == 0)
 	{
-		cout << '\r' << exrecv << " ExecutionReport msgs received";
+		cout << '\r' << exrecv << " ExecutionReport msgs received   ";
 		cout.flush();
 	}
 	return true;

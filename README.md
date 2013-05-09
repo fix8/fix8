@@ -14,17 +14,19 @@ and framework; and a set of complete client/server test applications.
 
 * Statically compile your FIX xml schema and quickly build your FIX application on top. If you need to add customised messages or fields, simply update the schema and recompile.
 
-* Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average 36.5% faster encoding/decoding the same message than Quickfix. See [Performance](http://fix8.org/performance.html) to see how we substantiate this shameless bragging.
+* Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average 50% faster encoding/decoding the same message than Quickfix. See [Performance](http://fix8.org/performance.html) to see how we substantiate this shameless bragging.
 
 * Fix8 supports standard `FIX4.X` to `FIX5.X` and `FIXT1.X`. If you have a custom FIX variant Fix8 can use that too. New FIX versions will be supported.
 
 * Fix8 offers run-time custom fields, message recycling and a meta-data aware test harness. Incorporates lock free queues, atomics and many other modern techniques.
 
+* Fix8 contains a built-in unit test framework that's being continually revised and extended. Fix8 also has a metadata driven test harness that can be scripted to support captured or canned data playback.
+
 * Fix8 is a complete C++ FIX framework, including client/server session and connection classes; support for the standard FIX field types; FIX printer, async logger, async message persister and XML configuration classes.
 
 * Fix8 statically supports nested components and groups to any depth. The Fix8 compiler and runtime library takes the pain out of using repeating groups.
 
-* Fix8 applications are fast. On production level hardware, client NewOrderSingle encode latency is now 6.8us, and ExecutionReport decode 6.7us. Without the framework overhead, NewOrderSingle encode latency is 3.9us. This is being continually improved.
+* Fix8 applications are fast. On production level hardware, client NewOrderSingle encode latency is now 2.7us, and ExecutionReport decode 6.6us. Without the framework overhead, NewOrderSingle encode latency is 1.9us. This is being continually improved.
 
 * Fix8 has been designed to be extended, customised or enhanced. If you have special requirements, Fix8 provides a flexible platform to develop your application on.
 
@@ -90,6 +92,10 @@ and framework; and a set of complete client/server test applications.
              <td>test/</td>
              <td>test applications client/server source</td>
           </tr>
+          <tr>
+             <td>utests/</td>
+             <td>unit test applications</td>
+          </tr>
     </tbody>
 </table>
 
@@ -124,11 +130,15 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-    % tar xvzf fix8-0.7.3.tar.gz
-    % cd fix8-0.7.3
-    % ./configure
-    % make
-    % make install
+	% tar xvzf fix8-0.8.0.tar.gz
+	% cd fix8-0.8.0
+	% ./configure
+	% make
+	% make install
+
+If you have built the test cases, you can also run them as follows:
+
+	% make check
 
 ## License
 

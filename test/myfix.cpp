@@ -156,11 +156,6 @@ namespace FIX8
 bool quiet(false);
 
 //-----------------------------------------------------------------------------------------
-#if defined PERMIT_CUSTOM_FIELDS
-#include "myfix_custom.hpp"
-#endif
-
-//-----------------------------------------------------------------------------------------
 void sig_handler(int sig)
 {
    switch (sig)
@@ -227,11 +222,6 @@ int main(int argc, char **argv)
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 
-#if defined PERMIT_CUSTOM_FIELDS
-	TEX::myfix_custom custfields(true); // will cleanup; modifies ctx
-	TEX::ctx.set_ube(&custfields);
-#endif
-
 	try
 	{
 		const string conf_file(server ? clcf.empty() ? "myfix_server.xml" : clcf : clcf.empty() ? "myfix_client.xml" : clcf);
@@ -257,38 +247,38 @@ int main(int argc, char **argv)
 				inst->stop();
 			}
 		}
-		else if (reliable)
-		{
-			ReliableClientSession<myfix_session_client>::Client_ptr
-				mc(new ReliableClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
-			if (!quiet)
-				mc->session_ptr()->control() |= Session::print;
-			mc->start(false, next_send, next_receive);
-			MyMenu mymenu(*mc->session_ptr(), 0, cout);
-			char ch;
-			mymenu.get_tty().set_raw_mode();
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
-				;
-			// don't explicitly call mc->session_ptr()->stop() with reliable sessions
-			// before checking if the session is already shutdown - the framework will generally do this for you
-			if (!mc->session_ptr()->is_shutdown())
-				mc->session_ptr()->stop();
-			mymenu.get_tty().unset_raw_mode();
-		}
 		else
 		{
-			ClientSession<myfix_session_client>::Client_ptr
-				mc(new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
+			scoped_ptr<ClientSession<myfix_session_client> >
+				mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1")
+							   : new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
-				mc->session_ptr()->control() |= Session::print;
-			const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
-			mc->start(false, next_send, next_receive, lparam._davi());
+				mc->session_ptr()->control() |= Session::printnohb;
+
+			if (!reliable)
+			{
+				const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
+				mc->start(false, next_send, next_receive, lparam._davi());
+			}
+			else
+				mc->start(false);
+
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
 			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
 				;
-			mc->session_ptr()->stop();
+
+			if (reliable)
+			{
+				// don't explicitly call mc->session_ptr()->stop() with reliable sessions
+				// before checking if the session is already shutdown - the framework will generally do this for you
+				if (!mc->session_ptr()->is_shutdown())
+					mc->session_ptr()->stop();
+			}
+			else
+				mc->session_ptr()->stop();
+
 			mymenu.get_tty().unset_raw_mode();
 		}
 	}
@@ -321,71 +311,71 @@ bool myfix_session_server::handle_application(const unsigned seqnum, const Messa
 //-----------------------------------------------------------------------------------------
 bool MyMenu::new_order_single()
 {
-	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
-	*nos += new TEX::TransactTime;
-	*nos += new TEX::OrderQty(1 + RandDev::getrandom(9999));
-	*nos += new TEX::Price(RandDev::getrandom(500.));
 	static unsigned oid(0);
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
-	*nos += new TEX::ClOrdID(oistr.str());
-	*nos += new TEX::Symbol("BHP");
-	*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
-	*nos += new TEX::Side(TEX::Side_BUY);
-	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
+	*nos << new TEX::TransactTime
+	     << new TEX::OrderQty(1 + RandDev::getrandom(9999))
+	     << new TEX::Price(RandDev::getrandom(500.))
+	     << new TEX::ClOrdID(oistr.str())
+	     << new TEX::Symbol("BHP")
+	     << new TEX::OrdType(TEX::OrdType_LIMIT)
+	     << new TEX::Side(TEX::Side_BUY)
+	     << new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
 
-	*nos += new TEX::NoUnderlyings(3);
+	*nos << new TEX::NoUnderlyings(3);
 	GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
 
 	// repeating groups
 	MessageBase *gr1(noul->create_group());
-	*gr1 += new TEX::UnderlyingSymbol("BLAH");
-	*gr1 += new TEX::UnderlyingQty(1 + RandDev::getrandom(999));
-	*noul += gr1;
+	*gr1 << new TEX::UnderlyingSymbol("BLAH")
+	     << new TEX::UnderlyingQty(1 + RandDev::getrandom(999));
+	*noul << gr1;
 
 	MessageBase *gr2(noul->create_group());
-	*gr2 += new TEX::UnderlyingSymbol("FOO");
 	// nested repeating groups
-	*gr2 += new TEX::NoUnderlyingSecurityAltID(2);
-	*noul += gr2;
+	*gr2 << new TEX::UnderlyingSymbol("FOO")
+	     << new TEX::NoUnderlyingSecurityAltID(2);
+	*noul << gr2;
 	GroupBase *nosai(gr2->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingSecurityAltID>());
 	MessageBase *gr3(nosai->create_group());
-	*gr3 += new TEX::UnderlyingSecurityAltID("UnderBlah");
-	*nosai += gr3;
+	*gr3 << new TEX::UnderlyingSecurityAltID("UnderBlah");
+	*nosai << gr3;
 	MessageBase *gr4(nosai->create_group());
-	*gr4 += new TEX::UnderlyingSecurityAltID("OverFoo");
-	*nosai += gr4;
+	*gr4 << new TEX::UnderlyingSecurityAltID("OverFoo");
+	*nosai << gr4;
 
 	MessageBase *gr5(noul->create_group());
-	*gr5 += new TEX::UnderlyingSymbol("BOOM");
+	*gr5 << new TEX::UnderlyingSymbol("BOOM");
 	// nested repeating groups
 	GroupBase *nus(gr5->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>());
 	static const char *secIDs[] = { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
-	*gr5 += new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
+	*gr5 << new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
 	for (size_t ii(0); ii < sizeof(secIDs)/sizeof(char *); ++ii)
 	{
 		MessageBase *gr(nus->create_group());
-		*gr += new TEX::UnderlyingStipType(secIDs[ii]);
-		*nus += gr;
+		*gr << new TEX::UnderlyingStipType(secIDs[ii]);
+		*nus << gr;
 	}
-	*noul += gr5;
+	*noul << gr5;
 
 	// multiply nested repeating groups
-	*nos += new TEX::NoAllocs(1);
+	*nos << new TEX::NoAllocs(1);
 	GroupBase *noall(nos->find_group<TEX::NewOrderSingle::NoAllocs>());
 	MessageBase *gr9(noall->create_group());
-	*gr9 += new TEX::AllocAccount("Account1");
-	*gr9 += new TEX::NoNestedPartyIDs(1);
-	*noall += gr9;
+	*gr9 << new TEX::AllocAccount("Account1")
+	     << new TEX::NoNestedPartyIDs(1);
+	*noall << gr9;
 	GroupBase *nonp(gr9->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs>());
 	MessageBase *gr10(nonp->create_group());
-	*gr10 += new TEX::NestedPartyID("nestedpartyID1");
-	*gr10 += new TEX::NoNestedPartySubIDs(1);
-	*nonp += gr10;
+	*gr10 << new TEX::NestedPartyID("nestedpartyID1")
+	      << new TEX::NoNestedPartySubIDs(1);
+	*nonp << gr10;
 	GroupBase *nonpsid(gr10->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs>());
 	MessageBase *gr11(nonpsid->create_group());
-	*gr11 += new TEX::NestedPartySubID("subnestedpartyID1");
-	*nonpsid += gr11;
+	*gr11 << new TEX::NestedPartySubID("subnestedpartyID1");
+	*nonpsid << gr11;
 
 	_session.send(nos);
 
@@ -556,26 +546,19 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
-	*er += new TEX::OrderID(oistr.str());
-	*er += new TEX::ExecType(TEX::ExecType_NEW);
-	*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
-	*er += new TEX::LeavesQty(qty());
-	*er += new TEX::CumQty(0);
-	*er += new TEX::AvgPx(0);
-	*er += new TEX::LastCapacity('5');
-	*er += new TEX::ReportToExch('Y');
-#if defined PERMIT_CUSTOM_FIELDS
-	*er += new TEX::Orderbook('X');
-	*er += new TEX::BrokerInitiated(true);
-	*er += new TEX::ExecOption(3);
-	*er += new TEX::ExecID(oistr.str());
-#else
-	*er += new TEX::ExecID(oistr.str());
-#endif
+	*er << new TEX::OrderID(oistr.str())
+	    << new TEX::ExecType(TEX::ExecType_NEW)
+	    << new TEX::OrdStatus(TEX::OrdStatus_NEW)
+	    << new TEX::LeavesQty(qty())
+	    << new TEX::CumQty(0)
+	    << new TEX::AvgPx(0)
+	    << new TEX::LastCapacity('5')
+	    << new TEX::ReportToExch('Y')
+	    << new TEX::ExecID(oistr.str());
 #if defined MSGRECYCLING
 	er->set_in_use(true);	// indicate this message is in use again
 	delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
-	*er += new TEX::AvgPx(9999); // will replace and delete original
+	*er << new TEX::AvgPx(9999); // will replace and delete original
 	_session.send_wait(er.get());
 #else
 	_session.send(er);
@@ -596,18 +579,18 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		er = new TEX::ExecutionReport;
 		msg->copy_legal(er);
 #endif
-		*er += new TEX::OrderID(oistr.str());
 		ostringstream eistr;
 		eistr << "exec" << ++eoid;
-		*er += new TEX::ExecID(eistr.str());
-		*er += new TEX::ExecType(TEX::ExecType_NEW);
-		*er += new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED);
 		remaining_qty -= trdqty;
 		cum_qty += trdqty;
-		*er += new TEX::LeavesQty(remaining_qty);
-		*er += new TEX::CumQty(cum_qty);
-		*er += new TEX::LastQty(trdqty);
-		*er += new TEX::AvgPx(price());
+		*er << new TEX::OrderID(oistr.str())
+		    << new TEX::ExecID(eistr.str())
+		    << new TEX::ExecType(TEX::ExecType_NEW)
+		    << new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED)
+		    << new TEX::LeavesQty(remaining_qty)
+		    << new TEX::CumQty(cum_qty)
+		    << new TEX::LastQty(trdqty)
+		    << new TEX::AvgPx(price());
 #if defined MSGRECYCLING
 		_session.send_wait(er.get());
 #else

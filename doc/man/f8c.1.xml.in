@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone='no'?>
 
-<manpage name="f8c" section="8" app="fix8" date="@CONFIGURE_SDATE@" desc="Compile FIX xml schema" built="@CONFIGURE_TIME@$">
+<manpage name="f8c" section="1" app="fix8" date="@CONFIGURE_SDATE@" desc="Compile FIX xml schema" built="@CONFIGURE_TIME@$">
 
 <synopsis>
 <cmd>f8c [-NVbcdfhiknoprstvx] &lt;input xml schema&gt;</cmd>

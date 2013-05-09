@@ -1,9 +1,8 @@
-#!/bin/bash
 #############################################################################################
 # Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
 # Fix8 Open Source FIX Engine.
-# Copyright (C) 2010,2011,2012,2013 David L. Dight <fix@fix8.org>
+# Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 #
 # Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 # GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -32,11 +31,54 @@
 # HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #
 #############################################################################################
-#
-# This is the master version file, called by configure
-#
-#############################################################################################
-MAJOR_VERSION_NUM=0
-MINOR_VERSION_NUM=8
-PATCH_VERSION_NUM=0
-echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$PATCH_VERSION_NUM
+
+if USEGTEST
+test_programs = message_test fileLogger_test filePersister_test session_test
+noinst_PROGRAMS = $(test_programs)
+lib_LTLIBRARIES = libutest.la
+INCLUDES = -I$(top_srcdir)/include
+
+TESTS = $(test_programs)
+
+message_test_SOURCES = message_test.cpp
+fileLogger_test_SOURCES = fileLogger_test.cpp
+filePersister_test_SOURCES = filePersister_test.cpp
+session_test_SOURCES = mockConnection.hpp mockConnection.cpp session_test.cpp
+
+libutest_la_SOURCES = utest_types.hpp utest_types.cpp utest_traits.cpp \
+							 utest_router.hpp utest_classes.hpp utest_classes.cpp
+
+CLEANFILES = $(libutest_la_SOURCES)
+
+.NOTPARALLEL: $(XML_42_SCHEMA)
+
+XML_42_SCHEMA = $(top_srcdir)/schema/FIX42.xml
+
+$(libutest_la_SOURCES): $(XML_42_SCHEMA)
+	$(top_srcdir)/compiler/f8c -Vp utest -n UTEST $(XML_42_SCHEMA)
+
+AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lgtest -lgtest_main
+
+if BDBSUPPORT
+AM_LDFLAGS += -ldb_cxx
+endif
+if USECOMPRESSION
+AM_LDFLAGS += -lz
+endif
+if TBBSUPPORT
+AM_LDFLAGS += -ltbb
+endif
+
+built = $(top_srcdir)/runtime
+
+required_objs = -lutest $(built)/logger.lo $(built)/f8utils.lo $(built)/gzstream.lo $(built)/popen.lo $(built)/modp_numtoa.lo
+persist_objs = $(built)/message.lo $(built)/configuration.lo $(built)/xml.lo $(built)/persist.lo $(built)/filepersist.lo
+session_objs = $(built)/connection.lo $(built)/session.lo
+
+message_test_LDADD = $(required_objs) $(persist_objs)
+fileLogger_test_LDADD = $(required_objs)
+filePersister_test_LDADD = $(required_objs) $(persist_objs) $(session_objs)
+session_test_LDADD = $(required_objs) $(persist_objs)
+
+endif
+

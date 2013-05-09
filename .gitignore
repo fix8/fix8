@@ -63,13 +63,13 @@ test/Perf_types.hpp
 test/f8perf
 test/run
 doc/fix8.doxygen
-doc/man/f8c.8.gz
-doc/man/f8c.8.xml
-doc/man/seqedit.8.gz
-doc/man/seqedit.8.xml
+doc/man/f8c.1.gz
+doc/man/f8c.1.xml
+doc/man/seqedit.1.gz
+doc/man/seqedit.1.xml
 test/FIX44TEST2.xml
 test/client
-test/global_filename_not_set.log
+test/global_filename_not_set.log.*
 test/gmon.out
 test/gmon.out.client
 test/gmon.out.server
@@ -84,4 +84,9 @@ test/vfix1_myfix_client.xml
 test/vfix_myfix_client.xml
 util/.deps/
 util/seqedit
+utests/utest_classes.hpp
+utests/utest_router.hpp
+utests/utest_traits.cpp
+utests/utest_types.cpp
+utests/utest_types.hpp
 

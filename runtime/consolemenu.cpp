@@ -119,7 +119,7 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 	if (grpid)
 		ostr << msg->get_msgtype() << " (" << grpid << ')';
 	else
-		ostr << _ctx._bme.find_ptr(msg->get_msgtype())->_name;
+		ostr << _ctx._bme.find_ptr(msg->get_msgtype().c_str())->_name;
 
    for(;;)
    {
@@ -133,7 +133,7 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 		int page(0);
 		for (unsigned nlines(0); itr != msg->get_fp().get_presence().end(); ++itr)
 		{
-			const BaseEntry *tbe(_ctx._be.find_ptr(itr->_fnum));
+			const BaseEntry *tbe(_ctx.find_be(itr->_fnum));
 			_os << '[' << _opt_keys[nlines] << "] ";
 			if (msg->have(itr->_fnum))
 			{
@@ -185,7 +185,7 @@ const FieldTable::Pair *ConsoleMenu::SelectField(const Message *msg, int grpid) 
 //-------------------------------------------------------------------------------------------------
 int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) const
 {
-	const BaseEntry& be(_ctx._be.find_ref(fnum));
+	const BaseEntry *be(_ctx.find_be(fnum));
 
 	for(;;)
 	{
@@ -194,7 +194,7 @@ int ConsoleMenu::SelectRealm(const unsigned short fnum, const RealmBase *rb) con
 
 		_os << endl;
 		_os << "--------------------------------------------------" << endl;
-		_os << ' ' << be._name << ": Select realm value to add" << endl;
+		_os << ' ' << be->_name << ": Select realm value to add" << endl;
 		_os << "--------------------------------------------------" << endl;
 
 		int page(0);
@@ -260,7 +260,7 @@ Message *ConsoleMenu::SelectFromMsg(MsgList& lst) const
 		int page(0);
 		for (unsigned nlines(0); itr != lst.end(); ++itr)
 		{
-			const MsgTable::Pair *tbme(_ctx._bme.find_pair_ptr((*itr)->get_msgtype()));
+			const MsgTable::Pair *tbme(_ctx._bme.find_pair_ptr((*itr)->get_msgtype().c_str()));
          _os << '[' << _opt_keys[nlines] << "]  " << tbme->_value._name << '(' << tbme->_key << ')' << endl;
 
 			++nlines;

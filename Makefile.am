@@ -38,6 +38,10 @@ if USEDOXYGEN
 SUBDIRS += doc
 endif
 
+if USEGTEST
+SUBDIRS += utests
+endif
+
 #############################################################################################
 ACLOCAL_AMFLAGS = -I m4
 
@@ -56,18 +60,20 @@ check-release:
 	md5sum -c $(distdir).md5sum
 
 pkgincludedir = ${prefix}/include/fix8
-ffincludes = include/ff/*.hpp include/ff/*.h include/ff/d/*.hpp include/ff/platforms/*.h include/ff/atomic/*.h
-pkginclude_HEADERS = include/*.hpp include/f8config.h ${ffincludes}
+ffincdir = include/ff
+ffincludes = ${ffincdir}/*.hpp ${ffincdir}/*.h ${ffincdir}/d/*.hpp ${ffincdir}/platforms/*.h ${ffincdir}/atomic/*.h
+pkginclude_HEADERS = include/*.hpp include/f8config.h
 
+ffdir = ${prefix}/include/fix8/ff
 sharedir = ${prefix}/share/fix8
 mandir = doc/man
-fix8mandir = ${sharedir}/man/man8
+fix8mandir = ${sharedir}/man/man1
 testdir = ${sharedir}/test
 fix8htmldir = $(sharedir)/html
 schemadir = ${sharedir}/schema
 
 xmltoman=$(mandir)/xmltoman
-PROCESS_MAN_PAGES = $(mandir)/f8c.8 $(mandir)/seqedit.8
+PROCESS_MAN_PAGES = $(mandir)/f8c.1 $(mandir)/seqedit.1
 
 INSTALL_DATA_LOCAL_TEST = test/hf_client.xml test/myfix_client.xml test/hf_client_include.xml \
 	test/hf_server.xml test/myfix_server.xml
@@ -81,9 +87,15 @@ INSTALL_DATA_HTML_SEARCH_DOC = doc/html/search/*.js doc/html/search/*.html doc/h
 INSTALL_DATA_LOCAL_SCHEMA = schema/*.xml schema/QUICKFIX-LICENCE
 
 install-data-local:
-	@$(mkinstalldirs) $(DESTDIR)$(testdir) $(DESTDIR)$(schemadir) $(DESTDIR)$(fix8mandir)
+	@$(mkinstalldirs) $(DESTDIR)$(testdir) $(DESTDIR)$(schemadir)
+	@$(mkinstalldirs) $(DESTDIR)$(ffdir)/d $(DESTDIR)$(ffdir)/platforms $(DESTDIR)$(ffdir)/atomic
+	@$(mkinstalldirs) $(DESTDIR)$(fix8mandir)
 	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_TEST) $(DESTDIR)$(testdir)
 	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_SCHEMA) $(DESTDIR)$(schemadir)
+	$(INSTALL_DATA) ${ffincdir}/*.hpp ${ffincdir}/*.h $(DESTDIR)$(ffdir)
+	$(INSTALL_DATA) ${ffincdir}/d/*.hpp $(DESTDIR)$(ffdir)/d
+	$(INSTALL_DATA) ${ffincdir}/platforms/*.h $(DESTDIR)$(ffdir)/platforms
+	$(INSTALL_DATA) ${ffincdir}/atomic/*.h $(DESTDIR)$(ffdir)/atomic
 	@for manfile in $(PROCESS_MAN_PAGES) ; do \
 		$(xmltoman) $$manfile.xml | gzip > $$manfile.gz ; \
 		$(INSTALL_DATA) $$manfile.gz $(DESTDIR)$(fix8mandir); \
@@ -95,5 +107,6 @@ if USEDOXYGEN
 endif
 
 EXTRA_DIST = $(xmltoman) fix8.spec doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen \
-	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) version.sh
+	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) version.sh ${ffincludes} \
+	bootstrap README.md
 

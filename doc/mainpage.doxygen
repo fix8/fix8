@@ -31,7 +31,19 @@
   * <li> \link FIX8::Timer \endlink a high resolution timer with event notification.
   * </ul>
   *
-  * <A HREF="http://www.fix8.org">Return to the home page.</A>
+  * <hr>
+  *
+  * <a href="http://www.fix8.org">Home</a> |
+  * <a href="http://www.fix8.org/howitworks.html">How It Works</a> |
+  * <a href="http://www.fix8.org/faq.html">FAQ</a> |
+  * <a href="http://blog.fix8.org">News</a> |
+  * <a href="https://fix8engine.atlassian.net/wiki">Wiki</a> |
+  * <a href="http://www.fix8.org/support.html">Support</a> |
+  * <a href="http://www.fix8.org/issues.html">Issues</a> |
+  * <a href="https://github.com/dakka/fix8">Project</a> |
+  * <a href="http://www.fix8.org/performance.html">Performance</a> |
+  * <a href="http://www.fix8.org/aboutus.html">About Us</a> |
+  * <a href="http://eepurl.com/yNdzX">Register</a>
   *
   * Copyright &copy; 2010-13, The Fix8 Team <fix@fix8.org> All rights reserved.
   *

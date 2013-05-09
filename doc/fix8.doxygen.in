@@ -642,7 +642,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = ../include ../runtime ../compiler ../test ../util \
+INPUT                  = ../include ../runtime ../compiler ../test ../util ../utests \
 								 mainpage.doxygen ../schema/FIX50SP2.xml
 
 # This tag can be used to specify the character encoding of the source files
@@ -675,7 +675,7 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                = ../include/ff
+EXCLUDE                = ../include/ff ../utests/mockConnection.hpp ../utests/mockConnection.cpp
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded

@@ -180,9 +180,13 @@ public:
 	bool create_msgs();
 	bool edit_msgs();
 	bool delete_msgs();
+	bool print_msgs();
 	bool send_msgs();
 	bool write_msgs();
 	bool read_msgs();
+
+	bool load_msgs(const std::string& fname);
+	void send_lst();
 
 	FIX8::tty_save_state& get_tty() { return _tty; }
 

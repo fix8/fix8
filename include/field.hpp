@@ -279,6 +279,95 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+/// Partial specialisation for char * field type.
+/*! \tparam field field number (fix tag) */
+template<const unsigned short field>
+class Field<char *, field> : public BaseField
+{
+protected:
+	char *_value;
+
+public:
+	/// The FIX fieldID (tag number).
+	static unsigned short get_field_id() { return field; }
+
+	/// Ctor.
+	Field () : BaseField(field) {}
+
+	/// Copy Ctor.
+	/* \param from field to copy */
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
+
+	/*! Construct from string ctor.
+	  \param from string to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
+
+	/// Assignment operator.
+	/*! \param that field to assign from
+	    \return field */
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
+
+	/// Equivalence operator.
+	/*! \param that field to compare to
+	    \return true if equal */
+	bool operator==(const char *that) const { return ::strcmp(_value, that) == 0; }
+
+	/// Inequivalence operator.
+	/*! \param that field to compare to
+	    \return true if unequal */
+	bool operator!=(const char *that) const { return ::strcmp(_value, that); }
+
+	/// Dtor.
+	virtual ~Field() {}
+
+	/*! Check if this value is a member/in range of the domain set.
+	  \return true if in the set or no domain available */
+	bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
+
+	/*! Get the realm index of this value in the domain set.
+	  \return the index in the domain set of this value */
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
+
+	/*! Get field value.
+	  \return value (f8String) */
+	const char *get() const { return _value; }
+
+	/*! Get field value.
+	  \return value (f8String) */
+	const char *operator()() const { return _value; }
+
+	/*! Get field value.
+	  \param from value to set
+	  \return original value (f8String) */
+	const char *set(const char *from) { return _value = from; }
+
+	/*! Set the value from a string.
+	  \param from value to set
+	  \return original value (f8String) */
+	const char *set_from_raw(const char *from) { return _value = from; }
+
+	/*! Copy (clone) this field.
+	  \return copy of field */
+	Field *copy() { return new Field(*this); }
+
+	/*! Print this field to the supplied stream. Used to format for FIX output.
+	  \param os stream to insert to
+	  \return stream */
+	std::ostream& print(std::ostream& os) const { return os << _value; }
+
+	/*! Print this field to the supplied buffer, update size written.
+	  \param to buffer to print to
+	  \param sz current size of buffer payload stream */
+	void print(char *to, size_t& sz) const { ::strcpy(to, _value); sz += ::strlen(_value); }
+};
+
+//-------------------------------------------------------------------------------------------------
 /// Partial specialisation for f8String field type.
 /*! \tparam field field number (fix tag) */
 template<const unsigned short field>
@@ -297,6 +386,11 @@ public:
 	/// Copy Ctor.
 	/* \param from field to copy */
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
@@ -449,16 +543,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const { sz += std::sprintf(to, "%.*f", _precision, _value); }
-#if 0
-	virtual void print(char *to, size_t& sz) const
-	{
-		std::string res;
-		PutValue<double>(_value, res);
-		res.copy(to, res.size());
-		sz += res.size();
-	}
-#endif
+	void print(char *to, size_t& sz) const { sz += modp_dtoa(_value, to, _precision); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1476,6 +1561,10 @@ typedef Field<Boolean, Common_ResetSeqNumFlag> reset_seqnum_flag;
 
 typedef Field<int, Common_HeartBtInt> heartbeat_interval;
 typedef Field<int, Common_EncryptMethod> encrypt_method;
+
+//-------------------------------------------------------------------------------------------------
+// Misc consts
+const size_t MAX_MSGTYPE_FIELD_LEN(32);
 
 } // FIX8
 
