@@ -373,6 +373,7 @@ int main(int argc, char *argv[])
 								<th>Msgs/sec</th>
 								<th>Average &#xb5;s/msg</th>
 								<th>% Improvement</th>
+								<th>Thoughput</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -384,6 +385,7 @@ int main(int argc, char *argv[])
 								<td>188695.409</td>
 								<td>5.29</td>
 								<td>-</td>
+								<td>-</td>
 							</tr>
 							<tr class="success">
 								<td></td>
@@ -392,6 +394,7 @@ int main(int argc, char *argv[])
 								<td>1.527</td>
 								<td>65499.295</td>
 								<td>15.27</td>
+								<td>-</td>
 								<td>-</td>
 							</tr>
 							<tr class="success">
@@ -402,6 +405,7 @@ int main(int argc, char *argv[])
 								<td>520827.366</td>
 								<td>1.92</td>
 								<td><h4>63.8</h4></td>
+								<td><h4>2.8x</h4></td>
 							</tr>
 							<tr class="success">
 								<td></td>
@@ -411,6 +415,7 @@ int main(int argc, char *argv[])
 								<td>102578.748</td>
 								<td>9.75</td>
 								<td><h4>36.2</h4></td>
+								<td><h4>1.6x</h4></td>
 							</tr>
 						</tbody>
 					</table>
@@ -420,7 +425,7 @@ int main(int argc, char *argv[])
 			<div class="row">
 				<div class="span12">
 					<h2>Conclusion</h2>
-					<p>For the same message, Fix8 encodes <em><b>64% faster</b></em> and decodes <em><b>36% faster</b></em> for an average improvement of close to <em><b>50%</b></em> over Quickfix.</p>
+					<p>For the same message, Fix8 encodes <em><b>64% faster</b></em> and decodes <em><b>36% faster</b></em> for an average improvement of close to <em><b>50%</b></em> over Quickfix. Also worth noting is that Fix8 shows a 2.8 times improvement (over 1/2 a million msgs/sec) in message throughput for encode and 1.8 times improvement for decode.</p>
 				</div>
 			</div>
 		</div>
