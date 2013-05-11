@@ -167,4 +167,3 @@ const string& trim(string& source, const string& ws)
 
 } // namespace FIX8
 
-

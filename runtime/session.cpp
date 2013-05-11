@@ -121,7 +121,7 @@ void SessionID::from_string(const f8String& from)
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
-	_timer(*this, 1), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
 }
@@ -130,7 +130,7 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
-	_timer(*this, 1), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
 }
@@ -279,8 +279,6 @@ bool Session::process(const f8String& from)
 		if ((_control & printnohb) && msg->get_msgtype() != Common_MsgType_HEARTBEAT)
 			cout << *msg << endl;
 		else if (_control & print)
-			cout << *msg << endl;
-		else if ((_control & printnohb) && msg->get_msgtype() != Common_MsgType_HEARTBEAT)
 			cout << *msg << endl;
 		bool result((msg->is_admin() ? handle_admin(seqnum, msg.get()) : true)
 			&& (this->*_handlers.find_ref(msg->get_msgtype()))(seqnum, msg.get()));
