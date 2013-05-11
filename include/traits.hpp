@@ -64,6 +64,7 @@ struct FieldTrait
 		ft_Language, ft_end_string=ft_Language
 	};
 
+	/// Trait bits
 	enum TraitTypes { mandatory, present, position, group, component, suppress, automatic, count };
 
 	/*! Check if this FieldType is an int.
@@ -86,12 +87,20 @@ struct FieldTrait
 	  \return true if a float */
 	static bool is_float(const FieldType ftype) { return ft_float <= ftype && ftype <= ft_end_float; }
 
+	/// Ctor
 	FieldTrait() {}
 
+	/// Copy Ctor
 	FieldTrait(const FieldTrait& from) : _fnum(from._fnum), _ftype(from._ftype), _pos(from._pos),
 		_component(from._component), _field_traits(from._field_traits) {}
 
-	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, unsigned short compon, short field_traits)
+	/*! Ctor.
+	  \param fnum field num (tag number)
+	  \param ftype field type
+	  \param pos field position (in FIX message)
+	  \param compon component idx
+	  \param field_traits bitmap of TraitTypes */
+	FieldTrait(unsigned short fnum, unsigned ftype, unsigned short pos, unsigned short compon, unsigned short field_traits)
 		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _component(compon), _field_traits(field_traits)  {}
 
 	/*! Ctor.
@@ -142,6 +151,7 @@ struct FieldTrait
 };
 
 //-------------------------------------------------------------------------------------------------
+/// Fast index lookup for FieldTrait
 struct FieldTrait_Hash_Array
 {
    const unsigned _els, _sz;
@@ -368,15 +378,11 @@ public:
 	/*! Ctor.
 	  \tparam InputIterator input iterator to construct from
 	  \param begin start iterator to input
-	  \param cnt number of elements to input */
+	  \param cnt number of elements to input
+	  \param ftha field trait hash array */
 	template<typename InputIterator>
-	FieldTraits(const InputIterator begin, const size_t cnt
-
-#if defined PERMIT_CUSTOM_FIELDS
-			) : _presence(begin, cnt) {}
-#else
-		, const FieldTrait_Hash_Array *ftha) : _presence(begin, cnt, ftha) {}
-#endif
+	FieldTraits(const InputIterator begin, const size_t cnt,
+		const FieldTrait_Hash_Array *ftha) : _presence(begin, cnt, ftha) {}
 	/// Ctor.
 	FieldTraits() {}
 

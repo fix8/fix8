@@ -102,9 +102,9 @@ namespace FIX8
 	template<>
 	const GeneratedTable<unsigned int, BaseEntry>::Pair GeneratedTable<unsigned int, BaseEntry>::_pairs[] = {};
 	template<>
-	const size_t GeneratedTable<const f8String, BaseMsgEntry>::_pairsz(0);
+	const size_t GeneratedTable<const char *, BaseMsgEntry>::_pairsz(0);
 	template<>
-	const GeneratedTable<const f8String, BaseMsgEntry>::Pair GeneratedTable<const f8String, BaseMsgEntry>::_pairs[] = {};
+	const GeneratedTable<const char *, BaseMsgEntry>::Pair GeneratedTable<const char *, BaseMsgEntry>::_pairs[] = {};
 }
 
 //-----------------------------------------------------------------------------------------
@@ -615,11 +615,9 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 				',' << setw(3) << right << flitr->_component << ',' << tostr.str() << ')';
 		}
 		outp << endl << "};" << endl;
-#if !defined PERMIT_CUSTOM_FIELDS
 		outp << "const FieldTrait_Hash_Array " << prefix << ms._name << "::" << gsitr->second._name << "::_ftha("
 			<< prefix << ms._name << "::" << gsitr->second._name << "::_traits, "
 			<< gitr->second._fields.get_presence().size() << ");" << endl;
-#endif
 		outp << "const MsgType " << prefix << ms._name << "::" << gsitr->second._name << "::_msgtype(\""
 			<< gsitr->second._name << "\");" << endl;
 		outp << "const unsigned short " << prefix << ms._name << "::" << gsitr->second._name << "::_fnum;" << endl;
@@ -633,9 +631,7 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		outh << dspacer << "class " << gsitr->second._name
 			<< " : public GroupBase // depth: " << depth << endl << dspacer << '{' << endl;
 		outh << d2spacer << "static const FieldTrait _traits[];" << endl;
-#if !defined PERMIT_CUSTOM_FIELDS
 		outh << d2spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
-#endif
 		outh << d2spacer << "static const MsgType _msgtype;" << endl << endl;
 		outh << dspacer << "public:" << endl;
 		outh << d2spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl << endl;
@@ -644,21 +640,13 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		if (gitr->second._groups.empty())
 			outh << d2spacer << "MessageBase *create_group() const { return new MessageBase(ctx, _msgtype(), _traits, "
 				<< gitr->second._fields.get_presence().size()
-#if defined PERMIT_CUSTOM_FIELDS
-				<< "); }" << endl;
-#else
 				<< ", &_ftha); }" << endl;
-#endif
 		else
 		{
 			outh << d2spacer << "MessageBase *create_group() const" << endl << d2spacer << '{' << endl;
 			outh << d2spacer << spacer << "MessageBase *mb(new MessageBase(ctx, _msgtype(), _traits, "
 				<< gitr->second._fields.get_presence().size()
-#if defined PERMIT_CUSTOM_FIELDS
-				<< "));" << endl;
-#else
 				<< ", &_ftha));" << endl;
-#endif
 			for (GroupMap::const_iterator gsitr(gitr->second._groups.begin()); gsitr != gitr->second._groups.end(); ++gsitr)
 				outh << d2spacer << spacer << "mb->append_group(new " << gsitr->second._name << "); // "
 					<< gsitr->first << endl;
@@ -762,6 +750,8 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	osr_cpp << _csMap.find_ref(cs_divider) << endl;
 
+// =============================== Message class definitions ==============================
+
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 	{
@@ -804,15 +794,11 @@ int process(XmlElement& xf, Ctxt& ctxt)
 					<< flitr->_pos << ',' << setw(3) << right << flitr->_component << ',' << tostr.str() << ')';
 			}
 			osr_cpp << endl << "};" << endl;
-#if !defined PERMIT_CUSTOM_FIELDS
 			osr_cpp << "const FieldTrait_Hash_Array " << mitr->second._name << "::_ftha(" << mitr->second._name << "::_traits, "
 				<< mitr->second._fields.get_presence().size() << ");" << endl;
-#endif
 			osr_cpp << "const MsgType " << mitr->second._name << "::_msgtype(\"" << mitr->first << "\");" << endl;
 			osc_hpp << spacer << "static const FieldTrait _traits[];" << endl;
-#if !defined PERMIT_CUSTOM_FIELDS
 			osc_hpp << spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
-#endif
 			osc_hpp << spacer << "static const MsgType _msgtype;" << endl;
 		}
 
@@ -823,11 +809,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		if (mitr->second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
 				<< "(ctx, _msgtype(), _traits, " << mitr->second._fields.get_presence().size()
-#if defined PERMIT_CUSTOM_FIELDS
-				<< ')';
-#else
 				<< ", &_ftha)";
-#endif
 		if (isHeader || isTrailer)
 			osc_hpp << " { add_preamble(); }" << endl;
 		else if (!mitr->second._groups.empty())

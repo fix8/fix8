@@ -126,11 +126,6 @@ public:
 };
 
 //-----------------------------------------------------------------------------------------
-#if defined PERMIT_CUSTOM_FIELDS
-#include "myfix_custom.hpp"
-#endif
-
-//-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
 	int val, offset(0);
@@ -192,11 +187,6 @@ int main(int argc, char **argv)
 	unsigned msgs(0);
 	MessageCount *mc(summary ? new MessageCount : 0);
 
-#if defined PERMIT_CUSTOM_FIELDS
-	TEX::myfix_custom custfields(true); // will cleanup; modifies ctx
-	TEX::ctx.set_ube(&custfields);
-#endif
-
 	const int bufsz(4096);
 	char buffer[bufsz];
 
@@ -238,7 +228,7 @@ int main(int argc, char **argv)
 	{
 		for (MessageCount::const_iterator mitr(mc->begin()); mitr != mc->end(); ++mitr)
 		{
-			const BaseMsgEntry *bme(TEX::ctx._bme.find_ptr(mitr->first));
+			const BaseMsgEntry *bme(TEX::ctx._bme.find_ptr(mitr->first.c_str()));
 			cout << setw(20) << left << bme->_name << " (\"" << mitr->first << "\")" << '\t' << mitr->second << endl;
 		}
 	}

@@ -276,7 +276,9 @@ bool Session::process(const f8String& from)
 			return false;
 		}
 
-		if (_control & print)
+		if ((_control & printnohb) && msg->get_msgtype() != Common_MsgType_HEARTBEAT)
+			cout << *msg << endl;
+		else if (_control & print)
 			cout << *msg << endl;
 		else if ((_control & printnohb) && msg->get_msgtype() != Common_MsgType_HEARTBEAT)
 			cout << *msg << endl;
@@ -679,8 +681,7 @@ Message *Session::generate_logon(const unsigned heartbtint, const f8String davi)
 //-------------------------------------------------------------------------------------------------
 Message *Session::generate_logout()
 {
-	Message *msg(create_msg(Common_MsgType_LOGOUT));
-	return msg;
+	return create_msg(Common_MsgType_LOGOUT);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -761,15 +762,27 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 
 	if (msg->Header()->have(Common_MsgSeqNum))
 	{
-		if (!is_dup)
+		if (is_dup)
 		{
-			*msg->Header() += new poss_dup_flag(true);
-			is_dup = true;
+			if (_loginParamaters._always_seqnum_assign)
+				delete msg->Header()->remove(Common_PossDupFlag);
+		}
+		else
+		{
+			if (!_loginParamaters._always_seqnum_assign)
+			{
+				*msg->Header() += new poss_dup_flag(true);
+				is_dup = true;
+			}
 		}
 
 		sending_time sendtime;
 		msg->Header()->get(sendtime);
 		*msg->Header() += new orig_sending_time(sendtime());
+
+		if (_loginParamaters._always_seqnum_assign)
+			//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
+			*msg->Header() += new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
 	}
 	else
 	{
@@ -787,7 +800,7 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		if (!_connection->send(output))
 		{
 			ostringstream ostr;
-			ostr << "Message write failed: " << enclen;
+			ostr << "Message write failed: " << enclen << " bytes";
 			log(ostr.str());
 			return false;
 		}

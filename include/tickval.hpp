@@ -66,7 +66,7 @@ private:
 public:
 	/*! Ctor.
 	  \param settonow if true, construct with current time */
-	Tickval(bool settonow=false) { _value = noticks; if (settonow) now(); }
+	Tickval(bool settonow=false) { if (settonow) now(); else _value = noticks; }
 
 	/*! Copy Ctor. */
 	Tickval(const Tickval& from) { _value = from._value; }
@@ -234,7 +234,7 @@ private:
 	/*! Convert timespec to ticks.
 	  \param from timespec to convert
 	  \return resulting ticks */
-	ticks _cvt(const timespec& from)
+	static ticks _cvt(const timespec& from)
 	{
 		return billion * static_cast<ticks>(from.tv_sec) + static_cast<ticks>(from.tv_nsec);
 	}

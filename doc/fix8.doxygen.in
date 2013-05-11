@@ -642,7 +642,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = ../include ../runtime ../compiler ../test ../util \
+INPUT                  = ../include ../runtime ../compiler ../test ../util ../utests \
 								 mainpage.doxygen ../schema/FIX50SP2.xml
 
 # This tag can be used to specify the character encoding of the source files

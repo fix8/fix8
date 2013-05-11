@@ -67,28 +67,27 @@ namespace {
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned MessageBase::extract_header(const f8String& from, f8String& len, f8String& mtype)
+unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtype)
 {
 	const char *dptr(from.data());
-
-	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
+	const size_t flen(from.size());
+	char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
 	unsigned s_offset(0), result;
-	if ((result = extract_element(dptr, from.size(), tag, val)))
+
+	if ((result = extract_element(dptr, flen, tag, val)))
 	{
 		if (*tag != '8')
 			return 0;
 		s_offset += result;
-		if ((result = extract_element(dptr + s_offset, from.size() - s_offset, tag, val)))
+		if ((result = extract_element(dptr + s_offset, flen - s_offset, tag, len)))
 		{
 			if (*tag != '9')
 				return 0;
-			len = val;
 			s_offset += result;
-			if ((result = extract_element(dptr + s_offset, from.size() - s_offset, tag, val)))
+			if ((result = extract_element(dptr + s_offset, flen - s_offset, tag, mtype)))
 			{
 				if (*tag != '3' || *(tag + 1) != '5')
 					return 0;
-				mtype = val;
 				s_offset += result;
 			}
 		}
@@ -114,12 +113,8 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 	for (unsigned pos(_pos.size()); s_offset <= fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 	{
 		const unsigned tv(fast_atoi<unsigned>(tag));
-		const BaseEntry *be(_ctx._be.find_ptr(tv));
-#if defined PERMIT_CUSTOM_FIELDS
-		if (!be && (!_ctx._ube || (be = _ctx._ube->find_ptr(tv)) == 0))
-#else
+		const BaseEntry *be(_ctx.find_be(tv));
 		if (!be)
-#endif
 			throw InvalidField(tv);
 		Presence::const_iterator itr(_fp.get_presence().end());
 		if (!_fp.has(tv, itr))
@@ -141,9 +136,9 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 	const unsigned short missing(_fp.find_missing());
 	if (missing)
 	{
-		const BaseEntry& tbe(_ctx._be.find_ref(missing));
+		const BaseEntry *tbe(_ctx.find_be(missing));
 		ostringstream ostr;
-		ostr << tbe._name << " (" << missing << ')';
+		ostr << tbe->_name << " (" << missing << ')';
 		throw MissingMandatoryField(ostr.str());
 	}
 
@@ -173,7 +168,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 				break;
 			if (pos == 0 && grp->_fp.getPos(tv, itr) != 1)	// first field in group is mandatory
 				throw MissingRepeatingGroupField(tv);
-			const BaseEntry *be(_ctx._be.find_ptr(tv));
+			const BaseEntry *be(_ctx.find_be(tv));
 			if (!be)
 				throw InvalidField(tv);
 			if (!grp->_fp.has(tv, itr))	// field not found in sub-group - end of repeats?
@@ -191,9 +186,9 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 		const unsigned short missing(grp->_fp.find_missing());
 		if (missing)
 		{
-			const BaseEntry& tbe(_ctx._be.find_ref(missing));
+			const BaseEntry *tbe(_ctx.find_be(missing));
 			ostringstream ostr;
-			ostr << tbe._name << " (" << missing << ')';
+			ostr << tbe->_name << " (" << missing << ')';
 			throw MissingMandatoryField(ostr.str());
 		}
 		*grpbase += grp.release();
@@ -205,25 +200,21 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::check_positions()
 {
-	return 0;
+	return 0; // FIXME
 }
 
 //-------------------------------------------------------------------------------------------------
 Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 {
 	Message *msg(0);
-	f8String len, mtype;
+	char mtype[MAX_MSGTYPE_FIELD_LEN] = {}, len[MAX_MSGTYPE_FIELD_LEN] = {};
 	if (extract_header(from, len, mtype))
 	{
-		const unsigned mlen(fast_atoi<unsigned>(len.c_str()));
+		const unsigned mlen(fast_atoi<unsigned>(len));
 		const BaseMsgEntry *bme(ctx._bme.find_ptr(mtype));
 		if (!bme)
 			throw InvalidMessage(mtype);
 		msg = bme->_create();
-#if defined PERMIT_CUSTOM_FIELDS
-		if (ctx._ube)
-			ctx._ube->post_msg_ctor(msg);
-#endif
 #if defined CODECTIMING
 		IntervalTimer itm;
 #endif
@@ -429,17 +420,14 @@ unsigned Message::encode(f8String& to) const
 void MessageBase::print(ostream& os, int depth) const
 {
 	const string dspacer((depth + 1) * 3, ' ');
-	const BaseMsgEntry *tbme(_ctx._bme.find_ptr(_msgType));
+	const BaseMsgEntry *tbme(_ctx._bme.find_ptr(_msgType.c_str()));
 	if (tbme)
 		os << tbme->_name << " (\"" << _msgType << "\")" << endl;
 	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
 	{
-		const BaseEntry *tbe(_ctx._be.find_ptr(itr->second->_fnum));
+		const BaseEntry *tbe(_ctx.find_be(itr->second->_fnum));
 		if (!tbe)
-#if defined PERMIT_CUSTOM_FIELDS
-			if (!_ctx._ube || (tbe = _ctx._ube->find_ptr(itr->second->_fnum)) == 0)
-#endif
-				throw InvalidField(itr->second->_fnum);
+			throw InvalidField(itr->second->_fnum);
 		os << dspacer << tbe->_name;
 		const unsigned short comp(_fp.getComp(itr->second->_fnum));
 		if (comp)
@@ -477,12 +465,9 @@ void MessageBase::print_field(const unsigned short fnum, ostream& os) const
 	Fields::const_iterator fitr(_fields.find(fnum));
 	if (fitr != _fields.end())
 	{
-		const BaseEntry *tbe(_ctx._be.find_ptr(fnum));
+		const BaseEntry *tbe(_ctx.find_be(fnum));
 		if (!tbe)
-#if defined PERMIT_CUSTOM_FIELDS
-			if (!_ctx._ube || (tbe = _ctx._ube->find_ptr(fnum)) == 0)
-#endif
-				throw InvalidField(fnum);
+			throw InvalidField(fnum);
 		os << tbe->_name << " (" << fnum << "): ";
 		int idx;
 		if (fitr->second->_rlm && (idx = (fitr->second->get_rlm_idx())) >= 0)
@@ -591,7 +576,7 @@ BaseField *MessageBase::remove(const unsigned short fnum, Presence::const_iterat
 //-------------------------------------------------------------------------------------------------
 Message *Message::clone() const
 {
-	const BaseMsgEntry& bme(_ctx._bme.find_ref(_msgType));
+	const BaseMsgEntry& bme(_ctx._bme.find_ref(_msgType.c_str()));
 	Message *msg(bme._create());
 	copy_legal(msg, true);
 	_header->copy_legal(msg->_header, true);

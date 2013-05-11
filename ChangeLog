@@ -1,3 +1,20 @@
+* Fri May 10 2013 David L. Dight <fix@fix8.org> 0.8.0
+Fixed Jira tickets FX-56, FX-55, FX-54, FX-53, FX-52, FX-51, FX-50, FX-49, FX-48, FX-47, FX-46, FX-45, FX-31
+Integrate a 3rd party unit testing framework
+Integrate gperf tcmalloc alternate heap allocator
+Modify session to force sequence number assignment when requested
+Improve fmt_chksum routine
+Implement hash array index lookup for fields
+Provide component metadata visibility
+Replace double field encode (sprintf) with modp_dtoa
+Remove custom field support
+Remove some virtual methods from fields and generated messages
+Fix Fastflow install not placing includes in correct path
+Fix MemoryPersister::get not handling end record situation correctly
+Fix Invalid Session::handle_resend_request not resetting session state
+Fix In get_last_seqnum(unsigned& to) of MemoryPersister, can't get last seqnum from the argument "to"
+Fix hftest preload should preload on startup
+
 * Sun Apr 07 2013 David L. Dight <fix@fix8.org> 0.7.2
 Fixed jira tickets FX-23, FX-35, FX-36, FX-37, FX-38, FX-39, FX-40, FX-42, FX-43, FX-44, FX-17
 Partial implemntation of stack based messages.

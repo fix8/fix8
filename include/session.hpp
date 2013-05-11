@@ -113,6 +113,14 @@ public:
 	    \return true if both Sendercompids are the same */
 	bool same_target_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _targetCompID(); }
 
+	/*! Sendercompid equivalence operator.
+	    \return true if both Sendercompids are the same, on the same session side */
+	bool same_side_target_comp_id(const target_comp_id& targetCompID) const { return targetCompID() == _targetCompID(); }
+
+	/*! Targetcompid equivalence operator.
+	    \return true if both Targetcompids are the same, on the same session side */
+	bool same_side_sender_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _senderCompID(); }
+
 	/*! Inserter friend.
 	    \param os stream to send to
 	    \param what SessionID
@@ -152,16 +160,18 @@ struct LoginParameters
 	enum { default_retry_interval=5000, default_login_retries=100 };
 
 	LoginParameters() : _login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
-		_reset_sequence_numbers(), _recv_buf_sz(), _send_buf_sz() {}
+		_reset_sequence_numbers(), _always_seqnum_assign(), _recv_buf_sz(), _send_buf_sz() {}
 
 	LoginParameters(const unsigned login_retry_interval, const unsigned login_retries,
-		const default_appl_ver_id& davi, const bool reset_seqnum=false, unsigned recv_buf_sz=0, unsigned send_buf_sz=0)
+		const default_appl_ver_id& davi, const bool reset_seqnum=false, const bool always_seqnum_assign=false,
+		unsigned recv_buf_sz=0, unsigned send_buf_sz=0)
 		: _login_retry_interval(login_retry_interval), _login_retries(login_retries),
-		_reset_sequence_numbers(reset_seqnum), _davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz) {}
+		_reset_sequence_numbers(reset_seqnum), _always_seqnum_assign(always_seqnum_assign),
+		_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz) {}
 
 	LoginParameters(const LoginParameters& from)
 		: _login_retry_interval(from._login_retry_interval), _login_retries(from._login_retries),
-		_reset_sequence_numbers(from._reset_sequence_numbers), _davi(from._davi),
+		_reset_sequence_numbers(from._reset_sequence_numbers), _always_seqnum_assign(from._always_seqnum_assign), _davi(from._davi),
 		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz) {}
 
 	LoginParameters& operator=(const LoginParameters& that)
@@ -171,6 +181,7 @@ struct LoginParameters
 			_login_retry_interval = that._login_retry_interval;
 			_login_retries = that._login_retries;
 			_reset_sequence_numbers = that._reset_sequence_numbers;
+			_always_seqnum_assign = that._always_seqnum_assign;
 			_davi = that._davi;
 			_recv_buf_sz = that._recv_buf_sz;
 			_send_buf_sz = that._send_buf_sz;
@@ -179,7 +190,7 @@ struct LoginParameters
 	}
 
 	unsigned _login_retry_interval, _login_retries;
-	bool _reset_sequence_numbers;
+	bool _reset_sequence_numbers, _always_seqnum_assign;
 	default_appl_ver_id _davi;
 	unsigned _recv_buf_sz, _send_buf_sz;
 };
@@ -299,7 +310,7 @@ protected:
 	    \return new Message */
 	Message *create_msg(const f8String& msg_type)
 	{
-		const BaseMsgEntry *bme(_ctx._bme.find_ptr(msg_type));
+		const BaseMsgEntry *bme(_ctx._bme.find_ptr(msg_type.c_str()));
 		if (!bme)
 			throw InvalidMetadata(msg_type);
 		return bme->_create();

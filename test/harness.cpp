@@ -129,7 +129,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:r");
+const string GETARGLIST("hl:svqc:R:S:rp:");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
@@ -141,8 +141,8 @@ namespace FIX8
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('c', "Create messages"), &MyMenu::create_msgs),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('e', "Edit messages"), &MyMenu::edit_msgs),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('d', "Delete messages"), &MyMenu::delete_msgs),
+		MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Print messages"), &MyMenu::print_msgs),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('s', "Send messages"), &MyMenu::send_msgs),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('w', "Write messages to disk"), &MyMenu::write_msgs),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('r', "Read messages from disk"), &MyMenu::read_msgs),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
 		MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
@@ -176,7 +176,7 @@ int main(int argc, char **argv)
 {
 	int val;
 	bool server(false), reliable(false);
-	string clcf;
+	string clcf, replay_file;
 	unsigned next_send(0), next_receive(0);
 
 #ifdef HAVE_GETOPT_LONG
@@ -186,6 +186,7 @@ int main(int argc, char **argv)
 		{ "version",	0,	0,	'v' },
 		{ "log",			1,	0,	'l' },
 		{ "config",		1,	0,	'c' },
+		{ "replay",		1,	0,	'p' },
 		{ "server",		0,	0,	's' },
 		{ "send",		1,	0,	'S' },
 		{ "receive",	1,	0,	'R' },
@@ -208,6 +209,7 @@ int main(int argc, char **argv)
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
+		case 'p': replay_file = optarg; break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
 		case 'S': next_send = GetValue<unsigned>(optarg); break;
@@ -249,43 +251,38 @@ int main(int argc, char **argv)
 				inst->stop();
 			}
 		}
-		else if (reliable)
-		{
-			ReliableClientSession<myfix_session_client>::Client_ptr
-				mc(new ReliableClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
-			if (!quiet)
-				mc->session_ptr()->control() |= Session::printnohb;
-			mc->start(false);
-			ConsoleMenu cm(TEX::ctx, mc->session_ptr(), cin, cout, 50);
-			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
-			char ch;
-			mymenu.get_tty().set_raw_mode();
-			hypersleep<h_seconds>(1);
-			do
-			{
-				cout << endl << "?=help > " << flush;
-			}
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch));
-			mymenu.get_tty().unset_raw_mode();
-		}
 		else
 		{
-			ClientSession<myfix_session_client>::Client_ptr
-				mc(new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
+			scoped_ptr<ClientSession<myfix_session_client> >
+				mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1")
+							   : new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::printnohb;
-			const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
-			mc->start(false, next_send, next_receive, lparam._davi());
+
+			if (!reliable)
+			{
+				const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
+				mc->start(false, next_send, next_receive, lparam._davi());
+			}
+			else
+				mc->start(false);
+
 			ConsoleMenu cm(TEX::ctx, mc->session_ptr(), cin, cout, 50);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
 			hypersleep<h_seconds>(1);
+
+			// permit replaying of test message sets
+			if (!replay_file.empty() && mymenu.load_msgs(replay_file))
+				mymenu.send_lst();
+
 			do
 			{
 				cout << endl << "?=help > " << flush;
 			}
 			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch));
+
 			mymenu.get_tty().unset_raw_mode();
 		}
 	}
@@ -344,6 +341,7 @@ void print_usage()
 	um.add('h', "help", "help, this screen");
 	um.add('v', "version", "print version then exit");
 	um.add('l', "log", "global log filename");
+	um.add('p', "replay", "name of fix input file to send on connect");
 	um.add('c', "config", "xml config (default: myfix_client.xml or myfix_server.xml)");
 	um.add('q', "quiet", "do not print fix output");
 	um.add('R', "receive", "set next expected receive sequence number");
@@ -386,36 +384,64 @@ bool MyMenu::delete_msgs()
 }
 
 //-----------------------------------------------------------------------------------------
+void MyMenu::send_lst()
+{
+	for (MsgList::const_iterator itr(_lst.begin()); itr != _lst.end(); ++itr)
+		_session.send(*itr);
+	_lst.clear();
+}
+
+//-----------------------------------------------------------------------------------------
 bool MyMenu::send_msgs()
 {
 	if (_cm->get_yn("Send messages? (y/n):", true))
-	{
-		for (MsgList::const_iterator itr(_lst.begin()); itr != _lst.end(); ++itr)
-			_session.send(*itr);
-		_lst.clear();
-	}
+		send_lst();
 	return true;
 }
 
 //-----------------------------------------------------------------------------------------
-bool MyMenu::write_msgs()
+bool MyMenu::print_msgs()
 {
-	cout << "Enter filename: " << flush;
-	string fname;
-	if (!_cm->GetString(_tty, fname).empty())
+	for (MsgList::const_iterator itr(_lst.begin()); itr != _lst.end(); ++itr)
+		cout << **itr << endl;
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::load_msgs(const string& fname)
+{
+	ifstream ifs(fname.c_str());
+	if (!ifs)
 	{
-		ofstream ofs(fname.c_str());
-		if (!ofs)
-		{
-			cout << Str_error(errno, "Could not open file");
-			return false;
-		}
-		for (MsgList::const_iterator itr(_lst.begin()); itr != _lst.end(); ++itr)
-		{
-			(static_cast<MessageBase *>(*itr))->encode(ofs); // we only want the main message part, not the header/trailer
-			ofs << endl;
-		}
+		cerr << Str_error(errno, "Could not open file");
+		return false;
 	}
+
+	char buffer[MAX_MSG_LENGTH];
+	unsigned loaded(0), skipped(0);
+	while (!ifs.eof())
+	{
+		ifs.getline(buffer, MAX_MSG_LENGTH - 1);
+		if (!buffer[0])
+			continue;
+		Message *msg(Message::factory(TEX::ctx, buffer));
+		if (msg->is_admin())
+			continue;
+		sender_comp_id sci;
+		msg->Header()->get(sci);
+		target_comp_id tci;
+		msg->Header()->get(tci);
+		if (_session.get_sid().same_side_sender_comp_id(sci) && _session.get_sid().same_side_target_comp_id(tci))
+		{
+			++loaded;
+			_lst.push_back(msg);
+		}
+		else
+			++skipped;
+	}
+
+	cout << loaded << " msgs loaded, " << skipped << " msgs skipped" << endl;
+
 	return true;
 }
 
@@ -425,19 +451,7 @@ bool MyMenu::read_msgs()
 	cout << "Enter filename: " << flush;
 	string fname;
 	if (!_cm->GetString(_tty, fname).empty())
-	{
-		ifstream ifs(fname.c_str());
-		if (!ifs)
-		{
-			cout << Str_error(errno, "Could not open file");
-			return false;
-		}
-		for (MsgList::const_iterator itr(_lst.begin()); itr != _lst.end(); ++itr)
-		{
-			f8String buf;
-			(static_cast<MessageBase *>(*itr))->decode(buf, 0);
-		}
-	}
+		return load_msgs(fname);
 	return true;
 }
 

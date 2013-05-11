@@ -37,7 +37,7 @@ doxyfile.stamp:
 	$(DOXYGEN) fix8.doxygen
 	echo `date` > doxyfile.stamp
 
-CLEANFILES = doxyfile.stamp
+CLEANFILES = doxyfile.stamp man/*.xml man/*.gz
 
 all-local: doxyfile.stamp
 clean-local:

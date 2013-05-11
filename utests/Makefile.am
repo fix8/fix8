@@ -33,61 +33,52 @@
 #############################################################################################
 
 if USEGTEST
-bin_PROGRAMS = message_test fileLogger_test filePersister_test session_test
+test_programs = message_test fileLogger_test filePersister_test session_test
+noinst_PROGRAMS = $(test_programs)
 lib_LTLIBRARIES = libutest.la
 INCLUDES = -I$(top_srcdir)/include
+
+TESTS = $(test_programs)
 
 message_test_SOURCES = message_test.cpp
 fileLogger_test_SOURCES = fileLogger_test.cpp
 filePersister_test_SOURCES = filePersister_test.cpp
-session_test_SOURCES = mockConnection.hpp mockConnection.cpp session_test.cpp 
+session_test_SOURCES = mockConnection.hpp mockConnection.cpp session_test.cpp
 
 libutest_la_SOURCES = utest_types.hpp utest_types.cpp utest_traits.cpp \
-                                                         utest_router.hpp utest_classes.hpp utest_classes.cpp
+							 utest_router.hpp utest_classes.hpp utest_classes.cpp
 
 CLEANFILES = $(libutest_la_SOURCES)
+
+.NOTPARALLEL: $(XML_42_SCHEMA)
 
 XML_42_SCHEMA = $(top_srcdir)/schema/FIX42.xml
 
 $(libutest_la_SOURCES): $(XML_42_SCHEMA)
-	$(top_srcdir)/compiler/f8c -sVp utest -n UTEST $(XML_42_SCHEMA)
+	$(top_srcdir)/compiler/f8c -Vp utest -n UTEST $(XML_42_SCHEMA)
 
+AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lgtest -lgtest_main
 
-POCO_LIBS = -lPocoFoundation -lPocoNet -lPocoUtil
-
-GEN_LIBS = 
 if BDBSUPPORT
-  GEN_LIBS += -ldb_cxx
+AM_LDFLAGS += -ldb_cxx
 endif
-
 if USECOMPRESSION
-  GEN_LIBS += -lz
+AM_LDFLAGS += -lz
+endif
+if TBBSUPPORT
+AM_LDFLAGS += -ltbb
 endif
 
-GEN_FLAGS = $(GEN_LIBS) $(POCO_LIBS) -ltbb -lgtest -lgtest_main
-RUNTIME_FOLDER = $(top_srcdir)/runtime/.libs
+built = $(top_srcdir)/runtime
 
-message_test_LDADD = $(RUNTIME_FOLDER)/message.o $(RUNTIME_FOLDER)/logger.o $(RUNTIME_FOLDER)/f8utils.o \
-                        $(RUNTIME_FOLDER)/gzstream.o $(RUNTIME_FOLDER)/popen.o
-message_test_LDFLAGS = $(GEN_FLAGS) -lutest
+required_objs = -lutest $(built)/logger.lo $(built)/f8utils.lo $(built)/gzstream.lo $(built)/popen.lo $(built)/modp_numtoa.lo
+persist_objs = $(built)/message.lo $(built)/configuration.lo $(built)/xml.lo $(built)/persist.lo $(built)/filepersist.lo
+session_objs = $(built)/connection.lo $(built)/session.lo
 
-fileLogger_test_LDADD = $(RUNTIME_FOLDER)/logger.o $(RUNTIME_FOLDER)/f8utils.o \
-                        $(RUNTIME_FOLDER)/gzstream.o $(RUNTIME_FOLDER)/popen.o 
-fileLogger_test_LDFLAGS = $(GEN_FLAGS)
+message_test_LDADD = $(required_objs) $(persist_objs)
+fileLogger_test_LDADD = $(required_objs)
+filePersister_test_LDADD = $(required_objs) $(persist_objs) $(session_objs)
+session_test_LDADD = $(required_objs) $(persist_objs)
 
-filePersister_test_LDADD = $(RUNTIME_FOLDER)/filepersist.o $(RUNTIME_FOLDER)/f8utils.o \
-                           $(RUNTIME_FOLDER)/connection.o $(RUNTIME_FOLDER)/session.o \
-                           $(RUNTIME_FOLDER)/logger.o $(RUNTIME_FOLDER)/message.o \
-                           $(RUNTIME_FOLDER)/gzstream.o $(RUNTIME_FOLDER)/popen.o \
-                           $(RUNTIME_FOLDER)/configuration.o $(RUNTIME_FOLDER)/xml.o \
-                           $(RUNTIME_FOLDER)/persist.o
-filePersister_test_LDFLAGS = $(GEN_FLAGS) -lutest
-
-session_test_LDADD = $(RUNTIME_FOLDER)/f8utils.o \
-		     $(RUNTIME_FOLDER)/logger.o \
-                     $(RUNTIME_FOLDER)/message.o $(RUNTIME_FOLDER)/configuration.o $(RUNTIME_FOLDER)/xml.o \
-                     $(RUNTIME_FOLDER)/gzstream.o $(RUNTIME_FOLDER)/popen.o \
-                     $(RUNTIME_FOLDER)/persist.o $(RUNTIME_FOLDER)/filepersist.o
-session_test_LDFLAGS = $(GEN_FLAGS) -lutest
 endif
 

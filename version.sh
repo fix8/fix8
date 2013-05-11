@@ -37,6 +37,6 @@
 #
 #############################################################################################
 MAJOR_VERSION_NUM=0
-MINOR_VERSION_NUM=7
-PATCH_VERSION_NUM=3
+MINOR_VERSION_NUM=8
+PATCH_VERSION_NUM=0
 echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$PATCH_VERSION_NUM

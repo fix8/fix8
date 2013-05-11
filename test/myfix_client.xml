@@ -7,13 +7,14 @@
 				ip="127.0.0.1" port="11001"
 				sender_comp_id="DLD_TEX"
 				target_comp_id="TEX_DLD"
-				session_log="session_log"
+				session_log="session_log_file"
 				protocol_log="protocol_log"
 				login_retry_interval="15000"
 				reset_sequence_numbers="false"
 				default_appl_ver_id="8"
 				heartbeat_interval="10"
 				tcp_nodelay="true"
+				always_seqnum_assign="true"
 				pipelined="false"
 				login_retries="100"
 				persist="file0" />
@@ -35,6 +36,12 @@
 				filename="|/bin/cat"
 				rotation="5"
 				flags="timestamp|sequence|compress|thread"/>
+
+	<log 		name="session_log_file"
+				type="session"
+				filename="./run/myfix_client_session.log"
+				rotation="5"
+				flags="timestamp|sequence|thread"/>
 
 	<log 		name="session_log_udp"
 				type="session"
