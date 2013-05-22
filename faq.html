@@ -650,11 +650,11 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 												</div>
 												<div id="testEleven" class="accordion-body collapse">
 													<div class="accordion-inner">
-														Configure will by default attempt to locate your gtest installation. gtest recommends that you install this yourself so it is likely you will need to tell confgure where you have gtest installed. Use the following switch:
+														Configure will by default attempt to locate your gtest installation. gtest recommends that you install this yourself so it is likely you will need to tell confgure where you have gtest installed. Use something like the following switch:
 <pre>
 % ./configure --with-gtest=/usr/src/gtest-1.6.0 [your usual options here]
 </pre>
-								When gtest is fouind, the test cases will be built.
+								When gtest is found, the test cases will be built.
 													</div>
 												</div>
 											</div>
@@ -719,7 +719,7 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 								</div>
 								<div id="runningThree" class="accordion-body collapse">
 									<div class="accordion-inner">
-										Assuming you have successfully built the unit test applications (see above), simply run the following command. The test framework will report all failures. If you receive test failures please contact us (either through the support group or via Jira, see <a href="support.html">Support</a>.
+										Assuming you have successfully built the unit test applications (see above), simply run the following command. The test framework will report all failures. If you receive test failures please contact us (either through the support group or via Jira, see <a href="support.html">Support</a>).
 <pre>
 % make check
 </pre>
