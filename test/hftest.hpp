@@ -183,6 +183,7 @@ public:
 	bool batch_preload_new_order_single();
 	bool multi_new_order_single();
 	bool send_all_preloaded();
+	bool send_all_preloaded(coroutine& coro, FIX8::Session *ses);
 	bool help();
 	bool nothing() { return true; }
 	bool do_exit() { return false; }
@@ -197,12 +198,14 @@ public:
 /// A random number generator wrapper.
 struct RandDev
 {
+	/// Initialise the random number generator
 	static void init()
-	{
-		time_t tval(time(0));
-		srandom (static_cast<unsigned>(((tval % getpid()) * tval)));
-	}
+		{ srandom (static_cast<unsigned>(time(0) % getpid())); }
 
+	/*! Return a random number between 0 and n - 1, or between 0 and RAND_MAX
+	  \tparam T type of random number
+	  \param range upper range to return value within, or 0 for RAND_MAX
+	  \return the random number of the specified type within the psecifed range */
 	template<typename T>
    static T getrandom(const T range=0)
    {

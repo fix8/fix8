@@ -58,11 +58,11 @@ class AsyncSocket
 
 protected:
     Session& _session;
-    bool _pipelined;
+	 ProcessModel _pmodel;
 
 public:
-    AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const bool pipelined=true)
-        :  _session(session), _pipelined(pipelined) {}
+    AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_thread)
+        :  _session(session), _pmodel(pmodel) {}
 
     virtual ~AsyncSocket() {}
 
@@ -95,8 +95,8 @@ protected:
 
 public:
     /// Ctor
-    FIXReader(Poco::Net::StreamSocket *sock, Session& session, const bool pipelined=true)
-        : AsyncSocket<f8String>(sock, session, pipelined), _bg_sz()
+    FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_thread)
+        : AsyncSocket<f8String>(sock, session, pmodel), _bg_sz()
     {
         set_preamble_sz();
     }
@@ -131,8 +131,8 @@ protected:
 public:
 
     /// Ctor
-    FIXWriter(Poco::Net::StreamSocket *sock, Session& session, const bool pipelined=true)
-    : AsyncSocket<Message *>(sock, session, pipelined)
+    FIXWriter(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_thread)
+    : AsyncSocket<Message *>(sock, session, pmodel)
     {}
 
     /// Dtor
@@ -180,16 +180,17 @@ protected:
     Role _role;
     unsigned _hb_interval, _hb_interval20pc;
     bool _started;
+	 Poco::Net::SocketAddress _addr;
 
 public:
 
     /// Ctor
-    Connection(Poco::Net::StreamSocket *sock, Session &session, const bool pipelined)   // client
+    Connection(Poco::Net::StreamSocket *sock, Session &session, const ProcessModel pmodel)   // client
         : _connected(false), _session(session), _role(cn_initiator),
         _hb_interval(10), _started(false){}
 
     /// Ctor
-    Connection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval, const bool pipelined) // server
+    Connection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval, const ProcessModel pmodel) // server
         : _connected(true), _session(session), _role(cn_acceptor), _hb_interval(hb_interval),
         _hb_interval20pc(hb_interval + hb_interval / 5), _started(false){}
 
@@ -219,9 +220,9 @@ public:
 
     virtual bool write(Message *from)
     {
-        f8String output;
-        from->encode(output);
-        _output.push_back(output);
+		  char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+        from->encode(&ptr);
+        _output.push_back(ptr);
         return true;
     }
 
@@ -231,9 +232,9 @@ public:
 
     virtual bool write(Message& from)
     {
-        f8String output;
-        from.encode(output);
-        _output.push_back(output);
+		  char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+        from.encode(&ptr);
+        _output.push_back(ptr);
         return true;
     }
 
@@ -245,6 +246,16 @@ public:
     {
         _output.push_back(from);
         return from.length();
+    }
+
+    /*!helper to unit test, cache the message in string format
+          \param from message string to be sent
+          \return return the length of the message*/
+
+    int send(const char *from, size_t sz)
+    {
+        _output.push_back(f8String(from, sz));
+        return sz;
     }
 
     /*! Set the heartbeat interval for this connection.
@@ -310,6 +321,9 @@ public:
 
     ///Get the session associated with this connection
     Session& get_session() { return _session; }
+
+	const Poco::Net::SocketAddress& get_socket_address() const { return _addr; }
+	const Poco::Net::SocketAddress get_peer_socket_address() const { return Poco::Net::SocketAddress(); }
 };
 //-------------------------------------------------------------------------------------------------
 ///  mock Client (initiator) specialisation of Connection.
@@ -320,9 +334,9 @@ class ClientConnection : public Connection
 
 public:
     /// Ctor
-    ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, const bool pipelined=true,
-            const bool no_delay=true)
-        : Connection(sock, session, pipelined), _addr(addr), _no_delay(no_delay) {}
+    ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session,
+		 const ProcessModel pmodel=pm_thread, const bool no_delay=true)
+        : Connection(sock, session, pmodel), _addr(addr), _no_delay(no_delay) {}
 
     /// Dtor
     virtual ~ClientConnection() {}
@@ -345,11 +359,9 @@ class ServerConnection : public Connection
 public:
 
     /// Ctor
-    ServerConnection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval, const bool pipelined=true,
-            const bool no_delay=true) :
-        Connection(sock, session, hb_interval, pipelined)
-    {
-    }
+    ServerConnection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval,
+		 const ProcessModel pmodel=pm_thread, const bool no_delay=true) :
+        Connection(sock, session, hb_interval, pmodel) {}
 
     /// Dtor
     virtual ~ServerConnection() {}

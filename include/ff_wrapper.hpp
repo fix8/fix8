@@ -188,7 +188,7 @@ public:
 };
 
 //----------------------------------------------------------------------------------------
-// generic pthread_mutex wrapper
+/// generic pthread_mutex wrapper
 class f8_mutex
 {
 	pthread_mutex_t _pmutex;
@@ -210,6 +210,7 @@ public:
 };
 
 //----------------------------------------------------------------------------------------
+/// Your bog standard RAII scoped lock
 class f8_scoped_lock
 {
 	f8_mutex *_local_mutex;
@@ -219,24 +220,24 @@ class f8_scoped_lock
 
 public:
 	f8_scoped_lock() : _local_mutex() {}
-	f8_scoped_lock(f8_mutex& f8_mutex) { acquire(f8_mutex); }
+	f8_scoped_lock(f8_mutex& mutex) { acquire(mutex); }
 	~f8_scoped_lock()
 	{
 		if (_local_mutex)
 			release();
 	}
 
-	void acquire(f8_mutex& f8_mutex)
+	void acquire(f8_mutex& mutex)
 	{
-		f8_mutex.lock();
-		_local_mutex = &f8_mutex;
+		mutex.lock();
+		_local_mutex = &mutex;
 	}
 
-	bool try_acquire(f8_mutex& f8_mutex)
+	bool try_acquire(f8_mutex& mutex)
 	{
-		bool result(f8_mutex.try_lock());
+		bool result(mutex.try_lock());
 		if(result)
-			_local_mutex = &f8_mutex;
+			_local_mutex = &mutex;
 		return result;
 	}
 

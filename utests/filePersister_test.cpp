@@ -227,13 +227,15 @@ TEST(filePersister, find_nearest_highest_seq)
 
 class check_session : public Session
 {
+	Poco::Net::SocketAddress _addr;
+
 public:
 
     /// Ctor
     check_session(const F8MetaCntx& ctx):
         Session(ctx)
     {
-        _connection = new Connection(NULL, *this, false);
+        _connection = new Connection(NULL, _addr, *this, pm_thread);
     };
 
     /// Dtor
@@ -269,8 +271,9 @@ TEST(filePersister, resend_get)
     EXPECT_TRUE(fixture.filePer.put(5, "this is five"));
 
 
+	 Poco::Net::SocketAddress _addr;
     check_session session(UTEST::ctx);
-    Connection connection(NULL, session, false);
+    Connection connection(NULL, _addr, session, pm_thread);
 
     fixture.filePer.get(1, 5, session, &Session::retrans_callback);
 

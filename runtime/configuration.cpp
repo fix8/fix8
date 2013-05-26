@@ -214,3 +214,12 @@ unsigned Configuration::get_all_sessions(vector<const XmlElement *>& target, con
 	return target.size();
 }
 
+//-------------------------------------------------------------------------------------------------
+ProcessModel Configuration::get_process_model(const XmlElement *from) const
+{
+	static const f8String process_strings[] = { "threaded", "pipelined", "coroutine" };
+	string pm;
+	return from && from->GetAttr("process_model", pm)
+		? enum_str_get(pm_count, process_strings, pm, pm_thread) : pm_thread; // default to threaded
+}
+

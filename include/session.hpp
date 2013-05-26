@@ -208,6 +208,7 @@ class Session
 
 public:
 	enum SessionControl { shutdown, print, printnohb, debug, count };
+
 	typedef ebitset_r<SessionControl> Control;
 
 protected:

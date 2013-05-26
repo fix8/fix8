@@ -40,7 +40,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 typedef std::string f8String;
-typedef std::ostringstream f8ostrstream;
+
+enum ProcessModel { pm_thread, pm_pipeline, pm_coro, pm_count };
 
 const unsigned char default_field_separator(0x1);
 

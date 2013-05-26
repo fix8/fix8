@@ -185,6 +185,7 @@ public:
         delete pLogger;
         delete per;
     };
+
 };
 
 /// a initiator fixture, inherited from session_fixture
@@ -197,7 +198,7 @@ public:
     initiator_fixture()
     {
         Poco::Net::SocketAddress addr("127.0.0.1:80");
-        initiator = new ClientConnection(NULL, addr, *ss, false, false);
+        initiator = new ClientConnection(NULL, addr, *ss, pm_thread, false);
         initiator->connect();
         ss->start(initiator, false);
     };

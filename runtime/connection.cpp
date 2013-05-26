@@ -61,66 +61,113 @@ int FIXReader::operator()()
 {
    unsigned processed(0), dropped(0), invalid(0);
 	int retval(0);
+	f8String msg;
 
-   for (; !_session.is_shutdown();)
-   {
+	if (_pmodel == pm_coro)
+	{
 		try
 		{
-			f8String msg;
-
-			if (read(msg))	// will block
+			reenter(_coro)
 			{
-				if (_pipelined)
+				while (!_session.is_shutdown())
 				{
-					if (!_msg_queue.try_push (msg))
+					if (poll()) // it is a fair assumption that there is a complete message waiting to be read
 					{
-						_session.log("FIXReader: message queue is full");
-						++dropped;
+						if (read(msg))	// if our assumption is wrong we could block here
+						{
+							if (!_session.process(msg))
+							{
+								ostringstream ostr;
+								ostr << "Unhandled message: " << msg;
+								_session.log(ostr.str());
+								++invalid;
+							}
+							else
+								++processed;
+						}
+						else
+							++invalid;
 					}
-					else
-						++processed;
-				}
-				else
-				{
-					if (!_session.process(msg))
-					{
-						ostringstream ostr;
-						ostr << "Unhandled message: " << msg;
-						_session.log(ostr.str());
-						++invalid;
-					}
-					else
-						++processed;
+					coro_yield;
 				}
 			}
-			else
-				++invalid;
 		}
 		catch (Poco::Net::NetException& e)
 		{
 			_session.log(e.what());
 			retval = -1;
-			break;
 		}
 		catch (PeerResetConnection& e)
 		{
 			_session.log(e.what());
 			retval = -1;
-			break;
 		}
 		catch (exception& e)	// also catches Poco::Net::NetException
 		{
 			_session.log(e.what());
 			++invalid;
 		}
-   }
+	}
+	else
+	{
+		while (!_session.is_shutdown())
+		{
+			try
+			{
+				if (read(msg))	// will block
+				{
+					if (_pmodel == pm_pipeline)
+					{
+						if (!_msg_queue.try_push (msg))
+						{
+							_session.log("FIXReader: message queue is full");
+							++dropped;
+						}
+						else
+							++processed;
+					}
+					else // _pmodel == pm_thread
+					{
+						if (!_session.process(msg))
+						{
+							ostringstream ostr;
+							ostr << "Unhandled message: " << msg;
+							_session.log(ostr.str());
+							++invalid;
+						}
+						else
+							++processed;
+					}
+				}
+				else
+					++invalid;
+			}
+			catch (Poco::Net::NetException& e)
+			{
+				_session.log(e.what());
+				retval = -1;
+				break;
+			}
+			catch (PeerResetConnection& e)
+			{
+				_session.log(e.what());
+				retval = -1;
+				break;
+			}
+			catch (exception& e)	// also catches Poco::Net::NetException
+			{
+				_session.log(e.what());
+				++invalid;
+			}
+		}
 
-	ostringstream ostr;
-	ostr << "FIXReader: " << processed << " messages processed, " << dropped << " dropped, "
-		<< invalid << " invalid";
-	if (retval)
-		ostr << " (socket error=" << errno << ')';
-	_session.log(ostr.str());
+		ostringstream ostr;
+		ostr << "FIXReader: " << processed << " messages processed, " << dropped << " dropped, "
+			<< invalid << " invalid";
+		if (retval)
+			ostr << " (socket error=" << errno << ')';
+		_session.log(ostr.str());
+	}
 
 	return retval;
 }

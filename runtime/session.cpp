@@ -91,7 +91,7 @@ namespace FIX8
 //-------------------------------------------------------------------------------------------------
 void SessionID::make_id()
 {
-	f8ostrstream ostr;
+	ostringstream ostr;
 	ostr << _beginString << ':' << _targetCompID << "->" << _senderCompID;
 	_rid = ostr.str();
 	ostr.str("");
@@ -411,6 +411,10 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 			_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id);
 		if (!_persist)
 			_persist = _sf->create_persister(_sf->_ses, &id);
+
+		ostringstream ostr;
+		ostr << "Connection from " << _connection->get_peer_socket_address().toString();
+		log(ostr.str());
 
 		if (_ctx.version() >= 4100 && msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get())
 		{
@@ -793,9 +797,9 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 	{
 		//cout << "Sending:" << *msg;
 		modify_outbound(msg);
-		f8String output;
-		const unsigned enclen(msg->encode(output));
-		if (!_connection->send(output))
+		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		const size_t enclen(msg->encode(&ptr));
+		if (!_connection->send(ptr, enclen))
 		{
 			ostringstream ostr;
 			ostr << "Message write failed: " << enclen << " bytes";

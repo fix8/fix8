@@ -254,20 +254,16 @@ int main(int argc, char **argv)
 				ostringstream sostr;
 				sostr << "client(" << ++scnt << ") connection established.";
 				GlobalLogger::log(sostr.str());
-				const bool pipelined(ms->get_pipelined(ms->_ses));
-				inst->start(pipelined, next_send, next_receive);
-				if (!pipelined)
-				{
+				const ProcessModel pm(ms->get_process_model(ms->_ses));
+				inst->start(pm == pm_pipeline, next_send, next_receive);
+				cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+				if (pm != pm_pipeline)
 					while (!inst->session_ptr()->is_shutdown())
 						hypersleep<h_milliseconds>(100);
-				}
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
-#if defined BUFFERED_GLOBAL_LOGGING
-				GlobalLogger::flush_log();
-#endif
 #if defined CODECTIMING
-				Message::report_codec_timings();
+				Message::report_codec_timings("server");
 #endif
 			}
 		}
@@ -279,11 +275,9 @@ int main(int argc, char **argv)
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
 
+			const ProcessModel pm(mc->get_process_model(mc->_ses));
 			if (!reliable)
-			{
-				const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
-				mc->start(false, next_send, next_receive, lparam._davi());
-			}
+				mc->start(false, next_send, next_receive, mc->session_ptr()->get_login_parameters()._davi());
 			else
 				mc->start(false, next_send, next_receive);
 
@@ -292,13 +286,43 @@ int main(int argc, char **argv)
 				mymenu.preload_new_order_single();
 			char ch;
 			mymenu.get_tty().set_raw_mode();
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
-				;
-#if defined BUFFERED_GLOBAL_LOGGING
-			GlobalLogger::flush_log();
-#endif
+			if (pm == pm_coro)
+			{
+				cout << "Coroutine mode." << endl;
+				fd_set rfds;
+				timeval tv = { 0, 0 };
+
+				while (!term_received)
+				{
+					mc->session_ptr()->get_connection()->reader_execute();
+					char ch(0);
+					FD_ZERO(&rfds);
+					FD_SET(0, &rfds);
+					if (select(1, &rfds, 0, 0, &tv) > 0)
+					{
+						if (read (0, &ch, 1) < 0)
+							break;
+						if (ch == 'a')
+						{
+							cout << "Sending messages..." << endl;
+							coroutine coro;
+							while(mymenu.send_all_preloaded(coro, mc->session_ptr()))
+								mc->session_ptr()->get_connection()->reader_execute();
+						}
+						else if (ch == 0x3 || !mymenu.process(ch))
+							break;
+					}
+				}
+			}
+			else
+			{
+				cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+				while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
+					;
+			}
+			cout << endl;
 #if defined CODECTIMING
-			Message::report_codec_timings();
+			Message::report_codec_timings("client");
 #endif
 			if (!mc->session_ptr()->is_shutdown())
 				mc->session_ptr()->stop();
@@ -308,16 +332,10 @@ int main(int argc, char **argv)
 	}
 	catch (f8Exception& e)
 	{
-#if defined BUFFERED_GLOBAL_LOGGING
-		GlobalLogger::flush_log();
-#endif
 		cerr << "exception: " << e.what() << endl;
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
-#if defined BUFFERED_GLOBAL_LOGGING
-			GlobalLogger::flush_log();
-#endif
 		cerr << "exception: " << e.what() << endl;
 	}
 
@@ -430,6 +448,30 @@ bool MyMenu::send_all_preloaded()
 	}
 	cout << endl << snt << " NewOrderSingle msgs sent." << endl;
 	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::send_all_preloaded(coroutine& coro, FIX8::Session *ses)
+{
+	unsigned snt(0);
+	TEX::NewOrderSingle *ptr;
+
+	reenter(coro)
+	{
+		while (_session.cached())
+		{
+			if (ses->get_connection()->writer_poll())
+			{
+				if (!(ptr = _session.pop()))
+					break;
+				_session.send(ptr);
+				if (++snt % batch_size)
+					continue;
+			}
+			coro_yield;
+		}
+	}
+	return _session.cached();
 }
 
 //-----------------------------------------------------------------------------------------

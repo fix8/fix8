@@ -5,15 +5,12 @@
 				fix_version="1100"
 				active="true"
 				heartbeat_interval="10"
-				session_log="session_log"
-            protocol_log="protocol_log_null"
 				ip="127.0.0.1" port="11002"
 				sender_comp_id="TEX_DLD"
 				tcp_nodelay="true"
 			   tcp_recv_buffer="100663296"
 			   tcp_send_buffer="100663296"
-			   pipelined="false"
-				persist="mem0" />
+			   pipelined="false" />
 
 	<persist name="bdb0"
 				type="bdb"

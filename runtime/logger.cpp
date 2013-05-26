@@ -75,7 +75,7 @@ int Logger::operator()()
 {
    unsigned received(0);
 
-   for (; !_stopping; )
+   while (!_stopping)
    {
 		LogElement *msg_ptr(0);
 

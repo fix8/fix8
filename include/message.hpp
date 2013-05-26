@@ -164,6 +164,8 @@ struct F8MetaCntx
 	Message *(*_mk_hdr)(), *(*_mk_trl)();
 	/// Fix header beginstring
 	const f8String _beginStr;
+	/// Preamble length
+	const size_t _preamble_sz;
 
 	enum MsgFlags { noverifychksum, count };
 	mutable ebitset<MsgFlags, unsigned> _msg_flags;
@@ -191,7 +193,7 @@ struct F8MetaCntx
 		: _version(version), _bme(bme), _be(be), _cn(cn),
 		_flu_sz(_be.at(_be.size() - 1)->_key + 1), _flu(new const BaseEntry *[_flu_sz]),
 		_mk_hdr(_bme.find_ptr("header")->_create), _mk_trl(_bme.find_ptr("trailer")->_create),
-		_beginStr(bg)
+		_beginStr(bg), _preamble_sz(2 + _beginStr.size() + 1 + 3)
 	{
 		std::fill(_flu, _flu + _flu_sz, static_cast<BaseEntry *>(0));
       for (unsigned offset(0); offset < _be.size(); ++offset)
@@ -296,26 +298,24 @@ public:
 	/*! Encode message to stream.
 	    \param to stream to encode to
 	    \return number of bytes encoded */
-	unsigned encode(std::ostream& to) const;
+	size_t encode(std::ostream& to) const;
 
 	/*! Encode message to buffer.
 	    \param to buffer to encode to
-	    \param sz current message size
 	    \return number of bytes encoded */
-	unsigned encode(char *to, size_t& sz) const;
+	size_t encode(char *to) const;
 
 	/*! Encode group message to stream.
 	    \param fnum repeating group fix field num (no...)
 	    \param to stream to encode to
 	    \return number of bytes encoded */
-	unsigned encode_group(const unsigned short fnum, std::ostream& to) const;
+	size_t encode_group(const unsigned short fnum, std::ostream& to) const;
 
 	/*! Encode group message to buffer.
 	    \param fnum repeating group fix field num (no...)
 	    \param to buffer to encode to
-	    \param sz current message size
 	    \return number of bytes encoded */
-	unsigned encode_group(const unsigned short fnum, char *to, size_t& sz) const;
+	size_t encode_group(const unsigned short fnum, char *to) const;
 
 	/*! Check to see if positions of fields are as required.
 	  \return field number of field not in order, 0 if all ok */
@@ -743,7 +743,12 @@ public:
 	/*! Encode message to stream.
 	    \param to stream to encode to
 	    \return number of bytes encoded */
-	unsigned encode(f8String& to) const;
+	size_t encode(f8String& to) const;
+
+	/*! Encode message to stream. Perform absolutely minimal copying of output buffer.
+	    \param to pointer to pointer to buffer
+	    \return number of bytes encoded; to ptr is updated with address of start of encoded message string */
+	size_t encode(char **to) const;
 
 	/*! Clone this message. Performs a deep copy.
 	    \return pointer to copy of this message */
@@ -850,8 +855,8 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Message& what) { what.print(os); return os; }
 
 #if defined CODECTIMING
-	static void format_codec_timings(const f8String&, std::ostream&, codec_timings&);
-	static void report_codec_timings();
+	static void format_codec_timings(const f8String& md, std::ostream& ostr, codec_timings& tobj);
+	static void report_codec_timings(const f8String& tag);
 #endif
 };
 

@@ -44,8 +44,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-/// File descriptor output streambuf
-class fdoutbuf : public std::streambuf // inspiration from Josuttis N.M.
+/// File descriptor output streambuf, inspiration from Josuttis N.M.
+class fdoutbuf : public std::streambuf
 {
 protected:
    int fd;
@@ -107,8 +107,8 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Socket output streambuf
-class bcoutbuf : public std::streambuf // inspiration from Josuttis N.M.
+/// Socket output streambuf, inspiration from Josuttis N.M.
+class bcoutbuf : public std::streambuf
 {
 protected:
 	Poco::Net::DatagramSocket *_sock;
@@ -156,7 +156,6 @@ class Tickval;
 class Logger
 {
 	dthread<Logger> _thread;
-	std::ostringstream _buf;
 	std::list<std::string> _buffer;
 
 public:
@@ -198,13 +197,7 @@ protected:
 	f8_concurrent_queue<LogElement> _msg_queue;
 	unsigned _sequence, _osequence;
 
-	typedef std::
-#if defined HAS_TR1_UNORDERED_MAP
-		tr1::unordered_map
-#else
-		map
-#endif
-		<pthread_t, char> ThreadCodes;
+	typedef std::map<pthread_t, char> ThreadCodes;
 	ThreadCodes _thread_codes;
 
 	typedef std::map<char, pthread_t> RevThreadCodes;

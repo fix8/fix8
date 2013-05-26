@@ -292,9 +292,9 @@ unsigned MessageBase::copy_legal(MessageBase *to, bool force) const
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned MessageBase::encode(char *to, size_t& sz) const
+size_t MessageBase::encode(char *to) const
 {
-	const size_t where(sz);
+	const char *where(to);
 	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
 	{
 #if defined POPULATE_METADATA
@@ -303,17 +303,17 @@ unsigned MessageBase::encode(char *to, size_t& sz) const
 		Presence::const_iterator fpitr(_fp.get_presence().end());
 		if (!_fp.get(itr->second->_fnum, fpitr, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
 		{
-			itr->second->encode(to, sz);
+			to += itr->second->encode(to);
 			if (_fp.get(itr->second->_fnum, fpitr, FieldTrait::group))
-				encode_group(itr->second->_fnum, to, sz);
+				to += encode_group(itr->second->_fnum, to);
 		}
 	}
 
-	return sz - where;
+	return to - where;
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned MessageBase::encode(ostream& to) const
+size_t MessageBase::encode(ostream& to) const
 {
 	const std::ios::pos_type where(to.tellp());
 	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
@@ -334,19 +334,19 @@ unsigned MessageBase::encode(ostream& to) const
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned MessageBase::encode_group(const unsigned short fnum, char *to, size_t& sz) const
+size_t MessageBase::encode_group(const unsigned short fnum, char *to) const
 {
-	const size_t where(sz);
+	const char *where(to);
 	GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
 		throw InvalidRepeatingGroup(fnum);
 	for (GroupElement::iterator itr(grpbase->_msgs.begin()); itr != grpbase->_msgs.end(); ++itr)
-		(*itr)->encode(to, sz);
-	return sz - where;
+		to += (*itr)->encode(to);
+	return to - where;
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned MessageBase::encode_group(const unsigned short fnum, std::ostream& to) const
+size_t MessageBase::encode_group(const unsigned short fnum, std::ostream& to) const
 {
 	const std::ios::pos_type where(to.tellp());
 	GroupBase *grpbase(find_group(fnum));
@@ -358,10 +358,10 @@ unsigned MessageBase::encode_group(const unsigned short fnum, std::ostream& to) 
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned Message::encode(f8String& to) const
+/// Encode message with minimal copying
+size_t Message::encode(char **hmsg_store) const
 {
-	char msg[MAX_MSG_LENGTH], hmsg[MAX_MSG_LENGTH];
-	size_t sz(0), hsz(0);
+	char *moffs(*hmsg_store + HEADER_CALC_OFFSET), *msg(moffs);
 
 #if defined CODECTIMING
 	IntervalTimer itm;
@@ -371,17 +371,20 @@ unsigned Message::encode(f8String& to) const
 		throw MissingMessageComponent("header");
 	Fields::const_iterator fitr(_header->_fields.find(Common_MsgType));
 	static_cast<msg_type *>(fitr->second)->set(_msgType);
-	_header->encode(msg, sz);
-	MessageBase::encode(msg, sz);
+	msg += _header->encode(msg); // start
+	msg += MessageBase::encode(msg);
 	if (!_trailer)
 		throw MissingMessageComponent("trailer");
-	_trailer->encode(msg, sz);
-	const unsigned msgLen(sz);	// checksummable msglength
+	msg += _trailer->encode(msg);
+	const size_t msgLen(msg - moffs); // checksummable msglength
+	const size_t hlen(_ctx._preamble_sz + (msgLen < 10 ? 1 : msgLen < 100 ? 2 : msgLen < 1000 ? 3 : 4));
+	char *hmsg(moffs - hlen);
+	*hmsg_store = hmsg;
 
 	if ((fitr = _header->_fields.find(Common_BeginString)) == _header->_fields.end())
 		throw MissingMandatoryField(Common_BeginString);
 	_header->_fp.clear(Common_BeginString, FieldTrait::suppress);
-	fitr->second->encode(hmsg, hsz);
+	hmsg += fitr->second->encode(hmsg);
 #if defined MSGRECYCLING
 	_header->_fp.set(Common_BeginString, FieldTrait::suppress); // in case we want to reuse
 #endif
@@ -390,19 +393,16 @@ unsigned Message::encode(f8String& to) const
 		throw MissingMandatoryField(Common_BodyLength);
 	_header->_fp.clear(Common_BodyLength, FieldTrait::suppress);
 	static_cast<body_length *>(fitr->second)->set(msgLen);
-	fitr->second->encode(hmsg, hsz);
+	hmsg += fitr->second->encode(hmsg);
 #if defined MSGRECYCLING
 	_header->_fp.set(Common_BodyLength, FieldTrait::suppress); // in case we want to reuse
 #endif
 
-	::memcpy(hmsg + hsz, msg, sz);
-	hsz += sz;
-
 	if ((fitr = _trailer->_fields.find(Common_CheckSum)) == _trailer->_fields.end())
 		throw MissingMandatoryField(Common_CheckSum);
-	static_cast<check_sum *>(fitr->second)->set(fmt_chksum(calc_chksum(hmsg, hsz)));
+	static_cast<check_sum *>(fitr->second)->set(fmt_chksum(calc_chksum(moffs - hlen, msgLen + hlen)));
 	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
-	fitr->second->encode(hmsg, hsz);
+	msg += fitr->second->encode(msg);
 #if defined MSGRECYCLING
 	_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress); // in case we want to reuse
 #endif
@@ -412,7 +412,16 @@ unsigned Message::encode(f8String& to) const
 	++_encode_timings._msg_count;
 #endif
 
-	to.assign(hmsg, hsz);
+	*msg = 0;
+	return msg - *hmsg_store;
+}
+
+//-------------------------------------------------------------------------------------------------
+size_t Message::encode(f8String& to) const
+{
+	char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+	const size_t msgLen(encode(&ptr));
+	to.assign(ptr, msgLen);
 	return to.size();
 }
 
@@ -608,16 +617,18 @@ void Message::format_codec_timings(const f8String& str, ostream& os, codec_timin
 		<< setprecision(2) << (ct._msg_count / ct._cpu_used) << " msgs/sec";
 }
 
-void Message::report_codec_timings()
+void Message::report_codec_timings(const f8String& tag)
 {
 	ostringstream ostr;
 	ostr.setf(std::ios::showpoint);
 	ostr.setf(std::ios::fixed);
 
+	ostr << tag << ' ';
 	format_codec_timings("Encode", ostr, _encode_timings);
 	GlobalLogger::log(ostr.str());
 
 	ostr.str("");
+	ostr << tag << ' ';
 	format_codec_timings("Decode", ostr, _decode_timings);
 	GlobalLogger::log(ostr.str());
 }

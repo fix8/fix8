@@ -209,11 +209,10 @@ public:
 	bool get_tcp_nodelay(const XmlElement *from)
 		{ return from && from->FindAttr("tcp_nodelay", true); }
 
-	/*! Extract the pipelined flag.
+	/*! Extract process model.
 	  \param from xml entity to search
-	  \return false if pipelined flag was passed and was false */
-	bool get_pipelined(const XmlElement *from)
-		{ return from && from->FindAttr("pipelined", true); }
+	  \return pm_thread, pm_pipeline or pm_coro */
+	ProcessModel get_process_model(const XmlElement *from) const;
 
 	/*! Extract the reset_sequence_number flag from a session entity.
 	  \param from xml entity to search

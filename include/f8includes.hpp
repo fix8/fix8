@@ -62,6 +62,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <field.hpp>
 #include <message.hpp>
 #include <session.hpp>
+#include <coroutine.hpp>
+#include <yield.hpp>
 #include <connection.hpp>
 #include <configuration.hpp>
 #include <persist.hpp>

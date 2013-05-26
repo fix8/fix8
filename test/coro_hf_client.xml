@@ -15,16 +15,9 @@
            login_retries="100"
 			  tcp_recv_buffer="100663296"
 			  tcp_send_buffer="100663296"
-			  process_model="threaded"
-           persist="mem0" />
-
-  <persist name="bdb0"
-           type="bdb" dir="./run"
-           db="hf_client.db" />
+			  process_model="coroutine" />
 
   <persist name="mem0"
            type="mem" />
-
-  <xi:include href="./hf_client_include.xml"/>
 </fix8>
 

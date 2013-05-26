@@ -133,7 +133,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	virtual void print(char *to, size_t& sz) const = 0;
+	virtual size_t print(char *to) const = 0;
 
 	/*! Copy this field.
 	  \return the copy */
@@ -161,16 +161,15 @@ public:
 
 	/*! Encode this field to the supplied stream.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream
 	  \return the number of bytes encoded */
-	size_t encode(char *to, size_t& sz) const
+	size_t encode(char *to) const
 	{
-		const size_t cur_sz(sz);
-		sz += itoa(_fnum, to + sz);
-		*(to + sz++) = '=';
-		print(to + sz, sz);
-		*(to + sz++) = default_field_separator;
-		return sz - cur_sz;
+		const char *cur_ptr(to);
+		to += itoa(_fnum, to);
+		*to++ = '=';
+		to += print(to);
+		*to++ = default_field_separator;
+		return to - cur_ptr;
 	}
 
 	/*! Get the realm pointer for this field.
@@ -275,7 +274,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const { sz += itoa(_value, to); }
+	size_t print(char *to) const { return itoa(_value, to); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -364,7 +363,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const { ::strcpy(to, _value); sz += ::strlen(_value); }
+	size_t print(char *to) const { ::strcpy(to, _value); return ::strlen(_value); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -448,7 +447,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const { sz += _value.copy(to, _value.size()); }
+	size_t print(char *to) const { return _value.copy(to, _value.size()); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -543,7 +542,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const { sz += modp_dtoa(_value, to, _precision); }
+	size_t print(char *to) const { return modp_dtoa(_value, to, _precision); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -626,7 +625,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const { *to = _value; ++sz; }
+	size_t print(char *to) const { *to = _value; return 1; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -796,7 +795,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const { sz += DateTimeFormat(_value, to, _with_ms); }
+	size_t print(char *to) const { return DateTimeFormat(_value, to, _with_ms); }
 };
 
 template<const unsigned short field>
@@ -912,7 +911,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const {}  	// TODO
+	size_t print(char *to) const { return 0; }  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -979,7 +978,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const {}  	// TODO
+	size_t print(char *to) const { return 0; }  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1046,7 +1045,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const {}  	// TODO
+	size_t print(char *to) const { return 0; }  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1112,7 +1111,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const {}  	// TODO
+	size_t print(char *to) const { return 0; }  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1179,7 +1178,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const {}  	// TODO
+	size_t print(char *to) const { return 0; }  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1414,7 +1413,7 @@ public:
 	/*! Print this field to the supplied buffer, update size written.
 	  \param to buffer to print to
 	  \param sz current size of buffer payload stream */
-	void print(char *to, size_t& sz) const { *to = _value ? 'Y' : 'N'; ++sz; }
+	size_t print(char *to) const { *to = _value ? 'Y' : 'N'; return 1; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1565,6 +1564,7 @@ typedef Field<int, Common_EncryptMethod> encrypt_method;
 //-------------------------------------------------------------------------------------------------
 // Misc consts
 const size_t MAX_MSGTYPE_FIELD_LEN(32);
+const size_t HEADER_CALC_OFFSET(32);
 
 } // FIX8
 

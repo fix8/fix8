@@ -83,16 +83,24 @@ const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *t
   \param source source string
   \param ws string containing whitespace characters to trim out
   \return trimmed string */
-const std::string& trim(std::string& source, const std::string& ws = " \t");
+const std::string& trim(std::string& source, const std::string& ws=" \t");
 
 //----------------------------------------------------------------------------------------
-/*! Rotate a value by the specified number of bits
+/*! Rotate left value the specified number of times
   \tparam T type
   \param val source value
-  \param bits number of bits to rotate by
+  \param times number of times to rotate left
   \return the rotated value */
 template<typename T>
-inline T rotl(const T val, const int bits) { return val << bits | val >> (sizeof(T) * 8 - bits); }
+inline T rotl(const T val, const int times) { return val << times | val >> (sizeof(T) * 8 - times); }
+
+/*! Rotate right value the specified number of times
+  \tparam T type
+  \param val source value
+  \param times number of times to rotate right
+  \return the rotated value */
+template<typename T>
+inline T rotr(const T val, const int times) { return val >> times | val << (sizeof(T) * 8 - times); }
 
 /*! Generate a rot13 hash. No multiplication, algorithm by Serge Vakulenko. See http://vak.ru/doku.php/proj/hash/sources.
   \param str source string
@@ -811,6 +819,23 @@ public:
 	    \return ebitset_r */
 	ebitset_r& operator<<(const T sbit) { a_ |= 1 << sbit; return *this; }
 };
+
+//----------------------------------------------------------------------------------------
+/*! From a set of strings representing the names of an enumeration in order,
+  return the enum of the given string.
+	 \param els number of elements in set; if 0 return default value
+	 \param sset the set of strings; if null return default value
+	 \param what the string to find
+	 \param def the default value to return if not found
+	 \return enum value or default */
+template<typename T>
+T enum_str_get(const unsigned els, const std::string *sset, const std::string& what, const T def)
+{
+	if (!sset || !els)
+		return def;
+	const std::string *last(sset + els), *result(std::find(sset, last, what));
+	return result == last ? def : static_cast<T>(std::distance(sset, result));
+}
 
 //----------------------------------------------------------------------------------------
 /*! Check for file existance.
