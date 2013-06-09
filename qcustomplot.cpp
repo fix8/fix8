@@ -1001,16 +1001,15 @@ void QCPGraph::getScatterPlotData(QVector<QCPData> *pointData) const
   if (!pointData) return;
   
   // get visible data range:
-  QCPDataMap::const_iterator lower, upper;
+  QCPDataMap::const_iterator lower, upperEnd;
   int dataCount;
-  getVisibleDataBounds(lower, upper, dataCount);
+  getVisibleDataBounds(lower, upperEnd, dataCount);
   // prepare vectors:
   if (pointData)
     pointData->resize(dataCount);
 
   // position data points:
   QCPDataMap::const_iterator it = lower;
-  QCPDataMap::const_iterator upperEnd = upper+1;
   int i = 0;
   if (mKeyAxis->orientation() == Qt::Vertical)
   {
@@ -1044,9 +1043,9 @@ void QCPGraph::getScatterPlotData(QVector<QCPData> *pointData) const
 void QCPGraph::getLinePlotData(QVector<QPointF> *lineData, QVector<QCPData> *pointData) const
 {
   // get visible data range:
-  QCPDataMap::const_iterator lower, upper;
+  QCPDataMap::const_iterator lower, upperEnd;
   int dataCount;
-  getVisibleDataBounds(lower, upper, dataCount);
+  getVisibleDataBounds(lower, upperEnd, dataCount);
   // prepare vectors:
   if (lineData)
   { 
@@ -1059,7 +1058,6 @@ void QCPGraph::getLinePlotData(QVector<QPointF> *lineData, QVector<QCPData> *poi
 
   // position data points:
   QCPDataMap::const_iterator it = lower;
-  QCPDataMap::const_iterator upperEnd = upper+1;
   int i = 0;
   if (mKeyAxis->orientation() == Qt::Vertical)
   {
@@ -1099,9 +1097,9 @@ void QCPGraph::getLinePlotData(QVector<QPointF> *lineData, QVector<QCPData> *poi
 void QCPGraph::getStepLeftPlotData(QVector<QPointF> *lineData, QVector<QCPData> *pointData) const
 {
   // get visible data range:
-  QCPDataMap::const_iterator lower, upper;
+  QCPDataMap::const_iterator lower, upperEnd;
   int dataCount;
-  getVisibleDataBounds(lower, upper, dataCount);
+  getVisibleDataBounds(lower, upperEnd, dataCount);
   // prepare vectors:
   if (lineData)
   {
@@ -1115,7 +1113,6 @@ void QCPGraph::getStepLeftPlotData(QVector<QPointF> *lineData, QVector<QCPData> 
   
   // position data points:
   QCPDataMap::const_iterator it = lower;
-  QCPDataMap::const_iterator upperEnd = upper+1;
   int i = 0;
   int ipoint = 0;
   if (mKeyAxis->orientation() == Qt::Vertical)
@@ -1176,9 +1173,9 @@ void QCPGraph::getStepLeftPlotData(QVector<QPointF> *lineData, QVector<QCPData> 
 void QCPGraph::getStepRightPlotData(QVector<QPointF> *lineData, QVector<QCPData> *pointData) const
 {
   // get visible data range:
-  QCPDataMap::const_iterator lower, upper;
+  QCPDataMap::const_iterator lower, upperEnd;
   int dataCount;
-  getVisibleDataBounds(lower, upper, dataCount);
+  getVisibleDataBounds(lower, upperEnd, dataCount);
   // prepare vectors:
   if (lineData)
   {
@@ -1192,7 +1189,6 @@ void QCPGraph::getStepRightPlotData(QVector<QPointF> *lineData, QVector<QCPData>
   
   // position points:
   QCPDataMap::const_iterator it = lower;
-  QCPDataMap::const_iterator upperEnd = upper+1;
   int i = 0;
   int ipoint = 0;
   if (mKeyAxis->orientation() == Qt::Vertical)
@@ -1253,9 +1249,9 @@ void QCPGraph::getStepRightPlotData(QVector<QPointF> *lineData, QVector<QCPData>
 void QCPGraph::getStepCenterPlotData(QVector<QPointF> *lineData, QVector<QCPData> *pointData) const
 {
   // get visible data range:
-  QCPDataMap::const_iterator lower, upper;
+  QCPDataMap::const_iterator lower, upperEnd;
   int dataCount;
-  getVisibleDataBounds(lower, upper, dataCount);
+  getVisibleDataBounds(lower, upperEnd, dataCount);
   // prepare vectors:
   if (lineData)
   {
@@ -1269,7 +1265,6 @@ void QCPGraph::getStepCenterPlotData(QVector<QPointF> *lineData, QVector<QCPData
   
   // position points:
   QCPDataMap::const_iterator it = lower;
-  QCPDataMap::const_iterator upperEnd = upper+1;
   int i = 0;
   int ipoint = 0;
   if (mKeyAxis->orientation() == Qt::Vertical)
@@ -1356,9 +1351,9 @@ void QCPGraph::getStepCenterPlotData(QVector<QPointF> *lineData, QVector<QCPData
 void QCPGraph::getImpulsePlotData(QVector<QPointF> *lineData, QVector<QCPData> *pointData) const
 {
   // get visible data range:
-  QCPDataMap::const_iterator lower, upper;
+  QCPDataMap::const_iterator lower, upperEnd;
   int dataCount;
-  getVisibleDataBounds(lower, upper, dataCount);
+  getVisibleDataBounds(lower, upperEnd, dataCount);
   // prepare vectors:
   if (lineData)
   {
@@ -1370,7 +1365,6 @@ void QCPGraph::getImpulsePlotData(QVector<QPointF> *lineData, QVector<QCPData> *
   
   // position data points:
   QCPDataMap::const_iterator it = lower;
-  QCPDataMap::const_iterator upperEnd = upper+1;
   int i = 0;
   int ipoint = 0;
   if (mKeyAxis->orientation() == Qt::Vertical)
@@ -1666,21 +1660,22 @@ void QCPGraph::drawError(QCPPainter *painter, double x, double y, const QCPData 
   \param[out] upper returns an iterator to the highest data point. Same as before, \a upper may also
   lie outside of the visible range.
   \param[out] count number of data points that need plotting, i.e. points between \a lower and \a upper,
-  including them. This is useful for allocating the array of QPointFs in the specific drawing functions.
+  including \a lower but not \a upper. This is useful for allocating the array of QPointFs in the
+  specific drawing functions.
 */
 void QCPGraph::getVisibleDataBounds(QCPDataMap::const_iterator &lower, QCPDataMap::const_iterator &upper, int &count) const
 {
   // get visible data range as QMap iterators
   QCPDataMap::const_iterator lbound = mData->lowerBound(mKeyAxis->range().lower);
-  QCPDataMap::const_iterator ubound = mData->upperBound(mKeyAxis->range().upper)-1;
+  QCPDataMap::const_iterator ubound = mData->upperBound(mKeyAxis->range().upper);
   bool lowoutlier = lbound != mData->constBegin(); // indicates whether there exist points below axis range
-  bool highoutlier = ubound+1 != mData->constEnd(); // indicates whether there exist points above axis range
+  bool highoutlier = ubound != mData->constEnd(); // indicates whether there exist points above axis range
   lower = (lowoutlier ? lbound-1 : lbound); // data pointrange that will be actually drawn
   upper = (highoutlier ? ubound+1 : ubound); // data pointrange that will be actually drawn
   
   // count number of points in range lower to upper (including them), so we can allocate array for them in draw functions:
   QCPDataMap::const_iterator it = lower;
-  count = 1;
+  count = 0;
   while (it != upper)
   {
     ++it;
