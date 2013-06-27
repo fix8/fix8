@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Fix8 FAQ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Modern open source FIX framework featuring complete schema driven customisation, high performance and fast application development.">
+    <meta name="description" content="Modern open source low latency C++ FIX framework featuring complete schema driven customisation, high performance and fast application development. 3.2x faster encdoding than Quickfix. Production client encode latency is 2.2us, decode 4.5us. Free, community supported.">
     <meta name="author" content="David L. Dight">
 
     <!-- Le styles -->
@@ -413,7 +413,7 @@ Message *my_sess::generate_logon(const unsigned heartbeat_interval, const f8Stri
 												Nested repeating groups are easy to use. The following example creates multiple nested groups. Using <code>find_group</code>
 												and then <code>create_group</code> you can locate the group you wish to add, create an instance, populate the fields
 												and then add it to the message.
-												<pre>
+												<pre class="pre-scrollable">
 *nos << new TEX::NoUnderlyings(3);
 GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
 

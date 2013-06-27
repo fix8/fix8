@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Fix8 Performance</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Modern open source C++ FIX framework free featuring complete schema driven customisation, high performance and fast application development. Production client encode latency is 2.2us, decode 4.5us.">
+    <meta name="description" content="Modern open source low latency C++ FIX framework featuring complete schema driven customisation, high performance and fast application development. 3.2x faster encdoding than Quickfix. Production client encode latency is 2.2us, decode 4.5us. Free, community supported.">
     <meta name="author" content="David L. Dight">
 
     <!-- Le styles -->
@@ -173,7 +173,7 @@ tbb version 4.1 (tbb41_20130116oss)
 					</div>
 					<div id="codeheadOne" class="accordion-body collapse">
 							<div class="accordion-inner">
-<pre>
+<pre class="pre-scrollable">
 #include "quickfix/Field.h"
 #include "quickfix/Values.h"
 #include "quickfix/Message.h"
@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
 					</div>
 					<div id="codeheadTwo" class="accordion-body collapse">
 							<div class="accordion-inner">
-<pre>
+<pre class="pre-scrollable">
 // f8 headers
 #include "f8includes.hpp"
 #include "message.hpp"
@@ -450,7 +450,7 @@ int main(int argc, char *argv[])
 					<h2>The message set</h2>
 					<p>The test client sends a simple <code>NewOrderSingle(D)</code> message for a Fill or Kill buy order with a random quantity bwtween 1 and 10000
 					and a random price between 1.0 and 500.0. Each order will have a unique ClOrderID. The following is a typical order.</p>
-<pre>
+<pre class="pre-scrollable">
 header ("header")
    BeginString (8): FIX.4.2
    BodyLength (9): 146
@@ -474,7 +474,7 @@ trailer ("trailer")
 </pre>
 					<p>When the test server receives a <code>NewOrderSingle</code> message it sends either an <code>ExecutionReport(8)</code> with order reject,
 						order cancel or order confirmation (randomly selected). The following is a typical order confirmation.</p>
-<pre>
+<pre class="pre-scrollable">
 header ("header")
    BeginString (8): FIX.4.2
    BodyLength (9): 224
@@ -507,7 +507,7 @@ trailer ("trailer")
    CheckSum (10):
 </pre>
 					<p>Followed by one or more fills.</p>
-<pre>
+<pre class="pre-scrollable">
 header ("header")
    BeginString (8): FIX.4.2
    BodyLength (9): 217
@@ -688,7 +688,7 @@ x       Exit
 						<tbody>
 							<tr class="success">
 								<td>encode</td>
-								<td><b>2.46</b></td>
+								<td><b>2.05</b></td>
 							</tr>
 							<tr class="success">
 								<td>decode</td>
