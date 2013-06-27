@@ -194,6 +194,41 @@ typedef StaticTable<comp_str, std::string> CSMap;
 //-----------------------------------------------------------------------------------------
 inline int recover_line(const XmlElement& xf) { return xf.FindAttr("line", xf.GetLine()); }
 
+//-----------------------------------------------------------------------------------------
+class push_dir
+{
+	char _cwd[MAX_FLD_LENGTH];
+
+	push_dir();
+
+public:
+	push_dir(const std::string& to) : _cwd()
+	{
+		if (::getcwd(_cwd, MAX_FLD_LENGTH) == 0)
+		{
+			std::ostringstream ostr;
+			ostr << "Error getting current directory (" << ::strerror(errno) << ')';
+			throw f8Exception(ostr.str());
+		}
+		if (::chdir(to.c_str()))
+		{
+			std::ostringstream ostr;
+			ostr << "Error setting current directory '" << to << "' (" << ::strerror(errno) << ')';
+			throw f8Exception(ostr.str());
+		}
+	}
+
+	~push_dir()
+	{
+		if (_cwd[0] && ::chdir(_cwd))
+		{
+			std::ostringstream ostr;
+			ostr << "Error restoring current directory '" << _cwd << "' (" << ::strerror(errno) << ')';
+			throw f8Exception(ostr.str());
+		}
+	}
+};
+
 } // FIX8
 
 #endif // _F8_F8C_HPP_

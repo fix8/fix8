@@ -39,11 +39,18 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
+//-------------------------------------------------------------------------------------------------
 typedef std::string f8String;
 
+//-------------------------------------------------------------------------------------------------
+/// Supported session process models
 enum ProcessModel { pm_thread, pm_pipeline, pm_coro, pm_count };
 
+/// default FIX field separator (^A)
 const unsigned char default_field_separator(0x1);
+
+/// default FIX assignment separator (=)
+const unsigned char default_assignment_separator('=');
 
 //-------------------------------------------------------------------------------------------------
 /// Pair abstraction for use with GeneratedTable

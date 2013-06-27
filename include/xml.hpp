@@ -164,7 +164,7 @@ public:
 		{
 			XmlAttrs::iterator itr(attrs_->find(what));
 			if (itr != attrs_->end())
-				return FIX8::GetValue<T>(itr->second);
+				return FIX8::get_value<T>(itr->second);
 		}
 
 		return defValue;
@@ -182,7 +182,7 @@ public:
 		{
 			XmlAttrs::iterator itr(attrs_->find(what));
 			if (itr != attrs_->end())
-				target = FIX8::GetValue<T>(itr->second);
+				target = FIX8::get_value<T>(itr->second);
 		}
 
 		return target;

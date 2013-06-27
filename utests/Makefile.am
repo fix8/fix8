@@ -71,8 +71,9 @@ endif
 
 built = $(top_srcdir)/runtime
 
-required_objs = -lutest $(built)/logger.lo $(built)/f8utils.lo $(built)/gzstream.lo $(built)/popen.lo $(built)/modp_numtoa.lo
-persist_objs = $(built)/message.lo $(built)/configuration.lo $(built)/xml.lo $(built)/persist.lo $(built)/filepersist.lo
+required_objs = -lutest $(built)/logger.lo $(built)/f8utils.lo $(built)/gzstream.lo \
+					 $(built)/message.lo $(built)/modp_numtoa.lo
+persist_objs = $(built)/configuration.lo $(built)/xml.lo $(built)/persist.lo $(built)/filepersist.lo
 session_objs = $(built)/connection.lo $(built)/session.lo
 
 message_test_LDADD = $(required_objs) $(persist_objs)

@@ -214,12 +214,12 @@ int main(int argc, char **argv)
 		case 'h': print_usage(); return 0;
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
-		case 'b': batch_size = GetValue<unsigned>(optarg); break;
-		case 'p': preload_count = GetValue<unsigned>(optarg); break;
-		case 'u': update_count = GetValue<unsigned>(optarg); break;
+		case 'b': batch_size = get_value<unsigned>(optarg); break;
+		case 'p': preload_count = get_value<unsigned>(optarg); break;
+		case 'u': update_count = get_value<unsigned>(optarg); break;
 		case 's': server = true; break;
-		case 'S': next_send = GetValue<unsigned>(optarg); break;
-		case 'R': next_receive = GetValue<unsigned>(optarg); break;
+		case 'S': next_send = get_value<unsigned>(optarg); break;
+		case 'R': next_receive = get_value<unsigned>(optarg); break;
 		case 'q': quiet = false; break;
 		case 'r': reliable = true; break;
 		default: break;

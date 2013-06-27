@@ -220,16 +220,20 @@ CSMap::TypePair(cs_copyright2,
 	CSMap::TypePair(cs_copyright_short, "Copyright (c) 2010-"),
 	CSMap::TypePair(cs_copyright_short2, ", David L. Dight <fix@fix8.org>, All rights reserved."),
 	CSMap::TypePair(cs_header_preamble,
+"	begin_string *get_begin_string() { return _begin_string; };\n"
+"	body_length *get_body_length() { return _body_length; };\n"
+"	msg_type *get_msg_type() { return _msg_type; };\n\n"
 "	void add_preamble()\n"
 "	{\n"
-"		add_field(Common_BeginString, 1, new begin_string(ctx._beginStr), false);\n"
-"		add_field(Common_BodyLength, 2, new body_length(0), false);\n"
-"		add_field(Common_MsgType, 3, new msg_type, false);\n"
+"		add_field(Common_BeginString, 1, _begin_string, false);\n"
+"		add_field(Common_BodyLength, 2, _body_length, false);\n"
+"		add_field(Common_MsgType, 3, _msg_type, false);\n"
 "	}"),
 	CSMap::TypePair(cs_trailer_preamble,
+"	check_sum *get_check_sum() { return _check_sum; };\n\n"
 "	void add_preamble()\n"
 "	{\n"
-"		add_field(Common_CheckSum, 3, new check_sum, false);\n"
+"		add_field(Common_CheckSum, 3, _check_sum, false);\n"
 "	}"),
 };
 template<>

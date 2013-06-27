@@ -149,9 +149,12 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 				&& ((type % "session" && ltype == session_log) || (type % "protocol" && ltype == protocol_log)))
 			{
 				string logname("logname_not_set.log");
-				trim(get_logname(which, logname, sid));
+				which->FindAttrRef("filename", logname);
 
-				if (logname[0] == '|' || logname[0] == '!')
+				if (logname[0] == '|')
+#ifndef HAVE_POPEN
+					throw f8Exception("popen not supported on your platform");
+#endif
 					return new PipeLogger(logname, get_logflags(which));
 
 				RegMatch match;
@@ -160,11 +163,12 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 					f8String ip, port;
 					_ipexp.SubExpr(match, logname, ip, 0, 1);
 					_ipexp.SubExpr(match, logname, port, 0, 2);
-					BCLogger *bcl(new BCLogger(ip, GetValue<unsigned>(port), get_logflags(which)));
+					BCLogger *bcl(new BCLogger(ip, get_value<unsigned>(port), get_logflags(which)));
 					if (*bcl)
 						return bcl;
 				}
 
+				trim(get_logname(which, logname, sid)); // only applies to file loggers
 				return new FileLogger(logname, get_logflags(which), get_logfile_rotation(which));
 			}
 		}
@@ -176,9 +180,6 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 //-------------------------------------------------------------------------------------------------
 string& Configuration::get_logname(const XmlElement *from, string& to, const SessionID *sid) const
 {
-	if (from)
-		from->FindAttrRef("filename", to);
-
 	if (sid)
 		to += ('.' + sid->get_senderCompID()() + '.' + sid->get_targetCompID()());
 	else if (from && from->FindAttr("use_session_id", false))
@@ -220,6 +221,6 @@ ProcessModel Configuration::get_process_model(const XmlElement *from) const
 	static const f8String process_strings[] = { "threaded", "pipelined", "coroutine" };
 	string pm;
 	return from && from->GetAttr("process_model", pm)
-		? enum_str_get(pm_count, process_strings, pm, pm_thread) : pm_thread; // default to threaded
+		? enum_str_get(pm_count, process_strings, pm, pm_thread) : pm_pipeline; // default to pipelined
 }
 

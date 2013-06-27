@@ -67,7 +67,8 @@ namespace FIX8
 	template<>
 	f8_mutex Singleton<SingleLogger<glob_log0> >::_mutex = f8_mutex();
 
-	const string Logger::_bit_names[] = { "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer" };
+	const string Logger::_bit_names[] =
+		{ "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer", "inbound", "outbound" };
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -259,29 +260,25 @@ bool FileLogger::rotate(bool force)
 }
 
 //-------------------------------------------------------------------------------------------------
-PipeLogger::PipeLogger(const string& fname, const ebitset<Flags> flags) : Logger(flags)
+PipeLogger::PipeLogger(const string& ifname, const ebitset<Flags> flags) : Logger(flags)
 {
-	const string pathname(fname.substr(1));
+	string fname(ifname);
+	const string pathname(trim(fname).substr(1));
 
-   // | uses IFS safe cfpopen; ! uses old popen if available
-	FILE *pcmd(
-#ifdef HAVE_POPEN
-		fname[0] == '!' ? popen(pathname.c_str(), "w") :
-#endif
-								cfpopen(const_cast<char*>(pathname.c_str()), const_cast<char*>("w")));
+	if (fname[0] != '|')
+		throw f8Exception("pipe command must be prefixed with '|'");
+
+	FILE *pcmd(popen(pathname.c_str(), "w"));
+
 	if (pcmd == 0)
-#ifdef DEBUG
-		*errofs << pathname << " failed to execute" << endl
-#endif
-		;
-	else if (ferror(pcmd))
-#ifdef DEBUG
-		*errofs << pathname << " shows ferror" << endl
-#endif
-		;
+	{
+		ostringstream ostr;
+		ostr << pathname << ": failed to execute";
+		GlobalLogger::log(ostr.str());
+	}
 	else
 	{
-		_ofs = new fptrostream(pcmd, fname[0] == '|');
+		_ofs = new fptrostream(pcmd);
 		_flags |= pipe;
 	}
 }

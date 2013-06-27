@@ -264,10 +264,13 @@ bool Session::process(const f8String& from)
 		seqnum = fast_atoi<unsigned>(from.data() + fpos + 3, default_field_separator);
 
 		bool retry_plog(false);
-		if (_state != States::st_wait_for_logon)
-			plog(from, 1);
-		else
-			retry_plog = true;
+		if (_plogger && _plogger->has_flag(Logger::inbound))
+		{
+			if (_state != States::st_wait_for_logon)
+				plog(from, 1);
+			else
+				retry_plog = true;
+		}
 
 		scoped_ptr<Message> msg(Message::factory(_ctx, from));
 		if (!msg.get())
@@ -807,7 +810,9 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 			return false;
 		}
 		_last_sent.now();
-		plog(output);
+
+		if (_plogger && _plogger->has_flag(Logger::outbound))
+			plog(ptr);
 
 		//cout << "send_process" << endl;
 

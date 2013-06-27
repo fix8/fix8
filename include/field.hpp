@@ -39,8 +39,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #include <Poco/Timestamp.h>
 #include <Poco/DateTime.h>
-#include <Poco/DateTimeParser.h>
-#include <Poco/DateTimeFormatter.h>
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
@@ -82,10 +80,7 @@ struct RealmBase
 	  \param idx of value
 	  \return reference to the associated value */
 	template<typename T>
-	const T& get_rlm_val(const int idx) const
-	{
-		return *(static_cast<const T*>(_range) + idx);
-	}
+	const T& get_rlm_val(const int idx) const { return *(static_cast<const T*>(_range) + idx); }
 
 	/*! Get the realm index of this value in the domain set.
 	  \tparam T domain type
@@ -150,23 +145,23 @@ public:
 	T& from() { return *static_cast<T*>(this); }
 
 	/*! Encode this field to the supplied stream.
-	  \param os stream to print to
+	  \param os stream to encode to
 	  \return the number of bytes encoded */
 	size_t encode(std::ostream& os) const
 	{
 		const std::ios::pos_type where(os.tellp());
-		os << _fnum << '=' << *this << default_field_separator;
+		os << _fnum << default_assignment_separator << *this << default_field_separator;
 		return os.tellp() - where;
 	}
 
 	/*! Encode this field to the supplied stream.
-	  \param to buffer to print to
+	  \param to buffer to encode to
 	  \return the number of bytes encoded */
 	size_t encode(char *to) const
 	{
 		const char *cur_ptr(to);
 		to += itoa(_fnum, to);
-		*to++ = '=';
+		*to++ = default_assignment_separator;
 		to += print(to);
 		*to++ = default_field_separator;
 		return to - cur_ptr;
@@ -686,7 +681,6 @@ typedef EnumType<FieldTrait::ft_UTCTimestamp> UTCTimestamp;
 template<const unsigned short field>
 class Field<UTCTimestamp, field> : public BaseField
 {
-	static const std::string _fmt_sec, _fmt_ms;
 	enum MillisecondIndicator { _sec_only = 17, _with_ms = 21 };
 	Poco::DateTime _value;
 	int _tzdiff;
@@ -774,8 +768,7 @@ public:
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const
-		{ return os << Poco::DateTimeFormatter::format(_value, _fmt_sec); }
+	std::ostream& print(std::ostream& os) const { return os; }
 
 	/*! Format Poco::DateTime into a string.
 		 With millisecond, the format string will be "YYYYMMDD-HH:MM:SS.MMM"
@@ -841,11 +834,6 @@ inline void Field<UTCTimestamp, field>::DateTimeParse(const std::string& from, P
 	if (Poco::DateTime::isValid(year, month, day, hour, minute, second, millisecond))
 		dateTime.assign(year, month, day, hour, minute, second, millisecond);
 }
-
-template<const unsigned short field>
-const std::string Field<UTCTimestamp, field>::_fmt_sec("%Y%m%d-%H:%M:%S");
-template<const unsigned short field>
-const std::string Field<UTCTimestamp, field>::_fmt_ms("%Y%m%d-%H:%M:%S.%i");
 
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_UTCTimeOnly> UTCTimeOnly;

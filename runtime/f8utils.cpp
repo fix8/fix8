@@ -147,7 +147,7 @@ string Str_error(const int err, const char *str)
 {
 	const size_t max_str(256);
 	char buf[max_str] = {};
-	strerror_r(err, buf, max_str - 1);
+	ignore_value(strerror_r(err, buf, max_str - 1));
 	if (str && *str)
 	{
 		ostringstream ostr;

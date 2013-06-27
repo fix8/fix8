@@ -138,7 +138,6 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 	FieldSpecMap& fspec, Components& compon);
 void process_ordering(MessageSpecMap& mspec);
 ostream *open_ofile(const string& odir, const string& fname, string& target);
-const string flname(const string& from);
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
 const string& filepart(const string& source, string& where);
@@ -152,6 +151,7 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 void load_components(const XmlElement::XmlSet& comlist, Components& components);
 unsigned lookup_component(const Components& compon, const f8String& name);
 void binary_report();
+string bintoaschex(const string& from);
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
@@ -202,13 +202,13 @@ int main(int argc, char **argv)
 		case 'c': gen_classes = optarg; break;
 		case 'h': print_usage(); return 0;
 		case ':': case '?': return 1;
-		case 'o': odir = optarg; break;
+		case 'o': CheckAddTrailingSlash(odir = optarg); break;
 		case 'd': dump = true; break;
 		case 'i': error_ignore = true; break;
 		case 'k': keep_failed = true; break;
 		case 'r': retain_precomp = true; break;
 		case 's': second_only = true; break;
-		case 't': tabsize = GetValue<unsigned>(optarg); break;
+		case 't': tabsize = get_value<unsigned>(optarg); break;
 		case 'p': prefix = optarg; break;
 		case 'b': binary_report(); return 0;
 		case 'x': fixt = optarg; break;
@@ -258,6 +258,14 @@ int main(int argc, char **argv)
 		cout << "expanding " << shortName << ' ';
 		cout.flush();
 		scoped_ptr<ostream> pre_out(open_ofile(odir, shortName + ".p1", precompFile));
+		if (!pre_out.get())
+		{
+			cerr << endl << "Error opening: " << odir << '/' << shortName;
+			if	(errno)
+				cerr << " (" << strerror(errno) << ')';
+			cerr << endl;
+			return 1;
+		}
 		scoped_ptr<XmlElement> pcmp(XmlElement::Factory(inputFile)), pcmpfixt;
 		unsigned xmlsz(pcmp->GetLineCnt());
 
@@ -314,7 +322,7 @@ int main(int argc, char **argv)
 	for (unsigned ii(0); ii < Ctxt::count; ++ii)
 	{
 		ctxt._out[ii].first.second = prefix + ctxt._exts[ii];
-		ctxt._out[ii].first.first = '.' + ctxt._out[ii].first.second + ".p2";
+		ctxt._out[ii].first.first = ctxt._out[ii].first.second + ".p2";
 		remove(ctxt._out[ii].first.first.c_str());
 		string target;
 		if ((ctxt._out[ii].second = open_ofile(odir, ctxt._out[ii].first.first, target)) == 0)
@@ -336,15 +344,29 @@ int main(int argc, char **argv)
 			}
 			else
 			{
-				string backup(ctxt._out[ii].first.second + ".old");
-				remove(backup.c_str());
-				rename(ctxt._out[ii].first.second.c_str(), backup.c_str());
-				rename(ctxt._out[ii].first.first.c_str(), ctxt._out[ii].first.second.c_str());
+				try
+				{
+					push_dir pd(odir);
+					string backup(ctxt._out[ii].first.second + ".old");
+					remove(backup.c_str());
+					rename(ctxt._out[ii].first.second.c_str(), backup.c_str());
+					if (rename(ctxt._out[ii].first.first.c_str(), ctxt._out[ii].first.second.c_str()))
+					{
+						cerr << "Error renaming files \'" << ctxt._out[ii].first.first << "' to '" <<  ctxt._out[ii].first.second;
+						if	(errno)
+							cerr << " (" << strerror(errno) << ')';
+						cerr << endl;
+					}
+
+					if (gen_classes.empty())
+						remove(ctxt._out[Ctxt::session_hpp].first.second.c_str());
+				}
+				catch (f8Exception& e)
+				{
+					cerr << "exception: " << e.what() << endl;
+				}
 			}
 		}
-
-		if (gen_classes.empty())
-			remove(ctxt._out[Ctxt::session_hpp].first.second.c_str());
 	}
 
 	if (glob_errors)
@@ -378,7 +400,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 			FieldTrait::FieldType ft(FieldSpec::_baseTypeMap.find_value(type));
 			pair<FieldSpecMap::iterator, bool> result;
 			if (ft != FieldTrait::ft_untyped)
-				result = fspec.insert(FieldSpecMap::value_type(GetValue<unsigned>(number), FieldSpec(name, ft)));
+				result = fspec.insert(FieldSpecMap::value_type(get_value<unsigned>(number), FieldSpec(name, ft)));
 			else
 			{
 				cerr << shortName << ':' << recover_line(**itr) << ": warning: Unknown field type: " << type << " in " << name << endl;
@@ -710,15 +732,15 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	// output file preambles
 	generate_preamble(osu_hpp, ctxt._out[Ctxt::router_hpp].first.second);
-	osu_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::router_hpp].first.second) << '_' << endl;
-	osu_hpp << "#define _" << flname(ctxt._out[Ctxt::router_hpp].first.second) << '_' << endl << endl;
+	osu_hpp << "#ifndef " << bintoaschex(ctxt._out[Ctxt::router_hpp].first.second) << endl;
+	osu_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::router_hpp].first.second) << endl << endl;
 	osu_hpp << _csMap.find_ref(cs_start_namespace) << endl;
 	osu_hpp << "namespace " << ctxt._fixns << " {" << endl;
 	osu_hpp << endl << _csMap.find_ref(cs_divider) << endl;
 
 	generate_preamble(osc_hpp, ctxt._out[Ctxt::classes_hpp].first.second);
-	osc_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::classes_hpp].first.second) << '_' << endl;
-	osc_hpp << "#define _" << flname(ctxt._out[Ctxt::classes_hpp].first.second) << '_' << endl << endl;
+	osc_hpp << "#ifndef " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl;
+	osc_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl << endl;
 	osc_hpp << _csMap.find_ref(cs_start_namespace) << endl;
 	osc_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
@@ -802,6 +824,15 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			osc_hpp << spacer << "static const MsgType _msgtype;" << endl;
 		}
 
+		if (isHeader)
+		{
+			osc_hpp << endl << spacer << "begin_string *_begin_string;" << endl;
+			osc_hpp << spacer << "body_length *_body_length;" << endl;
+			osc_hpp << spacer << "msg_type *_msg_type;" << endl;
+		}
+		else if (isTrailer)
+			osc_hpp << endl << spacer << "check_sum *_check_sum;" << endl;
+
 		osc_hpp << endl;
 
 		osc_hpp << "public:" << endl;
@@ -811,7 +842,14 @@ int process(XmlElement& xf, Ctxt& ctxt)
 				<< "(ctx, _msgtype(), _traits, " << mitr->second._fields.get_presence().size()
 				<< ", &_ftha)";
 		if (isHeader || isTrailer)
+		{
+			osc_hpp << ',' << endl << spacer << spacer;
+			if (isHeader)
+				osc_hpp << "_begin_string(new begin_string(ctx._beginStr)), _body_length(new body_length(0)), _msg_type(new msg_type)";
+			else
+				osc_hpp << "_check_sum(new check_sum)";
 			osc_hpp << " { add_preamble(); }" << endl;
+		}
 		else if (!mitr->second._groups.empty())
 		{
 			osc_hpp << endl << spacer << '{' << endl;
@@ -819,8 +857,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			{
 				FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
 				osc_hpp << spacer << spacer;
-				osc_hpp << "_groups.insert(_groups.end(), Groups::value_type("
-					<< gsitr->first << ", new " << gsitr->second._name << "));" << endl;
+				osc_hpp << "_groups.insert(";
+				if (gitr != mitr->second._groups.begin())
+					osc_hpp << "_groups.end(), ";
+				osc_hpp << "Groups::value_type(" << gsitr->first << ", new " << gsitr->second._name << "));" << endl;
 			}
 			osc_hpp << spacer << '}' << endl;
 		}
@@ -914,12 +954,12 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	// terminate files
 	osc_hpp << endl << "} // namespace " << ctxt._fixns << endl;
 	osc_hpp << _csMap.find_ref(cs_end_namespace) << endl;
-	osc_hpp << "#endif // _" << flname(ctxt._out[Ctxt::classes_hpp].first.second) << '_' << endl;
+	osc_hpp << "#endif // " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl;
 	osu_hpp << endl << "} // namespace " << ctxt._fixns << endl;
 	osu_hpp << _csMap.find_ref(cs_end_namespace) << endl;
-	osu_hpp << "#endif // _" << flname(ctxt._out[Ctxt::router_hpp].first.second) << '_' << endl;
-	osr_cpp << endl << _csMap.find_ref(cs_end_namespace) << endl;
-	osr_cpp << "} // namespace " << ctxt._fixns << endl;
+	osu_hpp << "#endif // " << bintoaschex(ctxt._out[Ctxt::router_hpp].first.second) << endl;
+	osr_cpp << endl << "} // namespace " << ctxt._fixns << endl;
+	osr_cpp << _csMap.find_ref(cs_end_namespace) << endl;
 	osc_cpp << _csMap.find_ref(cs_end_namespace) << endl;
 	osc_cpp << endl;
 
@@ -929,8 +969,8 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	{
 		bool is_server(gen_classes == "server");
 		generate_preamble(oss_hpp, ctxt._out[Ctxt::session_hpp].first.second, false);
-		oss_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::session_hpp].first.second) << '_' << endl;
-		oss_hpp << "#define _" << flname(ctxt._out[Ctxt::session_hpp].first.second) << '_' << endl;
+		oss_hpp << "#ifndef " << bintoaschex(ctxt._out[Ctxt::session_hpp].first.second) << endl;
+		oss_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::session_hpp].first.second) << endl;
 		oss_hpp << endl << _csMap.find_ref(cs_divider) << endl;
 
 		oss_hpp << "// " << gen_classes << " session and router classes" << endl;
@@ -1000,15 +1040,15 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 		oss_hpp << "};" << endl;
 
-		oss_hpp << endl << "#endif // _" << flname(ctxt._out[Ctxt::session_hpp].first.second) << '_' << endl;
+		oss_hpp << endl << "#endif // " << bintoaschex(ctxt._out[Ctxt::session_hpp].first.second) << endl;
 	}
 
 // ================================= Field processing =====================================
 
 	// output file preambles
 	generate_preamble(ost_hpp, ctxt._out[Ctxt::types_hpp].first.second);
-	ost_hpp << "#ifndef _" << flname(ctxt._out[Ctxt::types_hpp].first.second) << '_' << endl;
-	ost_hpp << "#define _" << flname(ctxt._out[Ctxt::types_hpp].first.second) << '_' << endl << endl;
+	ost_hpp << "#ifndef " << bintoaschex(ctxt._out[Ctxt::types_hpp].first.second) << endl;
+	ost_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::types_hpp].first.second) << endl << endl;
 	ost_hpp << _csMap.find_ref(cs_start_namespace) << endl;
 	ost_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
@@ -1120,7 +1160,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	// terminate files
 	ost_hpp << endl << "} // namespace " << ctxt._fixns << endl;
 	ost_hpp << _csMap.find_ref(cs_end_namespace) << endl;
-	ost_hpp << "#endif // _" << flname(ctxt._out[Ctxt::types_hpp].first.second) << '_' << endl;
+	ost_hpp << "#endif // " << bintoaschex(ctxt._out[Ctxt::types_hpp].first.second) << endl;
 	ost_cpp << endl << _csMap.find_ref(cs_end_namespace) << endl;
 
 	if (verbose)

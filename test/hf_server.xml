@@ -10,7 +10,7 @@
 				tcp_nodelay="true"
 			   tcp_recv_buffer="100663296"
 			   tcp_send_buffer="100663296"
-			   pipelined="false" />
+			   process_model="threaded" />
 
 	<persist name="bdb0"
 				type="bdb"
@@ -30,7 +30,12 @@
 				type="protocol"
 				filename="./run/hf_server_protocol.log"
 				rotation="5"
-				flags="sequence|append|direction"/>
+				flags="sequence|append|direction|inbound|outbound"/>
+
+	<log 		name="protocol_log_pipe"
+				type="protocol"
+				filename="|/bin/cat"
+				flags="sequence|append|direction|inbound|outbound"/>
 
 	<log 		name="protocol_log_null"
 				type="protocol"

@@ -60,6 +60,12 @@ public:
 		: _reason(msg), _force_logoff(force_logoff) {}
 
 	/*! Ctor.
+	    \param msg message associated with this exception
+	    \param force_logoff if true, logoff when thrown */
+	f8Exception(const char *msg, bool force_logoff=false)
+		: _reason(msg), _force_logoff(force_logoff) {}
+
+	/*! Ctor.
 	    \tparam T type of value to format
 	    \param msg message associated with this exception
 	    \param val value to display with this exception

@@ -154,7 +154,7 @@ int main(int argc, char **argv)
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
-		case 'o': offset = GetValue<int>(optarg); break;
+		case 'o': offset = get_value<int>(optarg); break;
 		case 's': summary = true; break;
 		case 'c':
 			 cout << "Context FIX beginstring:" << TEX::ctx._beginStr << endl;

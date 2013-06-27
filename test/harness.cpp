@@ -212,8 +212,8 @@ int main(int argc, char **argv)
 		case 'p': replay_file = optarg; break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
-		case 'S': next_send = GetValue<unsigned>(optarg); break;
-		case 'R': next_receive = GetValue<unsigned>(optarg); break;
+		case 'S': next_send = get_value<unsigned>(optarg); break;
+		case 'R': next_receive = get_value<unsigned>(optarg); break;
 		case 'q': quiet = true; break;
 		case 'r': reliable = true; break;
 		default: break;

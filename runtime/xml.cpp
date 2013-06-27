@@ -120,21 +120,21 @@ ostream& operator<<(ostream& os, const XmlElement& en)
 namespace {
 
 // execute command and pipe output to string; only 1 line is captured.
-string& exec_cmd(const string& cmd, string& result)
+bool exec_cmd(const string& cmd, string& result)
 {
    FILE *apipe(popen(cmd.c_str(), "r"));
    if (apipe)
    {
-      const size_t maxcmdlen(128);
-      char buffer[maxcmdlen] = {};
-      if (!feof(apipe) && fgets(buffer, maxcmdlen, apipe) && buffer[0])
+      const size_t maxcmdresultlen(1024);
+      char buffer[maxcmdresultlen] = {};
+      if (!feof(apipe) && fgets(buffer, maxcmdresultlen, apipe) && buffer[0])
       {
          result = buffer;
-         result.resize(result.size() - 1);
+         result.resize(result.size() - 1); // remove lf
       }
       pclose(apipe);
    }
-   return result;
+   return !result.empty();
 }
 
 }
@@ -580,18 +580,19 @@ const string& XmlElement::InplaceXlate (string& what)
 	RegMatch match;
 	while (rCX_.SearchString(match, what, 2) == 2)
 	{
-		string whatv, replv;
+		string whatv;
+		char replv;
 		rCX_.SubExpr(match, what, whatv, 1);
 		if (whatv == "amp")
-			replv = "&";
+			replv = '&';
 		else if (whatv == "lt")
-			replv = "<";
+			replv = '<';
 		else if (whatv == "gt")
-			replv = ">";
+			replv = '>';
 		else if (whatv == "apos")
-			replv = "'";
+			replv = '\'';
 		else if (whatv == "quot")
-			replv = "\"";
+			replv = '\"';
 		else
 			break;	// cannot be reached
 
@@ -622,7 +623,7 @@ const string& XmlElement::InplaceXlate (string& what)
    {
       string whatv;
       rEn_.SubExpr(match, what, whatv, 0, 1);
-      string result(getenv(whatv.c_str()));
+      const string result(getenv(whatv.c_str()));
       if (!result.empty())
          rEn_.Replace(match, what, result);
    }
@@ -632,8 +633,7 @@ const string& XmlElement::InplaceXlate (string& what)
       string whatv;
       rEv_.SubExpr(match, what, whatv, 0, 1);
       string result;
-      exec_cmd(whatv, result);
-      if (!result.empty())
+      if (exec_cmd(whatv, result))
          rEv_.Replace(match, what, result);
    }
 

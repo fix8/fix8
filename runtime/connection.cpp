@@ -102,7 +102,7 @@ int FIXReader::operator()()
 			_session.log(e.what());
 			retval = -1;
 		}
-		catch (exception& e)	// also catches Poco::Net::NetException
+		catch (exception& e)
 		{
 			_session.log(e.what());
 			++invalid;
@@ -154,7 +154,7 @@ int FIXReader::operator()()
 				retval = -1;
 				break;
 			}
-			catch (exception& e)	// also catches Poco::Net::NetException
+			catch (exception& e)
 			{
 				_session.log(e.what());
 				++invalid;
@@ -286,7 +286,7 @@ int FIXWriter::operator()()
 {
 	int result(0), processed(0), invalid(0);
 
-   for (; !_session.is_shutdown();)
+   while (!_session.is_shutdown())
    {
 		try
 		{
@@ -349,7 +349,7 @@ bool ClientConnection::connect()
 {
 	unsigned attempts(0);
 	const LoginParameters& lparam(_session.get_login_parameters());
-	Poco::Timespan timeout(1000000);
+	const Poco::Timespan timeout(1000000);
 
 	while (attempts < lparam._login_retries)
 	{

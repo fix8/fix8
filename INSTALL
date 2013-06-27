@@ -332,6 +332,7 @@ Optional Features:
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-doxygen        enable doxygen generation (default=yes if available)
   --enable-fillmetadata   enable metadata population (default=yes)
+  --enable-tcmalloc       enable gperftools tcmalloc (default=yes)
   --enable-bdb            enable support for Oracle Berkeley DB persistence
                           (default=no)
   --enable-xmlstrictbool  enable xml strict bool behaviour (default=no)
@@ -359,6 +360,8 @@ Optional Packages:
   --with-maxmsglen=VALUE  Maximum length of a FIX message (default=8192)
   --with-maxfldlen=VALUE  Maximum length of a FIX field (default=1024)
   --with-tbb=DIR          location of TBB
+  --with-gtest=DIR        location of gtest
+  --with-gperf=DIR        location of gperf libraries
   --with-mpmc=VAL         select which mpmc system will be used (tbb|ff,
                           default=ff)
   --with-sleep=VAL        If using fastflow, sleep for VAL ns instead of yield
@@ -382,5 +385,5 @@ Some influential environment variables:
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
 
-Report bugs to <fix@fix8.org>.
+Report bugs to http://groups.google.com/group/fix8-support
 fix8 home page: <http://www.fix8.org>.

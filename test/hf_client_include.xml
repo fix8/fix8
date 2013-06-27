@@ -15,19 +15,19 @@
 	<log 		name="protocol_log_udp"
 				type="protocol"
 				filename="127.0.0.1:514"
-				flags="sequence|append|direction"/>
+				flags="sequence|append|direction|inbound|outbound"/>
 
 	<log 		name="protocol_log_with_attributes"
 				type="protocol"
 				filename="./run/hf_client_protocol.log"
 				rotation="5"
-				flags="sequence|append|direction|compress"/>
+				flags="sequence|append|direction|compress|inbound|outbound"/>
 
 	<log 		name="protocol_log"
 				type="protocol"
 				filename="./run/hf_client2_protocol.log"
 				rotation="5"
-				flags="append"/>
+				flags="append|inbound|outbound"/>
 
 	<log 		name="protocol_log_null"
 				type="protocol"

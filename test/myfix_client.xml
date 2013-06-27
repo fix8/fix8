@@ -8,14 +8,14 @@
 				sender_comp_id="DLD_TEX"
 				target_comp_id="TEX_DLD"
 				session_log="session_log_file"
-				protocol_log="protocol_log"
+				protocol_log="protocol_log_file"
 				login_retry_interval="15000"
 				reset_sequence_numbers="false"
 				default_appl_ver_id="8"
 				heartbeat_interval="10"
 				tcp_nodelay="true"
 				always_seqnum_assign="true"
-				pipelined="false"
+				process_mode="threaded"
 				login_retries="100"
 				persist="file0" />
 
@@ -35,7 +35,7 @@
 				type="session"
 				filename="|/bin/cat"
 				rotation="5"
-				flags="timestamp|sequence|compress|thread"/>
+				flags="timestamp|sequence|thread"/>
 
 	<log 		name="session_log_file"
 				type="session"
@@ -52,17 +52,23 @@
 	<log 		name="protocol_log_udp"
 				type="protocol"
 				filename="127.0.0.1:514"
-				flags="sequence|append|direction"/>
+				flags="sequence|append|direction|inbound|outbound"/>
 
 	<log 		name="protocol_log_with_attributes"
 				type="protocol"
 				filename="./run/myfix_client_protocol.log"
 				rotation="5"
-				flags="sequence|append|direction|compress"/>
+				flags="sequence|append|direction|compress|inbound|outbound"/>
 
-	<log 		name="protocol_log"
+	<log 		name="protocol_log_pipe"
 				type="protocol"
-				filename="./run/myfix_client_protocol.log"
+				filename="|/bin/cat"
 				rotation="5"
-				flags="append"/>
+				flags="append|inbound"/>
+
+	<log 		name="protocol_log_file"
+				type="protocol"
+				filename="!{pwd -P}/run/myfix_client_protocol.log"
+				rotation="5"
+				flags="append|inbound"/>
 </fix8>

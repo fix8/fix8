@@ -71,35 +71,22 @@ public:
    virtual ~fdoutbuf () {}
 };
 
-extern "C"
-{
-	FILE *cfpopen(char *command, char *type);
-	int cfpclose(FILE *pp);
-}
-
 /// File pointer stream
 class fptrostream : public std::ostream
 {
    FILE *fptr_;
-   bool cf_;
 
 protected:
    fdoutbuf buf_;
 
 public:
 	/*! Ctor.
-	    \param fptr FILE*
-	    \param cf if true, us cfpopen instead of popen */
-   fptrostream(FILE *fptr, bool cf=true) : std::ostream(&buf_), fptr_(fptr), cf_(cf), buf_(fileno(fptr)) {}
+	    \param fptr FILE* */
+   fptrostream(FILE *fptr)
+		: std::ostream(&buf_), fptr_(fptr), buf_(fileno(fptr)) {}
 
 	/// Dtor.
-   virtual ~fptrostream ()
-	{
-		if (cf_)
-			cfpclose(fptr_);
-		else
-			pclose(fptr_);
-	}
+   virtual ~fptrostream () { pclose(fptr_); }
 
 	/*! Get the filno (fd)
 	    \return fd */
@@ -159,7 +146,7 @@ class Logger
 	std::list<std::string> _buffer;
 
 public:
-	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, buffer, num_flags };
+	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, buffer, inbound, outbound, num_flags };
 	enum { rotation_default = 5, max_rotation = 64} ;
 	typedef ebitset<Flags> LogFlags;
 
@@ -243,6 +230,11 @@ public:
 
 	/// string representation of logflags
 	static const std::string _bit_names[];
+
+	/*! Check if the given log flag is set
+		\param flg flag bit to check
+		\return true if set */
+	bool has_flag(const Flags flg) const { return _flags.has(flg); }
 
 	/*! Get the thread code for this thread or allocate a new code if not found.
 		\param tid the thread id of the thread to get a code for */

@@ -68,12 +68,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
   \b Notes \n
 \n
   1. If you have configured with \c --enable-msgrecycle, the example will reuse allocated messages.\n
-  2. If you have configured with \c --enable-customfields, the example will add custom fields\n
-     defined below.\n
-  3. The client has a simple menu. Press ? to see options.\n
-  4. The server will wait for the client to logout before exiting.\n
-  5. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
-  6. The example uses the files \c FIX50SP2.xml and \c FIXT11.xml in ./schema\n
+  2. The client has a simple menu. Press ? to see options.\n
+  3. The server will wait for the client to logout before exiting.\n
+  4. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
+  5. The example uses the files \c FIX50SP2.xml and \c FIXT11.xml in ./schema\n
 \n
 */
 
@@ -208,8 +206,8 @@ int main(int argc, char **argv)
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
-		case 'S': next_send = GetValue<unsigned>(optarg); break;
-		case 'R': next_receive = GetValue<unsigned>(optarg); break;
+		case 'S': next_send = get_value<unsigned>(optarg); break;
+		case 'R': next_receive = get_value<unsigned>(optarg); break;
 		case 'q': quiet = true; break;
 		case 'r': reliable = true; break;
 		default: break;
@@ -221,6 +219,9 @@ int main(int argc, char **argv)
 	signal(SIGTERM, sig_handler);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
+
+	FIX8::tty_save_state save_tty(0);
+	bool restore_tty(false);
 
 	try
 	{
@@ -256,27 +257,19 @@ int main(int argc, char **argv)
 				mc->session_ptr()->control() |= Session::printnohb;
 
 			if (!reliable)
-			{
-				const LoginParameters& lparam(mc->session_ptr()->get_login_parameters());
-				mc->start(false, next_send, next_receive, lparam._davi());
-			}
+				mc->start(false, next_send, next_receive, mc->session_ptr()->get_login_parameters()._davi());
 			else
-				mc->start(false);
+				mc->start(false, next_send, next_receive);
 
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
-			char ch;
+			char ch(0);
 			mymenu.get_tty().set_raw_mode();
+			save_tty = mymenu.get_tty();
 			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
 				;
-
-			if (reliable)
-			{
-				// don't explicitly call mc->session_ptr()->stop() with reliable sessions
-				// before checking if the session is already shutdown - the framework will generally do this for you
-				if (!mc->session_ptr()->is_shutdown())
-					mc->session_ptr()->stop();
-			}
-			else
+			// don't explicitly call mc->session_ptr()->stop() with reliable sessions
+			// before checking if the session is already shutdown - the framework will generally do this for you
+			if (!mc->session_ptr()->is_shutdown())
 				mc->session_ptr()->stop();
 
 			mymenu.get_tty().unset_raw_mode();
@@ -285,11 +278,21 @@ int main(int argc, char **argv)
 	catch (f8Exception& e)
 	{
 		cerr << "exception: " << e.what() << endl;
+		restore_tty = true;
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
 		cerr << "exception: " << e.what() << endl;
+		restore_tty = true;
 	}
+	catch (...)
+	{
+		cerr << "unknown exception" << endl;
+		restore_tty = true;
+	}
+
+	if (restore_tty && !server)
+		save_tty.unset_raw_mode();
 
 	if (term_received)
 		cout << "terminated." << endl;
@@ -607,6 +610,7 @@ bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 	TEX::LastCapacity lastCap;
 	if (msg->get(lastCap))
 	{
+		// if we have set a realm range for LastCapacity, when can check it here
 		if (!quiet && !lastCap.is_valid())
 			cout << "TEX::LastCapacity(" << lastCap << ") is not a valid value" << endl;
 	}

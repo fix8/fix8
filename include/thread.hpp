@@ -104,7 +104,7 @@ public:
 	/*! Ctor.
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	_dthreadcore(const bool detach, const size_t stacksize) throw(dthreadException) : _attr(), _tid(), _exitval()
+	_dthreadcore(const bool detach, const size_t stacksize) : _attr(), _tid(), _exitval()
 	{
 		if (pthread_attr_init(&_attr))
 			throw dthreadException("pthread_attr_init failure");
@@ -206,7 +206,7 @@ public:
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
 	dthread(T what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
-		throw(dthreadException) : _dthreadcore(detach, stacksize), _sub(what, method) {}
+		: _dthreadcore(detach, stacksize), _sub(what, method) {}
 
 	/*! Ctor. Reference to object, functor version.
 	  \param what reference wrapper of class with entry point
@@ -214,7 +214,7 @@ public:
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
 	dthread(reference_wrapper<T> what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
-		throw(dthreadException) : _dthreadcore(detach, stacksize), _sub(what, method) {}
+		: _dthreadcore(detach, stacksize), _sub(what, method) {}
 
 	/// Dtor.
 	virtual ~dthread() {}
@@ -247,7 +247,7 @@ public:
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
 	dthread(int (*func)(void *), void *args, const bool detach=false, const size_t stacksize=0)
-		throw(dthreadException) : _dthreadcore(detach, stacksize), _sub(func, args) {}
+		: _dthreadcore(detach, stacksize), _sub(func, args) {}
 
 	/// Dtor.
 	virtual ~dthread() {}

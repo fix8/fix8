@@ -15,7 +15,7 @@
            login_retries="100"
 			  tcp_recv_buffer="100663296"
 			  tcp_send_buffer="100663296"
-			  process_model="threaded"
+			  process_model="coroutine"
            persist="mem0" />
 
   <persist name="bdb0"

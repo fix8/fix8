@@ -1,3 +1,6 @@
+* Mon Jun 24 2013 David L. Dight <fix@fix8.org> 0.9.0
+Fixed Jira tickets FX-56, FX-55, FX-54, FX-53, FX-52, FX-51, FX-50, FX-49, FX-48, FX-47, FX-46, FX-45, FX-31
+
 * Fri May 10 2013 David L. Dight <fix@fix8.org> 0.8.0
 Fixed Jira tickets FX-56, FX-55, FX-54, FX-53, FX-52, FX-51, FX-50, FX-49, FX-48, FX-47, FX-46, FX-45, FX-31
 Integrate a 3rd party unit testing framework

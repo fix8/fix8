@@ -78,11 +78,11 @@ int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits
 	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, const Components& compon);
 int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, FieldSpecMap& fspec);
 void process_ordering(MessageSpecMap& mspec);
-const string flname(const string& from);
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
 void process_group_ordering(const MessageSpec& ms);
 unsigned lookup_component(const Components& compon, const f8String& name);
+string bintoaschex(const string& from);
 
 //-----------------------------------------------------------------------------------------
 namespace
@@ -93,6 +93,8 @@ namespace
 //-----------------------------------------------------------------------------------------
 ostream *open_ofile(const string& odir, const string& fname, string& target)
 {
+	if (!exist(odir))
+		return 0;
 	ostringstream ofs;
 	string odirect(odir);
 	ofs << CheckAddTrailingSlash(odirect) << fname;
@@ -149,7 +151,7 @@ int load_fix_version (XmlElement& xf, Ctxt& ctxt)
 	fix->GetAttr("type", type);
 
 	// fix version: <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
-	ctxt._version = GetValue<int>(major) * 1000 + GetValue<int>(minor) * 100 + GetValue<int>(revision);
+	ctxt._version = get_value<int>(major) * 1000 + get_value<int>(minor) * 100 + get_value<int>(revision);
 	if (type == "FIX" && ctxt._version < 4000)
 	{
 		cerr << "Unsupported FIX version " << ctxt._version << " from fix header in " << shortName << endl;
@@ -288,9 +290,12 @@ int process_message_fields(const std::string& where, const XmlElement *xt, Field
 }
 
 //-----------------------------------------------------------------------------------------
-const string flname(const string& from)
+string bintoaschex(const string& from)
 {
-	return from.substr(0, from.find_first_of('.'));
+	ostringstream result;
+	for (string::const_iterator itr(from.begin()); itr != from.end(); ++itr)
+		result << uppercase << hex << setw(2) << setfill('0') << static_cast<unsigned short>(*itr);
+	return '_' + result.str() + '_';
 }
 
 //-----------------------------------------------------------------------------------------
@@ -347,7 +352,7 @@ void print_usage()
 	um.add('N', "nounique", "do not enforce unique field parsing (default false)");
 	um.add('r', "retain", "retain 1st pass code (default delete)");
 	um.add('b', "binary", "print binary/ABI details, exit");
-	um.add('c', "classes <server|client>", "generate user session classes (default no)");
+	um.add('c', "classes <server|client>", "generate user session classes (default neither)");
 	um.add('t', "tabwidth", "tabwidth for generated code (default 3 spaces)");
 	um.add('x', "fixt <file>", "For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file");
 	um.add('V', "verbose", "be more verbose when processing");
@@ -363,11 +368,11 @@ void print_usage()
 RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype, bool isRange)
 {
 	if (FieldTrait::is_int(ftype))
-		return new TypedRealm<int>(GetValue<int>(from), isRange);
+		return new TypedRealm<int>(get_value<int>(from), isRange);
 	if (FieldTrait::is_char(ftype))
 		return new CharRealm(from[0], isRange);
 	if (FieldTrait::is_float(ftype))
-		return new TypedRealm<double>(GetValue<double>(from), isRange);
+		return new TypedRealm<double>(get_value<double>(from), isRange);
 	if (FieldTrait::is_string(ftype))
 		return new StringRealm(from, isRange);
 	return 0;

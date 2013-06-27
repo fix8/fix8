@@ -336,7 +336,7 @@ void ConsoleMenu::EditMsg(tty_save_state& tty, const FieldTable::Pair *fld, Mess
 		GetString(tty, txt);
 		if (msg->get_fp().is_group(fld->_key))
 		{
-			int cnt(GetValue<int>(txt));
+			int cnt(get_value<int>(txt));
 			GroupBase *gb(msg->find_group(fld->_key));
 			if (gb && cnt)
 			{

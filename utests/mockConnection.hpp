@@ -61,7 +61,7 @@ protected:
 	 ProcessModel _pmodel;
 
 public:
-    AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_thread)
+    AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
         :  _session(session), _pmodel(pmodel) {}
 
     virtual ~AsyncSocket() {}
@@ -95,7 +95,7 @@ protected:
 
 public:
     /// Ctor
-    FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_thread)
+    FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
         : AsyncSocket<f8String>(sock, session, pmodel), _bg_sz()
     {
         set_preamble_sz();
@@ -131,7 +131,7 @@ protected:
 public:
 
     /// Ctor
-    FIXWriter(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_thread)
+    FIXWriter(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
     : AsyncSocket<Message *>(sock, session, pmodel)
     {}
 
@@ -335,7 +335,7 @@ class ClientConnection : public Connection
 public:
     /// Ctor
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session,
-		 const ProcessModel pmodel=pm_thread, const bool no_delay=true)
+		 const ProcessModel pmodel=pm_pipeline, const bool no_delay=true)
         : Connection(sock, session, pmodel), _addr(addr), _no_delay(no_delay) {}
 
     /// Dtor
@@ -360,7 +360,7 @@ public:
 
     /// Ctor
     ServerConnection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval,
-		 const ProcessModel pmodel=pm_thread, const bool no_delay=true) :
+		 const ProcessModel pmodel=pm_pipeline, const bool no_delay=true) :
         Connection(sock, session, hb_interval, pmodel) {}
 
     /// Dtor

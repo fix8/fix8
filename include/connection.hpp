@@ -66,7 +66,7 @@ public:
 	    \param sock connected socket
 	    \param session session
 	    \param pmodel process model */
-	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_thread)
+	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
 		: _thread(ref(*this)), _sock(sock), _session(session), _pmodel(pmodel) {}
 
 	/// Dtor.
@@ -96,7 +96,7 @@ public:
 
 	/*! Wait till processing thead has finished.
 	    \return 0 on success */
-	int join() { return _pmodel == pm_pipeline ? _thread.join() : -1; }
+	int join() { return _pmodel != pm_coro ? _thread.join() : -1; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ public:
 	    \param sock connected socket
 	    \param session session
 	    \param pmodel process model */
-	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_thread)
+	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
 		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(ref(*this), &FIXReader::callback_processor), _bg_sz()
 	{
 		set_preamble_sz();
@@ -229,7 +229,7 @@ public:
 	    \param sock connected socket
 	    \param session session
 	    \param pmodel process model */
-	FIXWriter(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_thread)
+	FIXWriter(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
 		: AsyncSocket<Message *>(sock, session, pmodel) {}
 
 	/// Dtor.
@@ -491,7 +491,7 @@ public:
 	    \param pmodel process model
 	    \param no_delay set or clear the tcp no delay flag on the socket */
 	ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session,
-		const ProcessModel pmodel=pm_thread, const bool no_delay=true)
+		const ProcessModel pmodel=pm_pipeline, const bool no_delay=true)
 		: Connection(sock, addr, session, pmodel), _no_delay(no_delay) {}
 
 	/// Dtor.
@@ -515,7 +515,7 @@ public:
 	    \param pmodel process model
 	    \param no_delay set or clear the tcp no delay flag on the socket */
 	ServerConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-			Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_thread, const bool no_delay=true) :
+			Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true) :
 		Connection(sock, addr, session, hb_interval, pmodel)
 	{
 		_sock->setLinger(false, 0);

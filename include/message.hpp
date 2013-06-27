@@ -215,7 +215,13 @@ struct F8MetaCntx
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef std::map<unsigned short, BaseField *> Fields;
+typedef std::
+#if defined HAS_TR1_UNORDERED_MAP
+	tr1::unordered_map
+#else
+	map
+#endif
+		<unsigned short, BaseField *> Fields;
 typedef std::multimap<unsigned short, BaseField *> Positions;
 
 /// Base class for all fix messages
@@ -359,6 +365,27 @@ public:
 		}
 
 		_fields.insert(Fields::value_type(fnum, what));
+		_pos.insert(Positions::value_type(pos, what));
+		_fp.set(fnum, itr, FieldTrait::present);
+	}
+
+	/*! Add fix field to this message.
+	    \param fnum field tag
+		 \param itr hint iterator: set to itr of found element
+	    \param pos position of field in message
+	    \param what pointer to field
+	    \param check if false, don't check for presence */
+	void add_field(const unsigned short fnum, Fields::iterator fitr, const unsigned pos, BaseField *what, bool check=true)
+	{
+		Presence::const_iterator itr(_fp.get_presence().end());
+		if (check && _fp.get(fnum, itr, FieldTrait::present)) // for now, silently replace duplicate
+		{
+			//std::cerr << _msgType << " replacing field:" << fnum << std::endl;
+			delete replace(fnum, itr, what);
+			return;
+		}
+
+		_fields.insert(fitr, Fields::value_type(fnum, what));
 		_pos.insert(Positions::value_type(pos, what));
 		_fp.set(fnum, itr, FieldTrait::present);
 	}
@@ -596,11 +623,8 @@ public:
 			case get_tag:
 				if (!isdigit(from[ii]))
 				{
-					if (from[ii] != '=')
-					{
-						*val = *tag = 0;
-						return 0;
-					}
+					if (from[ii] != default_assignment_separator)
+						return *val = *tag = 0;
 					state = get_value;
 				}
 				else
@@ -616,8 +640,7 @@ public:
 				break;
 			}
 		}
-		*val = *tag = 0;
-		return 0;
+		return *val = *tag = 0;
 	}
 
 	/*! Extract a tag/value element from a char buffer.
@@ -639,7 +662,7 @@ public:
 			case get_tag:
 				if (!isdigit(from[ii]))
 				{
-					if (from[ii] != '=')
+					if (from[ii] != default_assignment_separator)
 						return 0;
 					state = get_value;
 				}
@@ -666,6 +689,22 @@ public:
 	/*! Presence printer
 	    \param os stream to send to */
 	void print_fp(std::ostream& os) { os << _fp; }
+
+	/*! Get pointer to begin_string Field; used by header/trailer.
+	    \return Field */
+	virtual begin_string *get_begin_string() { return 0; }
+
+	/*! Get pointer to body_length Field; used by header/trailer.
+	    \return Field */
+	virtual body_length *get_body_length() { return 0; }
+
+	/*! Get pointer to msg_type Field; used by header/trailer.
+	    \return Field */
+	virtual msg_type *get_msg_type() { return 0; }
+
+	/*! Get pointer to check_sum Field; used by header/trailer.
+	    \return Field */
+	virtual check_sum *get_check_sum() { return 0; }
 };
 
 //-------------------------------------------------------------------------------------------------

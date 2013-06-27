@@ -224,9 +224,8 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 		++_decode_timings._msg_count;
 #endif
 
-		static_cast<body_length *>(msg->_header->_fields.find(Common_BodyLength)->second)->set(mlen);
-		Fields::const_iterator fitr(msg->_header->_fields.find(Common_MsgType));
-		static_cast<msg_type *>(fitr->second)->set(mtype);
+		msg->_header->get_body_length()->set(mlen);
+		msg->_header->get_msg_type()->set(mtype);
 #if defined POPULATE_METADATA
 		msg->check_set_rlm(fitr->second);
 #endif
@@ -237,7 +236,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 		if (!ctx.has_flag(F8MetaCntx::noverifychksum)) // permit chksum calculation to be skipped
 		{
 			const f8String chksum(pp + 3, 3);
-			static_cast<check_sum *>(msg->_trailer->_fields.find(Common_CheckSum)->second)->set(chksum);
+			msg->_trailer->get_check_sum()->set(chksum);
 			const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), mchkval(calc_chksum(from, 0, from.size() - 7));
 			if (chkval != mchkval)
 				throw BadCheckSum(mchkval);
@@ -369,8 +368,7 @@ size_t Message::encode(char **hmsg_store) const
 
 	if (!_header)
 		throw MissingMessageComponent("header");
-	Fields::const_iterator fitr(_header->_fields.find(Common_MsgType));
-	static_cast<msg_type *>(fitr->second)->set(_msgType);
+	_header->get_msg_type()->set(_msgType);
 	msg += _header->encode(msg); // start
 	msg += MessageBase::encode(msg);
 	if (!_trailer)
@@ -381,28 +379,28 @@ size_t Message::encode(char **hmsg_store) const
 	char *hmsg(moffs - hlen);
 	*hmsg_store = hmsg;
 
-	if ((fitr = _header->_fields.find(Common_BeginString)) == _header->_fields.end())
+	if (!_header->get_begin_string())
 		throw MissingMandatoryField(Common_BeginString);
 	_header->_fp.clear(Common_BeginString, FieldTrait::suppress);
-	hmsg += fitr->second->encode(hmsg);
+	hmsg += _header->get_begin_string()->encode(hmsg);
 #if defined MSGRECYCLING
 	_header->_fp.set(Common_BeginString, FieldTrait::suppress); // in case we want to reuse
 #endif
 
-	if ((fitr = _header->_fields.find(Common_BodyLength)) == _header->_fields.end())
+	if (!_header->get_body_length())
 		throw MissingMandatoryField(Common_BodyLength);
 	_header->_fp.clear(Common_BodyLength, FieldTrait::suppress);
-	static_cast<body_length *>(fitr->second)->set(msgLen);
-	hmsg += fitr->second->encode(hmsg);
+	_header->get_body_length()->set(msgLen);
+	hmsg += _header->get_body_length()->encode(hmsg);
 #if defined MSGRECYCLING
 	_header->_fp.set(Common_BodyLength, FieldTrait::suppress); // in case we want to reuse
 #endif
 
-	if ((fitr = _trailer->_fields.find(Common_CheckSum)) == _trailer->_fields.end())
+	if (!_trailer->get_check_sum())
 		throw MissingMandatoryField(Common_CheckSum);
-	static_cast<check_sum *>(fitr->second)->set(fmt_chksum(calc_chksum(moffs - hlen, msgLen + hlen)));
+	_trailer->get_check_sum()->set(fmt_chksum(calc_chksum(moffs - hlen, msgLen + hlen)));
 	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
-	msg += fitr->second->encode(msg);
+	msg += _trailer->get_check_sum()->encode(msg);
 #if defined MSGRECYCLING
 	_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress); // in case we want to reuse
 #endif

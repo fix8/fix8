@@ -86,6 +86,19 @@ const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *t
 const std::string& trim(std::string& source, const std::string& ws=" \t");
 
 //----------------------------------------------------------------------------------------
+/*! Sidestep the warn_unused_result attribute
+  \tparam T type
+  \param val value to ignore */
+template<typename T>
+inline void ignore_value (T val) { (void) val; }
+
+/*! Sidestep the warn_unused_result attribute, ptr version
+  \tparam T type
+  \param val * value to ignore */
+template<typename T>
+inline void ignore_value (T *val) { (void) val; }
+
+//----------------------------------------------------------------------------------------
 /*! Rotate left value the specified number of times
   \tparam T type
   \param val source value
@@ -369,6 +382,19 @@ public:
 		return source;
 	}
 
+	/*! Replace a sub-expression with a character.
+	  \param match reference to a RegMatch object
+	  \param source source string
+	  \param with replacement character
+	  \param num desired sub-expression
+	  \return the source string */
+	static std::string& Replace(RegMatch& match, std::string& source, const char with, const int num=0)
+	{
+		if (num < match.subCnt_)
+			source.replace(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so, 1, with);
+		return source;
+	}
+
 	/*! Get the regular expression pattern.
 	  \return the pattern string */
 	const std::string& GetPattern() const { return pattern_; }
@@ -415,7 +441,7 @@ struct StringLessThanNoCase
   \param defval value to return if source string is empty
   \return the extracted value. */
 template<typename T>
-inline T GetValue(const std::string& source, T defval)
+inline T get_value(const std::string& source, T defval)
 {
 	if (source.empty())
 		return defval;
@@ -430,7 +456,7 @@ inline T GetValue(const std::string& source, T defval)
   \param source source string
   \return the extracted value. */
 template<typename T>
-inline T GetValue(const std::string& source)
+inline T get_value(const std::string& source)
 {
 	std::istringstream istr(source);
 	T result;
@@ -443,7 +469,7 @@ inline T GetValue(const std::string& source)
   \param source source string
   \return the extracted value. */
 template<>
-inline bool GetValue(const std::string& source)
+inline bool get_value(const std::string& source)
 {
 	if (source.empty())
 		return false;
@@ -455,19 +481,6 @@ inline bool GetValue(const std::string& source)
 	istr >> std::boolalpha >> result;
 	return result;
 #endif
-}
-
-/*! Insert a typed value into a string.
-  \tparam typename
-  \param a source value
-  \param target string to place result
-  \return the inserted string */
-template<typename T>
-inline const std::string& PutValue(const T& a, std::string& target)
-{
-	std::ostringstream ostr;
-	ostr << a;
-	return target = ostr.str();
 }
 
 //----------------------------------------------------------------------------------------
@@ -665,12 +678,12 @@ public:
 	/*! Check if an enum is in the set.
 	    \param sbit enum to check
 	    \return integral_type of bits if found */
-	integral_type has(const T sbit) { return a_ & 1 << sbit; }
+	integral_type has(const T sbit) const { return a_ & 1 << sbit; }
 
 	/*! Check if an enum is in the set.
 	    \param sbit enum to check
 	    \return integral_type of bits if found */
-	integral_type operator&(const T sbit) { return a_ & 1 << sbit; }
+	integral_type operator&(const T sbit) const { return a_ & 1 << sbit; }
 
 	/*! Set a bit on or off.
 	    \param sbit enum to set
@@ -760,12 +773,12 @@ public:
 	/*! Check if an enum is in the set.
 	    \param sbit enum to check
 	    \return integral_type of bits if found */
-	integral_type has(const T sbit) { return a_ & 1 << sbit; }
+	integral_type has(const T sbit) const { return a_ & 1 << sbit; }
 
 	/*! Check if an enum is in the set.
 	    \param sbit enum to check
 	    \return integral_type of bits if found */
-	integral_type operator&(const T sbit) { return a_ & 1 << sbit; }
+	integral_type operator&(const T sbit) const { return a_ & 1 << sbit; }
 
 	/*! Set a bit on or off.
 	    \param sbit enum to set
