@@ -125,9 +125,9 @@ public:
 	  \return the stream */
 	virtual std::ostream& print(std::ostream& os) const = 0;
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	virtual size_t print(char *to) const = 0;
 
 	/*! Copy this field.
@@ -266,9 +266,9 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { return itoa(_value, to); }
 };
 
@@ -355,9 +355,9 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { ::strcpy(to, _value); return ::strlen(_value); }
 };
 
@@ -439,9 +439,9 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { return _value.copy(to, _value.size()); }
 };
 
@@ -534,9 +534,9 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { return modp_dtoa(_value, to, _precision); }
 };
 
@@ -617,9 +617,9 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << _value; }
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { *to = _value; return 1; }
 };
 
@@ -785,9 +785,9 @@ public:
 	  \param ind indicating whether the string has millisecond or not */
 	void DateTimeParse(const std::string& from, Poco::DateTime& dateTime, const MillisecondIndicator ind=_sec_only) const;
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { return DateTimeFormat(_value, to, _with_ms); }
 };
 
@@ -896,9 +896,9 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { return 0; }  	// TODO
 };
 
@@ -963,9 +963,9 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { return 0; }  	// TODO
 };
 
@@ -1030,9 +1030,9 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { return 0; }  	// TODO
 };
 
@@ -1096,9 +1096,9 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { return 0; }  	// TODO
 };
 
@@ -1163,9 +1163,9 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { return 0; }  	// TODO
 };
 
@@ -1398,9 +1398,9 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << (_value ? 'Y' : 'N'); }
 
-	/*! Print this field to the supplied buffer, update size written.
+	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
-	  \param sz current size of buffer payload stream */
+	  \return number bytes encoded */
 	size_t print(char *to) const { *to = _value ? 'Y' : 'N'; return 1; }
 };
 

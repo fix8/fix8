@@ -150,6 +150,7 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 			{
 				string logname("logname_not_set.log");
 				which->FindAttrRef("filename", logname);
+				trim(logname);
 
 				if (logname[0] == '|')
 #ifndef HAVE_POPEN
@@ -168,7 +169,7 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 						return bcl;
 				}
 
-				trim(get_logname(which, logname, sid)); // only applies to file loggers
+				get_logname(which, logname, sid); // only applies to file loggers
 				return new FileLogger(logname, get_logflags(which), get_logfile_rotation(which));
 			}
 		}

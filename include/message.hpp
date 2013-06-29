@@ -371,7 +371,7 @@ public:
 
 	/*! Add fix field to this message.
 	    \param fnum field tag
-		 \param itr hint iterator: set to itr of found element
+		 \param fitr hint iterator: set to itr of found element
 	    \param pos position of field in message
 	    \param what pointer to field
 	    \param check if false, don't check for presence */

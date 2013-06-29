@@ -260,10 +260,9 @@ bool FileLogger::rotate(bool force)
 }
 
 //-------------------------------------------------------------------------------------------------
-PipeLogger::PipeLogger(const string& ifname, const ebitset<Flags> flags) : Logger(flags)
+PipeLogger::PipeLogger(const string& fname, const ebitset<Flags> flags) : Logger(flags)
 {
-	string fname(ifname);
-	const string pathname(trim(fname).substr(1));
+	const string pathname(fname.substr(1));
 
 	if (fname[0] != '|')
 		throw f8Exception("pipe command must be prefixed with '|'");
@@ -273,7 +272,7 @@ PipeLogger::PipeLogger(const string& ifname, const ebitset<Flags> flags) : Logge
 	if (pcmd == 0)
 	{
 		ostringstream ostr;
-		ostr << pathname << ": failed to execute";
+		ostr << "PipeLogger: " << pathname << ": failed to execute";
 		GlobalLogger::log(ostr.str());
 	}
 	else

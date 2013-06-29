@@ -30,7 +30,7 @@
 				type="session"
 				filename="|/bin/cat"
 				rotation="5"
-				flags="timestamp|sequence|compress|thread"/>
+				flags="timestamp|sequence|thread"/>
 
 	<log 		name="session_log_file"
 				type="session"

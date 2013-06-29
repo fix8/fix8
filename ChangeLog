@@ -1,5 +1,12 @@
-* Mon Jun 24 2013 David L. Dight <fix@fix8.org> 0.9.0
-Fixed Jira tickets FX-56, FX-55, FX-54, FX-53, FX-52, FX-51, FX-50, FX-49, FX-48, FX-47, FX-46, FX-45, FX-31
+* Sat Jun 29 2013 David L. Dight <fix@fix8.org> 0.9.0
+Fixed Jira tickets FX-57, FX-58, FX-59, FX-60, FX-61, FX-62, FX-63
+Logflags - support specific inbound and outbound flags for protocol logs
+Replace cfpopen with non GPL replacement
+Fixed compiler generated include guards do not work if alternate output directory specified.
+Fixed f8c compiler - can't specify output directory by "-o" as expected
+Remove header/trailer field lookups in encode and decode
+Fixed unit tests not building properly
+Add optional coroutine version of FIX reader and writer
 
 * Fri May 10 2013 David L. Dight <fix@fix8.org> 0.8.0
 Fixed Jira tickets FX-56, FX-55, FX-54, FX-53, FX-52, FX-51, FX-50, FX-49, FX-48, FX-47, FX-46, FX-45, FX-31

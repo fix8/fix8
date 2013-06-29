@@ -115,7 +115,7 @@ libraries) being installed to build properly:
 
 You can either choose the internally supplied [Fastflow](http://calvados.di.unipi.it/dokuwiki/doku.php?id=ffnamespace:about) or use...
 
-- Intel Threading Building Blocks [OSS edition](http://threadingbuildingblocks.org/download.php)
+- Intel Threading Building Blocks [OSS edition](http://threadingbuildingblocks.org/download)
 
 If you wish to build the html documentation, you will need:
 
@@ -143,7 +143,7 @@ If you have built the test cases, you can also run them as follows:
 ## License
 
 Fix8 is released under the [GNU LESSER GENERAL PUBLIC LICENSE Version 3](http://www.gnu.org/licenses/lgpl.html).
-See [License](http://fix8.org/faq.html#licensing) for more information.
+See [License](http://fix8.org/faq.html#license) for more information.
 
 ## More Information
 
