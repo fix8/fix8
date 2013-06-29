@@ -18,6 +18,8 @@ var searchData=
   ['connection',['Connection',['../classFIX8_1_1Connection.html',1,'FIX8']]],
   ['consolemenu',['ConsoleMenu',['../classFIX8_1_1ConsoleMenu.html',1,'FIX8']]],
   ['contraryintentionreport',['ContraryIntentionReport',['../classFIX8_1_1TEX_1_1ContraryIntentionReport.html',1,'FIX8::TEX']]],
+  ['coroutine',['coroutine',['../classcoroutine.html',1,'']]],
+  ['coroutine_5fref',['coroutine_ref',['../classcoroutine__ref.html',1,'']]],
   ['crossordercancelreplacerequest',['CrossOrderCancelReplaceRequest',['../classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest.html',1,'FIX8::TEX']]],
   ['crossordercancelrequest',['CrossOrderCancelRequest',['../classFIX8_1_1TEX_1_1CrossOrderCancelRequest.html',1,'FIX8::TEX']]],
   ['ctxt',['Ctxt',['../structFIX8_1_1Ctxt.html',1,'FIX8']]]

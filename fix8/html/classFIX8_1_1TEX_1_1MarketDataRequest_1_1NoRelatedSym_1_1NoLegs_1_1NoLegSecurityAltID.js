@@ -2,7 +2,11 @@ var classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoLegs_1_1NoLegSecu
 [
     [ "NoLegSecurityAltID", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoLegs_1_1NoLegSecurityAltID.html#a0ff023c131ca86ab78689c0cd48aaeef", null ],
     [ "~NoLegSecurityAltID", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoLegs_1_1NoLegSecurityAltID.html#ab0e5d4bbe67f70dff216f6d277338779", null ],
+    [ "NoLegSecurityAltID", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoLegs_1_1NoLegSecurityAltID.html#a0ff023c131ca86ab78689c0cd48aaeef", null ],
+    [ "~NoLegSecurityAltID", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoLegs_1_1NoLegSecurityAltID.html#ab0e5d4bbe67f70dff216f6d277338779", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoLegs_1_1NoLegSecurityAltID.html#a5de05fb0d08fadb9198fa2964081f2d8", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoLegs_1_1NoLegSecurityAltID.html#a5de05fb0d08fadb9198fa2964081f2d8", null ],
+    [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoLegs_1_1NoLegSecurityAltID.html#a58ed7773cea1a0ca801af8c38fcf04c6", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoLegs_1_1NoLegSecurityAltID.html#a58ed7773cea1a0ca801af8c38fcf04c6", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoLegs_1_1NoLegSecurityAltID.html#ac7323dda232711dcbd4e03f3250af3da", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoLegs_1_1NoLegSecurityAltID.html#ad1f19302f541f4227e9e908003a431da", null ],

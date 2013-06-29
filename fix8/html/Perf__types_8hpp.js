@@ -1,6 +1,6 @@
 var Perf__types_8hpp =
 [
-    [ "_Perf_types_", "Perf__types_8hpp.html#aaa44ba6c29db8ecde0e95ef716e40ade", null ],
+    [ "_506572665F74797065732E687070_", "Perf__types_8hpp.html#a81d26eaa750eaa3a52639839a9f1193b", null ],
     [ "AllocShares", "Perf__types_8hpp.html#a7c29ff2e6f4d5277d7eb6707ac6043ee", null ],
     [ "ClearingAccount", "Perf__types_8hpp.html#a07bd73508acb703d75912ba0a9565fcb", null ],
     [ "ClearingFirm", "Perf__types_8hpp.html#a72ef24c4d3c74df449bb280b36ac77fc", null ],

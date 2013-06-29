@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.8.0</span>
+   &#160;<span id="projectnumber">version  0.9.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -113,12 +113,14 @@ $(document).ready(function(){initNavTree('classFIX8_1_1AsyncSocket.html','');});
 
 <p>This is the complete list of members for <a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#acf00e6f0363973453a9043ef1d0890f5">_msg_queue</a></td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a72957d0d18911277a6c7e674e9aabe38">_pipelined</a></td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a8ab8f034fe13cf89370423a0d05485f7">_session</a></td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#ae5040119022950e65597c0159c19c3c1">_sock</a></td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a6ea30ba6a898736524c8d06bacdca7e2">_thread</a></td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a3efbb9b2951f4a003f184c5da9b0c085">AsyncSocket</a>(Poco::Net::StreamSocket *sock, Session &amp;session, const bool pipelined=true)</td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a67344df11b0f44cde43f114684497b34">_coro</a></td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#acf00e6f0363973453a9043ef1d0890f5">_msg_queue</a></td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#ab16272b8e50303bb0e33cfdc72a16233">_pmodel</a></td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a8ab8f034fe13cf89370423a0d05485f7">_session</a></td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#ae5040119022950e65597c0159c19c3c1">_sock</a></td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a6ea30ba6a898736524c8d06bacdca7e2">_thread</a></td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a16610e1a851b5f44c75f6a9e2821f829">AsyncSocket</a>(Poco::Net::StreamSocket *sock, Session &amp;session, const ProcessModel pmodel=pm_pipeline)</td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a1a1269775d2eb580a57a9b218c886a26">execute</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a00154a47b8c62ff878567f4469d9dab9">join</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a338ce12d6596464b639c28e448f7f507">operator()</a>()=0</td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html#a324f323586a49e9086934b6c9a2fca91">queued</a>() const </td><td class="entry"><a class="el" href="classFIX8_1_1AsyncSocket.html">FIX8::AsyncSocket&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -129,7 +131,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1AsyncSocket.html','');});
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu May 9 2013 21:35:28. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:35. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.8.0</span>
+   &#160;<span id="projectnumber">version  0.9.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -117,20 +117,23 @@ $(document).ready(function(){initNavTree('classFIX8_1_1f8__scoped__lock.html',''
 </div><!--header-->
 <div class="contents">
 
+<p>Your bog standard RAII scoped lock.  
+ <a href="classFIX8_1_1f8__scoped__lock.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a891c0a3e47a3ff285a13b1504c7d621c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock.html#a891c0a3e47a3ff285a13b1504c7d621c">f8_scoped_lock</a> ()</td></tr>
 <tr class="separator:a891c0a3e47a3ff285a13b1504c7d621c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6d5a243559adaa08b60f7ac30b83f8c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock.html#ab6d5a243559adaa08b60f7ac30b83f8c">f8_scoped_lock</a> (<a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> &amp;<a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a>)</td></tr>
-<tr class="separator:ab6d5a243559adaa08b60f7ac30b83f8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e0639db568b8377a23eb0c0c54731c9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock.html#a8e0639db568b8377a23eb0c0c54731c9">f8_scoped_lock</a> (<a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> &amp;mutex)</td></tr>
+<tr class="separator:a8e0639db568b8377a23eb0c0c54731c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d72772aeeb09a00c831a1e59ae14457"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock.html#a3d72772aeeb09a00c831a1e59ae14457">~f8_scoped_lock</a> ()</td></tr>
 <tr class="separator:a3d72772aeeb09a00c831a1e59ae14457"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41e989e48c2900ea64f95bc7c241af30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock.html#a41e989e48c2900ea64f95bc7c241af30">acquire</a> (<a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> &amp;<a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a>)</td></tr>
-<tr class="separator:a41e989e48c2900ea64f95bc7c241af30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeacdfbdc2949638f4b9c654325740072"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock.html#aeacdfbdc2949638f4b9c654325740072">try_acquire</a> (<a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> &amp;<a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a>)</td></tr>
-<tr class="separator:aeacdfbdc2949638f4b9c654325740072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9019a2a58ce16b17619cce1c81740835"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock.html#a9019a2a58ce16b17619cce1c81740835">acquire</a> (<a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> &amp;mutex)</td></tr>
+<tr class="separator:a9019a2a58ce16b17619cce1c81740835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97a67c00fb7cf1844c27311ff3b4e649"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock.html#a97a67c00fb7cf1844c27311ff3b4e649">try_acquire</a> (<a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> &amp;mutex)</td></tr>
+<tr class="separator:a97a67c00fb7cf1844c27311ff3b4e649"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab8aafbb8f5043abd83c2c8a6dcc2f4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock.html#aab8aafbb8f5043abd83c2c8a6dcc2f4c">release</a> ()</td></tr>
 <tr class="separator:aab8aafbb8f5043abd83c2c8a6dcc2f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -152,8 +155,9 @@ Friends</h2></td></tr>
 <tr class="separator:a2a5d9fbbe9d3487624b2d56fa7cf755a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00213">213</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<div class="textblock"><p>Your bog standard RAII scoped lock. </p>
+
+<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00214">214</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a1dce4e3f384efc7a02e1f26a7630bf0d"></a>
 <div class="memitem">
@@ -200,11 +204,11 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00221">221</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00222">222</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab6d5a243559adaa08b60f7ac30b83f8c"></a>
+<a class="anchor" id="a8e0639db568b8377a23eb0c0c54731c9"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -215,7 +219,7 @@ Friends</h2></td></tr>
           <td class="memname">FIX8::f8_scoped_lock::f8_scoped_lock </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> &amp;&#160;</td>
-          <td class="paramname"><em>f8_mutex</em></td><td>)</td>
+          <td class="paramname"><em>mutex</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -226,9 +230,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00222">222</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00223">223</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00229">acquire()</a>.</p>
+<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00230">acquire()</a>.</p>
 
 </div>
 </div>
@@ -253,14 +257,14 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00223">223</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00224">224</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00215">_local_mutex</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00243">release()</a>.</p>
+<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00216">_local_mutex</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00244">release()</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a41e989e48c2900ea64f95bc7c241af30"></a>
+<a class="anchor" id="a9019a2a58ce16b17619cce1c81740835"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -271,7 +275,7 @@ Friends</h2></td></tr>
           <td class="memname">void FIX8::f8_scoped_lock::acquire </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> &amp;&#160;</td>
-          <td class="paramname"><em>f8_mutex</em></td><td>)</td>
+          <td class="paramname"><em>mutex</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -282,11 +286,11 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00229">229</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00230">230</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00215">_local_mutex</a>, <a class="el" href="ff__wrapper_8hpp_source.html#l00249">f8_mutex</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00205">FIX8::f8_mutex::lock()</a>.</p>
+<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00216">_local_mutex</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00205">FIX8::f8_mutex::lock()</a>.</p>
 
-<p>Referenced by <a class="el" href="ff__wrapper_8hpp_source.html#l00222">f8_scoped_lock()</a>.</p>
+<p>Referenced by <a class="el" href="ff__wrapper_8hpp_source.html#l00223">f8_scoped_lock()</a>.</p>
 
 </div>
 </div>
@@ -335,15 +339,15 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00243">243</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00244">244</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00215">_local_mutex</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00207">FIX8::f8_mutex::unlock()</a>.</p>
+<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00216">_local_mutex</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00207">FIX8::f8_mutex::unlock()</a>.</p>
 
-<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00130">FIX8::Timer&lt; T &gt;::operator()()</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00223">~f8_scoped_lock()</a>.</p>
+<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00130">FIX8::Timer&lt; T &gt;::operator()()</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00224">~f8_scoped_lock()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aeacdfbdc2949638f4b9c654325740072"></a>
+<a class="anchor" id="a97a67c00fb7cf1844c27311ff3b4e649"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -354,7 +358,7 @@ Friends</h2></td></tr>
           <td class="memname">bool FIX8::f8_scoped_lock::try_acquire </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classFIX8_1_1f8__mutex.html">f8_mutex</a> &amp;&#160;</td>
-          <td class="paramname"><em>f8_mutex</em></td><td>)</td>
+          <td class="paramname"><em>mutex</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -365,9 +369,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00235">235</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00236">236</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00215">_local_mutex</a>, <a class="el" href="ff__wrapper_8hpp_source.html#l00249">f8_mutex</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00206">FIX8::f8_mutex::try_lock()</a>.</p>
+<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00216">_local_mutex</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00206">FIX8::f8_mutex::try_lock()</a>.</p>
 
 </div>
 </div>
@@ -390,9 +394,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00249">249</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
-
-<p>Referenced by <a class="el" href="ff__wrapper_8hpp_source.html#l00229">acquire()</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00235">try_acquire()</a>.</p>
+<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00250">250</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -415,9 +417,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00215">215</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00216">216</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="ff__wrapper_8hpp_source.html#l00229">acquire()</a>, <a class="el" href="ff__wrapper_8hpp_source.html#l00243">release()</a>, <a class="el" href="ff__wrapper_8hpp_source.html#l00235">try_acquire()</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00223">~f8_scoped_lock()</a>.</p>
+<p>Referenced by <a class="el" href="ff__wrapper_8hpp_source.html#l00230">acquire()</a>, <a class="el" href="ff__wrapper_8hpp_source.html#l00244">release()</a>, <a class="el" href="ff__wrapper_8hpp_source.html#l00236">try_acquire()</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00224">~f8_scoped_lock()</a>.</p>
 
 </div>
 </div>
@@ -427,7 +429,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu May 9 2013 21:35:28. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:36. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

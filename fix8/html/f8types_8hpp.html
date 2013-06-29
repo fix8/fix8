@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.8.0</span>
+   &#160;<span id="projectnumber">version  0.9.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -109,6 +109,7 @@ $(document).ready(function(){initNavTree('f8types_8hpp.html','');});
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">f8types.hpp File Reference</div>  </div>
@@ -154,13 +155,25 @@ Macros</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:a653abc4baa49d96ad764ffc8f3dce148"><td class="memItemLeft" align="right" valign="top">typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">FIX8::f8String</a></td></tr>
 <tr class="separator:a653abc4baa49d96ad764ffc8f3dce148"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5460478d112c38b40aaeece24739d761"><td class="memItemLeft" align="right" valign="top">typedef std::ostringstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a5460478d112c38b40aaeece24739d761">FIX8::f8ostrstream</a></td></tr>
-<tr class="separator:a5460478d112c38b40aaeece24739d761"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:adf65fd9873c63995c6da40e0a5031f83"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83">FIX8::ProcessModel</a> { <a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a084c5fde2b1e72f800d4de6902d5c014">FIX8::pm_thread</a>, 
+<a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a2d62ac51b86fdbba00ccdc1c2b7012e4">FIX8::pm_pipeline</a>, 
+<a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a159e812b2f5ed7734bd14a70a90e5dce">FIX8::pm_coro</a>, 
+<a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83ae004040754630fc147bbd4b038088d16">FIX8::pm_count</a>
+ }</td></tr>
+<tr class="memdesc:adf65fd9873c63995c6da40e0a5031f83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supported session process models.  <a href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83">More...</a><br/></td></tr>
+<tr class="separator:adf65fd9873c63995c6da40e0a5031f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a25dd5007a5a971fe43a58df371e1db34"><td class="memItemLeft" align="right" valign="top">const unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a25dd5007a5a971fe43a58df371e1db34">FIX8::default_field_separator</a> (0x1)</td></tr>
+<tr class="memdesc:a25dd5007a5a971fe43a58df371e1db34"><td class="mdescLeft">&#160;</td><td class="mdescRight">default FIX field separator (^A)  <a href="#a25dd5007a5a971fe43a58df371e1db34">More...</a><br/></td></tr>
 <tr class="separator:a25dd5007a5a971fe43a58df371e1db34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1962eafa95e5fafa614c0322fd5f8e49"><td class="memItemLeft" align="right" valign="top">const unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a1962eafa95e5fafa614c0322fd5f8e49">FIX8::default_assignment_separator</a> ('=')</td></tr>
+<tr class="memdesc:a1962eafa95e5fafa614c0322fd5f8e49"><td class="mdescLeft">&#160;</td><td class="mdescRight">default FIX assignment separator (=)  <a href="#a1962eafa95e5fafa614c0322fd5f8e49">More...</a><br/></td></tr>
+<tr class="separator:a1962eafa95e5fafa614c0322fd5f8e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ae89fa0b5c6e0e6c49d84d1ffd27de060"></a>
@@ -180,7 +193,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu May 9 2013 21:35:28. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:35. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

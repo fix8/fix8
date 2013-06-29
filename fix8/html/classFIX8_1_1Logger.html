@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.8.0</span>
+   &#160;<span id="projectnumber">version  0.9.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -156,6 +156,8 @@ Public Types</h2></td></tr>
 <a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca40878af9af97bc2393daf2247c81ae7d">direction</a>, 
 <br/>
 &#160;&#160;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca698daf8a8d99520e595ae94b4d5345a6">buffer</a>, 
+<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cade63fafe68f6e03d7c9ad188a375517b">inbound</a>, 
+<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cade9399235e0a4da18201678a86433d25">outbound</a>, 
 <a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca27fc663d3efa7113258d010e526f6755">num_flags</a>
 <br/>
  }</td></tr>
@@ -185,6 +187,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a96598126c3eb87a72b3581a223b7b489"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa11f47142886e4dd38230ad63ce0377f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#aa11f47142886e4dd38230ad63ce0377f">operator()</a> ()</td></tr>
 <tr class="separator:aa11f47142886e4dd38230ad63ce0377f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eb3d8d99829f835c85a27745d8f4663"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a0eb3d8d99829f835c85a27745d8f4663">has_flag</a> (const <a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736c">Flags</a> flg) const </td></tr>
+<tr class="separator:a0eb3d8d99829f835c85a27745d8f4663"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d54594857fa5bbd58f465476e1c6a81"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81">get_thread_code</a> (pthread_t tid)</td></tr>
 <tr class="separator:a7d54594857fa5bbd58f465476e1c6a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8175e14a66ef836973ac504cf04170ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a8175e14a66ef836973ac504cf04170ef">purge_thread_codes</a> ()</td></tr>
@@ -196,14 +200,14 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a6554c51c2200392f76245151a0b7376c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c">_bit_names</a> [] = { &quot;append&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca1ef54871de8a1398f024ad2f6376e8eb">timestamp</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca7a22c0ccad6314615fa7b2f7ec1fb90e">sequence</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca413204368f98ffce9776895b0dac4b81">compress</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cae42b3dd21e40c3477a3e57889bc9f222">pipe</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca111961a483ad2b35ec93c3c5c8ff4f9e">broadcast</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca5d02a867d0e1dacb801616b8c38c59e6">thread</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca40878af9af97bc2393daf2247c81ae7d">direction</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca698daf8a8d99520e595ae94b4d5345a6">buffer</a>&quot; }</td></tr>
+<tr class="memitem:a6554c51c2200392f76245151a0b7376c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c">_bit_names</a> []</td></tr>
 <tr class="memdesc:a6554c51c2200392f76245151a0b7376c"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of logflags  <a href="#a6554c51c2200392f76245151a0b7376c">More...</a><br/></td></tr>
 <tr class="separator:a6554c51c2200392f76245151a0b7376c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
 Protected Types</h2></td></tr>
-<tr class="memitem:aba11dcf2790930d9868d3ea025fc1802"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; pthread_t, char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#aba11dcf2790930d9868d3ea025fc1802">ThreadCodes</a></td></tr>
-<tr class="separator:aba11dcf2790930d9868d3ea025fc1802"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5f6d1d28f18cb2ebc868dfc1efdf40b"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; pthread_t, char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#ac5f6d1d28f18cb2ebc868dfc1efdf40b">ThreadCodes</a></td></tr>
+<tr class="separator:ac5f6d1d28f18cb2ebc868dfc1efdf40b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a288d6d01354fe848f48150f3e656076e"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; char, pthread_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a288d6d01354fe848f48150f3e656076e">RevThreadCodes</a></td></tr>
 <tr class="separator:a288d6d01354fe848f48150f3e656076e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -225,7 +229,7 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:ab8da984b4ce7f89a11653dcff6222b6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac82651d126acdac512113beee695bb11"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#ac82651d126acdac512113beee695bb11">_osequence</a></td></tr>
 <tr class="separator:ac82651d126acdac512113beee695bb11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a476ab5cc45fc17d77fcf89b94c296970"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html#aba11dcf2790930d9868d3ea025fc1802">ThreadCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a476ab5cc45fc17d77fcf89b94c296970">_thread_codes</a></td></tr>
+<tr class="memitem:a476ab5cc45fc17d77fcf89b94c296970"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html#ac5f6d1d28f18cb2ebc868dfc1efdf40b">ThreadCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a476ab5cc45fc17d77fcf89b94c296970">_thread_codes</a></td></tr>
 <tr class="separator:a476ab5cc45fc17d77fcf89b94c296970"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a7b69255874cb0e2ae4629858c93a02"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html#a288d6d01354fe848f48150f3e656076e">RevThreadCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a1a7b69255874cb0e2ae4629858c93a02">_rev_thread_codes</a></td></tr>
 <tr class="separator:a1a7b69255874cb0e2ae4629858c93a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,15 +238,13 @@ Protected Attributes</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a38bb01364574b762666b588ebf5b0280"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1dthread.html">dthread</a>&lt; <a class="el" href="classFIX8_1_1Logger.html">Logger</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a38bb01364574b762666b588ebf5b0280">_thread</a></td></tr>
 <tr class="separator:a38bb01364574b762666b588ebf5b0280"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16c633385a6d715c09fe8f1f9052ea87"><td class="memItemLeft" align="right" valign="top">std::ostringstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a16c633385a6d715c09fe8f1f9052ea87">_buf</a></td></tr>
-<tr class="separator:a16c633385a6d715c09fe8f1f9052ea87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24892c6b55cde6cd91e97e0180ddfa39"><td class="memItemLeft" align="right" valign="top">std::list&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a24892c6b55cde6cd91e97e0180ddfa39">_buffer</a></td></tr>
 <tr class="separator:a24892c6b55cde6cd91e97e0180ddfa39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>dthread delegated async logging class </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00156">156</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00143">143</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="a478225c58aaf0244c2b1ada179d61eb4"></a>
 <div class="memitem">
@@ -254,7 +256,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00165">165</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00151">151</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -276,11 +278,11 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00210">210</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00190">190</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aba11dcf2790930d9868d3ea025fc1802"></a>
+<a class="anchor" id="ac5f6d1d28f18cb2ebc868dfc1efdf40b"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -288,7 +290,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std:: map&lt;pthread_t, char&gt; <a class="el" href="classFIX8_1_1Logger.html#aba11dcf2790930d9868d3ea025fc1802">FIX8::Logger::ThreadCodes</a></td>
+          <td class="memname">typedef std::map&lt;pthread_t, char&gt; <a class="el" href="classFIX8_1_1Logger.html#ac5f6d1d28f18cb2ebc868dfc1efdf40b">FIX8::Logger::ThreadCodes</a></td>
         </tr>
       </table>
   </td>
@@ -298,7 +300,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00207">207</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00187">187</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -319,7 +321,7 @@ Private Attributes</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00164">164</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00150">150</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -351,11 +353,15 @@ Private Attributes</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="af598c69563afde5b6ccc34cdb2ce736ca698daf8a8d99520e595ae94b4d5345a6"></a>buffer</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="af598c69563afde5b6ccc34cdb2ce736cade63fafe68f6e03d7c9ad188a375517b"></a>inbound</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="af598c69563afde5b6ccc34cdb2ce736cade9399235e0a4da18201678a86433d25"></a>outbound</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="af598c69563afde5b6ccc34cdb2ce736ca27fc663d3efa7113258d010e526f6755"></a>num_flags</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00163">163</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00149">149</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -389,9 +395,9 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00216">216</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00196">196</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00172">_stopping</a>, and <a class="el" href="logger_8hpp_source.html#l00158">_thread</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00158">_stopping</a>, and <a class="el" href="logger_8hpp_source.html#l00145">_thread</a>.</p>
 
 </div>
 </div>
@@ -418,9 +424,9 @@ Private Attributes</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00223">223</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00203">203</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00170">_ofs</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00156">_ofs</a>.</p>
 
 </div>
 </div>
@@ -448,7 +454,7 @@ Private Attributes</h2></td></tr>
 
 <p>Flush the buffer. </p>
 
-<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00158">158</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00159">159</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
 
 </div>
 </div>
@@ -475,9 +481,9 @@ Private Attributes</h2></td></tr>
 <p>Get the underlying stream object. </p>
 <dl class="section return"><dt>Returns</dt><dd>the stream </dd></dl>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00227">227</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00207">207</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00170">_ofs</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00156">_ofs</a>.</p>
 
 </div>
 </div>
@@ -502,7 +508,45 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00187">187</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00188">188</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0eb3d8d99829f835c85a27745d8f4663"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FIX8::Logger::has_flag </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736c">Flags</a>&#160;</td>
+          <td class="paramname"><em>flg</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Check if the given log flag is set </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flg</td><td>flag bit to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if set </dd></dl>
+
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00237">237</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+
+<p>References <a class="el" href="logger_8hpp_source.html#l00155">_flags</a>, and <a class="el" href="f8utils_8hpp_source.html#l00681">FIX8::ebitset&lt; T, B &gt;::has()</a>.</p>
+
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>, and <a class="el" href="session_8cpp_source.html#l00759">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -521,9 +565,9 @@ Private Attributes</h2></td></tr>
 <p>The logging thread entry point. </p>
 <dl class="section return"><dt>Returns</dt><dd>0 on success </dd></dl>
 
-<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00074">74</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00075">75</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00177">FIX8::Logger::LogElement::_str</a>, <a class="el" href="logger_8hpp_source.html#l00176">FIX8::Logger::LogElement::_tid</a>, <a class="el" href="logger_8hpp_source.html#l00178">FIX8::Logger::LogElement::_val</a>, <a class="el" href="logger_8hpp_source.html#l00179">FIX8::Logger::LogElement::_when</a>, <a class="el" href="namespaceFIX8.html#a21bce0769809df7d55f39cd67e6b22a0">FIX8::GetTimeAsStringMS()</a>, and <a class="el" href="hypersleep_8hpp_source.html#l00093">FIX8::hypersleep&lt; h_milliseconds &gt;()</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00163">FIX8::Logger::LogElement::_str</a>, <a class="el" href="logger_8hpp_source.html#l00162">FIX8::Logger::LogElement::_tid</a>, <a class="el" href="logger_8hpp_source.html#l00164">FIX8::Logger::LogElement::_val</a>, <a class="el" href="logger_8hpp_source.html#l00165">FIX8::Logger::LogElement::_when</a>, <a class="el" href="namespaceFIX8.html#a21bce0769809df7d55f39cd67e6b22a0">FIX8::GetTimeAsStringMS()</a>, and <a class="el" href="hypersleep_8hpp_source.html#l00093">FIX8::hypersleep&lt; h_milliseconds &gt;()</a>.</p>
 
 </div>
 </div>
@@ -542,7 +586,7 @@ Private Attributes</h2></td></tr>
 
 <p>Remove dead threads from the thread code cache. </p>
 
-<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00168">168</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8cpp_source.html#l00169">169</a> of file <a class="el" href="logger_8cpp_source.html">logger.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="session_8cpp_source.html#l00166">FIX8::Session::start()</a>.</p>
 
@@ -580,7 +624,7 @@ Private Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classFIX8_1_1FileLogger.html#afc44ff8fb3c39044085b18a14ee64cc3">FIX8::FileLogger</a>.</p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00245">245</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00225">225</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -625,11 +669,11 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00233">233</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00213">213</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00198">_msg_queue</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00184">_msg_queue</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00429">FIX8::Session::log()</a>, <a class="el" href="session_8hpp_source.html#l00435">FIX8::Session::plog()</a>, <a class="el" href="logger_8hpp_source.html#l00240">stop()</a>, and <a class="el" href="fileLogger__test_8cpp_source.html#l00113">TEST()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00430">FIX8::Session::log()</a>, <a class="el" href="session_8hpp_source.html#l00436">FIX8::Session::plog()</a>, <a class="el" href="logger_8hpp_source.html#l00220">stop()</a>, and <a class="el" href="fileLogger__test_8cpp_source.html#l00113">TEST()</a>.</p>
 
 </div>
 </div>
@@ -656,9 +700,9 @@ Private Attributes</h2></td></tr>
 
 <p>Stop the logging thread. </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00240">240</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00220">220</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00172">_stopping</a>, <a class="el" href="logger_8hpp_source.html#l00158">_thread</a>, and <a class="el" href="logger_8hpp_source.html#l00233">send()</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00158">_stopping</a>, <a class="el" href="logger_8hpp_source.html#l00145">_thread</a>, and <a class="el" href="logger_8hpp_source.html#l00213">send()</a>.</p>
 
 <p>Referenced by <a class="el" href="fileLogger__test_8cpp_source.html#l00113">TEST()</a>, and <a class="el" href="session_8cpp_source.html#l00146">FIX8::Session::~Session()</a>.</p>
 
@@ -673,7 +717,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const string FIX8::Logger::_bit_names = { &quot;append&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca1ef54871de8a1398f024ad2f6376e8eb">timestamp</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca7a22c0ccad6314615fa7b2f7ec1fb90e">sequence</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca413204368f98ffce9776895b0dac4b81">compress</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cae42b3dd21e40c3477a3e57889bc9f222">pipe</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca111961a483ad2b35ec93c3c5c8ff4f9e">broadcast</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca5d02a867d0e1dacb801616b8c38c59e6">thread</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca40878af9af97bc2393daf2247c81ae7d">direction</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca698daf8a8d99520e595ae94b4d5345a6">buffer</a>&quot; }</td>
+          <td class="memname">const string FIX8::Logger::_bit_names</td>
         </tr>
       </table>
   </td>
@@ -682,34 +726,14 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">      { <span class="stringliteral">&quot;append&quot;</span>, <span class="stringliteral">&quot;timestamp&quot;</span>, <span class="stringliteral">&quot;sequence&quot;</span>, <span class="stringliteral">&quot;compress&quot;</span>, <span class="stringliteral">&quot;pipe&quot;</span>, <span class="stringliteral">&quot;broadcast&quot;</span>, <span class="stringliteral">&quot;thread&quot;</span>, <span class="stringliteral">&quot;direction&quot;</span>, <span class="stringliteral">&quot;buffer&quot;</span>, <span class="stringliteral">&quot;inbound&quot;</span>, <span class="stringliteral">&quot;outbound&quot;</span> }</div>
+</div><!-- fragment -->
 <p>string representation of logflags </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00252">252</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00232">232</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="configuration_8cpp_source.html#l00191">FIX8::Configuration::get_logflags()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a16c633385a6d715c09fe8f1f9052ea87"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostringstream FIX8::Logger::_buf</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00159">159</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Referenced by <a class="el" href="configuration_8cpp_source.html#l00193">FIX8::Configuration::get_logflags()</a>.</p>
 
 </div>
 </div>
@@ -731,7 +755,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00160">160</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00146">146</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -753,9 +777,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00169">169</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00155">155</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="logger_8cpp_source.html#l00262">FIX8::PipeLogger::PipeLogger()</a>, and <a class="el" href="logger_8cpp_source.html#l00221">FIX8::FileLogger::rotate()</a>.</p>
+<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00237">has_flag()</a>, <a class="el" href="logger_8cpp_source.html#l00263">FIX8::PipeLogger::PipeLogger()</a>, and <a class="el" href="logger_8cpp_source.html#l00222">FIX8::FileLogger::rotate()</a>.</p>
 
 </div>
 </div>
@@ -777,7 +801,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00171">171</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00157">157</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -799,9 +823,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00198">198</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00184">184</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00233">send()</a>.</p>
+<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00213">send()</a>.</p>
 
 </div>
 </div>
@@ -823,9 +847,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00168">168</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00154">154</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="logger_8cpp_source.html#l00221">FIX8::FileLogger::rotate()</a>.</p>
+<p>Referenced by <a class="el" href="logger_8cpp_source.html#l00222">FIX8::FileLogger::rotate()</a>.</p>
 
 </div>
 </div>
@@ -847,9 +871,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00170">170</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00156">156</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00227">get_stream()</a>, <a class="el" href="logger_8cpp_source.html#l00262">FIX8::PipeLogger::PipeLogger()</a>, <a class="el" href="logger_8cpp_source.html#l00221">FIX8::FileLogger::rotate()</a>, and <a class="el" href="logger_8hpp_source.html#l00223">~Logger()</a>.</p>
+<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00207">get_stream()</a>, <a class="el" href="logger_8cpp_source.html#l00263">FIX8::PipeLogger::PipeLogger()</a>, <a class="el" href="logger_8cpp_source.html#l00222">FIX8::FileLogger::rotate()</a>, and <a class="el" href="logger_8hpp_source.html#l00203">~Logger()</a>.</p>
 
 </div>
 </div>
@@ -871,7 +895,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00199">199</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00185">185</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -893,7 +917,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00211">211</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00191">191</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -915,7 +939,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00199">199</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00185">185</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -937,9 +961,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00172">172</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00158">158</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00216">Logger()</a>, and <a class="el" href="logger_8hpp_source.html#l00240">stop()</a>.</p>
+<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00196">Logger()</a>, and <a class="el" href="logger_8hpp_source.html#l00220">stop()</a>.</p>
 
 </div>
 </div>
@@ -961,9 +985,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00158">158</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00145">145</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00216">Logger()</a>, and <a class="el" href="logger_8hpp_source.html#l00240">stop()</a>.</p>
+<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00196">Logger()</a>, and <a class="el" href="logger_8hpp_source.html#l00220">stop()</a>.</p>
 
 </div>
 </div>
@@ -975,7 +999,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1Logger.html#aba11dcf2790930d9868d3ea025fc1802">ThreadCodes</a> FIX8::Logger::_thread_codes</td>
+          <td class="memname"><a class="el" href="classFIX8_1_1Logger.html#ac5f6d1d28f18cb2ebc868dfc1efdf40b">ThreadCodes</a> FIX8::Logger::_thread_codes</td>
         </tr>
       </table>
   </td>
@@ -985,7 +1009,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00208">208</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00188">188</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -996,7 +1020,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu May 9 2013 21:35:29. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:36. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

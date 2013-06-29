@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.8.0</span>
+   &#160;<span id="projectnumber">version  0.9.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -131,8 +131,8 @@ Inheritance diagram for FIX8::fptrostream:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa89107a0a97b23d322bbd9978468c684"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1fptrostream.html#aa89107a0a97b23d322bbd9978468c684">fptrostream</a> (FILE *fptr, bool cf=true)</td></tr>
-<tr class="separator:aa89107a0a97b23d322bbd9978468c684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0d3181f8a1069f5ee4a67f40a7d54e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1fptrostream.html#ac0d3181f8a1069f5ee4a67f40a7d54e8">fptrostream</a> (FILE *fptr)</td></tr>
+<tr class="separator:ac0d3181f8a1069f5ee4a67f40a7d54e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a084c0424f19a9b7d827c7c40779094b5"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1fptrostream.html#a084c0424f19a9b7d827c7c40779094b5">~fptrostream</a> ()</td></tr>
 <tr class="memdesc:a084c0424f19a9b7d827c7c40779094b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="#a084c0424f19a9b7d827c7c40779094b5">More...</a><br/></td></tr>
 <tr class="separator:a084c0424f19a9b7d827c7c40779094b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,15 +148,13 @@ Protected Attributes</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a91914244a5440245ce8328193d637618"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1fptrostream.html#a91914244a5440245ce8328193d637618">fptr_</a></td></tr>
 <tr class="separator:a91914244a5440245ce8328193d637618"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a9293fb1b9479f93ca84998f803f71c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1fptrostream.html#a5a9293fb1b9479f93ca84998f803f71c">cf_</a></td></tr>
-<tr class="separator:a5a9293fb1b9479f93ca84998f803f71c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>File pointer stream. </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00081">81</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00075">75</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aa89107a0a97b23d322bbd9978468c684"></a>
+<a class="anchor" id="ac0d3181f8a1069f5ee4a67f40a7d54e8"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -167,18 +165,8 @@ Private Attributes</h2></td></tr>
           <td class="memname">FIX8::fptrostream::fptrostream </td>
           <td>(</td>
           <td class="paramtype">FILE *&#160;</td>
-          <td class="paramname"><em>fptr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>fptr</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>cf</em> = <code>true</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -191,12 +179,11 @@ Private Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">fptr</td><td>FILE* </td></tr>
-    <tr><td class="paramname">cf</td><td>if true, us cfpopen instead of popen </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00093">93</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00085">85</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -223,9 +210,9 @@ Private Attributes</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00096">96</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00089">89</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00084">cf_</a>, <a class="el" href="popen_8c_source.html#l00199">FIX8::cfpclose()</a>, and <a class="el" href="logger_8hpp_source.html#l00083">fptr_</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00077">fptr_</a>.</p>
 
 </div>
 </div>
@@ -253,9 +240,9 @@ Private Attributes</h2></td></tr>
 <p>Get the filno (fd) </p>
 <dl class="section return"><dt>Returns</dt><dd>fd </dd></dl>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00106">106</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00093">93</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00083">fptr_</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00077">fptr_</a>.</p>
 
 </div>
 </div>
@@ -278,31 +265,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00087">87</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a5a9293fb1b9479f93ca84998f803f71c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool FIX8::fptrostream::cf_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00084">84</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
-
-<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00096">~fptrostream()</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00080">80</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -324,9 +287,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00083">83</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00077">77</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00106">getfileno()</a>, and <a class="el" href="logger_8hpp_source.html#l00096">~fptrostream()</a>.</p>
+<p>Referenced by <a class="el" href="logger_8hpp_source.html#l00093">getfileno()</a>, and <a class="el" href="logger_8hpp_source.html#l00089">~fptrostream()</a>.</p>
 
 </div>
 </div>
@@ -336,7 +299,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu May 9 2013 21:35:29. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:36. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

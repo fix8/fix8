@@ -2,7 +2,11 @@ var classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyIn
 [
     [ "NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a4ee675c9abfb237ba813abf069b5ffee", null ],
     [ "~NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a8afe5987ce1a1d1b88c6588058960791", null ],
+    [ "NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a4ee675c9abfb237ba813abf069b5ffee", null ],
+    [ "~NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a8afe5987ce1a1d1b88c6588058960791", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac21c0135618648033b75c5a18b5ce02c", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac21c0135618648033b75c5a18b5ce02c", null ],
+    [ "get_msgtype", "classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a94c15444995724ef3a366c37d35df1d1", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a94c15444995724ef3a366c37d35df1d1", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac2a45d3e9b6092258d557dec8c8816ff", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a26256665c19d963a837c17e7092b1cfa", null ],

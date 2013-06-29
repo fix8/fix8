@@ -2,7 +2,11 @@ var classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndly
 [
     [ "NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#aac2de024135cc8a0a428aa05516540d4", null ],
     [ "~NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a978390a04445684646e440c703d3c0ee", null ],
+    [ "NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#aac2de024135cc8a0a428aa05516540d4", null ],
+    [ "~NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a978390a04445684646e440c703d3c0ee", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac444019e5fcb6c775068b877fd1f6eb3", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac444019e5fcb6c775068b877fd1f6eb3", null ],
+    [ "get_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac08000d70b30219377c34ba949c85396", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac08000d70b30219377c34ba949c85396", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#af772ed6e952c024e7627ac280ab4d5a4", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a1e8a8cac811c61ee1594bbce9e938137", null ],

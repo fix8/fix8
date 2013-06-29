@@ -20,5 +20,6 @@ var structFIX8_1_1F8MetaCntx =
     [ "_mk_hdr", "structFIX8_1_1F8MetaCntx.html#ac252f821778b6f936171ed79adfd23fb", null ],
     [ "_mk_trl", "structFIX8_1_1F8MetaCntx.html#af013244d09339b399dfb070b1dae3fc6", null ],
     [ "_msg_flags", "structFIX8_1_1F8MetaCntx.html#a5daaec3b3c02ae373f8c5912b6692813", null ],
+    [ "_preamble_sz", "structFIX8_1_1F8MetaCntx.html#a19322108f7f39324f1553de4e4f3ebcc", null ],
     [ "_version", "structFIX8_1_1F8MetaCntx.html#a62a7a8ba6ea319f5217f33a186cbf1cb", null ]
 ];

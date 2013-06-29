@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.8.0</span>
+   &#160;<span id="projectnumber">version  0.9.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -330,29 +330,33 @@ $(document).ready(function(){initNavTree('f8cstatic_8hpp_source.html','');});
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">CSMap::TypePair</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25ad02c34ef6de3835378636e9dfc2b030a">cs_copyright_short</a>, <span class="stringliteral">&quot;Copyright (c) 2010-&quot;</span>),</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">CSMap::TypePair</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a4d57c4b08e5c37770047af42c41f28ac">cs_copyright_short2</a>, <span class="stringliteral">&quot;, David L. Dight &lt;fix@fix8.org&gt;, All rights reserved.&quot;</span>),</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">CSMap::TypePair</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25ad28c368bcc1e5bab98c209fc55c9d2bf">cs_header_preamble</a>,</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="stringliteral">&quot;  void add_preamble()\n&quot;</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="stringliteral">&quot;  {\n&quot;</span></div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="stringliteral">&quot;     add_field(Common_BeginString, 1, new begin_string(ctx._beginStr), false);\n&quot;</span></div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="stringliteral">&quot;     add_field(Common_BodyLength, 2, new body_length(0), false);\n&quot;</span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="stringliteral">&quot;     add_field(Common_MsgType, 3, new msg_type, false);\n&quot;</span></div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="stringliteral">&quot;  }&quot;</span>),</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">CSMap::TypePair</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25ab245d0223f33478a8d050caca7077477">cs_trailer_preamble</a>,</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="stringliteral">&quot;  void add_preamble()\n&quot;</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="stringliteral">&quot;  {\n&quot;</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="stringliteral">&quot;     add_field(Common_CheckSum, 3, new check_sum, false);\n&quot;</span></div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="stringliteral">&quot;  }&quot;</span>),</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;};</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="keyword">const</span> <a class="code" href="structFIX8_1_1StaticTable.html#a2ad0208949fe9e985ca78d0ae3edff05">CSMap::TypeMap</a> <a class="code" href="structFIX8_1_1StaticTable.html#a2f99cd0d5bc1be93d43c0bf71fd204f5" title="The container.">CSMap::_valuemap</a>(<a class="code" href="structFIX8_1_1StaticTable.html#a9621b152183d9cd42ad199b88aff9d4b" title="The actual data set.">CSMap::_valueTable</a>, <a class="code" href="structFIX8_1_1StaticTable.html#a01f50857699799ca7537a1a550ae67a5">CSMap::get_table_end</a>());</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="keyword">const</span> <a class="code" href="structFIX8_1_1StaticTable.html#a267de06cd639bc971f139143308713cb">CSMap::NotFoundType</a> <a class="code" href="structFIX8_1_1StaticTable.html#aff7cd3306d16b9a89b4c403784663c9f" title="The value to return when the key is not found.">CSMap::_noval</a>(<span class="stringliteral">&quot;not found&quot;</span>);</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;} <span class="comment">// namespace FIX8</span></div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="stringliteral">&quot;  begin_string *get_begin_string() { return _begin_string; };\n&quot;</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="stringliteral">&quot;  body_length *get_body_length() { return _body_length; };\n&quot;</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="stringliteral">&quot;  msg_type *get_msg_type() { return _msg_type; };\n\n&quot;</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="stringliteral">&quot;  void add_preamble()\n&quot;</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="stringliteral">&quot;  {\n&quot;</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="stringliteral">&quot;     add_field(Common_BeginString, 1, _begin_string, false);\n&quot;</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="stringliteral">&quot;     add_field(Common_BodyLength, 2, _body_length, false);\n&quot;</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="stringliteral">&quot;     add_field(Common_MsgType, 3, _msg_type, false);\n&quot;</span></div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="stringliteral">&quot;  }&quot;</span>),</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">CSMap::TypePair</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25ab245d0223f33478a8d050caca7077477">cs_trailer_preamble</a>,</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="stringliteral">&quot;  check_sum *get_check_sum() { return _check_sum; };\n\n&quot;</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="stringliteral">&quot;  void add_preamble()\n&quot;</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="stringliteral">&quot;  {\n&quot;</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="stringliteral">&quot;     add_field(Common_CheckSum, 3, _check_sum, false);\n&quot;</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="stringliteral">&quot;  }&quot;</span>),</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;};</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="keyword">const</span> <a class="code" href="structFIX8_1_1StaticTable.html#a2ad0208949fe9e985ca78d0ae3edff05">CSMap::TypeMap</a> <a class="code" href="structFIX8_1_1StaticTable.html#a2f99cd0d5bc1be93d43c0bf71fd204f5" title="The container.">CSMap::_valuemap</a>(<a class="code" href="structFIX8_1_1StaticTable.html#a9621b152183d9cd42ad199b88aff9d4b" title="The actual data set.">CSMap::_valueTable</a>, <a class="code" href="structFIX8_1_1StaticTable.html#a01f50857699799ca7537a1a550ae67a5">CSMap::get_table_end</a>());</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="keyword">const</span> <a class="code" href="structFIX8_1_1StaticTable.html#a267de06cd639bc971f139143308713cb">CSMap::NotFoundType</a> <a class="code" href="structFIX8_1_1StaticTable.html#aff7cd3306d16b9a89b4c403784663c9f" title="The value to return when the key is not found.">CSMap::_noval</a>(<span class="stringliteral">&quot;not found&quot;</span>);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;} <span class="comment">// namespace FIX8</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu May 9 2013 21:35:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:13. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

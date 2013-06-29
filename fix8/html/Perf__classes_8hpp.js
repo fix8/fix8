@@ -20,6 +20,6 @@ var Perf__classes_8hpp =
     [ "header", "classFIX8_1_1TEX_1_1header.html", "classFIX8_1_1TEX_1_1header" ],
     [ "BusinessMessageReject", "classFIX8_1_1TEX_1_1BusinessMessageReject.html", "classFIX8_1_1TEX_1_1BusinessMessageReject" ],
     [ "trailer", "classFIX8_1_1TEX_1_1trailer.html", "classFIX8_1_1TEX_1_1trailer" ],
-    [ "_Perf_classes_", "Perf__classes_8hpp.html#a53aee81b8f2e6fa4adf54f8a3d995860", null ],
+    [ "_506572665F636C61737365732E687070_", "Perf__classes_8hpp.html#a1e9042a826902cf14bbbd78be7ce97fd", null ],
     [ "Perf_BaseMsgEntry", "Perf__classes_8hpp.html#ab482135f8cdcad3f4135431f969c1f38", null ]
 ];

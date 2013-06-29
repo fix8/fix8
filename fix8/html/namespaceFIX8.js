@@ -131,5 +131,6 @@ var namespaceFIX8 =
     [ "StringRealm", "structFIX8_1_1StringRealm.html", "structFIX8_1_1StringRealm" ],
     [ "CharRealm", "structFIX8_1_1CharRealm.html", "structFIX8_1_1CharRealm" ],
     [ "FieldSpec", "structFIX8_1_1FieldSpec.html", "structFIX8_1_1FieldSpec" ],
-    [ "MessageSpec", "structFIX8_1_1MessageSpec.html", "structFIX8_1_1MessageSpec" ]
+    [ "MessageSpec", "structFIX8_1_1MessageSpec.html", "structFIX8_1_1MessageSpec" ],
+    [ "push_dir", "classFIX8_1_1push__dir.html", "classFIX8_1_1push__dir" ]
 ];

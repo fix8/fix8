@@ -2,7 +2,11 @@ var classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1
 [
     [ "NoComplexEventTimes", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#a9fb7e6a7605ed24cf86a9fd9de01ad70", null ],
     [ "~NoComplexEventTimes", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#ad9cf6271043085bb0af843cbaf901b6a", null ],
+    [ "NoComplexEventTimes", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#a9fb7e6a7605ed24cf86a9fd9de01ad70", null ],
+    [ "~NoComplexEventTimes", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#ad9cf6271043085bb0af843cbaf901b6a", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#aee5494a3c08e9172ba5f3bbfe074c584", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#aee5494a3c08e9172ba5f3bbfe074c584", null ],
+    [ "get_msgtype", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#a897d96d35437810323be6184fc12cf96", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#a897d96d35437810323be6184fc12cf96", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#a59fc5448695fc8ba409466bd628e355f", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#aae5bdac752abb7eba29ea7e021ee1067", null ],

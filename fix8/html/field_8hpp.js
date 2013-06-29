@@ -103,5 +103,6 @@ var field_8hpp =
     [ "Common_TargetCompID", "field_8hpp.html#ae954b6d79778b6006f9fb8fccfb52a3b", null ],
     [ "Common_TestReqID", "field_8hpp.html#af44b18408c41e07d3a7e3f46890b2627", null ],
     [ "Common_Text", "field_8hpp.html#af51f4d61b7ffb8ac325bdf8db7363a0b", null ],
+    [ "HEADER_CALC_OFFSET", "field_8hpp.html#a0ebb30b10d5fff1e65636454e2ff9b8c", null ],
     [ "MAX_MSGTYPE_FIELD_LEN", "field_8hpp.html#ac850a69853609eac9d0a7db133b5c55a", null ]
 ];

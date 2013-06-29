@@ -19,11 +19,9 @@ var classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4 =
     [ "operator=", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a9d01790584a98138042ca205fc029a52", null ],
     [ "parseDate", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a08ed1910d37c7ec5e1ff183c38ae0794", null ],
     [ "print", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a334d08d9736bcdcc9a8a3caab2b20773", null ],
-    [ "print", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a1236e682f0bc2edbc5efbd33f8bad3fb", null ],
+    [ "print", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a0c4560aebdf7570936e9a1a98f9cd91b", null ],
     [ "set", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a3837e1adb72ff787c182317c96a94f29", null ],
     [ "set", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#ac66dcc43d5456f611e0fe749c8829eea", null ],
-    [ "_fmt_ms", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#afcd625f85ae59dce5508c741b397fab6", null ],
-    [ "_fmt_sec", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a67591e1d178a4536053e1d7a9ef3fad0", null ],
     [ "_tzdiff", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a100991265003ff4cbba1cb67ed9b30e0", null ],
     [ "_value", "classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a680b893b4bf6aa3eac5dfb995d0c1a33", null ]
 ];

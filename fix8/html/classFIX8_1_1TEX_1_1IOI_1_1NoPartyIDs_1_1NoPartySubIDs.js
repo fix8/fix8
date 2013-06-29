@@ -2,7 +2,11 @@ var classFIX8_1_1TEX_1_1IOI_1_1NoPartyIDs_1_1NoPartySubIDs =
 [
     [ "NoPartySubIDs", "classFIX8_1_1TEX_1_1IOI_1_1NoPartyIDs_1_1NoPartySubIDs.html#a18b14a398f2547ae534dd132c85d49dc", null ],
     [ "~NoPartySubIDs", "classFIX8_1_1TEX_1_1IOI_1_1NoPartyIDs_1_1NoPartySubIDs.html#a6c568100336fc12a83c8f700e9b1748d", null ],
+    [ "NoPartySubIDs", "classFIX8_1_1TEX_1_1IOI_1_1NoPartyIDs_1_1NoPartySubIDs.html#a18b14a398f2547ae534dd132c85d49dc", null ],
+    [ "~NoPartySubIDs", "classFIX8_1_1TEX_1_1IOI_1_1NoPartyIDs_1_1NoPartySubIDs.html#a6c568100336fc12a83c8f700e9b1748d", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1IOI_1_1NoPartyIDs_1_1NoPartySubIDs.html#a4342ad5c7cd0e154efc8378749c8ab64", null ],
+    [ "create_group", "classFIX8_1_1TEX_1_1IOI_1_1NoPartyIDs_1_1NoPartySubIDs.html#a4342ad5c7cd0e154efc8378749c8ab64", null ],
+    [ "get_msgtype", "classFIX8_1_1TEX_1_1IOI_1_1NoPartyIDs_1_1NoPartySubIDs.html#a6e2d4b8fb3cafad34cec48ceefbd85b6", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1IOI_1_1NoPartyIDs_1_1NoPartySubIDs.html#a6e2d4b8fb3cafad34cec48ceefbd85b6", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1IOI_1_1NoPartyIDs_1_1NoPartySubIDs.html#adc52b809cbf3f84beb5f161074fddde9", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1IOI_1_1NoPartyIDs_1_1NoPartySubIDs.html#aab436f99fb5195453b32fe1c914cb376", null ],

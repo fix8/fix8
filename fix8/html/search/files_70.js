@@ -7,6 +7,5 @@ var searchData=
   ['perf_5ftypes_2ecpp',['Perf_types.cpp',['../Perf__types_8cpp.html',1,'']]],
   ['perf_5ftypes_2ehpp',['Perf_types.hpp',['../Perf__types_8hpp.html',1,'']]],
   ['persist_2ecpp',['persist.cpp',['../persist_8cpp.html',1,'']]],
-  ['persist_2ehpp',['persist.hpp',['../persist_8hpp.html',1,'']]],
-  ['popen_2ec',['popen.c',['../popen_8c.html',1,'']]]
+  ['persist_2ehpp',['persist.hpp',['../persist_8hpp.html',1,'']]]
 ];

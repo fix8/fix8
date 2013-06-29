@@ -12,8 +12,6 @@ var logger_8hpp =
     [ "SingleLogger", "classFIX8_1_1SingleLogger.html", "classFIX8_1_1SingleLogger" ],
     [ "_FIX8_LOGGER_HPP_", "logger_8hpp.html#a4e88fa5eeb820128073f324b6675d0ae", null ],
     [ "GlobalLogger", "logger_8hpp.html#a1beb48800ede87e560cf9b9861beb7f0", null ],
-    [ "cfpclose", "logger_8hpp.html#ab56a8b73e6bf1af89a358299152e52ae", null ],
-    [ "cfpopen", "logger_8hpp.html#a61fa3919d0614bd1b99e4864af719428", null ],
     [ "max_global_filename_length", "logger_8hpp.html#a27994926f6936871625db686be6e5ea2", null ],
     [ "glob_log0", "logger_8hpp.html#a595619ea9e58f25f16ff139c53723175", null ]
 ];

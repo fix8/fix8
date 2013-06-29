@@ -9,6 +9,7 @@ var classFIX8_1_1RegExp =
     [ "operator void *", "classFIX8_1_1RegExp.html#afbdc5d94ec3283090468fd11a5dd0872", null ],
     [ "operator!", "classFIX8_1_1RegExp.html#a8ec4124d3a8a31a51f83f240f3945d1c", null ],
     [ "Replace", "classFIX8_1_1RegExp.html#a9650e55a66d6567e80b9118369f74b56", null ],
+    [ "Replace", "classFIX8_1_1RegExp.html#a92a80ed7b7aa483a6e8556b090ff640d", null ],
     [ "SearchString", "classFIX8_1_1RegExp.html#a6dcc79a6a9a658e78982026ce96e8ae6", null ],
     [ "SubExpr", "classFIX8_1_1RegExp.html#ac2311bf6fda6d75a881bdc29f5eb002a", null ],
     [ "errCode_", "classFIX8_1_1RegExp.html#a415e201ac10aa5d62c0fc73a360c3f6f", null ],

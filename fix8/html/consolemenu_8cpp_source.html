@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.8.0</span>
+   &#160;<span id="projectnumber">version  0.9.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -446,7 +446,7 @@ $(document).ready(function(){initNavTree('consolemenu_8cpp_source.html','');});
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      GetString(tty, txt);</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      <span class="keywordflow">if</span> (msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a1c3a817c478e0dcb8a373206d4fef58f">get_fp</a>().<a class="code" href="classFIX8_1_1FieldTraits.html#a1f2657879503207b0c1a43b4fd181603">is_group</a>(fld-&gt;<a class="code" href="structFIX8_1_1__Pair.html#af1ee9d8632e4cdca772ea34e692074a3">_key</a>))</div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;      {</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;         <span class="keywordtype">int</span> cnt(GetValue&lt;int&gt;(txt));</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;         <span class="keywordtype">int</span> cnt(get_value&lt;int&gt;(txt));</div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;         <a class="code" href="classFIX8_1_1GroupBase.html" title="Abstract base class for all repeating groups.">GroupBase</a> *gb(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">find_group</a>(fld-&gt;<a class="code" href="structFIX8_1_1__Pair.html#af1ee9d8632e4cdca772ea34e692074a3">_key</a>));</div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;         <span class="keywordflow">if</span> (gb &amp;&amp; cnt)</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;         {</div>
@@ -513,7 +513,7 @@ $(document).ready(function(){initNavTree('consolemenu_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu May 9 2013 21:35:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:13. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

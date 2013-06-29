@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.8.0</span>
+   &#160;<span id="projectnumber">version  0.9.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -168,6 +168,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a858c1ea1f37e54d330c5ab05b4fb80a3 inherit pub_methods_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa11f47142886e4dd38230ad63ce0377f inherit pub_methods_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#aa11f47142886e4dd38230ad63ce0377f">operator()</a> ()</td></tr>
 <tr class="separator:aa11f47142886e4dd38230ad63ce0377f inherit pub_methods_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eb3d8d99829f835c85a27745d8f4663 inherit pub_methods_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a0eb3d8d99829f835c85a27745d8f4663">has_flag</a> (const <a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736c">Flags</a> flg) const </td></tr>
+<tr class="separator:a0eb3d8d99829f835c85a27745d8f4663 inherit pub_methods_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d54594857fa5bbd58f465476e1c6a81 inherit pub_methods_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81">get_thread_code</a> (pthread_t tid)</td></tr>
 <tr class="separator:a7d54594857fa5bbd58f465476e1c6a81 inherit pub_methods_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8175e14a66ef836973ac504cf04170ef inherit pub_methods_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a8175e14a66ef836973ac504cf04170ef">purge_thread_codes</a> ()</td></tr>
@@ -210,6 +212,8 @@ Additional Inherited Members</h2></td></tr>
 <a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca40878af9af97bc2393daf2247c81ae7d">direction</a>, 
 <br/>
 &#160;&#160;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca698daf8a8d99520e595ae94b4d5345a6">buffer</a>, 
+<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cade63fafe68f6e03d7c9ad188a375517b">inbound</a>, 
+<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cade9399235e0a4da18201678a86433d25">outbound</a>, 
 <a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca27fc663d3efa7113258d010e526f6755">num_flags</a>
 <br/>
  }</td></tr>
@@ -221,12 +225,12 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a478225c58aaf0244c2b1ada179d61eb4 inherit pub_types_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classFIX8_1_1ebitset.html">ebitset</a>&lt; <a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736c">Flags</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a478225c58aaf0244c2b1ada179d61eb4">LogFlags</a></td></tr>
 <tr class="separator:a478225c58aaf0244c2b1ada179d61eb4 inherit pub_types_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_classFIX8_1_1Logger"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classFIX8_1_1Logger')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classFIX8_1_1Logger.html">FIX8::Logger</a></td></tr>
-<tr class="memitem:a6554c51c2200392f76245151a0b7376c inherit pub_static_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c">_bit_names</a> [] = { &quot;append&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca1ef54871de8a1398f024ad2f6376e8eb">timestamp</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca7a22c0ccad6314615fa7b2f7ec1fb90e">sequence</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca413204368f98ffce9776895b0dac4b81">compress</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736cae42b3dd21e40c3477a3e57889bc9f222">pipe</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca111961a483ad2b35ec93c3c5c8ff4f9e">broadcast</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca5d02a867d0e1dacb801616b8c38c59e6">thread</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca40878af9af97bc2393daf2247c81ae7d">direction</a>&quot;, &quot;<a class="el" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca698daf8a8d99520e595ae94b4d5345a6">buffer</a>&quot; }</td></tr>
+<tr class="memitem:a6554c51c2200392f76245151a0b7376c inherit pub_static_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c">_bit_names</a> []</td></tr>
 <tr class="memdesc:a6554c51c2200392f76245151a0b7376c inherit pub_static_attribs_classFIX8_1_1Logger"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of logflags  <a href="#a6554c51c2200392f76245151a0b7376c">More...</a><br/></td></tr>
 <tr class="separator:a6554c51c2200392f76245151a0b7376c inherit pub_static_attribs_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_types_classFIX8_1_1Logger"><td colspan="2" onclick="javascript:toggleInherit('pro_types_classFIX8_1_1Logger')"><img src="closed.png" alt="-"/>&#160;Protected Types inherited from <a class="el" href="classFIX8_1_1Logger.html">FIX8::Logger</a></td></tr>
-<tr class="memitem:aba11dcf2790930d9868d3ea025fc1802 inherit pro_types_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; pthread_t, char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#aba11dcf2790930d9868d3ea025fc1802">ThreadCodes</a></td></tr>
-<tr class="separator:aba11dcf2790930d9868d3ea025fc1802 inherit pro_types_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5f6d1d28f18cb2ebc868dfc1efdf40b inherit pro_types_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; pthread_t, char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#ac5f6d1d28f18cb2ebc868dfc1efdf40b">ThreadCodes</a></td></tr>
+<tr class="separator:ac5f6d1d28f18cb2ebc868dfc1efdf40b inherit pro_types_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a288d6d01354fe848f48150f3e656076e inherit pro_types_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; char, pthread_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a288d6d01354fe848f48150f3e656076e">RevThreadCodes</a></td></tr>
 <tr class="separator:a288d6d01354fe848f48150f3e656076e inherit pro_types_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classFIX8_1_1Logger"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classFIX8_1_1Logger')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classFIX8_1_1Logger.html">FIX8::Logger</a></td></tr>
@@ -246,7 +250,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:ab8da984b4ce7f89a11653dcff6222b6b inherit pro_attribs_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac82651d126acdac512113beee695bb11 inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#ac82651d126acdac512113beee695bb11">_osequence</a></td></tr>
 <tr class="separator:ac82651d126acdac512113beee695bb11 inherit pro_attribs_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a476ab5cc45fc17d77fcf89b94c296970 inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html#aba11dcf2790930d9868d3ea025fc1802">ThreadCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a476ab5cc45fc17d77fcf89b94c296970">_thread_codes</a></td></tr>
+<tr class="memitem:a476ab5cc45fc17d77fcf89b94c296970 inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html#ac5f6d1d28f18cb2ebc868dfc1efdf40b">ThreadCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a476ab5cc45fc17d77fcf89b94c296970">_thread_codes</a></td></tr>
 <tr class="separator:a476ab5cc45fc17d77fcf89b94c296970 inherit pro_attribs_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a7b69255874cb0e2ae4629858c93a02 inherit pro_attribs_classFIX8_1_1Logger"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Logger.html#a288d6d01354fe848f48150f3e656076e">RevThreadCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Logger.html#a1a7b69255874cb0e2ae4629858c93a02">_rev_thread_codes</a></td></tr>
 <tr class="separator:a1a7b69255874cb0e2ae4629858c93a02 inherit pro_attribs_classFIX8_1_1Logger"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -264,7 +268,7 @@ class FIX8::SingleLogger&lt; fn &gt;</h3>
 </dl>
 <p>Create a static instance of this template and set the template parameter to the desired logfile pathname </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00335">335</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00320">320</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a3cdccda5cb169dfefed83adb309cf908"></a>
 <div class="memitem">
@@ -291,7 +295,7 @@ template&lt;char * fn&gt; </div>
 
 <p>Ctor. </p>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00339">339</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00324">324</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
 </div>
 </div>
@@ -319,9 +323,9 @@ template&lt;char * fn&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00360">360</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00345">345</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l00937">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00975">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
 
 </div>
 </div>
@@ -357,11 +361,11 @@ template&lt;char * fn&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00355">355</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00340">340</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l00937">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00975">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
 
-<p>Referenced by <a class="el" href="persist_8cpp_source.html#l00163">FIX8::BDBPersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00355">FIX8::MemoryPersister::get()</a>, <a class="el" href="filepersist_8cpp_source.html#l00177">FIX8::FilePersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00143">FIX8::BDBPersister::get_last_seqnum()</a>, <a class="el" href="persist_8cpp_source.html#l00066">FIX8::BDBPersister::initialise()</a>, <a class="el" href="filepersist_8cpp_source.html#l00066">FIX8::FilePersister::initialise()</a>, <a class="el" href="persist_8cpp_source.html#l00290">FIX8::BDBPersister::operator()()</a>, <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>, <a class="el" href="filepersist_8cpp_source.html#l00240">FIX8::FilePersister::put()</a>, <a class="el" href="connection_8hpp_source.html#l00395">FIX8::Connection::set_recv_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00407">FIX8::Connection::set_send_buf_sz()</a>.</p>
+<p>Referenced by <a class="el" href="persist_8cpp_source.html#l00163">FIX8::BDBPersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00355">FIX8::MemoryPersister::get()</a>, <a class="el" href="filepersist_8cpp_source.html#l00177">FIX8::FilePersister::get()</a>, <a class="el" href="persist_8cpp_source.html#l00143">FIX8::BDBPersister::get_last_seqnum()</a>, <a class="el" href="persist_8cpp_source.html#l00066">FIX8::BDBPersister::initialise()</a>, <a class="el" href="filepersist_8cpp_source.html#l00066">FIX8::FilePersister::initialise()</a>, <a class="el" href="persist_8cpp_source.html#l00290">FIX8::BDBPersister::operator()()</a>, <a class="el" href="logger_8cpp_source.html#l00263">FIX8::PipeLogger::PipeLogger()</a>, <a class="el" href="session_8cpp_source.html#l00251">FIX8::Session::process()</a>, <a class="el" href="filepersist_8cpp_source.html#l00240">FIX8::FilePersister::put()</a>, <a class="el" href="connection_8hpp_source.html#l00431">FIX8::Connection::set_recv_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00443">FIX8::Connection::set_send_buf_sz()</a>.</p>
 
 </div>
 </div>
@@ -396,9 +400,9 @@ template&lt;char * fn&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00347">347</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00332">332</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l00830">FIX8::CopyString()</a>, and <a class="el" href="namespaceFIX8.html#a27994926f6936871625db686be6e5ea2">FIX8::max_global_filename_length()</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00868">FIX8::CopyString()</a>, and <a class="el" href="namespaceFIX8.html#a27994926f6936871625db686be6e5ea2">FIX8::max_global_filename_length()</a>.</p>
 
 </div>
 </div>
@@ -425,9 +429,9 @@ template&lt;char * fn&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00365">365</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
+<p>Definition at line <a class="el" href="logger_8hpp_source.html#l00350">350</a> of file <a class="el" href="logger_8hpp_source.html">logger.hpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l00937">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00975">FIX8::Singleton&lt; SingleLogger&lt; fn &gt; &gt;::instance()</a>.</p>
 
 </div>
 </div>
@@ -437,7 +441,7 @@ template&lt;char * fn&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu May 9 2013 21:35:29. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:36. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

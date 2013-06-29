@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.8.0</span>
+   &#160;<span id="projectnumber">version  0.9.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -195,9 +195,18 @@ Functions</h2></td></tr>
 <tr class="separator:a21bce0769809df7d55f39cd67e6b22a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab83fe73ed9b4e13c4f2c6084f6fbbe20"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim</a> (std::string &amp;source, const std::string &amp;ws=&quot; \t&quot;)</td></tr>
 <tr class="separator:ab83fe73ed9b4e13c4f2c6084f6fbbe20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a1bb6144e06782716374e53763d1bd5"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a9a1bb6144e06782716374e53763d1bd5"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a9a1bb6144e06782716374e53763d1bd5">FIX8::rotl</a> (const T val, const int bits)</td></tr>
-<tr class="separator:a9a1bb6144e06782716374e53763d1bd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad884c8d50eeee9a07543803c0885759e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ad884c8d50eeee9a07543803c0885759e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ad884c8d50eeee9a07543803c0885759e">FIX8::ignore_value</a> (T val)</td></tr>
+<tr class="separator:ad884c8d50eeee9a07543803c0885759e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81626d96ee74fc977e025199a55c30e3"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a81626d96ee74fc977e025199a55c30e3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a81626d96ee74fc977e025199a55c30e3">FIX8::ignore_value</a> (T *val)</td></tr>
+<tr class="separator:a81626d96ee74fc977e025199a55c30e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f3dee8d2298cc45516ad0ac2fb230d2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9f3dee8d2298cc45516ad0ac2fb230d2"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a9f3dee8d2298cc45516ad0ac2fb230d2">FIX8::rotl</a> (const T val, const int times)</td></tr>
+<tr class="separator:a9f3dee8d2298cc45516ad0ac2fb230d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37b7e80fbf4fce64df4e79fa93cf2b5f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a37b7e80fbf4fce64df4e79fa93cf2b5f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a37b7e80fbf4fce64df4e79fa93cf2b5f">FIX8::rotr</a> (const T val, const int times)</td></tr>
+<tr class="separator:a37b7e80fbf4fce64df4e79fa93cf2b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a895c89b5283d8fc9243301b21b32443f"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a895c89b5283d8fc9243301b21b32443f">FIX8::ROT13Hash</a> (const std::string &amp;str)</td></tr>
 <tr class="separator:a895c89b5283d8fc9243301b21b32443f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e32a07b35645c5e6ad8b5e690334f55"><td class="memTemplParams" colspan="2">template&lt;typename _CharT , typename _Traits , typename _Alloc &gt; </td></tr>
@@ -212,18 +221,15 @@ Functions</h2></td></tr>
 <tr class="memitem:af20f8a9bd055244cf11f235ea220b549"><td class="memTemplParams" colspan="2">template&lt;typename _CharT , typename _Traits , typename _Alloc &gt; </td></tr>
 <tr class="memitem:af20f8a9bd055244cf11f235ea220b549"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#af20f8a9bd055244cf11f235ea220b549">FIX8::operator^</a> (const std::basic_string&lt; _CharT, _Traits, _Alloc &gt; &amp;__lhs, const std::basic_string&lt; _CharT, _Traits, _Alloc &gt; &amp;__rhs)</td></tr>
 <tr class="separator:af20f8a9bd055244cf11f235ea220b549"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac96d648dbd809edefcc89b677c61a205"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ac96d648dbd809edefcc89b677c61a205"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ac96d648dbd809edefcc89b677c61a205">FIX8::GetValue</a> (const std::string &amp;source, T defval)</td></tr>
-<tr class="separator:ac96d648dbd809edefcc89b677c61a205"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a667716a0a146c6a524f970d4c22efb35"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a667716a0a146c6a524f970d4c22efb35"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a667716a0a146c6a524f970d4c22efb35">FIX8::GetValue</a> (const std::string &amp;source)</td></tr>
-<tr class="separator:a667716a0a146c6a524f970d4c22efb35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afef67868434c6efa9fea68f062b8eaba"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
-<tr class="memitem:afef67868434c6efa9fea68f062b8eaba"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#afef67868434c6efa9fea68f062b8eaba">FIX8::GetValue</a> (const std::string &amp;source)</td></tr>
-<tr class="separator:afef67868434c6efa9fea68f062b8eaba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72449a1b3ff04bb2b4dd38fb2d7e525f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a72449a1b3ff04bb2b4dd38fb2d7e525f"><td class="memTemplItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a72449a1b3ff04bb2b4dd38fb2d7e525f">FIX8::PutValue</a> (const T &amp;a, std::string &amp;target)</td></tr>
-<tr class="separator:a72449a1b3ff04bb2b4dd38fb2d7e525f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8ad3c03260db39cee9eaec3d16f9ff2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:af8ad3c03260db39cee9eaec3d16f9ff2"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#af8ad3c03260db39cee9eaec3d16f9ff2">FIX8::get_value</a> (const std::string &amp;source, T defval)</td></tr>
+<tr class="separator:af8ad3c03260db39cee9eaec3d16f9ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e4264f509d6f441ead2050844ebe17d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a6e4264f509d6f441ead2050844ebe17d"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a6e4264f509d6f441ead2050844ebe17d">FIX8::get_value</a> (const std::string &amp;source)</td></tr>
+<tr class="separator:a6e4264f509d6f441ead2050844ebe17d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad94198d7f46c02262539b901532cea7a"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:ad94198d7f46c02262539b901532cea7a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ad94198d7f46c02262539b901532cea7a">FIX8::get_value</a> (const std::string &amp;source)</td></tr>
+<tr class="separator:ad94198d7f46c02262539b901532cea7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8293aacd018aa6e9bfcb81c0786b6ec9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a8293aacd018aa6e9bfcb81c0786b6ec9"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a8293aacd018aa6e9bfcb81c0786b6ec9">FIX8::fast_atoi</a> (const char *str, const char term='\0')</td></tr>
 <tr class="separator:a8293aacd018aa6e9bfcb81c0786b6ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,6 +240,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aa61ff0a5f826f3c9369d7b27baf295e7"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aa61ff0a5f826f3c9369d7b27baf295e7">FIX8::modp_dtoa</a> (double value, char *str, int prec)</td></tr>
 <tr class="memdesc:aa61ff0a5f826f3c9369d7b27baf295e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert doublt to ascii.  <a href="#aa61ff0a5f826f3c9369d7b27baf295e7">More...</a><br/></td></tr>
 <tr class="separator:aa61ff0a5f826f3c9369d7b27baf295e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b82747859379a6711d72608db775233"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a8b82747859379a6711d72608db775233"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a8b82747859379a6711d72608db775233">FIX8::enum_str_get</a> (const unsigned els, const std::string *sset, const std::string &amp;what, const T def)</td></tr>
+<tr class="separator:a8b82747859379a6711d72608db775233"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4226474a0829e2de4e8025a1a2007f86"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a4226474a0829e2de4e8025a1a2007f86">FIX8::exist</a> (const std::string &amp;fname)</td></tr>
 <tr class="separator:a4226474a0829e2de4e8025a1a2007f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fd1dad50dfe91621755bf3029d0cb56"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a8fd1dad50dfe91621755bf3029d0cb56">FIX8::CopyString</a> (const std::string &amp;src, char *target, unsigned limit=0)</td></tr>
@@ -257,7 +266,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu May 9 2013 21:35:28. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:35. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.8.0</span>
+   &#160;<span id="projectnumber">version  0.9.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -235,7 +235,7 @@ $(document).ready(function(){initNavTree('myfix_8hpp_source.html','');});
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
 <div class="line"><a name="l00168"></a><span class="lineno"><a class="code" href="classMyMenu.html#a4101b8c2b9630547e9791f6d9b6b373b">  168</a></span>&#160;   std::istream&amp; <a class="code" href="classMyMenu.html#a4101b8c2b9630547e9791f6d9b6b373b">get_istr</a>() { <span class="keywordflow">return</span> <a class="code" href="classMyMenu.html#a055f1c3989a51d8c3ddbbb6419fba9ca">_istr</a>; }</div>
 <div class="line"><a name="l00169"></a><span class="lineno"><a class="code" href="classMyMenu.html#a80cd0d96336dcc982f76feee799c4b8f">  169</a></span>&#160;   std::ostream&amp; <a class="code" href="classMyMenu.html#a80cd0d96336dcc982f76feee799c4b8f">get_ostr</a>() { <span class="keywordflow">return</span> <a class="code" href="classMyMenu.html#a54cc0c6893d0882490a635b6953e7b14">_ostr</a>; }</div>
-<div class="line"><a name="l00170"></a><span class="lineno"><a class="code" href="classMyMenu.html#a37e125c2bc030fed0d595357c9a9590d">  170</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classMyMenu.html#a37e125c2bc030fed0d595357c9a9590d">process</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> ch) { <span class="keywordflow">return</span> (this-&gt;*<a class="code" href="classMyMenu.html#a16e8958dbfe5bc3e02853c5b879ca4c6">_handlers</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="structMyMenu_1_1MenuItem.html" title="Individual menu item.">MenuItem</a>(ch, std::string())))(); }</div>
+<div class="line"><a name="l00170"></a><span class="lineno"><a class="code" href="classMyMenu.html#a37e125c2bc030fed0d595357c9a9590d">  170</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classMyMenu.html#a37e125c2bc030fed0d595357c9a9590d">process</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> ch) { <span class="keywordflow">return</span> ch ? (this-&gt;*<a class="code" href="classMyMenu.html#a16e8958dbfe5bc3e02853c5b879ca4c6">_handlers</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="structMyMenu_1_1MenuItem.html" title="Individual menu item.">MenuItem</a>(ch, std::string())))() : <span class="keyword">true</span>; }</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classMyMenu.html#a1d3b0ca23e9ef99df200bc80e841f2ff">new_order_single</a>();</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classMyMenu.html#ad0bda1a05f1378cc4b8fe6e93fa065cf">new_order_single_50</a>();</div>
@@ -283,7 +283,7 @@ $(document).ready(function(){initNavTree('myfix_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu May 9 2013 21:35:19. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:14. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

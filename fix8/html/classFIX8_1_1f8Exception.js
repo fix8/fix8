@@ -2,6 +2,7 @@ var classFIX8_1_1f8Exception =
 [
     [ "f8Exception", "classFIX8_1_1f8Exception.html#a6c1a33ea6620050174343b80846bd5ba", null ],
     [ "f8Exception", "classFIX8_1_1f8Exception.html#a25d7fa713b9f719a0319cca5fa184ca1", null ],
+    [ "f8Exception", "classFIX8_1_1f8Exception.html#a7271d5cae6d7b0664de4b0f28b8d5721", null ],
     [ "f8Exception", "classFIX8_1_1f8Exception.html#a40eca7d7acdb0c4f254f6c0a547311fa", null ],
     [ "~f8Exception", "classFIX8_1_1f8Exception.html#aac3188a45269ebd8a06f418a2873efbc", null ],
     [ "force_logoff", "classFIX8_1_1f8Exception.html#a2b4ab08104073be15cb3af79328753e5", null ],

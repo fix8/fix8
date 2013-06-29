@@ -5,5 +5,7 @@ var searchData=
   ['workingindicator_5frealm_5fels',['WorkingIndicator_realm_els',['../namespaceFIX8_1_1TEX.html#a7dfd5cf770c82ab0fbd41462b3388295',1,'FIX8::TEX']]],
   ['workingindicator_5fyes',['WorkingIndicator_YES',['../namespaceFIX8_1_1TEX.html#a9892e1bad402574163f0aaafd90bb19e',1,'FIX8::TEX']]],
   ['write',['write',['../classFIX8_1_1FIXWriter.html#ae837724c0bca9b25c188cb352d16ba88',1,'FIX8::FIXWriter::write(Message *from)'],['../classFIX8_1_1FIXWriter.html#af1de83e854ad92abdf0bef2984750502',1,'FIX8::FIXWriter::write(Message &amp;from)'],['../classFIX8_1_1Connection.html#a2daf511c15cdfdb04bcade284e63292b',1,'FIX8::Connection::write(Message *from)'],['../classFIX8_1_1Connection.html#a4df0059db3ffccabd58c1b0ad367ff03',1,'FIX8::Connection::write(Message &amp;from)'],['../classFIX8_1_1BDBPersister.html#a3838b43dc8b78f569d8f23dc51102d68',1,'FIX8::BDBPersister::write()']]],
-  ['write_5fmsgs',['write_msgs',['../classMyMenu.html#aa702d8304303510898b9938e1dc15c07',1,'MyMenu']]]
+  ['write_5fmsgs',['write_msgs',['../classMyMenu.html#aa702d8304303510898b9938e1dc15c07',1,'MyMenu']]],
+  ['writer_5fexecute',['writer_execute',['../classFIX8_1_1Connection.html#acb5bd49224dd29cbd0f231773f72724c',1,'FIX8::Connection']]],
+  ['writer_5fpoll',['writer_poll',['../classFIX8_1_1Connection.html#aa7b01c3947687343007ec1362faeb54c',1,'FIX8::Connection']]]
 ];

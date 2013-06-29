@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.8.0</span>
+   &#160;<span id="projectnumber">version  0.9.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -109,6 +109,7 @@ $(document).ready(function(){initNavTree('classcheck__session.html','');});
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classcheck__session-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">check_session Class Reference</div>  </div>
@@ -221,6 +222,11 @@ Public Member Functions</h2></td></tr>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a4a705b4932cb9e919b50258e624f54e5"><td class="memItemLeft" align="right" valign="top">std::map&lt; unsigned, <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcheck__session.html#a4a705b4932cb9e919b50258e624f54e5">_resends</a></td></tr>
 <tr class="separator:a4a705b4932cb9e919b50258e624f54e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a0c8a267f83f9df1cc559479c7ed94735"><td class="memItemLeft" align="right" valign="top">Poco::Net::SocketAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcheck__session.html#a0c8a267f83f9df1cc559479c7ed94735">_addr</a></td></tr>
+<tr class="separator:a0c8a267f83f9df1cc559479c7ed94735"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -340,7 +346,9 @@ unsigned, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8
 
 <p>Ctor. </p>
 
-<p>Definition at line <a class="el" href="filePersister__test_8cpp_source.html#l00233">233</a> of file <a class="el" href="filePersister__test_8cpp_source.html">filePersister_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filePersister__test_8cpp_source.html#l00235">235</a> of file <a class="el" href="filePersister__test_8cpp_source.html">filePersister_test.cpp</a>.</p>
+
+<p>References <a class="el" href="f8types_8hpp_source.html#l00047">FIX8::pm_thread</a>.</p>
 
 </div>
 </div>
@@ -367,7 +375,7 @@ unsigned, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="filePersister__test_8cpp_source.html#l00240">240</a> of file <a class="el" href="filePersister__test_8cpp_source.html">filePersister_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filePersister__test_8cpp_source.html#l00242">242</a> of file <a class="el" href="filePersister__test_8cpp_source.html">filePersister_test.cpp</a>.</p>
 
 </div>
 </div>
@@ -407,11 +415,33 @@ unsigned, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8
 
 <p>Reimplemented from <a class="el" href="classFIX8_1_1Session.html#a1d262e8d9d794c158415ac20cd420400">FIX8::Session</a>.</p>
 
-<p>Definition at line <a class="el" href="filePersister__test_8cpp_source.html#l00249">249</a> of file <a class="el" href="filePersister__test_8cpp_source.html">filePersister_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filePersister__test_8cpp_source.html#l00251">251</a> of file <a class="el" href="filePersister__test_8cpp_source.html">filePersister_test.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a0c8a267f83f9df1cc559479c7ed94735"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Poco::Net::SocketAddress check_session::_addr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="filePersister__test_8cpp_source.html#l00230">230</a> of file <a class="el" href="filePersister__test_8cpp_source.html">filePersister_test.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a4a705b4932cb9e919b50258e624f54e5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -422,7 +452,9 @@ unsigned, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="filePersister__test_8cpp_source.html#l00255">255</a> of file <a class="el" href="filePersister__test_8cpp_source.html">filePersister_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="filePersister__test_8cpp_source.html#l00257">257</a> of file <a class="el" href="filePersister__test_8cpp_source.html">filePersister_test.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="filePersister__test_8cpp_source.html#l00264">TEST()</a>.</p>
 
 </div>
 </div>
@@ -432,7 +464,7 @@ unsigned, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu May 9 2013 21:35:28. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:35. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>
