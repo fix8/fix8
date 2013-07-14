@@ -67,7 +67,7 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: _thread(ref(*this)), _sock(sock), _session(session), _pmodel(pmodel) {}
+		: _thread(FIX8::ref(*this)), _sock(sock), _session(session), _pmodel(pmodel) {}
 
 	/// Dtor.
 	virtual ~AsyncSocket() {}
@@ -160,7 +160,7 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(ref(*this), &FIXReader::callback_processor), _bg_sz()
+		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(FIX8::ref(*this), &FIXReader::callback_processor), _bg_sz()
 	{
 		set_preamble_sz();
 	}
