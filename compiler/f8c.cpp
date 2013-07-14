@@ -191,7 +191,7 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << "f8c for "PACKAGE" version "VERSION << endl;
+			cout << "f8c for " PACKAGE " version " VERSION << endl;
 			cout << _csMap.find_ref(cs_copyright_short) << insert_year()
 				  << _csMap.find_ref(cs_copyright_short2) << endl;
 			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;

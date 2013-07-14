@@ -122,7 +122,7 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << "seqedit for "PACKAGE" version "VERSION << endl;
+			cout << "seqedit for " PACKAGE " version " VERSION << endl;
 			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case 'h': print_usage(); return 0;
