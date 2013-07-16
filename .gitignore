@@ -19,6 +19,7 @@ config.guess
 config.log
 config.status
 config.sub
+configure
 depcomp
 doc/Makefile
 doc/Makefile.in
@@ -68,6 +69,7 @@ doc/man/f8c.1.xml
 doc/man/seqedit.1.gz
 doc/man/seqedit.1.xml
 test/FIX44TEST2.xml
+test/FIX50SP2.xml.p1
 test/client
 test/global_filename_not_set.log.*
 test/gmon.out
@@ -84,9 +86,17 @@ test/vfix1_myfix_client.xml
 test/vfix_myfix_client.xml
 util/.deps/
 util/seqedit
+utests/.deps/
+utests/.libs/
+utests/fileLogger_test
+utests/filePersister_test
+utests/global_filename_not_set.log
+utests/global_filename_not_set.log.1
+utests/message_test
+utests/session_test
+utests/utest_classes.cpp
 utests/utest_classes.hpp
 utests/utest_router.hpp
 utests/utest_traits.cpp
 utests/utest_types.cpp
 utests/utest_types.hpp
-
