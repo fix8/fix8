@@ -38,6 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define _FIX8_TIMER_HPP_
 
 //-------------------------------------------------------------------------------------------------
+#include <iomanip>
 #include <queue>
 #include <sys/time.h>
 

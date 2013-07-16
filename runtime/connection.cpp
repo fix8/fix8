@@ -371,14 +371,17 @@ bool ClientConnection::connect()
 			_session.log("Connection successful");
 			return _connected = true;
 		}
-		catch (exception& e)	// also catches Poco::Net::NetException
+		catch (Poco::Exception& e)
+   		{
+			ostr.str("");
+			ostr << "exception: " << e.displayText();
+			_session.log(ostr.str());
+			hypersleep<h_milliseconds>(lparam._login_retry_interval);
+		}
+		catch (exception& e)
 		{
 			ostr.str("");
-			ostr << "exception: ";
-			if (dynamic_cast<Poco::Exception*>(&e))
-				ostr << (static_cast<Poco::Exception&>(e)).displayText();
-			else
-				ostr << e.what();
+			ostr << "exception: " << e.what();
 			_session.log(ostr.str());
 			hypersleep<h_milliseconds>(lparam._login_retry_interval);
 		}

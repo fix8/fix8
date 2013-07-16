@@ -124,6 +124,9 @@ public:
 class Router
 {
 public:
+	/// Dtor.
+    	virtual ~Router() {}
+
 	/*! Function operator; overloaded with each generated Fix message type.
 	  \return true on success */
 	virtual bool operator()(const Message *msg) const { return false; }

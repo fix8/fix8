@@ -942,6 +942,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		<< '{' << endl << "public:" << endl;
 	osu_hpp << spacer << ctxt._clname << "_Router() {}" << endl;
 	osu_hpp << spacer << "virtual ~" << ctxt._clname << "_Router() {}" << endl << endl;
+        osu_hpp << spacer << "virtual bool operator() (const class Message *msg) const { return false; }" << endl;
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 	{
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
