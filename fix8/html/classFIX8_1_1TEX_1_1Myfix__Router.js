@@ -2,6 +2,7 @@ var classFIX8_1_1TEX_1_1Myfix__Router =
 [
     [ "Myfix_Router", "classFIX8_1_1TEX_1_1Myfix__Router.html#ac45e99228730daefbd69f33f1851cba7", null ],
     [ "~Myfix_Router", "classFIX8_1_1TEX_1_1Myfix__Router.html#a2ec6e9528bed0ab66042ee24d3a2b023", null ],
+    [ "operator()", "classFIX8_1_1TEX_1_1Myfix__Router.html#a30e17190fef264551813a08dfa966e73", null ],
     [ "operator()", "classFIX8_1_1TEX_1_1Myfix__Router.html#a506e3ab1e4b3f6a9ae9ced6b424bfbde", null ],
     [ "operator()", "classFIX8_1_1TEX_1_1Myfix__Router.html#aaeabef13ad48b30145096b46d56f0d39", null ],
     [ "operator()", "classFIX8_1_1TEX_1_1Myfix__Router.html#a7d5e4814f0c8267decce3074b0e26a3c", null ],

@@ -18,7 +18,7 @@ var searchData=
   ['testreqid',['TestReqID',['../namespaceFIX8_1_1TEX.html#a58a4c8acd3c5a3aaf72fb59c51da5b76',1,'FIX8::TEX']]],
   ['texgw_5fbaseentry',['texgw_BaseEntry',['../namespaceFIX8_1_1TEX.html#a869776cc7cd9bb7c2e5c6212f45ad94a',1,'FIX8::TEX']]],
   ['texgw_5fbasemsgentry',['texgw_BaseMsgEntry',['../namespaceFIX8_1_1TEX.html#a8f25822704575ccb50fbfdcddaa32adc',1,'FIX8::TEX']]],
-  ['text',['text',['../namespaceFIX8.html#a66c37e12f4ea8b8913cdc5754dba633a',1,'FIX8::text()'],['../namespaceFIX8_1_1TEX.html#a9e2d9c6a983398c96d5b5c98c467594e',1,'FIX8::TEX::Text()']]],
+  ['text',['Text',['../namespaceFIX8_1_1TEX.html#a9e2d9c6a983398c96d5b5c98c467594e',1,'FIX8::TEX::Text()'],['../namespaceFIX8.html#a66c37e12f4ea8b8913cdc5754dba633a',1,'FIX8::text()']]],
   ['threadcodes',['ThreadCodes',['../classFIX8_1_1Logger.html#ac5f6d1d28f18cb2ebc868dfc1efdf40b',1,'FIX8::Logger']]],
   ['thresholdamount',['ThresholdAmount',['../namespaceFIX8_1_1TEX.html#ad85de4c76cbd2aa7d91bbc6e18b73822',1,'FIX8::TEX']]],
   ['tickdirection',['TickDirection',['../namespaceFIX8_1_1TEX.html#aa437ed3056e1dba016bdc9d4f5e72b4b',1,'FIX8::TEX']]],

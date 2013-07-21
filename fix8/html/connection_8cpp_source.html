@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.0</span>
+   &#160;<span id="projectnumber">version  0.9.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -481,27 +481,30 @@ $(document).ready(function(){initNavTree('connection_8cpp_source.html','');});
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;         _session.log(<span class="stringliteral">&quot;Connection successful&quot;</span>);</div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;         <span class="keywordflow">return</span> _connected = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;      }</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;      <span class="keywordflow">catch</span> (exception&amp; e) <span class="comment">// also catches Poco::Net::NetException</span></div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      {</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;      <span class="keywordflow">catch</span> (Poco::Exception&amp; e)</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;         {</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;         ostr.str(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;         ostr &lt;&lt; <span class="stringliteral">&quot;exception: &quot;</span>;</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;         <span class="keywordflow">if</span> (dynamic_cast&lt;Poco::Exception*&gt;(&amp;e))</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;            ostr &lt;&lt; (static_cast&lt;Poco::Exception&amp;&gt;(e)).displayText();</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;         <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;            ostr &lt;&lt; e.what();</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;         _session.log(ostr.str());</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;         <a class="code" href="namespaceFIX8.html#aa5ab254abf3ebbcdf79efa804f1c4266">hypersleep&lt;h_milliseconds&gt;</a>(lparam._login_retry_interval);</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;      }</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;   }</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;   _session.log(<span class="stringliteral">&quot;Connection failed&quot;</span>);</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;}</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;         ostr &lt;&lt; <span class="stringliteral">&quot;exception: &quot;</span> &lt;&lt; e.displayText();</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;         _session.log(ostr.str());</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;         <a class="code" href="namespaceFIX8.html#aa5ab254abf3ebbcdf79efa804f1c4266">hypersleep&lt;h_milliseconds&gt;</a>(lparam._login_retry_interval);</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;      }</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;      <span class="keywordflow">catch</span> (exception&amp; e)</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;      {</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;         ostr.str(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;         ostr &lt;&lt; <span class="stringliteral">&quot;exception: &quot;</span> &lt;&lt; e.what();</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;         _session.log(ostr.str());</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;         <a class="code" href="namespaceFIX8.html#aa5ab254abf3ebbcdf79efa804f1c4266">hypersleep&lt;h_milliseconds&gt;</a>(lparam._login_retry_interval);</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;      }</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;   }</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;   _session.log(<span class="stringliteral">&quot;Connection failed&quot;</span>);</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;}</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:13. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Jul 21 2013 16:05:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

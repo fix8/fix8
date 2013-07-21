@@ -1,5 +1,8 @@
 var NAVTREEINDEX74 =
 {
+"classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ada4e3c4526e5bfbcf668dd22a24b0d38":[2,0,0,0,63,10,0,1],
+"classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ada4e3c4526e5bfbcf668dd22a24b0d38":[2,0,0,0,63,10,0,3],
+"classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#af73fe284f12931356233d36a9bc330e5":[2,0,0,0,63,10,0,4],
 "classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#af73fe284f12931356233d36a9bc330e5":[2,0,0,0,63,10,0,5],
 "classFIX8_1_1TEX_1_1OrderMassActionRequest.html":[2,0,0,0,65],
 "classFIX8_1_1TEX_1_1OrderMassActionRequest.html#a1bdfc2276e44842d3777c49525bfa79f":[2,0,0,0,65,19],
@@ -246,8 +249,5 @@ var NAVTREEINDEX74 =
 "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#aa550d736f84cb8f625d28d8e4d47d196":[2,0,0,0,109,1,0,12],
 "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#ab51f11b25668f154469796d118120066":[2,0,0,0,109,1,0,10],
 "classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#abaecc95f5e5ca59183b48ecbb4d3a234":[2,0,0,0,109,1,0,11],
-"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html":[2,0,0,0,109,1,0,0],
-"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a09a121c1048a9e6457d0fd2511433df2":[2,0,0,0,109,1,0,0,0],
-"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a09a121c1048a9e6457d0fd2511433df2":[2,0,0,0,109,1,0,0,2],
-"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a7feda0de749b693e2c512a7b269e5c6c":[2,0,0,0,109,1,0,0,3]
+"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html":[2,0,0,0,109,1,0,0]
 };

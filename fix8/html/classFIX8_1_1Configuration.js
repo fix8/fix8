@@ -8,7 +8,7 @@ var classFIX8_1_1Configuration =
     [ "Configuration", "classFIX8_1_1Configuration.html#a16a94169784d5c3c98092ddc0edf552a", null ],
     [ "~Configuration", "classFIX8_1_1Configuration.html#a0bb1685581bfae684ec48ca7de704d80", null ],
     [ "create_logger", "classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4", null ],
-    [ "create_persister", "classFIX8_1_1Configuration.html#aca423ae19c16258163e746a588003f6f", null ],
+    [ "create_persister", "classFIX8_1_1Configuration.html#a8cf38307e62dc3ba5e871ba94b69aca3", null ],
     [ "find_element", "classFIX8_1_1Configuration.html#a018a8c76cb47a35fc25f4d5f2518581a", null ],
     [ "find_logger", "classFIX8_1_1Configuration.html#a3fef1d5ad6917771112e7f07e0df1def", null ],
     [ "find_persister", "classFIX8_1_1Configuration.html#a49e12b5f0089c74316463f53ab7cf9b9", null ],

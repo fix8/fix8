@@ -10,6 +10,7 @@ var classFIX8_1_1Persister =
     [ "get", "classFIX8_1_1Persister.html#a4c9b3a3362b5b3175909f5656af73c14", null ],
     [ "get_last_seqnum", "classFIX8_1_1Persister.html#aad5124d2eed21a7773da2961b5fe3896", null ],
     [ "operator=", "classFIX8_1_1Persister.html#ace92dbf12f8fb329b13e242697163b80", null ],
+    [ "purge", "classFIX8_1_1Persister.html#a3731adebc85f2c024cfa7c132ebbc3a7", null ],
     [ "put", "classFIX8_1_1Persister.html#a2318928465e09f9c0b8973258e8f3add", null ],
     [ "put", "classFIX8_1_1Persister.html#a90946f09b6189cfcfbc7457200ad71a3", null ],
     [ "stop", "classFIX8_1_1Persister.html#a7cd911c314b215c6dba3433fbed45a71", null ],

@@ -1,5 +1,7 @@
 var NAVTREEINDEX42 =
 {
+"classFIX8_1_1TEX_1_1Confirmation_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#af72fc89aade79324362dac0a7fdebd30":[2,0,0,0,21,5,0,2],
+"classFIX8_1_1TEX_1_1Confirmation_1_1NoLegs.html":[2,0,0,0,21,6],
 "classFIX8_1_1TEX_1_1Confirmation_1_1NoLegs.html#a05bce2173b4e0d2f5278fca39d39a0b7":[2,0,0,0,21,6,11],
 "classFIX8_1_1TEX_1_1Confirmation_1_1NoLegs.html#a2a83563e5ca535e2b7acfcf7689778f6":[2,0,0,0,21,6,9],
 "classFIX8_1_1TEX_1_1Confirmation_1_1NoLegs.html#a4cf0452da6655dac362294838bde0a15":[2,0,0,0,21,6,10],
@@ -247,7 +249,5 @@ var NAVTREEINDEX42 =
 "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents_1_1NoComplexEventDates.html#ae48076495776d27c6f5b548b786ab4c9":[2,0,0,0,52,0,0,12],
 "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html":[2,0,0,0,52,0,0,0],
 "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a1bc3eef6a254e030f68498c2ff546679":[2,0,0,0,52,0,0,0,6],
-"classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a1bc3eef6a254e030f68498c2ff546679":[2,0,0,0,52,0,0,0,7],
-"classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a2fa6df8bc8092343efd37e1fbdae7c7d":[2,0,0,0,52,0,0,0,1],
-"classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a2fa6df8bc8092343efd37e1fbdae7c7d":[2,0,0,0,52,0,0,0,3]
+"classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a1bc3eef6a254e030f68498c2ff546679":[2,0,0,0,52,0,0,0,7]
 };

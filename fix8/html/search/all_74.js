@@ -84,7 +84,7 @@ var searchData=
   ['texgw_5ftraits_2ecpp',['texgw_traits.cpp',['../texgw__traits_8cpp.html',1,'']]],
   ['texgw_5ftypes_2ecpp',['texgw_types.cpp',['../texgw__types_8cpp.html',1,'']]],
   ['texgw_5ftypes_2ehpp',['texgw_types.hpp',['../texgw__types_8hpp.html',1,'']]],
-  ['text',['text',['../namespaceFIX8.html#a66c37e12f4ea8b8913cdc5754dba633a',1,'FIX8::text()'],['../namespaceFIX8_1_1TEX.html#a9e2d9c6a983398c96d5b5c98c467594e',1,'FIX8::TEX::Text()']]],
+  ['text',['Text',['../namespaceFIX8_1_1TEX.html#a9e2d9c6a983398c96d5b5c98c467594e',1,'FIX8::TEX::Text()'],['../namespaceFIX8.html#a66c37e12f4ea8b8913cdc5754dba633a',1,'FIX8::text()']]],
   ['thousand',['thousand',['../classFIX8_1_1Tickval.html#ac1dc112410dfe3cfa507515fe4b0de2a',1,'FIX8::Tickval']]],
   ['thread',['thread',['../classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca5d02a867d0e1dacb801616b8c38c59e6',1,'FIX8::Logger']]],
   ['thread_2ehpp',['thread.hpp',['../thread_8hpp.html',1,'']]],

@@ -1,5 +1,8 @@
 var NAVTREEINDEX120 =
 {
+"namespacemembers_func_0x75.html":[1,1,1,18],
+"namespacemembers_func_0x76.html":[1,1,1,19],
+"namespacemembers_func_0x77.html":[1,1,1,20],
 "namespacemembers_func_0x79.html":[1,1,1,21],
 "namespacemembers_type.html":[1,1,3],
 "namespacemembers_type.html":[1,1,3,0],
@@ -246,8 +249,5 @@ var NAVTREEINDEX120 =
 "structFIX8_1_1InvalidBodyLength.html":[2,0,0,16],
 "structFIX8_1_1InvalidBodyLength.html#a2792021f0b04c87266a336a2833a83b1":[2,0,0,16,0],
 "structFIX8_1_1InvalidConfiguration.html":[2,0,0,29],
-"structFIX8_1_1InvalidConfiguration.html#a0ae87454fce4fc14bbf478bcc052592f":[2,0,0,29,0],
-"structFIX8_1_1InvalidDomainValue.html":[2,0,0,12],
-"structFIX8_1_1InvalidDomainValue.html#af152cea8bd04a1806b7790f8a4afe8c2":[2,0,0,12,0],
-"structFIX8_1_1InvalidField.html":[2,0,0,13]
+"structFIX8_1_1InvalidConfiguration.html#a0ae87454fce4fc14bbf478bcc052592f":[2,0,0,29,0]
 };

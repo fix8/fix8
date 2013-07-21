@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.0</span>
+   &#160;<span id="projectnumber">version  0.9.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -127,18 +127,19 @@ $(document).ready(function(){initNavTree('classFIX8_1_1FilePersister.html','');}
   <tr><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html#a7aa6aaff5f5415618dfd199607e52f71">get</a>(unsigned &amp;sender_seqnum, unsigned &amp;target_seqnum) const </td><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html#a2568823c3d50efca3bd4849680cb9fd4">get_last_seqnum</a>(unsigned &amp;to) const </td><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html#a7eb0a14862baf78381079885c09cf581">Index</a> typedef</td><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html#aab941d349258502bdf913ef2741108ed">initialise</a>(const f8String &amp;dbDir, const f8String &amp;dbFname)</td><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html#ac4f3690ee9c9481bff0af568b218f3d1">initialise</a>(const f8String &amp;dbDir, const f8String &amp;dbFname, bool purge=false)</td><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFIX8_1_1Persister.html#a42380ce0af51e15cc7492403d9637728a6671b0b2d47dc4e4d716424be8e95f89">MaxMsgLen</a> enum value</td><td class="entry"><a class="el" href="classFIX8_1_1Persister.html">FIX8::Persister</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Persister.html#a8d445e222b09652878db6268a4efc52e">Persister</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Persister.html">FIX8::Persister</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html#a19d93cba61fa4916ffea4ecbb8e4e940">put</a>(const unsigned seqnum, const f8String &amp;what)</td><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html#af34146c3f0f526a19a9021fcf0555769">put</a>(const unsigned sender_seqnum, const unsigned target_seqnum)</td><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1Persister.html#a7cd911c314b215c6dba3433fbed45a71">stop</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Persister.html">FIX8::Persister</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html#a97b9638102b672c04faa8fc4da0dba1c">~FilePersister</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFIX8_1_1Persister.html#a2db5fb9e4dc7cac7f26c5c6dda828e74">~Persister</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Persister.html">FIX8::Persister</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1Persister.html#a3731adebc85f2c024cfa7c132ebbc3a7">purge</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Persister.html">FIX8::Persister</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html#a19d93cba61fa4916ffea4ecbb8e4e940">put</a>(const unsigned seqnum, const f8String &amp;what)</td><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html#af34146c3f0f526a19a9021fcf0555769">put</a>(const unsigned sender_seqnum, const unsigned target_seqnum)</td><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Persister.html#a7cd911c314b215c6dba3433fbed45a71">stop</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Persister.html">FIX8::Persister</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html#a97b9638102b672c04faa8fc4da0dba1c">~FilePersister</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1FilePersister.html">FIX8::FilePersister</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFIX8_1_1Persister.html#a2db5fb9e4dc7cac7f26c5c6dda828e74">~Persister</a>()</td><td class="entry"><a class="el" href="classFIX8_1_1Persister.html">FIX8::Persister</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:43. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Jul 21 2013 16:05:47. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

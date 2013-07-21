@@ -3,7 +3,7 @@ var searchData=
   ['xml_2ecpp',['xml.cpp',['../xml_8cpp.html',1,'']]],
   ['xml_2ehpp',['xml.hpp',['../xml_8hpp.html',1,'']]],
   ['xmlattrs',['XmlAttrs',['../classXmlElement.html#ae85eace076ada6f09b8d40efc60d8d0a',1,'XmlElement']]],
-  ['xmldata',['XMLData',['../namespaceFIX8.html#a1b15c5c0039aaf7bf0b43d70427a9b24',1,'FIX8::XMLData()'],['../namespaceFIX8_1_1TEX.html#ac1314861062e9b0fc239ccde7a1a2c45',1,'FIX8::TEX::XmlData()']]],
+  ['xmldata',['XmlData',['../namespaceFIX8_1_1TEX.html#ac1314861062e9b0fc239ccde7a1a2c45',1,'FIX8::TEX::XmlData()'],['../namespaceFIX8.html#a1b15c5c0039aaf7bf0b43d70427a9b24',1,'FIX8::XMLData()']]],
   ['xmldatalen',['XmlDataLen',['../namespaceFIX8_1_1TEX.html#af0f922575ce9e91de72124cd791e9474',1,'FIX8::TEX']]],
   ['xmlelement',['XmlElement',['../classXmlElement.html',1,'XmlElement'],['../classXmlElement.html#a604980b35f37a37c635fd606ebe25682',1,'XmlElement::XmlElement(const XmlElement &amp;)'],['../classXmlElement.html#a36be7064eccbff1faf63f5f9c61750c8',1,'XmlElement::XmlElement(std::istream &amp;ifs, int subidx, XmlElement *parent=0, int txtline=0, int depth=0, const char *rootAttr=0)']]],
   ['xmlset',['XmlSet',['../classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf',1,'XmlElement']]],

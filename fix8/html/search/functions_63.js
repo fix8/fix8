@@ -287,7 +287,7 @@ var searchData=
   ['create_5flogger',['create_logger',['../classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4',1,'FIX8::Configuration']]],
   ['create_5fmsg',['create_msg',['../classFIX8_1_1Session.html#a03cf7d0242f543446b60617a4ed3b346',1,'FIX8::Session']]],
   ['create_5fmsgs',['create_msgs',['../classMyMenu.html#a942c0edc0e2fef9839279ada4d3c6925',1,'MyMenu']]],
-  ['create_5fpersister',['create_persister',['../classFIX8_1_1Configuration.html#aca423ae19c16258163e746a588003f6f',1,'FIX8::Configuration']]],
+  ['create_5fpersister',['create_persister',['../classFIX8_1_1Configuration.html#a8cf38307e62dc3ba5e871ba94b69aca3',1,'FIX8::Configuration']]],
   ['createmsgs',['CreateMsgs',['../classFIX8_1_1ConsoleMenu.html#aa793a1886b1691b5f636a0204f5a6a75',1,'FIX8::ConsoleMenu']]],
   ['cref',['cref',['../namespaceFIX8.html#a05fbec449fbab85b71d88bc1fe018c7b',1,'FIX8']]],
   ['crossordercancelreplacerequest',['CrossOrderCancelReplaceRequest',['../classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest.html#a506514fba0a5f836b12160005197baa4',1,'FIX8::TEX::CrossOrderCancelReplaceRequest::CrossOrderCancelReplaceRequest()'],['../classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest.html#a506514fba0a5f836b12160005197baa4',1,'FIX8::TEX::CrossOrderCancelReplaceRequest::CrossOrderCancelReplaceRequest()']]],

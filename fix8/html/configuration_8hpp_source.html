@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.0</span>
+   &#160;<span id="projectnumber">version  0.9.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -261,22 +261,22 @@ $(document).ready(function(){initNavTree('configuration_8hpp_source.html','');})
 <div class="line"><a name="l00244"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#aee6c01563c11821c57992e3719149206">  244</a></span>&#160;   <a class="code" href="classFIX8_1_1Field.html">target_comp_id</a> <a class="code" href="classFIX8_1_1Configuration.html#aee6c01563c11821c57992e3719149206">get_target_comp_id</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="keyword">      </span>{ <a class="code" href="classFIX8_1_1Field.html">target_comp_id</a> to; <span class="keywordflow">return</span> <a class="code" href="classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8">get_string_field</a>(from, <span class="stringliteral">&quot;target_comp_id&quot;</span>, to); }</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;   <a class="code" href="classFIX8_1_1Persister.html" title="Base (ABC) Persister class.">Persister</a> *<a class="code" href="classFIX8_1_1Configuration.html#aca423ae19c16258163e746a588003f6f">create_persister</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid=0) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;   <a class="code" href="classFIX8_1_1Logger.html" title="dthread delegated async logging class">Logger</a> *<a class="code" href="classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4">create_logger</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2">Logtype</a> ltype, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid=0) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;   <span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28">get_all_sessions</a>(std::vector&lt;const XmlElement *&gt;&amp; target, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804" title="Roles: acceptor, initiator or unknown.">Connection::Role</a> role=<a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">Connection::cn_unknown</a>) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;};</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;} <span class="comment">// FIX8</span></div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="preprocessor">#endif // _FIX8_CONFIGURATION_HPP_</span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;   <a class="code" href="classFIX8_1_1Persister.html" title="Base (ABC) Persister class.">Persister</a> *<a class="code" href="classFIX8_1_1Configuration.html#a8cf38307e62dc3ba5e871ba94b69aca3">create_persister</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid=0, <span class="keywordtype">bool</span> flag=<span class="keyword">false</span>) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;   <a class="code" href="classFIX8_1_1Logger.html" title="dthread delegated async logging class">Logger</a> *<a class="code" href="classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4">create_logger</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2">Logtype</a> ltype, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid=0) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;   <span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28">get_all_sessions</a>(std::vector&lt;const XmlElement *&gt;&amp; target, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804" title="Roles: acceptor, initiator or unknown.">Connection::Role</a> role=<a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">Connection::cn_unknown</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;};</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;} <span class="comment">// FIX8</span></div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="preprocessor">#endif // _FIX8_CONFIGURATION_HPP_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:13. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Jul 21 2013 16:05:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

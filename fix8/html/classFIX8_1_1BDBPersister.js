@@ -10,7 +10,7 @@ var classFIX8_1_1BDBPersister =
     [ "get", "classFIX8_1_1BDBPersister.html#a37d07ef29c6dae1afd1fa4a7ab4639b2", null ],
     [ "get", "classFIX8_1_1BDBPersister.html#a859b6003f36876475ee58c8ff8de8b3a", null ],
     [ "get_last_seqnum", "classFIX8_1_1BDBPersister.html#a9f45c457d5756001bd4c98338399943b", null ],
-    [ "initialise", "classFIX8_1_1BDBPersister.html#ac5d837dd642f0a5f5991b8b7d1804c26", null ],
+    [ "initialise", "classFIX8_1_1BDBPersister.html#ab40f068d3bc523d8439e3f738ff62d48", null ],
     [ "operator()", "classFIX8_1_1BDBPersister.html#a67fe2cd1a9b9afbdea3f9571aeab53d0", null ],
     [ "put", "classFIX8_1_1BDBPersister.html#af85a52247e9d744fcc82702484f964f3", null ],
     [ "put", "classFIX8_1_1BDBPersister.html#abb4f3a2f5b72bb0638e6896140c26743", null ],

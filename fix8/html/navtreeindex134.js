@@ -1,5 +1,8 @@
 var NAVTREEINDEX134 =
 {
+"texgw__types_8hpp.html#af267fa791c302cbc574a1f45f52da08b":[3,0,70,956],
+"texgw__types_8hpp.html#af26b52793aa804b3bf372b74ead07bb7":[3,0,70,2535],
+"texgw__types_8hpp.html#af27cd382dc592098d4f81dc0deed7c6b":[3,0,70,2777],
 "texgw__types_8hpp.html#af27d9ee70d5714cd1f1231d9e3c5417a":[3,0,70,2689],
 "texgw__types_8hpp.html#af27e1cff9b82c1874ff5355a114f74bc":[3,0,70,1803],
 "texgw__types_8hpp.html#af27eb457a800200b874873c15c539362":[3,0,70,1841],

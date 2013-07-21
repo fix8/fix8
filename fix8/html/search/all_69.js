@@ -36,7 +36,7 @@ var searchData=
   ['individualalloctype_5fsub_5fallocate',['IndividualAllocType_SUB_ALLOCATE',['../namespaceFIX8_1_1TEX.html#a5a7f8ba1f488d6f8716f68074b72d039',1,'FIX8::TEX']]],
   ['individualalloctype_5fthird_5fparty_5fallocation',['IndividualAllocType_THIRD_PARTY_ALLOCATION',['../namespaceFIX8_1_1TEX.html#aa57841287c8f891b03ee0e8c48f7e7a3',1,'FIX8::TEX']]],
   ['init',['init',['../structRandDev.html#a8afa9d5ccdd10bdfba6a499854fb2575',1,'RandDev::init()'],['../structRandDev.html#a8afa9d5ccdd10bdfba6a499854fb2575',1,'RandDev::init()']]],
-  ['initialise',['initialise',['../classFIX8_1_1BDBPersister.html#ac5d837dd642f0a5f5991b8b7d1804c26',1,'FIX8::BDBPersister::initialise()'],['../classFIX8_1_1FilePersister.html#aab941d349258502bdf913ef2741108ed',1,'FIX8::FilePersister::initialise()']]],
+  ['initialise',['initialise',['../classFIX8_1_1BDBPersister.html#ab40f068d3bc523d8439e3f738ff62d48',1,'FIX8::BDBPersister::initialise()'],['../classFIX8_1_1FilePersister.html#ac4f3690ee9c9481bff0af568b218f3d1',1,'FIX8::FilePersister::initialise()']]],
   ['initiator',['initiator',['../classinitiator__fixture.html#abb2e789ab0fa3dcc4a1d751c5e3ed50a',1,'initiator_fixture']]],
   ['initiator_5ffixture',['initiator_fixture',['../classinitiator__fixture.html',1,'initiator_fixture'],['../classinitiator__fixture.html#ae1f0d259da10848dae8b0348eeb651e2',1,'initiator_fixture::initiator_fixture()']]],
   ['initiator_5ftest',['initiator_test',['../classsessionTest.html#afeb8e4583cea546f8bd213a297626b55',1,'sessionTest']]],

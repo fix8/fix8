@@ -8,7 +8,7 @@ var classFIX8_1_1FilePersister =
     [ "get", "classFIX8_1_1FilePersister.html#a67c12ca837cd76bad1ffc897584ad76c", null ],
     [ "get", "classFIX8_1_1FilePersister.html#a7aa6aaff5f5415618dfd199607e52f71", null ],
     [ "get_last_seqnum", "classFIX8_1_1FilePersister.html#a2568823c3d50efca3bd4849680cb9fd4", null ],
-    [ "initialise", "classFIX8_1_1FilePersister.html#aab941d349258502bdf913ef2741108ed", null ],
+    [ "initialise", "classFIX8_1_1FilePersister.html#ac4f3690ee9c9481bff0af568b218f3d1", null ],
     [ "put", "classFIX8_1_1FilePersister.html#a19d93cba61fa4916ffea4ecbb8e4e940", null ],
     [ "put", "classFIX8_1_1FilePersister.html#af34146c3f0f526a19a9021fcf0555769", null ],
     [ "_dbFname", "classFIX8_1_1FilePersister.html#a9a8d870f248a5157824ec72015294565", null ],

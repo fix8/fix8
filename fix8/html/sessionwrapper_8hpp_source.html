@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.0</span>
+   &#160;<span id="projectnumber">version  0.9.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -202,7 +202,7 @@ $(document).ready(function(){initNavTree('sessionwrapper_8hpp_source.html','');}
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <a class="code" href="classFIX8_1_1ClientSession.html#ac8c223fcdcb00ab7afcd508ba4c2519f">_plog</a>(<a class="code" href="classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4">create_logger</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">_ses</a>, <a class="code" href="classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2a0596d4c2007a735c0f84ad824f3eb283">protocol_log</a>)),</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <a class="code" href="classFIX8_1_1ClientSession.html#aae09ef8be6f06867398531698c85f4ac">_sci</a>(<a class="code" href="classFIX8_1_1Configuration.html#a00d8d606b3ec33836fa64397fcca2b1c">get_sender_comp_id</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">_ses</a>)), <a class="code" href="classFIX8_1_1ClientSession.html#afdf6561acf5d3a1919c222b3dd5f7702">_tci</a>(<a class="code" href="classFIX8_1_1Configuration.html#aee6c01563c11821c57992e3719149206">get_target_comp_id</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">_ses</a>)),</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <a class="code" href="classFIX8_1_1ClientSession.html#a5c931f9000ccdab8ae3bd1fafdcdaabd">_id</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#a55de9525ba96315a53fcf111ae2ecb1c">_ctx</a>._beginStr, <a class="code" href="classFIX8_1_1ClientSession.html#aae09ef8be6f06867398531698c85f4ac">_sci</a>, <a class="code" href="classFIX8_1_1ClientSession.html#afdf6561acf5d3a1919c222b3dd5f7702">_tci</a>),</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      <a class="code" href="classFIX8_1_1ClientSession.html#ac165cca8eb7c3971c8fee7cfea594bb4">_persist</a>(<a class="code" href="classFIX8_1_1Configuration.html#aca423ae19c16258163e746a588003f6f">create_persister</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">_ses</a>)),</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      <a class="code" href="classFIX8_1_1ClientSession.html#ac165cca8eb7c3971c8fee7cfea594bb4">_persist</a>(<a class="code" href="classFIX8_1_1Configuration.html#a8cf38307e62dc3ba5e871ba94b69aca3">create_persister</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">_ses</a>, 0, <a class="code" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a>._reset_sequence_numbers)),</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      <a class="code" href="classFIX8_1_1ClientSession.html#a81849f9b332c38ee9f7aa6ff99decd47">_session</a>(new T(<a class="code" href="structFIX8_1_1SessionConfig.html#a55de9525ba96315a53fcf111ae2ecb1c">_ctx</a>, <a class="code" href="classFIX8_1_1ClientSession.html#a5c931f9000ccdab8ae3bd1fafdcdaabd">_id</a>, <a class="code" href="classFIX8_1_1ClientSession.html#ac165cca8eb7c3971c8fee7cfea594bb4">_persist</a>, <a class="code" href="classFIX8_1_1ClientSession.html#aa8a83a634dc6db3bcdb1eb6c94d6201f">_log</a>, <a class="code" href="classFIX8_1_1ClientSession.html#ac8c223fcdcb00ab7afcd508ba4c2519f">_plog</a>)),</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      <a class="code" href="classFIX8_1_1ClientSession.html#ac1dc4048b3d9cfe1c75f354fb4c1b3d4">_sock</a>(init_con_later ? 0 : new Poco::Net::StreamSocket),</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      <a class="code" href="classFIX8_1_1ClientSession.html#a47766e5b7be4b0b4aee80e2796cf2921">_addr</a>(<a class="code" href="classFIX8_1_1Configuration.html#ace764895c637f1ceb7d466505a6687df">get_address</a>(<a class="code" href="structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903">_ses</a>)),</div>
@@ -362,7 +362,7 @@ $(document).ready(function(){initNavTree('sessionwrapper_8hpp_source.html','');}
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:25. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Jul 21 2013 16:05:29. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

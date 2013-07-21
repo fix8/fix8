@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.0</span>
+   &#160;<span id="projectnumber">version  0.9.2</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -207,7 +207,7 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#aca423ae19c16258163e746a588003f6f">  100</a></span>&#160;<a class="code" href="classFIX8_1_1Persister.html" title="Base (ABC) Persister class.">Persister</a> *<a class="code" href="classFIX8_1_1Configuration.html#aca423ae19c16258163e746a588003f6f">Configuration::create_persister</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#a8cf38307e62dc3ba5e871ba94b69aca3">  100</a></span>&#160;<a class="code" href="classFIX8_1_1Persister.html" title="Base (ABC) Persister class.">Persister</a> *<a class="code" href="classFIX8_1_1Configuration.html#a8cf38307e62dc3ba5e871ba94b69aca3">Configuration::create_persister</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid, <span class="keywordtype">bool</span> flag)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword"></span>{</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;   <span class="keywordtype">string</span> name, type;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   <span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *which;</div>
@@ -229,7 +229,7 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor"></span>      <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;bdb&quot;</span>)</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      {</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;BDBPersister&gt;</a> result(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1BDBPersister.html" title="BerkeleyDB backed message persister.">BDBPersister</a>);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;         <span class="keywordflow">if</span> (result-&gt;<a class="code" href="classFIX8_1_1BDBPersister.html#ac5d837dd642f0a5f5991b8b7d1804c26">initialise</a>(dir, db))</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;         <span class="keywordflow">if</span> (result-&gt;<a class="code" href="classFIX8_1_1BDBPersister.html#ab40f068d3bc523d8439e3f738ff62d48">initialise</a>(dir, db, flag))</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            <span class="keywordflow">return</span> result.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      }</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      <span class="keywordflow">else</span></div>
@@ -237,7 +237,7 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor"></span>      <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;file&quot;</span>)</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      {</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;FilePersister&gt;</a> result(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1FilePersister.html">FilePersister</a>);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;         <span class="keywordflow">if</span> (result-&gt;<a class="code" href="classFIX8_1_1FilePersister.html#aab941d349258502bdf913ef2741108ed">initialise</a>(dir, db))</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;         <span class="keywordflow">if</span> (result-&gt;<a class="code" href="classFIX8_1_1FilePersister.html#ac4f3690ee9c9481bff0af568b218f3d1">initialise</a>(dir, db, flag))</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            <span class="keywordflow">return</span> result.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      }</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;   }</div>
@@ -338,7 +338,7 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sat Jun 29 2013 16:21:13. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Jul 21 2013 16:05:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>
