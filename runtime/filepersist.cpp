@@ -63,7 +63,7 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname)
+bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, bool purge)
 {
 	if (_opened)
 		return true;
@@ -75,9 +75,11 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname)
 	ostr << ".idx";
 	_dbIname = ostr.str();
 
-	if (!exist(_dbFname))
+	bool nof;
+
+	if ((nof = !exist(_dbFname)) || purge)
 	{
-		if ((_fod = open(_dbFname.c_str(), O_RDWR | O_CREAT, 0600)) < 0)
+		if ((_fod = open(_dbFname.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600)) < 0)
 		{
 			ostringstream eostr;
 			eostr << "Error creating database: " << _dbFname << " (" << strerror(errno) << ')';
@@ -93,6 +95,13 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname)
 		}
 
 		_wasCreated = true;
+
+		if (purge && !nof)
+		{
+			ostringstream eostr;
+			eostr << "Purged perist db";
+			GlobalLogger::log(eostr.str());
+		}
 	}
 	else
 	{

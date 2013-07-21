@@ -97,7 +97,7 @@ Poco::Net::SocketAddress Configuration::get_address(const XmlElement *from) cons
 }
 
 //-------------------------------------------------------------------------------------------------
-Persister *Configuration::create_persister(const XmlElement *from, const SessionID *sid) const
+Persister *Configuration::create_persister(const XmlElement *from, const SessionID *sid, bool flag) const
 {
 	string name, type;
 	const XmlElement *which;
@@ -119,7 +119,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 		if (type == "bdb")
 		{
 			scoped_ptr<BDBPersister> result(new BDBPersister);
-			if (result->initialise(dir, db))
+			if (result->initialise(dir, db, flag))
 				return result.release();
 		}
 		else
@@ -127,7 +127,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 		if (type == "file")
 		{
 			scoped_ptr<FilePersister> result(new FilePersister);
-			if (result->initialise(dir, db))
+			if (result->initialise(dir, db, flag))
 				return result.release();
 		}
 	}

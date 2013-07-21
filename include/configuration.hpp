@@ -247,8 +247,9 @@ public:
 	/*! Create a new persister object from a session entity.
 	  \param from xml entity to search
 	  \param sid optional session id to build name from
+	  \param flag additional flag for persister use
 	  \return new persister or 0 if unable to create */
-	Persister *create_persister(const XmlElement *from, const SessionID *sid=0) const;
+	Persister *create_persister(const XmlElement *from, const SessionID *sid=0, bool flag=false) const;
 
 	/*! Create a new logger object from a session entity.
 	  \param from xml entity to search

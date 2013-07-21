@@ -10,6 +10,7 @@
 				ip="127.0.0.1" port="11001"
 				sender_comp_id="TEX_DLD"
 				tcp_nodelay="true"
+				reset_sequence_numbers="false"
 				process_mode="threaded"
 				persist="file0" />
 
