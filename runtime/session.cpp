@@ -157,8 +157,11 @@ Session::~Session()
 	if (_connection->get_role() == Connection::cn_acceptor)
 	{
 		delete _plogger;
+		_plogger = 0;
 		delete _logger;
+		_logger = 0;
 		delete _persist;
+		_persist = 0;
 	}
 }
 
@@ -384,6 +387,7 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 {
 	_state = States::st_logon_received;
+	const bool reset_given(msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get());
 
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
@@ -413,13 +417,13 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		if (!_plogger)
 			_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id);
 		if (!_persist)
-			_persist = _sf->create_persister(_sf->_ses, &id);
+			_persist = _sf->create_persister(_sf->_ses, &id, reset_given);
 
 		ostringstream ostr;
 		ostr << "Connection from " << _connection->get_peer_socket_address().toString();
 		log(ostr.str());
 
-		if (_ctx.version() >= 4100 && msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get())
+		if (reset_given) // ignore version restrictions on this behaviour
 		{
 			log("Resetting sequence numbers");
 			_next_send_seq = _next_receive_seq = 1;
@@ -821,7 +825,7 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 			if (_persist)
 			{
 				if (!msg->is_admin())
-					_persist->put(_next_send_seq, output);
+					_persist->put(_next_send_seq, ptr);
 				_persist->put(_next_send_seq + 1, _next_receive_seq);
 				//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
 			}

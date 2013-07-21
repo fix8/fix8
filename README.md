@@ -18,7 +18,7 @@ and framework; and a set of complete client/server test applications.
 
 * Fix8 supports standard `FIX4.X` to `FIX5.X` and `FIXT1.X`. If you have a custom FIX variant Fix8 can use that too. New FIX versions will be supported.
 
-* Fix8 offers run-time custom fields, message recycling and a meta-data aware test harness. Incorporates lock free queues, atomics and many other modern techniques.
+* Fix8 offers message recycling and a meta-data aware test harness. Incorporates lock free queues, atomics and many other modern techniques.
 
 * Fix8 contains a built-in unit test framework that's being continually revised and extended. Fix8 also has a metadata driven test harness that can be scripted to support captured or canned data playback.
 

@@ -99,7 +99,7 @@ public:
 		_plog(create_logger(_ses, protocol_log)),
 		_sci(get_sender_comp_id(_ses)), _tci(get_target_comp_id(_ses)),
 		_id(_ctx._beginStr, _sci, _tci),
-		_persist(create_persister(_ses)),
+		_persist(create_persister(_ses, 0, _loginParameters._reset_sequence_numbers)),
 		_session(new T(_ctx, _id, _persist, _log, _plog)),
 		_sock(init_con_later ? 0 : new Poco::Net::StreamSocket),
 		_addr(get_address(_ses)),

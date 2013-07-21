@@ -108,6 +108,10 @@ public:
 	    \return the nearest sequence number or 0 if not found */
 	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const = 0;
 
+	/*! Remove all records (excluding the sequence number record 0) from the persist database
+	    \return true on success */
+	virtual bool purge() { return true; }
+
 	/// Stop the persister thread.
 	virtual void stop() {}
 };
@@ -195,8 +199,9 @@ public:
 	/*! Open existing database or create new database.
 	    \param dbDir database environment directory
 	    \param dbFname database name
+	    \param purge if true, empty database if found
 	    \return true on success */
-	virtual bool initialise(const f8String& dbDir, const f8String& dbFname);
+	virtual bool initialise(const f8String& dbDir, const f8String& dbFname, bool purge=false);
 
 	/*! Find the nearest highest sequence number from the sequence to last provided.
 	    \param requested sequence number to start
@@ -364,8 +369,9 @@ public:
 	/*! Open existing database or create new database.
 	    \param dbDir database directory
 	    \param dbFname database name
+	    \param purge if true, empty database if found
 	    \return true on success */
-	virtual bool initialise(const f8String& dbDir, const f8String& dbFname);
+	virtual bool initialise(const f8String& dbDir, const f8String& dbFname, bool purge=false);
 
 	/*! Persist a message.
 	    \param seqnum sequence number of message
@@ -405,6 +411,7 @@ public:
 	    \return true on success */
 	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
 
+	/// Stop the persister thread.
 	/*! Find the nearest highest sequence number from the sequence to last provided.
 	    \param requested sequence number to start
 	    \param last highest sequence
