@@ -147,7 +147,7 @@ public:
     void kickHBService() {heartbeat_service();}
 };
 
-/// a session fixture to create and destory test session
+/// a session fixture to create and destroy test session
 class session_fixture
 {
 public:

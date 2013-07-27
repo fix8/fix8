@@ -309,7 +309,13 @@ int FIXWriter::operator()()
 			result = -1;
 			break;
 		}
-		catch (exception& e)	// also catches Poco::Net::NetException
+		catch (Poco::Net::NetException& e)
+		{
+			_session.log(e.what());
+			++invalid;
+			break;
+		}
+		catch (exception& e)
 		{
 			_session.log(e.what());
 			++invalid;

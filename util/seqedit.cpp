@@ -174,6 +174,7 @@ int main(int argc, char **argv)
 
 	if (!rawdump && !quiet)
 	{
+		cout << endl;
 		cout << "Next      send         receive" << endl;
 		cout << "==============================" << endl;
 		cout << "Current   " << left << setw(10) << iprec._prec._offset << right << setw(10) << iprec._prec._size << endl;
@@ -203,6 +204,7 @@ int main(int argc, char **argv)
 			if (!quiet)
 				cout << "New       " << left << setw(10) << iprec._prec._offset << right << setw(10) << iprec._prec._size << endl;
 		}
+		cout << endl;
 	}
 	else for(;;)
 	{
@@ -263,6 +265,7 @@ void print_usage()
 	um.add("@seqedit -d client.DLD_TEX.TEX_DLD");
 	um.add("@seqedit -D client.DLD_TEX.TEX_DLD");
 	um.add("@seqedit -id client.DLD_TEX.TEX_DLD");
+	um.add("@seqedit -S 2005 server.TEX_DLD.DLD_TEX");
 	um.print(cerr);
 }
 

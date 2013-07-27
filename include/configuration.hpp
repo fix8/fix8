@@ -119,7 +119,7 @@ public:
 		: _xmlfile(xmlfile), _root(XmlElement::Factory(_xmlfile)) { if (do_process) process(); }
 
 	/// Dtor.
-	virtual ~Configuration() { delete _root; }
+	virtual ~Configuration() {}
 
 	/*! Process the config file.
 	  \return the number of sessions processed (found) */

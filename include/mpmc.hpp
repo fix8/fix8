@@ -51,7 +51,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // when we move to c++11 we will use proper template type aliases
 #define f8_atomic tbb::atomic
 #define f8_scoped_lock tbb::mutex::scoped_lock
+#define f8_scoped_spin_lock tbb::spin_mutex::scoped_lock
 #define f8_mutex tbb::mutex
+#define f8_spin_lock tbb::spin_mutex
 #define f8_concurrent_queue tbb::concurrent_bounded_queue
 
 //-------------------------------------------------------------------------------------------------

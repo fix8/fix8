@@ -74,47 +74,56 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname, bo
    // Use concurrent db and default shared memory pool
    _dbEnv.open(_dbDir.c_str(), DB_CREATE | DB_INIT_MPOOL | DB_INIT_CDB | DB_THREAD, 0);
 
-   bool notFound(false);
-   try
-   {
-      _db->set_bt_compare(bt_compare_fcn);
-      _db->open(0, _dbFname.c_str(), 0, DB_BTREE, DB_THREAD, 0); // try and open existing if possible
-		unsigned last;
-      if (get_last_seqnum(last))
+	bool notFound(false);
+
+	if (!purge)
+	{
+		try
 		{
-			ostringstream ostr;
-         ostr << _dbFname << ": Last sequence is " << last;
-			GlobalLogger::log(ostr.str());
-		}
-   }
-   catch(DbException& dbe)
-   {
-      switch (dbe.get_errno())
-      {
-      case ENOENT:
-      case EACCES:
-         notFound = true;
-         break;
-      default:
+			_db->set_bt_compare(bt_compare_fcn);
+			_db->open(0, _dbFname.c_str(), 0, DB_BTREE, DB_THREAD, 0); // try and open existing if possible
+			unsigned last;
+			if (get_last_seqnum(last))
 			{
 				ostringstream ostr;
-				ostr << "Error opening existing database: " << dbe.what() << " (" << dbe.get_errno() << ')';
+				ostr << _dbFname << ": Last sequence is " << last;
 				GlobalLogger::log(ostr.str());
 			}
-         return false;
-      }
-   }
+		}
+		catch(DbException& dbe)
+		{
+			switch (dbe.get_errno())
+			{
+			case ENOENT:
+			case EACCES:
+				notFound = true;
+				break;
+			default:
+				{
+					ostringstream ostr;
+					ostr << "Error: opening existing database: " << dbe.what() << " (" << dbe.get_errno() << ')';
+					GlobalLogger::log(ostr.str());
+				}
+				return false;
+			}
+		}
+	}
 
-   if (notFound)  // create a new one
+   if (notFound || purge)  // create a new one
    {
       try
       {
          _db->open(0, _dbFname.c_str(), 0, DB_BTREE, DB_CREATE | DB_THREAD, 0);
+			if (purge)
+			{
+				_db->truncate(0, 0, 0);
+				GlobalLogger::log("Purged perist db");
+			}
       }
       catch(DbException& dbe)
       {
 			ostringstream ostr;
-         ostr << "Error creating new database: " << dbe.what() << " (" << dbe.get_errno() << ')';
+         ostr << "Error: creating new database: " << dbe.what() << " (" << dbe.get_errno() << ')';
 			GlobalLogger::log(ostr.str());
          return false;
       }
@@ -122,7 +131,7 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname, bo
       _wasCreated = true;
    }
 
-	_thread.Start();
+	_thread.start();
    return _opened = true;
 
 }
@@ -313,7 +322,7 @@ int BDBPersister::operator()()
 			continue;
 		}
 #else
-		_msg_queue.pop(msg_ptr); // will block
+		_persist_queue.pop(msg_ptr); // will block
 		if (msg_ptr->empty())  // means exit
 			break;
 #endif
@@ -335,7 +344,7 @@ int BDBPersister::operator()()
 				++persisted;
 		}
 #if (MPMC_SYSTEM == MPMC_FF)
-		_msg_queue.release(msg_ptr);
+		_persist_queue.release(msg_ptr);
 #endif
 	}
 
@@ -390,7 +399,7 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 	else
 	{
 		ostringstream ostr;
-		ostr << "record not found";
+		ostr << "record not found (" << startSeqNum << ')';
 		GlobalLogger::log(ostr.str());
 	}
 

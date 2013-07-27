@@ -205,35 +205,54 @@ public:
 	void lock() { pthread_mutex_lock(&_pmutex); }
 	bool try_lock() { return pthread_mutex_trylock(&_pmutex) == 0; }
 	void unlock() { pthread_mutex_unlock(&_pmutex); }
+};
 
-	friend class f8_scoped_lock;
+//----------------------------------------------------------------------------------------
+/// generic pthread_spin_lock wrapper
+class f8_spin_lock
+{
+	pthread_spinlock_t _psl;
+
+public:
+	f8_spin_lock()
+	{
+		if (pthread_spin_init(&_psl, PTHREAD_PROCESS_PRIVATE))
+			throw f8Exception("pthread_spin_init failed");
+	}
+
+	~f8_spin_lock() { pthread_spin_destroy(&_psl); };
+
+	void lock() { pthread_spin_lock(&_psl); }
+	bool try_lock() { return pthread_spin_trylock(&_psl) == 0; }
+	void unlock() { pthread_spin_unlock(&_psl); }
 };
 
 //----------------------------------------------------------------------------------------
 /// Your bog standard RAII scoped lock
-class f8_scoped_lock
+template<typename T>
+class f8_scoped_lock_impl
 {
-	f8_mutex *_local_mutex;
+	T *_local_mutex;
 
-	f8_scoped_lock(const f8_scoped_lock&);
-	f8_scoped_lock& operator=(const f8_scoped_lock&);
+	f8_scoped_lock_impl(const f8_scoped_lock_impl&);
+	f8_scoped_lock_impl& operator=(const f8_scoped_lock_impl&);
 
 public:
-	f8_scoped_lock() : _local_mutex() {}
-	f8_scoped_lock(f8_mutex& mutex) { acquire(mutex); }
-	~f8_scoped_lock()
+	f8_scoped_lock_impl() : _local_mutex() {}
+	f8_scoped_lock_impl(T& mutex) { acquire(mutex); }
+	~f8_scoped_lock_impl()
 	{
 		if (_local_mutex)
 			release();
 	}
 
-	void acquire(f8_mutex& mutex)
+	void acquire(T& mutex)
 	{
 		mutex.lock();
 		_local_mutex = &mutex;
 	}
 
-	bool try_acquire(f8_mutex& mutex)
+	bool try_acquire(T& mutex)
 	{
 		bool result(mutex.try_lock());
 		if(result)
@@ -247,8 +266,11 @@ public:
 		_local_mutex = 0;
 	}
 
-	friend class f8_mutex;
+	friend T;
 };
+
+typedef f8_scoped_lock_impl<f8_mutex> f8_scoped_lock;
+typedef f8_scoped_lock_impl<f8_spin_lock> f8_scoped_spin_lock;
 
 //----------------------------------------------------------------------------------------
 

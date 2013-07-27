@@ -83,7 +83,7 @@ int Logger::operator()()
 #if (MPMC_SYSTEM == MPMC_FF)
 		if (!_msg_queue.try_pop(msg_ptr))
 		{
-			hypersleep<h_milliseconds>(1);
+			hypersleep<h_microseconds>(200);
 			continue;
 		}
 #else

@@ -16,6 +16,6 @@
 # define coro_yield CORO_YIELD
 #endif
 
-#ifndef fork
-# define fork CORO_FORK
+#ifndef coro_fork
+# define coro_fork CORO_FORK
 #endif

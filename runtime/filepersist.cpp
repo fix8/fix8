@@ -82,14 +82,14 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 		if ((_fod = open(_dbFname.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600)) < 0)
 		{
 			ostringstream eostr;
-			eostr << "Error creating database: " << _dbFname << " (" << strerror(errno) << ')';
+			eostr << "Error: creating database: " << _dbFname << " (" << strerror(errno) << ')';
 			GlobalLogger::log(eostr.str());
 			return false;
 		}
 		if ((_iod = open(_dbIname.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600)) < 0)
 		{
 			ostringstream eostr;
-			eostr << "Error creating database index: " << _dbIname << " (" << strerror(errno) << ')';
+			eostr << "Error: creating database index: " << _dbIname << " (" << strerror(errno) << ')';
 			GlobalLogger::log(eostr.str());
 			return false;
 		}
@@ -97,25 +97,21 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 		_wasCreated = true;
 
 		if (purge && !nof)
-		{
-			ostringstream eostr;
-			eostr << "Purged perist db";
-			GlobalLogger::log(eostr.str());
-		}
+			GlobalLogger::log("Purged perist db");
 	}
 	else
 	{
 		if ((_fod = open(_dbFname.c_str(), O_RDWR)) < 0)
 		{
 			ostringstream eostr;
-			eostr << "Error opening existing database: " << _dbFname << " (" << strerror(errno) << ')';
+			eostr << "Error: opening existing database: " << _dbFname << " (" << strerror(errno) << ')';
 			GlobalLogger::log(eostr.str());
 			return false;
 		}
 		if ((_iod = open(_dbIname.c_str(), O_RDWR)) < 0)
 		{
 			ostringstream eostr;
-			eostr << "Error opening existing database index: " << _dbIname << " (" << strerror(errno) << ')';
+			eostr << "Error: opening existing database index: " << _dbIname << " (" << strerror(errno) << ')';
 			GlobalLogger::log(eostr.str());
 			return false;
 		}
@@ -127,7 +123,7 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 			if (blrd < 0)
 			{
 				ostringstream eostr;
-				eostr << "Error reading existing database index: " << _dbIname << " (" << strerror(errno) << ')';
+				eostr << "Error: reading existing database index: " << _dbIname << " (" << strerror(errno) << ')';
 				GlobalLogger::log(eostr.str());
 				return false;
 			}
@@ -144,9 +140,8 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 			if (!_index.insert(Index::value_type(iprec._seq, iprec._prec)).second)
 			{
 				ostringstream eostr;
-				eostr << "Error inserting index record into database index: " << _dbIname << " (idx=" << iprec._seq << ')';
+				eostr << "Error: inserting index record into database index: " << _dbIname << " (" << iprec << "). Ignoring.";
 				GlobalLogger::log(eostr.str());
-				return false;
 			}
 		}
 
@@ -212,7 +207,7 @@ unsigned FilePersister::get(const unsigned from, const unsigned to, Session& ses
 			if (lseek(_fod, itr->second._offset, SEEK_SET) < 0)
 			{
 				ostringstream eostr;
-				eostr << "Error could not seek to correct index location for get: " << _dbFname;
+				eostr << "Error: could not seek to correct index location for get: " << _dbFname;
 				GlobalLogger::log(eostr.str());
 				break;
 			}
@@ -220,7 +215,7 @@ unsigned FilePersister::get(const unsigned from, const unsigned to, Session& ses
 			if (read (_fod, buff, itr->second._size) != itr->second._size)
 			{
 				ostringstream eostr;
-				eostr << "Error could not read message record for seqnum " << itr->first << " from: " << _dbFname;
+				eostr << "Error: could not read message record for seqnum " << itr->first << " from: " << _dbFname;
 				GlobalLogger::log(eostr.str());
 				break;
 			}
@@ -250,21 +245,21 @@ bool FilePersister::put(const unsigned sender_seqnum, const unsigned target_seqn
 {
 	if (!_opened)
 		return false;
-	IPrec iirec(0, sender_seqnum, target_seqnum);
+	IPrec iprec(0, sender_seqnum, target_seqnum);
 	Index::iterator itr(_index.find(0));
 	if (itr == _index.end())
-		_index.insert(Index::value_type(0, iirec._prec));
+		_index.insert(Index::value_type(0, iprec._prec));
 	else
-		itr->second = iirec._prec;
+		itr->second = iprec._prec;
 
 	if (lseek(_iod, 0, SEEK_SET) < 0)
 	{
 		ostringstream eostr;
-		eostr << "Error could not seek to 0 for seqnum persitence: " << _dbIname;
+		eostr << "Error: could not seek to 0 for seqnum persitence: " << _dbIname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
-	return write (_iod, static_cast<void *>(&iirec), sizeof(iirec)) == sizeof(iirec);
+	return write (_iod, static_cast<void *>(&iprec), sizeof(IPrec)) == sizeof(IPrec);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -276,14 +271,14 @@ bool FilePersister::put(const unsigned seqnum, const f8String& what)
 	if (_index.find(seqnum) != _index.end())
 	{
 		ostringstream eostr;
-		eostr << "Error seqnum " << seqnum << " already persisted in: " << _dbIname;
+		eostr << "Error: seqnum " << seqnum << " already persisted in: " << _dbIname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
 	if (lseek(_iod, 0, SEEK_END) < 0)
 	{
 		ostringstream eostr;
-		eostr << "Error could not seek to index end for seqnum persitence: " << _dbIname;
+		eostr << "Error: could not seek to index end for seqnum persitence: " << _dbIname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
@@ -291,7 +286,7 @@ bool FilePersister::put(const unsigned seqnum, const f8String& what)
 	if ((offset = lseek(_fod, 0, SEEK_END)) < 0)
 	{
 		ostringstream eostr;
-		eostr << "Error could not seek to end for seqnum persitence: " << _dbFname;
+		eostr << "Error: could not seek to end for seqnum persitence: " << _dbFname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
@@ -299,14 +294,14 @@ bool FilePersister::put(const unsigned seqnum, const f8String& what)
 	if (write (_iod, static_cast<void *>(&iprec), sizeof(IPrec)) != sizeof(IPrec))
 	{
 		ostringstream eostr;
-		eostr << "Error could not write index record for seqnum " << seqnum << " to: " << _dbIname;
+		eostr << "Error: could not write index record for seqnum " << seqnum << " to: " << _dbIname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
 	if (write (_fod, what.data(), what.size()) != static_cast<ssize_t>(what.size()))
 	{
 		ostringstream eostr;
-		eostr << "Error could not write record for seqnum " << seqnum << " to: " << _dbFname;
+		eostr << "Error: could not write record for seqnum " << seqnum << " to: " << _dbFname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
@@ -323,7 +318,7 @@ bool FilePersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) const
 	if (_index.empty())
 	{
 		ostringstream eostr;
-		eostr << "Error index is empty: " << _dbIname;
+		eostr << "Warning: index is empty: " << _dbIname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
@@ -332,7 +327,7 @@ bool FilePersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) const
 	if (itr == _index.end())
 	{
 		ostringstream eostr;
-		eostr << "Error index does not contain control record: " << _dbIname;
+		eostr << "Error: index does not contain control record: " << _dbIname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
@@ -351,7 +346,7 @@ bool FilePersister::get(const unsigned seqnum, f8String& to) const
 	if (itr == _index.end())
 	{
 		ostringstream eostr;
-		eostr << "Error index does not contain seqnum: " << seqnum << " in: " << _dbIname;
+		eostr << "Error: index does not contain seqnum: " << seqnum << " in: " << _dbIname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
@@ -359,7 +354,7 @@ bool FilePersister::get(const unsigned seqnum, f8String& to) const
 	if (lseek(_fod, itr->second._offset, SEEK_SET) < 0)
 	{
 		ostringstream eostr;
-		eostr << "Error could not seek to correct index location for get: " << _dbFname;
+		eostr << "Error: could not seek to correct index location for get: " << _dbFname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}
@@ -368,7 +363,7 @@ bool FilePersister::get(const unsigned seqnum, f8String& to) const
 	if (read (_fod, buff, itr->second._size) != itr->second._size)
 	{
 		ostringstream eostr;
-		eostr << "Error could not read message record for seqnum " << seqnum << " from: " << _dbFname;
+		eostr << "Error: could not read message record for seqnum " << seqnum << " from: " << _dbFname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}

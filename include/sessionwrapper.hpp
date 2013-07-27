@@ -187,7 +187,11 @@ public:
 				//std::cout << "ReliableClientSession: f8exception" << std::endl;
 				this->_session->log(e.what());
 			}
-			catch (std::exception& e)	// also catches Poco::Net::NetException
+			catch (Poco::Net::NetException& e)
+			{
+				this->_session->log(e.what());
+			}
+			catch (std::exception& e)
 			{
 				//cout << "process:: std::exception" << endl;
 				this->_session->log(e.what());

@@ -145,23 +145,16 @@ void Session::atomic_init(States::SessionStates st)
 //-------------------------------------------------------------------------------------------------
 Session::~Session()
 {
+	log("Session terminating");
 	if (_logger)
-	{
-		log("Session terminating");
-//#if (MPMC_SYSTEM == MPMC_FF)
 		_logger->stop();
-//#endif
-		hypersleep<h_seconds>(1);
-	}
+	hypersleep<h_seconds>(1); // needed for service threads to exit gracefully
 
 	if (_connection->get_role() == Connection::cn_acceptor)
 	{
-		delete _plogger;
-		_plogger = 0;
-		delete _logger;
-		_logger = 0;
-		delete _persist;
-		_persist = 0;
+		//{ f8_scoped_spin_lock guard(_log_spl); delete _logger; _logger = 0; }
+		//{ f8_scoped_spin_lock guard(_plog_spl); delete _plogger; _plogger = 0; }
+		{ f8_scoped_spin_lock guard(_per_spl); delete _persist; _persist = 0; }
 	}
 }
 
@@ -171,8 +164,10 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 {
 	if (_logger)
 		_logger->purge_thread_codes();
+
 	if (_plogger)
 		_plogger->purge_thread_codes();
+
 	_control.clear(shutdown);
 	log("Starting session");
 	_connection = connection; // takes owership
@@ -230,7 +225,10 @@ void Session::stop()
 	{
 		_timer.schedule(_hb_processor, 0);
 		if (_persist)
+		{
+			f8_scoped_spin_lock guard(_per_spl);
 			_persist->stop();
+		}
 	}
 	_connection->stop();
 	hypersleep<h_milliseconds>(250);
@@ -293,6 +291,7 @@ bool Session::process(const f8String& from)
 			plog(from, 1);
 		if (_persist)
 		{
+			f8_scoped_spin_lock guard(_per_spl);
 			_persist->put(_next_send_seq, _next_receive_seq);
 			//cout << "Persisted:" << _next_send_seq << " and " << _next_receive_seq << endl;
 		}
@@ -301,7 +300,7 @@ bool Session::process(const f8String& from)
 	}
 	catch (f8Exception& e)
 	{
-		//cout << "process:: f8exception" << ' ' << seqnum << ' ' << e.what() << endl;
+		//cerr << "process:: f8exception" << ' ' << seqnum << ' ' << e.what() << endl;
 
 		log(e.what());
 		if (!e.force_logoff())
@@ -319,10 +318,14 @@ bool Session::process(const f8String& from)
 			stop();
 		}
 	}
-	catch (exception& e)	// also catches Poco::Net::NetException
+	catch (Poco::Net::NetException& e)
 	{
-		//cout << "process:: std::exception" << endl;
-
+		//cerr << "process:: Poco::Net::NetException" << endl;
+		log(e.what());
+	}
+	catch (exception& e)
+	{
+		//cerr << "process:: std::exception" << endl;
 		log(e.what());
 	}
 
@@ -414,10 +417,15 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		// important - these objects can't be created until we have a valid SessionID
 		if (!_logger)
 			_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id);
+
 		if (!_plogger)
 			_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id);
+
 		if (!_persist)
+		{
+			f8_scoped_spin_lock guard(_per_spl);
 			_persist = _sf->create_persister(_sf->_ses, &id, reset_given);
+		}
 
 		ostringstream ostr;
 		ostr << "Connection from " << _connection->get_peer_socket_address().toString();
@@ -516,6 +524,7 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		{
 			//cout << "got resend request:" << begin() << " to " << end() << endl;
 			_state = States::st_resend_request_received;
+			f8_scoped_spin_lock guard(_per_spl);
 			_persist->get(begin(), end(), *this, &Session::retrans_callback);
 		}
 	}
@@ -612,7 +621,11 @@ bool Session::heartbeat_service()
 			{
 				stop();
 			}
-			catch (exception& e)	// also catches Poco::Net::NetException
+			catch (Poco::Net::NetException& e)
+			{
+				log(e.what());
+			}
+			catch (exception& e)
 			{
 				log(e.what());
 			}
@@ -649,7 +662,7 @@ Message *Session::generate_heartbeat(const f8String& testReqID)
 {
 	Message *msg(create_msg(Common_MsgType_HEARTBEAT));
 	if (!testReqID.empty())
-		*msg += new test_request_id(testReqID);
+		*msg << new test_request_id(testReqID);
 
 	return msg;
 }
@@ -658,9 +671,9 @@ Message *Session::generate_heartbeat(const f8String& testReqID)
 Message *Session::generate_reject(const unsigned seqnum, const char *what)
 {
 	Message *msg(create_msg(Common_MsgType_REJECT));
-	*msg += new ref_seq_num(seqnum);
+	*msg << new ref_seq_num(seqnum);
 	if (what)
-		*msg += new text(what);
+		*msg << new text(what);
 	return msg;
 }
 
@@ -668,7 +681,7 @@ Message *Session::generate_reject(const unsigned seqnum, const char *what)
 Message *Session::generate_test_request(const f8String& testReqID)
 {
 	Message *msg(create_msg(Common_MsgType_TEST_REQUEST));
-	*msg += new test_request_id(testReqID);
+	*msg << new test_request_id(testReqID);
 
 	return msg;
 }
@@ -677,12 +690,12 @@ Message *Session::generate_test_request(const f8String& testReqID)
 Message *Session::generate_logon(const unsigned heartbtint, const f8String davi)
 {
 	Message *msg(create_msg(Common_MsgType_LOGON));
-	*msg += new heartbeat_interval(heartbtint);
-	*msg += new encrypt_method(0); // FIXME
+	*msg << new heartbeat_interval(heartbtint)
+		  << new encrypt_method(0); // FIXME
 	if (!davi.empty())
-		*msg += new default_appl_ver_id(davi);
+		*msg << new default_appl_ver_id(davi);
 	if (_loginParamaters._reset_sequence_numbers)
-		*msg += new reset_seqnum_flag(true);
+		*msg << new reset_seqnum_flag(true);
 
 	return msg;
 }
@@ -697,8 +710,8 @@ Message *Session::generate_logout()
 Message *Session::generate_resend_request(const unsigned begin, const unsigned end)
 {
 	Message *msg(create_msg(Common_MsgType_RESEND_REQUEST));
-	*msg += new begin_seq_num(begin);
-	*msg += new end_seq_num(end);
+	*msg << new begin_seq_num(begin)
+		  << new end_seq_num(end);
 
 	return msg;
 }
@@ -707,10 +720,10 @@ Message *Session::generate_resend_request(const unsigned begin, const unsigned e
 Message *Session::generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag)
 {
 	Message *msg(create_msg(Common_MsgType_SEQUENCE_RESET));
-	*msg += new new_seq_num(newseqnum);
+	*msg << new new_seq_num(newseqnum);
 
 	if (gapfillflag)
-		*msg += new gap_fill_flag(true);
+		*msg << new gap_fill_flag(true);
 
 	return msg;
 }
@@ -765,9 +778,9 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 	bool is_dup(msg->Header()->have(Common_PossDupFlag));
 
 	if (!msg->Header()->have(Common_SenderCompID))
-		*msg->Header() += new sender_comp_id(_sid.get_senderCompID());
+		*msg->Header() << new sender_comp_id(_sid.get_senderCompID());
 	if (!msg->Header()->have(Common_TargetCompID))
-		*msg->Header() += new target_comp_id(_sid.get_targetCompID());
+		*msg->Header() << new target_comp_id(_sid.get_targetCompID());
 
 	if (msg->Header()->have(Common_MsgSeqNum))
 	{
@@ -780,25 +793,25 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		{
 			if (!_loginParamaters._always_seqnum_assign)
 			{
-				*msg->Header() += new poss_dup_flag(true);
+				*msg->Header() << new poss_dup_flag(true);
 				is_dup = true;
 			}
 		}
 
 		sending_time sendtime;
 		msg->Header()->get(sendtime);
-		*msg->Header() += new orig_sending_time(sendtime());
+		*msg->Header() << new orig_sending_time(sendtime());
 
 		if (_loginParamaters._always_seqnum_assign)
 			//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
-			*msg->Header() += new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
+			*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
 	}
 	else
 	{
 		//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
-		*msg->Header() += new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
+		*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
 	}
-	*msg->Header() += new sending_time;
+	*msg->Header() << new sending_time;
 
 	try
 	{
@@ -824,6 +837,7 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		{
 			if (_persist)
 			{
+				f8_scoped_spin_lock guard(_per_spl);
 				if (!msg->is_admin())
 					_persist->put(_next_send_seq, ptr);
 				_persist->put(_next_send_seq + 1, _next_receive_seq);
@@ -856,6 +870,7 @@ void Session::recover_seqnums()
 {
 	if (_persist)
 	{
+		f8_scoped_spin_lock guard(_per_spl);
 		unsigned send_seqnum, receive_seqnum;
 		if (_persist->get(send_seqnum, receive_seqnum))
 		{

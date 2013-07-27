@@ -191,7 +191,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 			ostr << tbe->_name << " (" << missing << ')';
 			throw MissingMandatoryField(ostr.str());
 		}
-		*grpbase += grp.release();
+		*grpbase << grp.release();
 	}
 
 	return s_offset;

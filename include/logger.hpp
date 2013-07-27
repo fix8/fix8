@@ -218,6 +218,9 @@ public:
 		return _msg_queue.try_push (le) == 0;
 	}
 
+	/// Kill the logging thread.
+	void kill() { _thread.kill(0); }
+
 	/// Stop the logging thread.
 	void stop() { send(std::string()); _stopping = true; _thread.join(); }
 
