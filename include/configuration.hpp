@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_CONFIGURATION_HPP_
-#define _FIX8_CONFIGURATION_HPP_
+# define _FIX8_CONFIGURATION_HPP_
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
@@ -208,6 +208,12 @@ public:
 	  \return false if nodelay flag was passed and was false */
 	bool get_tcp_nodelay(const XmlElement *from)
 		{ return from && from->FindAttr("tcp_nodelay", true); }
+
+	/*! Extract the silent disconnect flag.
+	  \param from xml entity to search
+	  \return true if silent_disconnect flag was passed and was true */
+	bool get_silent_disconnect(const XmlElement *from)
+		{ return from && from->FindAttr("silent_disconnect", false); }
 
 	/*! Extract process model.
 	  \param from xml entity to search

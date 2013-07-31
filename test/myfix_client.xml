@@ -10,7 +10,7 @@
 				session_log="session_log_file"
 				protocol_log="protocol_log_file"
 				login_retry_interval="8000"
-				reset_sequence_numbers="false"
+				reset_sequence_numbers="true"
 				default_appl_ver_id="8"
 				heartbeat_interval="10"
 				tcp_nodelay="true"
@@ -22,6 +22,7 @@
 	<persist name="file0"
             type="file" dir="./run"
             use_session_id="true"
+            rotation="5"
             db="client" />
 
 	<persist name="bdb0"

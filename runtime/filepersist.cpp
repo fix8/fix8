@@ -79,6 +79,31 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 
 	if ((nof = !exist(_dbFname)) || purge)
 	{
+		if (purge)
+		{
+			if (_rotnum > 0)
+			{
+				vector<string> dblst, idxlst;
+				dblst.push_back(_dbFname);
+				idxlst.push_back(_dbIname);
+
+				for (unsigned ii(0); ii < _rotnum && ii < Logger::max_rotation; ++ii)
+				{
+					ostringstream ostr;
+					ostr << _dbFname << '.' << (ii + 1);
+					dblst.push_back(ostr.str());
+					ostr << ".idx";
+					idxlst.push_back(ostr.str());
+				}
+
+				for (unsigned ii(_rotnum); ii; --ii)
+				{
+					rename (dblst[ii - 1].c_str(), dblst[ii].c_str());   // ignore errors
+					rename (idxlst[ii - 1].c_str(), idxlst[ii].c_str()); // ignore errors
+				}
+			}
+		}
+
 		if ((_fod = open(_dbFname.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0600)) < 0)
 		{
 			ostringstream eostr;
@@ -97,7 +122,7 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 		_wasCreated = true;
 
 		if (purge && !nof)
-			GlobalLogger::log("Purged perist db");
+			GlobalLogger::log(_rotnum ? "Rotated and purged perist db" : "Purged perist db");
 	}
 	else
 	{
@@ -140,7 +165,7 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 			if (!_index.insert(Index::value_type(iprec._seq, iprec._prec)).second)
 			{
 				ostringstream eostr;
-				eostr << "Error: inserting index record into database index: " << _dbIname << " (" << iprec << "). Ignoring.";
+				eostr << "Warning: inserting index record into database index: " << _dbIname << " (" << iprec << "). Ignoring.";
 				GlobalLogger::log(eostr.str());
 			}
 		}
@@ -346,7 +371,7 @@ bool FilePersister::get(const unsigned seqnum, f8String& to) const
 	if (itr == _index.end())
 	{
 		ostringstream eostr;
-		eostr << "Error: index does not contain seqnum: " << seqnum << " in: " << _dbIname;
+		eostr << "Warning: index does not contain seqnum: " << seqnum << " in: " << _dbIname;
 		GlobalLogger::log(eostr.str());
 		return false;
 	}

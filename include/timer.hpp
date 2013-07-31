@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_TIMER_HPP_
-#define _FIX8_TIMER_HPP_
+# define _FIX8_TIMER_HPP_
 
 //-------------------------------------------------------------------------------------------------
 #include <iomanip>

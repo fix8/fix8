@@ -34,7 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef _F8_EXCEPTION_HPP_
-#define _F8_EXCEPTION_HPP_
+# define _F8_EXCEPTION_HPP_
 
 //-------------------------------------------------------------------------------------------------
 #include <string>
@@ -82,7 +82,7 @@ public:
 
 	/*! Get message associated with this exception.
 	    \return text message */
-	virtual const char *what() const throw() { return _reason.c_str(); }
+	const char *what() const throw() { return _reason.c_str(); }
 
 	/*! Get the force logoff setting.
 	    \return true if force logoff is set */

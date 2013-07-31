@@ -12,6 +12,7 @@
 				tcp_nodelay="true"
 				reset_sequence_numbers="false"
 				process_mode="threaded"
+				silent_disconnect="false"
 				persist="file0" />
 
 	<persist name="bdb0"

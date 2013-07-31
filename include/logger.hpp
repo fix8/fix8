@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_LOGGER_HPP_
-#define _FIX8_LOGGER_HPP_
+# define _FIX8_LOGGER_HPP_
 
 //-------------------------------------------------------------------------------------------------
 #include <list>

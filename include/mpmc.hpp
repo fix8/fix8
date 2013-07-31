@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_MPMC_HPP_
-#define _FIX8_MPMC_HPP_
+# define _FIX8_MPMC_HPP_
 
 //-------------------------------------------------------------------------------------------------
 // provide generic names to Multi Producer Multi Consumer queues, mutexes and atomic from
@@ -44,33 +44,33 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 #if (MPMC_SYSTEM == MPMC_TBB)
 
-#include <tbb/concurrent_queue.h>
-#include <tbb/atomic.h>
-#include <tbb/mutex.h>
+# include <tbb/concurrent_queue.h>
+# include <tbb/atomic.h>
+# include <tbb/mutex.h>
 
 // when we move to c++11 we will use proper template type aliases
-#define f8_atomic tbb::atomic
-#define f8_scoped_lock tbb::mutex::scoped_lock
-#define f8_scoped_spin_lock tbb::spin_mutex::scoped_lock
-#define f8_mutex tbb::mutex
-#define f8_spin_lock tbb::spin_mutex
-#define f8_concurrent_queue tbb::concurrent_bounded_queue
+# define f8_atomic tbb::atomic
+# define f8_scoped_lock tbb::mutex::scoped_lock
+# define f8_scoped_spin_lock tbb::spin_mutex::scoped_lock
+# define f8_mutex tbb::mutex
+# define f8_spin_lock tbb::spin_mutex
+# define f8_concurrent_queue tbb::concurrent_bounded_queue
 
 //-------------------------------------------------------------------------------------------------
 #elif (MPMC_SYSTEM == MPMC_FF)
 
-#include <ff/atomic/atomic.h>
-#include <ff/allocator.hpp>
-#include <ff/buffer.hpp>
-#include <ff/MPMCqueues.hpp>
-#include <sched.h>
+# include <ff/atomic/atomic.h>
+# include <ff/allocator.hpp>
+# include <ff/buffer.hpp>
+# include <ff/MPMCqueues.hpp>
+# include <sched.h>
 
 // std wrappers for ff
-#include <pthread.h>
-#include <ff_wrapper.hpp>
+# include <pthread.h>
+# include <ff_wrapper.hpp>
 
-#define f8_atomic FIX8::ff_atomic
-#define f8_concurrent_queue FIX8::ff_unbounded_queue
+# define f8_atomic FIX8::ff_atomic
+# define f8_concurrent_queue FIX8::ff_unbounded_queue
 
 //-------------------------------------------------------------------------------------------------
 #endif // MPMC_SYSTEM

@@ -126,7 +126,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 #endif
 		if (type == "file")
 		{
-			scoped_ptr<FilePersister> result(new FilePersister);
+			scoped_ptr<FilePersister> result(new FilePersister(which->FindAttr("rotation", 0)));
 			if (result->initialise(dir, db, flag))
 				return result.release();
 		}

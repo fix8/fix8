@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-----------------------------------------------------------------------------------------
 #ifndef _USAGE_HPP_
-#define _USAGE_HPP_
+# define _USAGE_HPP_
 
 //-----------------------------------------------------------------------------------------
 /// Convenient program help/usage wrapper. Generates a standardised usage message.

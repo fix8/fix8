@@ -327,7 +327,8 @@ bool MyMenu::help()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::do_logout()
 {
-	_session.send(new TEX::Logout);
+	if (!_session.is_shutdown())
+		_session.send(new TEX::Logout);
 	hypersleep<h_seconds>(1);
 	return false; // will exit
 }

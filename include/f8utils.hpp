@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-----------------------------------------------------------------------------------------
 #ifndef _F8_UTILS_HPP_
-#define _F8_UTILS_HPP_
+# define _F8_UTILS_HPP_
 
 //-----------------------------------------------------------------------------------------
 #include <Poco/DateTime.h>
@@ -838,6 +838,7 @@ public:
 //----------------------------------------------------------------------------------------
 /*! From a set of strings representing the names of an enumeration in order,
   return the enum of the given string.
+	 \tparam T enum return type
 	 \param els number of elements in set; if 0 return default value
 	 \param sset the set of strings; if null return default value
 	 \param what the string to find

@@ -1,3 +1,10 @@
+* Sun Aug 04 2013 David L. Dight <fix@fix8.org> 0.9.3
+Fixed Jira tickets FX-67, FX-68, FX-69, FX-70
+Added backup the persist file instead of purging after sequence reset
+Added forced logout message should contain error text
+Fixed	server crashes when reliable client attempts sync reconnect
+Fixed reset sequence number not truncating BDB persist database
+
 * Sun Jul 21 2013 David L. Dight <fix@fix8.org> 0.9.2
 Fixed Jira tickets FX-64, FX-65, FX-66
 Merged Neomantra changes allows Fix8 to be built using C++11 compiler

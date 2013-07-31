@@ -418,7 +418,8 @@ bool MyMenu::help()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::do_logout()
 {
-	_session.send(new TEX::Logout);
+	if (!_session.is_shutdown())
+		_session.send(new TEX::Logout);
 	hypersleep<h_seconds>(1);
 	return false; // will exit
 }
@@ -426,14 +427,17 @@ bool MyMenu::do_logout()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::resend_request()
 {
-	unsigned bnum(0), bend(0);
-	cout << "Enter BeginSeqNo:" << flush;
-	_tty.unset_raw_mode();
-	cin >> bnum;
-	cout << "Enter EndSeqNo(0=all):" << flush;
-	cin >> bend;
-	_tty.set_raw_mode();
-	_session.send(_session.generate_resend_request(bnum, bend));
+	if (!_session.is_shutdown())
+	{
+		unsigned bnum(0), bend(0);
+		cout << "Enter BeginSeqNo:" << flush;
+		_tty.unset_raw_mode();
+		cin >> bnum;
+		cout << "Enter EndSeqNo(0=all):" << flush;
+		cin >> bend;
+		_tty.set_raw_mode();
+		_session.send(_session.generate_resend_request(bnum, bend));
+	}
 	return true;
 }
 

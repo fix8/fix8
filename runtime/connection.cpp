@@ -378,7 +378,7 @@ bool ClientConnection::connect()
 			return _connected = true;
 		}
 		catch (Poco::Exception& e)
-   		{
+		{
 			ostr.str("");
 			ostr << "exception: " << e.displayText();
 			_session.log(ostr.str());

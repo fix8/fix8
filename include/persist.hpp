@@ -35,10 +35,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_PERSIST_HPP_
-#define _FIX8_PERSIST_HPP_
+# define _FIX8_PERSIST_HPP_
 
 #if defined HAVE_BDB
-#include <db_cxx.h>
+# include <db_cxx.h>
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -354,6 +354,7 @@ class FilePersister : public Persister
 {
 	f8String _dbFname, _dbIname;
 	int _fod, _iod;
+	unsigned _rotnum;
 	bool _wasCreated;
 
 	typedef std::map<uint32_t, Prec> Index;
@@ -361,7 +362,7 @@ class FilePersister : public Persister
 
 public:
 	/// Ctor.
-	FilePersister() : _fod(-1), _iod(-1), _wasCreated() {}
+	FilePersister(unsigned rotnum=0) : _fod(-1), _iod(-1), _rotnum(rotnum), _wasCreated() {}
 
 	/// Dtor.
 	virtual ~FilePersister();

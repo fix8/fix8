@@ -181,7 +181,7 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
 		atomic_init(States::st_not_logged_in);
-		if (_loginParamaters._reset_sequence_numbers)
+		if (_loginParameters._reset_sequence_numbers)
 			_next_send_seq = _next_receive_seq = 1;
 		else
 		{
@@ -224,11 +224,9 @@ void Session::stop()
 	else
 	{
 		_timer.schedule(_hb_processor, 0);
+		f8_scoped_spin_lock guard(_per_spl);
 		if (_persist)
-		{
-			f8_scoped_spin_lock guard(_per_spl);
 			_persist->stop();
-		}
 	}
 	_connection->stop();
 	hypersleep<h_milliseconds>(250);
@@ -310,9 +308,9 @@ bool Session::process(const f8String& from)
 		}
 		else
 		{
-			if (_state != States::st_logon_received)
+			if (_state == States::st_logon_received && !_loginParameters._silent_disconnect)
 			{
-				send(generate_logout(), 0, true); // so it won't increment
+				send(generate_logout(e.what()), 0, true); // so it won't increment
 				_state = States::st_logoff_sent;
 			}
 			stop();
@@ -612,10 +610,10 @@ bool Session::heartbeat_service()
 	{
 		if (_state == States::st_test_request_sent)	// already sent
 		{
-			send(generate_logout(), 0, true); // so it won't increment
-			_state = States::st_logoff_sent;
 			ostringstream ostr;
 			ostr << "Remote has ignored my test request. Aborting session...";
+			send(generate_logout(_loginParameters._silent_disconnect ? 0 : ostr.str().c_str()), 0, true); // so it won't increment
+			_state = States::st_logoff_sent;
 			log(ostr.str());
 			try
 			{
@@ -674,6 +672,7 @@ Message *Session::generate_reject(const unsigned seqnum, const char *what)
 	*msg << new ref_seq_num(seqnum);
 	if (what)
 		*msg << new text(what);
+
 	return msg;
 }
 
@@ -694,24 +693,27 @@ Message *Session::generate_logon(const unsigned heartbtint, const f8String davi)
 		  << new encrypt_method(0); // FIXME
 	if (!davi.empty())
 		*msg << new default_appl_ver_id(davi);
-	if (_loginParamaters._reset_sequence_numbers)
+	if (_loginParameters._reset_sequence_numbers)
 		*msg << new reset_seqnum_flag(true);
 
 	return msg;
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *Session::generate_logout()
+Message *Session::generate_logout(const char *msgstr)
 {
-	return create_msg(Common_MsgType_LOGOUT);
+	Message *msg(create_msg(Common_MsgType_LOGOUT));
+	if (msgstr)
+		*msg << new text(msgstr);
+
+	return msg;
 }
 
 //-------------------------------------------------------------------------------------------------
 Message *Session::generate_resend_request(const unsigned begin, const unsigned end)
 {
 	Message *msg(create_msg(Common_MsgType_RESEND_REQUEST));
-	*msg << new begin_seq_num(begin)
-		  << new end_seq_num(end);
+	*msg << new begin_seq_num(begin) << new end_seq_num(end);
 
 	return msg;
 }
@@ -786,12 +788,12 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 	{
 		if (is_dup)
 		{
-			if (_loginParamaters._always_seqnum_assign)
+			if (_loginParameters._always_seqnum_assign)
 				delete msg->Header()->remove(Common_PossDupFlag);
 		}
 		else
 		{
-			if (!_loginParamaters._always_seqnum_assign)
+			if (!_loginParameters._always_seqnum_assign)
 			{
 				*msg->Header() << new poss_dup_flag(true);
 				is_dup = true;
@@ -802,7 +804,7 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		msg->Header()->get(sendtime);
 		*msg->Header() << new orig_sending_time(sendtime());
 
-		if (_loginParamaters._always_seqnum_assign)
+		if (_loginParameters._always_seqnum_assign)
 			//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
 			*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
 	}
@@ -868,17 +870,17 @@ bool Session::handle_application(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 void Session::recover_seqnums()
 {
+	f8_scoped_spin_lock guard(_per_spl);
 	if (_persist)
 	{
-		f8_scoped_spin_lock guard(_per_spl);
 		unsigned send_seqnum, receive_seqnum;
 		if (_persist->get(send_seqnum, receive_seqnum))
 		{
 			ostringstream ostr;
 			ostr << "Last sent: " << send_seqnum << ", last received: " << receive_seqnum;
 			log(ostr.str());
-			_next_send_seq = send_seqnum ;// + 1;
-			_next_receive_seq = receive_seqnum ;// + 1;
+			_next_send_seq = send_seqnum; // + 1;
+			_next_receive_seq = receive_seqnum; // + 1;
 		}
 	}
 }

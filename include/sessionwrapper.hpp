@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_SESSIONWRAPPER_HPP_
-#define _FIX8_SESSIONWRAPPER_HPP_
+# define _FIX8_SESSIONWRAPPER_HPP_
 
 #include <Poco/Net/ServerSocket.h>
 
@@ -61,7 +61,8 @@ struct SessionConfig : public Configuration
 
 		LoginParameters lparam(get_retry_interval(_ses), get_retry_count(_ses),
 			get_default_appl_ver_id(_ses), get_reset_sequence_number_flag(_ses),
-			get_always_seqnum_assign(_ses), get_tcp_recvbuf_sz(_ses), get_tcp_sendbuf_sz(_ses));
+			get_always_seqnum_assign(_ses), get_silent_disconnect(_ses),
+			get_tcp_recvbuf_sz(_ses), get_tcp_sendbuf_sz(_ses));
 		_loginParameters = lparam;
 	}
 

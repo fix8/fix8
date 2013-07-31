@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-----------------------------------------------------------------------------------------
 #ifndef _XML_ELEMENT_HPP_
-#define _XML_ELEMENT_HPP_
+# define _XML_ELEMENT_HPP_
 
 //-----------------------------------------------------------------------------------------
 #include <set>

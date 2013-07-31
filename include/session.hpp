@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_SESSION_HPP_
-#define _FIX8_SESSION_HPP_
+# define _FIX8_SESSION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
 
@@ -160,18 +160,20 @@ struct LoginParameters
 	enum { default_retry_interval=5000, default_login_retries=100 };
 
 	LoginParameters() : _login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
-		_reset_sequence_numbers(), _always_seqnum_assign(), _recv_buf_sz(), _send_buf_sz() {}
+		_reset_sequence_numbers(), _always_seqnum_assign(), _silent_disconnect(), _recv_buf_sz(), _send_buf_sz() {}
 
 	LoginParameters(const unsigned login_retry_interval, const unsigned login_retries,
 		const default_appl_ver_id& davi, const bool reset_seqnum=false, const bool always_seqnum_assign=false,
-		unsigned recv_buf_sz=0, unsigned send_buf_sz=0)
+		const bool silent_disconnect=false, unsigned recv_buf_sz=0, unsigned send_buf_sz=0)
 		: _login_retry_interval(login_retry_interval), _login_retries(login_retries),
 		_reset_sequence_numbers(reset_seqnum), _always_seqnum_assign(always_seqnum_assign),
+		_silent_disconnect(silent_disconnect),
 		_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz) {}
 
 	LoginParameters(const LoginParameters& from)
 		: _login_retry_interval(from._login_retry_interval), _login_retries(from._login_retries),
-		_reset_sequence_numbers(from._reset_sequence_numbers), _always_seqnum_assign(from._always_seqnum_assign), _davi(from._davi),
+		_reset_sequence_numbers(from._reset_sequence_numbers), _always_seqnum_assign(from._always_seqnum_assign),
+		_silent_disconnect(from._silent_disconnect), _davi(from._davi),
 		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz) {}
 
 	LoginParameters& operator=(const LoginParameters& that)
@@ -182,6 +184,7 @@ struct LoginParameters
 			_login_retries = that._login_retries;
 			_reset_sequence_numbers = that._reset_sequence_numbers;
 			_always_seqnum_assign = that._always_seqnum_assign;
+			_silent_disconnect = that._silent_disconnect;
 			_davi = that._davi;
 			_recv_buf_sz = that._recv_buf_sz;
 			_send_buf_sz = that._send_buf_sz;
@@ -190,7 +193,7 @@ struct LoginParameters
 	}
 
 	unsigned _login_retry_interval, _login_retries;
-	bool _reset_sequence_numbers, _always_seqnum_assign;
+	bool _reset_sequence_numbers, _always_seqnum_assign, _silent_disconnect;
 	default_appl_ver_id _davi;
 	unsigned _recv_buf_sz, _send_buf_sz;
 };
@@ -222,7 +225,7 @@ protected:
 	SessionID _sid;
 	struct SessionConfig *_sf;
 
-	LoginParameters _loginParamaters;
+	LoginParameters _loginParameters;
 
 	f8_spin_lock _per_spl;
 	Persister *_persist;
@@ -483,15 +486,15 @@ public:
 
 	/*! Set the LoginParameters
 	    \param loginParamaters to populate from */
-	void set_login_parameters(const LoginParameters& loginParamaters) { _loginParamaters = loginParamaters; }
+	void set_login_parameters(const LoginParameters& loginParamaters) { _loginParameters = loginParamaters; }
 
 	/*! Get the LoginParameters
 	    \param loginParamaters to populate */
-	void get_login_parameters(LoginParameters& loginParamaters) const { loginParamaters = _loginParamaters; }
+	void get_login_parameters(LoginParameters& loginParamaters) const { loginParamaters = _loginParameters; }
 
 	/*! Get the LoginParameters
 	    \return loginParamaters */
-	const LoginParameters& get_login_parameters() const { return  _loginParamaters; }
+	const LoginParameters& get_login_parameters() const { return  _loginParameters; }
 
 	/*! Set the persister.
 	    \param pst pointer to persister object  */
@@ -511,7 +514,7 @@ public:
 
 	/*! Generate a logout message.
 	    \return new Message */
-	virtual Message *generate_logout();
+	virtual Message *generate_logout(const char *msgstr=0);
 
 	/*! Generate a heartbeat message.
 	    \param testReqID test request id
