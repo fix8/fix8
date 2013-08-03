@@ -1,7 +1,8 @@
 var searchData=
 [
   ['f8_5fmutex',['f8_mutex',['../classFIX8_1_1f8__mutex.html',1,'FIX8']]],
-  ['f8_5fscoped_5flock',['f8_scoped_lock',['../classFIX8_1_1f8__scoped__lock.html',1,'FIX8']]],
+  ['f8_5fscoped_5flock_5fimpl',['f8_scoped_lock_impl',['../classFIX8_1_1f8__scoped__lock__impl.html',1,'FIX8']]],
+  ['f8_5fspin_5flock',['f8_spin_lock',['../classFIX8_1_1f8__spin__lock.html',1,'FIX8']]],
   ['f8exception',['f8Exception',['../classFIX8_1_1f8Exception.html',1,'FIX8']]],
   ['f8metacntx',['F8MetaCntx',['../structFIX8_1_1F8MetaCntx.html',1,'FIX8']]],
   ['fdinbuf',['fdinbuf',['../classFIX8_1_1fdinbuf.html',1,'FIX8']]],

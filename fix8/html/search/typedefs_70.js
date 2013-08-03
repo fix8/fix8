@@ -67,7 +67,7 @@ var searchData=
   ['pretradeanonymity',['PreTradeAnonymity',['../namespaceFIX8_1_1TEX.html#ac69339566dfdedbebc5355588906fbf3',1,'FIX8::TEX']]],
   ['prevclosepx',['PrevClosePx',['../namespaceFIX8_1_1TEX.html#a5b58ba5f9bb7a79f2dc050b7444bae3e',1,'FIX8::TEX']]],
   ['previouslyreported',['PreviouslyReported',['../namespaceFIX8_1_1TEX.html#acb847b42e2ed2ba41852603e6485e095',1,'FIX8::TEX']]],
-  ['price',['price',['../namespaceFIX8.html#a995f7fbb850fb2c8cdbb1b5c26a9dc43',1,'FIX8::price()'],['../namespaceFIX8_1_1TEX.html#a9a4818f3b8fe10c7a68a93eba698ea6c',1,'FIX8::TEX::Price()']]],
+  ['price',['Price',['../namespaceFIX8_1_1TEX.html#a9a4818f3b8fe10c7a68a93eba698ea6c',1,'FIX8::TEX::Price()'],['../namespaceFIX8.html#a995f7fbb850fb2c8cdbb1b5c26a9dc43',1,'FIX8::price()']]],
   ['price2',['Price2',['../namespaceFIX8_1_1TEX.html#a41ff923620ac5ec0416d62c5c3a7f473',1,'FIX8::TEX']]],
   ['pricedelta',['PriceDelta',['../namespaceFIX8_1_1TEX.html#a451b38620a49326576be6bb380c39977',1,'FIX8::TEX']]],
   ['priceimprovement',['PriceImprovement',['../namespaceFIX8_1_1TEX.html#a4bbcffa8b812ea5a1c54756513e616b0',1,'FIX8::TEX']]],

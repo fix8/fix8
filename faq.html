@@ -309,7 +309,7 @@
 											<br><br>
 											Lock free containers and atomics are required for Fix8. Fix8 contains the
 											<a href="http://calvados.di.unipi.it/dokuwiki/doku.php?id=ffnamespace:about">FastFlow</a> distribution which
-											is used by default. Alternatively you can use Intel <a href="http://threadingbuildingblocks.org/">TBB</a>.
+											is used by default.<br>Alternatively you can use Intel <a href="http://threadingbuildingblocks.org/">TBB</a> (<i>if you are building for a 32 bit environment it is recommended that you use TBB</i>).
 											<br>Optionally you can use
 											Oracle <a href="http://www.oracle.com/technetwork/database/berkeleydb/overview/index.html">Berkeley DB</a>. If
 											you want to generate the API documentation you will also need <a href="http://www.doxygen.org">doxygen</a>.
@@ -727,6 +727,17 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 									</div>
 								</div>
 							</div>
+							<div class="accordion-group">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#runningFour">d) My client/server won't synchronise. What do I do?</a>
+								</div>
+								<div id="runningFour" class="accordion-body collapse">
+									<div class="accordion-inner">
+										See the troubleshooting section in the wiki <a href="https://fix8engine.atlassian.net/wiki/x/AgCE">Solving connection synchronisation problems</a> for help with this problem.
+									</div>
+								</div>
+							</div>
+						</div>
 						</div>
 						</div>
 					</div>

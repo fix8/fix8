@@ -8,7 +8,7 @@ var classFIX8_1_1f8Exception =
     [ "force_logoff", "classFIX8_1_1f8Exception.html#a2b4ab08104073be15cb3af79328753e5", null ],
     [ "format", "classFIX8_1_1f8Exception.html#aaa3e7f40aa390e3769e21e1dcce51304", null ],
     [ "format", "classFIX8_1_1f8Exception.html#a53e91854a660d4ab73dcaba33afad128", null ],
-    [ "what", "classFIX8_1_1f8Exception.html#abb6a7867b11df20e941a87b1c8447bb1", null ],
+    [ "what", "classFIX8_1_1f8Exception.html#a479fb74f51273a9a731ef368f4b0c8c7", null ],
     [ "_force_logoff", "classFIX8_1_1f8Exception.html#a01cfbe633619e4ede283389e0306a1d3", null ],
     [ "_reason", "classFIX8_1_1f8Exception.html#aa09cb63db768a17864863fefd31305f8", null ]
 ];

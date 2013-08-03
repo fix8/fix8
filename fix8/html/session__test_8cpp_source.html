@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.2</span>
+   &#160;<span id="projectnumber">version  0.9.3</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -246,7 +246,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00147"></a><span class="lineno"><a class="code" href="classtest__session.html#a13abd50020d7adcb2a4cd59cb8c3a7ff">  147</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtest__session.html#a13abd50020d7adcb2a4cd59cb8c3a7ff" title="start heartbeat service thread">kickHBService</a>() {heartbeat_service();}</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;};</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
-<div class="line"><a name="l00151"></a><span class="lineno"><a class="code" href="classsession__fixture.html">  151</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsession__fixture.html" title="a session fixture to create and destory test session">session_fixture</a></div>
+<div class="line"><a name="l00151"></a><span class="lineno"><a class="code" href="classsession__fixture.html">  151</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsession__fixture.html" title="a session fixture to create and destroy test session">session_fixture</a></div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;{</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00154"></a><span class="lineno"><a class="code" href="classsession__fixture.html#a167947c6fe42ef3b60485fc0e9644078">  154</a></span>&#160;    <a class="code" href="classFIX8_1_1MemoryPersister.html" title="Memory based message persister.">MemoryPersister</a> * <a class="code" href="classsession__fixture.html#a167947c6fe42ef3b60485fc0e9644078">per</a>;</div>
@@ -254,7 +254,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00156"></a><span class="lineno"><a class="code" href="classsession__fixture.html#ac667aca2578093a3f17df6cfc8798e63">  156</a></span>&#160;    <a class="code" href="classFIX8_1_1PipeLogger.html" title="A pipe logger.">PipeLogger</a> * <a class="code" href="classsession__fixture.html#ac667aca2578093a3f17df6cfc8798e63">sLogger</a>;</div>
 <div class="line"><a name="l00157"></a><span class="lineno"><a class="code" href="classsession__fixture.html#a7843f3de33eb50ba5871e1fae2e9bc7b">  157</a></span>&#160;    <a class="code" href="classtest__session.html" title="a test session">test_session</a> * <a class="code" href="classsession__fixture.html#a7843f3de33eb50ba5871e1fae2e9bc7b">ss</a>;</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
-<div class="line"><a name="l00160"></a><span class="lineno"><a class="code" href="classsession__fixture.html#a6f03a8ecab9de31fc1d115268bd749fd">  160</a></span>&#160;    <a class="code" href="classsession__fixture.html" title="a session fixture to create and destory test session">session_fixture</a>()</div>
+<div class="line"><a name="l00160"></a><span class="lineno"><a class="code" href="classsession__fixture.html#a6f03a8ecab9de31fc1d115268bd749fd">  160</a></span>&#160;    <a class="code" href="classsession__fixture.html" title="a session fixture to create and destroy test session">session_fixture</a>()</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    {</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> id(<span class="stringliteral">&quot;FIX.4.2:A12345B-&gt;COMPARO&quot;</span>);</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
@@ -274,7 +274,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        ss = <span class="keyword">new</span> <a class="code" href="classtest__session.html" title="a test session">test_session</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">ctx</a>, <span class="keywordtype">id</span>, per, sLogger, pLogger);</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    };</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
-<div class="line"><a name="l00181"></a><span class="lineno"><a class="code" href="classsession__fixture.html#ad8e0365baa6c93edbd084db3032837aa">  181</a></span>&#160;    ~<a class="code" href="classsession__fixture.html" title="a session fixture to create and destory test session">session_fixture</a>()</div>
+<div class="line"><a name="l00181"></a><span class="lineno"><a class="code" href="classsession__fixture.html#ad8e0365baa6c93edbd084db3032837aa">  181</a></span>&#160;    ~<a class="code" href="classsession__fixture.html" title="a session fixture to create and destroy test session">session_fixture</a>()</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    {</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <span class="keyword">delete</span> ss;</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <span class="keyword">delete</span> sLogger;</div>
@@ -284,7 +284,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;};</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
-<div class="line"><a name="l00192"></a><span class="lineno"><a class="code" href="classinitiator__fixture.html">  192</a></span>&#160;<span class="keyword">class </span><a class="code" href="classinitiator__fixture.html" title="a initiator fixture, inherited from session_fixture">initiator_fixture</a> : <span class="keyword">public</span> <a class="code" href="classsession__fixture.html" title="a session fixture to create and destory test session">session_fixture</a></div>
+<div class="line"><a name="l00192"></a><span class="lineno"><a class="code" href="classinitiator__fixture.html">  192</a></span>&#160;<span class="keyword">class </span><a class="code" href="classinitiator__fixture.html" title="a initiator fixture, inherited from session_fixture">initiator_fixture</a> : <span class="keyword">public</span> <a class="code" href="classsession__fixture.html" title="a session fixture to create and destroy test session">session_fixture</a></div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;{</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00195"></a><span class="lineno"><a class="code" href="classinitiator__fixture.html#abb2e789ab0fa3dcc4a1d751c5e3ed50a">  195</a></span>&#160;    <a class="code" href="classFIX8_1_1ClientConnection.html" title="Client (initiator) specialisation of Connection.">ClientConnection</a> * <a class="code" href="classinitiator__fixture.html#abb2e789ab0fa3dcc4a1d751c5e3ed50a">initiator</a>;</div>
@@ -603,7 +603,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Jul 21 2013 16:05:29. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 4 2013 08:13:49. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

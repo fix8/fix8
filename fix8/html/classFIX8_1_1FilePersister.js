@@ -1,7 +1,7 @@
 var classFIX8_1_1FilePersister =
 [
     [ "Index", "classFIX8_1_1FilePersister.html#a7eb0a14862baf78381079885c09cf581", null ],
-    [ "FilePersister", "classFIX8_1_1FilePersister.html#a792d5fe0e483ea54004467eee5f11ae5", null ],
+    [ "FilePersister", "classFIX8_1_1FilePersister.html#afa40a23d6540adf6f94467cb9edf1357", null ],
     [ "~FilePersister", "classFIX8_1_1FilePersister.html#a97b9638102b672c04faa8fc4da0dba1c", null ],
     [ "find_nearest_highest_seqnum", "classFIX8_1_1FilePersister.html#ae01718e7b3eb7aefac718361d2998624", null ],
     [ "get", "classFIX8_1_1FilePersister.html#ab6cad69b43368cbbe6c7b5400ecc646a", null ],
@@ -16,5 +16,6 @@ var classFIX8_1_1FilePersister =
     [ "_fod", "classFIX8_1_1FilePersister.html#a06ed4dce7e797d10976dab22f44c2db3", null ],
     [ "_index", "classFIX8_1_1FilePersister.html#aae713163f3c06a52432fb949f524cd94", null ],
     [ "_iod", "classFIX8_1_1FilePersister.html#a65ab4b35a9303ca6bde00cebdb2b2911", null ],
+    [ "_rotnum", "classFIX8_1_1FilePersister.html#a09be19089aee1885fc310e995470856a", null ],
     [ "_wasCreated", "classFIX8_1_1FilePersister.html#a20d9b5f4bd5ca2457d5d07cafb123b68", null ]
 ];

@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.2</span>
+   &#160;<span id="projectnumber">version  0.9.3</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -154,11 +154,14 @@ $(document).ready(function(){initNavTree('functions_func_0x66.html','');});
 <li>f8_mutex()
 : <a class="el" href="classFIX8_1_1f8__mutex.html#a3c906c1354fb15f527d4b026124a9c7a">FIX8::f8_mutex</a>
 </li>
-<li>f8_scoped_lock()
-: <a class="el" href="classFIX8_1_1f8__scoped__lock.html#a1dce4e3f384efc7a02e1f26a7630bf0d">FIX8::f8_scoped_lock</a>
+<li>f8_scoped_lock_impl()
+: <a class="el" href="classFIX8_1_1f8__scoped__lock__impl.html#aef4f28d07163ddbaacad37af4a02a319">FIX8::f8_scoped_lock_impl&lt; T &gt;</a>
+</li>
+<li>f8_spin_lock()
+: <a class="el" href="classFIX8_1_1f8__spin__lock.html#a9ac5017e774d882a0f3dd8f7a802dc82">FIX8::f8_spin_lock</a>
 </li>
 <li>f8Exception()
-: <a class="el" href="classFIX8_1_1f8Exception.html#a40eca7d7acdb0c4f254f6c0a547311fa">FIX8::f8Exception</a>
+: <a class="el" href="classFIX8_1_1f8Exception.html#a7271d5cae6d7b0664de4b0f28b8d5721">FIX8::f8Exception</a>
 </li>
 <li>F8MetaCntx()
 : <a class="el" href="structFIX8_1_1F8MetaCntx.html#a77cf7192839ce3c35fbf30a62ab85beb">FIX8::F8MetaCntx</a>
@@ -176,65 +179,71 @@ $(document).ready(function(){initNavTree('functions_func_0x66.html','');});
 : <a class="el" href="classFIX8_1_1fdoutbuf.html#a06ba4286d10ab5da426bf7a8b4bff578">FIX8::fdoutbuf</a>
 </li>
 <li>ff_unbounded_queue()
-: <a class="el" href="classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html#afb3b4572f7c4efd2018ac56e772d3ad3">FIX8::ff_unbounded_queue&lt; T * &gt;</a>
-, <a class="el" href="classFIX8_1_1ff__unbounded__queue.html#a0373f0cb8217930ba30a98bd13191165">FIX8::ff_unbounded_queue&lt; T &gt;</a>
+: <a class="el" href="classFIX8_1_1ff__unbounded__queue.html#a0373f0cb8217930ba30a98bd13191165">FIX8::ff_unbounded_queue&lt; T &gt;</a>
+, <a class="el" href="classFIX8_1_1ff__unbounded__queue_3_01T_01_5_01_4.html#afb3b4572f7c4efd2018ac56e772d3ad3">FIX8::ff_unbounded_queue&lt; T * &gt;</a>
 </li>
 <li>Field()
-: <a class="el" href="classFIX8_1_1Field_3_01double_00_01field_01_4.html#ad7f69b9254a9ba1234ec3842207514d4">FIX8::Field&lt; double, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01Length_00_01field_01_4.html#a8327e8a2b2f6fc12da774a39030d2945">FIX8::Field&lt; Length, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01char_00_01field_01_4.html#a14c65a01c8bb60a1081445bca59161f6">FIX8::Field&lt; char, field &gt;</a>
+: <a class="el" href="classFIX8_1_1Field_3_01double_00_01field_01_4.html#a126f8f0738c52fefced921f33dd2b326">FIX8::Field&lt; double, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01Length_00_01field_01_4.html#aa117deeab3c633946b910d50ab7fa683">FIX8::Field&lt; Length, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01double_00_01field_01_4.html#ad7f69b9254a9ba1234ec3842207514d4">FIX8::Field&lt; double, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01Length_00_01field_01_4.html#aa17d5fc12be003cf177dd30394ff8815">FIX8::Field&lt; Length, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01TagNum_00_01field_01_4.html#a5e3cdfb8ede46323329bf747a52dc40f">FIX8::Field&lt; TagNum, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#a82023b8c3679040a6d67d6aaf07f2584">FIX8::Field&lt; int, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01char_00_01field_01_4.html#a14c65a01c8bb60a1081445bca59161f6">FIX8::Field&lt; char, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01TagNum_00_01field_01_4.html#a9d2fa4795c9e8871b65e5f09a0e239e3">FIX8::Field&lt; TagNum, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01char_00_01field_01_4.html#a44a88ee4e516a6d73b24ec201b6262f4">FIX8::Field&lt; char, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01TagNum_00_01field_01_4.html#ad84b739f838a67528e49acd4cd50fd63">FIX8::Field&lt; TagNum, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01char_00_01field_01_4.html#a13047fc350dac5bd5d7545b4294a9c16">FIX8::Field&lt; char, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01TagNum_00_01field_01_4.html#ae995e432fd64dda4fe4346de4194d102">FIX8::Field&lt; TagNum, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01SeqNum_00_01field_01_4.html#aeed67a810fdcc78f2a7805f8771411dd">FIX8::Field&lt; SeqNum, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#a6ae4e9750684e162b2678f729830a8fe">FIX8::Field&lt; int, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#a82023b8c3679040a6d67d6aaf07f2584">FIX8::Field&lt; int, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01char_00_01field_01_4.html#a13047fc350dac5bd5d7545b4294a9c16">FIX8::Field&lt; char, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01SeqNum_00_01field_01_4.html#add9a645ee24d330393dd2f377904f62e">FIX8::Field&lt; SeqNum, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01char_00_01field_01_4.html#a31513a391c61cce1f5c42d58ee7d1ca6">FIX8::Field&lt; char, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01SeqNum_00_01field_01_4.html#a714ddd3ce6e6f0caa70864075f3eb80f">FIX8::Field&lt; SeqNum, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html#a11eabdc799fb6c177b16a006d41bc743">FIX8::Field&lt; MonthYear, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01SeqNum_00_01field_01_4.html#a05f7839be6422c2903d3cd229a4c39c6">FIX8::Field&lt; SeqNum, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01NumInGroup_00_01field_01_4.html#aef332dfe5f46c833eaafb68a8e45c2a6">FIX8::Field&lt; NumInGroup, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#aa4477e3072d0945bc288848522944fe8">FIX8::Field&lt; int, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#a6ae4e9750684e162b2678f729830a8fe">FIX8::Field&lt; int, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html#a11eabdc799fb6c177b16a006d41bc743">FIX8::Field&lt; MonthYear, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01NumInGroup_00_01field_01_4.html#abb22639deebadba755d8660ac72002dd">FIX8::Field&lt; NumInGroup, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html#a82b40c7e0fcb9020ac788de9c61cbede">FIX8::Field&lt; MonthYear, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01NumInGroup_00_01field_01_4.html#a6517e13a773dca89903596fc55dc32ed">FIX8::Field&lt; NumInGroup, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html#a628683113b33ef1472d3165caf047148">FIX8::Field&lt; MonthYear, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01NumInGroup_00_01field_01_4.html#a21e8c96f85dcc8df366bc28a911f564e">FIX8::Field&lt; NumInGroup, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01DayOfMonth_00_01field_01_4.html#aedb6fc10110d9dfbf7103baff950924d">FIX8::Field&lt; DayOfMonth, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#a2d469252fc6a575a7ba46d5ee616a43c">FIX8::Field&lt; int, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#aa4477e3072d0945bc288848522944fe8">FIX8::Field&lt; int, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html#a628683113b33ef1472d3165caf047148">FIX8::Field&lt; MonthYear, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01DayOfMonth_00_01field_01_4.html#aba6638a291170724f6f2509e20ebb4f1">FIX8::Field&lt; DayOfMonth, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01data_00_01field_01_4.html#ad1a72b0c214c6ec67a04329cba61120b">FIX8::Field&lt; data, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01DayOfMonth_00_01field_01_4.html#a2b0fbf00b5d40e0c8aaaed2a4cc57f64">FIX8::Field&lt; DayOfMonth, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01data_00_01field_01_4.html#ad6af8622a6ac7a2155243b0263b67a01">FIX8::Field&lt; data, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01DayOfMonth_00_01field_01_4.html#a053ee61356cf829742166f7cde03ca24">FIX8::Field&lt; DayOfMonth, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#a312ba0aed508f03b29bdbfe6c1626cc1">FIX8::Field&lt; Boolean, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01char_01_5_00_01field_01_4.html#ad95707849dd6a42cfd04f505bb2de5aa">FIX8::Field&lt; char *, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#a2d469252fc6a575a7ba46d5ee616a43c">FIX8::Field&lt; int, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01data_00_01field_01_4.html#ad6af8622a6ac7a2155243b0263b67a01">FIX8::Field&lt; data, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#a185bf7c60f979477d920216f6fe84273">FIX8::Field&lt; Boolean, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01data_00_01field_01_4.html#a2502c1435251291805ed413cff60a4a1">FIX8::Field&lt; data, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#a3f2cfc04b3cd2d1b39d471edf517e0ed">FIX8::Field&lt; Boolean, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#a059172a878a77266bae98cd71fa566e0">FIX8::Field&lt; Boolean, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01char_01_5_00_01field_01_4.html#ad95707849dd6a42cfd04f505bb2de5aa">FIX8::Field&lt; char *, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#afd47856e7c66731c323523e53c568156">FIX8::Field&lt; UTCTimestamp, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#a396420b4f596fb5b00308c3170763dde">FIX8::Field&lt; Boolean, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01Qty_00_01field_01_4.html#a599612c9af04c1c85110b55521150e31">FIX8::Field&lt; Qty, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01char_01_5_00_01field_01_4.html#abbaf8a5359c0940a6059ccc93bf05f02">FIX8::Field&lt; char *, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a55146deb74adcc791dba1a62dffc0ba7">FIX8::Field&lt; UTCTimestamp, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01Qty_00_01field_01_4.html#ae00de1120a6f107bcbb76aeba38eec2b">FIX8::Field&lt; Qty, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a17b753821732fcb7038a4134e0da2d39">FIX8::Field&lt; UTCTimestamp, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01Qty_00_01field_01_4.html#ace00ac5a3fbd1f6df5e1115bc809c7aa">FIX8::Field&lt; Qty, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01MultipleCharValue_00_01field_01_4.html#adff90766b5b05822e7f8e1188ac170fb">FIX8::Field&lt; MultipleCharValue, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01char_01_5_00_01field_01_4.html#a168396913805ab08618d04941d4b01a2">FIX8::Field&lt; char *, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01char_01_5_00_01field_01_4.html#abbaf8a5359c0940a6059ccc93bf05f02">FIX8::Field&lt; char *, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a17b753821732fcb7038a4134e0da2d39">FIX8::Field&lt; UTCTimestamp, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01MultipleCharValue_00_01field_01_4.html#a747df8ca63582e8565f5747ed33f9f4b">FIX8::Field&lt; MultipleCharValue, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a94b6322604c3786ec6ef2af5642925fb">FIX8::Field&lt; UTCTimestamp, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01char_01_5_00_01field_01_4.html#a168396913805ab08618d04941d4b01a2">FIX8::Field&lt; char *, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01UTCTimeOnly_00_01field_01_4.html#a788c9356c6d29c05632e3d235633434d">FIX8::Field&lt; UTCTimeOnly, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01f8String_00_01field_01_4.html#a9dc31e86670033066520d8d5faed6eb4">FIX8::Field&lt; f8String, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01UTCTimeOnly_00_01field_01_4.html#affc28845676c795a9bbe14adc7ed8443">FIX8::Field&lt; UTCTimeOnly, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01f8String_00_01field_01_4.html#a8b9a9287b00779273b3521b494dce6ec">FIX8::Field&lt; f8String, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01UTCTimeOnly_00_01field_01_4.html#a537639adc0759d2b40950a73c10b1a51">FIX8::Field&lt; UTCTimeOnly, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01UTCDateOnly_00_01field_01_4.html#a76ff1a8ae77f307d83eca5f0eb1652ac">FIX8::Field&lt; UTCDateOnly, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01f8String_00_01field_01_4.html#a8b9a9287b00779273b3521b494dce6ec">FIX8::Field&lt; f8String, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01UTCDateOnly_00_01field_01_4.html#ac5e9d0d40d9e4d345a2d61b828f6fa61">FIX8::Field&lt; UTCDateOnly, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01f8String_00_01field_01_4.html#adbba34402ac769bcc2d2c96d0288e654">FIX8::Field&lt; f8String, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01UTCDateOnly_00_01field_01_4.html#a2d617100a3ab0e519c83282efcee6669">FIX8::Field&lt; UTCDateOnly, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a8d5d25048fa18c0243e78538f3acd6c6">FIX8::Field&lt; LocalMktDate, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01f8String_00_01field_01_4.html#a14a0e27d5443d00f2bee8f65da8b5b72">FIX8::Field&lt; f8String, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a08b2c4c81151e400b63929f3ecc3c4db">FIX8::Field&lt; LocalMktDate, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01double_00_01field_01_4.html#a3522de0de101b9cb36da906d3c9b73c6">FIX8::Field&lt; double, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a7dfdb5f4205ae8ff29c3b3f3cee6ed8e">FIX8::Field&lt; LocalMktDate, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01TZTimeOnly_00_01field_01_4.html#a2bf05fc5848b6622c6d5f24909654717">FIX8::Field&lt; TZTimeOnly, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01double_00_01field_01_4.html#a3522de0de101b9cb36da906d3c9b73c6">FIX8::Field&lt; double, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01TZTimeOnly_00_01field_01_4.html#af660f74ca0a9f9342ebb87064fed96fe">FIX8::Field&lt; TZTimeOnly, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01double_00_01field_01_4.html#a1b8f1e5cd196f1029e993c97a1707087">FIX8::Field&lt; double, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01TZTimeOnly_00_01field_01_4.html#aaf72b043ac2eaa23abda909db91c4d07">FIX8::Field&lt; TZTimeOnly, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01TZTimestamp_00_01field_01_4.html#a20167967b17d46524dbc31b1ee393660">FIX8::Field&lt; TZTimestamp, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01double_00_01field_01_4.html#affb3e0007b66bb6fd51232e1e30b9df8">FIX8::Field&lt; double, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01TZTimestamp_00_01field_01_4.html#aaabbd743450a41864105cc2c303b1ca7">FIX8::Field&lt; TZTimestamp, field &gt;</a>
-, <a class="el" href="classFIX8_1_1Field_3_01double_00_01field_01_4.html#a126f8f0738c52fefced921f33dd2b326">FIX8::Field&lt; double, field &gt;</a>
+, <a class="el" href="classFIX8_1_1Field_3_01TZTimestamp_00_01field_01_4.html#a1ebf29eb741b380bcca6ff70bf046aa1">FIX8::Field&lt; TZTimestamp, field &gt;</a>
 , <a class="el" href="classFIX8_1_1Field_3_01Length_00_01field_01_4.html#a4b10d4935a3eeb5347f3cc540b517aa8">FIX8::Field&lt; Length, field &gt;</a>
 </li>
 <li>fields_begin()
@@ -247,7 +256,7 @@ $(document).ready(function(){initNavTree('functions_func_0x66.html','');});
 : <a class="el" href="structFIX8_1_1FieldSpec.html#a3822c875b519b2938f044d49f30671cc">FIX8::FieldSpec</a>
 </li>
 <li>FieldTrait()
-: <a class="el" href="structFIX8_1_1FieldTrait.html#ab7783c7a6b1cfbd20ae49b24cace1ba1">FIX8::FieldTrait</a>
+: <a class="el" href="structFIX8_1_1FieldTrait.html#a46ccefdb0ec688b1fe40691b2e94e287">FIX8::FieldTrait</a>
 </li>
 <li>FieldTrait_Hash_Array()
 : <a class="el" href="structFIX8_1_1FieldTrait__Hash__Array.html#a2ddf90ebf2554e683108cceeaf0e7a34">FIX8::FieldTrait_Hash_Array</a>
@@ -259,7 +268,7 @@ $(document).ready(function(){initNavTree('functions_func_0x66.html','');});
 : <a class="el" href="classFIX8_1_1FileLogger.html#a79c39a625f39fdf863850a0289f414c4">FIX8::FileLogger</a>
 </li>
 <li>FilePersister()
-: <a class="el" href="classFIX8_1_1FilePersister.html#a792d5fe0e483ea54004467eee5f11ae5">FIX8::FilePersister</a>
+: <a class="el" href="classFIX8_1_1FilePersister.html#afa40a23d6540adf6f94467cb9edf1357">FIX8::FilePersister</a>
 </li>
 <li>filestdin()
 : <a class="el" href="classfilestdin.html#adfe23624dbc5fbfbf97eb801fabdc1bb">filestdin</a>
@@ -267,10 +276,12 @@ $(document).ready(function(){initNavTree('functions_func_0x66.html','');});
 <li>find()
 : <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a1399f60718836e820c6ddccc8b707d85">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;</a>
 , <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement</a>
-, <a class="el" href="classFIX8_1_1presorted__set.html#a8c488905fb1263e9880cb031f0a3e1d1">FIX8::presorted_set&lt; K, T, Comp &gt;</a>
 , <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#affa23f5017a177db28920cee8903bce5">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;</a>
 , <a class="el" href="classFIX8_1_1presorted__set.html#a0dfbdbb4cb7ed5c0df80831a2ad99304">FIX8::presorted_set&lt; K, T, Comp &gt;</a>
-, <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#aca44551d392d8b279149654e7d899901">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;</a>
+, <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#abaf4622c9af0a3ae72f82f631cc96a6f">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;</a>
+, <a class="el" href="classFIX8_1_1presorted__set.html#ae689612ea20a73a1396f11e09c874f99">FIX8::presorted_set&lt; K, T, Comp &gt;</a>
+, <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a79e9ae8999aa8d706a12cc1dca5b7716">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;</a>
+, <a class="el" href="classXmlElement.html#af3ca984c6a21b635ea00adf4b595173d">XmlElement</a>
 </li>
 <li>find_be()
 : <a class="el" href="structFIX8_1_1F8MetaCntx.html#a2ebbb7ab0c2b070a24bacaee8130f03e">FIX8::F8MetaCntx</a>
@@ -291,10 +302,10 @@ $(document).ready(function(){initNavTree('functions_func_0x66.html','');});
 : <a class="el" href="classFIX8_1_1FieldTraits.html#abb9f5a6e5c60ac0b27f5b177b98de41b">FIX8::FieldTraits</a>
 </li>
 <li>find_nearest_highest_seqnum()
-: <a class="el" href="classFIX8_1_1BDBPersister.html#a0f5d0e2d79d9a2cf94950215e8063757">FIX8::BDBPersister</a>
+: <a class="el" href="classFIX8_1_1Persister.html#a80aebfa8f8e41b7d25ec958f8ccad8fe">FIX8::Persister</a>
+, <a class="el" href="classFIX8_1_1BDBPersister.html#a0f5d0e2d79d9a2cf94950215e8063757">FIX8::BDBPersister</a>
 , <a class="el" href="classFIX8_1_1MemoryPersister.html#a8e8d8c6b0c73e5736596e85d4250fd1e">FIX8::MemoryPersister</a>
 , <a class="el" href="classFIX8_1_1FilePersister.html#ae01718e7b3eb7aefac718361d2998624">FIX8::FilePersister</a>
-, <a class="el" href="classFIX8_1_1Persister.html#a80aebfa8f8e41b7d25ec958f8ccad8fe">FIX8::Persister</a>
 </li>
 <li>find_pair_ptr()
 : <a class="el" href="classFIX8_1_1GeneratedTable.html#ae454b21e25b84bfcb66b1155b07016f4">FIX8::GeneratedTable&lt; Key, Val &gt;</a>
@@ -303,8 +314,8 @@ $(document).ready(function(){initNavTree('functions_func_0x66.html','');});
 : <a class="el" href="classFIX8_1_1Configuration.html#a49e12b5f0089c74316463f53ab7cf9b9">FIX8::Configuration</a>
 </li>
 <li>find_ptr()
-: <a class="el" href="classFIX8_1_1GeneratedTable.html#a4950e75366c975bf01660bb63cb15424">FIX8::GeneratedTable&lt; Key, Val &gt;</a>
-, <a class="el" href="structFIX8_1_1StaticTable.html#a475af9295994ff2d9e7d36ca5eaacef9">FIX8::StaticTable&lt; Key, Val, Compare &gt;</a>
+: <a class="el" href="structFIX8_1_1StaticTable.html#a475af9295994ff2d9e7d36ca5eaacef9">FIX8::StaticTable&lt; Key, Val, Compare &gt;</a>
+, <a class="el" href="classFIX8_1_1GeneratedTable.html#a4950e75366c975bf01660bb63cb15424">FIX8::GeneratedTable&lt; Key, Val &gt;</a>
 </li>
 <li>find_ref()
 : <a class="el" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">FIX8::StaticTable&lt; Key, Val, Compare &gt;</a>
@@ -371,7 +382,7 @@ $(document).ready(function(){initNavTree('functions_func_0x66.html','');});
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Jul 21 2013 16:06:07. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 4 2013 08:14:27. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

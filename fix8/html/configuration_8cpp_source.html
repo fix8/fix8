@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.2</span>
+   &#160;<span id="projectnumber">version  0.9.3</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -236,7 +236,7 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor"></span>      <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;file&quot;</span>)</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      {</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;FilePersister&gt;</a> result(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1FilePersister.html">FilePersister</a>);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;FilePersister&gt;</a> result(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1FilePersister.html">FilePersister</a>(which-&gt;<a class="code" href="classXmlElement.html#a9bcc420674262afdd97a18c1639349a2">FindAttr</a>(<span class="stringliteral">&quot;rotation&quot;</span>, 0)));</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;         <span class="keywordflow">if</span> (result-&gt;<a class="code" href="classFIX8_1_1FilePersister.html#ac4f3690ee9c9481bff0af568b218f3d1">initialise</a>(dir, db, flag))</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            <span class="keywordflow">return</span> result.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      }</div>
@@ -338,7 +338,7 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Jul 21 2013 16:05:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 4 2013 08:13:38. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -138,7 +138,7 @@ var searchData=
   ['unitofmeasure_5fus_5fdollars',['UnitOfMeasure_US_DOLLARS',['../namespaceFIX8_1_1TEX.html#af782ae02c46a2db71c5f652d00f5db64',1,'FIX8::TEX']]],
   ['unitofmeasureqty',['UnitOfMeasureQty',['../namespaceFIX8_1_1TEX.html#a2f894d7b6c3479d694ccc988bed8d677',1,'FIX8::TEX']]],
   ['unlink_5fdirectory',['unlink_directory',['../classlog__fixture.html#a714176c4dcba7578bd7fb48c6f1e4b3e',1,'log_fixture::unlink_directory()'],['../classpersist__fixture.html#a2af9e1393d9f282f078e75e9c72b418c',1,'persist_fixture::unlink_directory()']]],
-  ['unlock',['unlock',['../classFIX8_1_1f8__mutex.html#a225309cc94ff574fdb0e9ce03ac1233d',1,'FIX8::f8_mutex']]],
+  ['unlock',['unlock',['../classFIX8_1_1f8__mutex.html#a225309cc94ff574fdb0e9ce03ac1233d',1,'FIX8::f8_mutex::unlock()'],['../classFIX8_1_1f8__spin__lock.html#ae1c999847592862338458dc1358d6ea2',1,'FIX8::f8_spin_lock::unlock()']]],
   ['unset_5fraw_5fmode',['unset_raw_mode',['../classFIX8_1_1tty__save__state.html#aaecaabf5b98750e1a62a093bea443899',1,'FIX8::tty_save_state']]],
   ['unsolicitedindicator',['UnsolicitedIndicator',['../namespaceFIX8_1_1TEX.html#a5c0a051ddc2d6c43574039d857217de0',1,'FIX8::TEX']]],
   ['unsolicitedindicator_5fno',['UnsolicitedIndicator_NO',['../namespaceFIX8_1_1TEX.html#a590c848f03de148e9236457269db1ff2',1,'FIX8::TEX']]],

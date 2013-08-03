@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['f8_5fscoped_5flock',['f8_scoped_lock',['../namespaceFIX8.html#a4880b1e134d6360c95c8ef460d165897',1,'FIX8']]],
+  ['f8_5fscoped_5fspin_5flock',['f8_scoped_spin_lock',['../namespaceFIX8.html#ad5ce42535b8df313bfb2f9a27ec3f718',1,'FIX8']]],
   ['f8string',['f8String',['../namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148',1,'FIX8']]],
   ['factor',['Factor',['../namespaceFIX8_1_1TEX.html#aa4816458f9016e50f61f856e84e91db7',1,'FIX8::TEX']]],
   ['fairvalue',['FairValue',['../namespaceFIX8_1_1TEX.html#afaf1b4bd6f8f20dce79d6d64ae72ffbd',1,'FIX8::TEX']]],

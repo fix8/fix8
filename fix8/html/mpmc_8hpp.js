@@ -4,5 +4,7 @@ var mpmc_8hpp =
     [ "f8_atomic", "mpmc_8hpp.html#a09529314cda4fed23b266afef4c4355c", null ],
     [ "f8_concurrent_queue", "mpmc_8hpp.html#a86434e873a3410dba0d42e677288465f", null ],
     [ "f8_mutex", "mpmc_8hpp.html#a8b3ee434e7062e37caee9a864c73d0dd", null ],
-    [ "f8_scoped_lock", "mpmc_8hpp.html#a36015b61fefaa115329be75a76f9c418", null ]
+    [ "f8_scoped_lock", "mpmc_8hpp.html#a36015b61fefaa115329be75a76f9c418", null ],
+    [ "f8_scoped_spin_lock", "mpmc_8hpp.html#a4783d418099c0817a3f8c398ccd526c3", null ],
+    [ "f8_spin_lock", "mpmc_8hpp.html#adae5f78769c2ce79976f0ced2333e97f", null ]
 ];

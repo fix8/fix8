@@ -1,5 +1,9 @@
 var NAVTREEINDEX93 =
 {
+"classFIX8_1_1TEX_1_1RequestForPositionsAck_1_1NoLegs.html#a79435c052b3e6492b5982bc82103cae8":[2,0,0,0,25,3,7],
+"classFIX8_1_1TEX_1_1RequestForPositionsAck_1_1NoLegs.html#a79435c052b3e6492b5982bc82103cae8":[2,0,0,0,25,3,8],
+"classFIX8_1_1TEX_1_1RequestForPositionsAck_1_1NoLegs.html#aa0932bd0ccc7466d52732e198554238c":[2,0,0,0,25,3,10],
+"classFIX8_1_1TEX_1_1RequestForPositionsAck_1_1NoLegs.html#ab7936185dd302ef1a7a8e3302949d375":[2,0,0,0,25,3,2],
 "classFIX8_1_1TEX_1_1RequestForPositionsAck_1_1NoLegs.html#ab7936185dd302ef1a7a8e3302949d375":[2,0,0,0,25,3,4],
 "classFIX8_1_1TEX_1_1RequestForPositionsAck_1_1NoLegs.html#abfabb4ba84aa8118abb3bb3499b44144":[2,0,0,0,25,3,5],
 "classFIX8_1_1TEX_1_1RequestForPositionsAck_1_1NoLegs.html#abfabb4ba84aa8118abb3bb3499b44144":[2,0,0,0,25,3,6],
@@ -245,9 +249,5 @@ var NAVTREEINDEX93 =
 "classFIX8_1_1TEX_1_1RequestForPositions_1_1NoPartyIDs_1_1NoPartySubIDs.html#a0713cf8941865b94c69e53684c2f33cf":[2,0,0,0,24,4,0,7],
 "classFIX8_1_1TEX_1_1RequestForPositions_1_1NoPartyIDs_1_1NoPartySubIDs.html#a7ceccd956a90bced9d2278d6d41a156e":[2,0,0,0,24,4,0,8],
 "classFIX8_1_1TEX_1_1RequestForPositions_1_1NoPartyIDs_1_1NoPartySubIDs.html#a8c05df0be2c7b7b12397d15ad93d0eb5":[2,0,0,0,24,4,0,10],
-"classFIX8_1_1TEX_1_1RequestForPositions_1_1NoPartyIDs_1_1NoPartySubIDs.html#a94b8b96deb5986cfb660ffdc8f50c282":[2,0,0,0,24,4,0,11],
-"classFIX8_1_1TEX_1_1RequestForPositions_1_1NoPartyIDs_1_1NoPartySubIDs.html#aabc05dd6ec35f31e0518941b0d840b8b":[2,0,0,0,24,4,0,0],
-"classFIX8_1_1TEX_1_1RequestForPositions_1_1NoPartyIDs_1_1NoPartySubIDs.html#aabc05dd6ec35f31e0518941b0d840b8b":[2,0,0,0,24,4,0,2],
-"classFIX8_1_1TEX_1_1RequestForPositions_1_1NoPartyIDs_1_1NoPartySubIDs.html#ad49e27a944a11e80a98f9625381954c2":[2,0,0,0,24,4,0,4],
-"classFIX8_1_1TEX_1_1RequestForPositions_1_1NoPartyIDs_1_1NoPartySubIDs.html#ad49e27a944a11e80a98f9625381954c2":[2,0,0,0,24,4,0,5]
+"classFIX8_1_1TEX_1_1RequestForPositions_1_1NoPartyIDs_1_1NoPartySubIDs.html#a94b8b96deb5986cfb660ffdc8f50c282":[2,0,0,0,24,4,0,11]
 };

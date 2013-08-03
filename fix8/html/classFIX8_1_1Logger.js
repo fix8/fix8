@@ -26,6 +26,7 @@ var classFIX8_1_1Logger =
     [ "get_stream", "classFIX8_1_1Logger.html#a8aee5d01bebcad62a5eae8f613233369", null ],
     [ "get_thread_code", "classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81", null ],
     [ "has_flag", "classFIX8_1_1Logger.html#a0eb3d8d99829f835c85a27745d8f4663", null ],
+    [ "kill", "classFIX8_1_1Logger.html#ab0e04af2b8ac7360e7796223a8e034ab", null ],
     [ "operator()", "classFIX8_1_1Logger.html#aa11f47142886e4dd38230ad63ce0377f", null ],
     [ "purge_thread_codes", "classFIX8_1_1Logger.html#a8175e14a66ef836973ac504cf04170ef", null ],
     [ "rotate", "classFIX8_1_1Logger.html#a96598126c3eb87a72b3581a223b7b489", null ],

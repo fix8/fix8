@@ -1,5 +1,9 @@
 var NAVTREEINDEX90 =
 {
+"classFIX8_1_1TEX_1_1Quote_1_1NoComplexEvents_1_1NoComplexEventDates.html#ae5231a71f03dd45998c149110a7c0c70":[2,0,0,0,85,0,0,1],
+"classFIX8_1_1TEX_1_1Quote_1_1NoComplexEvents_1_1NoComplexEventDates.html#ae5231a71f03dd45998c149110a7c0c70":[2,0,0,0,85,0,0,3],
+"classFIX8_1_1TEX_1_1Quote_1_1NoComplexEvents_1_1NoComplexEventDates.html#aea309529fe7c0831b24f93712b4f1090":[2,0,0,0,85,0,0,4],
+"classFIX8_1_1TEX_1_1Quote_1_1NoComplexEvents_1_1NoComplexEventDates.html#aea309529fe7c0831b24f93712b4f1090":[2,0,0,0,85,0,0,2],
 "classFIX8_1_1TEX_1_1Quote_1_1NoComplexEvents_1_1NoComplexEventDates.html#af79a7362ab6f891d7fdaaee834309705":[2,0,0,0,85,0,0,11],
 "classFIX8_1_1TEX_1_1Quote_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html":[2,0,0,0,85,0,0,0],
 "classFIX8_1_1TEX_1_1Quote_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a0750db892602e492b2d34e5c083979ca":[2,0,0,0,85,0,0,0,11],
@@ -245,9 +249,5 @@ var NAVTREEINDEX90 =
 "classFIX8_1_1TEX_1_1Quote_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#ac036191249001ccdff3d91eea4ca0963":[2,0,0,0,85,9,2,1],
 "classFIX8_1_1TEX_1_1Quote_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#ac036191249001ccdff3d91eea4ca0963":[2,0,0,0,85,9,2,3],
 "classFIX8_1_1TEX_1_1Quote_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#ac7de0f0b4b183e31aa04315b4c793ec5":[2,0,0,0,85,9,2,5],
-"classFIX8_1_1TEX_1_1Quote_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#ac7de0f0b4b183e31aa04315b4c793ec5":[2,0,0,0,85,9,2,6],
-"classFIX8_1_1TEX_1_1Quote_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#acf307ee30e98867e92c4133e3534a6f5":[2,0,0,0,85,9,2,10],
-"classFIX8_1_1TEX_1_1Quote_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#ae22eddede105dfc10a863943e223fa61":[2,0,0,0,85,9,2,9],
-"classFIX8_1_1TEX_1_1Quote_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html":[2,0,0,0,85,9,2,0],
-"classFIX8_1_1TEX_1_1Quote_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a05dbe07f6b2f0606b7b80e553e8447be":[2,0,0,0,85,9,2,0,11]
+"classFIX8_1_1TEX_1_1Quote_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#ac7de0f0b4b183e31aa04315b4c793ec5":[2,0,0,0,85,9,2,6]
 };

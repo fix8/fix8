@@ -6,5 +6,5 @@ var searchData=
   ['keydatapair',['KeyDataPair',['../structFIX8_1_1BDBPersister_1_1KeyDataPair.html#ab7696053ce4a3e53f5d9ebe64cf7d5d1',1,'FIX8::BDBPersister::KeyDataPair']]],
   ['keydatapair',['KeyDataPair',['../structFIX8_1_1BDBPersister_1_1KeyDataPair.html',1,'FIX8::BDBPersister']]],
   ['kickhbservice',['kickHBService',['../classtest__session.html#a13abd50020d7adcb2a4cd59cb8c3a7ff',1,'test_session']]],
-  ['kill',['kill',['../classFIX8_1_1__dthreadcore.html#a805a44bb5fc9906e2df7bbb5d7076172',1,'FIX8::_dthreadcore::kill(int signum) const '],['../classFIX8_1_1__dthreadcore.html#ac2501976d09af78592725353792e6f3f',1,'FIX8::_dthreadcore::kill(_dthreadcore &amp;ctxt, const int signal=SIGTERM)'],['../classFIX8_1_1Timer.html#a6520db3e8bbce98e9082898101797822',1,'FIX8::Timer::kill()']]]
+  ['kill',['kill',['../classFIX8_1_1Logger.html#ab0e04af2b8ac7360e7796223a8e034ab',1,'FIX8::Logger::kill()'],['../classFIX8_1_1__dthreadcore.html#a805a44bb5fc9906e2df7bbb5d7076172',1,'FIX8::_dthreadcore::kill(int signum) const '],['../classFIX8_1_1__dthreadcore.html#ac2501976d09af78592725353792e6f3f',1,'FIX8::_dthreadcore::kill(_dthreadcore &amp;ctxt, const int signal=SIGTERM)'],['../classFIX8_1_1Timer.html#a6520db3e8bbce98e9082898101797822',1,'FIX8::Timer::kill()']]]
 ];

@@ -1,5 +1,9 @@
 var NAVTREEINDEX65 =
 {
+"classFIX8_1_1TEX_1_1NewOrderCross.html#a9e7d2ea4024535db25bee2b579287d05":[2,0,0,0,110,14],
+"classFIX8_1_1TEX_1_1NewOrderCross.html#aadfc2fdab283428a466161ce08b425cb":[2,0,0,0,110,11],
+"classFIX8_1_1TEX_1_1NewOrderCross.html#aadfc2fdab283428a466161ce08b425cb":[2,0,0,0,110,13],
+"classFIX8_1_1TEX_1_1NewOrderCross.html#abeba23fe25d07f4ca8ca65bfe1a8024e":[2,0,0,0,110,20],
 "classFIX8_1_1TEX_1_1NewOrderCross.html#ae2bf98425687becc07b9dbca9d1ee86d":[2,0,0,0,110,15],
 "classFIX8_1_1TEX_1_1NewOrderCross.html#ae2bf98425687becc07b9dbca9d1ee86d":[2,0,0,0,110,16],
 "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoComplexEvents.html":[2,0,0,0,110,0],
@@ -245,9 +249,5 @@ var NAVTREEINDEX65 =
 "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStrategyParameters.html#a878a27f7d46b7f49671ed741c344fe89":[2,0,0,0,110,8,11],
 "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStrategyParameters.html#aa89665ee2cf4f1f3e5e6ae663ae80933":[2,0,0,0,110,8,8],
 "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStrategyParameters.html#aaa63176c93b2ac1ee7c7151308365f72":[2,0,0,0,110,8,0],
-"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStrategyParameters.html#aaa63176c93b2ac1ee7c7151308365f72":[2,0,0,0,110,8,2],
-"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStrategyParameters.html#ab9920c3956fb7f525c71f1f0260f8019":[2,0,0,0,110,8,6],
-"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStrategyParameters.html#ab9920c3956fb7f525c71f1f0260f8019":[2,0,0,0,110,8,7],
-"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStrategyParameters.html#adf02158bd5ce020027fa3ed706ce2afc":[2,0,0,0,110,8,9],
-"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html":[2,0,0,0,110,9]
+"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoStrategyParameters.html#aaa63176c93b2ac1ee7c7151308365f72":[2,0,0,0,110,8,2]
 };

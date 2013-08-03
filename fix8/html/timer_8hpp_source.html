@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.2</span>
+   &#160;<span id="projectnumber">version  0.9.3</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -145,7 +145,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;#endif</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef _FIX8_TIMER_HPP_</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="timer_8hpp.html#a1a0ec969afbdbff6eba828cc14d1c545">   38</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _FIX8_TIMER_HPP_</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="timer_8hpp.html#a1a0ec969afbdbff6eba828cc14d1c545">   38</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor"># define _FIX8_TIMER_HPP_</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
@@ -219,7 +219,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;   {</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;      <span class="keywordtype">bool</span> shouldsleep(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;      {</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;         <a class="code" href="classFIX8_1_1f8__scoped__lock.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock</a> guard(_mutex);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;         <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock</a> guard(_mutex);</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;         <span class="keywordflow">if</span> (_event_queue.size())</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;         {</div>
@@ -234,7 +234,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            {</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;               <span class="keyword">const</span> <a class="code" href="classFIX8_1_1TimerEvent.html" title="Timer event object to provide callback context with Timer.">TimerEvent&lt;T&gt;</a> rop(_event_queue.top()); <span class="comment">// take a copy</span></div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;               _event_queue.pop(); <span class="comment">// remove from queue</span></div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;               guard.<a class="code" href="classFIX8_1_1f8__scoped__lock.html#aab8aafbb8f5043abd83c2c8a6dcc2f4c">release</a>();</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;               guard.<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aa1b520bd4bf807da834ff8b24dd6bd28">release</a>();</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;               ++elapsed;</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;               <span class="keywordflow">if</span> (!(_monitor.*rop._callback)())</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                  <span class="keywordflow">break</span>;</div>
@@ -261,7 +261,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 <div class="line"><a name="l00178"></a><span class="lineno"><a class="code" href="classFIX8_1_1Timer.html#a8459f0c5f91c707601e564a669c21934">  178</a></span>&#160;<span class="keywordtype">size_t</span> <a class="code" href="classFIX8_1_1Timer.html#a8459f0c5f91c707601e564a669c21934">Timer&lt;T&gt;::clear</a>()</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;{</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;   <span class="keywordtype">size_t</span> result(0);</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock</a> guard(_mutex);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock</a> guard(_mutex);</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;   <span class="keywordflow">while</span> (_event_queue.size())</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;   {</div>
@@ -286,7 +286,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;   }</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;   what.<a class="code" href="classFIX8_1_1TimerEvent.html#ac008ce0cae9ad35ea0b314cc0f7bd57a">set</a>(tofire);</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock</a> guard(_mutex);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock</a> guard(_mutex);</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;   _event_queue.push(what);</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;   <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
@@ -335,7 +335,7 @@ $(document).ready(function(){initNavTree('timer_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Jul 21 2013 16:05:39. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 4 2013 08:13:59. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

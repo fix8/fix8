@@ -28,6 +28,7 @@ var classFIX8_1_1Configuration =
     [ "get_role", "classFIX8_1_1Configuration.html#a36a52fd4fa27e1ce343590ce56f69d19", null ],
     [ "get_sender_comp_id", "classFIX8_1_1Configuration.html#a00d8d606b3ec33836fa64397fcca2b1c", null ],
     [ "get_session", "classFIX8_1_1Configuration.html#a5ad3c83d2f3a318346e9a75255b7e702", null ],
+    [ "get_silent_disconnect", "classFIX8_1_1Configuration.html#a873f1b9a15f2df130a1ae9a2bf622f1d", null ],
     [ "get_string_field", "classFIX8_1_1Configuration.html#a7693a3f4a90f3366e6871355e62998c8", null ],
     [ "get_target_comp_id", "classFIX8_1_1Configuration.html#aee6c01563c11821c57992e3719149206", null ],
     [ "get_tcp_nodelay", "classFIX8_1_1Configuration.html#a23e75c52ddcf807011115ed12c23664a", null ],
