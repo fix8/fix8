@@ -982,7 +982,10 @@ public:
 
 		f8_scoped_lock guard(_mutex);
 		if (_instance == 0)
-			_instance = new T;
+		{
+			T *p(new T); // avoid race condition between mem assignment and construction
+			_instance = p;
+		}
 		return _instance;
 	}
 

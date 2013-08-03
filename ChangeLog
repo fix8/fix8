@@ -1,5 +1,6 @@
 * Sun Aug 04 2013 David L. Dight <fix@fix8.org> 0.9.3
-Fixed Jira tickets FX-67, FX-68, FX-69, FX-70
+Fixed Jira tickets FX-67, FX-68, FX-69, FX-70, FX-71
+Fixed race condition in Singleton
 Added backup the persist file instead of purging after sequence reset
 Added forced logout message should contain error text
 Fixed	server crashes when reliable client attempts sync reconnect
