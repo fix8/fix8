@@ -265,8 +265,6 @@ public:
 		_local_mutex->unlock();
 		_local_mutex = 0;
 	}
-
-	friend T;
 };
 
 typedef f8_scoped_lock_impl<f8_mutex> f8_scoped_lock;
