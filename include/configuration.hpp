@@ -269,6 +269,10 @@ public:
 	  \param role role to filter (cn_unknown means all)
 	  \return number of sessions found */
 	unsigned get_all_sessions(std::vector<const XmlElement *>& target, const Connection::Role role=Connection::cn_unknown) const;
+
+	/*! Return ptr to the root XmlElement
+	  \return root element */
+	const XmlElement *get_root() const { return _root; }
 };
 
 //-------------------------------------------------------------------------------------------------

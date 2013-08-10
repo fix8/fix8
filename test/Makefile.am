@@ -44,7 +44,7 @@ libhftest_la_SOURCES = Perf_types.hpp Perf_types.cpp Perf_traits.cpp \
 					 		 Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
 
 CLEANFILES = $(libmyfix_la_SOURCES) $(libhftest_la_SOURCES)
-INCLUDES = -I$(top_srcdir)/include
+AM_CPPFLAGS = -I$(top_srcdir)/include
 
 XML_SCHEMA = $(top_srcdir)/schema/FIX50SP2.xml
 XML_HF_SCHEMA = $(top_srcdir)/schema/FIX42PERF.xml

@@ -41,14 +41,23 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <set>
 
 //----------------------------------------------------------------------------------------
+typedef FIX8::StaticTable<std::string, unsigned char> Str2Chr;
+
+//----------------------------------------------------------------------------------------
 /// A simple xml parser with Xpath style lookup.
 class XmlElement
 {
+	/// XML entity char lookup
+	static const Str2Chr stringtochar_;
+
 	/// Maximum depth levels supported.
 	enum { MaxDepth = 128 };
-	static int errors_, line_, incline_, maxdepth_, seq_;
 	static FIX8::RegExp rCE_, rCX_, rIn_, rEn_, rEv_;
-	static std::string inclusion_;
+
+	XmlElement *parent_, *root_;
+
+	int errors_, line_, incline_, maxdepth_, seq_;
+	std::string inclusion_;
 
 	std::string tag_, *value_, *decl_;
 	int depth_, sequence_, txtline_, chldcnt_, subidx_;
@@ -76,8 +85,6 @@ private:
 	/// Set of all child elements in file order
 	XmlSet *ordchildren_;
 	static const XmlSet emptyset_;
-
-	XmlElement *parent_;
 
 	/// Copy Ctor. Non-copyable.
 	XmlElement(const XmlElement&);
@@ -227,6 +234,10 @@ public:
 
 	/*! Get the maximum depth supported.
 	  \return the maximum depth */
+	int GetMaxDepthPermitted() const { return MaxDepth; }
+
+	/*! Get the maximum depth from this node
+	  \return the maximum depth */
 	int GetMaxDepth() const { return maxdepth_; }
 
 	/*! Get the full xpath for the element; recursive
@@ -244,9 +255,6 @@ public:
 	/*! Get the declaration if available.
 	  \return the depth */
 	const std::string *GetDecl() const { return decl_; }
-
-	/// Reset all counters, errors and sequences.
-	static void Reset() { errors_ = maxdepth_ = seq_ = 0; line_ = 1; }
 
 	/*! Create a new root element (and recursively parse) from a given xml filename.
 	  \param fname the xml filename
@@ -269,9 +277,9 @@ public:
 	  \return const_iterator to last+1 element */
 	XmlSet::const_iterator end() const { return ordchildren_ ? ordchildren_->end() : emptyset_.end(); }
 
-	/*! Get the root element of this tree
+	/*! Get the root element of this tree, const version
 	  \return the root element */
-	const XmlElement *GetRoot() const { return parent_ ? parent_->GetRoot() : this; }
+	const XmlElement *GetRoot() const { return parent_ ? parent_->root_ : this; }
 
 	/*! Inserter friend.
 	    \param os stream to send to

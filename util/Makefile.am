@@ -35,7 +35,7 @@ bin_PROGRAMS = seqedit
 seqedit_SOURCES = seqedit.cpp
 
 CLEANFILES =
-INCLUDES = -I$(top_srcdir)/include
+AM_CPPFLAGS = -I$(top_srcdir)/include
 
 GEN_LIBS = -lrt -lstdc++
 

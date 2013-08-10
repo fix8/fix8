@@ -76,9 +76,9 @@ public:
 	    \return number of queued messages */
 	size_t queued() const { return _msg_queue.size(); }
 
-	/*! Pure virtual Function operator. Called by thread to process message on queue.
+	/*! Function operator. Called by thread to process message on queue.
 	    \return 0 on success */
-	virtual int operator()() = 0;
+	virtual int operator()() { return 0; }
 
 	/*! Execute the function operator
 	    \return result of operator */

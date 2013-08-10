@@ -33,7 +33,7 @@
 #############################################################################################
 lib_LTLIBRARIES = libfix8.la
 inc = $(top_srcdir)/include
-INCLUDES = -I$(inc)
+AM_CPPFLAGS = -I$(inc)
 
 libfix8_la_SOURCES = xml.cpp f8utils.cpp message.cpp traits.cpp \
                      field.cpp session.cpp logger.cpp persist.cpp \

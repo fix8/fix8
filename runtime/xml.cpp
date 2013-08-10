@@ -66,14 +66,35 @@ using namespace FIX8;
 using namespace std;
 
 //----------------------------------------------------------------------------------------
-int XmlElement::errors_(0), XmlElement::line_(1), XmlElement::incline_(1),
-	 XmlElement::maxdepth_(0), XmlElement::seq_(0);
-string XmlElement::inclusion_;
 const XmlElement::XmlSet XmlElement::emptyset_;
 const XmlElement::XmlAttrs XmlElement::emptyattrs_;
-RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&(amp|lt|gt|apos|quot);"),
+RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&([a-z]{2,});"),
 	XmlElement::rIn_("href=\"([^\"]+)\""),
    XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
+
+//----------------------------------------------------------------------------------------
+template<>
+const Str2Chr::TypePair Str2Chr::_valueTable[] =
+{
+	Str2Chr::TypePair("amp", '&'),	Str2Chr::TypePair("lt", '<'),		Str2Chr::TypePair("gt", '>'),
+	Str2Chr::TypePair("apos", '\''),	Str2Chr::TypePair("quot", '"'),	Str2Chr::TypePair("nbsp", 160),
+	Str2Chr::TypePair("iexcl", 161),	Str2Chr::TypePair("cent", 162),	Str2Chr::TypePair("pound", 163),
+	Str2Chr::TypePair("curren", 164),Str2Chr::TypePair("yen", 165),	Str2Chr::TypePair("brvbar", 166),
+	Str2Chr::TypePair("sect", 167),	Str2Chr::TypePair("uml", 168),	Str2Chr::TypePair("copy", 169),
+	Str2Chr::TypePair("ordf", 170),	Str2Chr::TypePair("laquo", 171),	Str2Chr::TypePair("not", 172),
+	Str2Chr::TypePair("shy", 173),	Str2Chr::TypePair("reg", 174),	Str2Chr::TypePair("macr", 175),
+	Str2Chr::TypePair("deg", 176),	Str2Chr::TypePair("plusmn", 177),Str2Chr::TypePair("sup2", 178),
+	Str2Chr::TypePair("sup3", 179),	Str2Chr::TypePair("acute", 180),	Str2Chr::TypePair("micro", 181),
+	Str2Chr::TypePair("para", 182),	Str2Chr::TypePair("middot", 183),Str2Chr::TypePair("cedil", 184),
+	Str2Chr::TypePair("sup1", 185),	Str2Chr::TypePair("ordm", 186),	Str2Chr::TypePair("raquo", 187),
+	Str2Chr::TypePair("frac14", 188),Str2Chr::TypePair("frac12", 189),Str2Chr::TypePair("frac34", 190),
+	Str2Chr::TypePair("iquest", 191)
+};
+template<>
+const Str2Chr::TypeMap Str2Chr::_valuemap(Str2Chr::_valueTable, Str2Chr::get_table_end());
+template<>
+const Str2Chr::NotFoundType Str2Chr::_noval('?');
+const Str2Chr XmlElement::stringtochar_;
 
 //-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlElement& en)
@@ -143,8 +164,9 @@ bool exec_cmd(const string& cmd, string& result)
 // finite state machine with simple recursive descent parser
 //-----------------------------------------------------------------------------------------
 XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline, int depth, const char *rootAttr)
-	: value_(), decl_(), depth_(depth), sequence_(++seq_), txtline_(txtline),
-	chldcnt_(), subidx_(subidx), attrs_(), children_(), _was_include(), ordchildren_(), parent_(parent)
+	: parent_(parent), root_(parent_ ? parent_->root_ : this), errors_(), line_(1), incline_(1), maxdepth_(),
+	seq_(), value_(), decl_(), depth_(depth), sequence_(++root_->seq_), txtline_(txtline),
+	chldcnt_(), subidx_(subidx), attrs_(), children_(), _was_include(), ordchildren_()
 {
 	istream *ifsptr(&ifs);
 
@@ -163,8 +185,8 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 		attrs_->insert(XmlAttrs::value_type("docpath", rootAttr));
 	}
 
-	if (maxdepth_ < depth)
-		maxdepth_ = depth_;
+	if (root_->maxdepth_ < depth)
+		root_->maxdepth_ = depth_;
 
 	while (ifsptr->good() && state != finished)
 	{
@@ -173,10 +195,10 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 		switch (c)
 		{
 		case '\n':
-			if (!inclusion_.empty())
-				++incline_;
+			if (!root_->inclusion_.empty())
+				++root_->incline_;
 			else
-				++line_; // drop through
+				++root_->line_; // drop through
 		case '\r':
 			continue;
 		default:
@@ -203,6 +225,8 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 				state = odec;
 			else if (c == '!' && tmpotag.empty())
 				state = ocom0;
+			else if (c == '=' || c == '\\' || c == '"' || c == '\'')
+				goto illegal_tag;
 			else if (!isspace(c))
 				tmpotag += c;
 			break;
@@ -273,18 +297,20 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 					ifsptr->putback(c);
 					if (depth_ + 1 > MaxDepth)
 					{
-						++errors_;
-						cerr << "Error (" << line_ << "): maximum depth exceeded (" << MaxDepth << ')' << endl;
+						++root_->errors_;
+						ostringstream ostr;
+						ostr << "Error (" << root_->line_ << "): maximum depth exceeded (" << MaxDepth << ')';
 						state = olb;
+						throw XMLError(ostr.str());
 					}
 					else
 					{
-						XmlElement *child(new XmlElement(*ifsptr, chldcnt_ + 1, this, line_, depth_ + 1));
+						XmlElement *child(new XmlElement(*ifsptr, chldcnt_ + 1, this, root_->line_, depth_ + 1));
 						if (child->GetTag().empty()
 							|| (child->_was_include && (!child->children_ || !child->children_->begin()->second->children_)))
 						{
 							delete child;
-							--seq_;
+							--root_->seq_;
 						}
 						else
 						{
@@ -305,7 +331,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 								}
 
 								delete child;
-								inclusion_.clear();
+								root_->inclusion_.clear();
 							}
 							else
 							{
@@ -332,12 +358,14 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 				state = finished;
 				if (tmpotag != tmpctag)
 				{
-					++errors_;
-					cerr << "Error (" << line_ << "): unmatched tag " << '\''
+illegal_tag:
+					++root_->errors_;
+					ostringstream ostr;
+					ostr << "Error (" << root_->line_ << "): unmatched tag " << '\''
 						 << tmpotag << '\'' << " does not close with " << '\'' << tmpctag << '\'';
-					if (!inclusion_.empty())
-						cerr << " in inclusion " << inclusion_ << " (" << incline_ << ')';
-					cerr << endl;
+					if (!root_->inclusion_.empty())
+						ostr << " in inclusion " << root_->inclusion_ << " (" << root_->incline_ << ')';
+					throw XMLError(ostr.str());
 				}
 				else
 				{
@@ -351,15 +379,17 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 							ifstream *ifs1(new ifstream(InplaceXlate(whatv).c_str()));
 							if (!*ifs1)
 							{
-								++errors_;
-								cerr << "Error (" << line_ << "): could not process include " << '\'' << whatv << '\'' << endl;
+								++root_->errors_;
+								ostringstream ostr;
+								ostr << "Error (" << root_->line_ << "): could not process include " << '\'' << whatv << '\'';
+								throw XMLError(ostr.str());
 							}
 							else
 							{
 								ifsptr = ifs1;	// process xml elements from this stream now
 								state = olb;	// reset
-								inclusion_ = whatv;
-								incline_ = 1;
+								root_->inclusion_ = whatv;
+								root_->incline_ = 1;
 								tmpctag.clear();
 								tmpval.clear();
 								tmpattr.clear();
@@ -370,8 +400,10 @@ XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline
 						}
 						else
 						{
-							++errors_;
-							cerr << "Error (" << line_ << "): invalid xml include specification " << '\'' << tmpattr << '\'' << endl;
+							ostringstream ostr;
+							++root_->errors_;
+							ostr << "Error (" << root_->line_ << "): invalid xml include specification " << '\'' << tmpattr << '\'';
+							throw XMLError(ostr.str());
 						}
 					}
 
@@ -422,12 +454,23 @@ int XmlElement::ParseAttrs(const string& attlst)
 				state = es;
 			else if (c == '=')
 				state = oq;
+			else if (c == '"' || c == '\'')
+			{
+illegal_char:
+				ostringstream ostr;
+				ostr << "Error (" << root_->line_ << ") attribute \'" << tmptag << "\' illegal character defined";
+				if (!root_->inclusion_.empty())
+					ostr << " in inclusion " << root_->inclusion_ << " (" << root_->incline_ << ')';
+				throw XMLError(ostr.str());
+			}
 			else
 				tmptag += c;
 			break;
 		case es:
 			if (c == '=')
 				state = oq;
+			else if (c == '"' || c == '\'')
+				goto illegal_char;
 			break;
 		case oq:
 			if (c == '"' || c == '\'')
@@ -435,24 +478,28 @@ int XmlElement::ParseAttrs(const string& attlst)
 				comchar = c;
 				state = value;
 			}
+			else if (!isspace(c))
+				goto illegal_char;
 			break;
 		case value:
 			if (c != comchar)
 				tmpval += c;
 			else
 			{
+				if (tmptag.find_first_of("\\\'\"=") != string::npos)
+					goto illegal_char;
 				if (tmptag != "docpath")
 				{
 					if (!attrs_)
 						attrs_ = new XmlAttrs;
 					if (!attrs_->insert(XmlAttrs::value_type(tmptag, InplaceXlate(tmpval))).second)
 					{
-						++errors_;
-						cerr << "Error (" << line_ << ") attribute \'" << tmptag
-							<< "\' already defined; ignoring";
-						if (!inclusion_.empty())
-							cerr << " in inclusion " << inclusion_ << " (" << incline_ << ')';
-						cerr << endl;
+						++root_->errors_;
+						ostringstream ostr;
+						ostr << "Error (" << root_->line_ << ") attribute \'" << tmptag << "\' already defined";
+						if (!root_->inclusion_.empty())
+							ostr << " in inclusion " << root_->inclusion_ << " (" << root_->incline_ << ')';
+						throw XMLError(ostr.str());
 					}
 				}
 				tmptag.clear();
@@ -487,7 +534,7 @@ const XmlElement *XmlElement::find(const string& what, bool ignorecase, const st
 	const string *aval, const char delim)	const// find 1st matching entity
 {
 	if (what.compare(0, 2, "//") == 0) 	// root based
-		return GetRoot()->find(what.substr(2), ignorecase, atag, aval, delim);
+		return root_->find(what.substr(2), ignorecase, atag, aval, delim);
 
 	if (ignorecase ? what % tag_ : what == tag_)
 		return atag && aval && !findAttrByValue(*atag, *aval) ? 0 : this;
@@ -516,7 +563,7 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 	const string *atag, const string *aval, const char delim) const	// find all matching entities
 {
 	if (what.compare(0, 2, "//") == 0) 	// root based
-		return GetRoot()->find(what.substr(2), eset, ignorecase, atag, aval, delim);
+		return root_->find(what.substr(2), eset, ignorecase, atag, aval, delim);
 
 	if (ignorecase ? what % tag_ : what == tag_)
 	{
@@ -581,28 +628,14 @@ const string& XmlElement::InplaceXlate (string& what)
 	while (rCX_.SearchString(match, what, 2) == 2)
 	{
 		string whatv;
-		char replv;
-		rCX_.SubExpr(match, what, whatv, 1);
-		if (whatv == "amp")
-			replv = '&';
-		else if (whatv == "lt")
-			replv = '<';
-		else if (whatv == "gt")
-			replv = '>';
-		else if (whatv == "apos")
-			replv = '\'';
-		else if (whatv == "quot")
-			replv = '\"';
-		else
-			break;	// cannot be reached
-
-		rCX_.Replace(match, what, replv);
+		rCX_.SubExpr(match, what, whatv, 0, 1);
+		rCX_.Replace(match, what, stringtochar_.find_value(whatv)); // not found character entity replaces string with '?'
 	}
 
 	while (rCE_.SearchString(match, what, 2) == 2)	// translate Numeric character references &#x12d; or &#12;
 	{
 		string whatv;
-		rCE_.SubExpr(match, what, whatv, 1);
+		rCE_.SubExpr(match, what, whatv, 0, 1);
 		istringstream istr(whatv);
 		int value;
 		if (whatv[0] == 'x')
@@ -643,7 +676,6 @@ const string& XmlElement::InplaceXlate (string& what)
 //-----------------------------------------------------------------------------------------
 XmlElement *XmlElement::Factory(const string& fname)
 {
-	Reset();
 	ifstream ifs(fname.c_str());
 	return ifs ? new XmlElement(ifs, 0, 0, 0, 0, fname.c_str()) : 0;
 }
