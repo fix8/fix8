@@ -247,7 +247,7 @@
 											This answer only applies if you intend on publishing your software. If your software only uses the Fix8 library by dynamically
 											linking against it, you are not required to release your code.  If your software is based upon <i>modifications</i> to
 											the Fix8 library, it is considered a <i>derivative work</i> and you are required to release the modified source to the
-											public. This definition of derivative excludes software that inherits from Fix8 classes.
+											public. Software that inherits from Fix8 classes is not considered derivative.
 										</div>
 									</div>
 								</div>
@@ -550,7 +550,10 @@ MessageBase *gr11(nonpsid->create_group());
 												</div>
 												<div id="testSix" class="accordion-body collapse">
 													<div class="accordion-inner">
-													This problem is usually because libtool is not installed.  If you are using debian or ubuntu:
+													Try running the following:
+<pre>
+% ./bootstrap</pre>
+													If this fails, install libtool.  If you are using debian or ubuntu:
 								<pre>
 % apt-get install libtool</pre>
 													On centos/RH:
@@ -702,7 +705,8 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 										Thread caching malloc (<a href="http://google-perftools.googlecode.com/svn/trunk/doc/tcmalloc.html">tcmalloc</a>)
 										is an alternative heap allocator that you can use instead of the
 										default allocator. It offers dramatically improved performance. The Fix8 performance tests use tcmalloc.
-										To use, download and install google <a href="https://code.google.com/p/gperftools/">gperftools</a>.
+										To use, download and install google <a href="https://code.google.com/p/gperftools/">gperftools</a>. When installed, the Fix8 build will
+										use it if found (must be on your <code>LD_LIBRARY_PATH</code>).
 										You can either link your application directly to tcmalloc, as follows:
 <pre>
 % g++ -g -O2 -Wall -rdynamic -lrt -lfix8 -lpthread  -lPocoFoundation -lPocoNet -lPocoUtil -ltcmalloc_minimal -L../runtime -lmyfix -lz  -o hftest hftest.o

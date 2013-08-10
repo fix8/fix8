@@ -164,6 +164,7 @@ tbb version 4.1 (tbb41_20130116oss)
 					<h2>Our test applications</h2>
 					<p>We have two almost identical applications - one Fix8 and one QuickFix - that generate 100000 <code>NewOrderSingle(D)</code> messages. The encode and
 					decode times are accumulated for each test and reported at test completion.</p>
+					<p><i class="icon-exclamation-sign"></i> Note that we used <code>tcmalloc</code> for this test. See the <a href="faq.html">FAQ</a> for details.</p>
 				</div>
 			</div>
 			<div class="accordion" id="codehead">
@@ -543,6 +544,7 @@ trailer ("trailer")
 			<div class="row">
 				<div class="span12">
 					<h2>The test client/server</h2>
+					<p><i class="icon-exclamation-sign"></i> Note that we used <code>tcmalloc</code> for this test. See the <a href="faq.html">FAQ</a> for details.</p>
 					<p>Before you begin, set your compiler optimisation to <code>-O3</code>
 <pre>
 % export CXXFLAGS=-O3
