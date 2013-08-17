@@ -277,7 +277,7 @@ int main(int argc, char **argv)
 			char ch(0);
 			mymenu.get_tty().set_raw_mode();
 			save_tty = mymenu.get_tty();
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
+			while(!mymenu.get_istr().get(ch).bad() && !mc->has_given_up() && !term_received && ch != 0x3 && mymenu.process(ch))
 				;
 			// don't explicitly call mc->session_ptr()->stop() with reliable sessions
 			// before checking if the session is already shutdown - the framework will generally do this for you
