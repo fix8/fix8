@@ -899,7 +899,7 @@ inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
 {
    if (!target)
       return 0;
-   unsigned sz(limit && src.size() > limit ? limit : src.size() + 1);
+   const unsigned sz(limit && src.size() > limit ? limit : src.size() + 1);
    src.copy(target, sz - 1);
    target[sz - 1] = 0;
    return target;
@@ -1035,7 +1035,7 @@ public:
 /// Create a streambuf from an open file descriptor.
 class fdinbuf : public std::streambuf
 {
-   enum { _buffer_size = 16 };
+   enum { _back_limit = 4, _buffer_size = 16 };
 
 protected:
    char _buffer[_buffer_size];
@@ -1046,22 +1046,22 @@ protected:
       if (gptr() < egptr())
          return *gptr();
       int put_back_cnt(gptr() - eback());
-      if (put_back_cnt > 4)
-         put_back_cnt = 4;
-		memcpy(_buffer + (4 - put_back_cnt), gptr() - put_back_cnt, put_back_cnt);
+      if (put_back_cnt > _back_limit)
+         put_back_cnt = _back_limit;
+		memcpy(_buffer + (_back_limit - put_back_cnt), gptr() - put_back_cnt, put_back_cnt);
 #ifdef _MSC_VER
-      int num_read(_read (_fd, _buffer + 4, _buffer_size - 4));
+      int num_read(_read (_fd, _buffer + _back_limit, _buffer_size - _back_limit));
 #else
-      int num_read(read (_fd, _buffer + 4, _buffer_size - 4));
+      int num_read(read (_fd, _buffer + _back_limit, _buffer_size - _back_limit));
 #endif
       if (num_read <= 0)
          return -1;
-      setg(_buffer + (4 - put_back_cnt), _buffer + 4, _buffer + 4 + num_read);
+      setg(_buffer + (_back_limit - put_back_cnt), _buffer + _back_limit, _buffer + _back_limit + num_read);
       return *gptr();
    }
 
 public:
-   fdinbuf(int infd) : _buffer(), _fd(infd) { setg(_buffer + 4, _buffer + 4, _buffer + 4); }
+   fdinbuf(int infd) : _buffer(), _fd(infd) { setg(_buffer + _back_limit, _buffer + _back_limit, _buffer + _back_limit); }
 };
 
 //---------------------------------------------------------------------------------------------------

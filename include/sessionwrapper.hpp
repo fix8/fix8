@@ -109,6 +109,10 @@ public:
 		_session->set_login_parameters(_loginParameters);
 	}
 
+	/*! If reliable, determine if the maximum no. of reties has been reached
+	  \return false for default clientsession */
+	virtual bool has_given_up() const { return false; }
+
 	/// Dtor.
 	virtual ~ClientSession ()
 	{
@@ -142,11 +146,19 @@ class ReliableClientSession : public ClientSession<T>
 {
 	dthread<ReliableClientSession<T> > _thread;
 	unsigned _send_seqnum, _recv_seqnum;
+	f8_atomic<bool> _giving_up;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
 	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
-		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this)), _send_seqnum(), _recv_seqnum() {}
+		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this)), _send_seqnum(), _recv_seqnum()
+	{
+		_giving_up = false;
+	}
+
+	/*! If reliable, determine if the maximum no. of reties has been reached
+	  \return true if maximum no. of reties reached */
+	bool has_given_up() const { return _giving_up; }
 
 	/// Dtor.
 	virtual ~ReliableClientSession () {}
@@ -172,7 +184,7 @@ public:
 	{
 		unsigned attempts(0);
 
-		for (; ++attempts < this->_loginParameters._login_retries; )
+		for (; ++attempts <= this->_loginParameters._login_retries; )
 		{
 			try
 			{
@@ -183,7 +195,7 @@ public:
 				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, this->_loginParameters._davi());
 				_send_seqnum = _recv_seqnum = 0; // only set seqnums for the first time round
 			}
-			catch(f8Exception& e)
+			catch (f8Exception& e)
 			{
 				//std::cout << "ReliableClientSession: f8exception" << std::endl;
 				this->_session->log(e.what());
@@ -199,11 +211,28 @@ public:
 			}
 
 			//std::cout << "operator()():out of try" << std::endl;
-			this->_session->stop();
+			try
+			{
+				this->_session->stop();
+			}
+			catch (f8Exception& e)
+			{
+				this->_session->log(e.what());
+			}
+			catch (Poco::Net::NetException& e)
+			{
+				this->_session->log(e.what());
+			}
+			catch (std::exception& e)
+			{
+				this->_session->log(e.what());
+			}
 			delete this->_cc;
 			delete this->_sock;
 			hypersleep<h_milliseconds>(this->_loginParameters._login_retry_interval);
 		}
+
+		_giving_up = true;
 
 		return 0;
 	}

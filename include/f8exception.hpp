@@ -264,6 +264,13 @@ struct InvalidConfiguration : f8Exception
 };
 
 //-------------------------------------------------------------------------------------------------
+/// An invalid configuration parameter was passed.
+struct XMLError : f8Exception
+{
+	XMLError(const std::string& str) { format("XML parsing error", str); }
+};
+
+//-------------------------------------------------------------------------------------------------
 
 } // FIX8
 

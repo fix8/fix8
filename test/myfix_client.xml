@@ -16,7 +16,7 @@
 				tcp_nodelay="true"
 				always_seqnum_assign="true"
 				process_mode="threaded"
-				login_retries="100"
+				login_retries="5"
 				persist="file0" />
 
 	<persist name="file0"

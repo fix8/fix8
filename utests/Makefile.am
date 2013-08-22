@@ -36,7 +36,8 @@ if USEGTEST
 test_programs = message_test fileLogger_test filePersister_test session_test
 noinst_PROGRAMS = $(test_programs)
 lib_LTLIBRARIES = libutest.la
-INCLUDES = -I$(top_srcdir)/include
+AM_CPPFLAGS = -I$(top_srcdir)/include
+pkginclude_HEADERS = f8headers.hpp
 
 TESTS = $(test_programs)
 

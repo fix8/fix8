@@ -33,7 +33,7 @@
 #############################################################################################
 
 bin_PROGRAMS = f8c
-INCLUDES = -I$(top_srcdir)/include
+AM_CPPFLAGS = -I$(top_srcdir)/include
 
 f8c_SOURCES = 	f8c.cpp f8cutils.cpp f8cstatic.hpp f8c.hpp f8precomp.cpp
 

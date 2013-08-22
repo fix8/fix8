@@ -129,6 +129,9 @@ extern const string GETARGLIST("hvVo:p:dikn:rst:x:Nc:fb");
 extern string spacer, shortName;
 
 //-----------------------------------------------------------------------------------------
+GroupMap global_groups;
+
+//-----------------------------------------------------------------------------------------
 const CSMap _csMap;
 
 //-----------------------------------------------------------------------------------------
@@ -158,6 +161,7 @@ int precomp(XmlElement& xf, ostream& outf);
 int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique);
 void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int depth,
 	const string& msname, ostream& outp, ostream& outh, const string cls_prefix=string());
+void generate_common_group_bodies(const FieldSpecMap& fspec, ostream& outp);
 void load_components(const XmlElement::XmlSet& comlist, Components& components);
 unsigned lookup_component(const Components& compon, const f8String& name);
 void binary_report();
@@ -590,6 +594,7 @@ unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr
 					++result;
 					if ((*gitr)->find("group/group", comlist))
 						result += parse_groups(gresult.first->second, gitr, gname, ftonSpec, fspec, comlist, compon);
+					global_groups.insert(*gresult.first);
 				}
 			}
 			else
@@ -624,34 +629,16 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 	{
 		FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
 		outp << _csMap.find_ref(cs_divider) << endl;
-		outp << "const FieldTrait " << prefix << ms._name << "::" << gsitr->second._name << "::_traits[] ="
-			<< endl << '{' << endl;
-		for (Presence::const_iterator flitr(gitr->second._fields.get_presence().begin());
-			flitr != gitr->second._fields.get_presence().end(); ++flitr)
-		{
-			bool spaceme(true);
-			if (flitr != gitr->second._fields.get_presence().begin())
-			{
-				outp << ',';
-				if (Presence::distance(gitr->second._fields.get_presence().begin(), flitr) % 3 == 0)
-					outp << endl;
-				else
-					spaceme = false;
-			}
 
-			ostringstream tostr;
-			tostr << "0x" << setfill('0') << setw(2) << hex << flitr->_field_traits.get();
-			outp << (spaceme ? spacer : " ");
-			outp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ',' << setw(2)
-				<< right << flitr->_ftype << ',' << setw(3) << right << flitr->_pos <<
-				',' << setw(3) << right << flitr->_component << ',' << tostr.str() << ')';
-		}
-		outp << endl << "};" << endl;
-		outp << "const FieldTrait_Hash_Array " << prefix << ms._name << "::" << gsitr->second._name << "::_ftha("
-			<< prefix << ms._name << "::" << gsitr->second._name << "::_traits, "
-			<< gitr->second._fields.get_presence().size() << ");" << endl;
-		outp << "const MsgType " << prefix << ms._name << "::" << gsitr->second._name << "::_msgtype(\""
-			<< gsitr->second._name << "\");" << endl;
+		outp << "const FieldTrait *" << prefix << ms._name << "::" << gsitr->second._name << "::_traits("
+			<< gsitr->second._name << "_traits);" << endl;
+
+		outp << "const FieldTrait_Hash_Array& " << prefix << ms._name << "::" << gsitr->second._name << "::_ftha("
+			<< gsitr->second._name << "_ftha);" << endl;
+
+		outp << "const MsgType& " << prefix << ms._name << "::" << gsitr->second._name << "::_msgtype("
+			<< gsitr->second._name << "_msgtype);" << endl;
+
 #ifdef _MSC_VER
 		outp << "#ifndef _MSC_EXTENSIONS" << endl;
 #endif
@@ -668,9 +655,9 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		outh << endl << dspacer << "// " << prefix << ms._name << "::" << gsitr->second._name << endl;
 		outh << dspacer << "class " << gsitr->second._name
 			<< " : public GroupBase // depth: " << depth << endl << dspacer << '{' << endl;
-		outh << d2spacer << "static const FieldTrait _traits[];" << endl;
-		outh << d2spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
-		outh << d2spacer << "static const MsgType _msgtype;" << endl << endl;
+		outh << d2spacer << "static const FieldTrait *_traits;" << endl;
+		outh << d2spacer << "static const FieldTrait_Hash_Array& _ftha;" << endl;
+		outh << d2spacer << "static const MsgType& _msgtype;" << endl << endl;
 		outh << dspacer << "public:" << endl;
 		outh << d2spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl << endl;
 		outh << d2spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
@@ -698,6 +685,44 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 			generate_group_bodies(gitr->second, fspec, depth + 1, msname, outp, outh, prefix + ms._name);
 
 		outh << dspacer << "};" << endl;
+	}
+}
+
+//-----------------------------------------------------------------------------------------
+void generate_common_group_bodies(const FieldSpecMap& fspec, ostream& outp)
+{
+	for (GroupMap::const_iterator gitr(global_groups.begin()); gitr != global_groups.end(); ++gitr)
+	{
+		FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
+		outp << _csMap.find_ref(cs_divider) << endl;
+		outp << "const FieldTrait " << gsitr->second._name << "_traits[] ="
+			<< endl << '{' << endl;
+		for (Presence::const_iterator flitr(gitr->second._fields.get_presence().begin());
+			flitr != gitr->second._fields.get_presence().end(); ++flitr)
+		{
+			bool spaceme(true);
+			if (flitr != gitr->second._fields.get_presence().begin())
+			{
+				outp << ',';
+				if (Presence::distance(gitr->second._fields.get_presence().begin(), flitr) % 3 == 0)
+					outp << endl;
+				else
+					spaceme = false;
+			}
+
+			ostringstream tostr;
+			tostr << "0x" << setfill('0') << setw(2) << hex << flitr->_field_traits.get();
+			outp << (spaceme ? spacer : " ");
+			outp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ',' << setw(2)
+				<< right << flitr->_ftype << ',' << setw(3) << right << flitr->_pos <<
+				',' << setw(3) << right << flitr->_component << ',' << tostr.str() << ')';
+		}
+		outp << endl << "};" << endl;
+		outp << "const FieldTrait_Hash_Array " << gsitr->second._name << "_ftha("
+			<< gsitr->second._name << "_traits, "
+			<< gitr->second._fields.get_presence().size() << ");" << endl;
+		outp << "const MsgType " << gsitr->second._name << "_msgtype(\""
+			<< gsitr->second._name << "\");" << endl;
 	}
 }
 
@@ -789,6 +814,13 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osr_cpp << _csMap.find_ref(cs_divider) << endl;
 
 // =============================== Message class definitions ==============================
+
+	osr_cpp << "// Common group traits" << endl;
+	osr_cpp << "namespace {" << endl;
+	generate_common_group_bodies(fspec, osr_cpp);
+	osr_cpp << "} // namespace" << endl;
+	osr_cpp << _csMap.find_ref(cs_divider) << endl;
+	osr_cpp << "// Message traits" << endl;
 
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)

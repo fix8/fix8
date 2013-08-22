@@ -127,7 +127,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:r");
+const string GETARGLIST("hl:svqc:R:S:rd");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
@@ -171,7 +171,7 @@ void sig_handler(int sig)
 int main(int argc, char **argv)
 {
 	int val;
-	bool server(false), reliable(false);
+	bool server(false), reliable(false), dump(false);
 	string clcf;
 	unsigned next_send(0), next_receive(0);
 
@@ -187,6 +187,7 @@ int main(int argc, char **argv)
 		{ "receive",	1,	0,	'R' },
 		{ "quiet",		0,	0,	'q' },
 		{ "reliable",	0,	0,	'r' },
+		{ "dump",		0,	0,	'd' },
 		{ 0 },
 	};
 
@@ -210,6 +211,7 @@ int main(int argc, char **argv)
 		case 'R': next_receive = get_value<unsigned>(optarg); break;
 		case 'q': quiet = true; break;
 		case 'r': reliable = true; break;
+		case 'd': dump = true; break;
 		default: break;
 		}
 	}
@@ -226,6 +228,16 @@ int main(int argc, char **argv)
 	try
 	{
 		const string conf_file(server ? clcf.empty() ? "myfix_server.xml" : clcf : clcf.empty() ? "myfix_client.xml" : clcf);
+
+		if (dump)
+		{
+			XmlElement *root(XmlElement::Factory(conf_file));
+			if (root)
+				cout << *root << endl;
+			else
+				cerr << "Failed to parse " << conf_file << endl;
+			return 0;
+		}
 
 		if (server)
 		{
@@ -265,7 +277,7 @@ int main(int argc, char **argv)
 			char ch(0);
 			mymenu.get_tty().set_raw_mode();
 			save_tty = mymenu.get_tty();
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
+			while(!mymenu.get_istr().get(ch).bad() && !mc->has_given_up() && !term_received && ch != 0x3 && mymenu.process(ch))
 				;
 			// don't explicitly call mc->session_ptr()->stop() with reliable sessions
 			// before checking if the session is already shutdown - the framework will generally do this for you
@@ -448,13 +460,14 @@ void print_usage()
 	um.setdesc("f8test -- f8 test client/server");
 	um.add('s', "server", "run in server mode (default client mode)");
 	um.add('h', "help", "help, this screen");
-	um.add('v', "version", "print version then exit");
+	um.add('v', "version", "print version, exit");
 	um.add('l', "log", "global log filename");
 	um.add('c', "config", "xml config (default: myfix_client.xml or myfix_server.xml)");
 	um.add('q', "quiet", "do not print fix output");
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
 	um.add('r', "reliable", "start in reliable mode");
+	um.add('d', "dump", "dump parsed XML config file, exit");
 	um.print(cerr);
 }
 
