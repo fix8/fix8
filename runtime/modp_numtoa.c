@@ -66,6 +66,16 @@ static void strreverse(char* begin, char* end)
 // slighly modified by DD to return target length
 size_t modp_dtoa(double value, char* str, int prec) // DD
 {
+	/* if input is larger than thres_max, revert to exponential */
+    const double thres_max = (double)(0x7FFFFFFF);
+
+    double diff = 0.0;
+    char* wstr = str;
+	int neg = 0;
+	int whole = 0;
+    double tmp = 0.0;
+    uint32_t frac = 0;
+
     /* Hacky test for NaN
      * under -fast-math this won't work, but then you also won't
      * have correct nan values anyways.  The alternative is
@@ -75,11 +85,6 @@ size_t modp_dtoa(double value, char* str, int prec) // DD
         str[0] = 'n'; str[1] = 'a'; str[2] = 'n'; str[3] = '\0';
         return 3; // DD
     }
-    /* if input is larger than thres_max, revert to exponential */
-    const double thres_max = (double)(0x7FFFFFFF);
-
-    double diff = 0.0;
-    char* wstr = str;
 
     if (prec < 0) {
         prec = 0;
@@ -91,16 +96,14 @@ size_t modp_dtoa(double value, char* str, int prec) // DD
 
     /* we'll work in positive values and deal with the
        negative sign issue later */
-    int neg = 0;
     if (value < 0) {
         neg = 1;
         value = -value;
     }
 
-
-    int whole = (int) value;
-    double tmp = (value - whole) * pow10[prec];
-    uint32_t frac = (uint32_t)(tmp);
+    whole = (int) value;
+    tmp = (value - whole) * pow10[prec];
+    frac = (uint32_t)(tmp);
     diff = tmp - frac;
 
     if (diff > 0.5) {

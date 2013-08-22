@@ -47,11 +47,18 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <numeric>
 #include <bitset>
 
+#ifndef _MSC_VER
 #include <strings.h>
+#endif
 #include <cerrno>
 #include <regex.h>
 #include <stdint.h>
+#ifdef _MSC_VER
+#include <io.h>
+#define ssize_t int
+#else
 #include <unistd.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>

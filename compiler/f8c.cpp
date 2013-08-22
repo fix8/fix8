@@ -99,12 +99,22 @@ namespace FIX8
 {
 	template<>
 	const size_t GeneratedTable<unsigned int, BaseEntry>::_pairsz(0);
+#ifdef _MSC_VER
+	template<>
+	const GeneratedTable<unsigned int, BaseEntry>::Pair GeneratedTable<unsigned int, BaseEntry>::_pairs[1] = {};
+#else
 	template<>
 	const GeneratedTable<unsigned int, BaseEntry>::Pair GeneratedTable<unsigned int, BaseEntry>::_pairs[] = {};
+#endif
 	template<>
 	const size_t GeneratedTable<const char *, BaseMsgEntry>::_pairsz(0);
+#ifdef _MSC_VER
+	template<>
+	const GeneratedTable<const char *, BaseMsgEntry>::Pair GeneratedTable<const char *, BaseMsgEntry>::_pairs[1] = {};
+#else
 	template<>
 	const GeneratedTable<const char *, BaseMsgEntry>::Pair GeneratedTable<const char *, BaseMsgEntry>::_pairs[] = {};
+#endif
 }
 
 //-----------------------------------------------------------------------------------------
@@ -642,7 +652,13 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 			<< gitr->second._fields.get_presence().size() << ");" << endl;
 		outp << "const MsgType " << prefix << ms._name << "::" << gsitr->second._name << "::_msgtype(\""
 			<< gsitr->second._name << "\");" << endl;
+#ifdef _MSC_VER
+		outp << "#ifndef _MSC_EXTENSIONS" << endl;
+#endif
 		outp << "const unsigned short " << prefix << ms._name << "::" << gsitr->second._name << "::_fnum;" << endl;
+#ifdef _MSC_VER
+		outp << "#endif // _MSC_EXTENSIONS" << endl;
+#endif
 
 		// nested class decl.
 		outh << endl << dspacer << "/// " << gitr->second._name << " (" << gitr->first << "), "
@@ -929,9 +945,16 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		osc_cpp << " }";
 	}
 	osc_cpp << endl << "};" << endl;
+#ifdef _MSC_VER
+	osc_cpp << "template<>" << endl << "const size_t " 
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_pairsz(sizeof(" 
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_pairs)/sizeof(" 
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::Pair));" << endl;
+#else
 	osc_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname
 		<< "_BaseMsgEntry::_pairsz(sizeof(_pairs)/sizeof(" << ctxt._fixns << "::"
 		<< ctxt._clname << "_BaseMsgEntry::Pair));" << endl;
+#endif
 	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::NotFoundType "
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = {0, 0};" << endl;
 	osc_cpp << "namespace " << ctxt._fixns << " { F8MetaCntx ctx(" << ctxt._version << ", bme, be, cn, \"" << ctxt._beginstr << "\"); }" << endl;
@@ -1153,8 +1176,15 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		ost_cpp << " } }";
 	}
 	ost_cpp << endl << "};" << endl;
+#ifdef _MSC_VER
+	ost_cpp << "template<>" << endl << "const size_t " 
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairsz(sizeof("
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairs)/sizeof("
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair));" << endl;
+#else
 	ost_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairsz(sizeof(_pairs)/sizeof("
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair));" << endl;
+#endif
 	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::NotFoundType "
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_noval = {0, 0};" << endl;
 

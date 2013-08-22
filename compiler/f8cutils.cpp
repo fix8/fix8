@@ -381,11 +381,19 @@ RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype
 //-------------------------------------------------------------------------------------------------
 string insert_year()
 {
-   struct tm tim;
-	time_t now(time(0));
+#ifdef _MSC_VER
+   struct tm *ptim;
+   time_t now(time(0));
+   ptim = localtime (&now);
+#else
+   struct tm tim, *ptim;
+   time_t now(time(0));
    localtime_r(&now, &tim);
+   ptim = &tim;
+#endif
+
 	ostringstream ostr;
-	ostr << setw(2) << (tim.tm_year - 100);
+	ostr << setw(2) << (ptim->tm_year - 100);
 	return ostr.str();
 }
 

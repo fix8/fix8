@@ -39,9 +39,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-----------------------------------------------------------------------------------------
 #include <Poco/DateTime.h>
+#ifndef _MSC_VER
 #include <sys/ioctl.h>
+#endif
 #include <regex.h>
-#include <termios.h>
+
+#ifndef _MSC_VER
+	#include <termios.h>
+#endif
 
 namespace FIX8 {
 
@@ -144,7 +149,13 @@ inline unsigned ROT13Hash (const std::string& str)
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator% (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 		const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
-			{ return strcasecmp(__lhs.c_str(), __rhs.c_str()) == 0; }
+			{ 
+#ifdef _MSC_VER
+				return _stricmp(__lhs.c_str(), __rhs.c_str()) == 0; 
+#else
+				return strcasecmp(__lhs.c_str(), __rhs.c_str()) == 0; 
+#endif 
+			}
 
 /*! case insensitive char* == std::string operator
   \tparam _CharT char type
@@ -166,7 +177,13 @@ template<typename _CharT, typename _Traits, typename _Alloc>
   \return true if strings are equivalent */
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator% (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs, const _CharT* __rhs)
-		{ return strcasecmp(__lhs.c_str(), __rhs) == 0; }
+		{ 
+#ifdef _MSC_VER
+			return _stricmp(__lhs.c_str(), __rhs) == 0; 
+#else
+			return strcasecmp(__lhs.c_str(), __rhs) == 0; 
+#endif
+		}
 
 /*! case insensitive std::string < std::string operator
   \tparam _CharT char type
@@ -178,7 +195,13 @@ template<typename _CharT, typename _Traits, typename _Alloc>
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 		const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
-			{ return strcasecmp(__lhs.c_str(), __rhs.c_str()) < 0; }
+			{ 
+#ifdef _MSC_VER
+				return _stricmp(__lhs.c_str(), __rhs.c_str()) < 0;
+#else
+				return strcasecmp(__lhs.c_str(), __rhs.c_str()) < 0; 
+#endif
+			}
 
 //----------------------------------------------------------------------------------------
 /// C++11 inspired scoped pointer.
@@ -859,7 +882,11 @@ T enum_str_get(const unsigned els, const std::string *sset, const std::string& w
     \return true if file exists */
 inline bool exist(const std::string& fname)
 {
+#ifdef _MSC_VER
+	return _access(fname.c_str(), 0) == 0;
+#else
 	return access(fname.c_str(), F_OK) == 0;
+#endif
 }
 
 //----------------------------------------------------------------------------------------
@@ -1022,7 +1049,11 @@ protected:
       if (put_back_cnt > 4)
          put_back_cnt = 4;
 		memcpy(_buffer + (4 - put_back_cnt), gptr() - put_back_cnt, put_back_cnt);
+#ifdef _MSC_VER
+      int num_read(_read (_fd, _buffer + 4, _buffer_size - 4));
+#else
       int num_read(read (_fd, _buffer + 4, _buffer_size - 4));
+#endif
       if (num_read <= 0)
          return -1;
       setg(_buffer + (4 - put_back_cnt), _buffer + 4, _buffer + 4 + num_read);
@@ -1034,6 +1065,42 @@ public:
 };
 
 //---------------------------------------------------------------------------------------------------
+#ifdef _MSC_VER
+class tty_save_state
+{
+	bool _raw_mode;
+	int _fd;
+
+public:
+	explicit tty_save_state(int fd) : _raw_mode(), _fd(fd) {}
+
+	tty_save_state& operator=(const tty_save_state& from)
+	{
+		if (&from != this)
+		{
+			_raw_mode = from._raw_mode;
+			_fd = from._fd;
+		}
+		return *this;
+	}
+
+	void unset_raw_mode()
+	{
+		if (_raw_mode)
+		{
+			_raw_mode = false;
+		}
+	}
+
+	void set_raw_mode()
+	{
+		if (!_raw_mode)
+		{
+			_raw_mode = true;
+		}
+	}
+};
+#else
 class tty_save_state
 {
 	bool _raw_mode;
@@ -1085,6 +1152,7 @@ public:
 		}
 	}
 };
+#endif // _MSC_VER
 
 //----------------------------------------------------------------------------------------
 } // namespace FIX8

@@ -200,16 +200,26 @@ struct RandDev
 {
 	/// Initialise the random number generator
 	static void init()
-		{ srandom (static_cast<unsigned>(time(0) % getpid())); }
+	{
+#ifdef _MSC_VER
+	    srand (static_cast<unsigned>(time(0) % _getpid()));
+#else
+		srandom (static_cast<unsigned>(time(0) % getpid()));
+#endif 
+	}
 
 	/*! Return a random number between 0 and n - 1, or between 0 and RAND_MAX
 	  \tparam T type of random number
 	  \param range upper range to return value within, or 0 for RAND_MAX
 	  \return the random number of the specified type within the psecifed range */
 	template<typename T>
-   static T getrandom(const T range=0)
-   {
+    static T getrandom(const T range=0)
+    {
+#ifdef _MSC_VER
+	    T target(rand());
+#else
 		T target(random());
+#endif 
 		return range ? target / (RAND_MAX / range + 1) : target;
 	}
 };

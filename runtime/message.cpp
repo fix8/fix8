@@ -47,7 +47,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <numeric>
 #include <bitset>
 
+#ifndef _MSC_VER
 #include <strings.h>
+#endif
 #include <regex.h>
 
 #include <f8includes.hpp>

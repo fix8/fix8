@@ -200,7 +200,11 @@ struct RandDev
 	static void init()
 	{
 		time_t tval(time(0));
+#ifdef _MSC_VER
+	    srand (static_cast<unsigned>(((tval % _getpid()) * tval)));
+#else
 		srandom (static_cast<unsigned>(((tval % getpid()) * tval)));
+#endif
 	}
 
 	template<typename T>

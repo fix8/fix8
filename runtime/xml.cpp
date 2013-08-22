@@ -41,15 +41,25 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <algorithm>
+#ifndef _MSC_VER
 #include <strings.h>
+#endif
 #include <string.h>
+#ifndef _MSC_VER
 #include <sys/time.h>
+#endif
 #include <time.h>
+#ifndef _MSC_VER
 #include <unistd.h>
+#endif
 #include <errno.h>
+#ifndef _MSC_VER
 #include <netdb.h>
+#endif
 #include <signal.h>
+#ifndef _MSC_VER
 #include <syslog.h>
+#endif
 #include <fcntl.h>
 #include <time.h>
 #include <regex.h>
@@ -122,7 +132,11 @@ namespace {
 // execute command and pipe output to string; only 1 line is captured.
 bool exec_cmd(const string& cmd, string& result)
 {
+#ifdef _MSC_VER
+   FILE *apipe(_popen(cmd.c_str(), "r"));
+#else
    FILE *apipe(popen(cmd.c_str(), "r"));
+#endif   
    if (apipe)
    {
       const size_t maxcmdresultlen(1024);
@@ -132,7 +146,11 @@ bool exec_cmd(const string& cmd, string& result)
          result = buffer;
          result.resize(result.size() - 1); // remove lf
       }
+#ifdef _MSC_VER
+	  _pclose(apipe);
+#else
       pclose(apipe);
+#endif
    }
    return !result.empty();
 }
@@ -645,7 +663,14 @@ XmlElement *XmlElement::Factory(const string& fname)
 {
 	Reset();
 	ifstream ifs(fname.c_str());
+	
+#ifdef _MSC_VER
+	std::stringstream buffer;
+	buffer << ifs.rdbuf();
+    return ifs ? new XmlElement(buffer, 0, 0, 0, 0, fname.c_str()) : 0;
+#else
 	return ifs ? new XmlElement(ifs, 0, 0, 0, 0, fname.c_str()) : 0;
+#endif
 }
 
 //-----------------------------------------------------------------------------------------

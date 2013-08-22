@@ -38,11 +38,77 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 # define _FIX8_TICKVAL_HPP_
 
 //-------------------------------------------------------------------------------------------------
+#ifndef _MSC_VER
 #include <sys/time.h>
+#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8
 {
+
+#ifdef _MSC_VER
+
+#define CLOCK_REALTIME 0
+
+inline LARGE_INTEGER getFILETIMEoffset()
+{
+	SYSTEMTIME s;
+	FILETIME f;
+	LARGE_INTEGER t;
+
+	s.wYear = 1970;
+	s.wMonth = 1;
+	s.wDay = 1;
+	s.wHour = 0;
+	s.wMinute = 0;
+	s.wSecond = 0;
+	s.wMilliseconds = 0;
+	SystemTimeToFileTime(&s, &f);
+	t.QuadPart = f.dwHighDateTime;
+	t.QuadPart <<= 32;
+	t.QuadPart |= f.dwLowDateTime;
+	return (t);
+}
+
+inline int clock_gettime(int X, struct timespec *tv)
+{
+    LARGE_INTEGER           t;
+    FILETIME				f;
+    double                  nanoseconds;
+    //static LARGE_INTEGER    offset;
+    static double           frequencyToNanoseconds;
+    static int              initialized = 0;
+    static BOOL             usePerformanceCounter = 0;
+
+    if (!initialized) {
+        LARGE_INTEGER performanceFrequency;
+        initialized = 1;
+        usePerformanceCounter = QueryPerformanceFrequency(&performanceFrequency);
+        if (usePerformanceCounter) {
+            //QueryPerformanceCounter(&offset);
+            frequencyToNanoseconds = (double)performanceFrequency.QuadPart / 1000000000.;
+        } else {
+            //offset = getFILETIMEoffset();
+            frequencyToNanoseconds = 10.;
+        }
+    }
+    if (usePerformanceCounter) QueryPerformanceCounter(&t);
+    else {
+        GetSystemTimeAsFileTime(&f);
+        t.QuadPart = f.dwHighDateTime;
+        t.QuadPart <<= 32;
+        t.QuadPart |= f.dwLowDateTime;
+    }
+
+    //t.QuadPart -= offset.QuadPart;
+    nanoseconds = (double)t.QuadPart / frequencyToNanoseconds;
+    t.QuadPart = nanoseconds;
+    tv->tv_sec = t.QuadPart / 1000000000;
+    tv->tv_nsec = t.QuadPart % 1000000000;
+    return (0);
+}
+
+#endif // _MSC_VER
 
 //---------------------------------------------------------------------------------------------------
 /// High resolution time in nanosecond ticks. Thread safe.
