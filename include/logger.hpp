@@ -150,6 +150,7 @@ class Tickval;
 
 
 //-------------------------------------------------------------------------------------------------
+#ifdef _MSC_VER
 class Comparator
 {
 public:
@@ -158,6 +159,7 @@ public:
 		return (lhs.p < rhs.p);
 	}
 };
+#endif
 
 /// dthread delegated async logging class
 class Logger
