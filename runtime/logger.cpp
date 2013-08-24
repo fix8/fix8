@@ -47,7 +47,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <numeric>
 #include <bitset>
 #include <time.h>
+#ifndef _MSC_VER
 #include <strings.h>
+#endif
 #include <regex.h>
 
 #include <f8includes.hpp>
@@ -61,9 +63,14 @@ namespace FIX8
 {
 	char glob_log0[max_global_filename_length] = { "global_filename_not_set.log" };
 
+#ifdef _MSC_VER
+	template<>
+	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance;
+#else
 	template<>
 	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
 		= f8_atomic<SingleLogger<glob_log0> *>();
+#endif
 	template<>
 	f8_mutex Singleton<SingleLogger<glob_log0> >::_mutex = f8_mutex();
 
@@ -172,9 +179,14 @@ void Logger::purge_thread_codes()
 
 	for (ThreadCodes::iterator itr(_thread_codes.begin()); itr != _thread_codes.end();)
 	{
+#ifdef _MSC_VER
+		// If ESRCH then thread is definitely dead.  Otherwise, we're unsure.
+		if ( pthread_kill(itr->first, 0) == ESRCH )
+#else
 		// a little trick to see if a thread is still alive
 		clockid_t clock_id;
 		if (pthread_getcpuclockid(itr->first, &clock_id) == ESRCH)
+#endif
 		{
 			_rev_thread_codes.erase(itr->second);
 			_thread_codes.erase(itr++); // post inc, takes copy before incr;
@@ -199,7 +211,7 @@ char Logger::get_thread_code(pthread_t tid)
 		if (itr == _rev_thread_codes.end())
 		{
 			_thread_codes.insert(ThreadCodes::value_type(tid, acode));
-			_rev_thread_codes.insert(ThreadCodes::value_type(acode, tid));
+			_rev_thread_codes.insert(RevThreadCodes::value_type(acode, tid));
 			return acode;
 		}
 	}
@@ -223,6 +235,10 @@ bool FileLogger::rotate(bool force)
 {
 	f8_scoped_lock guard(_mutex);
 
+#ifdef _MSC_VER
+	delete _ofs;
+#endif
+
 	string thislFile(_pathname);
 #ifdef HAVE_COMPRESSION
 	if (_flags & compress)
@@ -243,10 +259,14 @@ bool FileLogger::rotate(bool force)
 		}
 
 		for (unsigned ii(_rotnum); ii; --ii)
-			rename (rlst[ii - 1].c_str(), rlst[ii].c_str());   // ignore errors
+		{
+			rename (rlst[ii - 1].c_str(), rlst[ii].c_str());
+		}
 	}
 
+#ifndef _MSC_VER
 	delete _ofs;
+#endif
 
 	const ios_base::openmode mode (_flags & append ? ios_base::out | ios_base::app : ios_base::out);
 #ifdef HAVE_COMPRESSION
@@ -267,7 +287,11 @@ PipeLogger::PipeLogger(const string& fname, const ebitset<Flags> flags) : Logger
 	if (fname[0] != '|')
 		throw f8Exception("pipe command must be prefixed with '|'");
 
+#ifdef _MSC_VER
+	FILE *pcmd(_popen(pathname.c_str(), "w"));
+#else
 	FILE *pcmd(popen(pathname.c_str(), "w"));
+#endif
 
 	if (pcmd == 0)
 	{

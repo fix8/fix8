@@ -136,7 +136,9 @@ public:
 
 	/*! Yield CPU.
 		\return result of yield */
+	#ifndef _MSC_VER
 	int yield() const { return pthread_yield(); }
+	#endif
 
 	/*! Kill the thread.
 	  \param signum signal number to send */
@@ -167,6 +169,7 @@ public:
 	  \return true if the threads are unequal */
 	bool operator!=(const _dthreadcore& that) const { return !pthread_equal(_tid, that._tid); }
 
+#ifndef _MSC_VER
 	/*! Set the thread signal mask.
 	  \param how block, unblock or mask
 	  \param newmask new mask
@@ -180,6 +183,7 @@ public:
 	  \param sig new mask
 	  \return true on success */
 	static bool signalwait(const sigset_t *set, int *sig) { return sigwait(set, sig) == 0; }
+#endif
 };
 
 //----------------------------------------------------------------------------------------

@@ -100,9 +100,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <algorithm>
 #include <bitset>
 #include <typeinfo>
+#ifdef _MSC_VER
+#include <signal.h>
+#else
 #include <sys/ioctl.h>
 #include <signal.h>
 #include <termios.h>
+#endif
 
 #include <regex.h>
 #include <errno.h>
@@ -164,7 +168,9 @@ void sig_handler(int sig)
    {
    case SIGTERM:
    case SIGINT:
+#ifndef _MSC_VER
    case SIGQUIT:
+#endif
       term_received = true;
       signal(sig, sig_handler);
       break;
@@ -224,7 +230,9 @@ int main(int argc, char **argv)
 
 	signal(SIGTERM, sig_handler);
 	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+#ifndef _MSC_VER
+    signal(SIGQUIT, sig_handler);
+#endif
 
 	try
 	{

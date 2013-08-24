@@ -204,7 +204,11 @@ class push_dir
 public:
 	push_dir(const std::string& to) : _cwd()
 	{
+#ifdef _MSC_VER
+		if (_getcwd(_cwd, MAX_FLD_LENGTH) == 0)
+#else
 		if (::getcwd(_cwd, MAX_FLD_LENGTH) == 0)
+#endif
 		{
 			std::ostringstream ostr;
 			ostr << "Error getting current directory (" << ::strerror(errno) << ')';

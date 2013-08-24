@@ -35,7 +35,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_LOGGER_HPP_
-# define _FIX8_LOGGER_HPP_
+#define _FIX8_LOGGER_HPP_
 
 //-------------------------------------------------------------------------------------------------
 #include <list>
@@ -88,7 +88,14 @@ public:
 		: std::ostream(&buf_), fptr_(fptr), buf_(fileno(fptr)) {}
 
 	/// Dtor.
-   virtual ~fptrostream () { pclose(fptr_); }
+   virtual ~fptrostream () 
+   { 
+#ifdef _MSC_VER
+	   _pclose(fptr_);
+#else
+	   pclose(fptr_);
+#endif
+   }
 
 	/*! Get the filno (fd)
 	    \return fd */
@@ -141,6 +148,19 @@ public:
 //-------------------------------------------------------------------------------------------------
 class Tickval;
 
+
+//-------------------------------------------------------------------------------------------------
+#ifdef _MSC_VER
+class Comparator
+{
+public:
+	bool operator()( const pthread_t& lhs, const pthread_t& rhs ) const
+	{
+		return (lhs.p < rhs.p);
+	}
+};
+#endif
+
 /// dthread delegated async logging class
 class Logger
 {
@@ -186,7 +206,11 @@ protected:
 	f8_concurrent_queue<LogElement> _msg_queue;
 	unsigned _sequence, _osequence;
 
+#ifdef _MSC_VER
+	typedef std::map<pthread_t, char, Comparator> ThreadCodes;
+#else
 	typedef std::map<pthread_t, char> ThreadCodes;
+#endif
 	ThreadCodes _thread_codes;
 
 	typedef std::map<char, pthread_t> RevThreadCodes;
@@ -222,7 +246,7 @@ public:
 	void kill() { _thread.kill(0); }
 
 	/// Stop the logging thread.
-	void stop() { send(std::string()); _stopping = true; _thread.join(); }
+	void stop() {  _stopping = true; send(std::string()); _thread.join(); }
 
 	/*! Perform logfile rotation. Only relevant for file-type loggers.
 		\param force the rotation (even if the file is set to append)

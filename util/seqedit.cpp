@@ -83,6 +83,10 @@ e.g.\n
 #include <getopt.h>
 #endif
 
+#ifdef _MSC_VER
+#define ssize_t int
+#endif
+
 //-----------------------------------------------------------------------------------------
 using namespace std;
 using namespace FIX8;

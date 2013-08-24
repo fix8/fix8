@@ -79,6 +79,9 @@ inline int hypersleep<h_seconds>(const unsigned amt)
    ts.tv_sec += amt;
    ts.tv_nsec += (amt % (billion));
 	return execute_clock_nanosleep(ts);
+#elif defined _MSC_VER
+	Sleep(amt);
+	return 0;
 #else
 	const timespec tspec = { amt, amt % billion };
 	return nanosleep(&tspec, 0);
@@ -98,6 +101,9 @@ inline int hypersleep<h_milliseconds>(const unsigned amt)
    ts.tv_sec += (amt / thousand);
    ts.tv_nsec += (million * (amt % thousand));
 	return execute_clock_nanosleep(ts);
+#elif defined _MSC_VER
+	Sleep(amt);
+	return 0;
 #else
 	const timespec tspec = { amt / thousand, million * (amt % thousand) };
 	return nanosleep(&tspec, 0);
@@ -117,6 +123,9 @@ inline int hypersleep<h_microseconds>(const unsigned amt)
    ts.tv_sec += (amt / million);
    ts.tv_nsec += (thousand * (amt % million));
 	return execute_clock_nanosleep(ts);
+#elif defined _MSC_VER
+	Sleep(amt);
+	return 0;
 #else
 	const timespec tspec = { amt / million, thousand * (amt % million) };
 	return nanosleep(&tspec, 0);
@@ -136,6 +145,9 @@ inline int hypersleep<h_nanoseconds>(const unsigned amt)
    ts.tv_sec += (amt / billion);
    ts.tv_nsec += amt;
 	return execute_clock_nanosleep(ts);
+#elif defined _MSC_VER
+	Sleep(amt);
+	return 0;
 #else
 	const timespec tspec = { amt / billion, amt };
 	return nanosleep(&tspec, 0);
@@ -169,6 +181,9 @@ inline int hypersleep (const unsigned amt, const hyperunits_t units)
       ts.tv_nsec -= billion;
    }
 	return execute_clock_nanosleep(ts);
+#elif defined _MSC_VER
+	Sleep(amt);
+	return 0;
 #else
 	const timespec tspec = { amt / hv[units][Div], hv[units][Mul] * (amt % hv[units][Div]) };
 	return nanosleep(&tspec, 0);

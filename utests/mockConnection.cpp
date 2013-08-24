@@ -63,7 +63,10 @@ mockConnection.hpp and mockConnection.cpp are used to supply a mock connection o
 #include <sys/gmon.h>
 #endif
 
-#include <strings.h>
+#ifndef _MSC_VER
+	#include <strings.h>
+#endif
+
 #include <regex.h>
 #include <errno.h>
 #include <f8exception.hpp>

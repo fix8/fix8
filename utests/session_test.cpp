@@ -152,8 +152,8 @@ class session_fixture
 {
 public:
     MemoryPersister * per;
-    PipeLogger * pLogger;
-    PipeLogger * sLogger;
+    Logger * pLogger;
+    Logger * sLogger;
     test_session * ss;
 
     /// Ctor, create a test session with memory persister and pipe logger
@@ -161,6 +161,17 @@ public:
     {
         SessionID id("FIX.4.2:A12345B->COMPARO");
 
+#ifdef _MSC_VER
+        ebitset<Logger::Flags> flag;
+        flag.set(Logger::timestamp, true);
+        flag.set(Logger::sequence, true);
+        flag.set(Logger::thread, true);
+        flag.set(Logger::direction, true);
+
+        per = new MemoryPersister;
+        sLogger = new FileLogger("utest_slog.log", flag);
+        pLogger = new FileLogger("utest_plog.log", flag);
+#else
         f8String cmd("|/bin/cat");
         ebitset<Logger::Flags> flag;
         flag.set(Logger::timestamp, true);
@@ -173,6 +184,7 @@ public:
         per = new MemoryPersister;
         sLogger = new PipeLogger(cmd, flag);
         pLogger = new PipeLogger(cmd, flag);
+#endif // _MSC_VER
 
         ss = new test_session(ctx, id, per, sLogger, pLogger);
     };
@@ -217,19 +229,25 @@ class sessionTest : public ::testing::Test
 protected:
     static void SetUpTestCase()
     {
+		initiator_test = new initiator_fixture();
         recv_seq = 1;
     }
 
     static void TearDownTestCase()
     {
+		delete initiator_test;
     }
 public:
-    static initiator_fixture initiator_test;
+    // MSVC: We can't have a static initiator here; we get bitten by
+    // static order initialisation issues - specifically, the initiator
+    // tries to construct a Logon message before the static members of 
+    // Logon (field maps, traist etc) have been initialised.
+    static initiator_fixture* initiator_test;
     static unsigned recv_seq;
 };
 
 /// global initiator fixture
-initiator_fixture sessionTest::initiator_test;
+initiator_fixture* sessionTest::initiator_test = 0;
 
 /// global incoming sequence number
 unsigned sessionTest::recv_seq;
@@ -265,28 +283,28 @@ void fillRecvHeader(MessageBase * header)
 ///helper to get the last output message
 f8String getSingleMsg()
 {
-    if(sessionTest::initiator_test.initiator->_output.empty())
+    if(sessionTest::initiator_test->initiator->_output.empty())
     {
         return "";
     }
 
-    f8String output = sessionTest::initiator_test.initiator->_output[0];
-    sessionTest::initiator_test.initiator->_output.clear();
+    f8String output = sessionTest::initiator_test->initiator->_output[0];
+    sessionTest::initiator_test->initiator->_output.clear();
     return output;
 }
 
 ///helper to get all output messages
 std::vector<f8String> getMsgs()
 {
-    std::vector<f8String> ret = sessionTest::initiator_test.initiator->_output;
-    sessionTest::initiator_test.initiator->_output.clear();
+    std::vector<f8String> ret = sessionTest::initiator_test->initiator->_output;
+    sessionTest::initiator_test->initiator->_output.clear();
     return ret;
 }
 
 ///helper to clear cached output messages
 void clearOutputs()
 {
-    sessionTest::initiator_test.initiator->_output.clear();
+    sessionTest::initiator_test->initiator->_output.clear();
 }
 
 /*!helper to create a single new order and encode it to string
@@ -327,7 +345,7 @@ TEST_F(sessionTest, logon)
     f8String output = getSingleMsg();
     EXPECT_FALSE(output.empty());
     EXPECT_TRUE(output.find("35=A") !=  std::string::npos);
-    EXPECT_EQ(States::st_logon_sent, initiator_test.ss->getState());
+    EXPECT_EQ(States::st_logon_sent, initiator_test->ss->getState());
 
     //receive logon confirm
     Logon * logon = new Logon;
@@ -336,11 +354,11 @@ TEST_F(sessionTest, logon)
     *logon << new HeartBtInt(5) << new EncryptMethod(0);
     f8String logon_str;
     logon->encode(logon_str);
-    initiator_test.ss->update_received();
-    initiator_test.ss->process(logon_str);
+    initiator_test->ss->update_received();
+    initiator_test->ss->process(logon_str);
 
-    EXPECT_EQ(States::st_continuous, initiator_test.ss->getState());
-    EXPECT_EQ(unsigned(5), initiator_test.initiator->get_hb_interval());
+    EXPECT_EQ(States::st_continuous, initiator_test->ss->getState());
+    EXPECT_EQ(unsigned(5), initiator_test->initiator->get_hb_interval());
 
     delete logon;
 
@@ -361,33 +379,33 @@ TEST_F(sessionTest, handle_resend_request)
     resend->encode(resend_str);
     delete resend;
 
-    initiator_test.ss->set_persister(NULL);
-    initiator_test.ss->update_received();
-    initiator_test.ss->process(resend_str);
+    initiator_test->ss->set_persister(NULL);
+    initiator_test->ss->update_received();
+    initiator_test->ss->process(resend_str);
 
     f8String output = getSingleMsg();
 
-    EXPECT_EQ(States::st_continuous, initiator_test.ss->getState());
+    EXPECT_EQ(States::st_continuous, initiator_test->ss->getState());
     EXPECT_TRUE(output.find("35=4") !=  std::string::npos);
 
     //ill resend request
-    initiator_test.ss->set_persister(initiator_test.per);
+    initiator_test->ss->set_persister(initiator_test->per);
     resend = new ResendRequest;
     fillRecvHeader(resend->Header());
     *resend << new BeginSeqNo(100) << new EndSeqNo(4);
     resend->encode(resend_str);
     delete resend;
 
-    initiator_test.ss->update_received();
-    initiator_test.ss->process(resend_str);
+    initiator_test->ss->update_received();
+    initiator_test->ss->process(resend_str);
 
     output = getSingleMsg();
 
-    EXPECT_EQ(States::st_continuous, initiator_test.ss->getState());
+    EXPECT_EQ(States::st_continuous, initiator_test->ss->getState());
     EXPECT_TRUE(output.find("35=3") !=  std::string::npos);
 
     //have records
-    unsigned next_send = initiator_test.ss->get_next_send_seq();
+    unsigned next_send = initiator_test->ss->get_next_send_seq();
 
     Reject * rej = new Reject;
     fillSendHeader(rej->Header(), next_send);
@@ -395,20 +413,20 @@ TEST_F(sessionTest, handle_resend_request)
     f8String first;
     rej->encode(first);
     delete rej;
-    initiator_test.per->put(next_send, first);
-    initiator_test.per->put(++next_send, recv_seq);
+    initiator_test->per->put(next_send, first);
+    initiator_test->per->put(++next_send, recv_seq);
 
     f8String second = composeOrder(next_send);
-    initiator_test.per->put(next_send, second);
-    initiator_test.per->put(++next_send, recv_seq);
+    initiator_test->per->put(next_send, second);
+    initiator_test->per->put(++next_send, recv_seq);
 
     f8String third = composeOrder(next_send);
-    initiator_test.per->put(next_send, third);
-    initiator_test.per->put(++next_send, recv_seq);
+    initiator_test->per->put(next_send, third);
+    initiator_test->per->put(++next_send, recv_seq);
 
     f8String four = composeOrder(next_send);
-    initiator_test.per->put(next_send, four);
-    initiator_test.per->put(++next_send, recv_seq);
+    initiator_test->per->put(next_send, four);
+    initiator_test->per->put(++next_send, recv_seq);
 
     resend = new ResendRequest;
     fillRecvHeader(resend->Header());
@@ -416,12 +434,12 @@ TEST_F(sessionTest, handle_resend_request)
     resend->encode(resend_str);
     delete resend;
 
-    initiator_test.ss->update_received();
-    initiator_test.ss->process(resend_str);
+    initiator_test->ss->update_received();
+    initiator_test->ss->process(resend_str);
 
     std::vector<f8String> outputs = getMsgs();
 
-    EXPECT_EQ(States::st_continuous, initiator_test.ss->getState());
+    EXPECT_EQ(States::st_continuous, initiator_test->ss->getState());
     EXPECT_EQ(first, outputs[0]);
     EXPECT_EQ(second, outputs[1]);
     EXPECT_EQ(third, outputs[2]);
@@ -430,8 +448,8 @@ TEST_F(sessionTest, handle_resend_request)
     //have seq gap
     ++next_send; //skip 5
     f8String six = composeOrder(next_send);
-    initiator_test.per->put(next_send, six);
-    initiator_test.per->put(++next_send, recv_seq);
+    initiator_test->per->put(next_send, six);
+    initiator_test->per->put(++next_send, recv_seq);
 
     resend = new ResendRequest;
     fillRecvHeader(resend->Header());
@@ -439,12 +457,12 @@ TEST_F(sessionTest, handle_resend_request)
     resend->encode(resend_str);
     delete resend;
 
-    initiator_test.ss->update_received();
-    initiator_test.ss->process(resend_str);
+    initiator_test->ss->update_received();
+    initiator_test->ss->process(resend_str);
 
     outputs = getMsgs();
 
-    EXPECT_EQ(States::st_continuous, initiator_test.ss->getState());
+    EXPECT_EQ(States::st_continuous, initiator_test->ss->getState());
     EXPECT_EQ(first, outputs[0]);
     EXPECT_EQ(second, outputs[1]);
     EXPECT_EQ(third, outputs[2]);
@@ -468,10 +486,10 @@ TEST_F(sessionTest, handle_seq_reset)
            << new NewSeqNo(100);
     f8String tmp;
     reset->encode(tmp);
-    initiator_test.ss->update_received();
-    initiator_test.ss->process(tmp);
+    initiator_test->ss->update_received();
+    initiator_test->ss->process(tmp);
 
-    EXPECT_EQ(unsigned(100), initiator_test.ss->get_next_receive_seq());
+    EXPECT_EQ(unsigned(100), initiator_test->ss->get_next_receive_seq());
     recv_seq = 100;
 }
 
@@ -488,8 +506,8 @@ TEST_F(sessionTest, handle_test_request)
 
     f8String tmp;
     testreq->encode(tmp);
-    initiator_test.ss->update_received();
-    initiator_test.ss->process(tmp);
+    initiator_test->ss->update_received();
+    initiator_test->ss->process(tmp);
 
     f8String output = getSingleMsg();
 
@@ -507,15 +525,15 @@ TEST_F(sessionTest, send_test_request)
 {
     //make sure test request is sent
     Tickval empty;
-    initiator_test.ss->set_last_received(empty);
-    initiator_test.ss->kickHBService();
+    initiator_test->ss->set_last_received(empty);
+    initiator_test->ss->kickHBService();
 
     std::vector<f8String> outputs = getMsgs();
 
     f8String output = outputs.back();
     EXPECT_FALSE(output.empty());
     EXPECT_TRUE(output.find("35=1") !=  std::string::npos);
-    EXPECT_EQ(States::st_test_request_sent, initiator_test.ss->getState());
+    EXPECT_EQ(States::st_test_request_sent, initiator_test->ss->getState());
 
     RegExp testID("112=(\\w+)");
     RegMatch match;
@@ -528,17 +546,17 @@ TEST_F(sessionTest, send_test_request)
     hb << new TestReqID(reqId);
     f8String heartbeat;
     hb.encode(heartbeat);
-    initiator_test.ss->process(heartbeat);
-    EXPECT_EQ(States::st_continuous, initiator_test.ss->getState());
+    initiator_test->ss->process(heartbeat);
+    EXPECT_EQ(States::st_continuous, initiator_test->ss->getState());
 
     //fail to response testRequest
-    initiator_test.ss->kickHBService();
-    initiator_test.ss->kickHBService();
+    initiator_test->ss->kickHBService();
+    initiator_test->ss->kickHBService();
 
     outputs = getMsgs();
     output = outputs.back();
 
-    EXPECT_EQ(States::st_logoff_sent, initiator_test.ss->getState());
+    EXPECT_EQ(States::st_logoff_sent, initiator_test->ss->getState());
     EXPECT_TRUE(output.find("35=5") !=  std::string::npos);
     clearOutputs();
 }
