@@ -1,4 +1,5 @@
-* Sun Aug 18 2013 David L. Dight <fix@fix8.org> 0.9.4
+* Sun Aug 25 2013 David L. Dight <fix@fix8.org> 0.9.4
+- Merged in Richard Bourne's Windows port.
 - Fixed Jira tickets FX-72, FX-73, FX-74, FX-75
 - Merged from evdubs: remove the friend declaration in f8_scoped_lock_impl
 - Fixup package spec for pre-release to Fedora (now builds on f20 rawhide)

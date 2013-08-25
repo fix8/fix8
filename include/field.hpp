@@ -279,7 +279,7 @@ template<const unsigned short field>
 class Field<char *, field> : public BaseField
 {
 protected:
-	char *_value;
+	const char *_value;
 
 public:
 	/// The FIX fieldID (tag number).

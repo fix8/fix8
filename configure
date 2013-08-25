@@ -821,6 +821,7 @@ with_gperf
 with_mpmc
 with_sleep
 with_poco
+enable_gtest
 enable_bdb
 with_bdb
 enable_xmlstrictbool
@@ -1474,6 +1475,8 @@ Optional Features:
   --enable-doxygen        enable doxygen generation (default=yes if available)
   --enable-fillmetadata   enable metadata population (default=yes)
   --enable-tcmalloc       enable gperftools tcmalloc (default=yes)
+  --enable-gtest          enable gtest unit test case building if available
+                          (default=yes if available)
   --enable-bdb            enable support for Oracle Berkeley DB persistence
                           (default=no)
   --enable-xmlstrictbool  enable xml strict bool behaviour (default=no)
@@ -19309,6 +19312,17 @@ $as_echo "no" >&6; }
 		 exit 1
 	fi
 
+oktogtest=yes
+# Check whether --enable-gtest was given.
+if test "${enable_gtest+set}" = set; then :
+  enableval=$enable_gtest; case "${enableval}" in
+	yes) ;;
+	no)  oktogtest=no;;
+	*) as_fn_error $? "bad value ${enableval} for --enable-gtest" "$LINENO" 5 ;;
+esac
+fi
+
+
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gtest" >&5
 $as_echo_n "checking for gtest... " >&6; }
     cat confdefs.h - <<_ACEOF >conftest.$ac_ext
@@ -19330,7 +19344,7 @@ else
   have_gtest=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-    if test "$have_gtest" = yes; then
+    if test "$have_gtest" = yes && test "$oktogtest" = yes; then
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 
@@ -19340,7 +19354,7 @@ $as_echo "#define HAS_GTEST 1" >>confdefs.h
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
     fi
- if test x$have_gtest = xyes; then
+ if test x$have_gtest = xyes && test "$oktogtest" = yes; then
   USEGTEST_TRUE=
   USEGTEST_FALSE='#'
 else

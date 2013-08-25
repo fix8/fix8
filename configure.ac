@@ -330,18 +330,27 @@ AC_MSG_CHECKING(for Poco)
 		 exit 1
 	fi
 
+oktogtest=yes
+AC_ARG_ENABLE([gtest],
+[AC_HELP_STRING([--enable-gtest],[enable gtest unit test case building if available (default=yes if available)])],
+[case "${enableval}" in
+	yes) ;;
+	no)  oktogtest=no;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-gtest) ;;
+esac])
+
 AC_MSG_CHECKING(for gtest)
     AC_TRY_COMPILE([
         #include <gtest/gtest.h>
         ],[;],
         have_gtest=yes, have_gtest=no)
-    if test "$have_gtest" = yes; then
+    if test "$have_gtest" = yes && test "$oktogtest" = yes; then
         AC_MSG_RESULT(yes)
         AC_DEFINE(HAS_GTEST, 1, [Define to 1 if gtest available])
     else
         AC_MSG_RESULT(no)
     fi
-AM_CONDITIONAL(USEGTEST, [test x$have_gtest = xyes])
+AM_CONDITIONAL(USEGTEST, [test x$have_gtest = xyes && test "$oktogtest" = yes])
 
 
 AC_MSG_CHECKING(for tr1/unordered_map)

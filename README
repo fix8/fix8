@@ -47,7 +47,7 @@ Features
 * Fix8 supports field and value domain validation, mandatory/optional field assertion, field ordering,
   well-formedness testing, retransmission and standard session semantics.
 
-* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC and ARM. Other *NIX variants may work too.
+* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC and ARM. It also now runs on Windows. Other *NIX variants may work too.
 
 Directory Layout
 ================
@@ -78,6 +78,9 @@ Directory    Description
      include/ff/
              header files for FastFlow
 
+	  msvc/
+				 Microsoft Visual Studio project files
+
      runtime/
              runtime library source
 
@@ -107,6 +110,8 @@ libraries) being installed to build properly:
 
 - Poco C++ Libraries [basic edition](http://pocoproject.org/download/index.html)
 
+Additional libraries are needed for building on Windows, see https://fix8engine.atlassian.net/wiki/display/FX/Building
+
 Optional Dependencies
 =====================
 
@@ -126,7 +131,7 @@ Building on Linux/UNIX/OSX
 ==========================
 
 The build system is based on automake/autoconf/libtool.
-You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
+You **must** have libtool (http://www.gnu.org/software/libtool/) installed to build.
 
     % tar xvzf fix8-0.9.4.tar.gz
     % cd 0.9.4
@@ -138,10 +143,15 @@ If you have built the test cases, you can also run them as follows:
 
 	% make check
 
+Building on Windows
+===================
+
+Please see https://fix8engine.atlassian.net/wiki/display/FX/Building for detailed instructions on building for Windows.
+
 License
 =======
 
-Fix8 is released under the [GNU LESSER GENERAL PUBLIC LICENSE Version 3](http://www.gnu.org/licenses/lgpl.html).
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3 (http://www.gnu.org/licenses/lgpl.html).
 See [License](http://fix8.org/faq.html#license) for more information.
 
 More Information

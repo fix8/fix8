@@ -32,7 +32,7 @@ and framework; and a set of complete client/server test applications.
 
 * Fix8 supports field and value domain validation, mandatory/optional field assertion, field ordering, well-formedness testing, retransmission and standard session semantics.
 
-* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC and ARM. Other \*NIX variants may work too.
+* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC and ARM. It also now runs on *Windows*. Other \*NIX variants may work too.
 
 ## Directory Layout
 
@@ -85,6 +85,10 @@ and framework; and a set of complete client/server test applications.
              <td>additional utilities source</td>
           </tr>
           <tr>
+             <td>msvc/</td>
+             <td>Microsoft Visual Studio project files</td>
+          </tr>
+          <tr>
              <td>schema/</td>
              <td>quickfix FIX xml schemas</td>
           </tr>
@@ -110,6 +114,8 @@ Fix8 requires the following third-party software (header files and
 libraries) being installed to build properly:
 
 - Poco C++ Libraries [basic edition](http://pocoproject.org/download/index.html)
+
+Additional libraries are needed for building on Windows, [see here](https://fix8engine.atlassian.net/wiki/display/FX/Building).
 
 ## Optional Dependencies
 
@@ -139,6 +145,10 @@ You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to b
 If you have built the test cases, you can also run them as follows:
 
 	% make check
+
+## Building on Windows
+
+Please see [This document](https://fix8engine.atlassian.net/wiki/display/FX/Building) for detailed instructions on building for Windows.
 
 ## License
 
