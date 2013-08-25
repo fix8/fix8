@@ -36,6 +36,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _FIX8_INCLUDES_HPP_
 # define _FIX8_INCLUDES_HPP_
 
+#ifdef BUILD_F8API
+#define F8API __declspec(dllexport)
+#else
+#define F8API __declspec(dllimport)
+#endif
+
 #include <f8config.h>
 
 #ifdef HAS_TR1_UNORDERED_MAP

@@ -50,9 +50,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <algorithm>
 #include <bitset>
 #include <typeinfo>
+
+#ifdef _MSC_VER
+#include <signal.h>
+#else
 #include <sys/ioctl.h>
 #include <signal.h>
 #include <termios.h>
+#endif
 
 #include <regex.h>
 #include <errno.h>

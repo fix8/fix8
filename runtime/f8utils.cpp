@@ -39,24 +39,33 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <sstream>
 #include <iomanip>
 #include <sys/types.h>
+#ifndef _MSC_VER
 #include <sys/time.h>
+#endif
 #include <sys/stat.h>
 #include <time.h>
 #include <errno.h>
+#ifndef _MSC_VER
 #include <netdb.h>
+#endif
 #include <cstdlib>
 #include <signal.h>
+#ifndef _MSC_VER
 #include <syslog.h>
 #include <strings.h>
+#endif
 #include <string.h>
 #include <fcntl.h>
 #include <time.h>
+#ifndef _MSC_VER
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#endif
 #include <regex.h>
+#ifndef _MSC_VER
 #include <alloca.h>
-
+#endif
 #include <map>
 #include <set>
 #include <list>
@@ -88,13 +97,21 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
       startTime = &gotTime;
    }
 
-   struct tm tim;
-	time_t tval(startTime->secs());
+#ifdef _MSC_VER
+   struct tm *ptim;
+   time_t tval(startTime->secs());
+   ptim = localtime (&tval);
+#else
+   struct tm tim, *ptim;
+   time_t tval(startTime->secs());
    localtime_r(&tval, &tim);
+   ptim = &tim;
+#endif
+   
    ostringstream oss;
-   oss << setfill('0') << setw(4) << (tim.tm_year + 1900) << '-';
-   oss << setw(2) << (tim.tm_mon + 1)  << '-' << setw(2) << tim.tm_mday << ' ' << setw(2) << tim.tm_hour;
-   oss << ':' << setw(2) << tim.tm_min << ':';
+   oss << setfill('0') << setw(4) << (ptim->tm_year + 1900) << '-';
+   oss << setw(2) << (ptim->tm_mon + 1)  << '-' << setw(2) << ptim->tm_mday << ' ' << setw(2) << ptim->tm_hour;
+   oss << ':' << setw(2) << ptim->tm_min << ':';
 	if (dplaces)
 	{
 		const double secs((startTime->secs() % 60) + static_cast<double>(startTime->nsecs()) / Tickval::billion);
@@ -103,7 +120,7 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
 		oss << setw(3 + dplaces) << setfill('0') << setprecision(dplaces) << secs;
 	}
 	else
-		oss << setfill('0') << setw(2) << tim.tm_sec;
+		oss << setfill('0') << setw(2) << ptim->tm_sec;
    return result = oss.str();
 }
 
@@ -147,7 +164,11 @@ string Str_error(const int err, const char *str)
 {
 	const size_t max_str(256);
 	char buf[max_str] = {};
+#ifdef _MSC_VER
+    ignore_value(strerror_s(buf, max_str - 1, err));
+#else
 	ignore_value(strerror_r(err, buf, max_str - 1));
+#endif
 	if (str && *str)
 	{
 		ostringstream ostr;

@@ -40,7 +40,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 #include <iomanip>
 #include <queue>
+#ifdef _MSC_VER
+#include <time.h>
+#else
 #include <sys/time.h>
+#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8

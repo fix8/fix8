@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <Poco>C:\Users\Richard Bourne\Source\poco\poco-1.4.6p1</Poco>
+    <TBB>C:\Users\Richard Bourne\Source\tbb\tbb41_20130613oss</TBB>
+    <Boost>C:\Users\Richard Bourne\Source\boost\boost_1_54_0</Boost>
+    <pthreads>C:\Users\Richard Bourne\Source\pthreads\pthreads-w32-2-9-1</pthreads>
+    <zlib>C:\Users\Richard Bourne\Source\zlib\zlib128</zlib>
+    <GetOpt>C:\Users\Richard Bourne\Source\getopt</GetOpt>
+    <gtest>C:\Users\Richard Bourne\Source\gtest\gtest-1.6.0</gtest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IntDir>$(MSBuildProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>./;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(TBB)/include;$(Boost);$(Boost)/boost;$(pthreads)/pthreads.2;$(zlib)/include;$(GetOpt)/getopt_mb_uni_vc10_dll</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(pthreads)/pthreads.2;$(zlib)/lib;$(GetOpt)/bin/release/dll;$(boost)/stage/lib;$(tbb)/lib/ia32/vc11;$(poco)/lib;$(SolutionDir)../$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;getopt.lib;zdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="Poco">
+      <Value>$(Poco)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="TBB">
+      <Value>$(TBB)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="Boost">
+      <Value>$(Boost)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="pthreads">
+      <Value>$(pthreads)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="zlib">
+      <Value>$(zlib)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="GetOpt">
+      <Value>$(GetOpt)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="gtest">
+      <Value>$(gtest)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

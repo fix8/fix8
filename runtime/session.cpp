@@ -48,7 +48,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <numeric>
 #include <bitset>
 
+#ifndef _MSC_VER
 #include <strings.h>
+#endif
 #include <regex.h>
 
 #include <f8includes.hpp>
@@ -61,10 +63,12 @@ using namespace std;
 RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 
 //-------------------------------------------------------------------------------------------------
+#ifndef _MSC_VER
 const Tickval::ticks Tickval::noticks;
 const Tickval::ticks Tickval::thousand;
 const Tickval::ticks Tickval::million;
 const Tickval::ticks Tickval::billion;
+#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8

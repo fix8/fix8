@@ -69,7 +69,7 @@
 
 	<log 		name="protocol_log_file"
 				type="protocol"
-				filename="!{pwd -P}/run/myfix_client_protocol.log"
+				filename="./run/myfix_client_protocol.log"
 				rotation="5"
 				flags_old="append|inbound"
 				flags="append|inbound|outbound|direction|sequence"/>

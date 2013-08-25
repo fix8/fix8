@@ -102,7 +102,11 @@ class GeneratedTable
 public:
 	typedef _Pair<Key, Val> Pair;
 
+#ifdef _MSC_VER
+public:
+#else
 private:
+#endif
 	/// The actual data set
 	static const Pair _pairs[];
 
