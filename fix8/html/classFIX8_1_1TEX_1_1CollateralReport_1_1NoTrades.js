@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1CollateralReport_1_1NoTrades =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoTrades.html#abceda706534e56ab67edeb786057176f", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoTrades.html#a14eb3e1a134d8ce51c6bd91aee37f2a9", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoTrades.html#adccd51799338214860c75aada1fef555", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoTrades.html#adccd51799338214860c75aada1fef555", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoTrades.html#a1c28041f1e477a515d5fb60576647530", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoTrades.html#a599eecb2c1085628c4c333489a8b7873", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoTrades.html#a1c28041f1e477a515d5fb60576647530", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoTrades.html#ababc5131c5315d02c4ef11b02fef20bf", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralReport_1_1NoTrades.html#af46a480b92a0ba8873328d40db222533", null ]
 ];

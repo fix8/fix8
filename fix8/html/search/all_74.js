@@ -1,7 +1,6 @@
 var searchData=
 [
   ['the_20fix8_20api_20documentation_2e',['The FIX8 API Documentation.',['../index.html',1,'']]],
-  ['t',['T',['../classFIX8_1_1f8__scoped__lock__impl.html#a52235a3bf64cb6acc1a6297eec71ae8f',1,'FIX8::f8_scoped_lock_impl']]],
   ['tabsize',['tabsize',['../f8c_8cpp.html#a126b545831fee6de9231cf5a74d0752d',1,'f8c.cpp']]],
   ['tag_5f',['tag_',['../classXmlElement.html#aaeb54b7e5f68b7466613adef10f19212',1,'XmlElement']]],
   ['tagnum',['TagNum',['../namespaceFIX8.html#a62ae1542cbc6d532d5eb6ccb79a43562',1,'FIX8']]],
@@ -106,8 +105,8 @@ var searchData=
   ['tickruletype_5ftraded_5fas_5fa_5fspread_5fleg',['TickRuleType_TRADED_AS_A_SPREAD_LEG',['../namespaceFIX8_1_1TEX.html#a94b95ca3eefc5e9aa326b855081b505a',1,'FIX8::TEX']]],
   ['tickruletype_5fvariable',['TickRuleType_VARIABLE',['../namespaceFIX8_1_1TEX.html#a61af4b147ba8dac950f098fd6bc25639',1,'FIX8::TEX']]],
   ['ticks',['ticks',['../classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa',1,'FIX8::Tickval']]],
-  ['tickval',['Tickval',['../classFIX8_1_1Tickval.html',1,'FIX8']]],
   ['tickval',['Tickval',['../classFIX8_1_1Tickval.html#a7938b3ad3c58c8281b4b5d17771cff27',1,'FIX8::Tickval::Tickval(bool settonow=false)'],['../classFIX8_1_1Tickval.html#afe1532639eeef863084c1d6a83f447ce',1,'FIX8::Tickval::Tickval(const Tickval &amp;from)'],['../classFIX8_1_1Tickval.html#a8f18e8f41217ac33868fac20529936a2',1,'FIX8::Tickval::Tickval(const ticks &amp;from)'],['../classFIX8_1_1Tickval.html#aa1a1b99a8f1405995536213f13eebb70',1,'FIX8::Tickval::Tickval(const timespec &amp;from)']]],
+  ['tickval',['Tickval',['../classFIX8_1_1Tickval.html',1,'FIX8']]],
   ['tickval_2ehpp',['tickval.hpp',['../tickval_8hpp.html',1,'']]],
   ['tiercode',['TierCode',['../namespaceFIX8_1_1TEX.html#ab81285b0c2096eac61357e5c895e69a4',1,'FIX8::TEX']]],
   ['time_5fwith_5fsys_5ftime',['TIME_WITH_SYS_TIME',['../f8config_8h.html#a2b44ef64cf38e064ef11e11f35271380',1,'f8config.h']]],
@@ -411,8 +410,8 @@ var searchData=
   ['tradsesstatusrejreason_5frealm_5fels',['TradSesStatusRejReason_realm_els',['../namespaceFIX8_1_1TEX.html#ae7a0aad7279f51e3c089e1730a1a168d',1,'FIX8::TEX']]],
   ['tradsesstatusrejreason_5funknown_5for_5finvalid_5ftradingsessionid',['TradSesStatusRejReason_UNKNOWN_OR_INVALID_TRADINGSESSIONID',['../namespaceFIX8_1_1TEX.html#a5119ae43e628f6debe7f6c5b60b8eacc',1,'FIX8::TEX']]],
   ['tradsesupdateaction',['TradSesUpdateAction',['../namespaceFIX8_1_1TEX.html#a709d4dbc73eb781da97391e0d1bff703',1,'FIX8::TEX']]],
-  ['trailer',['Trailer',['../classFIX8_1_1Message.html#ac28982f16a861f4d033a26626b2c9ffb',1,'FIX8::Message::Trailer()'],['../classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df',1,'FIX8::TEX::trailer::trailer()'],['../classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df',1,'FIX8::TEX::trailer::trailer()'],['../classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df',1,'FIX8::TEX::trailer::trailer()']]],
   ['trailer',['trailer',['../classFIX8_1_1TEX_1_1trailer.html',1,'FIX8::TEX']]],
+  ['trailer',['Trailer',['../classFIX8_1_1Message.html#ac28982f16a861f4d033a26626b2c9ffb',1,'FIX8::Message::Trailer()'],['../classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df',1,'FIX8::TEX::trailer::trailer()'],['../classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df',1,'FIX8::TEX::trailer::trailer()'],['../classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df',1,'FIX8::TEX::trailer::trailer()']]],
   ['traits_2ecpp',['traits.cpp',['../traits_8cpp.html',1,'']]],
   ['traits_2ehpp',['traits.hpp',['../traits_8hpp.html',1,'']]],
   ['traits_5fcpp',['traits_cpp',['../structFIX8_1_1Ctxt.html#a543540fdfa08a4b524ecc436da83ae66a1087c19ce1c2db219588851961e3d940',1,'FIX8::Ctxt']]],

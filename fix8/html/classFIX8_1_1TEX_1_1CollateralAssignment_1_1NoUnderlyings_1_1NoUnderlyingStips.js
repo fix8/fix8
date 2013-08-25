@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoUnderlyings_1_1NoUnderlyingSti
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a1bd2ea68a67b9e8df53aab53807cc4ba", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a7f40d33be46f28c0807f04c9b722a448", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a2587864cf2a60eb8fa1ddb0840b3a031", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a2587864cf2a60eb8fa1ddb0840b3a031", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a44874f92a421d5014a866388ea9f75ff", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoUnderlyings_1_1NoUnderlyingStips.html#aba76a78739132938fce797184dee5f6c", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a44874f92a421d5014a866388ea9f75ff", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a408ae0eeafbfed99ad27511d4ef665f2", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a36860d7f7c9c62081b61bb351a258692", null ]
 ];

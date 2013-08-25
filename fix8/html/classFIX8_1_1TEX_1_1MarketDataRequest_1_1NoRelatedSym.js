@@ -16,6 +16,9 @@ var classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym.html#af9f9995df9aab84ce01e3e5b7310be6b", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym.html#ae55ad819425e4210742d64bce73c081a", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym.html#abfe6907cbc553990a15313ad60f0fad5", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym.html#abfe6907cbc553990a15313ad60f0fad5", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym.html#aac33bc5b6c341eb77f26dde272894b26", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym.html#a667d26b34356ca031032aea711147e35", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym.html#aac33bc5b6c341eb77f26dde272894b26", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym.html#a3840cee9114e38bfd962355289c17b04", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym.html#ab4cfdb211ccf797164f4c8f45bc9e1dc", null ]
 ];

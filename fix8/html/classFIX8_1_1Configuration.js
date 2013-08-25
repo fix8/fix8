@@ -26,6 +26,7 @@ var classFIX8_1_1Configuration =
     [ "get_retry_count", "classFIX8_1_1Configuration.html#a8f8f0922f008d43825a09fda5657d063", null ],
     [ "get_retry_interval", "classFIX8_1_1Configuration.html#a96776f7b6c4cc02dba1c9c7aeb19bbee", null ],
     [ "get_role", "classFIX8_1_1Configuration.html#a36a52fd4fa27e1ce343590ce56f69d19", null ],
+    [ "get_root", "classFIX8_1_1Configuration.html#a4c3e0bc7474555a2fb33f15c27a5d6fc", null ],
     [ "get_sender_comp_id", "classFIX8_1_1Configuration.html#a00d8d606b3ec33836fa64397fcca2b1c", null ],
     [ "get_session", "classFIX8_1_1Configuration.html#a5ad3c83d2f3a318346e9a75255b7e702", null ],
     [ "get_silent_disconnect", "classFIX8_1_1Configuration.html#a873f1b9a15f2df130a1ae9a2bf622f1d", null ],

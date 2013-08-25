@@ -15,6 +15,9 @@ var classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#a2935970f4f63b4950a25a2526a74bb36", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#aafce165eee8248b1cc2bd623d570c854", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#a24d45f231ce08adcb222d0bcf9fe94cd", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#a24d45f231ce08adcb222d0bcf9fe94cd", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#abafda7182c06a2c9a7857a862ba69467", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#a445105aa2e3b8e3161f2d3e9c809e12a", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#abafda7182c06a2c9a7857a862ba69467", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#ac19c4ee5f6be6698c9b450b8df8996ab", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoMarketSegments.html#a92abf6497a22cbdd6e1e5c8236c7c73b", null ]
 ];

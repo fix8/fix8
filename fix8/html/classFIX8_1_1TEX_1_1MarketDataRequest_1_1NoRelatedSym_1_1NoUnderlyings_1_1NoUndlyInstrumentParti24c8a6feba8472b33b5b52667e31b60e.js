@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1No
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParti24c8a6feba8472b33b5b52667e31b60e.html#a879b767268770ee0e8c5f25f862ad692", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParti24c8a6feba8472b33b5b52667e31b60e.html#a1676f98b55a586659e77dabb7e4d9621", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParti24c8a6feba8472b33b5b52667e31b60e.html#a55a098b0eee67031e2946a9cf88a07a9", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParti24c8a6feba8472b33b5b52667e31b60e.html#a55a098b0eee67031e2946a9cf88a07a9", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParti24c8a6feba8472b33b5b52667e31b60e.html#aa96deeb6383c584c251aec27665d57e0", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParti24c8a6feba8472b33b5b52667e31b60e.html#ad8a61b5106f8c00f6469fce195e37c46", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParti24c8a6feba8472b33b5b52667e31b60e.html#aa96deeb6383c584c251aec27665d57e0", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParti24c8a6feba8472b33b5b52667e31b60e.html#ac40635ee8d17a53239748f0fee3280ed", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParti24c8a6feba8472b33b5b52667e31b60e.html#ae5605afe89a782c26d33fc7b656d60f1", null ]
 ];

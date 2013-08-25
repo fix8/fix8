@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.3</span>
+   &#160;<span id="projectnumber">version  0.9.4</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -297,7 +297,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="connection_8hpp_source.html#l00162">162</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8cpp_source.html#l00217">set_preamble_sz()</a>.</p>
+<p>References <a class="el" href="connection_8cpp_source.html#l00219">set_preamble_sz()</a>.</p>
 
 </div>
 </div>
@@ -352,7 +352,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Process messages from inbound queue, calls session process method. </p>
 <dl class="section return"><dt>Returns</dt><dd>number of messages processed </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00176">176</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00178">178</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -410,9 +410,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Reader thread method. Reads messages and places them on the queue for processing. Supports pipelined, threaded and coroutine process models. </p>
 <dl class="section return"><dt>Returns</dt><dd>0 on success </dd></dl>
 
-<p>Implements <a class="el" href="classFIX8_1_1AsyncSocket.html#a338ce12d6596464b639c28e448f7f507">FIX8::AsyncSocket&lt; f8String &gt;</a>.</p>
+<p>Reimplemented from <a class="el" href="classFIX8_1_1AsyncSocket.html#aa97aab43e0623e0dd433d9881b6fac0d">FIX8::AsyncSocket&lt; f8String &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00060">60</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00062">62</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
 <p>References <a class="el" href="yield_8hpp_source.html#l00016">coro_yield</a>, <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_coro</a>, <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_pipeline</a>, <a class="el" href="yield_8hpp_source.html#l00012">reenter</a>, and <a class="el" href="f8exception_8hpp_source.html#l00085">FIX8::f8Exception::what()</a>.</p>
 
@@ -510,7 +510,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00223">223</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00225">225</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
 <p>References <a class="el" href="namespaceFIX8.html#a25dd5007a5a971fe43a58df371e1db34">FIX8::default_field_separator()</a>, and <a class="el" href="message_8hpp_source.html#l00618">FIX8::MessageBase::extract_element()</a>.</p>
 
@@ -531,7 +531,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Calculate the length of the Fix message preamble, e.g. "8=FIX.4.4^A9=". </p>
 
-<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00217">217</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00219">219</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="connection_8hpp_source.html#l00162">FIXReader()</a>.</p>
 
@@ -722,7 +722,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 4 2013 08:14:00. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:41. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

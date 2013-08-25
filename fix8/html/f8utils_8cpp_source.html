@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.3</span>
+   &#160;<span id="projectnumber">version  0.9.4</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -149,138 +149,159 @@ $(document).ready(function(){initNavTree('f8utils_8cpp_source.html','');});
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;sys/time.h&gt;</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;errno.h&gt;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;netdb.h&gt;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;signal.h&gt;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;syslog.h&gt;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;strings.h&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;sys/socket.h&gt;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &lt;netinet/in.h&gt;</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &lt;arpa/inet.h&gt;</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &lt;alloca.h&gt;</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#ifndef HAVE_GMTOFF</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor"></span><span class="keyword">extern</span> <span class="keywordtype">long</span> <a class="code" href="f8utils_8cpp.html#a3e348024a4a098ce0b8b51edba679a16">timezone</a>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a7313e34944fa1ffd53b5f7d7f6d79586">   79</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#a21bce0769809df7d55f39cd67e6b22a0">GetTimeAsStringMS</a>(<span class="keywordtype">string</span>&amp; result, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> *tv, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> dplaces)</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;   <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> *startTime;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;   <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> gotTime;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;   <span class="keywordflow">if</span> (tv)</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      startTime = tv;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;   {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      gotTime.<a class="code" href="classFIX8_1_1Tickval.html#a9a7c3f6ef8335a4b201d075b798896b2">now</a>();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      startTime = &amp;gotTime;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;   }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;   <span class="keyword">struct </span>tm tim;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;   time_t tval(startTime-&gt;<a class="code" href="classFIX8_1_1Tickval.html#a10ac6bf45dfb0bbe96d68abdb438b9bb">secs</a>());</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;   localtime_r(&amp;tval, &amp;tim);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   ostringstream oss;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;   oss &lt;&lt; setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; setw(4) &lt;&lt; (tim.tm_year + 1900) &lt;&lt; <span class="charliteral">&#39;-&#39;</span>;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;   oss &lt;&lt; setw(2) &lt;&lt; (tim.tm_mon + 1)  &lt;&lt; <span class="charliteral">&#39;-&#39;</span> &lt;&lt; setw(2) &lt;&lt; tim.tm_mday &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; setw(2) &lt;&lt; tim.tm_hour;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;   oss &lt;&lt; <span class="charliteral">&#39;:&#39;</span> &lt;&lt; setw(2) &lt;&lt; tim.tm_min &lt;&lt; <span class="charliteral">&#39;:&#39;</span>;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;   <span class="keywordflow">if</span> (dplaces)</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;   {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">double</span> secs((startTime-&gt;<a class="code" href="classFIX8_1_1Tickval.html#a10ac6bf45dfb0bbe96d68abdb438b9bb">secs</a>() % 60) + static_cast&lt;double&gt;(startTime-&gt;<a class="code" href="classFIX8_1_1Tickval.html#a3af59e09beed4c914f5011746e8268ec">nsecs</a>()) / Tickval::billion);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      oss.setf(ios::showpoint);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      oss.setf(ios::fixed);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      oss &lt;&lt; setw(3 + dplaces) &lt;&lt; setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; setprecision(dplaces) &lt;&lt; secs;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;   <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      oss &lt;&lt; setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; setw(2) &lt;&lt; tim.tm_sec;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   <span class="keywordflow">return</span> result = oss.str();</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a91dbcee63f466c2a9b43ad5a1d500bc1">  111</a></span>&#160;<span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#aa425fec2bfd5904c8599debe9e6adc9c">CheckAddTrailingSlash</a>(<span class="keywordtype">string</span>&amp; src)</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;{</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   <span class="keywordflow">if</span> (!src.empty() &amp;&amp; *src.rbegin() != <span class="charliteral">&#39;/&#39;</span>)</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      src += <span class="charliteral">&#39;/&#39;</span>;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   <span class="keywordflow">return</span> src;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a52effed54efdb70c2f5373f1d413a2e7">  119</a></span>&#160;<span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#a4137a195b29b8ed64119e8f16d040ee9">InPlaceStrToUpper</a>(<span class="keywordtype">string</span>&amp; src)</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;{</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;   <span class="keywordflow">for</span> (string::iterator itr(src.begin()); itr != src.end(); ++itr)</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      <span class="keywordflow">if</span> (islower(*itr))</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;         *itr = toupper(*itr);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;   <span class="keywordflow">return</span> src;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/time.h&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;errno.h&gt;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;netdb.h&gt;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;signal.h&gt;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;syslog.h&gt;</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &lt;strings.h&gt;</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/socket.h&gt;</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &lt;netinet/in.h&gt;</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &lt;arpa/inet.h&gt;</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;regex.h&gt;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;alloca.h&gt;</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#ifndef HAVE_GMTOFF</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor"></span><span class="keyword">extern</span> <span class="keywordtype">long</span> <a class="code" href="f8utils_8cpp.html#a3e348024a4a098ce0b8b51edba679a16">timezone</a>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a7313e34944fa1ffd53b5f7d7f6d79586">   88</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#a21bce0769809df7d55f39cd67e6b22a0">GetTimeAsStringMS</a>(<span class="keywordtype">string</span>&amp; result, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> *tv, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> dplaces)</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;{</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;   <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> *startTime;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;   <a class="code" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> gotTime;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;   <span class="keywordflow">if</span> (tv)</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      startTime = tv;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;   {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      gotTime.<a class="code" href="classFIX8_1_1Tickval.html#a9a7c3f6ef8335a4b201d075b798896b2">now</a>();</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      startTime = &amp;gotTime;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;   }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor"></span>   <span class="keyword">struct </span>tm *ptim;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;   time_t tval(startTime-&gt;<a class="code" href="classFIX8_1_1Tickval.html#a10ac6bf45dfb0bbe96d68abdb438b9bb">secs</a>());</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   ptim = localtime (&amp;tval);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor"></span>   <span class="keyword">struct </span>tm tim, *ptim;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   time_t tval(startTime-&gt;<a class="code" href="classFIX8_1_1Tickval.html#a10ac6bf45dfb0bbe96d68abdb438b9bb">secs</a>());</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   localtime_r(&amp;tval, &amp;tim);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   ptim = &amp;tim;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor"></span>   </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;   ostringstream oss;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;   oss &lt;&lt; setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; setw(4) &lt;&lt; (ptim-&gt;tm_year + 1900) &lt;&lt; <span class="charliteral">&#39;-&#39;</span>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   oss &lt;&lt; setw(2) &lt;&lt; (ptim-&gt;tm_mon + 1)  &lt;&lt; <span class="charliteral">&#39;-&#39;</span> &lt;&lt; setw(2) &lt;&lt; ptim-&gt;tm_mday &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; setw(2) &lt;&lt; ptim-&gt;tm_hour;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   oss &lt;&lt; <span class="charliteral">&#39;:&#39;</span> &lt;&lt; setw(2) &lt;&lt; ptim-&gt;tm_min &lt;&lt; <span class="charliteral">&#39;:&#39;</span>;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   <span class="keywordflow">if</span> (dplaces)</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">double</span> secs((startTime-&gt;<a class="code" href="classFIX8_1_1Tickval.html#a10ac6bf45dfb0bbe96d68abdb438b9bb">secs</a>() % 60) + static_cast&lt;double&gt;(startTime-&gt;<a class="code" href="classFIX8_1_1Tickval.html#a3af59e09beed4c914f5011746e8268ec">nsecs</a>()) / Tickval::billion);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      oss.setf(ios::showpoint);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      oss.setf(ios::fixed);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      oss &lt;&lt; setw(3 + dplaces) &lt;&lt; setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; setprecision(dplaces) &lt;&lt; secs;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;   }</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;   <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      oss &lt;&lt; setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; setw(2) &lt;&lt; ptim-&gt;tm_sec;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;   <span class="keywordflow">return</span> result = oss.str();</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;}</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a9ecf65110d7dbf2dc4eee5392dd69f8f">  128</a></span>&#160;<span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#a6990067429b01a85d2d95a15675d1e31">InPlaceReplaceInSet</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; iset, <span class="keywordtype">string</span>&amp; src, <span class="keyword">const</span> <span class="keywordtype">char</span> repl)</div>
+<div class="line"><a name="l00128"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a91dbcee63f466c2a9b43ad5a1d500bc1">  128</a></span>&#160;<span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#aa425fec2bfd5904c8599debe9e6adc9c">CheckAddTrailingSlash</a>(<span class="keywordtype">string</span>&amp; src)</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;{</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;   <span class="keywordflow">for</span> (string::iterator itr(src.begin()); itr != src.end(); ++itr)</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      <span class="keywordflow">if</span> (iset.find(*itr) == string::npos)</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;         *itr = repl;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;   <span class="keywordflow">return</span> src;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00137"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a67deae4d62ff85ab68313516c4af00a6">  137</a></span>&#160;<span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#adbbb9f9c65c6cbdf4d5a9d7446db7666">InPlaceStrToLower</a>(<span class="keywordtype">string</span>&amp; src)</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;{</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;   <span class="keywordflow">for</span> (string::iterator itr(src.begin()); itr != src.end(); ++itr)</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;      <span class="keywordflow">if</span> (isupper(*itr))</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;         *itr = tolower(*itr);</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;   <span class="keywordflow">return</span> src;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;}</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00146"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">  146</a></span>&#160;<span class="keywordtype">string</span> <a class="code" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">Str_error</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> err, <span class="keyword">const</span> <span class="keywordtype">char</span> *str)</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;{</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">size_t</span> max_str(256);</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;   <span class="keywordtype">char</span> buf[max_str] = {};</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;   <a class="code" href="namespaceFIX8.html#ad884c8d50eeee9a07543803c0885759e">ignore_value</a>(strerror_r(err, buf, max_str - 1));</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;   <span class="keywordflow">if</span> (str &amp;&amp; *str)</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;   {</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      ostringstream ostr;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      ostr &lt;&lt; str &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; buf;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="keywordflow">return</span> ostr.str();</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;   }</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;   <span class="keywordflow">return</span> string(buf);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;}</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#ad3ffb03a8b99d6de696664b0a00b0bf5">  161</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">trim</a>(<span class="keywordtype">string</span>&amp; source, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; ws)</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;{</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">size_t</span> bgstr(source.find_first_not_of(ws));</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordflow">return</span> bgstr == string::npos</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;       ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;}</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;} <span class="comment">// namespace FIX8</span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;   <span class="keywordflow">if</span> (!src.empty() &amp;&amp; *src.rbegin() != <span class="charliteral">&#39;/&#39;</span>)</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      src += <span class="charliteral">&#39;/&#39;</span>;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;   <span class="keywordflow">return</span> src;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a52effed54efdb70c2f5373f1d413a2e7">  136</a></span>&#160;<span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#a4137a195b29b8ed64119e8f16d040ee9">InPlaceStrToUpper</a>(<span class="keywordtype">string</span>&amp; src)</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;{</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;   <span class="keywordflow">for</span> (string::iterator itr(src.begin()); itr != src.end(); ++itr)</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      <span class="keywordflow">if</span> (islower(*itr))</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;         *itr = toupper(*itr);</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;   <span class="keywordflow">return</span> src;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;}</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a9ecf65110d7dbf2dc4eee5392dd69f8f">  145</a></span>&#160;<span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#a6990067429b01a85d2d95a15675d1e31">InPlaceReplaceInSet</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; iset, <span class="keywordtype">string</span>&amp; src, <span class="keyword">const</span> <span class="keywordtype">char</span> repl)</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;{</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;   <span class="keywordflow">for</span> (string::iterator itr(src.begin()); itr != src.end(); ++itr)</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      <span class="keywordflow">if</span> (iset.find(*itr) == string::npos)</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;         *itr = repl;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;   <span class="keywordflow">return</span> src;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;}</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a67deae4d62ff85ab68313516c4af00a6">  154</a></span>&#160;<span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#adbbb9f9c65c6cbdf4d5a9d7446db7666">InPlaceStrToLower</a>(<span class="keywordtype">string</span>&amp; src)</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;{</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;   <span class="keywordflow">for</span> (string::iterator itr(src.begin()); itr != src.end(); ++itr)</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      <span class="keywordflow">if</span> (isupper(*itr))</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;         *itr = tolower(*itr);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;   <span class="keywordflow">return</span> src;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;}</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">  163</a></span>&#160;<span class="keywordtype">string</span> <a class="code" href="namespaceFIX8.html#a7a2717c5631879023e7924bdc42eb235">Str_error</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> err, <span class="keyword">const</span> <span class="keywordtype">char</span> *str)</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;{</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;   <span class="keyword">const</span> <span class="keywordtype">size_t</span> max_str(256);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;   <span class="keywordtype">char</span> buf[max_str] = {};</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor"></span>    <a class="code" href="namespaceFIX8.html#ad884c8d50eeee9a07543803c0885759e">ignore_value</a>(strerror_s(buf, max_str - 1, err));</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor"></span>   <a class="code" href="namespaceFIX8.html#ad884c8d50eeee9a07543803c0885759e">ignore_value</a>(strerror_r(err, buf, max_str - 1));</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor"></span>   <span class="keywordflow">if</span> (str &amp;&amp; *str)</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;   {</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;      ostringstream ostr;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      ostr &lt;&lt; str &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; buf;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      <span class="keywordflow">return</span> ostr.str();</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;   }</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;   <span class="keywordflow">return</span> string(buf);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;}</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#ad3ffb03a8b99d6de696664b0a00b0bf5">  182</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; <a class="code" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">trim</a>(<span class="keywordtype">string</span>&amp; source, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; ws)</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;{</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">size_t</span> bgstr(source.find_first_not_of(ws));</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordflow">return</span> bgstr == string::npos</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;       ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;}</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;} <span class="comment">// namespace FIX8</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 4 2013 08:13:38. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:10. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

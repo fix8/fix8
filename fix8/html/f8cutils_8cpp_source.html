@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.3</span>
+   &#160;<span id="projectnumber">version  0.9.4</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -491,50 +491,58 @@ $(document).ready(function(){initNavTree('f8cutils_8cpp_source.html','');});
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00382"></a><span class="lineno"><a class="code" href="f8cutils_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4">  382</a></span>&#160;<span class="keywordtype">string</span> <a class="code" href="f8c_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4">insert_year</a>()</div>
 <div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;{</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;   <span class="keyword">struct </span>tm tim;</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;   time_t now(time(0));</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;   localtime_r(&amp;now, &amp;tim);</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;   ostringstream ostr;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;   ostr &lt;&lt; setw(2) &lt;&lt; (tim.tm_year - 100);</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;   <span class="keywordflow">return</span> ostr.str();</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;}</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00393"></a><span class="lineno"><a class="code" href="f8cutils_8cpp.html#abf2bd5ed37218c8fa0cb28e859e79deb">  393</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="f8c_8cpp.html#af9d15dd895fd6d62df23bb333c821589">generate_preamble</a>(ostream&amp; to, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; fname, <span class="keywordtype">bool</span> donotedit)</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;{</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;   to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;   <span class="keywordtype">string</span> result;</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;   <span class="keywordflow">if</span> (donotedit)</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;   {</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;      to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25aacc070dea106130f37cad12aaf65fbc8">cs_do_not_edit</a>) &lt;&lt; <a class="code" href="namespaceFIX8.html#a21bce0769809df7d55f39cd67e6b22a0">GetTimeAsStringMS</a>(result, 0, 0) &lt;&lt; <span class="stringliteral">&quot; ***&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;      to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;   }</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;   to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a4732f090e95c1ed2c6dc8b8189822593">cs_copyright</a>) &lt;&lt; <a class="code" href="f8c_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4">insert_year</a>() &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a45c7cac434032e60b0eab9d56cc81c2e">cs_copyright2</a>) &lt;&lt; endl;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;<span class="preprocessor"></span>   <span class="keyword">struct </span>tm *ptim;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;   time_t now(time(0));</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;   ptim = localtime (&amp;now);</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;<span class="preprocessor"></span>   <span class="keyword">struct </span>tm tim, *ptim;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;   time_t now(time(0));</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;   localtime_r(&amp;now, &amp;tim);</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;   ptim = &amp;tim;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;   ostringstream ostr;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;   ostr &lt;&lt; setw(2) &lt;&lt; (ptim-&gt;tm_year - 100);</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;   <span class="keywordflow">return</span> ostr.str();</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;}</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno"><a class="code" href="f8cutils_8cpp.html#abf2bd5ed37218c8fa0cb28e859e79deb">  401</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="f8c_8cpp.html#af9d15dd895fd6d62df23bb333c821589">generate_preamble</a>(ostream&amp; to, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; fname, <span class="keywordtype">bool</span> donotedit)</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;{</div>
 <div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;   to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;   to &lt;&lt; <span class="stringliteral">&quot;// &quot;</span> &lt;&lt; fname &lt;&lt; endl;</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;   to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;}</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1MessageSpec.html" title="f8c internal message representation.">FIX8::MessageSpec</a>&amp; what)</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;{</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;   os &lt;&lt; <span class="stringliteral">&quot;Name:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4497083907089972aec0d549f7f2b871">_name</a>;</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;   <span class="keywordflow">if</span> (!what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4a980632b2640fbe8e2d802eac27ebba">_description</a>.empty())</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot; Description:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4a980632b2640fbe8e2d802eac27ebba">_description</a>;</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;   if (!what.<a class="code" href="structFIX8_1_1MessageSpec.html#ae0f73d0b1ff8a36ad1109184e1c9eac6">_comment</a>.empty())</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot; Comment:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#ae0f73d0b1ff8a36ad1109184e1c9eac6">_comment</a>;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;   os &lt;&lt; <span class="stringliteral">&quot; isadmin:&quot;</span> &lt;&lt; boolalpha &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a2eb3aa22c9fe4f1db425021cf68123d1">_is_admin</a> &lt;&lt; endl;</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;   os &lt;&lt; <span class="stringliteral">&quot;Fields:&quot;</span> &lt;&lt; endl &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440">_fields</a>;</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;   for (GroupMap::const_iterator itr(what.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.begin()); itr != what.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.end(); ++itr)</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;Group (&quot;</span> &lt;&lt; itr-&gt;first &lt;&lt; <span class="stringliteral">&quot;): &quot;</span> &lt;&lt; endl &lt;&lt; itr-&gt;second &lt;&lt; endl;</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;   <span class="keywordflow">return</span> os;</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;}</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;   <span class="keywordtype">string</span> result;</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;   <span class="keywordflow">if</span> (donotedit)</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;   {</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;      to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25aacc070dea106130f37cad12aaf65fbc8">cs_do_not_edit</a>) &lt;&lt; <a class="code" href="namespaceFIX8.html#a21bce0769809df7d55f39cd67e6b22a0">GetTimeAsStringMS</a>(result, 0, 0) &lt;&lt; <span class="stringliteral">&quot; ***&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;      to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;   }</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;   to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a4732f090e95c1ed2c6dc8b8189822593">cs_copyright</a>) &lt;&lt; <a class="code" href="f8c_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4">insert_year</a>() &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a45c7cac434032e60b0eab9d56cc81c2e">cs_copyright2</a>) &lt;&lt; endl;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;   to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;   to &lt;&lt; <span class="stringliteral">&quot;// &quot;</span> &lt;&lt; fname &lt;&lt; endl;</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;   to &lt;&lt; <a class="code" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a>.<a class="code" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a>(<a class="code" href="namespaceFIX8.html#aa7ee6b7472eaea702e1785fda0d05d25a48aaca79608826522c4ca0a1872710ff">cs_divider</a>) &lt;&lt; endl;</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;}</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1MessageSpec.html" title="f8c internal message representation.">FIX8::MessageSpec</a>&amp; what)</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;{</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;   os &lt;&lt; <span class="stringliteral">&quot;Name:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4497083907089972aec0d549f7f2b871">_name</a>;</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;   <span class="keywordflow">if</span> (!what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4a980632b2640fbe8e2d802eac27ebba">_description</a>.empty())</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot; Description:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a4a980632b2640fbe8e2d802eac27ebba">_description</a>;</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;   if (!what.<a class="code" href="structFIX8_1_1MessageSpec.html#ae0f73d0b1ff8a36ad1109184e1c9eac6">_comment</a>.empty())</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot; Comment:&quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#ae0f73d0b1ff8a36ad1109184e1c9eac6">_comment</a>;</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;   os &lt;&lt; <span class="stringliteral">&quot; isadmin:&quot;</span> &lt;&lt; boolalpha &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#a2eb3aa22c9fe4f1db425021cf68123d1">_is_admin</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;   os &lt;&lt; <span class="stringliteral">&quot;Fields:&quot;</span> &lt;&lt; endl &lt;&lt; what.<a class="code" href="structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440">_fields</a>;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;   for (GroupMap::const_iterator itr(what.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.begin()); itr != what.<a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>.end(); ++itr)</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;Group (&quot;</span> &lt;&lt; itr-&gt;first &lt;&lt; <span class="stringliteral">&quot;): &quot;</span> &lt;&lt; endl &lt;&lt; itr-&gt;second &lt;&lt; endl;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;   <span class="keywordflow">return</span> os;</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;}</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 4 2013 08:13:38. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:10. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

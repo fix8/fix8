@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.3</span>
+   &#160;<span id="projectnumber">version  0.9.4</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -335,27 +335,27 @@ $(document).ready(function(){initNavTree('ff__wrapper_8hpp_source.html','');});
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="comment"></span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00233"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html">  233</a></span>&#160;<span class="keyword">class </span><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock_impl</a></div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;{</div>
-<div class="line"><a name="l00235"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">  235</a></span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a52235a3bf64cb6acc1a6297eec71ae8f">T</a> *<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a>;</div>
+<div class="line"><a name="l00235"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">  235</a></span>&#160;   T *<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a>;</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a6fe815a7f82cab076ba303a872373ba2">f8_scoped_lock_impl</a>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock_impl</a>&amp;);</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock_impl</a>&amp; <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a28eb3d5f032be9d525eab70bf9efc49d">operator=</a>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock_impl</a>&amp;);</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00241"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a6fe815a7f82cab076ba303a872373ba2">  241</a></span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a6fe815a7f82cab076ba303a872373ba2">f8_scoped_lock_impl</a>() : <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a>() {}</div>
-<div class="line"><a name="l00242"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a6d5ac2176a2a295baf11e89ce5fd5862">  242</a></span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a6d5ac2176a2a295baf11e89ce5fd5862">f8_scoped_lock_impl</a>(<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a52235a3bf64cb6acc1a6297eec71ae8f">T</a>&amp; mutex) { <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">acquire</a>(mutex); }</div>
+<div class="line"><a name="l00242"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a6d5ac2176a2a295baf11e89ce5fd5862">  242</a></span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a6d5ac2176a2a295baf11e89ce5fd5862">f8_scoped_lock_impl</a>(T&amp; mutex) { <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">acquire</a>(mutex); }</div>
 <div class="line"><a name="l00243"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a31d7f3851efbb20022510d8c71084343">  243</a></span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a31d7f3851efbb20022510d8c71084343">~f8_scoped_lock_impl</a>()</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;   {</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a>)</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;         <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aa1b520bd4bf807da834ff8b24dd6bd28">release</a>();</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;   }</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
-<div class="line"><a name="l00249"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">  249</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">acquire</a>(<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a52235a3bf64cb6acc1a6297eec71ae8f">T</a>&amp; mutex)</div>
+<div class="line"><a name="l00249"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">  249</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">acquire</a>(T&amp; mutex)</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;   {</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;      mutex.lock();</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;      <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a> = &amp;mutex;</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;   }</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
-<div class="line"><a name="l00255"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a7ee0e80f261d2da0de8f6572f948163e">  255</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a7ee0e80f261d2da0de8f6572f948163e">try_acquire</a>(<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a52235a3bf64cb6acc1a6297eec71ae8f">T</a>&amp; mutex)</div>
+<div class="line"><a name="l00255"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a7ee0e80f261d2da0de8f6572f948163e">  255</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a7ee0e80f261d2da0de8f6572f948163e">try_acquire</a>(T&amp; mutex)</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;   {</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      <span class="keywordtype">bool</span> result(mutex.try_lock());</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      <span class="keywordflow">if</span>(result)</div>
@@ -368,23 +368,21 @@ $(document).ready(function(){initNavTree('ff__wrapper_8hpp_source.html','');});
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a>-&gt;unlock();</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a> = 0;</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;   }</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
-<div class="line"><a name="l00269"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a52235a3bf64cb6acc1a6297eec71ae8f">  269</a></span>&#160;   <span class="keyword">friend</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a52235a3bf64cb6acc1a6297eec71ae8f">T</a>;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;};</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
-<div class="line"><a name="l00272"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a4880b1e134d6360c95c8ef460d165897">  272</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock_impl&lt;f8_mutex&gt;</a> <a class="code" href="namespaceFIX8.html#a4880b1e134d6360c95c8ef460d165897">f8_scoped_lock</a>;</div>
-<div class="line"><a name="l00273"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#ad5ce42535b8df313bfb2f9a27ec3f718">  273</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock_impl&lt;f8_spin_lock&gt;</a> <a class="code" href="namespaceFIX8.html#ad5ce42535b8df313bfb2f9a27ec3f718">f8_scoped_spin_lock</a>;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;};</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
+<div class="line"><a name="l00270"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#a4880b1e134d6360c95c8ef460d165897">  270</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock_impl&lt;f8_mutex&gt;</a> <a class="code" href="namespaceFIX8.html#a4880b1e134d6360c95c8ef460d165897">f8_scoped_lock</a>;</div>
+<div class="line"><a name="l00271"></a><span class="lineno"><a class="code" href="namespaceFIX8.html#ad5ce42535b8df313bfb2f9a27ec3f718">  271</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html" title="Your bog standard RAII scoped lock.">f8_scoped_lock_impl&lt;f8_spin_lock&gt;</a> <a class="code" href="namespaceFIX8.html#ad5ce42535b8df313bfb2f9a27ec3f718">f8_scoped_spin_lock</a>;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;} <span class="comment">// FIX8</span></div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;} <span class="comment">// FIX8</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<span class="preprocessor">#endif // _FIX8_FF_WRAPPER_HPP_</span></div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="preprocessor">#endif // _FIX8_FF_WRAPPER_HPP_</span></div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 4 2013 08:13:38. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:10. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

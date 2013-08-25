@@ -3661,7 +3661,8 @@ var hierarchy =
         [ "FIX8::MissingMessageComponent", "structFIX8_1_1MissingMessageComponent.html", null ],
         [ "FIX8::MissingRepeatingGroupField", "structFIX8_1_1MissingRepeatingGroupField.html", null ],
         [ "FIX8::MsgSequenceTooLow", "structFIX8_1_1MsgSequenceTooLow.html", null ],
-        [ "FIX8::PeerResetConnection", "structFIX8_1_1PeerResetConnection.html", null ]
+        [ "FIX8::PeerResetConnection", "structFIX8_1_1PeerResetConnection.html", null ],
+        [ "FIX8::XMLError", "structFIX8_1_1XMLError.html", null ]
       ] ]
     ] ],
     [ "ios", null, [

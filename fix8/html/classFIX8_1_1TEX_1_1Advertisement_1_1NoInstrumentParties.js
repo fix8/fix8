@@ -11,6 +11,9 @@ var classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#a4343431465569aabef1df8dc80fbb414", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#addd89eabcc6ca4996f4844ebdd945f6a", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#af5a5bef1c218495b266e037f5375fbac", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#af5a5bef1c218495b266e037f5375fbac", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#af1a7cf015bba198273ac67d8f7c9d6c0", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#a13dfd34da465febcf37738b128bdc246", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#af1a7cf015bba198273ac67d8f7c9d6c0", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#a4a2300b7c86c09f2e8442811bfb740fc", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1Advertisement_1_1NoInstrumentParties.html#ac1138bdf9f3ae44dc0249add7c7a5bef", null ]
 ];

@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTimeInForceRules =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTimeInForceRules.html#ad7c32abd2f6a261450c32206f28981ba", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTimeInForceRules.html#a13b1867bc5bcd8d60d1feb04aad27b60", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTimeInForceRules.html#a067842f3226be34bf8b1ed7d3f8efdc5", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTimeInForceRules.html#a067842f3226be34bf8b1ed7d3f8efdc5", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTimeInForceRules.html#ab3020a7843cdae359adfa98bff238433", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTimeInForceRules.html#ad4b1531096e215743ff36ed1e14f4160", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTimeInForceRules.html#ab3020a7843cdae359adfa98bff238433", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTimeInForceRules.html#a4a6a0f98d002961e82947b082f6b6b91", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoTimeInForceRules.html#a2d6f6ee1d2211a96fcd9d6b5fc1caf3d", null ]
 ];

@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport_1_1NoExecInstRules =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport_1_1NoExecInstRules.html#a7f5e4a4d23da17be1cacd79296dc1a70", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport_1_1NoExecInstRules.html#aed09dadee0a5b96423bb57c6173c8ba9", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport_1_1NoExecInstRules.html#a724cce59c61f9fe2f1d7dd502a857894", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport_1_1NoExecInstRules.html#a724cce59c61f9fe2f1d7dd502a857894", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport_1_1NoExecInstRules.html#a02076f3059457f4b6010dd3790e1a687", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport_1_1NoExecInstRules.html#a64a9252b29c09c8c0f6e32a21e98b121", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport_1_1NoExecInstRules.html#a02076f3059457f4b6010dd3790e1a687", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport_1_1NoExecInstRules.html#a23b3ab2d800fedf1769a4e2002d69485", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport_1_1NoExecInstRules.html#a42f5224bbbdd58fada5032cdc74c1f05", null ]
 ];

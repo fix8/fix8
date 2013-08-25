@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1Confirmation_1_1NoCapacities =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Confirmation_1_1NoCapacities.html#a89908f3166de11520a190ac46324d2d8", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1Confirmation_1_1NoCapacities.html#ab3c9f037a890b74a335abd724344ee6d", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1Confirmation_1_1NoCapacities.html#ae9548efd86696a3c2035324047f450bc", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1Confirmation_1_1NoCapacities.html#ae9548efd86696a3c2035324047f450bc", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1Confirmation_1_1NoCapacities.html#a234dd2c0d367314171dc70f15f8e41cc", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1Confirmation_1_1NoCapacities.html#a0238770e9e899a64cd356c1a87c24258", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1Confirmation_1_1NoCapacities.html#a234dd2c0d367314171dc70f15f8e41cc", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1Confirmation_1_1NoCapacities.html#a8883fb45f71bf0004fe51cbd2867e7fb", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1Confirmation_1_1NoCapacities.html#a86acbccc1a2b75d282860aa790d7771e", null ]
 ];

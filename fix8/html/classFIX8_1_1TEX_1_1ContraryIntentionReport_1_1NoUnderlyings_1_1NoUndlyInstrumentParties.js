@@ -11,6 +11,9 @@ var classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstr
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#abd7a77fceb0a1f2012ffb6c89debfb21", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a0c9185ffac947cdae2b3aa4bed039805", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a2b4c37ece96aee3ed311e16c63f6edea", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a2b4c37ece96aee3ed311e16c63f6edea", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#aea2f2b3c22e771dd6009d7d154813606", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a427551862dbc585c4cd380fc4b994197", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#aea2f2b3c22e771dd6009d7d154813606", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a2b13786467778420274ea037004d7c5c", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#ab4a28e8ede5a014d5f55d38f0bd2e79d", null ]
 ];

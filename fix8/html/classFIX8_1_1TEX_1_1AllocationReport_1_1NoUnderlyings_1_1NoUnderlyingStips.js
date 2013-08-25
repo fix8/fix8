@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1AllocationReport_1_1NoUnderlyings_1_1NoUnderlyingStips =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a801de40deb1593138320145019e6265e", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#ade1a6726b69e99b0edf6f0eb3a01add7", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a05b68783159b5ce18a2be97cbf6c8bac", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a05b68783159b5ce18a2be97cbf6c8bac", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a77ce2f4d0d5412d5b70543fe43b48131", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a90b0a64fa1e98317576f2d4c50c4aa8f", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a77ce2f4d0d5412d5b70543fe43b48131", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a696788f2ca825a11b7d5ec4d48b8b6be", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1AllocationReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a5e508613ea0c64fcec728f97f88ab9f5", null ]
 ];

@@ -11,6 +11,9 @@ var classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoRelatedSym_1_1NoComplexEvent
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoRelatedSym_1_1NoComplexEvents.html#a3cb7744694cde1404a34377eb9682d64", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoRelatedSym_1_1NoComplexEvents.html#af83f66acddb42e3ccb39450731e1e8d5", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoRelatedSym_1_1NoComplexEvents.html#a6015064bc6cfd53512974ce64e976629", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoRelatedSym_1_1NoComplexEvents.html#a6015064bc6cfd53512974ce64e976629", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoRelatedSym_1_1NoComplexEvents.html#a5f4007856bd3ff10332ca39c7f84203e", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoRelatedSym_1_1NoComplexEvents.html#ac691cda1d041008b17e41aa63c802789", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoRelatedSym_1_1NoComplexEvents.html#a5f4007856bd3ff10332ca39c7f84203e", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoRelatedSym_1_1NoComplexEvents.html#a055ff4a2a65a863e835205c2a5cb4c7e", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoRelatedSym_1_1NoComplexEvents.html#ae31a269ee88a5444faa7e8c53e4034ea", null ]
 ];

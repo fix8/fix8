@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoTradingSes
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a9d09fbc9b8121373ebff6f6d91f3744c", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a13f8b017b4677705d28c939debff3382", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a01666e91bc34d45847e897bbe6c04eb2", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a01666e91bc34d45847e897bbe6c04eb2", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a08b7804f3b50f102d984d054bcfc67cb", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a163e2be214760ec9a886d417a5149685", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a08b7804f3b50f102d984d054bcfc67cb", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#a1ffea1aaac9aa392f79afcc1ff056cb2", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoTradingSessionRules_1_1NoOrdTypeRules.html#ae9fbf5243a3e7746f3606e57648c6f71", null ]
 ];

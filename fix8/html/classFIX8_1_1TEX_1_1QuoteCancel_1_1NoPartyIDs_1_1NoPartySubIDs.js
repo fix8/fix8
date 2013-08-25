@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs_1_1NoPartySubIDs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs_1_1NoPartySubIDs.html#a3e3504f695ca235f75c2117a9788b4cc", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs_1_1NoPartySubIDs.html#a7f5843a572f690d7ff3085d8547e980a", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs_1_1NoPartySubIDs.html#ab7a6f45df2f7259069665737d39c99ba", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs_1_1NoPartySubIDs.html#ab7a6f45df2f7259069665737d39c99ba", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs_1_1NoPartySubIDs.html#a4f0991c5a59dd0c39dad67f330eef828", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs_1_1NoPartySubIDs.html#a393209d917c664c4417aa5c93b5b2ee5", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs_1_1NoPartySubIDs.html#a4f0991c5a59dd0c39dad67f330eef828", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs_1_1NoPartySubIDs.html#a0bffb0fa7201f41b6ac64677bd1eff1f", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1QuoteCancel_1_1NoPartyIDs_1_1NoPartySubIDs.html#a211dbf904556edcec93419d38a983536", null ]
 ];

@@ -11,6 +11,9 @@ var classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoPartyIDs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoPartyIDs.html#a48a3f41bef29d0db874c844fcdc624b1", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoPartyIDs.html#a616597050ccb85a1426d0eb36b821818", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoPartyIDs.html#aa78e6ccdfc57c2b78c47420284b1a884", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoPartyIDs.html#aa78e6ccdfc57c2b78c47420284b1a884", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoPartyIDs.html#aad7829139308365874f87681056487ef", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoPartyIDs.html#a993e8cf09cc24332160bf52672817494", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoPartyIDs.html#aad7829139308365874f87681056487ef", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoPartyIDs.html#a24cbb99cf3b55a14319df15016fd0396", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoPartyIDs.html#ab461681fc308a1ebd2ee828eedd31554", null ]
 ];

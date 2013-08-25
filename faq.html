@@ -101,7 +101,7 @@
 								</div>
 								<div id="generaleOne" class="accordion-body collapse">
 									<div class="accordion-inner">
-										Fix8 is a C++ development toolkit designed to provide <a href="http://www.fixprotocol.org">FIX</a> connectivity to userland applications.
+										Fix8 is a C++ development toolkit designed to provide <a href="http://www.fixtradingcommunity.org/">FIX</a> connectivity to userland applications.
 										Fix8 provides an API framework with which you can quickly develop a FIX interface.
 									</div>
 								</div>
@@ -112,7 +112,7 @@
 								</div>
 								<div id="generaleTwo" class="accordion-body collapse">
 									<div class="accordion-inner">
-										The <a href="http://www.fixprotocol.org">FIX</a> protocol allows market pariticpants to communicate with one another usually
+										The <a href="http://www.fixtradingcommunity.org/">FIX</a> protocol allows market pariticpants to communicate with one another usually
 										for the purposes of trading.  Typically this occurs between exchanges and brokers/institutions although many organisations
 										also use FIX internally.
 									</div>
@@ -124,7 +124,7 @@
 								</div>
 								<div id="generaleThree" class="accordion-body collapse">
 									<div class="accordion-inner">
-										Fix8 is designed to be used by C++ developers for creating <a href="http://www.fixprotocol.org">FIX</a> protocol applications.
+										Fix8 is designed to be used by C++ developers for creating <a href="http://www.fixtradingcommunity.org/">FIX</a> protocol applications.
 									</div>
 								</div>
 							</div>
@@ -165,8 +165,8 @@
 													<td>The open source license we use.</td>
 												</tr>
 												<tr class="success">
-													<td><img src="fix8/logo_member.gif" alt="Fix Protocol" width="50" height="50" /></td>
-													<td><a href="http://www.fixprotocol.org">Fix Protocol Limited</a></td>
+													<td><img src="fix8/member-banner.jpg" alt="Fix Protocol" width="50" height="50" /></td>
+													<td><a href="http://www.fixtradingcommunity.org/">Fix Protocol Limited</a></td>
 													<td>Fix8 is a member of FIX Protocol Limited (FPL). FPL is the non-profit industry association responsible for defining,
 													managing and promoting increased usage of FIX as an enabler for electronic trading.</td>
 												</tr>
@@ -289,10 +289,10 @@
 									</div>
 									<div id="platformeOne" class="accordion-body collapse">
 										<div class="accordion-inner">
-											Fix8 is currently only supported on <a href="http://en.wikipedia.org/wiki/Linux">Linux.</a> Both 32 and 64 bit builds have
+											Fix8 is currently supported on <a href="http://en.wikipedia.org/wiki/Linux">Linux.</a> Both 32 and 64 bit builds have
 											been tested.  Fix8 uses <a href="http://en.wikipedia.org/wiki/Posix">POSIX</a> system calls and should work on
 											other <a href="http://en.wikipedia.org/wiki/*NIX">*NIX</a> variants too. If you get Fix8 working on another *NIX
-											please let us know. Fix8 is not currently supported on Windows although it should be portable to that platform.
+											please let us know.<p><p>Fix8 is also now supported on <a href="http://en.wikipedia.org/wiki/Windows">Windows</a>.
 										</div>
 									</div>
 								</div>
@@ -304,12 +304,14 @@
 										<div class="accordion-inner">
 											Fix8 requires the standard set of <a href="http://www.gnu.org/gnu/linux-and-gnu.html">GNU/Linux</a> dev tools,
 											including <a href="http://http://gcc.gnu.org">gcc</a>,
-											<a href="http://www.gnu.org/software/libtool">libtool</a>. Also required is the
-											<a href="http://pocoproject.org/">Poco</a> library.
+											<a href="http://www.gnu.org/software/libtool">libtool</a>.
+											Also required is the <a href="http://pocoproject.org/">Poco</a> library.
+											Additional libraries are needed for building on Windows,
+											<a href="https://fix8engine.atlassian.net/wiki/display/FX/Building">see here.</a>
 											<br><br>
 											Lock free containers and atomics are required for Fix8. Fix8 contains the
 											<a href="http://calvados.di.unipi.it/dokuwiki/doku.php?id=ffnamespace:about">FastFlow</a> distribution which
-											is used by default.<br>Alternatively you can use Intel <a href="http://threadingbuildingblocks.org/">TBB</a> (<i>if you are building for a 32 bit environment it is recommended that you use TBB</i>).
+											is used by default.<br>Alternatively you can use Intel <a href="http://threadingbuildingblocks.org/">TBB</a> (<i>if you are building for a 32 bit environment it is recommended that you use TBB</i>). Also, for Windows, only TBB is currently supported.
 											<br>Optionally you can use
 											Oracle <a href="http://www.oracle.com/technetwork/database/berkeleydb/overview/index.html">Berkeley DB</a>. If
 											you want to generate the API documentation you will also need <a href="http://www.doxygen.org">doxygen</a>.
@@ -659,6 +661,26 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 % ./configure --with-gtest=/usr/src/gtest-1.6.0 [your usual options here]
 </pre>
 								When gtest is found, the test cases will be built.
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testTwelve">k) When I build, my compiler gets stuck on Myfix_traits.cpp</a>
+												</div>
+												<div id="testTwelve" class="accordion-body collapse">
+													<div class="accordion-inner">
+													Depending on your build system, the large generated files used in the fix8 test application f8test can take up to 10 or 15 minutes to compile. If your memory consumption is high but stable, just be patient. There have been a few versions of gcc that did actually lockup when compiling these files. With these cases, gcc eventually consumed all available memory. If memory consumption is running away then we suggest upgrading your compiler. Gcc versions of 4.7 or higher are known to work fine.
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testThirteen">l) How do I build Fix8 on Windows?</a>
+												</div>
+												<div id="testThirteen" class="accordion-body collapse">
+													<div class="accordion-inner">
+													Please see <a href="https://fix8engine.atlassian.net/wiki/display/FX/Building">this document</a> for details on building on Windows.
 													</div>
 												</div>
 											</div>

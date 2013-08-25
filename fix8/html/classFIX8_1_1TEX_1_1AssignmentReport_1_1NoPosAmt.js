@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1AssignmentReport_1_1NoPosAmt =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoPosAmt.html#aed0263c537a5283f8e6f1ef0421f1488", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoPosAmt.html#ad28f58f82ef5446cb7d882d148abc5d7", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoPosAmt.html#a37dc0b48ab71d0147ffa76e9f7611c5d", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoPosAmt.html#a37dc0b48ab71d0147ffa76e9f7611c5d", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoPosAmt.html#a5761241e03710e967d71bd0b5abdca31", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoPosAmt.html#a1b9796c5428971ca62c41bfc4c85bf46", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoPosAmt.html#a5761241e03710e967d71bd0b5abdca31", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoPosAmt.html#a1b258f00fac6c469efe0500b11cd9fc5", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoPosAmt.html#a0c3828051fb02991283c9558d0c9b2c8", null ]
 ];

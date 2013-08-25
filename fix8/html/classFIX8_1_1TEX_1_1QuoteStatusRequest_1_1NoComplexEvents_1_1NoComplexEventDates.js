@@ -11,6 +11,9 @@ var classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents_1_1NoComplexEventD
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#a180d4b182b27a31ea8250388c9199979", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#a5d80e71088e825087bd4fbe7ad468b83", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#abd29f1a884146c1628b00a6f23aca247", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#abd29f1a884146c1628b00a6f23aca247", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#a81435864cd20badbf8fdf068e8042e53", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#a93fa7dc2c28c4a1fdec01df0afd52097", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#a81435864cd20badbf8fdf068e8042e53", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#ae1af5173e6602ca093ffefe6e303ed43", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#ad32930d940321b81bb70d87e39f3ec0e", null ]
 ];

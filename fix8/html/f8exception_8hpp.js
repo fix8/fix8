@@ -21,5 +21,6 @@ var f8exception_8hpp =
     [ "dthreadException", "structFIX8_1_1dthreadException.html", "structFIX8_1_1dthreadException" ],
     [ "PeerResetConnection", "structFIX8_1_1PeerResetConnection.html", "structFIX8_1_1PeerResetConnection" ],
     [ "InvalidConfiguration", "structFIX8_1_1InvalidConfiguration.html", "structFIX8_1_1InvalidConfiguration" ],
+    [ "XMLError", "structFIX8_1_1XMLError.html", "structFIX8_1_1XMLError" ],
     [ "_F8_EXCEPTION_HPP_", "f8exception_8hpp.html#a6adf9c2e993d15b65f7b7c4a64f25b14", null ]
 ];

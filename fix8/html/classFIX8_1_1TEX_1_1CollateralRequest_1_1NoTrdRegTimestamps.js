@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1CollateralRequest_1_1NoTrdRegTimestamps =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoTrdRegTimestamps.html#ab6e58ba48b3b5b66908f635d4a27c782", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoTrdRegTimestamps.html#a0d010dba746c24e9dad5fd29180b12aa", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoTrdRegTimestamps.html#ab4b26adfc33e8dba9f53e9843edb1ba4", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoTrdRegTimestamps.html#ab4b26adfc33e8dba9f53e9843edb1ba4", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoTrdRegTimestamps.html#ae803ccc942fc53b61436c82b6716201c", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoTrdRegTimestamps.html#ab672afcc8464cd05b87da247983c070f", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoTrdRegTimestamps.html#ae803ccc942fc53b61436c82b6716201c", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoTrdRegTimestamps.html#ae2b18678ca2d5bff5bcc1d5c48a1cc8b", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoTrdRegTimestamps.html#a97df0708e277d7c4ac536e6c44a35742", null ]
 ];

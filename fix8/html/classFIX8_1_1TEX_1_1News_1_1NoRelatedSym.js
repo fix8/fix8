@@ -14,6 +14,9 @@ var classFIX8_1_1TEX_1_1News_1_1NoRelatedSym =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym.html#a2585ffa020b4e32c5aaebd40504f6f41", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym.html#a515a3342f57216a2850aa0042b7749cd", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym.html#a156ebee4b4389100289bd30c658a79f6", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym.html#a156ebee4b4389100289bd30c658a79f6", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym.html#ab8d680e9ae0661960618d0ca83555ce1", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym.html#a5a77d4ecbc86484325096e7488eb5ff5", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym.html#ab8d680e9ae0661960618d0ca83555ce1", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym.html#a9d0b9a3c2fd426c642bb9173b396ea14", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym.html#ae5534b1a5a7a4eaad37bc69663d7e5eb", null ]
 ];

@@ -475,7 +475,7 @@ var searchData=
   ['ctxt',['Ctxt',['../structFIX8_1_1Ctxt.html',1,'FIX8']]],
   ['cumqty',['CumQty',['../namespaceFIX8_1_1TEX.html#ae9cbe7c636afc6d2d04872ecf4d1ecb2',1,'FIX8::TEX']]],
   ['curpath',['curPath',['../filePersister__test_8cpp.html#a48849c727d139405cc3422f8d9b6a62c',1,'filePersister_test.cpp']]],
-  ['currency',['currency',['../namespaceFIX8.html#a25d28001a92ac3a86617f1d8de28b6c7',1,'FIX8::currency()'],['../namespaceFIX8_1_1TEX.html#a5d1f9f959ae77a8b363c6ab30239fa51',1,'FIX8::TEX::Currency()']]],
+  ['currency',['Currency',['../namespaceFIX8_1_1TEX.html#a5d1f9f959ae77a8b363c6ab30239fa51',1,'FIX8::TEX::Currency()'],['../namespaceFIX8.html#a25d28001a92ac3a86617f1d8de28b6c7',1,'FIX8::currency()']]],
   ['currencyratio',['CurrencyRatio',['../namespaceFIX8_1_1TEX.html#a78f7feaa4448d92ad094eaf5fc01cce6',1,'FIX8::TEX']]],
   ['custdirectedorder',['CustDirectedOrder',['../namespaceFIX8_1_1TEX.html#ac292037e11e8402dc2129a4ba68194cd',1,'FIX8::TEX']]],
   ['customerorfirm',['CustomerOrFirm',['../namespaceFIX8_1_1TEX.html#a591b501f5107e299d37494a4aeddfbad',1,'FIX8::TEX']]],

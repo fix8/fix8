@@ -11,6 +11,9 @@ var classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs.html#a89f80f8267bdfa3ed1245669cb35da29", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs.html#ab2c35dbe19e97e164dfcbcd250d17539", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs.html#a57ac9e49ce05f4e9e5a4559ef6b74d40", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs.html#a57ac9e49ce05f4e9e5a4559ef6b74d40", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs.html#a566b4f74cd5c0b276ac7c1bc500380bf", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs.html#a441dbbdf6952e603e621efa99e6aa796", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs.html#a566b4f74cd5c0b276ac7c1bc500380bf", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs.html#abef2e1587bc4258d06ead39ccbefcce7", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoLegs.html#a689752dbd7270e3e741fe028bcfb8390", null ]
 ];

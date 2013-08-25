@@ -30,6 +30,7 @@ var namespaceFIX8 =
     [ "dthreadException", "structFIX8_1_1dthreadException.html", "structFIX8_1_1dthreadException" ],
     [ "PeerResetConnection", "structFIX8_1_1PeerResetConnection.html", "structFIX8_1_1PeerResetConnection" ],
     [ "InvalidConfiguration", "structFIX8_1_1InvalidConfiguration.html", "structFIX8_1_1InvalidConfiguration" ],
+    [ "XMLError", "structFIX8_1_1XMLError.html", "structFIX8_1_1XMLError" ],
     [ "_Pair", "structFIX8_1_1__Pair.html", "structFIX8_1_1__Pair" ],
     [ "_Pair< const char *, Val >", "structFIX8_1_1__Pair_3_01const_01char_01_5_00_01Val_01_4.html", "structFIX8_1_1__Pair_3_01const_01char_01_5_00_01Val_01_4" ],
     [ "GeneratedTable", "classFIX8_1_1GeneratedTable.html", "classFIX8_1_1GeneratedTable" ],

@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.3</span>
+   &#160;<span id="projectnumber">version  0.9.4</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -194,6 +194,8 @@ Functions</h2></td></tr>
 <tr class="separator:a72a0107026d73fadd3fab65579797305"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ecbd2b8072f16a635e6d795d1ce30e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8c_8cpp.html#a0ecbd2b8072f16a635e6d795d1ce30e3">generate_group_bodies</a> (const <a class="el" href="structFIX8_1_1MessageSpec.html">MessageSpec</a> &amp;ms, const <a class="el" href="namespaceFIX8.html#aba98fd7f333103f1c65718ce1d2d1306">FieldSpecMap</a> &amp;fspec, int depth, const string &amp;msname, ostream &amp;outp, ostream &amp;outh, const string cls_prefix=string())</td></tr>
 <tr class="separator:a0ecbd2b8072f16a635e6d795d1ce30e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2219f5fe19341f6907940618dcd0e882"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8c_8cpp.html#a2219f5fe19341f6907940618dcd0e882">generate_common_group_bodies</a> (const <a class="el" href="namespaceFIX8.html#aba98fd7f333103f1c65718ce1d2d1306">FieldSpecMap</a> &amp;fspec, ostream &amp;outp)</td></tr>
+<tr class="separator:a2219f5fe19341f6907940618dcd0e882"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae904cefc9d0304eca29c020df2c9ab1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8c_8cpp.html#ae904cefc9d0304eca29c020df2c9ab1d">load_components</a> (const <a class="el" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlElement::XmlSet</a> &amp;comlist, <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;components)</td></tr>
 <tr class="separator:ae904cefc9d0304eca29c020df2c9ab1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56541d81b88ce1ddd96f6cdc9a64e6f1"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8c_8cpp.html#a56541d81b88ce1ddd96f6cdc9a64e6f1">lookup_component</a> (const <a class="el" href="namespaceFIX8.html#a39b9db9bebadb681f3312265f15b6d33">Components</a> &amp;compon, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;name)</td></tr>
@@ -223,6 +225,8 @@ Variables</h2></td></tr>
 <tr class="separator:ad7bbc6cd7404c28158498f73ef54d1a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2fea8f86294eff5752199c5a61714fa"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a></td></tr>
 <tr class="separator:aa2fea8f86294eff5752199c5a61714fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2555154e3a4c4bfe5ad692888f78508"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#ab2f736655c16c802e88bb5772312605d">GroupMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8c_8cpp.html#ae2555154e3a4c4bfe5ad692888f78508">global_groups</a></td></tr>
+<tr class="separator:ae2555154e3a4c4bfe5ad692888f78508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8beb6acf3b778482cf332b866053489a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceFIX8.html#aeb80f9f92b222aa70c97343ad2922b2d">CSMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="f8c_8cpp.html#a8beb6acf3b778482cf332b866053489a">_csMap</a></td></tr>
 <tr class="separator:a8beb6acf3b778482cf332b866053489a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -271,9 +275,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l01179">1179</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l01241">1241</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -293,7 +297,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00293">293</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
 
 </div>
 </div>
@@ -311,7 +315,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -341,7 +345,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00125">125</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -359,7 +363,39 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>, and <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>, and <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2219f5fe19341f6907940618dcd0e882"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void generate_common_group_bodies </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#aba98fd7f333103f1c65718ce1d2d1306">FieldSpecMap</a> &amp;&#160;</td>
+          <td class="paramname"><em>fspec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ostream &amp;&#160;</td>
+          <td class="paramname"><em>outp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00692">692</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+
+<p>References <a class="el" href="f8c_8cpp_source.html#l00135">_csMap</a>, <a class="el" href="f8c_8hpp_source.html#l00182">FIX8::cs_divider</a>, <a class="el" href="f8types_8hpp_source.html#l00222">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="f8c_8cpp_source.html#l00132">global_groups</a>, and <a class="el" href="f8c_8cpp_source.html#l00124">spacer</a>.</p>
+
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
 
 </div>
 </div>
@@ -417,11 +453,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00604">604</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00619">619</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>References <a class="el" href="f8c_8cpp_source.html#l00122">_csMap</a>, <a class="el" href="f8c_8hpp_source.html#l00158">FIX8::MessageSpec::_groups</a>, <a class="el" href="f8c_8hpp_source.html#l00159">FIX8::MessageSpec::_name</a>, <a class="el" href="f8c_8hpp_source.html#l00182">FIX8::cs_divider</a>, <a class="el" href="f8types_8hpp_source.html#l00218">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="f8cutils_8cpp.html#ab7b6fb49a3a178b1628690ad0f00927d">prefix</a>, <a class="el" href="f8c_8cpp_source.html#l00114">spacer</a>, and <a class="el" href="f8c_8cpp.html#a126b545831fee6de9231cf5a74d0752d">tabsize()</a>.</p>
+<p>References <a class="el" href="f8c_8cpp_source.html#l00135">_csMap</a>, <a class="el" href="f8c_8hpp_source.html#l00158">FIX8::MessageSpec::_groups</a>, <a class="el" href="f8c_8hpp_source.html#l00159">FIX8::MessageSpec::_name</a>, <a class="el" href="f8c_8hpp_source.html#l00182">FIX8::cs_divider</a>, <a class="el" href="f8types_8hpp_source.html#l00222">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="f8cutils_8cpp.html#ab7b6fb49a3a178b1628690ad0f00927d">prefix</a>, <a class="el" href="f8c_8cpp_source.html#l00124">spacer</a>, and <a class="el" href="f8c_8cpp.html#a126b545831fee6de9231cf5a74d0752d">tabsize()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
 
 </div>
 </div>
@@ -455,11 +491,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00393">393</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00401">401</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
 
-<p>References <a class="el" href="f8c_8cpp_source.html#l00122">_csMap</a>, <a class="el" href="f8c_8hpp_source.html#l00183">FIX8::cs_copyright</a>, <a class="el" href="f8c_8hpp_source.html#l00184">FIX8::cs_copyright2</a>, <a class="el" href="f8c_8hpp_source.html#l00182">FIX8::cs_divider</a>, <a class="el" href="f8c_8hpp_source.html#l00177">FIX8::cs_do_not_edit</a>, <a class="el" href="f8types_8hpp_source.html#l00218">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="namespaceFIX8.html#a21bce0769809df7d55f39cd67e6b22a0">FIX8::GetTimeAsStringMS()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00382">insert_year()</a>.</p>
+<p>References <a class="el" href="f8c_8cpp_source.html#l00135">_csMap</a>, <a class="el" href="f8c_8hpp_source.html#l00183">FIX8::cs_copyright</a>, <a class="el" href="f8c_8hpp_source.html#l00184">FIX8::cs_copyright2</a>, <a class="el" href="f8c_8hpp_source.html#l00182">FIX8::cs_divider</a>, <a class="el" href="f8c_8hpp_source.html#l00177">FIX8::cs_do_not_edit</a>, <a class="el" href="f8types_8hpp_source.html#l00222">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="namespaceFIX8.html#a21bce0769809df7d55f39cd67e6b22a0">FIX8::GetTimeAsStringMS()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00382">insert_year()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
 
 </div>
 </div>
@@ -509,7 +545,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00380">load_fields()</a>, and <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00394">load_fields()</a>, and <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -528,7 +564,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00382">382</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00393">generate_preamble()</a>, and <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8cutils_8cpp_source.html#l00401">generate_preamble()</a>, and <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -558,7 +594,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00197">197</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00086">precomp()</a>, and <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8precomp_8cpp_source.html#l00086">precomp()</a>, and <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
 
 </div>
 </div>
@@ -586,11 +622,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00380">380</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00394">394</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>References <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8c_8cpp.html#ab0b1628ffd241d2bfb2d9f58ca6745d7">glob_warnings()</a>, <a class="el" href="namespaceFIX8.html#a4137a195b29b8ed64119e8f16d040ee9">FIX8::InPlaceStrToUpper()</a>, <a class="el" href="f8c_8hpp_source.html#l00195">FIX8::recover_line()</a>, <a class="el" href="f8c_8cpp_source.html#l00114">shortName</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
+<p>References <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8c_8cpp.html#ab0b1628ffd241d2bfb2d9f58ca6745d7">glob_warnings()</a>, <a class="el" href="namespaceFIX8.html#a4137a195b29b8ed64119e8f16d040ee9">FIX8::InPlaceStrToUpper()</a>, <a class="el" href="f8c_8hpp_source.html#l00195">FIX8::recover_line()</a>, <a class="el" href="f8c_8cpp_source.html#l00124">shortName</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
 
 </div>
 </div>
@@ -620,9 +656,9 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00132">132</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
 
-<p>References <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_beginstr</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_clname</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_fixns</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_systemns</a>, <a class="el" href="f8c_8hpp_source.html#l00052">FIX8::Ctxt::_version</a>, <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="f8cutils_8cpp.html#ab7b6fb49a3a178b1628690ad0f00927d">prefix</a>, and <a class="el" href="f8c_8cpp_source.html#l00114">shortName</a>.</p>
+<p>References <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_beginstr</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_clname</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_fixns</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_systemns</a>, <a class="el" href="f8c_8hpp_source.html#l00052">FIX8::Ctxt::_version</a>, <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="f8cutils_8cpp.html#ab7b6fb49a3a178b1628690ad0f00927d">prefix</a>, and <a class="el" href="f8c_8cpp_source.html#l00124">shortName</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -668,11 +704,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00456">456</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00470">470</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>References <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8cutils_8cpp_source.html#l00117">mkel()</a>, <a class="el" href="f8c_8cpp_source.html#l00549">parse_groups()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00247">process_message_fields()</a>, <a class="el" href="f8c_8hpp_source.html#l00195">FIX8::recover_line()</a>, <a class="el" href="f8c_8cpp_source.html#l00114">shortName</a>, and <a class="el" href="f8cutils_8cpp.html#ab3f078684998b83967d507d0f453f454">verbose</a>.</p>
+<p>References <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8cutils_8cpp_source.html#l00117">mkel()</a>, <a class="el" href="f8c_8cpp_source.html#l00563">parse_groups()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00247">process_message_fields()</a>, <a class="el" href="f8c_8hpp_source.html#l00195">FIX8::recover_line()</a>, <a class="el" href="f8c_8cpp_source.html#l00124">shortName</a>, and <a class="el" href="f8cutils_8cpp.html#ab3f078684998b83967d507d0f453f454">verbose</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
 
 </div>
 </div>
@@ -700,9 +736,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l01204">1204</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l01266">1266</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00549">parse_groups()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00247">process_message_fields()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00563">parse_groups()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00247">process_message_fields()</a>.</p>
 
 </div>
 </div>
@@ -730,9 +766,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00157">157</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00171">171</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>References <a class="el" href="f8c_8cpp_source.html#l00122">_csMap</a>, <a class="el" href="f8c_8hpp_source.html#l00051">FIX8::Ctxt::_exts</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_fixns</a>, <a class="el" href="f8c_8hpp_source.html#l00050">FIX8::Ctxt::_out</a>, <a class="el" href="f8c_8cpp_source.html#l01179">binary_report()</a>, <a class="el" href="namespaceFIX8.html#aa425fec2bfd5904c8599debe9e6adc9c">FIX8::CheckAddTrailingSlash()</a>, <a class="el" href="f8c_8hpp_source.html#l00185">FIX8::cs_copyright_short</a>, <a class="el" href="f8c_8hpp_source.html#l00186">FIX8::cs_copyright_short2</a>, <a class="el" href="f8c_8cpp.html#ae9703f9b612b171b982a3437765a844e">error_ignore()</a>, <a class="el" href="xml_8cpp_source.html#l00644">XmlElement::Factory()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00125">filepart()</a>, <a class="el" href="f8types_8hpp_source.html#l00218">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="f8c_8cpp_source.html#l00114">fixt</a>, <a class="el" href="f8c_8cpp_source.html#l00114">gen_classes</a>, <a class="el" href="f8c_8cpp.html#aa293bdf8fd525a1ea11807bb1bc94f98">gen_fields()</a>, <a class="el" href="f8utils_8hpp_source.html#l00263">FIX8::scoped_ptr&lt; T &gt;::get()</a>, <a class="el" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <a class="el" href="xml_8hpp_source.html#l00206">XmlElement::GetErrorCnt()</a>, <a class="el" href="xml_8hpp_source.html#l00210">XmlElement::GetLineCnt()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8c_8cpp.html#ab0b1628ffd241d2bfb2d9f58ca6745d7">glob_warnings()</a>, <a class="el" href="f8c_8cpp_source.html#l00114">inputFile</a>, <a class="el" href="f8cutils_8cpp_source.html#l00382">insert_year()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00132">load_fix_version()</a>, <a class="el" href="f8cutils_8cpp.html#a9146d081d771a7d977d6b1ba92bbf0e5">odir</a>, <a class="el" href="f8cutils_8cpp_source.html#l00094">open_ofile()</a>, <a class="el" href="f8config_8h_source.html#l00427">PACKAGE</a>, <a class="el" href="f8precomp_8cpp_source.html#l00086">precomp()</a>, <a class="el" href="f8c_8cpp_source.html#l00114">precompFile</a>, <a class="el" href="f8precomp_8cpp_source.html#l00127">precompfixt()</a>, <a class="el" href="f8cutils_8cpp.html#ab7b6fb49a3a178b1628690ad0f00927d">prefix</a>, <a class="el" href="f8cutils_8cpp_source.html#l00339">print_usage()</a>, <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>, <a class="el" href="f8utils_8hpp_source.html#l00259">FIX8::scoped_ptr&lt; T &gt;::Reset()</a>, <a class="el" href="f8c_8cpp_source.html#l00114">shortName</a>, <a class="el" href="f8c_8cpp_source.html#l00114">shortNameFixt</a>, <a class="el" href="f8c_8cpp_source.html#l00114">spacer</a>, <a class="el" href="f8c_8cpp.html#a126b545831fee6de9231cf5a74d0752d">tabsize()</a>, <a class="el" href="f8cutils_8cpp.html#ab3f078684998b83967d507d0f453f454">verbose</a>, <a class="el" href="f8config_8h_source.html#l00487">VERSION</a>, and <a class="el" href="f8exception_8hpp_source.html#l00085">FIX8::f8Exception::what()</a>.</p>
+<p>References <a class="el" href="f8c_8cpp_source.html#l00135">_csMap</a>, <a class="el" href="f8c_8hpp_source.html#l00051">FIX8::Ctxt::_exts</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_fixns</a>, <a class="el" href="f8c_8hpp_source.html#l00050">FIX8::Ctxt::_out</a>, <a class="el" href="f8c_8cpp_source.html#l01241">binary_report()</a>, <a class="el" href="namespaceFIX8.html#aa425fec2bfd5904c8599debe9e6adc9c">FIX8::CheckAddTrailingSlash()</a>, <a class="el" href="f8c_8hpp_source.html#l00185">FIX8::cs_copyright_short</a>, <a class="el" href="f8c_8hpp_source.html#l00186">FIX8::cs_copyright_short2</a>, <a class="el" href="f8c_8cpp.html#ae9703f9b612b171b982a3437765a844e">error_ignore()</a>, <a class="el" href="xml_8cpp_source.html#l00695">XmlElement::Factory()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00125">filepart()</a>, <a class="el" href="f8types_8hpp_source.html#l00222">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="f8c_8cpp_source.html#l00124">fixt</a>, <a class="el" href="f8c_8cpp_source.html#l00124">gen_classes</a>, <a class="el" href="f8c_8cpp.html#aa293bdf8fd525a1ea11807bb1bc94f98">gen_fields()</a>, <a class="el" href="f8utils_8hpp_source.html#l00286">FIX8::scoped_ptr&lt; T &gt;::get()</a>, <a class="el" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <a class="el" href="xml_8hpp_source.html#l00213">XmlElement::GetErrorCnt()</a>, <a class="el" href="xml_8hpp_source.html#l00217">XmlElement::GetLineCnt()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8c_8cpp.html#ab0b1628ffd241d2bfb2d9f58ca6745d7">glob_warnings()</a>, <a class="el" href="f8c_8cpp_source.html#l00124">inputFile</a>, <a class="el" href="f8cutils_8cpp_source.html#l00382">insert_year()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00132">load_fix_version()</a>, <a class="el" href="f8cutils_8cpp.html#a9146d081d771a7d977d6b1ba92bbf0e5">odir</a>, <a class="el" href="f8cutils_8cpp_source.html#l00094">open_ofile()</a>, <a class="el" href="f8config_8h_source.html#l00427">PACKAGE</a>, <a class="el" href="f8precomp_8cpp_source.html#l00086">precomp()</a>, <a class="el" href="f8c_8cpp_source.html#l00124">precompFile</a>, <a class="el" href="f8precomp_8cpp_source.html#l00127">precompfixt()</a>, <a class="el" href="f8cutils_8cpp.html#ab7b6fb49a3a178b1628690ad0f00927d">prefix</a>, <a class="el" href="f8cutils_8cpp_source.html#l00339">print_usage()</a>, <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>, <a class="el" href="f8utils_8hpp_source.html#l00282">FIX8::scoped_ptr&lt; T &gt;::Reset()</a>, <a class="el" href="f8c_8cpp_source.html#l00124">shortName</a>, <a class="el" href="f8c_8cpp_source.html#l00124">shortNameFixt</a>, <a class="el" href="f8c_8cpp_source.html#l00124">spacer</a>, <a class="el" href="f8c_8cpp.html#a126b545831fee6de9231cf5a74d0752d">tabsize()</a>, <a class="el" href="f8cutils_8cpp.html#ab3f078684998b83967d507d0f453f454">verbose</a>, <a class="el" href="f8config_8h_source.html#l00487">VERSION</a>, and <a class="el" href="f8exception_8hpp_source.html#l00085">FIX8::f8Exception::what()</a>.</p>
 
 </div>
 </div>
@@ -768,7 +804,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00117">117</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00456">load_messages()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00470">load_messages()</a>.</p>
 
 </div>
 </div>
@@ -820,9 +856,9 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00094">94</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
 
-<p>References <a class="el" href="namespaceFIX8.html#aa425fec2bfd5904c8599debe9e6adc9c">FIX8::CheckAddTrailingSlash()</a>, <a class="el" href="f8utils_8hpp_source.html#l00860">FIX8::exist()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00255">FIX8::scoped_ptr&lt; T &gt;::release()</a>.</p>
+<p>References <a class="el" href="namespaceFIX8.html#aa425fec2bfd5904c8599debe9e6adc9c">FIX8::CheckAddTrailingSlash()</a>, <a class="el" href="f8utils_8hpp_source.html#l00883">FIX8::exist()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00278">FIX8::scoped_ptr&lt; T &gt;::release()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -880,11 +916,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00549">549</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00563">563</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>References <a class="el" href="f8c_8hpp_source.html#l00157">FIX8::MessageSpec::_fields</a>, <a class="el" href="f8c_8hpp_source.html#l00158">FIX8::MessageSpec::_groups</a>, <a class="el" href="traits_8hpp_source.html#l00511">FIX8::FieldTraits::add()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8c_8cpp_source.html#l01204">lookup_component()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00247">process_message_fields()</a>, <a class="el" href="f8c_8hpp_source.html#l00195">FIX8::recover_line()</a>, and <a class="el" href="f8c_8cpp_source.html#l00114">shortName</a>.</p>
+<p>References <a class="el" href="f8c_8hpp_source.html#l00157">FIX8::MessageSpec::_fields</a>, <a class="el" href="f8c_8hpp_source.html#l00158">FIX8::MessageSpec::_groups</a>, <a class="el" href="traits_8hpp_source.html#l00511">FIX8::FieldTraits::add()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8c_8cpp_source.html#l00132">global_groups</a>, <a class="el" href="f8c_8cpp_source.html#l01266">lookup_component()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00247">process_message_fields()</a>, <a class="el" href="f8c_8hpp_source.html#l00195">FIX8::recover_line()</a>, and <a class="el" href="f8c_8cpp_source.html#l00124">shortName</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00456">load_messages()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00470">load_messages()</a>.</p>
 
 </div>
 </div>
@@ -914,9 +950,9 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00086">86</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>References <a class="el" href="f8precomp_8cpp.html#a678a16a4d9c31d88739418fadb30a8fa">doctype()</a>, <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="xml_8hpp_source.html#l00238">XmlElement::GetTag()</a>, <a class="el" href="f8precomp_8cpp_source.html#l00197">load_components()</a>, and <a class="el" href="f8precomp_8cpp_source.html#l00244">output_attributes()</a>.</p>
+<p>References <a class="el" href="f8precomp_8cpp.html#a678a16a4d9c31d88739418fadb30a8fa">doctype()</a>, <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="xml_8hpp_source.html#l00249">XmlElement::GetTag()</a>, <a class="el" href="f8precomp_8cpp_source.html#l00197">load_components()</a>, and <a class="el" href="f8precomp_8cpp_source.html#l00244">output_attributes()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -958,7 +994,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8precomp_8cpp_source.html#l00127">127</a> of file <a class="el" href="f8precomp_8cpp_source.html">f8precomp.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -995,7 +1031,7 @@ Variables</h2></td></tr>
 
 <p>References <a class="el" href="usage_8hpp_source.html#l00073">UsageMan::add()</a>, <a class="el" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <a class="el" href="usage_8hpp_source.html#l00096">UsageMan::print()</a>, and <a class="el" href="usage_8hpp_source.html#l00092">UsageMan::setdesc()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -1023,11 +1059,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00689">689</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00730">730</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>References <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_beginstr</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_clname</a>, <a class="el" href="f8c_8cpp_source.html#l00122">_csMap</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_fixns</a>, <a class="el" href="f8c_8hpp_source.html#l00050">FIX8::Ctxt::_out</a>, <a class="el" href="f8c_8hpp_source.html#l00052">FIX8::Ctxt::_version</a>, <a class="el" href="f8cutils_8cpp_source.html#l00293">bintoaschex()</a>, <a class="el" href="f8c_8hpp_source.html#l00182">FIX8::cs_divider</a>, <a class="el" href="f8c_8hpp_source.html#l00181">FIX8::cs_end_anon_namespace</a>, <a class="el" href="f8c_8hpp_source.html#l00179">FIX8::cs_end_namespace</a>, <a class="el" href="f8c_8hpp_source.html#l00187">FIX8::cs_generated_includes</a>, <a class="el" href="f8c_8hpp_source.html#l00188">FIX8::cs_header_preamble</a>, <a class="el" href="f8c_8hpp_source.html#l00180">FIX8::cs_start_anon_namespace</a>, <a class="el" href="f8c_8hpp_source.html#l00178">FIX8::cs_start_namespace</a>, <a class="el" href="f8c_8hpp_source.html#l00189">FIX8::cs_trailer_preamble</a>, <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="f8types_8hpp_source.html#l00218">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="f8c_8cpp_source.html#l00114">gen_classes</a>, <a class="el" href="f8c_8cpp.html#aa293bdf8fd525a1ea11807bb1bc94f98">gen_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00604">generate_group_bodies()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00393">generate_preamble()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8precomp_8cpp_source.html#l00197">load_components()</a>, <a class="el" href="f8c_8cpp_source.html#l00380">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00456">load_messages()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00302">process_ordering()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00192">process_value_enums()</a>, <a class="el" href="f8c_8cpp_source.html#l00114">shortName</a>, <a class="el" href="f8c_8cpp_source.html#l00114">spacer</a>, and <a class="el" href="f8cutils_8cpp.html#ab3f078684998b83967d507d0f453f454">verbose</a>.</p>
+<p>References <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_beginstr</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_clname</a>, <a class="el" href="f8c_8cpp_source.html#l00135">_csMap</a>, <a class="el" href="f8c_8hpp_source.html#l00053">FIX8::Ctxt::_fixns</a>, <a class="el" href="f8c_8hpp_source.html#l00050">FIX8::Ctxt::_out</a>, <a class="el" href="f8c_8hpp_source.html#l00052">FIX8::Ctxt::_version</a>, <a class="el" href="f8cutils_8cpp_source.html#l00293">bintoaschex()</a>, <a class="el" href="f8c_8hpp_source.html#l00182">FIX8::cs_divider</a>, <a class="el" href="f8c_8hpp_source.html#l00181">FIX8::cs_end_anon_namespace</a>, <a class="el" href="f8c_8hpp_source.html#l00179">FIX8::cs_end_namespace</a>, <a class="el" href="f8c_8hpp_source.html#l00187">FIX8::cs_generated_includes</a>, <a class="el" href="f8c_8hpp_source.html#l00188">FIX8::cs_header_preamble</a>, <a class="el" href="f8c_8hpp_source.html#l00180">FIX8::cs_start_anon_namespace</a>, <a class="el" href="f8c_8hpp_source.html#l00178">FIX8::cs_start_namespace</a>, <a class="el" href="f8c_8hpp_source.html#l00189">FIX8::cs_trailer_preamble</a>, <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="f8types_8hpp_source.html#l00222">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="f8c_8cpp_source.html#l00124">gen_classes</a>, <a class="el" href="f8c_8cpp.html#aa293bdf8fd525a1ea11807bb1bc94f98">gen_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00692">generate_common_group_bodies()</a>, <a class="el" href="f8c_8cpp_source.html#l00619">generate_group_bodies()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00401">generate_preamble()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8precomp_8cpp_source.html#l00197">load_components()</a>, <a class="el" href="f8c_8cpp_source.html#l00394">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00470">load_messages()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00302">process_ordering()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00192">process_value_enums()</a>, <a class="el" href="f8c_8cpp_source.html#l00124">shortName</a>, <a class="el" href="f8c_8cpp_source.html#l00124">spacer</a>, and <a class="el" href="f8cutils_8cpp.html#ab3f078684998b83967d507d0f453f454">verbose</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -1081,9 +1117,9 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00247">247</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
 
-<p>References <a class="el" href="traits_8hpp_source.html#l00511">FIX8::FieldTraits::add()</a>, <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8c_8cpp_source.html#l01204">lookup_component()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00176">process_special_traits()</a>, <a class="el" href="f8c_8hpp_source.html#l00195">FIX8::recover_line()</a>, and <a class="el" href="f8c_8cpp_source.html#l00114">shortName</a>.</p>
+<p>References <a class="el" href="traits_8hpp_source.html#l00511">FIX8::FieldTraits::add()</a>, <a class="el" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">XmlElement::find()</a>, <a class="el" href="f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa">glob_errors</a>, <a class="el" href="f8c_8cpp_source.html#l01266">lookup_component()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00176">process_special_traits()</a>, <a class="el" href="f8c_8hpp_source.html#l00195">FIX8::recover_line()</a>, and <a class="el" href="f8c_8cpp_source.html#l00124">shortName</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00456">load_messages()</a>, and <a class="el" href="f8c_8cpp_source.html#l00549">parse_groups()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00470">load_messages()</a>, and <a class="el" href="f8c_8cpp_source.html#l00563">parse_groups()</a>.</p>
 
 </div>
 </div>
@@ -1105,7 +1141,7 @@ Variables</h2></td></tr>
 
 <p>References <a class="el" href="f8cutils_8cpp_source.html#l00320">process_group_ordering()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
 
 </div>
 </div>
@@ -1173,9 +1209,9 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="f8cutils_8cpp_source.html#l00192">192</a> of file <a class="el" href="f8cutils_8cpp_source.html">f8cutils.cpp</a>.</p>
 
-<p>References <a class="el" href="namespaceFIX8.html#a6990067429b01a85d2d95a15675d1e31">FIX8::InPlaceReplaceInSet()</a>, and <a class="el" href="f8c_8cpp_source.html#l00114">spacer</a>.</p>
+<p>References <a class="el" href="namespaceFIX8.html#a6990067429b01a85d2d95a15675d1e31">FIX8::InPlaceReplaceInSet()</a>, and <a class="el" href="f8c_8cpp_source.html#l00124">spacer</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
 
 </div>
 </div>
@@ -1193,7 +1229,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00604">generate_group_bodies()</a>, and <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00619">generate_group_bodies()</a>, and <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -1224,9 +1260,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00122">122</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00135">135</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00604">generate_group_bodies()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00393">generate_preamble()</a>, <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>, and <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00692">generate_common_group_bodies()</a>, <a class="el" href="f8c_8cpp_source.html#l00619">generate_group_bodies()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00401">generate_preamble()</a>, <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>, and <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
 
 </div>
 </div>
@@ -1240,9 +1276,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00114">114</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00124">124</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -1256,9 +1292,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00114">114</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00124">124</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>, and <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>, and <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>.</p>
 
 </div>
 </div>
@@ -1272,7 +1308,23 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00380">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00456">load_messages()</a>, <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>, <a class="el" href="f8c_8cpp_source.html#l00549">parse_groups()</a>, <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00247">process_message_fields()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00394">load_fields()</a>, <a class="el" href="f8c_8cpp_source.html#l00470">load_messages()</a>, <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>, <a class="el" href="f8c_8cpp_source.html#l00563">parse_groups()</a>, <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00247">process_message_fields()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae2555154e3a4c4bfe5ad692888f78508"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceFIX8.html#ab2f736655c16c802e88bb5772312605d">GroupMap</a> global_groups</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00132">132</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00692">generate_common_group_bodies()</a>, and <a class="el" href="f8c_8cpp_source.html#l00563">parse_groups()</a>.</p>
 
 </div>
 </div>
@@ -1286,9 +1338,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00114">114</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00124">124</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -1302,9 +1354,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00114">114</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00124">124</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -1318,9 +1370,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00114">114</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00124">124</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00380">load_fields()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00132">load_fix_version()</a>, <a class="el" href="f8c_8cpp_source.html#l00456">load_messages()</a>, <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>, <a class="el" href="f8c_8cpp_source.html#l00549">parse_groups()</a>, <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00247">process_message_fields()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00394">load_fields()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00132">load_fix_version()</a>, <a class="el" href="f8c_8cpp_source.html#l00470">load_messages()</a>, <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>, <a class="el" href="f8c_8cpp_source.html#l00563">parse_groups()</a>, <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00247">process_message_fields()</a>.</p>
 
 </div>
 </div>
@@ -1334,9 +1386,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00114">114</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00124">124</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>.</p>
 
 </div>
 </div>
@@ -1350,16 +1402,16 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00114">114</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="f8c_8cpp_source.html#l00124">124</a> of file <a class="el" href="f8c_8cpp_source.html">f8c.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00604">generate_group_bodies()</a>, <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>, <a class="el" href="xml_8cpp_source.html#l00079">operator&lt;&lt;()</a>, <a class="el" href="usage_8hpp_source.html#l00096">UsageMan::print()</a>, <a class="el" href="f8c_8cpp_source.html#l00689">process()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00192">process_value_enums()</a>.</p>
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00692">generate_common_group_bodies()</a>, <a class="el" href="f8c_8cpp_source.html#l00619">generate_group_bodies()</a>, <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>, <a class="el" href="xml_8cpp_source.html#l00110">operator&lt;&lt;()</a>, <a class="el" href="usage_8hpp_source.html#l00096">UsageMan::print()</a>, <a class="el" href="f8c_8cpp_source.html#l00730">process()</a>, and <a class="el" href="f8cutils_8cpp_source.html#l00192">process_value_enums()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 4 2013 08:13:59. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:41. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

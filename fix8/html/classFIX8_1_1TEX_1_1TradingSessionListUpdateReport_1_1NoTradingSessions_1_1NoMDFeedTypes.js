@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions_1_1N
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions_1_1NoMDFeedTypes.html#ab56ac3ca6b407a3a84af90e1bd8b4b72", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions_1_1NoMDFeedTypes.html#a87f8c7a3b97964cbc2d55d46900b7242", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions_1_1NoMDFeedTypes.html#a4e826c4f424b2b48ff002ad914c218fd", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions_1_1NoMDFeedTypes.html#a4e826c4f424b2b48ff002ad914c218fd", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions_1_1NoMDFeedTypes.html#a373d72b833fb922fcbe57073a56a00f8", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions_1_1NoMDFeedTypes.html#a6d633d6af7b19b4d4f9f583ddca7e216", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions_1_1NoMDFeedTypes.html#a373d72b833fb922fcbe57073a56a00f8", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions_1_1NoMDFeedTypes.html#a39b5a43100190cabdad1425ae672e06d", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1TradingSessionListUpdateReport_1_1NoTradingSessions_1_1NoMDFeedTypes.html#a0c42fa06aea114dbb15d26203704f60b", null ]
 ];

@@ -8,6 +8,5 @@ var classFIX8_1_1f8__scoped__lock__impl =
     [ "operator=", "classFIX8_1_1f8__scoped__lock__impl.html#a28eb3d5f032be9d525eab70bf9efc49d", null ],
     [ "release", "classFIX8_1_1f8__scoped__lock__impl.html#aa1b520bd4bf807da834ff8b24dd6bd28", null ],
     [ "try_acquire", "classFIX8_1_1f8__scoped__lock__impl.html#a7ee0e80f261d2da0de8f6572f948163e", null ],
-    [ "_local_mutex", "classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009", null ],
-    [ "T", "classFIX8_1_1f8__scoped__lock__impl.html#a52235a3bf64cb6acc1a6297eec71ae8f", null ]
+    [ "_local_mutex", "classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009", null ]
 ];

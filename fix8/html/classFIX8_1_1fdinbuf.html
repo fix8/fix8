@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.3</span>
+   &#160;<span id="projectnumber">version  0.9.4</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -149,14 +149,15 @@ Protected Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
-<tr class="memitem:a9ce06eb19d5200338588c822d41f2271"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classFIX8_1_1fdinbuf.html#a9ce06eb19d5200338588c822d41f2271af6e5bbb21a72e799670185158c1ab1c0">_buffer_size</a> = 16
+<tr class="memitem:a9ce06eb19d5200338588c822d41f2271"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classFIX8_1_1fdinbuf.html#a9ce06eb19d5200338588c822d41f2271a29d0c4606c412318a0fbac31ad47d86a">_back_limit</a> = 4, 
+<a class="el" href="classFIX8_1_1fdinbuf.html#a9ce06eb19d5200338588c822d41f2271af6e5bbb21a72e799670185158c1ab1c0">_buffer_size</a> = 16
  }</td></tr>
 <tr class="separator:a9ce06eb19d5200338588c822d41f2271"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Create a streambuf from an open file descriptor. </p>
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01009">1009</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01036">1036</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="a9ce06eb19d5200338588c822d41f2271"></a>
 <div class="memitem">
@@ -176,11 +177,13 @@ Private Types</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a9ce06eb19d5200338588c822d41f2271af6e5bbb21a72e799670185158c1ab1c0"></a>_buffer_size</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a9ce06eb19d5200338588c822d41f2271a29d0c4606c412318a0fbac31ad47d86a"></a>_back_limit</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a9ce06eb19d5200338588c822d41f2271af6e5bbb21a72e799670185158c1ab1c0"></a>_buffer_size</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01011">1011</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01038">1038</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
 </div>
 </div>
@@ -207,9 +210,9 @@ Private Types</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01033">1033</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01064">1064</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l01014">_buffer</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l01038">_back_limit</a>, and <a class="el" href="f8utils_8hpp_source.html#l01041">_buffer</a>.</p>
 
 </div>
 </div>
@@ -235,9 +238,9 @@ Private Types</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01017">1017</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01044">1044</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l01014">_buffer</a>, <a class="el" href="f8utils_8hpp_source.html#l01011">_buffer_size</a>, and <a class="el" href="f8utils_8hpp_source.html#l01015">_fd</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l01038">_back_limit</a>, <a class="el" href="f8utils_8hpp_source.html#l01041">_buffer</a>, <a class="el" href="f8utils_8hpp_source.html#l01038">_buffer_size</a>, and <a class="el" href="f8utils_8hpp_source.html#l01042">_fd</a>.</p>
 
 </div>
 </div>
@@ -260,9 +263,9 @@ Private Types</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01014">1014</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01041">1041</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l01033">fdinbuf()</a>, and <a class="el" href="f8utils_8hpp_source.html#l01017">underflow()</a>.</p>
+<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l01064">fdinbuf()</a>, and <a class="el" href="f8utils_8hpp_source.html#l01044">underflow()</a>.</p>
 
 </div>
 </div>
@@ -284,9 +287,9 @@ Private Types</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01015">1015</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8utils_8hpp_source.html#l01042">1042</a> of file <a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l01017">underflow()</a>.</p>
+<p>Referenced by <a class="el" href="f8utils_8hpp_source.html#l01044">underflow()</a>.</p>
 
 </div>
 </div>
@@ -296,7 +299,7 @@ Private Types</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 4 2013 08:14:00. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:41. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

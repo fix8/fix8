@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1CollateralResponse_1_1NoEvents =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoEvents.html#a4a7d66886ae024010100f685ca890cd9", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoEvents.html#a9e578e6bc4f6fa9fd601e72738fa3c14", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoEvents.html#ab29e1117c264a5222c60103dc51c2277", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoEvents.html#ab29e1117c264a5222c60103dc51c2277", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoEvents.html#a771f709a15dc4a5599f59fb1b36fe51b", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoEvents.html#a85d660957e14883bb9f9da3daefaf379", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoEvents.html#a771f709a15dc4a5599f59fb1b36fe51b", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoEvents.html#a122dfa7d90c2bc350d17f25a90437719", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralResponse_1_1NoEvents.html#a445f9985b5a24b9228e0ffc19fb0ea81", null ]
 ];

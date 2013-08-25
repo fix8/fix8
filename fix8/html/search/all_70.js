@@ -313,7 +313,7 @@ var searchData=
   ['pipelogger',['PipeLogger',['../classFIX8_1_1PipeLogger.html',1,'FIX8']]],
   ['pipelogger',['PipeLogger',['../classFIX8_1_1PipeLogger.html#aac153f6d111be43d805e0e56f35ddd60',1,'FIX8::PipeLogger']]],
   ['plog',['plog',['../classFIX8_1_1Session.html#a3ec24166b820610b495a58862817718d',1,'FIX8::Session']]],
-  ['plogger',['pLogger',['../classsession__fixture.html#a3648fc34839a7436e018b4128356205f',1,'session_fixture']]],
+  ['plogger',['pLogger',['../classsession__fixture.html#a45ebc3114146d94508106e408997df92',1,'session_fixture']]],
   ['pm_5fcoro',['pm_coro',['../namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a159e812b2f5ed7734bd14a70a90e5dce',1,'FIX8']]],
   ['pm_5fcount',['pm_count',['../namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83ae004040754630fc147bbd4b038088d16',1,'FIX8']]],
   ['pm_5fpipeline',['pm_pipeline',['../namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a2d62ac51b86fdbba00ccdc1c2b7012e4',1,'FIX8']]],

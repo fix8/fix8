@@ -13,6 +13,9 @@ var classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a90dc2169fd93eadaebb7a16a2a365c53", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#ae59caf32c2229d524473274bb2776e21", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#ae5948774ec7f7d429da95789b7f28de7", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#ae5948774ec7f7d429da95789b7f28de7", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a0e84dd2a70b02d06efd6b8bff078d296", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a096bd1dcc7b24505bfb7ce9b8c2dc7ab", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a0e84dd2a70b02d06efd6b8bff078d296", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a8ecc50b12e4442b3086b90b910339437", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1Email_1_1NoUnderlyings.html#a098d23c6c97bd8eed3b7f4508e921bbc", null ]
 ];

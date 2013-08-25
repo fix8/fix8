@@ -140,6 +140,7 @@ var searchData=
   ['stipulationvalue',['StipulationValue',['../namespaceFIX8_1_1TEX.html#ada28711a4c4611b2eb72f4fcc74b23f2',1,'FIX8::TEX']]],
   ['stoppx',['StopPx',['../namespaceFIX8_1_1TEX.html#a549da0c2d2d0c0826a78ca56a19b4af3',1,'FIX8::TEX']]],
   ['store',['Store',['../classFIX8_1_1MemoryPersister.html#a02298b067eaec20797b237b53aff51ee',1,'FIX8::MemoryPersister']]],
+  ['str2chr',['Str2Chr',['../xml_8hpp.html#a20fdb4f2be7cd8760329ab76ff30467a',1,'xml.hpp']]],
   ['strategyparametername',['StrategyParameterName',['../namespaceFIX8_1_1TEX.html#ab131e74d888f4977301234982f8e4eb0',1,'FIX8::TEX']]],
   ['strategyparametertype',['StrategyParameterType',['../namespaceFIX8_1_1TEX.html#a403e38d217426d2fcd2486e077eb800d',1,'FIX8::TEX']]],
   ['strategyparametervalue',['StrategyParameterValue',['../namespaceFIX8_1_1TEX.html#a410be1c521947889d219f4a9e2ce4ec7',1,'FIX8::TEX']]],

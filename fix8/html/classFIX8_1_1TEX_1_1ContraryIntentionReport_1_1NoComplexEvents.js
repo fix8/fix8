@@ -11,6 +11,9 @@ var classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents.html#a8296e7202cc9f2670b1506e15cbafede", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents.html#a98862bda2a3e39da70ebc7d4a7d72d03", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents.html#a4ce920f83f10b98989b7ba58788f38e0", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents.html#a4ce920f83f10b98989b7ba58788f38e0", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents.html#aa434eeb0858aa99242b9bcee7f2daa9d", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents.html#a5dcbaa2b78ea83915ff764f6f2fa8d65", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents.html#aa434eeb0858aa99242b9bcee7f2daa9d", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents.html#acb76c1495d07ea66aa448a23ef2287e5", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoComplexEvents.html#a6664e22f01b27745478b613cd47d824f", null ]
 ];

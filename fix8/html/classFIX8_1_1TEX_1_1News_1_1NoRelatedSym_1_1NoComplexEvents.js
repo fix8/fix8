@@ -11,6 +11,9 @@ var classFIX8_1_1TEX_1_1News_1_1NoRelatedSym_1_1NoComplexEvents =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym_1_1NoComplexEvents.html#ab43cb47c5923db90c5f106910aea6cce", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym_1_1NoComplexEvents.html#acd1fd51654dcfa39bdf05410905a01ec", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym_1_1NoComplexEvents.html#abc2b1d26ff551b50dbcc5c192a456dcf", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym_1_1NoComplexEvents.html#abc2b1d26ff551b50dbcc5c192a456dcf", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym_1_1NoComplexEvents.html#a47652a4e7db892b80a7323da1a7a9755", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym_1_1NoComplexEvents.html#a79fec10fe4b7bc6731fcf970499a60ad", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym_1_1NoComplexEvents.html#a47652a4e7db892b80a7323da1a7a9755", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym_1_1NoComplexEvents.html#a19a61347ef12acc662e30914e34ec920", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1News_1_1NoRelatedSym_1_1NoComplexEvents.html#a0351e10021d82c934d6911638770ad91", null ]
 ];

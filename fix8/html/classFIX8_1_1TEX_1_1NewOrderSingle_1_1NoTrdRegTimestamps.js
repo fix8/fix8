@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoTrdRegTimestamps =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoTrdRegTimestamps.html#a8f173b39e943e4f9d636f3f053a9c624", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoTrdRegTimestamps.html#a3e47dc80786cdb2511cf4be7da0354c8", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoTrdRegTimestamps.html#a73d69470561b48c22b029ddedf0a002f", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoTrdRegTimestamps.html#a73d69470561b48c22b029ddedf0a002f", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoTrdRegTimestamps.html#a4b1412a341dc4dd9bf51854934568012", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoTrdRegTimestamps.html#a644b76498d9cc08a75a8387688661010", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoTrdRegTimestamps.html#a4b1412a341dc4dd9bf51854934568012", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoTrdRegTimestamps.html#af435326c41e92ae5656b75d163ba72fd", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoTrdRegTimestamps.html#a38a8c5ad3e2f3bc6419444daf477afe8", null ]
 ];

@@ -11,6 +11,9 @@ var classFIX8_1_1TEX_1_1AllocationInstructionAck_1_1NoPartyIDs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AllocationInstructionAck_1_1NoPartyIDs.html#a4a8464b26649bfa336ec26e4b328f7aa", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AllocationInstructionAck_1_1NoPartyIDs.html#a3868bbe6fc574da29438f1a93c0ddef0", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1AllocationInstructionAck_1_1NoPartyIDs.html#a8f357d3f513ae8214d00cc5d01334189", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1AllocationInstructionAck_1_1NoPartyIDs.html#a8f357d3f513ae8214d00cc5d01334189", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1AllocationInstructionAck_1_1NoPartyIDs.html#aa23ee29e0445322c513b1e2b455da9d1", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AllocationInstructionAck_1_1NoPartyIDs.html#a2e1b55be441b81bbdd7ca18271c0a8c9", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1AllocationInstructionAck_1_1NoPartyIDs.html#aa23ee29e0445322c513b1e2b455da9d1", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1AllocationInstructionAck_1_1NoPartyIDs.html#af8894d2e6af4ebaa8a90fee0af5fe5e2", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1AllocationInstructionAck_1_1NoPartyIDs.html#aaad6b6bc8dbc6b9d8412a18783ecac53", null ]
 ];

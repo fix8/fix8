@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#a5ba75519cbc952f9dd6088ef2bae3297", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#ad1dd4c91ce790864f6f060f2d1e61f39", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#a064f3c6a6138e263f2a8b5b4406aec95", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#a064f3c6a6138e263f2a8b5b4406aec95", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#ac43f32a13ccebd448c7cb207c207297a", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#a9e0c39707473de6bec5b951f7c0437c4", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#ac43f32a13ccebd448c7cb207c207297a", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#ad034c138365604774371013e2f917ca7", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1NewOrderCross_1_1NoTradingSessions.html#a860b037e8d6ed285fa6bb58c76bcdc2e", null ]
 ];

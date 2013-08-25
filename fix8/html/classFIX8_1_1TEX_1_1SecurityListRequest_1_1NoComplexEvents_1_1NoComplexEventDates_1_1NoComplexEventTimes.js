@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1SecurityListRequest_1_1NoComplexEvents_1_1NoComplexEvent
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SecurityListRequest_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a1ba71961c1dfc001c783051f650062ef", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SecurityListRequest_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a93d0cb264919e19c3d47d85533a3747f", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1SecurityListRequest_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#ad2c61a2feb79276ee51d50f9e86f3234", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1SecurityListRequest_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#ad2c61a2feb79276ee51d50f9e86f3234", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityListRequest_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#ab712f2fae07ebf44c2321cfa0bcef47b", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SecurityListRequest_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a732c5e51877f09be1caa4a0a11b44e83", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1SecurityListRequest_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#ab712f2fae07ebf44c2321cfa0bcef47b", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityListRequest_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a0571a663e7b76560112609ffbe20617f", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1SecurityListRequest_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#ada768bfdb55672ea01472d05d2c92010", null ]
 ];

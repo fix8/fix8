@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs_1_1NoPartySubIDs =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#a892a0d11b360f125000220be5f462c12", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#af33ea0c4c3da99b0cc6bc452a4866b1d", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#a90b4400b59e9e07068b671dffe5b2b13", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#a90b4400b59e9e07068b671dffe5b2b13", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#ac1625b490d17c54cf8bfd70f79b98be1", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#aae4ac2e9c87710f96c258ff61f6b5c24", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#ac1625b490d17c54cf8bfd70f79b98be1", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#aa325260e997a02cc6c48904f19478d8c", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1ListCancelRequest_1_1NoPartyIDs_1_1NoPartySubIDs.html#a569712b8b34acc49471fa8a8258dd2bc", null ]
 ];

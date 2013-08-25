@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoEvents =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoEvents.html#a5f2125dbd2385e84c523e0b85e8e6d69", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoEvents.html#aea34345f08960b3f2ed521d0b79faba7", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoEvents.html#a504709922e914db26f4bd71e01842b92", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoEvents.html#a504709922e914db26f4bd71e01842b92", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoEvents.html#a2a49b5167343713330931f647fd05c20", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoEvents.html#a015f50b41c0378b33c3d89041972af61", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoEvents.html#a2a49b5167343713330931f647fd05c20", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoEvents.html#a9e67b6cf5a76dd89970d3d14fd434812", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoEvents.html#a2b34f823a064dd674f107e0cfca6ad64", null ]
 ];

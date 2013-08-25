@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoEvents =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoEvents.html#ac181d00371550aac50a978249d0d16d5", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoEvents.html#a83c801498a75566ffd7b7bdcfbfb2a8e", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoEvents.html#ac58f41894a186539b8b21a5b5264b4cc", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoEvents.html#ac58f41894a186539b8b21a5b5264b4cc", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoEvents.html#afa4d40c721127885846be18e56cfbe70", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoEvents.html#a489940b754126e0c90ebefb9a654cbc2", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoEvents.html#afa4d40c721127885846be18e56cfbe70", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoEvents.html#a83b2f559c32baf13ccb3858072ccad87", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoEvents.html#a6d8630f79d1fe221edc598f3c5313527", null ]
 ];

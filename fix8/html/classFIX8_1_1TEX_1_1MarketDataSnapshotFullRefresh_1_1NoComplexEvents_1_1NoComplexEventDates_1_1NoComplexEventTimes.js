@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh_1_1NoComplexEvents_1_1NoCo
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#ab09097c202a448456b7aa23f06ae4416", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a59f1bb2a578d7e4db40865d1c2893f5f", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a4c969d8ba87d367ab366d2d95768ee51", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a4c969d8ba87d367ab366d2d95768ee51", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a126ce6c7a487c5b9cc637063cee74b91", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a8410f1cf6d19eab51100dbd07cc3e55e", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a126ce6c7a487c5b9cc637063cee74b91", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#aea61dc036d8e5ba685f22c9513bf76ff", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a8f168dd75febef46a34081a53125796d", null ]
 ];

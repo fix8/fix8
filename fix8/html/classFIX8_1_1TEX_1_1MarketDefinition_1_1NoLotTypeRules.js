@@ -10,6 +10,9 @@ var classFIX8_1_1TEX_1_1MarketDefinition_1_1NoLotTypeRules =
     [ "get_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoLotTypeRules.html#adcea7692bd9c3c01dd34f283dbc3911b", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoLotTypeRules.html#a759634def538109f2ca91c26534c4948", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoLotTypeRules.html#a02fbb761c579bbd2ce9a817128e7389d", null ],
+    [ "_ftha", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoLotTypeRules.html#a02fbb761c579bbd2ce9a817128e7389d", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoLotTypeRules.html#aac0412b72295b4de034b7428f2dbea1d", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoLotTypeRules.html#a66c14b670e9384e20ca0a1ae34d346ba", null ]
+    [ "_msgtype", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoLotTypeRules.html#aac0412b72295b4de034b7428f2dbea1d", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoLotTypeRules.html#a9e2374c48fb3b4673726851e8076a3f0", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1MarketDefinition_1_1NoLotTypeRules.html#adb6437c2704c211a364406730e8ff6c5", null ]
 ];

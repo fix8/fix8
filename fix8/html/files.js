@@ -7,6 +7,7 @@ var files =
     [ "consolemenu.cpp", "consolemenu_8cpp.html", null ],
     [ "consolemenu.hpp", "consolemenu_8hpp.html", "consolemenu_8hpp" ],
     [ "coroutine.hpp", "coroutine_8hpp.html", "coroutine_8hpp" ],
+    [ "dllmain.cpp", "dllmain_8cpp.html", "dllmain_8cpp" ],
     [ "f8c.cpp", "f8c_8cpp.html", "f8c_8cpp" ],
     [ "f8c.hpp", "f8c_8hpp.html", "f8c_8hpp" ],
     [ "f8config.h", "f8config_8h.html", "f8config_8h" ],

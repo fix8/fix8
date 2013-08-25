@@ -139,6 +139,7 @@ var searchData=
   ['dkreason_5frealm_5fels',['DKReason_realm_els',['../namespaceFIX8_1_1TEX.html#a355536274f96a48fc26c269c2043cfee',1,'FIX8::TEX::DKReason_realm_els(7)'],['../namespaceFIX8_1_1TEX.html#a840563856eb44ec9b4d42a0e8b4f4002',1,'FIX8::TEX::DKReason_realm_els(6)']]],
   ['dkreason_5funknown_5fsymbol',['DKReason_UNKNOWN_SYMBOL',['../namespaceFIX8_1_1TEX.html#a8ac4e3a0ab33303c08e0bc73d4cb0635',1,'FIX8::TEX']]],
   ['dkreason_5fwrong_5fside',['DKReason_WRONG_SIDE',['../namespaceFIX8_1_1TEX.html#a442e778a3d130131b32935bc4fab9e88',1,'FIX8::TEX']]],
+  ['dllmain',['DllMain',['../dllmain_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9',1,'dllmain.cpp']]],
   ['dlvyinsttype_5fcash',['DlvyInstType_CASH',['../namespaceFIX8_1_1TEX.html#ae3f64d094ea28f5a7d7cea53a2f7522d',1,'FIX8::TEX']]],
   ['dlvyinsttype_5frealm_5fels',['DlvyInstType_realm_els',['../namespaceFIX8_1_1TEX.html#a7d33b2bf9438042a4d99b14d80602dce',1,'FIX8::TEX']]],
   ['dlvyinsttype_5fsecurities',['DlvyInstType_SECURITIES',['../namespaceFIX8_1_1TEX.html#a5dbe36eebc85e61cac21c457a0d55072',1,'FIX8::TEX']]],

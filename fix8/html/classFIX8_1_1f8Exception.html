@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.3</span>
+   &#160;<span id="projectnumber">version  0.9.4</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -146,6 +146,7 @@ Inheritance diagram for FIX8::f8Exception:</div>
 <area href="structFIX8_1_1MissingRepeatingGroupField.html" title="An invalid repeating group field was found while decoding a message (first field is mandatory)..." alt="FIX8::MissingRepeatingGroupField" shape="rect" coords="217,1064,424,1088"/>
 <area href="structFIX8_1_1MsgSequenceTooLow.html" title="A message was received with an out of sequence sequence number." alt="FIX8::MsgSequenceTooLow" shape="rect" coords="217,1120,424,1144"/>
 <area href="structFIX8_1_1PeerResetConnection.html" title="A connected peer has reset the connection (disconnected)." alt="FIX8::PeerResetConnection" shape="rect" coords="217,1176,424,1200"/>
+<area href="structFIX8_1_1XMLError.html" title="An invalid configuration parameter was passed." alt="FIX8::XMLError" shape="rect" coords="217,1232,424,1256"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -426,7 +427,7 @@ template&lt;typename T &gt; </div>
 
 <p>References <a class="el" href="f8exception_8hpp_source.html#l00052">_force_logoff</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00250">FIX8::Session::process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00254">FIX8::Session::process()</a>.</p>
 
 </div>
 </div>
@@ -482,7 +483,7 @@ template&lt;typename T &gt; </div>
 
 <p>References <a class="el" href="f8exception_8hpp_source.html#l00051">_reason</a>, and <a class="el" href="f8exception_8hpp_source.html#l00085">what()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8exception_8hpp_source.html#l00242">FIX8::BadCheckSum::BadCheckSum()</a>, <a class="el" href="f8exception_8hpp_source.html#l00206">FIX8::BadCompidId::BadCompidId()</a>, <a class="el" href="f8exception_8hpp_source.html#l00199">FIX8::BadSendingTime::BadSendingTime()</a>, <a class="el" href="f8exception_8hpp_source.html#l00249">FIX8::dthreadException::dthreadException()</a>, <a class="el" href="f8exception_8hpp_source.html#l00132">FIX8::DuplicateField::DuplicateField()</a>, <a class="el" href="f8exception_8hpp_source.html#l00077">f8Exception()</a>, <a class="el" href="f8exception_8hpp_source.html#l00185">FIX8::IllegalMessage::IllegalMessage()</a>, <a class="el" href="f8exception_8hpp_source.html#l00171">FIX8::InvalidBodyLength::InvalidBodyLength()</a>, <a class="el" href="f8exception_8hpp_source.html#l00263">FIX8::InvalidConfiguration::InvalidConfiguration()</a>, <a class="el" href="f8exception_8hpp_source.html#l00141">FIX8::InvalidDomainValue&lt; T &gt;::InvalidDomainValue()</a>, <a class="el" href="f8exception_8hpp_source.html#l00148">FIX8::InvalidField::InvalidField()</a>, <a class="el" href="f8exception_8hpp_source.html#l00178">FIX8::InvalidMessage::InvalidMessage()</a>, <a class="el" href="f8exception_8hpp_source.html#l00124">FIX8::InvalidMetadata::InvalidMetadata()</a>, <a class="el" href="f8exception_8hpp_source.html#l00155">FIX8::InvalidMsgSequence::InvalidMsgSequence()</a>, <a class="el" href="f8exception_8hpp_source.html#l00213">FIX8::InvalidRepeatingGroup::InvalidRepeatingGroup()</a>, <a class="el" href="f8exception_8hpp_source.html#l00192">FIX8::InvalidVersion::InvalidVersion()</a>, <a class="el" href="f8exception_8hpp_source.html#l00234">FIX8::MissingMandatoryField::MissingMandatoryField()</a>, <a class="el" href="f8exception_8hpp_source.html#l00227">FIX8::MissingMessageComponent::MissingMessageComponent()</a>, <a class="el" href="f8exception_8hpp_source.html#l00220">FIX8::MissingRepeatingGroupField::MissingRepeatingGroupField()</a>, <a class="el" href="f8exception_8hpp_source.html#l00163">FIX8::MsgSequenceTooLow::MsgSequenceTooLow()</a>, and <a class="el" href="f8exception_8hpp_source.html#l00256">FIX8::PeerResetConnection::PeerResetConnection()</a>.</p>
+<p>Referenced by <a class="el" href="f8exception_8hpp_source.html#l00242">FIX8::BadCheckSum::BadCheckSum()</a>, <a class="el" href="f8exception_8hpp_source.html#l00206">FIX8::BadCompidId::BadCompidId()</a>, <a class="el" href="f8exception_8hpp_source.html#l00199">FIX8::BadSendingTime::BadSendingTime()</a>, <a class="el" href="f8exception_8hpp_source.html#l00249">FIX8::dthreadException::dthreadException()</a>, <a class="el" href="f8exception_8hpp_source.html#l00132">FIX8::DuplicateField::DuplicateField()</a>, <a class="el" href="f8exception_8hpp_source.html#l00077">f8Exception()</a>, <a class="el" href="f8exception_8hpp_source.html#l00185">FIX8::IllegalMessage::IllegalMessage()</a>, <a class="el" href="f8exception_8hpp_source.html#l00171">FIX8::InvalidBodyLength::InvalidBodyLength()</a>, <a class="el" href="f8exception_8hpp_source.html#l00263">FIX8::InvalidConfiguration::InvalidConfiguration()</a>, <a class="el" href="f8exception_8hpp_source.html#l00141">FIX8::InvalidDomainValue&lt; T &gt;::InvalidDomainValue()</a>, <a class="el" href="f8exception_8hpp_source.html#l00148">FIX8::InvalidField::InvalidField()</a>, <a class="el" href="f8exception_8hpp_source.html#l00178">FIX8::InvalidMessage::InvalidMessage()</a>, <a class="el" href="f8exception_8hpp_source.html#l00124">FIX8::InvalidMetadata::InvalidMetadata()</a>, <a class="el" href="f8exception_8hpp_source.html#l00155">FIX8::InvalidMsgSequence::InvalidMsgSequence()</a>, <a class="el" href="f8exception_8hpp_source.html#l00213">FIX8::InvalidRepeatingGroup::InvalidRepeatingGroup()</a>, <a class="el" href="f8exception_8hpp_source.html#l00192">FIX8::InvalidVersion::InvalidVersion()</a>, <a class="el" href="f8exception_8hpp_source.html#l00234">FIX8::MissingMandatoryField::MissingMandatoryField()</a>, <a class="el" href="f8exception_8hpp_source.html#l00227">FIX8::MissingMessageComponent::MissingMessageComponent()</a>, <a class="el" href="f8exception_8hpp_source.html#l00220">FIX8::MissingRepeatingGroupField::MissingRepeatingGroupField()</a>, <a class="el" href="f8exception_8hpp_source.html#l00163">FIX8::MsgSequenceTooLow::MsgSequenceTooLow()</a>, <a class="el" href="f8exception_8hpp_source.html#l00256">FIX8::PeerResetConnection::PeerResetConnection()</a>, and <a class="el" href="f8exception_8hpp_source.html#l00270">FIX8::XMLError::XMLError()</a>.</p>
 
 </div>
 </div>
@@ -582,7 +583,7 @@ template&lt;typename T , typename S &gt; </div>
 
 <p>References <a class="el" href="f8exception_8hpp_source.html#l00051">_reason</a>.</p>
 
-<p>Referenced by <a class="el" href="f8exception_8hpp_source.html#l00097">format()</a>, <a class="el" href="f8c_8cpp_source.html#l00157">main()</a>, <a class="el" href="connection_8cpp_source.html#l00060">FIX8::FIXReader::operator()()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00171">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, <a class="el" href="connection_8cpp_source.html#l00285">FIX8::FIXWriter::operator()()</a>, <a class="el" href="session_8cpp_source.html#l00250">FIX8::Session::process()</a>, and <a class="el" href="session_8cpp_source.html#l00778">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="f8exception_8hpp_source.html#l00097">format()</a>, <a class="el" href="f8c_8cpp_source.html#l00171">main()</a>, <a class="el" href="connection_8cpp_source.html#l00062">FIX8::FIXReader::operator()()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00183">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, <a class="el" href="connection_8cpp_source.html#l00287">FIX8::FIXWriter::operator()()</a>, <a class="el" href="session_8cpp_source.html#l00254">FIX8::Session::process()</a>, and <a class="el" href="session_8cpp_source.html#l00782">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -641,7 +642,7 @@ template&lt;typename T , typename S &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 4 2013 08:14:00. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:41. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>
