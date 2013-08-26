@@ -104,7 +104,7 @@ public:
 		_session(new T(_ctx, _id, _persist, _log, _plog)),
 		_sock(init_con_later ? 0 : new Poco::Net::StreamSocket),
 		_addr(get_address(_ses)),
-		_cc(init_con_later ? 0 : new ClientConnection(_sock, _addr, *_session, get_process_model(_ses)))
+        _cc(init_con_later ? 0 : new ClientConnection(_sock, _addr, *_session, get_heartbeat_interval(_ses), get_process_model(_ses)))
 	{
 		_session->set_login_parameters(_loginParameters);
 	}

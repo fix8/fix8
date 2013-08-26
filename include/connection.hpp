@@ -342,9 +342,9 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // client
-		const ProcessModel pmodel)
+        const ProcessModel pmodel, const unsigned hb_interval)
 		: _sock(sock), _addr(addr), _connected(), _session(session), _role(cn_initiator),
-		_hb_interval(10), _reader(sock, session, pmodel), _writer(sock, session, pmodel) {}
+        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel) {}
 
 	/*! Ctor. Acceptor.
 	    \param sock connected socket
@@ -490,9 +490,9 @@ public:
 	    \param session session
 	    \param pmodel process model
 	    \param no_delay set or clear the tcp no delay flag on the socket */
-	ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session,
-		const ProcessModel pmodel=pm_pipeline, const bool no_delay=true)
-		: Connection(sock, addr, session, pmodel), _no_delay(no_delay) {}
+    ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
+            Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true)
+        : Connection(sock, addr, session, pmodel, hb_interval), _no_delay(no_delay) {}
 
 	/// Dtor.
 	virtual ~ClientConnection() {}
