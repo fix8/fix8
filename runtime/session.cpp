@@ -363,8 +363,8 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 			_state = States::st_resend_request_sent;
 			send(rmsg);
 		}
-		else
-			throw InvalidMsgSequence(seqnum, _next_receive_seq);
+		//else //corrected
+		//	throw InvalidMsgSequence(seqnum, _next_receive_seq);
 		return false;
 	}
 
@@ -526,7 +526,7 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		{
 			//cout << "got resend request:" << begin() << " to " << end() << endl;
 			_state = States::st_resend_request_received;
-			f8_scoped_spin_lock guard(_per_spl);
+			//f8_scoped_spin_lock guard(_per_spl);//corrected
 			_persist->get(begin(), end(), *this, &Session::retrans_callback);
 		}
 	}
@@ -550,7 +550,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 		else if (!rctx._last)
 		{
 			_next_send_seq = rctx._interrupted_seqnum;
-			send(generate_sequence_reset(rctx._interrupted_seqnum, true));
+			send(generate_sequence_reset(rctx._interrupted_seqnum, true), rctx._begin);
 			//cout << "#4" << endl;
 		}
 		_state = States::st_continuous;
