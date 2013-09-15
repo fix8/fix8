@@ -15,9 +15,17 @@
            login_retries="100"
 			  tcp_recv_buffer="100663296"
 			  tcp_send_buffer="100663296"
+			session_log="session_log"
 			  process_model="coroutine" />
 
   <persist name="mem0"
            type="mem" />
+
+	<log 		name="session_log"
+				type="session"
+				filename="|/bin/cat"
+				rotation="5"
+				flags="timestamp|sequence|compress|thread"/>
+
 </fix8>
 

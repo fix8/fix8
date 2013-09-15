@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -31,7 +31,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _F8_EXCEPTION_HPP_
 # define _F8_EXCEPTION_HPP_
@@ -119,10 +119,10 @@ protected:
 
 //-------------------------------------------------------------------------------------------------
 /// Indicates a static metadata lookup failed. With the exception of user defined fields there should never be an instance where a metatdata lookup fails.
+template<typename T>
 struct InvalidMetadata : f8Exception
 {
-	InvalidMetadata(const std::string& detail) { format("Invalid Metadata", detail); }
-	InvalidMetadata(const unsigned field) { format("Invalid Metadata", field); }
+	InvalidMetadata(const T field) { format("Invalid Metadata", field); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -261,6 +261,13 @@ struct PeerResetConnection : f8Exception
 struct InvalidConfiguration : f8Exception
 {
 	InvalidConfiguration(const std::string& str) { format("Invalid configuration setting in", str); }
+};
+
+//-------------------------------------------------------------------------------------------------
+/// Could not open a logfile
+struct LogfileException : f8Exception
+{
+	LogfileException(const std::string& str) { format("Error opening logfile", str); }
 };
 
 //-------------------------------------------------------------------------------------------------

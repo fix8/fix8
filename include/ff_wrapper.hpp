@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -31,7 +31,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_FF_WRAPPER_HPP_
 # define _FIX8_FF_WRAPPER_HPP_
@@ -226,49 +226,6 @@ public:
 	bool try_lock() { return pthread_spin_trylock(&_psl) == 0; }
 	void unlock() { pthread_spin_unlock(&_psl); }
 };
-
-//----------------------------------------------------------------------------------------
-/// Your bog standard RAII scoped lock
-template<typename T>
-class f8_scoped_lock_impl
-{
-	T *_local_mutex;
-
-	f8_scoped_lock_impl(const f8_scoped_lock_impl&);
-	f8_scoped_lock_impl& operator=(const f8_scoped_lock_impl&);
-
-public:
-	f8_scoped_lock_impl() : _local_mutex() {}
-	f8_scoped_lock_impl(T& mutex) { acquire(mutex); }
-	~f8_scoped_lock_impl()
-	{
-		if (_local_mutex)
-			release();
-	}
-
-	void acquire(T& mutex)
-	{
-		mutex.lock();
-		_local_mutex = &mutex;
-	}
-
-	bool try_acquire(T& mutex)
-	{
-		bool result(mutex.try_lock());
-		if(result)
-			_local_mutex = &mutex;
-		return result;
-	}
-
-	void release()
-	{
-		_local_mutex->unlock();
-		_local_mutex = 0;
-	}
-};
-
-typedef f8_scoped_lock_impl<f8_mutex> f8_scoped_lock;
-typedef f8_scoped_lock_impl<f8_spin_lock> f8_scoped_spin_lock;
 
 //----------------------------------------------------------------------------------------
 

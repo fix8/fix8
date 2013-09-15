@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -31,7 +31,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _F8_TYPES_HPP_
 # define _F8_TYPES_HPP_
@@ -117,6 +117,17 @@ private:
 	/// The value to return when the key is not found
 	static const NotFoundType _noval;
 
+	/*! Find a key; complexity log2(N)+2
+	  \param key the key to find
+	  \return Pair * if found, 0 if not found */
+   static const Pair *_find(const Key& key)
+   {
+		const Pair *res(std::lower_bound (begin(), end(),
+			reinterpret_cast<const Pair&>(key), typename Pair::Less()));
+      /// res != end && key >= res
+      return res != end() && !typename Pair::Less()(reinterpret_cast<const Pair&>(key), *res) ? res : 0;
+   }
+
 public:
 	///Ctor.
 	GeneratedTable() {}
@@ -135,12 +146,10 @@ public:
 	  \return value found (reference) */
 	static const Val& find_ref(const Key& key)
 	{
-		const Pair *res(std::lower_bound (_pairs, _pairs + _pairsz,
-			reinterpret_cast<const Pair&>(key), typename Pair::Less()));
-		if (res != end())
+		const Pair *res(_find(key));
+		if (res)
 			return res->_value;
-		static const std::string error_str("Invalid metadata or entry not found");
-		throw InvalidMetadata(error_str);
+		throw InvalidMetadata<Key>(key);
 	}
 
 	/*! Find a key (value).
@@ -148,9 +157,8 @@ public:
 	  \return value found (value) or _noval if not found */
 	static const Val find_val(const Key& key)
 	{
-		const Pair *res(std::lower_bound (_pairs, _pairs + _pairsz,
-			reinterpret_cast<const Pair&>(key), typename Pair::Less()));
-		return res != end() ? res->_value : _noval;
+		const Pair *res(_find(key));
+		return res ? res->_value : _noval;
 	}
 
 	/*! Find a key (pointer).
@@ -158,9 +166,8 @@ public:
 	  \return value found (pointer) or 0 if not found */
 	static const Val *find_ptr(const Key& key)
 	{
-		const Pair *res(std::lower_bound (_pairs, _pairs + _pairsz,
-			reinterpret_cast<const Pair&>(key), typename Pair::Less()));
-		return res != end() ? &res->_value : 0;
+		const Pair *res(_find(key));
+		return res ? &res->_value : 0;
 	}
 
 	/*! Find a key pair record (pointer).
@@ -168,9 +175,8 @@ public:
 	  \return key/value pair (pointer) or 0 if not found */
 	static const Pair *find_pair_ptr(const Key& key)
 	{
-		const Pair *res(std::lower_bound (_pairs, _pairs + _pairsz,
-			reinterpret_cast<const Pair&>(key), typename Pair::Less()));
-		return res != end() ? res : 0;
+		const Pair *res(_find(key));
+		return res ? res : 0;
 	}
 
 	/*! Get the pair at index location
@@ -285,6 +291,12 @@ public:
 	presorted_set(const_iterator arr_start, const size_t sz, const size_t reserve=RESERVE_PERCENT) : _reserve(reserve),
 		_sz(sz), _rsz(_sz + calc_reserve(_sz, _reserve)), _arr(new T[_rsz])
 			{ memcpy(_arr, arr_start, _sz * sizeof(T)); }
+
+	/*! copy ctor
+	  \param from presorted_set object to copy */
+	presorted_set(const presorted_set& from) : _reserve(from._reserve),
+		_sz(from._sz), _rsz(from._rsz), _arr(from._arr ? new T[_rsz] : 0)
+			{ if (_arr) memcpy(_arr, from._arr, _sz * sizeof(T)); }
 
 	/*! ctor - initialise an empty set; defer memory allocation;
 	  \param sz number of elements to initially allocate

@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,21 +32,20 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-----------------------------------------------------------------------------------------
 #ifndef _F8_UTILS_HPP_
 # define _F8_UTILS_HPP_
 
 //-----------------------------------------------------------------------------------------
 #include <Poco/DateTime.h>
-#ifndef _MSC_VER
-#include <sys/ioctl.h>
-#endif
-#include <regex.h>
 
 #ifndef _MSC_VER
-	#include <termios.h>
+# include <sys/ioctl.h>
+# include <termios.h>
 #endif
+
+#include <regex.h>
 
 namespace FIX8 {
 
@@ -149,12 +148,12 @@ inline unsigned ROT13Hash (const std::string& str)
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator% (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 		const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
-			{ 
+			{
 #ifdef _MSC_VER
-				return _stricmp(__lhs.c_str(), __rhs.c_str()) == 0; 
+				return _stricmp(__lhs.c_str(), __rhs.c_str()) == 0;
 #else
-				return strcasecmp(__lhs.c_str(), __rhs.c_str()) == 0; 
-#endif 
+				return strcasecmp(__lhs.c_str(), __rhs.c_str()) == 0;
+#endif
 			}
 
 /*! case insensitive char* == std::string operator
@@ -177,11 +176,11 @@ template<typename _CharT, typename _Traits, typename _Alloc>
   \return true if strings are equivalent */
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator% (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs, const _CharT* __rhs)
-		{ 
+		{
 #ifdef _MSC_VER
-			return _stricmp(__lhs.c_str(), __rhs) == 0; 
+			return _stricmp(__lhs.c_str(), __rhs) == 0;
 #else
-			return strcasecmp(__lhs.c_str(), __rhs) == 0; 
+			return strcasecmp(__lhs.c_str(), __rhs) == 0;
 #endif
 		}
 
@@ -195,11 +194,11 @@ template<typename _CharT, typename _Traits, typename _Alloc>
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 		const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
-			{ 
+			{
 #ifdef _MSC_VER
 				return _stricmp(__lhs.c_str(), __rhs.c_str()) < 0;
 #else
-				return strcasecmp(__lhs.c_str(), __rhs.c_str()) < 0; 
+				return strcasecmp(__lhs.c_str(), __rhs.c_str()) < 0;
 #endif
 			}
 

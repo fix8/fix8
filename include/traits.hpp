@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_TRAITS_HPP_
 # define _FIX8_TRAITS_HPP_
@@ -65,7 +65,7 @@ struct FieldTrait
 	};
 
 	/// Trait bits
-	enum TraitTypes { mandatory, present, position, group, component, suppress, automatic, count };
+	enum TraitTypes { mandatory, present, position, group, component, suppress, automatic, ignore, count };
 
 	/*! Check if this FieldType is an int.
 	  \param ftype field to check
@@ -210,9 +210,19 @@ public:
 		: _reserve(reserve), _sz(sz), _rsz(_sz + calc_reserve(_sz, _reserve)), _arr(new FieldTrait[_rsz]), _ftha(ftha)
 			{ memcpy(_arr, arr_start, _sz * sizeof(FieldTrait)); }
 
+	/*! ctor - initialise an empty set; defer memory allocation;
+	  \param arr_start pointer to start of static array to copy elements from
+	  \param sz number of elements to initially allocate
+	  \param reserve percentage of sz to keep in reserve */
 	presorted_set(const_iterator arr_start, const size_t sz, const size_t reserve=RESERVE_PERCENT) : _reserve(reserve),
 		_sz(sz), _rsz(_sz + calc_reserve(_sz, _reserve)), _arr(new FieldTrait[_rsz]), _ftha()
 			{ memcpy(_arr, arr_start, _sz * sizeof(FieldTrait)); }
+
+	/*! copy ctor
+	  \param from presorted_set object to copy */
+	presorted_set(const presorted_set& from) : _reserve(from._reserve),
+		_sz(from._sz), _rsz(from._rsz), _arr(new FieldTrait[_rsz]), _ftha(from._ftha)
+			{ memcpy(_arr, from._arr, _sz * sizeof(FieldTrait)); }
 
 	/*! ctor - initialise an empty set; defer memory allocation;
 	  \param sz number of elements to initially allocate
@@ -525,6 +535,11 @@ public:
 	  \param field field to check
 	  \return true if present */
 	bool is_present(const unsigned short field) const { return get(field, FieldTrait::present); }
+
+	/*! Check if a specified field has the ignore bit set.
+	  \param field field to check
+	  \return true if ignore set */
+	bool is_ignored(const unsigned short field) const { return get(field, FieldTrait::ignore); }
 
 	/*! Check if a specified field has the mandator bit set.
 	  \param field field to check

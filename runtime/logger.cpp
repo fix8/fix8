@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -31,7 +31,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
@@ -107,7 +107,6 @@ int Logger::operator()()
 
 		++received;
 
-
 		if (msg_ptr)
 		{
 			if (msg_ptr->_str.empty())  // means exit
@@ -181,7 +180,7 @@ void Logger::purge_thread_codes()
 	{
 #ifdef _MSC_VER
 		// If ESRCH then thread is definitely dead.  Otherwise, we're unsure.
-		if ( pthread_kill(itr->first, 0) == ESRCH )
+		if (pthread_kill(itr->first, 0) == ESRCH)
 #else
 		// a little trick to see if a thread is still alive
 		clockid_t clock_id;
@@ -220,7 +219,7 @@ char Logger::get_thread_code(pthread_t tid)
 }
 
 //-------------------------------------------------------------------------------------------------
-FileLogger::FileLogger(const string& fname, const ebitset<Flags> flags, const unsigned rotnum)
+FileLogger::FileLogger(const string& fname, const LogFlags flags, const unsigned rotnum)
 	: Logger(flags), _rotnum(rotnum)
 {
    if (!fname.empty())
@@ -259,9 +258,7 @@ bool FileLogger::rotate(bool force)
 		}
 
 		for (unsigned ii(_rotnum); ii; --ii)
-		{
 			rename (rlst[ii - 1].c_str(), rlst[ii].c_str());
-		}
 	}
 
 #ifndef _MSC_VER
@@ -276,11 +273,14 @@ bool FileLogger::rotate(bool force)
 #endif
 		_ofs = new ofstream(thislFile.c_str(), mode);
 
+   if (!_ofs || !*_ofs)
+      throw LogfileException(thislFile);
+
 	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
-PipeLogger::PipeLogger(const string& fname, const ebitset<Flags> flags) : Logger(flags)
+PipeLogger::PipeLogger(const string& fname, const LogFlags flags) : Logger(flags)
 {
 	const string pathname(fname.substr(1));
 
@@ -308,7 +308,7 @@ PipeLogger::PipeLogger(const string& fname, const ebitset<Flags> flags) : Logger
 
 //-------------------------------------------------------------------------------------------------
 // nc -lu 127.0.0.1 -p 51000
-BCLogger::BCLogger(Poco::Net::DatagramSocket *sock, const ebitset<Flags> flags) : Logger(flags), _init_ok(true)
+BCLogger::BCLogger(Poco::Net::DatagramSocket *sock, const LogFlags flags) : Logger(flags), _init_ok(true)
 {
 	_ofs = new bcostream(sock);
 	_flags |= broadcast;

@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-----------------------------------------------------------------------------------------
 // f8 headers
 #include <f8headers.hpp>
@@ -243,7 +243,7 @@ public:
     check_session(const F8MetaCntx& ctx):
         Session(ctx)
     {
-        _connection = new Connection(NULL, _addr, *this, pm_thread);
+        _connection = new Connection(NULL, _addr, *this, pm_thread, 10);
     };
 
     /// Dtor
@@ -281,7 +281,7 @@ TEST(filePersister, resend_get)
 
 	 Poco::Net::SocketAddress _addr;
     check_session session(UTEST::ctx);
-    Connection connection(NULL, _addr, session, pm_thread);
+    Connection connection(NULL, _addr, session, pm_thread, 10);
 
     fixture.filePer->get(1, 5, session, &Session::retrans_callback);
 

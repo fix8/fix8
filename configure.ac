@@ -8,7 +8,7 @@ AC_PREREQ(2.61)
 AC_INIT([fix8], m4_esyscmd([./version.sh|tr -d '\n']),fix@fix8.org,fix8,http://www.fix8.org)
 AM_INIT_AUTOMAKE
 AH_TOP([//-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -41,7 +41,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-----------------------------------------------------------------------------------------])
 
 AC_ENABLE_STATIC(no)
@@ -88,6 +88,7 @@ AC_TYPE_SIZE_T
 AC_TYPE_OFF_T
 AC_TYPE_UINT16_T
 AC_TYPE_UINT32_T
+AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
 AC_CHECK_TYPES([ptrdiff_t])
 
@@ -137,7 +138,7 @@ if test -z "$DOXYGEN";
 fi
 oktodox=yes
 AC_ARG_ENABLE([doxygen],
-[AC_HELP_STRING([--enable-doxygen],[enable doxygen generation (default=yes if available)])],
+[AS_HELP_STRING([--enable-doxygen],[enable doxygen generation (default=yes if available)])],
 [case "${enableval}" in
 	yes) ;;
 	no)  oktodox=no;;
@@ -154,11 +155,19 @@ AC_CHECK_FUNCS([scandir getopt_long sysconf popen waitpid alarm \
 
 fillmetadata=yes
 AC_ARG_ENABLE([fillmetadata],
-[AC_HELP_STRING([--enable-fillmetadata],[enable metadata population (default=yes)])],
+[AS_HELP_STRING([--enable-fillmetadata],[enable metadata population (default=yes)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(POPULATE_METADATA, 1, [Define to 1 to enable metatdata population in encode/decodes]) ;;
 	no)  fillmetadata=no;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-fillmetadata) ;;
+esac])
+
+AC_ARG_ENABLE([rdtsc],
+[AS_HELP_STRING([--enable-rdtsc],[use rdtsc for interval timer if available])],
+[case "${enableval}" in
+	yes) AC_DEFINE(USE_RDTSC, 1, [Define to 1 to enable rdtsc for interval timer if available]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-rdtsc) ;;
 esac])
 
 AC_CHECK_LIB(rt, clock_gettime, [AC_DEFINE(HAVE_CLOCK_GETTIME, 1, [Define if you have clock_gettime()])])
@@ -170,60 +179,36 @@ AC_CHECK_HEADERS([getopt.h fcntl.h netdb.h regex.h signal.h string.h sys/time.h 
 	sys/socket.h time.h syslog.h termios.h alloca.h
 	])
 
-PROCSTAT=/proc/stat
-AC_CHECK_FILE("$PROCSTAT",
-	[
-		AC_DEFINE_UNQUOTED(HAVE_PROC_STAT, 1, [Define to 1 if /proc/stat is available])
-	])
-
-PROCPIDSTAT=/proc/"$PPID"/stat
-AC_CHECK_FILE("$PROCPIDSTAT",
-	[
-		AC_DEFINE_UNQUOTED(HAVE_PROC_PID_STAT, 1, [Define to 1 if /proc/[pid]/stat is available])
-	])
-
-PROCPIDSTATM=/proc/"$PPID"/statm
-AC_CHECK_FILE("$PROCPIDSTATM",
-	[
-		AC_DEFINE_UNQUOTED(HAVE_PROC_PID_STATM, 1, [Define to 1 if /proc/[pid]/statm is available])
-	])
-
-DEVURANDOM=/dev/urandom
-AC_CHECK_FILE("$DEVURANDOM",
-	[
-		AC_DEFINE(HAVE_DEV_URANDOM, 1, [Define to 1 if the /dev/urandom device is available])
-	])
-
 AC_DEFINE_UNQUOTED(RESERVE_PERCENT, 30, [Percentage of message fields to reserve for additional fields])
 AC_ARG_WITH(reservepercent,
-  AC_HELP_STRING([--with-reservepercent=VALUE],[Percentage of message fields to reserve for additional fields]),
+  AS_HELP_STRING([--with-reservepercent=VALUE],[Percentage of message fields to reserve for additional fields]),
 [
 	AC_DEFINE_UNQUOTED(RESERVE_PERCENT, ${withval},[Percentage of message fields to reserve for additional fields])
 ],[])
 
 AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, 8192, [Maximum length of a FIX message in bytes])
 AC_ARG_WITH(maxmsglen,
-  AC_HELP_STRING([--with-maxmsglen=VALUE],[Maximum length of a FIX message (default=8192)]),
+  AS_HELP_STRING([--with-maxmsglen=VALUE],[Maximum length of a FIX message (default=8192)]),
 [
 	AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, ${withval}, [Maximum length of a FIX message (default=8192)])
 ],[])
 
 AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, 1024, [Maximum length of a FIX field in bytes])
 AC_ARG_WITH(maxfldlen,
-  AC_HELP_STRING([--with-maxfldlen=VALUE],[Maximum length of a FIX field (default=1024)]),
+  AS_HELP_STRING([--with-maxfldlen=VALUE],[Maximum length of a FIX field (default=1024)]),
 [
 	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=1024)])
 ],[])
 
 AC_ARG_WITH(tbb,
-  AC_HELP_STRING([--with-tbb=DIR],[location of TBB]),
+  AS_HELP_STRING([--with-tbb=DIR],[location of TBB]),
 [
 	CPPFLAGS="$CPPFLAGS -I${withval}/include"
 	LDFLAGS="$LDFLAGS -L${withval}/lib"
 ],[])
 
 AC_ARG_WITH(gtest,
-  AC_HELP_STRING([--with-gtest=DIR],[location of gtest]),
+  AS_HELP_STRING([--with-gtest=DIR],[location of gtest]),
 [
 	CPPFLAGS="$CPPFLAGS -I${withval}/include"
 	LDFLAGS="$LDFLAGS -L${withval}/lib -L${withval}/lib/.libs"
@@ -231,7 +216,7 @@ AC_ARG_WITH(gtest,
 
 usetcmalloc=yes
 AC_ARG_ENABLE([tcmalloc],
-[AC_HELP_STRING([--enable-tcmalloc],[enable gperftools tcmalloc (default=yes)])],
+[AS_HELP_STRING([--enable-tcmalloc],[enable gperftools tcmalloc (default=yes)])],
 [case "${enableval}" in
 	yes) ;;
 	no)  usetcmalloc=no;;
@@ -239,7 +224,7 @@ AC_ARG_ENABLE([tcmalloc],
 esac])
 
 AC_ARG_WITH(gperf,
-  AC_HELP_STRING([--with-gperf=DIR],[location of gperf libraries]),
+  AS_HELP_STRING([--with-gperf=DIR],[location of gperf libraries]),
 [
 	CPPFLAGS="$CPPFLAGS -I${withval}/include"
 	LDFLAGS="$LDFLAGS -L${withval}/lib"
@@ -261,7 +246,7 @@ AC_DEFINE(MPMC_FF, 2, [FF MPMC])
 mpmc_set=no
 using_ff=no
 AC_ARG_WITH([mpmc],
-[AC_HELP_STRING([--with-mpmc=VAL],[select which mpmc system will be used (tbb|ff, default=ff)])],
+[AS_HELP_STRING([--with-mpmc=VAL],[select which mpmc system will be used (tbb|ff, default=ff)])],
 [case "${withval}" in
 	tbb) AC_MSG_CHECKING(for TBB)
 				AC_TRY_COMPILE([
@@ -296,13 +281,13 @@ fi
 AM_CONDITIONAL(TBBSUPPORT, [test x$have_tbb = xyes])
 
 AC_ARG_WITH(sleep,
-	AC_HELP_STRING([--with-sleep=VAL],[If using fastflow, sleep for VAL ns instead of yield when waiting for input(default=no)]),
+	AS_HELP_STRING([--with-sleep=VAL],[If using fastflow, sleep for VAL ns instead of yield when waiting for input(default=no)]),
 [
 	AC_DEFINE_UNQUOTED(SLEEP_NO_YIELD, ${withval}, [Define to 1 if when using fastflow, sleep for VAL ns instead of yield when waiting for input])
 ],[])
 
 AC_ARG_WITH(poco,
-  AC_HELP_STRING([--with-poco=DIR],[location of Poco]),
+  AS_HELP_STRING([--with-poco=DIR],[location of Poco]),
 [
 	CPPFLAGS="$CPPFLAGS -I${withval}/include"
 	LDFLAGS="$LDFLAGS -L${withval}/lib"
@@ -332,7 +317,7 @@ AC_MSG_CHECKING(for Poco)
 
 oktogtest=yes
 AC_ARG_ENABLE([gtest],
-[AC_HELP_STRING([--enable-gtest],[enable gtest unit test case building if available (default=yes if available)])],
+[AS_HELP_STRING([--enable-gtest],[enable gtest unit test case building if available (default=yes if available)])],
 [case "${enableval}" in
 	yes) ;;
 	no)  oktogtest=no;;
@@ -378,9 +363,20 @@ AM_CONDITIONAL(USECCRYPT, [test x$havecrypt = xyes])
 m4_include(m4/ax_compare_version.m4)
 m4_include(m4/ax_path_bdb.m4)
 
+oktof8test=yes
+AC_ARG_ENABLE([f8test],
+[AS_HELP_STRING([--enable-f8test],[permit f8test client/server to be built (default=yes)])],
+[case "${enableval}" in
+	no) oktof8test=no ;;
+	yes) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-f8test) ;;
+esac])
+
+AM_CONDITIONAL(F8TEST, [test x$oktof8test = xyes])
+
 oktobdb=no
 AC_ARG_ENABLE([bdb],
-[AC_HELP_STRING([--enable-bdb],[enable support for Oracle Berkeley DB persistence (default=no)])],
+[AS_HELP_STRING([--enable-bdb],[enable support for Oracle Berkeley DB persistence (default=no)])],
 [case "${enableval}" in
 	yes) oktobdb=yes
 		AX_PATH_BDB([3],[ LIBS="$BDB_LIBS $LIBS" LDFLAGS="$BDB_LDFLAGS $LDFLAGS" CPPFLAGS="$CPPFLAGS $BDB_CPPFLAGS"
@@ -436,7 +432,7 @@ else
 fi
 
 AC_ARG_ENABLE([xmlstrictbool],
-[AC_HELP_STRING([--enable-xmlstrictbool],[enable xml strict bool behaviour (default=no)])],
+[AS_HELP_STRING([--enable-xmlstrictbool],[enable xml strict bool behaviour (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(XMLENTITY_STRICT_BOOL, 1, [Define to 1 if you wish to enforce strict bool ]) ;;
 	no)  ;;
@@ -444,7 +440,7 @@ AC_ARG_ENABLE([xmlstrictbool],
 esac])
 
 AC_ARG_ENABLE([bufgloblogging],
-[AC_HELP_STRING([--enable-bufgloblogging],[enable buffered global logging behaviour (default=no)])],
+[AS_HELP_STRING([--enable-bufgloblogging],[enable buffered global logging behaviour (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(BUFFERED_GLOBAL_LOGGING, 1, [Define to 1 if you wish to enable buffered global logging]) ;;
 	no)  ;;
@@ -452,7 +448,7 @@ AC_ARG_ENABLE([bufgloblogging],
 esac])
 
 AC_ARG_ENABLE([valgrind],
-[AC_HELP_STRING([--enable-valgrind],[enable internal support for valgrind (default=no)])],
+[AS_HELP_STRING([--enable-valgrind],[enable internal support for valgrind (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(HAVE_VALGRIND, 1, [Define to 1 for valgrind support ])
 		  AC_CHECK_HEADERS([valgrind/valgrind.h]) ;;
@@ -461,7 +457,7 @@ AC_ARG_ENABLE([valgrind],
 esac])
 
 AC_ARG_ENABLE([gprof],
-[AC_HELP_STRING([--enable-gprof],[enable internal support for gprof (default=no)])],
+[AS_HELP_STRING([--enable-gprof],[enable internal support for gprof (default=no)])],
 [case "${enableval}" in
 	yes) AC_CHECK_HEADERS([sys/gmon.h],[ have_gprof_headers=yes ])
 			if test "$have_gprof_headers" = yes; then
@@ -475,7 +471,7 @@ AC_ARG_ENABLE([gprof],
 esac])
 
 AC_ARG_ENABLE([msgrecycle],
-[AC_HELP_STRING([--enable-msgrecycle],[enable Message Recycling (default=no)])],
+[AS_HELP_STRING([--enable-msgrecycle],[enable Message Recycling (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(MSGRECYCLING, 1, [Define to 1 to enable Message Recycling]) ;;
 	no)  ;;
@@ -483,21 +479,15 @@ AC_ARG_ENABLE([msgrecycle],
 esac])
 
 AC_ARG_ENABLE([codectiming],
-[AC_HELP_STRING([--enable-codectiming],[enable CODEC timing testing code (default=no)])],
+[AS_HELP_STRING([--enable-codectiming],[enable CODEC timing testing code (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(CODECTIMING, 1, [Define to 1 to enable CODEC timing testing code]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-codectiming) ;;
 esac])
 
-AC_ARG_ENABLE([customfields],
-[AC_HELP_STRING([--enable-customfields],[enable User defined fields (default=no)])],
-[case "${enableval}" in
-	*) AC_MSG_ERROR(custom fields no longer supported) ;;
-esac])
-
 AC_ARG_ENABLE([debug],
-[AC_HELP_STRING([--enable-debug],[enable DEBUG support (default=no)])],
+[AS_HELP_STRING([--enable-debug],[enable DEBUG support (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(DEBUG, 1, [Define to 1 for debugging extensions]) ;;
 	no)  ;;
@@ -505,7 +495,7 @@ AC_ARG_ENABLE([debug],
 esac])
 
 AC_ARG_ENABLE([ssl],
-[AC_HELP_STRING([--enable-ssl],[enable SSL support (through OpenSSL, default=no)])],
+[AS_HELP_STRING([--enable-ssl],[enable SSL support (through OpenSSL, default=no)])],
 [case "${enableval}" in
 	yes) openssl=yes ;;
 	no)  openssl=no ;;

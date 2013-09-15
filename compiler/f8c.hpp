@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _F8_F8C_HPP_
 #define _F8_F8C_HPP_
@@ -156,10 +156,11 @@ struct MessageSpec
 {
 	FieldTraits _fields;
 	GroupMap _groups;
+   int group_refcnt;
 	std::string _name, _description, _comment;
 	bool _is_admin;
 
-	MessageSpec(const std::string& name, bool admin=false) : _name(name), _is_admin(admin) {}
+	MessageSpec(const std::string& name, bool admin=false) : group_refcnt(), _name(name), _is_admin(admin) {}
 	virtual ~MessageSpec() {}
 
 	friend std::ostream& operator<<(std::ostream& os, const MessageSpec& what);

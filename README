@@ -135,6 +135,7 @@ You **must** have libtool (http://www.gnu.org/software/libtool/) installed to bu
 
     % tar xvzf fix8-0.9.4.tar.gz
     % cd 0.9.4
+    % ./bootstrap
     % ./configure
     % make
     % make install

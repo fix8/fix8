@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,12 +32,12 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 mockConnection.hpp and mockConnection.cpp are used to supply a mock connection object for unit tests
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_CONNECTION_HPP_
 #define _FIX8_CONNECTION_HPP_
@@ -178,6 +178,7 @@ protected:
     bool _connected;
     Session& _session;
     Role _role;
+	 ProcessModel _pmodel;
     unsigned _hb_interval, _hb_interval20pc;
     bool _started;
 	 Poco::Net::SocketAddress _addr;
@@ -186,12 +187,12 @@ public:
 
     /// Ctor
     Connection(Poco::Net::StreamSocket *sock, Session &session, const ProcessModel pmodel)   // client
-        : _connected(false), _session(session), _role(cn_initiator),
+        : _connected(false), _session(session), _role(cn_initiator), _pmodel(pmodel),
         _hb_interval(10), _started(false){}
 
     /// Ctor
     Connection(Poco::Net::StreamSocket *sock, Session &session, const unsigned hb_interval, const ProcessModel pmodel) // server
-        : _connected(true), _session(session), _role(cn_acceptor), _hb_interval(hb_interval),
+        : _connected(true), _session(session), _role(cn_acceptor), _pmodel(pmodel), _hb_interval(hb_interval),
         _hb_interval20pc(hb_interval + hb_interval / 5), _started(false){}
 
     /// Dtor
@@ -199,8 +200,11 @@ public:
 
     /*! Get the role for this connection.
         \return the role */
-
     Role get_role() const { return _role; }
+
+	/*! Get the process model
+	  \return the process model */
+	 ProcessModel get_pmodel() const { return _pmodel; }
 
     ///set the state to started
     void start();

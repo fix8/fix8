@@ -31,9 +31,13 @@
 # HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #
 #############################################################################################
-bin_PROGRAMS = f8test f8print hftest hfprint harness
-lib_LTLIBRARIES = libmyfix.la libhftest.la
-f8test_SOURCES = myfix.cpp myfix.hpp myfix_custom.hpp
+bin_PROGRAMS = hftest hfprint
+lib_LTLIBRARIES = libhftest.la
+if F8TEST
+bin_PROGRAMS += f8test f8print harness
+lib_LTLIBRARIES += libmyfix.la
+endif
+f8test_SOURCES = myfix.cpp myfix.hpp
 f8print_SOURCES = myprint.cpp myfix.hpp
 harness_SOURCES = harness.cpp myfix.hpp
 hftest_SOURCES = hftest.cpp hftest.hpp
@@ -53,7 +57,7 @@ XML_FIXT_SCHEMA = $(top_srcdir)/schema/FIXT11.xml
 .NOTPARALLEL: $(XML_SCHEMA) $(XML_HF_SCHEMA)
 
 $(libhftest_la_SOURCES): $(XML_HF_SCHEMA)
-	$(top_srcdir)/compiler/f8c -sVp Perf -n TEX $(XML_HF_SCHEMA)
+	$(top_srcdir)/compiler/f8c -sVp Perf -R -n TEX $(XML_HF_SCHEMA)
 
 $(libmyfix_la_SOURCES): $(XML_SCHEMA)
 	$(top_srcdir)/compiler/f8c -rVn TEX $(XML_SCHEMA) -x $(XML_FIXT_SCHEMA)

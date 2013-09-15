@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
@@ -41,25 +41,19 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <algorithm>
+
 #ifndef _MSC_VER
-#include <strings.h>
+# include <strings.h>
+# include <sys/time.h>
+# include <unistd.h>
+# include <netdb.h>
+# include <syslog.h>
 #endif
+
 #include <string.h>
-#ifndef _MSC_VER
-#include <sys/time.h>
-#endif
 #include <time.h>
-#ifndef _MSC_VER
-#include <unistd.h>
-#endif
 #include <errno.h>
-#ifndef _MSC_VER
-#include <netdb.h>
-#endif
 #include <signal.h>
-#ifndef _MSC_VER
-#include <syslog.h>
-#endif
 #include <fcntl.h>
 #include <time.h>
 #include <regex.h>
@@ -78,7 +72,7 @@ using namespace std;
 //----------------------------------------------------------------------------------------
 const XmlElement::XmlSet XmlElement::emptyset_;
 const XmlElement::XmlAttrs XmlElement::emptyattrs_;
-RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&([a-z]{2,});"),
+RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&([a-z]{2,}[1-4]{0,});"),
 	XmlElement::rIn_("href=\"([^\"]+)\""),
    XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
 
@@ -157,7 +151,7 @@ bool exec_cmd(const string& cmd, string& result)
    FILE *apipe(_popen(cmd.c_str(), "r"));
 #else
    FILE *apipe(popen(cmd.c_str(), "r"));
-#endif   
+#endif
    if (apipe)
    {
       const size_t maxcmdresultlen(1024);
@@ -695,11 +689,11 @@ const string& XmlElement::InplaceXlate (string& what)
 XmlElement *XmlElement::Factory(const string& fname)
 {
 	ifstream ifs(fname.c_str());
-	
+
 #ifdef _MSC_VER
-	std::stringstream buffer;
+	stringstream buffer;
 	buffer << ifs.rdbuf();
-    return ifs ? new XmlElement(buffer, 0, 0, 0, 0, fname.c_str()) : 0;
+   return ifs ? new XmlElement(buffer, 0, 0, 0, 0, fname.c_str()) : 0;
 #else
 	return ifs ? new XmlElement(ifs, 0, 0, 0, 0, fname.c_str()) : 0;
 #endif

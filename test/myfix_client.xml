@@ -13,6 +13,7 @@
 				reset_sequence_numbers="false"
 				default_appl_ver_id="8"
 				heartbeat_interval="10"
+				ignore_logon_sequence_check="false"
 				tcp_nodelay="true"
 				always_seqnum_assign="true"
 				process_mode="threaded"

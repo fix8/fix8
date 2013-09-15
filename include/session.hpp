@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_SESSION_HPP_
 # define _FIX8_SESSION_HPP_
@@ -313,13 +313,19 @@ protected:
 	/*! Create a new Fix message from metadata layer.
 	    \param msg_type message type string
 	    \return new Message */
-	Message *create_msg(const f8String& msg_type)
+	Message *create_msg(const f8String& msg_type) const
 	{
 		const BaseMsgEntry *bme(_ctx._bme.find_ptr(msg_type.c_str()));
 		if (!bme)
-			throw InvalidMetadata(msg_type);
+			throw InvalidMetadata<f8String>(msg_type);
 		return bme->_create();
 	}
+
+#if !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
+	static f8String get_thread_policy_string(pthread_t id);
+	void set_scheduler(int priority);
+	void set_affinity(int core_id);
+#endif
 
 public:
 	/*! Ctor. Initiator.

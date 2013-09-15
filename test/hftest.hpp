@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_MYFIX_HPP_
 #define _FIX8_MYFIX_HPP_
@@ -205,7 +205,7 @@ struct RandDev
 	    srand (static_cast<unsigned>(time(0) % _getpid()));
 #else
 		srandom (static_cast<unsigned>(time(0) % getpid()));
-#endif 
+#endif
 	}
 
 	/*! Return a random number between 0 and n - 1, or between 0 and RAND_MAX
@@ -219,7 +219,7 @@ struct RandDev
 	    T target(rand());
 #else
 		T target(random());
-#endif 
+#endif
 		return range ? target / (RAND_MAX / range + 1) : target;
 	}
 };

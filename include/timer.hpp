@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_TIMER_HPP_
 # define _FIX8_TIMER_HPP_
@@ -214,14 +214,33 @@ bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWait)
 }
 
 //---------------------------------------------------------------------------------------------------
+#if defined __x86_64__ && (defined(__linux__) || defined(__FreeBSD__) || defined(__APPLE__))
+#define HAVE_RDTSC
+inline ticks rdtsc()
+{
+    uint32_t high, low;
+    __asm__ __volatile__("rdtsc" : "=a" (low), "=d" (high));
+    return (static_cast<ticks>(high) << 32) + static_cast<ticks>(low);
+}
+#endif
+
+//---------------------------------------------------------------------------------------------------
 /// High resolution interval timer.
 class IntervalTimer
 {
+#if defined USE_RDTSC && defined HAVE_RDTSC
+   ticks startTime_, delta_;
+#else
    Tickval startTime_, delta_;
+#endif
 
 public:
 	/// Ctor. RAII.
+#if defined USE_RDTSC && defined HAVE_RDTSC
+   IntervalTimer() : startTime_(rdtsc()) {}
+#else
    IntervalTimer() : startTime_(true) {}
+#endif
 
 	/// Dtor.
    virtual ~IntervalTimer() {}
@@ -230,21 +249,34 @@ public:
 	  \return reference to this object */
    const IntervalTimer& Calculate()
    {
+#if defined USE_RDTSC && defined HAVE_RDTSC
+      ticks now(rdtsc());
+#else
       Tickval now(true);
+#endif
       delta_ = now - startTime_;
       return *this;
    }
 
 	/*! Get delta as a double.
 	  \return delta as double */
+#if defined USE_RDTSC && defined HAVE_RDTSC
+   double AsDouble() const { return delta_; }
+#else
    double AsDouble() const { return delta_.todouble(); }
+#endif
 
 	/*! Reset the interval start time.
 	  \return the old delta as double */
    double Reset()
    {
+#if defined USE_RDTSC && defined HAVE_RDTSC
+      const ticks curr(delta_);
+		startTime_ = rdtsc();
+#else
       const double curr(AsDouble());
 		startTime_.now();
+#endif
       return curr;
    }
 
@@ -257,7 +289,11 @@ public:
       std::ostringstream ostr;
       ostr.setf(std::ios::showpoint);
       ostr.setf(std::ios::fixed);
+#if defined USE_RDTSC && defined HAVE_RDTSC
+      ostr << std::setprecision(9) << what;
+#else
       ostr << std::setprecision(9) << what.AsDouble();
+#endif
       return os << ostr.str();
    }
 };

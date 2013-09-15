@@ -320,7 +320,6 @@ System types:
   --host=HOST       cross-compile to build programs to run on HOST [BUILD]
 
 Optional Features:
-  --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-static[=PKGS]  build static libraries [default=no]
@@ -332,7 +331,12 @@ Optional Features:
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-doxygen        enable doxygen generation (default=yes if available)
   --enable-fillmetadata   enable metadata population (default=yes)
+  --enable-rdtsc          use rdtsc for interval timer if available
   --enable-tcmalloc       enable gperftools tcmalloc (default=yes)
+  --enable-gtest          enable gtest unit test case building if available
+                          (default=yes if available)
+  --enable-f8test         permit f8test client/server to be built
+                          (default=yes)
   --enable-bdb            enable support for Oracle Berkeley DB persistence
                           (default=no)
   --enable-xmlstrictbool  enable xml strict bool behaviour (default=no)
@@ -342,14 +346,13 @@ Optional Features:
   --enable-gprof          enable internal support for gprof (default=no)
   --enable-msgrecycle     enable Message Recycling (default=no)
   --enable-codectiming    enable CODEC timing testing code (default=no)
-  --enable-customfields   enable User defined fields (default=no)
   --enable-debug          enable DEBUG support (default=no)
   --enable-ssl            enable SSL support (through OpenSSL, default=no)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-pic              try to use only PIC/non-PIC objects [default=use
+  --with-pic[=PKGS]       try to use only PIC/non-PIC objects [default=use
                           both]
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-sysroot=DIR Search for dependent libraries within DIR

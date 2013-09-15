@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
@@ -228,7 +228,7 @@ void Session::stop()
 	else
 	{
 		_timer.schedule(_hb_processor, 0);
-		f8_scoped_spin_lock guard(_per_spl);
+		f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 		if (_persist)
 			_persist->stop();
 	}
@@ -293,7 +293,7 @@ bool Session::process(const f8String& from)
 			plog(from, 1);
 		if (_persist)
 		{
-			f8_scoped_spin_lock guard(_per_spl);
+			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 			_persist->put(_next_send_seq, _next_receive_seq);
 			//cout << "Persisted:" << _next_send_seq << " and " << _next_receive_seq << endl;
 		}
@@ -363,7 +363,7 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 			_state = States::st_resend_request_sent;
 			send(rmsg);
 		}
-		else
+		else if (!_sf->get_ignore_logon_sequence_check_flag(_sf->_ses))
 			throw InvalidMsgSequence(seqnum, _next_receive_seq);
 		return false;
 	}
@@ -425,7 +425,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 
 		if (!_persist)
 		{
-			f8_scoped_spin_lock guard(_per_spl);
+			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 			_persist = _sf->create_persister(_sf->_ses, &id, reset_given);
 		}
 
@@ -526,7 +526,7 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		{
 			//cout << "got resend request:" << begin() << " to " << end() << endl;
 			_state = States::st_resend_request_received;
-			f8_scoped_spin_lock guard(_per_spl);
+			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 			_persist->get(begin(), end(), *this, &Session::retrans_callback);
 		}
 	}
@@ -550,7 +550,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 		else if (!rctx._last)
 		{
 			_next_send_seq = rctx._interrupted_seqnum;
-			send(generate_sequence_reset(rctx._interrupted_seqnum, true));
+			send(generate_sequence_reset(rctx._interrupted_seqnum, true), rctx._begin);
 			//cout << "#4" << endl;
 		}
 		_state = States::st_continuous;
@@ -843,7 +843,7 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		{
 			if (_persist)
 			{
-				f8_scoped_spin_lock guard(_per_spl);
+				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 				if (!msg->is_admin())
 					_persist->put(_next_send_seq, ptr);
 				_persist->put(_next_send_seq + 1, _next_receive_seq);
@@ -874,7 +874,7 @@ bool Session::handle_application(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 void Session::recover_seqnums()
 {
-	f8_scoped_spin_lock guard(_per_spl);
+	f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 	if (_persist)
 	{
 		unsigned send_seqnum, receive_seqnum;
@@ -889,3 +889,67 @@ void Session::recover_seqnums()
 	}
 }
 
+//-------------------------------------------------------------------------------------------------
+#if !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
+
+f8String Session::get_thread_policy_string(pthread_t id)
+{
+   int policy;
+	ostringstream ostr;
+   sched_param param = {};
+   if (!pthread_getschedparam(id,  &policy, &param))
+		return policy == SCHED_OTHER ? "SCHED_OTHER" : policy == SCHED_RR ? "SCHED_RR"
+			  : policy == SCHED_FIFO ? "SCHED_FIFO" : "UNKNOWN";
+
+	ostr << "Could not get scheduler parameters: " << Str_error(errno);
+	return ostr.str();
+}
+
+//-------------------------------------------------------------------------------------------------
+void Session::set_scheduler(int priority)
+{
+   pthread_t thread(pthread_self());
+   sched_param param = { priority };
+
+	ostringstream ostr;
+	ostr << "Current scheduler policy: " << get_thread_policy_string(thread);
+	log(ostr.str());
+	ostr.str("");
+
+   if (pthread_setschedparam(thread, SCHED_RR, &param))
+	{
+		ostr << "Could not set new scheduler priority: " << get_thread_policy_string(thread)
+			<< " (" << Str_error(errno) << ") " << priority;
+		log(ostr.str());
+		return;
+   }
+
+	ostr << "New scheduler policy: " << get_thread_policy_string(thread);
+	log(ostr.str());
+}
+
+//-------------------------------------------------------------------------------------------------
+void Session::set_affinity(int core_id)
+{
+   const int num_cores(sysconf(_SC_NPROCESSORS_ONLN));
+	ostringstream ostr;
+   if (core_id >= num_cores)
+	{
+		ostr << "Invalid core id: " << core_id;
+		log(ostr.str());
+      return;
+	}
+
+   cpu_set_t cpuset;
+   CPU_ZERO(&cpuset);
+   CPU_SET(core_id, &cpuset);
+   const int error(pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset));
+
+	if (error)
+		ostr << "Could not set thread affinity for core " << core_id << " (" << Str_error(errno) << ')';
+	else
+		ostr << "Set thread affinity to " << core_id << " core for thread " << pthread_self();
+	log(ostr.str());
+}
+
+#endif

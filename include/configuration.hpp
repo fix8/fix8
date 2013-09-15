@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_CONFIGURATION_HPP_
 # define _FIX8_CONFIGURATION_HPP_
@@ -219,6 +219,12 @@ public:
 	  \param from xml entity to search
 	  \return pm_thread, pm_pipeline or pm_coro */
 	ProcessModel get_process_model(const XmlElement *from) const;
+
+	/*! Extract the ignore_logon_sequence_check flag from a session entity.
+	  \param from xml entity to search
+	  \return true if ignore_logon_sequence_check flag was passed and was true */
+	bool get_ignore_logon_sequence_check_flag(const XmlElement *from)
+		{ return from && from->FindAttr("ignore_logon_sequence_check", false); }
 
 	/*! Extract the reset_sequence_number flag from a session entity.
 	  \param from xml entity to search

@@ -1,3 +1,21 @@
+* Mon Sep 16 2013 David L. Dight <fix@fix8.org> 0.9.5
+- Fixed Jira tickets FX-78, FX-79, FX-80, FX-81, FX-82, FX-83, FX-84, FX-85, FX-86, FX-87
+- Fixed SendingTime and TransactTime not being output by Fix8 printer
+- Added compiler option to suppress realm use during field construction
+- Replaced Poco::DateTime with custom date time parser, reduced decode latency ~ 20%
+- Fixed f8c compiler crashing on exit
+- Fixed Incorrect sequence number in GenerateSequenceReset
+- Removed coroutine process mode spinlocks
+- Workaround for f8test not building on low memory platforms or with older compilers
+- Skip formal decode of some header/trailer fields
+- Fixed error checking on logfile creation
+- Fixed F8MetaCntx::_bme.find() not returning end() if not found
+- Replaced #ifdef 0 comment blocks with /* ... */
+- templated Field::add_field
+- Improved fix printer formatting, removed incorrect group metadata
+- Added rdtsc option for codec timing
+- Added set_scheduler and set_affinity support
+
 * Sun Aug 25 2013 David L. Dight <fix@fix8.org> 0.9.4
 - Merged in Richard Bourne's Windows port.
 - Fixed Jira tickets FX-72, FX-73, FX-74, FX-75

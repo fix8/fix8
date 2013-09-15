@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-----------------------------------------------------------------------------------------
 // f8 headers
 #include "f8headers.hpp"
@@ -113,7 +113,10 @@ TEST(message, neworder_decode)
     EXPECT_TRUE(neworder->has<UTEST::TimeInForce>());
 
     FIELD_TEST(BeginString, "FIX.4.2", header, EXPECT_EQ);
-    FIELD_TEST(SendingTime, Poco::DateTime(2013, 3, 4, 5, 6, 14), header, EXPECT_EQ);
+    //FIELD_TEST(SendingTime, Poco::DateTime(2013, 3, 4, 5, 6, 14), header, EXPECT_EQ);
+    tm tms = { 14, 6, 5, 4, 2, 113 }; // mon is 0-11, year is from 1900
+    SendingTime st(tms);
+    FIELD_TEST(SendingTime, st.get(), header, EXPECT_EQ);
     FIELD_TEST(MsgSeqNum, 78, header, EXPECT_EQ);
     FIELD_TEST(SenderCompID, "CLIENT", header, EXPECT_EQ);
     FIELD_TEST(TargetCompID , "SERVER", header, EXPECT_EQ);

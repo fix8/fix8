@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 
 //-----------------------------------------------------------------------------------------
 /** \file myfix.cpp
@@ -127,7 +127,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:rd");
+const string GETARGLIST("hl:svqc:R:S:rdo");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
@@ -171,7 +171,7 @@ void sig_handler(int sig)
 int main(int argc, char **argv)
 {
 	int val;
-	bool server(false), reliable(false), dump(false);
+	bool server(false), reliable(false), once(false), dump(false);
 	string clcf;
 	unsigned next_send(0), next_receive(0);
 
@@ -182,6 +182,7 @@ int main(int argc, char **argv)
 		{ "version",	0,	0,	'v' },
 		{ "log",			1,	0,	'l' },
 		{ "config",		1,	0,	'c' },
+		{ "once",	   0,	0,	'o' },
 		{ "server",		0,	0,	's' },
 		{ "send",		1,	0,	'S' },
 		{ "receive",	1,	0,	'R' },
@@ -207,6 +208,7 @@ int main(int argc, char **argv)
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
+		case 'o': once = true; break;
 		case 'S': next_send = get_value<unsigned>(optarg); break;
 		case 'R': next_receive = get_value<unsigned>(optarg); break;
 		case 'q': quiet = true; break;
@@ -258,6 +260,8 @@ int main(int argc, char **argv)
 				inst->start(true, next_send, next_receive);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
+            if (once)
+               break;
 			}
 		}
 		else
@@ -462,6 +466,7 @@ void print_usage()
 	um.add('h', "help", "help, this screen");
 	um.add('v', "version", "print version, exit");
 	um.add('l', "log", "global log filename");
+	um.add('o', "once", "for server, allow one client session then exit");
 	um.add('c', "config", "xml config (default: myfix_client.xml or myfix_server.xml)");
 	um.add('q', "quiet", "do not print fix output");
 	um.add('R', "receive", "set next expected receive sequence number");

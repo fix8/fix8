@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
@@ -80,7 +80,7 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 void process_ordering(MessageSpecMap& mspec);
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
-void process_group_ordering(const MessageSpec& ms);
+void process_group_ordering(const GroupMap& gm);
 unsigned lookup_component(const Components& compon, const f8String& name);
 string bintoaschex(const string& from);
 
@@ -183,6 +183,8 @@ void process_special_traits(const unsigned short field, FieldTraits& fts)
 		fts.set(field, FieldTrait::suppress);	// drop through
 	case Common_MsgType:
 		fts.set(field, FieldTrait::automatic);
+		fts.set(field, FieldTrait::ignore);			// don't decode
+		fts.clear(field, FieldTrait::mandatory);	// don't check for presence
 	default:
 		break;
 	}
@@ -311,15 +313,13 @@ void process_ordering(MessageSpecMap& mspec)
 		unsigned cnt(0);
 		for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
 			(*fto)->_pos = ++cnt;
-
-		process_group_ordering(mitr->second);
 	}
 }
 
 //-----------------------------------------------------------------------------------------
-void process_group_ordering(const MessageSpec& ms)
+void process_group_ordering(const GroupMap& gm)
 {
-	for (GroupMap::const_iterator gitr(ms._groups.begin()); gitr != ms._groups.end(); ++gitr)
+	for (GroupMap::const_iterator gitr(gm.begin()); gitr != gm.end(); ++gitr)
 	{
 		FieldTraitOrder go;
 		for (Presence::const_iterator flitr(gitr->second._fields.get_presence().begin());
@@ -331,7 +331,7 @@ void process_group_ordering(const MessageSpec& ms)
 			(*fto)->_pos = ++gcnt;
 
 		if (!gitr->second._groups.empty())
-			process_group_ordering(gitr->second);
+			process_group_ordering(gitr->second._groups);
 	}
 }
 
@@ -350,6 +350,7 @@ void print_usage()
 	um.add('v', "version", "print version, exit");
 	um.add('s', "second", "2nd pass only, no precompile (default both)");
 	um.add('N', "nounique", "do not enforce unique field parsing (default false)");
+	um.add('R', "norealm", "do not generate realm constructed field instantiators (default false)");
 	um.add('r', "retain", "retain 1st pass code (default delete)");
 	um.add('b', "binary", "print binary/ABI details, exit");
 	um.add('c', "classes <server|client>", "generate user session classes (default neither)");
@@ -414,7 +415,7 @@ void generate_preamble(ostream& to, const string& fname, bool donotedit)
 }
 
 //-------------------------------------------------------------------------------------------------
-ostream& FIX8::operator<<(ostream& os, const FIX8::MessageSpec& what)
+ostream& FIX8::operator<<(ostream& os, const MessageSpec& what)
 {
 	os << "Name:" << what._name;
 	if (!what._description.empty())

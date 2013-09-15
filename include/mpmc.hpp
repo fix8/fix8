@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_MPMC_HPP_
 # define _FIX8_MPMC_HPP_
@@ -50,8 +50,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 // when we move to c++11 we will use proper template type aliases
 # define f8_atomic tbb::atomic
-# define f8_scoped_lock tbb::mutex::scoped_lock
-# define f8_scoped_spin_lock tbb::spin_mutex::scoped_lock
 # define f8_mutex tbb::mutex
 # define f8_spin_lock tbb::spin_mutex
 # define f8_concurrent_queue tbb::concurrent_bounded_queue
@@ -74,6 +72,59 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-------------------------------------------------------------------------------------------------
 #endif // MPMC_SYSTEM
+
+//----------------------------------------------------------------------------------------
+/// Your bog standard RAII scoped lock
+namespace FIX8 {
+
+template<typename T>
+class f8_scoped_lock_impl
+{
+	T *_local_mutex;
+	bool _disabled;
+
+	f8_scoped_lock_impl(const f8_scoped_lock_impl&);
+	f8_scoped_lock_impl& operator=(const f8_scoped_lock_impl&);
+
+public:
+	f8_scoped_lock_impl() : _local_mutex(), _disabled() {}
+	f8_scoped_lock_impl(T& mutex) : _disabled() { acquire(mutex); }
+	f8_scoped_lock_impl(T& mutex, bool disable) : _disabled(disable)
+	{
+		if (!_disabled)
+			acquire(mutex);
+	}
+	~f8_scoped_lock_impl()
+	{
+		if (!_disabled && _local_mutex)
+			release();
+	}
+
+	void acquire(T& mutex)
+	{
+		mutex.lock();
+		_local_mutex = &mutex;
+	}
+
+	bool try_acquire(T& mutex)
+	{
+		bool result(mutex.try_lock());
+		if(result)
+			_local_mutex = &mutex;
+		return result;
+	}
+
+	void release()
+	{
+		_local_mutex->unlock();
+		_local_mutex = 0;
+	}
+};
+
+typedef f8_scoped_lock_impl<f8_mutex> f8_scoped_lock;
+typedef f8_scoped_lock_impl<f8_spin_lock> f8_scoped_spin_lock;
+
+} // namespace
 
 //-------------------------------------------------------------------------------------------------
 

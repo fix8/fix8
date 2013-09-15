@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_CONNECTION_HPP_
 # define _FIX8_CONNECTION_HPP_
@@ -330,6 +330,7 @@ protected:
 	bool _connected;
 	Session& _session;
 	Role _role;
+	ProcessModel _pmodel;
 	unsigned _hb_interval, _hb_interval20pc;
 
 	FIXReader _reader;
@@ -340,10 +341,11 @@ public:
 	    \param sock connected socket
 	    \param addr sock address structure
 	    \param session session
-	    \param pmodel process model */
+	    \param pmodel process model
+	    \param hb_interval heartbeat interval */
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // client
         const ProcessModel pmodel, const unsigned hb_interval)
-		: _sock(sock), _addr(addr), _connected(), _session(session), _role(cn_initiator),
+		: _sock(sock), _addr(addr), _connected(), _session(session), _role(cn_initiator), _pmodel(pmodel),
         _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel) {}
 
 	/*! Ctor. Acceptor.
@@ -354,8 +356,8 @@ public:
 	    \param pmodel process model */
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // server
 		const unsigned hb_interval, const ProcessModel pmodel)
-		: _sock(sock), _addr(addr), _connected(true), _session(session), _role(cn_acceptor), _hb_interval(hb_interval),
-		_hb_interval20pc(hb_interval + hb_interval / 5),
+		: _sock(sock), _addr(addr), _connected(true), _session(session), _role(cn_acceptor), _pmodel(pmodel),
+		_hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
 		  _reader(sock, session, pmodel), _writer(sock, session, pmodel) {}
 
 	/// Dtor.
@@ -364,6 +366,10 @@ public:
 	/*! Get the role for this connection.
 	    \return the role */
 	Role get_role() const { return _role; }
+
+	/*! Get the process model
+	  \return the process model */
+	ProcessModel get_pmodel() const { return _pmodel; }
 
 	/// Start the reader and writer threads.
 	void start();
@@ -488,6 +494,7 @@ public:
 	    \param sock connected socket
 	    \param addr sock address structure
 	    \param session session
+	    \param hb_interval heartbeat interval
 	    \param pmodel process model
 	    \param no_delay set or clear the tcp no delay flag on the socket */
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,

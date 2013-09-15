@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_FIELD_HPP_
 # define _FIX8_FIELD_HPP_
@@ -102,7 +102,7 @@ struct RealmBase
 /// The base field class (ABC) for all fields
 class BaseField
 {
-	unsigned short _fnum;
+	const unsigned short _fnum;
 
 protected:
 	const RealmBase *_rlm;
@@ -120,12 +120,12 @@ public:
 	  \return fix tag id (field num) */
 	unsigned short get_tag() const { return _fnum; }
 
-	/*! Print this field to the supplied stream.
+	/*! Print this field to the supplied stream. Used by the Fix8 printer.
 	  \param os stream to print to
 	  \return the stream */
 	virtual std::ostream& print(std::ostream& os) const = 0;
 
-	/*! Print this field to the supplied buffer.
+	/*! Print this field to the supplied buffer. Used for encoding.
 	  \param to buffer to print to
 	  \return number bytes encoded */
 	virtual size_t print(char *to) const = 0;
@@ -154,7 +154,7 @@ public:
 		return os.tellp() - where;
 	}
 
-	/*! Encode this field to the supplied stream.
+	/*! Encode this field to the supplied stream. ULL version.
 	  \param to buffer to encode to
 	  \return the number of bytes encoded */
 	size_t encode(char *to) const
@@ -682,11 +682,10 @@ template<const unsigned short field>
 class Field<UTCTimestamp, field> : public BaseField
 {
 	enum MillisecondIndicator { _sec_only = 17, _with_ms = 21 };
-	Poco::DateTime _value;
-	int _tzdiff;
+	Tickval _value;
 
 protected:
-	void format0(short data, char *to, int width) const
+	static void format0(int data, char *to, int width)
 	{
 		while(width-- > 0)
 		{
@@ -695,38 +694,50 @@ protected:
 		}
 	}
 
-	void parseDate(std::string::const_iterator &begin, size_t len , short &to) const
+	static size_t parseDate(const char *begin, size_t len, int &to)
 	{
+      const char *bsv(begin);
 		while(len-- > 0)
 			to = (to << 3) + (to << 1) + (*begin++ - '0');
+      return begin - bsv;
 	}
+
+	/*! Decode a DateTime string into ticks
+	  \param from input DateTime string
+	  \param len length of string
+	  \return ticks decoded */
+   static ticks datetimeparse(const char *from, size_t len);
 
 public:
 	/// The FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
-	Field () : BaseField(field), _tzdiff() {}
+	Field () : BaseField(field), _value(true) {}
 
 	/*! Copy Ctor.
 	  \param from field to copy */
-	Field (const Field& from) : BaseField(field), _value(from._value), _tzdiff(from._tzdiff) {}
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const Poco::DateTime& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val) {}
+	Field (const Tickval& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field)
-	{
-		if (from.size() == _sec_only) // 19981231-23:59:59
-			DateTimeParse(from, _value, _sec_only);
-		else if (from.size() == _with_ms) // 19981231-23:59:59.123
-			DateTimeParse(from, _value, _with_ms);
-	}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(datetimeparse(from.data(), from.size())) {}
+
+	/*! Construct from tm struct
+	  \param from string to construct field from
+	  \param rlm tm struct with broken out values */
+	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+
+	/*! Construct from string ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(datetimeparse(from, ::strlen(from))) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -736,7 +747,6 @@ public:
 		if (this != &that)
 		{
 			_value = that._value;
-			_tzdiff = that._tzdiff;
 		}
 		return *this;
 	}
@@ -745,21 +755,16 @@ public:
 	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
-
-	/*! Set field to the supplied value.
-	  \param from value to set
-	  \return the new value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
 
 	/*! Set field to the supplied value.
 	  \param from value to set */
-	void set(const Poco::DateTime& from) { _value = from; }
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
@@ -768,22 +773,23 @@ public:
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }
+	std::ostream& print(std::ostream& os) const
+   {
+      char buf[_with_ms + 1] = {};
+      print(buf);
+      return os << buf;
+   }
 
-	/*! Format Poco::DateTime into a string.
+   static time_t time_to_epoch (const tm& ltm, int utcdiff=0);
+
+	/*! Format Tickval into a string.
 		 With millisecond, the format string will be "YYYYMMDD-HH:MM:SS.MMM"
 		 Without millisecond, the format string will be "YYYYMMDD-HH:MM:SS"
-	  \param dateTime input Poco::DateTime object
+	  \param tickval input Tickval object
 	  \param to output buffer, should make sure there is enough space reserved
 	  \param ind indicating whether need millisecond or not
 	  \return length of formatted string */
-	size_t DateTimeFormat(const Poco::DateTime& dateTime, char *to, const MillisecondIndicator ind=_sec_only) const;
-
-	/*! Decode a DateTime string into a Poco::DateTime
-	  \param from input DateTime string
-	  \param dateTime output Poco::DateTime object
-	  \param ind indicating whether the string has millisecond or not */
-	void DateTimeParse(const std::string& from, Poco::DateTime& dateTime, const MillisecondIndicator ind=_sec_only) const;
+   size_t DateTimeFormat(const Tickval& tickval, char *to, const MillisecondIndicator ind) const;
 
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
@@ -792,47 +798,86 @@ public:
 };
 
 template<const unsigned short field>
-inline size_t Field<UTCTimestamp, field>::DateTimeFormat(const Poco::DateTime& dateTime, char *to, const MillisecondIndicator ind) const
+inline size_t Field<UTCTimestamp, field>::DateTimeFormat(const Tickval& tickval, char *to, const MillisecondIndicator ind) const
 {
-	format0(dateTime.year(), to, 4);
-	format0(dateTime.month(), to + 4, 2);
-	format0(dateTime.day(), to + 6, 2);
+   tm result;
+   const time_t secs(tickval.secs());
+   gmtime_r(&secs, &result);
+
+	format0(result.tm_year + 1900, to, 4);
+	format0(result.tm_mon + 1, to + 4, 2);
+	format0(result.tm_mday, to + 6, 2);
 	to[8] = '-';
 
-	format0(dateTime.hour(), to + 9, 2);
+	format0(result.tm_hour, to + 9, 2);
 	to[11] = ':';
 
-	format0(dateTime.minute(), to + 12, 2);
+	format0(result.tm_min, to + 12, 2);
 	to[14] = ':';
 
-	format0(dateTime.second(), to + 15, 2);
+	format0(result.tm_sec, to + 15, 2);
 
 	if(ind != _with_ms)
 		return _sec_only; //length of "YYYYMMDD-HH:MM:SS"
 
 	to[17] = '.';
-	format0(dateTime.millisecond(), to + 18, 3);
+	format0(tickval.msecs(), to + 18, 3);
 	return _with_ms; //length of "YYYYMMDD-HH:MM:SS.MMM"
 }
 
+/// Based on Ghulam M. Babar's "mktime slow? use custom function"
+/// see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
 template<const unsigned short field>
-inline void Field<UTCTimestamp, field>::DateTimeParse(const std::string& from, Poco::DateTime& dateTime, const MillisecondIndicator ind) const
+inline time_t Field<UTCTimestamp, field>::time_to_epoch (const tm& ltm, int utcdiff)
 {
-	std::string::const_iterator it(from.begin());
-	short year(0), month(0), day(0), hour(0), minute(0), second(0), millisecond(0);
+   static const int mon_days[] = {0,
+      31,
+      31 + 28,
+      31 + 28 + 31,
+      31 + 28 + 31 + 30,
+      31 + 28 + 31 + 30 + 31,
+      31 + 28 + 31 + 30 + 31 + 30,
+      31 + 28 + 31 + 30 + 31 + 30 + 31,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30 + 31
+   };
 
-	parseDate(it, 4, year);
-	parseDate(it, 2, month);
-	parseDate(it, 2, day);
-	parseDate(++it, 2, hour);
-	parseDate(++it, 2, minute);
-	parseDate(++it, 2, second);
+   const int tyears(ltm.tm_year - 70); // tm->tm_year is from 1900.
+   const int tdays(mon_days[ltm.tm_mon] + ltm.tm_mday - 1 + tyears * 365 + (tyears + 2) / 4);
+   return tdays * 86400 + (ltm.tm_hour + utcdiff) * 3600 + ltm.tm_min * 60 + ltm.tm_sec;
+}
 
-	if(ind == _with_ms)
-		parseDate(++it, 3, millisecond);
+template<const unsigned short field>
+inline ticks Field<UTCTimestamp, field>::datetimeparse(const char *ptr, size_t len)
+{
+   ticks result(Tickval::noticks);
+   int millisecond(0);
+   tm tms = {};
 
-	if (Poco::DateTime::isValid(year, month, day, hour, minute, second, millisecond))
-		dateTime.assign(year, month, day, hour, minute, second, millisecond);
+	ptr += parseDate(ptr, 4, tms.tm_year);
+	tms.tm_year -= 1900;
+	ptr += parseDate(ptr, 2, tms.tm_mon);
+	--tms.tm_mon;
+	ptr += parseDate(ptr, 2, tms.tm_mday);
+	ptr += parseDate(++ptr, 2, tms.tm_hour);
+	ptr += parseDate(++ptr, 2, tms.tm_min);
+	ptr += parseDate(++ptr, 2, tms.tm_sec);
+   switch(len)
+   {
+   case _with_ms: // 19981231-23:59:59.123
+      ptr += parseDate(++ptr, 3, millisecond);
+      result = millisecond * Tickval::million; // drop through
+   case _sec_only: // 19981231-23:59:59
+      result += time_to_epoch(tms) * Tickval::billion;
+      break;
+   default:
+      break;
+   }
+
+   return result;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -843,7 +888,7 @@ typedef EnumType<FieldTrait::ft_UTCTimeOnly> UTCTimeOnly;
 template<const unsigned short field>
 class Field<UTCTimeOnly, field> : public BaseField
 {
-	Poco::DateTime _value;
+	Tickval _value;
 
 public:
 	/// The FIX fieldID (tag number).
@@ -875,17 +920,16 @@ public:
 	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
 
-	/*! Get field value.
-	  \param from value to set
-	  \return original value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
@@ -910,7 +954,7 @@ typedef EnumType<FieldTrait::ft_UTCDateOnly> UTCDateOnly;
 template<const unsigned short field>
 class Field<UTCDateOnly, field> : public BaseField
 {
-	Poco::DateTime _value;
+	Tickval _value;
 
 public:
 	/// The FIX fieldID (tag number).
@@ -942,17 +986,16 @@ public:
 	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
 
-	/*! Get field value.
-	  \param from value to set
-	  \return original value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
@@ -977,7 +1020,7 @@ typedef EnumType<FieldTrait::ft_LocalMktDate> LocalMktDate;
 template<const unsigned short field>
 class Field<LocalMktDate, field> : public BaseField
 {
-	Poco::DateTime _value;
+	Tickval _value;
 
 public:
 	/// The FIX fieldID (tag number).
@@ -1009,17 +1052,16 @@ public:
 	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
 
-	/*! Get field value.
-	  \param from value to set
-	  \return original value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
@@ -1044,7 +1086,7 @@ typedef EnumType<FieldTrait::ft_TZTimeOnly> TZTimeOnly;
 template<const unsigned short field>
 class Field<TZTimeOnly, field> : public BaseField
 {
-	Poco::DateTime _value;
+	Tickval _value;
 
 public:
 	/// The FIX fieldID (tag number).
@@ -1076,16 +1118,16 @@ public:
 	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
-	/*! Get field value.
-	  \param from value to set
-	  \return original value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
+
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
@@ -1110,7 +1152,7 @@ typedef EnumType<FieldTrait::ft_TZTimestamp> TZTimestamp;
 template<const unsigned short field>
 class Field<TZTimestamp, field> : public BaseField
 {
-	Poco::DateTime _value;
+	Tickval _value;
 
 public:
 	/// The FIX fieldID (tag number).
@@ -1142,17 +1184,16 @@ public:
 	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
 
-	/*! Get field value.
-	  \param from value to set
-	  \return original value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */

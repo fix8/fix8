@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <sstream>
@@ -62,11 +62,6 @@ using namespace std;
 #if defined CODECTIMING
 codec_timings Message::_encode_timings, Message::_decode_timings;
 #endif
-
-//-------------------------------------------------------------------------------------------------
-namespace {
-	const string spacer(3, ' ');
-}
 
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtype)
@@ -105,33 +100,35 @@ unsigned MessageBase::extract_trailer(const f8String& from, f8String& chksum)
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned MessageBase::decode(const f8String& from, const unsigned offset)
+unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned ignore)
 {
-	unsigned s_offset(offset), result;
-	const unsigned fsize(from.size());
+	unsigned result;
+	const unsigned fsize(from.size() - ignore);
 	const char *dptr(from.data());
 	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
 
 	for (unsigned pos(_pos.size()); s_offset <= fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 	{
 		const unsigned tv(fast_atoi<unsigned>(tag));
-		const BaseEntry *be(_ctx.find_be(tv));
-		if (!be)
-			throw InvalidField(tv);
-		Presence::const_iterator itr(_fp.get_presence().end());
-		if (!_fp.has(tv, itr))
+		Presence::const_iterator itr(_fp.get_presence().find(tv));
+		if (itr == _fp.get_presence().end())
 			break;
 		s_offset += result;
-		if (_fp.get(tv, itr, FieldTrait::present))
+		if (itr->_field_traits.has(FieldTrait::ignore))
+			continue;
+		if (itr->_field_traits.has(FieldTrait::present))
 		{
-			if (!_fp.get(tv, itr, FieldTrait::automatic))
+			if (!itr->_field_traits.has(FieldTrait::automatic))
 				throw DuplicateField(tv);
 		}
 		else
 		{
+			const BaseEntry *be(_ctx.find_be(tv));
+			if (!be)
+				throw InvalidField(tv);
 			add_field(tv, itr, ++pos, be->_create(val, be->_rlm, -1), false);
 			if (_fp.is_group(tv, itr))
-				s_offset = decode_group(tv, from, s_offset);
+				s_offset = decode_group(tv, from, s_offset, ignore);
 		}
 	}
 
@@ -148,13 +145,13 @@ unsigned MessageBase::decode(const f8String& from, const unsigned offset)
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& from, const unsigned offset)
+unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& from, unsigned s_offset, unsigned ignore)
 {
-	unsigned s_offset(offset), result;
+	unsigned result;
 	GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
 		throw InvalidRepeatingGroup(fnum);
-	const unsigned fsize(from.size());
+	const unsigned fsize(from.size() - ignore);
 	const char *dptr(from.data());
 	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
 
@@ -182,7 +179,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 			grp->add_field(tv, itr, ++pos, be->_create(val, be->_rlm, -1), false);
 			grp->_fp.set(tv, itr, FieldTrait::present);	// is present
 			if (grp->_fp.is_group(tv, itr)) // nested group
-				s_offset = grp->decode_group(tv, from, s_offset);
+				s_offset = grp->decode_group(tv, from, s_offset, ignore);
 		}
 
 		const unsigned short missing(grp->_fp.find_missing());
@@ -202,52 +199,51 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::check_positions()
 {
-	return 0; // FIXME
+	return 0; // TODO
 }
 
 //-------------------------------------------------------------------------------------------------
 Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 {
-	Message *msg(0);
 	char mtype[MAX_MSGTYPE_FIELD_LEN] = {}, len[MAX_MSGTYPE_FIELD_LEN] = {};
-	if (extract_header(from, len, mtype))
-	{
-		const unsigned mlen(fast_atoi<unsigned>(len));
-		const BaseMsgEntry *bme(ctx._bme.find_ptr(mtype));
-		if (!bme)
-			throw InvalidMessage(mtype);
-		msg = bme->_create();
-#if defined CODECTIMING
-		IntervalTimer itm;
-#endif
-		msg->decode(from);
-#if defined CODECTIMING
-		_decode_timings._cpu_used += itm.Calculate().AsDouble();
-		++_decode_timings._msg_count;
-#endif
+	const size_t hlen(extract_header(from, len, mtype));
 
-		msg->_header->get_body_length()->set(mlen);
-		msg->_header->get_msg_type()->set(mtype);
-#if defined POPULATE_METADATA
-		msg->check_set_rlm(fitr->second);
-#endif
-
-		const char *pp(from.data() + from.size() - 7);
-		if (*pp != '1' || *(pp + 1) != '0') // 10=XXX^A
-			throw InvalidMessage(from);
-		if (!ctx.has_flag(F8MetaCntx::noverifychksum)) // permit chksum calculation to be skipped
-		{
-			const f8String chksum(pp + 3, 3);
-			msg->_trailer->get_check_sum()->set(chksum);
-			const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), mchkval(calc_chksum(from, 0, from.size() - 7));
-			if (chkval != mchkval)
-				throw BadCheckSum(mchkval);
-		}
-	}
-	else
+	if (!hlen)
 	{
 		//cerr << "Message::factory throwing" << endl;
 		throw InvalidMessage(from);
+	}
+
+	const unsigned mlen(fast_atoi<unsigned>(len));
+	const BaseMsgEntry *bme(ctx._bme.find_ptr(mtype));
+	if (!bme)
+		throw InvalidMessage(mtype);
+	Message *msg(bme->_create());
+#if defined CODECTIMING
+	IntervalTimer itm;
+#endif
+	msg->decode(from, hlen, 7); // skip already decoded mandatory 8, 9 & 35
+#if defined CODECTIMING
+	_decode_timings._cpu_used += itm.Calculate().AsDouble();
+	++_decode_timings._msg_count;
+#endif
+
+	msg->_header->get_body_length()->set(mlen);
+	msg->_header->get_msg_type()->set(mtype);
+#if defined POPULATE_METADATA
+	msg->check_set_rlm(fitr->second);
+#endif
+
+	const char *pp(from.data() + from.size() - 7);
+	if (*pp != '1' || *(pp + 1) != '0') // 10=XXX^A
+		throw InvalidMessage(from);
+	if (!ctx.has_flag(F8MetaCntx::noverifychksum)) // permit chksum calculation to be skipped
+	{
+		const f8String chksum(pp + 3, 3);
+		msg->_trailer->get_check_sum()->set(chksum);
+		const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), mchkval(calc_chksum(from, 0, from.size() - 7));
+		if (chkval != mchkval)
+			throw BadCheckSum(mchkval);
 	}
 
 	return msg;
@@ -429,9 +425,9 @@ size_t Message::encode(f8String& to) const
 void MessageBase::print(ostream& os, int depth) const
 {
 	const string dspacer((depth + 1) * 3, ' ');
-	const BaseMsgEntry *tbme(_ctx._bme.find_ptr(_msgType.c_str()));
-	if (tbme)
-		os << tbme->_name << " (\"" << _msgType << "\")" << endl;
+   const BaseMsgEntry *tbme(_ctx._bme.find_ptr(_msgType.c_str()));
+   if (tbme)
+      os << string(depth * 3, ' ') << tbme->_name << " (\"" << _msgType << "\")" << endl;
 	for (Positions::const_iterator itr(_pos.begin()); itr != _pos.end(); ++itr)
 	{
 		const BaseEntry *tbe(_ctx.find_be(itr->second->_fnum));

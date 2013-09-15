@@ -138,6 +138,7 @@ You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to b
 
 	% tar xvzf fix8-0.9.4.tar.gz
 	% cd 0.9.4
+	% ./bootstrap
 	% ./configure
 	% make
 	% make install
@@ -148,7 +149,7 @@ If you have built the test cases, you can also run them as follows:
 
 ## Building on Windows
 
-Please see [This document](https://fix8engine.atlassian.net/wiki/display/FX/Building) for detailed instructions on building for Windows.
+Please see [this document](https://fix8engine.atlassian.net/wiki/display/FX/Building) for detailed instructions on building for Windows.
 
 ## License
 

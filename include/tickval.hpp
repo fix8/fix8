@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_TICKVAL_HPP_
 # define _FIX8_TICKVAL_HPP_
@@ -126,24 +126,35 @@ private:
 // #if defined __WORDSIZE && (__WORDSIZE == 32) && (MPMC_SYSTEM == MPMC_FF)
 // 	ticks _value;
 // #else
-	f8_atomic<ticks> _value;
+	//f8_atomic<ticks> _value;
+	ticks _value;
 // #endif
 
 public:
 	/*! Ctor.
 	  \param settonow if true, construct with current time */
-	Tickval(bool settonow=false) { if (settonow) now(); else _value = noticks; }
+	Tickval(bool settonow=false) : _value(settonow ? _cvt(get_timespec()) : noticks) {}
 
 	/*! Copy Ctor. */
-	Tickval(const Tickval& from) { _value = from._value; }
+	Tickval(const Tickval& from) : _value(from._value) {}
 
 	/*! Ctor.
 	  \param from construct from raw ticks value (nanoseconds) */
-	explicit Tickval(const ticks& from) { _value = from; }
+	explicit Tickval(const ticks& from) : _value(from) {}
+
+	/*! Ctor.
+	  \param secs seconds
+	  \param nsecs nanoseconds */
+	Tickval(const time_t secs, const long nsecs)
+      : _value(billion * static_cast<ticks>(secs) + static_cast<ticks>(nsecs)) {}
 
 	/*! Ctor.
 	  \param from construct from timespec object */
-	explicit Tickval(const timespec& from) { _value = _cvt(from); }
+	explicit Tickval(const timespec& from) : _value(_cvt(from)) {}
+
+	/*! Ctor.
+	  \param from construct from time_t value */
+	explicit Tickval(const time_t from) : _value(static_cast<ticks>(from) * billion) {}
 
 	/*! Assignment operator. */
 	Tickval& operator=(const Tickval& that)
@@ -172,15 +183,15 @@ public:
 
 	/*! Get the current number of elapsed seconds
 	  \return value in seconds */
-	unsigned secs() const { return static_cast<unsigned>(_value / billion); }
+	time_t secs() const { return static_cast<time_t>(_value / billion); }
 
 	/*! Get the current number of elapsed milliseconds (excluding secs)
 	  \return value in milliseconds */
-	unsigned msecs() const { return static_cast<unsigned>(_value % thousand); }
+	unsigned msecs() const { return static_cast<unsigned>((_value % billion) / million); }
 
 	/*! Get the current number of elapsed microseconds (excluding secs)
 	  \return value in microseconds */
-	unsigned usecs() const { return static_cast<unsigned>(_value % million); }
+	unsigned usecs() const { return static_cast<unsigned>((_value % billion) / thousand); }
 
 	/*! Get the current number of elapsed nanoseconds (excluding secs)
 	  \return value in nanoseconds */
@@ -189,6 +200,15 @@ public:
 	/*! Get the current tickval as a double.
 	  \return value as a double */
 	double todouble() const { return static_cast<double>(_value) / billion; }
+
+	/*! Generate a timespec object
+	  \return timespec */
+	static timespec get_timespec()
+	{
+		timespec ts;
+		clock_gettime(CLOCK_REALTIME, &ts);
+		return ts;
+	}
 
 	/*! Generate a Tickval object, constructed with the current time.
 	  \return Tickval */
@@ -207,6 +227,12 @@ public:
 		clock_gettime(CLOCK_REALTIME, &ts);
 		return to = ts;
 	}
+
+	/*! Set from secs/nsecs
+	  \param secs seconds
+	  \param nsecs nanoseconds */
+	void set(const time_t secs, const long nsecs)
+      { _value = billion * static_cast<ticks>(secs) + static_cast<ticks>(nsecs); }
 
 	/*! Not operator
 	  \return true if no ticks (0) */

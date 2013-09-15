@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 
 //-----------------------------------------------------------------------------------------
 /** \file hftest.cpp
@@ -133,7 +133,7 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:rb:p:u:");
+const string GETARGLIST("hl:svqc:R:S:rb:p:u:o");
 bool term_received(false);
 unsigned batch_size(1000), preload_count(0), update_count(5000);
 
@@ -184,7 +184,7 @@ void sig_handler(int sig)
 int main(int argc, char **argv)
 {
 	int val;
-	bool server(false), reliable(false);
+	bool server(false), once(false), reliable(false);
 	string clcf;
 	unsigned next_send(0), next_receive(0);
 
@@ -193,6 +193,7 @@ int main(int argc, char **argv)
 	{
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },
+		{ "once",	   0,	0,	'o' },
 		{ "log",			1,	0,	'l' },
 		{ "config",		1,	0,	'c' },
 		{ "server",		0,	0,	's' },
@@ -225,6 +226,7 @@ int main(int argc, char **argv)
 		case 'p': preload_count = get_value<unsigned>(optarg); break;
 		case 'u': update_count = get_value<unsigned>(optarg); break;
 		case 's': server = true; break;
+		case 'o': once = true; break;
 		case 'S': next_send = get_value<unsigned>(optarg); break;
 		case 'R': next_receive = get_value<unsigned>(optarg); break;
 		case 'q': quiet = false; break;
@@ -274,6 +276,8 @@ int main(int argc, char **argv)
 #if defined CODECTIMING
 				Message::report_codec_timings("server");
 #endif
+            if (once)
+               break;
 			}
 		}
 		else
@@ -563,6 +567,7 @@ void print_usage()
 	um.add('v', "version", "print version then exit");
 	um.add('l', "log", "global log filename");
 	um.add('c', "config", "xml config (default: hf_client.xml or hf_server.xml)");
+	um.add('o', "once", "for server, allow one client session then exit");
 	um.add('q', "quiet", "do not print fix output (default yes)");
 	um.add('b', "batch", "if using batch send, number of messages in each batch (default 1000)");
 	um.add('p', "preload", "if batching or preloading, default number of messages to create");

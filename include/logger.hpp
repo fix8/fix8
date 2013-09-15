@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_LOGGER_HPP_
 #define _FIX8_LOGGER_HPP_
@@ -88,8 +88,8 @@ public:
 		: std::ostream(&buf_), fptr_(fptr), buf_(fileno(fptr)) {}
 
 	/// Dtor.
-   virtual ~fptrostream () 
-   { 
+   virtual ~fptrostream ()
+   {
 #ifdef _MSC_VER
 	   _pclose(fptr_);
 #else

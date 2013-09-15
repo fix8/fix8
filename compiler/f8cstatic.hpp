@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
@@ -166,12 +166,13 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "#include <f8utils.hpp>\n"
 "#include <f8types.hpp>\n"
 "#include <traits.hpp>\n"
+"#include <tickval.hpp>\n"
 "#include <field.hpp>\n"
 "#include <message.hpp>"),
 	CSMap::TypePair(cs_divider,
 "//-------------------------------------------------------------------------------------------------"),
 CSMap::TypePair(cs_copyright,
-"#if 0\n"
+"/*\n"
 "\n"
 "Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.\n"
 "\n"
@@ -216,7 +217,7 @@ CSMap::TypePair(cs_copyright2,
 "THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH\n"
 "HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.\n"
 "\n"
-"#endif\n"),
+"*/\n"),
 	CSMap::TypePair(cs_copyright_short, "Copyright (c) 2010-"),
 	CSMap::TypePair(cs_copyright_short2, ", David L. Dight <fix@fix8.org>, All rights reserved."),
 	CSMap::TypePair(cs_header_preamble,

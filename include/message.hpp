@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
@@ -32,7 +32,7 @@ NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINE
 THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-#endif
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_MESSAGE_HPP_
 # define _FIX8_MESSAGE_HPP_
@@ -140,7 +140,7 @@ struct BaseMsgEntry
 	const char *_name, *_comment;
 
 	bool operator==(const BaseMsgEntry& what) const
-		{ return _create == what._create && _name == what._name && _comment == what._comment; }
+		{ return _create == what._create && ::strcmp(_name, what._name) == 0; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -204,7 +204,7 @@ struct F8MetaCntx
 	}
 
 	/// Dtor.
-	~F8MetaCntx() { delete[] _flu; }
+	~F8MetaCntx() { delete[] _flu; _flu = 0; }
 
 	/*! Get the field BaseEntry object for this filed number. Will use fast field index lookup.
 	  \param fnum field to get
@@ -294,15 +294,17 @@ public:
 	/*! Decode from string.
 	    \param from source string
 	    \param offset in bytes to decode from
+	    \param ignore bytes to ignore counting back from end of message
 	    \return number of bytes consumed */
-	unsigned decode(const f8String& from, const unsigned offset);
+	unsigned decode(const f8String& from, unsigned offset, unsigned ignore=0);
 
 	/*! Decode repeating group from string.
 	    \param fnum repeating group fix field num (no...)
 	    \param from source string
 	    \param offset in bytes to decode from
+	    \param ignore bytes to ignore counting back from end of message
 	    \return number of bytes consumed */
-	unsigned decode_group(const unsigned short fnum, const f8String& from, const unsigned offset);
+	unsigned decode_group(const unsigned short fnum, const f8String& from, unsigned offset, unsigned ignore=0);
 
 	/*! Encode message to stream.
 	    \param to stream to encode to
@@ -419,6 +421,24 @@ public:
 	void set(const unsigned short field, FieldTrait::TraitTypes type=FieldTrait::present) { _fp.set(field, type); }
 
 	/*! Add fix field to this message.
+	    \tparam T field type
+	    \param what pointer to field
+		 \return true on success; throws InvalidField if not valid */
+   template<typename T>
+	bool add_field(T *what)
+	{
+		Presence::const_iterator itr(_fp.get_presence().end());
+		if (_fp.has(T::get_field_id(), itr))
+		{
+			add_field(T::get_field_id(), itr, _fp.getPos(T::get_field_id(), itr), what, true);
+			return true;
+		}
+		throw InvalidField(T::get_field_id());
+		return false;
+	}
+
+	/*! Add fix field to this message.
+	    \tparam T field type
 	    \param what pointer to field
 		 \return true on success; throws InvalidField if not valid */
 	bool add_field(BaseField *what)
@@ -435,14 +455,18 @@ public:
 	}
 
 	/*! Add fix field to this message.
+	    \tparam T field type
 	    \param what pointer to field
 	    \return true on success; throws InvalidField if not valid */
-	bool operator+=(BaseField *what) { return add_field(what); }
+   template<typename T>
+	bool operator+=(T *what) { return add_field(what); }
 
 	/*! Add fix field to this message.
+	    \tparam T field type
 	    \param what pointer to field
 	    \return reference to MessageBase on success */
-	MessageBase& operator<<(BaseField *what) { add_field(what); return *this; }
+   template<typename T>
+	MessageBase& operator<<(T *what) { add_field(what); return *this; }
 
 	/*! Populate supplied field with value from message.
 	    \tparam T type of field to get
@@ -451,7 +475,7 @@ public:
 	template<typename T>
 	bool get(T& to) const
 	{
-		Fields::const_iterator fitr(_fields.find(to._fnum));
+		Fields::const_iterator fitr(_fields.find(T::get_field_id()));
 		if (fitr == _fields.end())
 			return false;
 		to.set(fitr->second->from<T>().get());
@@ -556,8 +580,10 @@ public:
 	}
 
 	/*! Add a repeating group at the end of a message group. Assume key is not < last.
+	    \tparam T type of grop being appended
 	    \param what pointer to group to add */
-	void append_group(GroupBase *what) { _groups.insert(_groups.end(), Groups::value_type(what->_fnum, what)); }
+	template<typename T>
+	void append_group(T *what) { _groups.insert(_groups.end(), Groups::value_type(T::_fnum, what)); }
 
 	/*! Add a repeating group to a message.
 	    \param what pointer to group to add */
@@ -778,9 +804,11 @@ public:
 
 	/*! Decode from string.
 	    \param from source string
+	    \param offset in bytes to decode from
+	    \param ignore bytes to ignore counting back from end of message
 	    \return number of bytes consumed */
-	unsigned decode(const f8String& from)
-		{ return _trailer->decode(from, MessageBase::decode(from, _header->decode(from, 0))); }
+	unsigned decode(const f8String& from, unsigned offset=0, unsigned ignore=0)
+		{ return _trailer->decode(from, MessageBase::decode(from, _header->decode(from, offset)), ignore); }
 
 	/*! Encode message to stream.
 	    \param to stream to encode to
@@ -871,7 +899,7 @@ public:
 
 	/*! Set the custom sequence number. Used to override and suppress automatic seqnum assignment.
 	    \param seqnum the outbound sequence number to use for this message. */
-	virtual void set_custom_seqnum(const unsigned seqnum) { _custom_seqnum = seqnum; }
+	virtual void set_custom_seqnum(unsigned seqnum) { _custom_seqnum = seqnum; }
 
 	/*! Get the custom sequence number.
 	    \return seqnum the outbound sequence number to use for this message. */
@@ -879,7 +907,7 @@ public:
 
 	/*! Set the no increment flag.
 	    \param flag true means don't increment the seqnum after sending */
-	virtual void set_no_increment(const bool flag=true) { _no_increment = flag; }
+	virtual void set_no_increment(bool flag=true) { _no_increment = flag; }
 
 	/*! Get the no increment flag.
 	    \return value of _no_increment flag */
