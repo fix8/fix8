@@ -958,14 +958,6 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 // =============================== Message class instantiation ==============================
 
-	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
-	{
-		osc_cpp << "Message *Create_" << mitr->second._name << "() { return ";
-		if (mitr->second._name == "trailer" || mitr->second._name == "header")
-			osc_cpp << "reinterpret_cast<Message *>(new " << mitr->second._name << "); }" << endl;
-		else
-			osc_cpp << "new " << mitr->second._name << "; }" << endl;
-	}
 	osc_cpp << endl;
 	osc_cpp << "const " << ctxt._clname << "_BaseMsgEntry bme;" << endl;
 	osc_cpp << "const " << ctxt._clname << "_BaseEntry be;" << endl;
@@ -986,7 +978,11 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	{
 		if (mitr != mspec.begin())
 			osc_cpp << ',' << endl;
-		osc_cpp << spacer << "{ \"" << mitr->first << "\", { &" << ctxt._fixns << "::Create_" << mitr->second._name;
+		osc_cpp << spacer << "{ \"" << mitr->first << "\", { ";
+		if (mitr->second._name == "trailer" || mitr->second._name == "header")
+         osc_cpp << "MInstMsg<" << ctxt._fixns << "::" << mitr->second._name << ">()";
+      else
+         osc_cpp << "MInst<" << ctxt._fixns << "::" << mitr->second._name << ">()";
 		osc_cpp << ", \"" << mitr->second._name << '"';
 		if (!mitr->second._comment.empty())
 			osc_cpp << ',' << endl << spacer << spacer << '"' << mitr->second._comment << "\" }";
@@ -1006,7 +1002,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		<< ctxt._clname << "_BaseMsgEntry::Pair));" << endl;
 #endif
 	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::NotFoundType "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = {0, 0};" << endl;
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = { _minst() };" << endl;
 	osc_cpp << "namespace " << ctxt._fixns << " { F8MetaCntx ctx(" << ctxt._version << ", bme, be, cn, \"" << ctxt._beginstr << "\"); }" << endl;
 
 // ==================================== Message router ==================================
@@ -1168,36 +1164,6 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	// generate field instantiators
 	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
-	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
-	{
-		if (!gen_fields && !fitr->second._used)
-			continue;
-		ost_cpp << "BaseField *Create_" << fitr->second._name << "(const f8String& from, const RealmBase *db, const int rv)";
-		ost_cpp << " // " << fitr->second._name << endl;
-		if (fitr->second._dvals && !norealm) // generate code to create a Field using a value taken from an index into a Realm
-		{
-			ost_cpp << spacer << "{ return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set ? new "
-				<< fitr->second._name << "(from, db) : new " << fitr->second._name << "(db->get_rlm_val<";
-			if (FieldTrait::is_int(fitr->second._ftype))
-				ost_cpp << "int";
-			else if (FieldTrait::is_char(fitr->second._ftype))
-				ost_cpp << "char";
-			else if (FieldTrait::is_float(fitr->second._ftype))
-				ost_cpp << "double";
-			else if (FieldTrait::is_string(fitr->second._ftype))
-				ost_cpp << "f8String";
-			else
-			{
-				ost_cpp << "unknown";
-				cerr << shortName << ": error: unknown FieldTrait::type in realm " << fitr->second._name << endl;
-				++glob_errors;
-			}
-			ost_cpp << ">(rv), db); }" << endl;
-		}
-		else
-			ost_cpp << spacer << "{ return new " << fitr->second._name << "(from, db); }" << endl;
-	}
-
 	ost_cpp << endl << _csMap.find_ref(cs_end_anon_namespace) << endl;
 	ost_cpp << "} // namespace " << ctxt._fixns << endl;
 
@@ -1213,7 +1179,29 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			continue;
 		if (fitr != fspec.begin())
 			ost_cpp << ',' << endl;
-		ost_cpp << spacer << "{ " << fitr->first << ", { &" << ctxt._fixns << "::Create_" << fitr->second._name << ", ";
+		ost_cpp << spacer << "{ " << fitr->first << ", { ";
+		if (fitr->second._dvals && !norealm) // generate code to create a Field using a value taken from an index into a Realm
+		{
+			ost_cpp << "RealmInst<" << ctxt._fixns << "::" << fitr->second._name << ", ";
+			if (FieldTrait::is_int(fitr->second._ftype))
+				ost_cpp << "int";
+			else if (FieldTrait::is_char(fitr->second._ftype))
+				ost_cpp << "char";
+			else if (FieldTrait::is_float(fitr->second._ftype))
+				ost_cpp << "double";
+			else if (FieldTrait::is_string(fitr->second._ftype))
+				ost_cpp << "f8String";
+			else
+			{
+				ost_cpp << "unknown";
+				cerr << shortName << ": error: unknown FieldTrait::type in realm " << fitr->second._name << endl;
+				++glob_errors;
+			}
+      }
+      else
+			ost_cpp << "Inst<" << ctxt._fixns << "::" << fitr->second._name;
+      ost_cpp << ">(), ";
+
 		if (fitr->second._dvals)
 			ost_cpp << "&" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
 		else
@@ -1236,7 +1224,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair));" << endl;
 #endif
 	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::NotFoundType "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_noval = {0, 0};" << endl;
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_noval = { _inst() };" << endl;
 
 	// terminate files
 	ost_hpp << endl << "} // namespace " << ctxt._fixns << endl;

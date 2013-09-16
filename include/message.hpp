@@ -134,13 +134,27 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 /// Structure for framework generated message creation table
+struct _minst
+{
+   virtual Message *operator()() const { return 0; }
+};
+
+template<typename T>
+struct MInst : _minst
+{
+   Message *operator()() const { return new T; }
+};
+
+template<typename T>
+struct MInstMsg : _minst
+{
+   Message *operator()() const { return reinterpret_cast<Message *>(new T); }
+};
+
 struct BaseMsgEntry
 {
-	Message *(*_create)();
+   const _minst& _create;
 	const char *_name, *_comment;
-
-	bool operator==(const BaseMsgEntry& what) const
-		{ return _create == what._create && ::strcmp(_name, what._name) == 0; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -163,8 +177,8 @@ struct F8MetaCntx
 	const unsigned _flu_sz;
 	/// Hash array for field lookup (built by ctor)
 	const BaseEntry **_flu;
-	/// Pointers to the header and trailer create functions
-	Message *(*_mk_hdr)(), *(*_mk_trl)();
+	/// References to the header and trailer create functions
+	const _minst &_mk_hdr, &_mk_trl;
 	/// Fix header beginstring
 	const f8String _beginStr;
 	/// Preamble length
@@ -195,7 +209,7 @@ struct F8MetaCntx
 	F8MetaCntx(const unsigned version, const MsgTable& bme, const FieldTable& be, const char **cn, const f8String& bg)
 		: _version(version), _bme(bme), _be(be), _cn(cn),
 		_flu_sz(_be.at(_be.size() - 1)->_key + 1), _flu(new const BaseEntry *[_flu_sz]),
-		_mk_hdr(_bme.find_ptr("header")->_create), _mk_trl(_bme.find_ptr("trailer")->_create),
+		_mk_hdr(_bme.find_ref("header")._create), _mk_trl(_bme.find_ref("trailer")._create),
 		_beginStr(bg), _preamble_sz(2 + _beginStr.size() + 1 + 3)
 	{
 		std::fill(_flu, _flu + _flu_sz, static_cast<BaseEntry *>(0));

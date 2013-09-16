@@ -1,4 +1,4 @@
-* Mon Sep 16 2013 David L. Dight <fix@fix8.org> 0.9.5
+* Mon Sep 17 2013 David L. Dight <fix@fix8.org> 0.9.5
 - Fixed Jira tickets FX-78, FX-79, FX-80, FX-81, FX-82, FX-83, FX-84, FX-85, FX-86, FX-87
 - Fixed SendingTime and TransactTime not being output by Fix8 printer
 - Added compiler option to suppress realm use during field construction
@@ -15,6 +15,7 @@
 - Improved fix printer formatting, removed incorrect group metadata
 - Added rdtsc option for codec timing
 - Added set_scheduler and set_affinity support
+- Replaced msg/field instantiators with templates
 
 * Sun Aug 25 2013 David L. Dight <fix@fix8.org> 0.9.4
 - Merged in Richard Bourne's Windows port.

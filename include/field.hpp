@@ -1508,22 +1508,34 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 /// Field metadata structure
+struct _inst
+{
+   virtual BaseField *operator()(const f8String&, const RealmBase *, const int) const { return 0; }
+};
+
+template<typename T>
+struct Inst : _inst
+{
+   BaseField *operator()(const f8String& from, const RealmBase *db, const int) const
+      { return new T(from, db); }
+};
+
+template<typename T, typename R>
+struct RealmInst : _inst
+{
+   BaseField *operator()(const f8String& from, const RealmBase *db, const int rv) const
+   {
+      return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set
+         ? new T(from, db) : new T(db->get_rlm_val<R>(rv), db);
+   }
+};
+
 struct BaseEntry
 {
-	BaseField *(*_create)(const f8String& str, const RealmBase* rlm, const int rv);
+   const _inst& _create;
 	const RealmBase *_rlm;
 	const char *_name, *_comment;
 };
-
-/*! Construct a BaseEntry object.
-  \param be BaseEntry object (target)
-  \param create pointer to create function
-  \param rlm pointer to the realmbase for this field (if available)
-  \param name Field name
-  \param comment Field comments
-  \return BaseEntry object */
-BaseEntry *BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String&, const RealmBase*, const int),
-	const RealmBase *rlm, const char *name, const char *comment);
 
 //-------------------------------------------------------------------------------------------------
 // Common (administrative) msgtypes
