@@ -226,6 +226,12 @@ public:
 	bool get_ignore_logon_sequence_check_flag(const XmlElement *from)
 		{ return from && from->FindAttr("ignore_logon_sequence_check", false); }
 
+	/*! Extract the get_no_chksum_flag flag from a session entity.
+	  \param from xml entity to search
+	  \return true if get_no_chksum_flag flag was passed and was true */
+	bool get_no_chksum_flag(const XmlElement *from)
+		{ return from && from->FindAttr("no_chksum", false); }
+
 	/*! Extract the reset_sequence_number flag from a session entity.
 	  \param from xml entity to search
 	  \return true if reset_sequence_number flag was passed and was true */

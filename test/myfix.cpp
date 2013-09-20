@@ -575,8 +575,8 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	    << new TEX::ExecType(TEX::ExecType_NEW)
 	    << new TEX::OrdStatus(TEX::OrdStatus_NEW)
 	    << new TEX::LeavesQty(qty())
-	    << new TEX::CumQty(0)
-	    << new TEX::AvgPx(0)
+	    << new TEX::CumQty(0.)
+	    << new TEX::AvgPx(0.)
 	    << new TEX::LastCapacity('5')
 	    << new TEX::ReportToExch('Y')
 	    << new TEX::ExecID(oistr.str());

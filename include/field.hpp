@@ -218,6 +218,11 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atoi<int>(from.c_str())) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atoi<int>(from)) {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -292,8 +297,8 @@ public:
 	/* \param from field to copy */
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 
-	/*! Construct from string ctor.
-	  \param from string to construct field from
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
 
@@ -482,6 +487,11 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(2) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from)), _precision(2) {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -569,6 +579,11 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from[0]) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(*from) {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -644,6 +659,11 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
+
 	/// Dtor.
 	~Field() {}
 };
@@ -668,6 +688,11 @@ public:
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
 
 	/// Dtor.
 	~Field() {}
@@ -706,7 +731,7 @@ protected:
 	  \param from input DateTime string
 	  \param len length of string
 	  \return ticks decoded */
-   static ticks datetimeparse(const char *from, size_t len);
+   static Tickval::ticks datetimeparse(const char *from, size_t len);
 
 public:
 	/// The FIX fieldID (tag number).
@@ -729,15 +754,15 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(datetimeparse(from.data(), from.size())) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(datetimeparse(from, ::strlen(from))) {}
+
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
 	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
-
-	/*! Construct from string ctor.
-	  \param from char * to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(datetimeparse(from, ::strlen(from))) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -851,9 +876,9 @@ inline time_t Field<UTCTimestamp, field>::time_to_epoch (const tm& ltm, int utcd
 }
 
 template<const unsigned short field>
-inline ticks Field<UTCTimestamp, field>::datetimeparse(const char *ptr, size_t len)
+inline Tickval::ticks Field<UTCTimestamp, field>::datetimeparse(const char *ptr, size_t len)
 {
-   ticks result(Tickval::noticks);
+	Tickval::ticks result(Tickval::noticks);
    int millisecond(0);
    tm tms = {};
 
@@ -905,6 +930,11 @@ public:
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -972,6 +1002,11 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1037,6 +1072,11 @@ public:
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1104,6 +1144,11 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1170,6 +1215,11 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1225,7 +1275,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
+	Field (const unsigned val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1234,7 +1284,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from.c_str(), rlm) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
 	~Field() {}
@@ -1266,6 +1321,11 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+
 	/// Dtor.
 	~Field() {}
 };
@@ -1295,6 +1355,11 @@ public:
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
 	~Field() {}
@@ -1326,6 +1391,11 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+
 	/// Dtor.
 	~Field() {}
 };
@@ -1355,6 +1425,11 @@ public:
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
 	~Field() {}
@@ -1394,6 +1469,11 @@ public:
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(toupper(from[0]) == 'Y') {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(toupper(*from) == 'Y') {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1472,7 +1552,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<double, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<double, field>(from.c_str(), rlm) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<double, field>(from, rlm) {}
 
 	/// Dtor.
 	~Field() {}
@@ -1502,37 +1587,56 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm) : Field<f8String, field>(from, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm) : Field<f8String, field>(from, rlm) {}
+
 	/// Dtor.
 	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Field metadata structure
-struct _inst
+/// Field metadata structures
+class Inst
 {
-   virtual BaseField *operator()(const f8String&, const RealmBase *, const int) const { return 0; }
+   template<typename T>
+	struct _gen
+	{
+		static BaseField *_make(const char *from, const RealmBase *db, const int)
+			{ return new T(from, db); }
+	};
+
+   template<typename T, typename R>
+	struct _gen_realm
+	{
+		static BaseField *_make_realm(const char *from, const RealmBase *db, const int rv)
+		{
+			return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set
+				? new T(from, db) : new T(db->get_rlm_val<R>(rv), db);
+		}
+	};
+
+public:
+	BaseField *(&_do)(const char *from, const RealmBase *db, const int);
+
+   template<typename T>
+   Inst(Type2Type<T>) : _do(_gen<T>::_make) {}
+
+   template<typename T, typename R>
+   Inst(Type2Types<T, R>) : _do(_gen_realm<T, R>::_make_realm) {}
 };
 
-template<typename T>
-struct Inst : _inst
+template<>
+struct Inst::_gen<void *>
 {
-   BaseField *operator()(const f8String& from, const RealmBase *db, const int) const
-      { return new T(from, db); }
-};
-
-template<typename T, typename R>
-struct RealmInst : _inst
-{
-   BaseField *operator()(const f8String& from, const RealmBase *db, const int rv) const
-   {
-      return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set
-         ? new T(from, db) : new T(db->get_rlm_val<R>(rv), db);
-   }
+	static BaseField *_make(const char *from, const RealmBase *db, const int)
+		{ return 0; }
 };
 
 struct BaseEntry
 {
-   const _inst& _create;
+   const Inst& _create;
 	const RealmBase *_rlm;
 	const char *_name, *_comment;
 };

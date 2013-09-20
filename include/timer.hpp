@@ -216,11 +216,11 @@ bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWait)
 //---------------------------------------------------------------------------------------------------
 #if defined __x86_64__ && (defined(__linux__) || defined(__FreeBSD__) || defined(__APPLE__))
 #define HAVE_RDTSC
-inline ticks rdtsc()
+inline Tickval::ticks rdtsc()
 {
     uint32_t high, low;
     __asm__ __volatile__("rdtsc" : "=a" (low), "=d" (high));
-    return (static_cast<ticks>(high) << 32) + static_cast<ticks>(low);
+    return (static_cast<Tickval::ticks>(high) << 32) + static_cast<Tickval::ticks>(low);
 }
 #endif
 
@@ -229,7 +229,7 @@ inline ticks rdtsc()
 class IntervalTimer
 {
 #if defined USE_RDTSC && defined HAVE_RDTSC
-   ticks startTime_, delta_;
+	Tickval::ticks startTime_, delta_;
 #else
    Tickval startTime_, delta_;
 #endif
@@ -250,7 +250,7 @@ public:
    const IntervalTimer& Calculate()
    {
 #if defined USE_RDTSC && defined HAVE_RDTSC
-      ticks now(rdtsc());
+		Tickval::ticks now(rdtsc());
 #else
       Tickval now(true);
 #endif
@@ -271,7 +271,7 @@ public:
    double Reset()
    {
 #if defined USE_RDTSC && defined HAVE_RDTSC
-      const ticks curr(delta_);
+      const Tickval::ticks curr(delta_);
 		startTime_ = rdtsc();
 #else
       const double curr(AsDouble());

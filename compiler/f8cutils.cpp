@@ -410,8 +410,20 @@ void generate_preamble(ostream& to, const string& fname, bool donotedit)
 	}
 	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
 	to << _csMap.find_ref(cs_divider) << endl;
+	to << "#include <f8config.h>" << endl;
+	to << "#if MAGIC_NUM > " << MAGIC_NUM << 'L' << endl;
+	to << "#error " << fname << " version (" << PACKAGE_VERSION << ") is out of date. Please regenerate with f8c." << endl;
+	to << "#endif" << endl;
+	to << _csMap.find_ref(cs_divider) << endl;
 	to << "// " << fname << endl;
 	to << _csMap.find_ref(cs_divider) << endl;
+}
+
+inline void decode_reactor_version(const uint32_t from, uint32_t& majv, uint32_t& minv, uint32_t& patv)
+{
+	   majv = from >> 24 & 0xff;
+		   minv = from >> 12 & 0xfff;
+			   patv = from & 0xfff;
 }
 
 //-------------------------------------------------------------------------------------------------

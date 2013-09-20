@@ -27,9 +27,6 @@
     <ClCompile Include="..\runtime\f8utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\runtime\field.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\runtime\filepersist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

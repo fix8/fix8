@@ -50,17 +50,16 @@ AC_CONFIG_MACRO_DIR([m4])
 # generate major_version
 VERSION_DASHED=`[echo $VERSION | tr . -]`
 MAJOR_VERSION=`[echo $VERSION | sed 's/^\([0-9]*\.[0-9]*\)\..*/\1/']`
+echo "checking version... $VERSION"
 
 MAJOR_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$1}']`
 AC_DEFINE_UNQUOTED([MAJOR_VERSION_NUM], [$MAJOR_VERSION_NUM], [Major version number])
 MINOR_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$2}']`
 AC_DEFINE_UNQUOTED([MINOR_VERSION_NUM], [$MINOR_VERSION_NUM], [Minor version number])
-PATCH_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$4}']`
+PATCH_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$3}']`
 AC_DEFINE_UNQUOTED([PATCH_VERSION_NUM], [$PATCH_VERSION_NUM], [Patch number])
-AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 29 | MINOR_VERSION_NUM << 23 | PATCH_VERSION_NUM)], [Encoded Version])
+AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)], [Encoded Version])
 AC_DEFINE_UNQUOTED([CONFIGURE_OPTIONS], ["$ac_configure_args"], [configure options])
-
-echo "version is $VERSION"
 
 BRAND_SUMMARY='Fix8 Open Source FIX Framework'
 BRAND_DESCRIPTION='Modern fast FIX Framework'
@@ -102,7 +101,6 @@ AC_FUNC_MEMCMP
 AC_FUNC_MKTIME
 AC_TYPE_SIGNAL
 AC_FUNC_ALLOCA
-AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
 AC_FUNC_FORK
 AC_HEADER_STDC
@@ -148,9 +146,8 @@ esac])
 AM_CONDITIONAL([USEDOXYGEN],
 	[test -n "$DOXYGEN" && test $oktodox = yes])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
 
-AC_CHECK_FUNCS([scandir getopt_long sysconf popen waitpid alarm \
-	getcwd gettimeofday localtime_r pow regcomp socket strcasecmp strchr strdup strerror \
-	strncasecmp strspn strtol strtoul random srandom
+AC_CHECK_FUNCS([getopt_long sysconf popen getcwd gettimeofday localtime_r regcomp socket strcasecmp \
+		strerror strtol strtoul random srandom
 	])
 
 fillmetadata=yes
@@ -174,7 +171,7 @@ AC_CHECK_LIB(rt, clock_gettime, [AC_DEFINE(HAVE_CLOCK_GETTIME, 1, [Define if you
 AC_CHECK_LIB(rt, clock_nanosleep, [AC_DEFINE(HAVE_CLOCK_NANOSLEEP, 1, [Define if you have clock_nanosleep()])])
 
 AC_CHECK_HEADERS([getopt.h fcntl.h netdb.h regex.h signal.h string.h sys/time.h \
-	arpa/inet.h sys/stat.h sys/types.h select.h sys/event.h netinet/tcp.h \
+	arpa/inet.h sys/stat.h sys/types.h select.h \
 	sys/wait.h netinet/in.h getopt.h limits.h sys/ioctl.h unistd.h \
 	sys/socket.h time.h syslog.h termios.h alloca.h
 	])
@@ -387,15 +384,6 @@ esac])
 
 AM_CONDITIONAL(BDBSUPPORT, [test x$oktobdb = xyes])
 
-# Check for timersub macro in sys/time.h
-AC_CACHE_CHECK([for timersub macro in sys/time.h], ac_cv_timersubmacro,
-		[AC_TRY_COMPILE([#include <sys/time.h>],
-[struct timeval a, b, c; timersub(&a, &b, &c);],
-			  timersubmacro=yes, timersubmacro=no)])
-if test "$timersubmacro" = "yes"; then
-    AC_DEFINE(HAVE_TIMERSUB, 1, [Define to 1 if timersub macro is in sys/time.h])
-fi
-
 AC_CHECK_LIB(z, deflate, [
 	AC_CHECK_HEADERS([zlib.h],
 	[
@@ -568,19 +556,6 @@ if test $prefix/etc = $INTSYSCONF; then
 fi
 AC_DEFINE_UNQUOTED(SYSCONFDIR, "$INTSYSCONF", [Location of the system config directory])
 
-AC_MSG_CHECKING(architecture and if we need to supply scandir)
-case "$host_os" in
-	solaris* | sunos4*)	sunos=yes
-				AC_DEFINE(ISSUNOS, 1, [Define to 1 if this system is running sunos/solaris])
-				AC_MSG_RESULT(yes) ;;
-	netbsd* | openbsd* | *freebsd*)
-				AC_DEFINE(ISBSD, 1, [Define to 1 if this system is running a BSD variant])
-			 	AC_MSG_RESULT(no) ;;
-	linux*)	AC_DEFINE(ISLINUX, 1, [Define to 1 if this system is running linux])
-			 	AC_MSG_RESULT(no) ;;
-	*) 		AC_MSG_RESULT(no) ;;
-esac
-
 AM_CONDITIONAL(ISSUN, [test x$sunos = xyes])
 
 # substitutions
@@ -604,6 +579,8 @@ AC_SUBST(BRAND_SUMMARY)
 AC_SUBST(BRAND_DESCRIPTION)
 AC_SUBST(BRAND_COMPANY_SHORTNAME)
 AC_SUBST(BRAND_COMPANY_LONGNAME)
+AC_SUBST_FILE([CHANGELOG])
+CHANGELOG=$srcdir/ChangeLog
 
 AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen \
 						fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])

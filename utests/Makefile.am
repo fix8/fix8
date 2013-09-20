@@ -56,7 +56,7 @@ CLEANFILES = $(libutest_la_SOURCES)
 XML_42_SCHEMA = $(top_srcdir)/schema/FIX42.xml
 
 $(libutest_la_SOURCES): $(XML_42_SCHEMA)
-	$(top_srcdir)/compiler/f8c -Vp utest -n UTEST $(XML_42_SCHEMA)
+	$(top_srcdir)/compiler/f8c -sVp utest -n UTEST $(XML_42_SCHEMA)
 
 AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lgtest -lgtest_main
 

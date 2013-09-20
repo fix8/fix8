@@ -444,6 +444,21 @@ public:
 	const_iterator end() const { return _arr + _sz; }
 };
 
+//-------------------------------------------------------------------------------------------------
+/// Type2Type idiom. Kudos to Andrei Alexandrescu
+/*! \tparam type to convey */
+template<typename T>
+struct Type2Type
+{
+	typedef T type;
+};
+
+template<typename T, typename R>
+struct Type2Types
+{
+	typedef T type;
+	typedef R rtype;
+};
 } // FIX8
 
 #endif // _F8_TYPES_HPP_

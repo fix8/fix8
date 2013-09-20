@@ -3,6 +3,7 @@
 	<session name="TEX1"
 				role = "acceptor"
 				fix_version="1100"
+			   no_chksum="true"
 				active="true"
 				heartbeat_interval="10"
 				ip="127.0.0.1" port="11002"

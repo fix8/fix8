@@ -87,7 +87,6 @@
     <ClCompile Include="..\runtime\consolemenu.cpp" />
     <ClCompile Include="..\runtime\dllmain.cpp" />
     <ClCompile Include="..\runtime\f8utils.cpp" />
-    <ClCompile Include="..\runtime\field.cpp" />
     <ClCompile Include="..\runtime\filepersist.cpp" />
     <ClCompile Include="..\runtime\gzstream.cpp" />
     <ClCompile Include="..\runtime\logger.cpp" />

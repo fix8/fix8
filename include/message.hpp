@@ -133,30 +133,40 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Structure for framework generated message creation table
-struct _minst
+/// Structures for framework generated message creation table
+class Minst
 {
-   virtual Message *operator()() const { return 0; }
+   template<typename T>
+	struct _gen
+	{
+		static Message *_make() { return new T; }
+		static Message *_make_cast() { return reinterpret_cast<Message *>(new T); }
+	};
+
+public:
+	Message *(&_do)();
+
+   template<typename T>
+   Minst(Type2Type<T>) : _do(_gen<T>::_make) {}
+
+   template<typename T, typename R>
+   Minst(Type2Types<T, R>) : _do(_gen<T>::_make_cast) {}
 };
 
-template<typename T>
-struct MInst : _minst
+template<>
+struct Minst::_gen<void *>
 {
-   Message *operator()() const { return new T; }
-};
-
-template<typename T>
-struct MInstMsg : _minst
-{
-   Message *operator()() const { return reinterpret_cast<Message *>(new T); }
+	static Message *_make() { return 0; }
 };
 
 struct BaseMsgEntry
 {
-   const _minst& _create;
+   const Minst& _create;
 	const char *_name, *_comment;
 };
 
+//-------------------------------------------------------------------------------------------------
+/// Field metadata structure
 //-------------------------------------------------------------------------------------------------
 typedef GeneratedTable<const char *, BaseMsgEntry> MsgTable;
 typedef GeneratedTable<unsigned, BaseEntry> FieldTable;
@@ -178,27 +188,11 @@ struct F8MetaCntx
 	/// Hash array for field lookup (built by ctor)
 	const BaseEntry **_flu;
 	/// References to the header and trailer create functions
-	const _minst &_mk_hdr, &_mk_trl;
+	Message *(&_mk_hdr)(), *(&_mk_trl)();
 	/// Fix header beginstring
 	const f8String _beginStr;
 	/// Preamble length
 	const size_t _preamble_sz;
-
-	enum MsgFlags { noverifychksum, count };
-	mutable ebitset<MsgFlags, unsigned> _msg_flags;
-
-	/*! Check if flag bit present
-	  \param flg flag to check
-	  \return true if found */
-	bool has_flag(MsgFlags flg) const { return _msg_flags.has(flg); }
-
-	/*! Set flag.
-	  \param flg flag to set */
-	void set_flag(MsgFlags flg) { _msg_flags.set(flg); }
-
-	/*! Clear flag.
-	  \param flg flag to clear */
-	void clear_flag(MsgFlags flg) { _msg_flags.set(flg, false); }
 
 	/*! Ctor.
 	  \param version FIX version
@@ -209,7 +203,7 @@ struct F8MetaCntx
 	F8MetaCntx(const unsigned version, const MsgTable& bme, const FieldTable& be, const char **cn, const f8String& bg)
 		: _version(version), _bme(bme), _be(be), _cn(cn),
 		_flu_sz(_be.at(_be.size() - 1)->_key + 1), _flu(new const BaseEntry *[_flu_sz]),
-		_mk_hdr(_bme.find_ref("header")._create), _mk_trl(_bme.find_ref("trailer")._create),
+		_mk_hdr(_bme.find_ref("header")._create._do), _mk_trl(_bme.find_ref("trailer")._create._do),
 		_beginStr(bg), _preamble_sz(2 + _beginStr.size() + 1 + 3)
 	{
 		std::fill(_flu, _flu + _flu_sz, static_cast<BaseEntry *>(0));
@@ -777,6 +771,7 @@ protected:
 	MessageBase *_header, *_trailer;
 	unsigned _custom_seqnum;
 	bool _no_increment;
+	static bool _no_chksum_flag;
 
 public:
 	/*! Ctor.
@@ -904,6 +899,10 @@ public:
 		const f8String to(from);
 		return factory(ctx, to);
 	}
+
+	/*! Set the global _no_chksum_flag
+	    \param flag true or false */
+	static bool set_no_chksum_flag(bool flag) { return _no_chksum_flag = flag; }
 
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object

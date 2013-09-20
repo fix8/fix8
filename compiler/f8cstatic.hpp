@@ -141,7 +141,6 @@ const CSMap::TypePair CSMap::_valueTable[] =
 	CSMap::TypePair(cs_start_anon_namespace, "namespace {"),
 	CSMap::TypePair(cs_end_anon_namespace, "} // namespace"),
 	CSMap::TypePair(cs_generated_includes,
-"#include <f8config.h>\n"
 "#include <iostream>\n"
 "#include <fstream>\n"
 "#include <iomanip>\n"

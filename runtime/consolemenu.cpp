@@ -303,7 +303,7 @@ int ConsoleMenu::CreateMsgs(tty_save_state& tty, MsgList& lst) const
 		const BaseMsgEntry *mc(SelectMsg());
 		if (!mc)
 			break;
-		Message *msg(mc->_create());
+		Message *msg(mc->_create._do());
 		const FieldTable::Pair *fld;
 		while((fld = SelectField(msg)))
 			EditMsg(tty, fld, msg);
@@ -356,7 +356,7 @@ void ConsoleMenu::EditMsg(tty_save_state& tty, const FieldTable::Pair *fld, Mess
 		}
 	}
 
-	BaseField *bf(fld->_value._create(txt, fld->_value._rlm, rval));
+	BaseField *bf(fld->_value._create._do(txt.c_str(), fld->_value._rlm, rval));
 	msg->add_field(bf->get_tag(), msg->get_fp().get_presence().end(), 0, bf, true);
 }
 

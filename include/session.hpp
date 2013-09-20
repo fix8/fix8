@@ -160,20 +160,21 @@ struct LoginParameters
 	enum { default_retry_interval=5000, default_login_retries=100 };
 
 	LoginParameters() : _login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
-		_reset_sequence_numbers(), _always_seqnum_assign(), _silent_disconnect(), _recv_buf_sz(), _send_buf_sz() {}
+		_reset_sequence_numbers(), _always_seqnum_assign(), _silent_disconnect(), _no_chksum_flag(),
+		_recv_buf_sz(), _send_buf_sz() {}
 
 	LoginParameters(const unsigned login_retry_interval, const unsigned login_retries,
 		const default_appl_ver_id& davi, const bool reset_seqnum=false, const bool always_seqnum_assign=false,
-		const bool silent_disconnect=false, unsigned recv_buf_sz=0, unsigned send_buf_sz=0)
+		const bool silent_disconnect=false, const bool no_chksum_flag=false, unsigned recv_buf_sz=0, unsigned send_buf_sz=0)
 		: _login_retry_interval(login_retry_interval), _login_retries(login_retries),
 		_reset_sequence_numbers(reset_seqnum), _always_seqnum_assign(always_seqnum_assign),
-		_silent_disconnect(silent_disconnect),
+		_silent_disconnect(silent_disconnect), _no_chksum_flag(no_chksum_flag),
 		_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz) {}
 
 	LoginParameters(const LoginParameters& from)
 		: _login_retry_interval(from._login_retry_interval), _login_retries(from._login_retries),
 		_reset_sequence_numbers(from._reset_sequence_numbers), _always_seqnum_assign(from._always_seqnum_assign),
-		_silent_disconnect(from._silent_disconnect), _davi(from._davi),
+		_silent_disconnect(from._silent_disconnect), _no_chksum_flag(from._no_chksum_flag), _davi(from._davi),
 		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz) {}
 
 	LoginParameters& operator=(const LoginParameters& that)
@@ -185,6 +186,7 @@ struct LoginParameters
 			_reset_sequence_numbers = that._reset_sequence_numbers;
 			_always_seqnum_assign = that._always_seqnum_assign;
 			_silent_disconnect = that._silent_disconnect;
+			_no_chksum_flag = that._no_chksum_flag;
 			_davi = that._davi;
 			_recv_buf_sz = that._recv_buf_sz;
 			_send_buf_sz = that._send_buf_sz;
@@ -193,7 +195,7 @@ struct LoginParameters
 	}
 
 	unsigned _login_retry_interval, _login_retries;
-	bool _reset_sequence_numbers, _always_seqnum_assign, _silent_disconnect;
+	bool _reset_sequence_numbers, _always_seqnum_assign, _silent_disconnect, _no_chksum_flag;
 	default_appl_ver_id _davi;
 	unsigned _recv_buf_sz, _send_buf_sz;
 };
@@ -318,7 +320,7 @@ protected:
 		const BaseMsgEntry *bme(_ctx._bme.find_ptr(msg_type.c_str()));
 		if (!bme)
 			throw InvalidMetadata<f8String>(msg_type);
-		return bme->_create();
+		return bme->_create._do();
 	}
 
 #if !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__

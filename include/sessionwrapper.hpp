@@ -62,6 +62,7 @@ struct SessionConfig : public Configuration
 		LoginParameters lparam(get_retry_interval(_ses), get_retry_count(_ses),
 			get_default_appl_ver_id(_ses), get_reset_sequence_number_flag(_ses),
 			get_always_seqnum_assign(_ses), get_silent_disconnect(_ses),
+			get_no_chksum_flag(_ses),
 			get_tcp_recvbuf_sz(_ses), get_tcp_sendbuf_sz(_ses));
 		_loginParameters = lparam;
 	}
@@ -107,6 +108,7 @@ public:
         _cc(init_con_later ? 0 : new ClientConnection(_sock, _addr, *_session, get_heartbeat_interval(_ses), get_process_model(_ses)))
 	{
 		_session->set_login_parameters(_loginParameters);
+		_session->set_session_config(this);
 	}
 
 	/*! If reliable, determine if the maximum no. of reties has been reached
@@ -192,6 +194,8 @@ public:
 
 				this->_sock = new Poco::Net::StreamSocket,
 				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session, this->get_process_model(this->_ses));
+				this->_session->set_login_parameters(this->_loginParameters);
+				this->_session->set_session_config(this);
 				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, this->_loginParameters._davi());
 				_send_seqnum = _recv_seqnum = 0; // only set seqnums for the first time round
 			}

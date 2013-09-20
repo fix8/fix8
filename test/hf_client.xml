@@ -2,6 +2,7 @@
 <fix8>
   <session name="DLD1"
            role="initiator"
+			  no_chksum="true"
            fix_version="1100"
            active="true"
            ip="127.0.0.1"

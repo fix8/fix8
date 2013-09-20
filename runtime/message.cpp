@@ -64,6 +64,9 @@ codec_timings Message::_encode_timings, Message::_decode_timings;
 #endif
 
 //-------------------------------------------------------------------------------------------------
+bool Message::_no_chksum_flag(false);
+
+//-------------------------------------------------------------------------------------------------
 unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtype)
 {
 	const char *dptr(from.data());
@@ -126,7 +129,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 			const BaseEntry *be(_ctx.find_be(tv));
 			if (!be)
 				throw InvalidField(tv);
-			add_field(tv, itr, ++pos, be->_create(val, be->_rlm, -1), false);
+			add_field(tv, itr, ++pos, be->_create._do(val, be->_rlm, -1), false);
 			if (_fp.is_group(tv, itr))
 				s_offset = decode_group(tv, from, s_offset, ignore);
 		}
@@ -176,7 +179,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 				break;
 			}
 			s_offset += result;
-			grp->add_field(tv, itr, ++pos, be->_create(val, be->_rlm, -1), false);
+			grp->add_field(tv, itr, ++pos, be->_create._do(val, be->_rlm, -1), false);
 			grp->_fp.set(tv, itr, FieldTrait::present);	// is present
 			if (grp->_fp.is_group(tv, itr)) // nested group
 				s_offset = grp->decode_group(tv, from, s_offset, ignore);
@@ -218,7 +221,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 	const BaseMsgEntry *bme(ctx._bme.find_ptr(mtype));
 	if (!bme)
 		throw InvalidMessage(mtype);
-	Message *msg(bme->_create());
+	Message *msg(bme->_create._do());
 #if defined CODECTIMING
 	IntervalTimer itm;
 #endif
@@ -237,7 +240,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 	const char *pp(from.data() + from.size() - 7);
 	if (*pp != '1' || *(pp + 1) != '0') // 10=XXX^A
 		throw InvalidMessage(from);
-	if (!ctx.has_flag(F8MetaCntx::noverifychksum)) // permit chksum calculation to be skipped
+	if (!_no_chksum_flag) // permit chksum calculation to be skipped
 	{
 		const f8String chksum(pp + 3, 3);
 		msg->_trailer->get_check_sum()->set(chksum);
@@ -582,7 +585,7 @@ BaseField *MessageBase::remove(const unsigned short fnum, Presence::const_iterat
 Message *Message::clone() const
 {
 	const BaseMsgEntry& bme(_ctx._bme.find_ref(_msgType.c_str()));
-	Message *msg(bme._create());
+	Message *msg(bme._create._do());
 	copy_legal(msg, true);
 	_header->copy_legal(msg->_header, true);
 	_trailer->copy_legal(msg->_trailer, true);

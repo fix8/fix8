@@ -124,7 +124,7 @@ void SessionID::from_string(const f8String& from)
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
-	_sid(sid), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
+	_sid(sid), _sf(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
@@ -155,17 +155,16 @@ Session::~Session()
 	hypersleep<h_seconds>(1); // needed for service threads to exit gracefully
 
 	if (_connection->get_role() == Connection::cn_acceptor)
-	{
-		//{ f8_scoped_spin_lock guard(_log_spl); delete _logger; _logger = 0; }
-		//{ f8_scoped_spin_lock guard(_plog_spl); delete _plogger; _plogger = 0; }
 		{ f8_scoped_spin_lock guard(_per_spl); delete _persist; _persist = 0; }
-	}
 }
 
 //-------------------------------------------------------------------------------------------------
 int Session::start(Connection *connection, bool wait, const unsigned send_seqnum,
 	const unsigned recv_seqnum, const f8String davi)
 {
+	if (Message::set_no_chksum_flag(_loginParameters._no_chksum_flag))
+		GlobalLogger::log("chksum parsing/verification suppressed");
+
 	if (_logger)
 		_logger->purge_thread_codes();
 

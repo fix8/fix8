@@ -40,12 +40,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 f8c -- compile FIX xml schema\n
 \n
 <tt>
-Usage: f8c [-NVcdfhiknoprstvx] \<input xml schema\>\n
+Usage: f8c [-NRVbcdfhiknoprstvx] \<input xml schema\>\n
    -N,--nounique           do not enforce unique field parsing (default false)\n
+   -R,--norealm            do not generate realm constructed field instantiators (default false)
    -V,--verbose            be more verbose when processing\n
    -c,--classes \<server|client\> generate user session classes (default no)\n
-   -f,--fields             generate code for all defined fields even if they are not used in any message (default no)\n
    -d,--dump               dump 1st pass parsed source xml file, exit\n
+   -f,--fields             generate code for all defined fields even if they are not used in any message (default no)\n
    -h,--help               help, this screen\n
    -i,--ignore             ignore errors, attempt to generate code anyhow (default no)\n
    -k,--keep               retain generated temporaries even if there are errors (.*.tmp)\n
@@ -911,7 +912,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		{
 			osc_hpp << ',' << endl << spacer << spacer;
 			if (isHeader)
-				osc_hpp << "_begin_string(new begin_string(ctx._beginStr)), _body_length(new body_length(0)), _msg_type(new msg_type)";
+				osc_hpp << "_begin_string(new begin_string(ctx._beginStr)), _body_length(new body_length), _msg_type(new msg_type)";
 			else
 				osc_hpp << "_check_sum(new check_sum)";
 			osc_hpp << " { add_preamble(); }" << endl;
@@ -980,9 +981,9 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			osc_cpp << ',' << endl;
 		osc_cpp << spacer << "{ \"" << mitr->first << "\", { ";
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
-         osc_cpp << "MInstMsg<" << ctxt._fixns << "::" << mitr->second._name << ">()";
+         osc_cpp << "Minst(Type2Types<" << ctxt._fixns << "::" << mitr->second._name << ", bool>())";
       else
-         osc_cpp << "MInst<" << ctxt._fixns << "::" << mitr->second._name << ">()";
+         osc_cpp << "Minst(Type2Type<" << ctxt._fixns << "::" << mitr->second._name << ">())";
 		osc_cpp << ", \"" << mitr->second._name << '"';
 		if (!mitr->second._comment.empty())
 			osc_cpp << ',' << endl << spacer << spacer << '"' << mitr->second._comment << "\" }";
@@ -1002,7 +1003,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		<< ctxt._clname << "_BaseMsgEntry::Pair));" << endl;
 #endif
 	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::NotFoundType "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = { _minst() };" << endl;
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = { Minst(Type2Type<void *>()) };" << endl;
 	osc_cpp << "namespace " << ctxt._fixns << " { F8MetaCntx ctx(" << ctxt._version << ", bme, be, cn, \"" << ctxt._beginstr << "\"); }" << endl;
 
 // ==================================== Message router ==================================
@@ -1182,7 +1183,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		ost_cpp << spacer << "{ " << fitr->first << ", { ";
 		if (fitr->second._dvals && !norealm) // generate code to create a Field using a value taken from an index into a Realm
 		{
-			ost_cpp << "RealmInst<" << ctxt._fixns << "::" << fitr->second._name << ", ";
+			ost_cpp << "Inst(Type2Types<" << ctxt._fixns << "::" << fitr->second._name << ", ";
 			if (FieldTrait::is_int(fitr->second._ftype))
 				ost_cpp << "int";
 			else if (FieldTrait::is_char(fitr->second._ftype))
@@ -1199,8 +1200,8 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			}
       }
       else
-			ost_cpp << "Inst<" << ctxt._fixns << "::" << fitr->second._name;
-      ost_cpp << ">(), ";
+			ost_cpp << "Inst(Type2Type<" << ctxt._fixns << "::" << fitr->second._name;
+      ost_cpp << ">()), ";
 
 		if (fitr->second._dvals)
 			ost_cpp << "&" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
@@ -1224,7 +1225,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair));" << endl;
 #endif
 	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::NotFoundType "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_noval = { _inst() };" << endl;
+		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_noval = { Inst(Type2Type<void *>()) };" << endl;
 
 	// terminate files
 	ost_hpp << endl << "} // namespace " << ctxt._fixns << endl;
@@ -1238,7 +1239,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 			if (fitr->second._used)
 				++cnt;
-		cout << cnt << " of " << fspec.size() << " fields used in messages." << endl;
+		cout << cnt << " of " << fspec.size() << " fields used in messages" << endl;
 	}
 	return result;
 }
