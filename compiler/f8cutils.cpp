@@ -419,13 +419,6 @@ void generate_preamble(ostream& to, const string& fname, bool donotedit)
 	to << _csMap.find_ref(cs_divider) << endl;
 }
 
-inline void decode_reactor_version(const uint32_t from, uint32_t& majv, uint32_t& minv, uint32_t& patv)
-{
-	   majv = from >> 24 & 0xff;
-		   minv = from >> 12 & 0xfff;
-			   patv = from & 0xfff;
-}
-
 //-------------------------------------------------------------------------------------------------
 ostream& FIX8::operator<<(ostream& os, const MessageSpec& what)
 {

@@ -459,6 +459,7 @@ struct Type2Types
 	typedef T type;
 	typedef R rtype;
 };
+
 } // FIX8
 
 #endif // _F8_TYPES_HPP_

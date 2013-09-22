@@ -123,6 +123,14 @@ You can either choose the internally supplied [Fastflow](http://calvados.di.unip
 
 - Intel Threading Building Blocks [OSS edition](http://threadingbuildingblocks.org/download)
 
+If you wish to use the built-in unit tests (recommended):
+
+- [googletest](https://code.google.com/p/googletest/downloads/list)
+
+If you wish to use tcmalloc (recommended):
+
+- [gperftools](https://code.google.com/p/gperftools/downloads/list)
+
 If you wish to build the html documentation, you will need:
 
 - [Doxygen](http://www.doxygen.org)
@@ -136,8 +144,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf fix8-0.9.4.tar.gz
-	% cd 0.9.4
+	% tar xvzf 0.9.5.tar.gz
+	% cd fix8-0.9.5
 	% ./bootstrap
 	% ./configure
 	% make

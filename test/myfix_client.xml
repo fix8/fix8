@@ -3,7 +3,6 @@
 	<session name="DLD1"
 				role="initiator"
 				fix_version="1100"
-				no_chksum="true"
 				active="true"
 				ip="127.0.0.1" port="11001"
 				sender_comp_id="DLD_TEX"

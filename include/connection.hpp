@@ -96,7 +96,7 @@ public:
 
 	/*! Wait till processing thead has finished.
 	    \return 0 on success */
-	int join() { return _pmodel != pm_coro ? _thread.join() : -1; }
+	int join() { return _thread.join(); }
 };
 
 //----------------------------------------------------------------------------------------
@@ -199,6 +199,10 @@ public:
 		}
 	}
 
+	/*! Wait till writer thead has finished.
+	    \return 0 on success */
+   int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
+
 	/// Calculate the length of the Fix message preamble, e.g. "8=FIX.4.4^A9=".
 	void set_preamble_sz();
 
@@ -251,6 +255,10 @@ public:
 #endif
 		return result;
 	}
+
+	/*! Wait till writer thead has finished.
+	    \return 0 on success */
+   int join() { return _pmodel == pm_pipeline ? AsyncSocket<Message *>::join() : -1; }
 
 	/*! Send Fix message directly
 	    \param from message to send

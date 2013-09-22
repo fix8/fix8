@@ -3,7 +3,6 @@
 	<session name="TEX1"
 				role="acceptor"
 				fix_version="1100"
-				no_chksum="true"
 				active="true"
 				heartbeat_interval="10"
 				session_log="session_log_file"
