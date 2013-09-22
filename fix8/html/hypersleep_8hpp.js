@@ -1,6 +1,5 @@
 var hypersleep_8hpp =
 [
-    [ "_F8_HYPERSLEEP_", "hypersleep_8hpp.html#a820a6db4bbef89d7093d7fd48ab6652d", null ],
     [ "hyperunits_t", "hypersleep_8hpp.html#a065eb2245fc0ee1300739d1b3f1b853a", [
       [ "h_seconds", "hypersleep_8hpp.html#a065eb2245fc0ee1300739d1b3f1b853aad9c4b5c939299e14e8652f28a5033058", null ],
       [ "h_milliseconds", "hypersleep_8hpp.html#a065eb2245fc0ee1300739d1b3f1b853aa1194012258667ab9f74441a0a8aedb44", null ],

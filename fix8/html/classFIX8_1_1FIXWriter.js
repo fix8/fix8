@@ -2,6 +2,7 @@ var classFIX8_1_1FIXWriter =
 [
     [ "FIXWriter", "classFIX8_1_1FIXWriter.html#a4d27f4d2490da75b25015e5892463ba1", null ],
     [ "~FIXWriter", "classFIX8_1_1FIXWriter.html#a3d2612fbcd4ea437476569ffc2257bad", null ],
+    [ "join", "classFIX8_1_1FIXWriter.html#a13176a9f9f6bf74b908805626bbf3c7d", null ],
     [ "operator()", "classFIX8_1_1FIXWriter.html#a2dd0333d28b304e2961c383a2fd8519f", null ],
     [ "poll", "classFIX8_1_1FIXWriter.html#a9bf9b87b70d0f1ca2d6aa0dc90bc2432", null ],
     [ "send", "classFIX8_1_1FIXWriter.html#a83da2b7666c2ee4a36ee720b78a1f597", null ],

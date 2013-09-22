@@ -101,8 +101,7 @@
 								</div>
 								<div id="generaleOne" class="accordion-body collapse">
 									<div class="accordion-inner">
-										Fix8 is a C++ development toolkit designed to provide <a href="http://www.fixtradingcommunity.org/">FIX</a> connectivity to userland applications.
-										Fix8 provides an API framework with which you can quickly develop a FIX interface.
+										Fix8 is a C++ development toolkit designed to provide <a href="http://www.fixtradingcommunity.org/">FIX</a> connectivity to userland applications. Fix8 provides an API and framework that you can quickly develop a FIX interface on. Fix8 is flexible enough to work with <i>any</i> FIX version.
 									</div>
 								</div>
 							</div>
@@ -113,7 +112,7 @@
 								<div id="generaleTwo" class="accordion-body collapse">
 									<div class="accordion-inner">
 										The <a href="http://www.fixtradingcommunity.org/">FIX</a> protocol allows market pariticpants to communicate with one another usually
-										for the purposes of trading.  Typically this occurs between exchanges and brokers/institutions although many organisations
+										for the purposes of trading. Typically this occurs between exchanges and brokers/institutions although many organisations
 										also use FIX internally.
 									</div>
 								</div>
@@ -670,7 +669,7 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 												</div>
 												<div id="testTwelve" class="accordion-body collapse">
 													<div class="accordion-inner">
-													Depending on your build system, the large generated files used in the fix8 test application f8test can take up to 10 or 15 minutes to compile. If your memory consumption is high but stable, just be patient. There have been a few versions of gcc that did actually lockup when compiling these files. With these cases, gcc eventually consumed all available memory. If memory consumption is running away then we suggest upgrading your compiler. Gcc versions of 4.7 or higher are known to work fine.
+													Depending on your build system, the large generated files used in the fix8 test application f8test can take up to 10 or 15 minutes to compile. If your memory consumption is high but stable, just be patient. There have been a few versions of gcc that did actually lockup when compiling these files. With these cases, gcc eventually consumed all available memory. If memory consumption is running away then we suggest upgrading your compiler. Gcc versions of 4.7 or higher are known to work fine. See item m) below.
 													</div>
 												</div>
 											</div>
@@ -681,6 +680,47 @@ LDFLAGS='-L/lib64 -lpthread' ./configure --enable-codectiming --enable-doxygen=n
 												<div id="testThirteen" class="accordion-body collapse">
 													<div class="accordion-inner">
 													Please see <a href="https://fix8engine.atlassian.net/wiki/display/FX/Building">this document</a> for details on building on Windows.
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testFourteen">m) When I build, my compiler hangs or exits or reports an internal error.</a>
+												</div>
+												<div id="testFourteen" class="accordion-body collapse">
+													<div class="accordion-inner">
+                                          By default, the f8test executable and library are built. These are based on the FIX5.0SP2 schema which is very large. On some systems with either low memory and/or older compilers, the build may hang, lock up or even prematurely exit, for example:
+<pre>
+mv -f .deps/libmyfix_la-Myfix_types.Tpo .deps/libmyfix_la-Myfix_types.Plo
+/bin/sh ../libtool  --tag=CXX   --mode=compile g++ -DHAVE_CONFIG_H -I. -I../include     -g -O2 -Wall -MT libmyfix_la-Myfix_traits.lo -MD -MP -
+MF .deps/libmyfix_la-Myfix_traits.Tpo -c -o libmyfix_la-Myfix_traits.lo `test -f 'Myfix_traits.cpp' || echo './'`Myfix_traits.cpp
+libtool: compile:  g++ -DHAVE_CONFIG_H -I. -I../include -g -O2 -Wall -MT libmyfix_la-Myfix_traits.lo -MD -MP -MF .deps/libmyfix_la-Myfix_trait
+s.Tpo -c Myfix_traits.cpp  -fPIC -DPIC -o .libs/libmyfix_la-Myfix_traits.o
+g++: Internal error: Killed (program cc1plus)
+Please submit a full bug report.
+See &lt;http://bugzilla.redhat.com/bugzilla&gt; for instructions.
+make[1]: *** [libmyfix_la-Myfix_traits.lo] Error 1
+make[1]: Leaving directory `/home/davidd/fix8-0.9.5/test'
+make: *** [all-recursive] Error 1
+</pre>
+                                          You can use a workaround to sidestep this issue:
+<pre>
+% ./configure --enable-f8test=no [with your options here]
+</pre>
+                                          This switch will prevent f8test from being built.
+													</div>
+												</div>
+											</div>
+											<div class="accordion-group">
+												<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#testFifteen">n) I am having problems building or running Fix8 and can't find any help.</a>
+												</div>
+												<div id="testFifteen" class="accordion-body collapse">
+													<div class="accordion-inner">
+													Please review the topics in our <a href="https://groups.google.com/forum/#!forum/fix8-support">Support</a> and
+													<a href="https://groups.google.com/forum/#!forum/fix8-developer">Develper</a> and groups. If you can't find any help there
+													post a question. Someone will help you out. If you believe you have found an issue please raise a ticket on our
+													<a href="https://fix8engine.atlassian.net/">issue tracking site</a>.
 													</div>
 												</div>
 											</div>

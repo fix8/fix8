@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -116,10 +116,7 @@ $(document).ready(function(){initNavTree('classFIX8_1_1f8__scoped__lock__impl.ht
 </div><!--header-->
 <div class="contents">
 
-<p>Your bog standard RAII scoped lock.  
- <a href="classFIX8_1_1f8__scoped__lock__impl.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -127,6 +124,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6fe815a7f82cab076ba303a872373ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d5ac2176a2a295baf11e89ce5fd5862"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock__impl.html#a6d5ac2176a2a295baf11e89ce5fd5862">f8_scoped_lock_impl</a> (T &amp;mutex)</td></tr>
 <tr class="separator:a6d5ac2176a2a295baf11e89ce5fd5862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f94c5575f5b17175e4f83192e4c7ac6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock__impl.html#a5f94c5575f5b17175e4f83192e4c7ac6">f8_scoped_lock_impl</a> (T &amp;mutex, bool disable)</td></tr>
+<tr class="separator:a5f94c5575f5b17175e4f83192e4c7ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31d7f3851efbb20022510d8c71084343"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock__impl.html#a31d7f3851efbb20022510d8c71084343">~f8_scoped_lock_impl</a> ()</td></tr>
 <tr class="separator:a31d7f3851efbb20022510d8c71084343"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff2f90393c490ad57556690c12bc6d48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">acquire</a> (T &amp;mutex)</td></tr>
@@ -147,14 +146,15 @@ Private Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:acd58cad949e091af80e3a4e3f127d009"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a></td></tr>
 <tr class="separator:acd58cad949e091af80e3a4e3f127d009"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261ae2b1617ab2eb288db663bbb87ea2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock__impl.html#a261ae2b1617ab2eb288db663bbb87ea2">_disabled</a></td></tr>
+<tr class="separator:a261ae2b1617ab2eb288db663bbb87ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br/>
 class FIX8::f8_scoped_lock_impl&lt; T &gt;</h3>
 
-<p>Your bog standard RAII scoped lock. </p>
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00233">233</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00081">81</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aef4f28d07163ddbaacad37af4a02a319"></a>
 <div class="memitem">
@@ -205,7 +205,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00241">241</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00090">90</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
 
 </div>
 </div>
@@ -233,9 +233,49 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00242">242</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00091">91</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
 
-<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00249">FIX8::f8_scoped_lock_impl&lt; T &gt;::acquire()</a>.</p>
+<p>References <a class="el" href="mpmc_8hpp_source.html#l00103">FIX8::f8_scoped_lock_impl&lt; T &gt;::acquire()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5f94c5575f5b17175e4f83192e4c7ac6"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFIX8_1_1f8__scoped__lock__impl.html">FIX8::f8_scoped_lock_impl</a>&lt; T &gt;::<a class="el" href="classFIX8_1_1f8__scoped__lock__impl.html">f8_scoped_lock_impl</a> </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;&#160;</td>
+          <td class="paramname"><em>mutex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>disable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00092">92</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
+
+<p>References <a class="el" href="mpmc_8hpp_source.html#l00084">FIX8::f8_scoped_lock_impl&lt; T &gt;::_disabled</a>, and <a class="el" href="mpmc_8hpp_source.html#l00103">FIX8::f8_scoped_lock_impl&lt; T &gt;::acquire()</a>.</p>
 
 </div>
 </div>
@@ -262,9 +302,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00243">243</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00097">97</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
 
-<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00235">FIX8::f8_scoped_lock_impl&lt; T &gt;::_local_mutex</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00263">FIX8::f8_scoped_lock_impl&lt; T &gt;::release()</a>.</p>
+<p>References <a class="el" href="mpmc_8hpp_source.html#l00084">FIX8::f8_scoped_lock_impl&lt; T &gt;::_disabled</a>, <a class="el" href="mpmc_8hpp_source.html#l00083">FIX8::f8_scoped_lock_impl&lt; T &gt;::_local_mutex</a>, and <a class="el" href="mpmc_8hpp_source.html#l00117">FIX8::f8_scoped_lock_impl&lt; T &gt;::release()</a>.</p>
 
 </div>
 </div>
@@ -293,11 +333,11 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00249">249</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00103">103</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
 
-<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00235">FIX8::f8_scoped_lock_impl&lt; T &gt;::_local_mutex</a>.</p>
+<p>References <a class="el" href="mpmc_8hpp_source.html#l00083">FIX8::f8_scoped_lock_impl&lt; T &gt;::_local_mutex</a>.</p>
 
-<p>Referenced by <a class="el" href="ff__wrapper_8hpp_source.html#l00242">FIX8::f8_scoped_lock_impl&lt; T &gt;::f8_scoped_lock_impl()</a>.</p>
+<p>Referenced by <a class="el" href="mpmc_8hpp_source.html#l00091">FIX8::f8_scoped_lock_impl&lt; T &gt;::f8_scoped_lock_impl()</a>.</p>
 
 </div>
 </div>
@@ -350,11 +390,11 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00263">263</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00117">117</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
 
-<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00235">FIX8::f8_scoped_lock_impl&lt; T &gt;::_local_mutex</a>.</p>
+<p>References <a class="el" href="mpmc_8hpp_source.html#l00083">FIX8::f8_scoped_lock_impl&lt; T &gt;::_local_mutex</a>.</p>
 
-<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00135">FIX8::Timer&lt; T &gt;::operator()()</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00243">FIX8::f8_scoped_lock_impl&lt; T &gt;::~f8_scoped_lock_impl()</a>.</p>
+<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00135">FIX8::Timer&lt; T &gt;::operator()()</a>, and <a class="el" href="mpmc_8hpp_source.html#l00097">FIX8::f8_scoped_lock_impl&lt; T &gt;::~f8_scoped_lock_impl()</a>.</p>
 
 </div>
 </div>
@@ -382,13 +422,39 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00255">255</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00109">109</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
 
-<p>References <a class="el" href="ff__wrapper_8hpp_source.html#l00235">FIX8::f8_scoped_lock_impl&lt; T &gt;::_local_mutex</a>.</p>
+<p>References <a class="el" href="mpmc_8hpp_source.html#l00083">FIX8::f8_scoped_lock_impl&lt; T &gt;::_local_mutex</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a261ae2b1617ab2eb288db663bbb87ea2"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classFIX8_1_1f8__scoped__lock__impl.html">FIX8::f8_scoped_lock_impl</a>&lt; T &gt;::_disabled</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00084">84</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mpmc_8hpp_source.html#l00092">FIX8::f8_scoped_lock_impl&lt; T &gt;::f8_scoped_lock_impl()</a>, and <a class="el" href="mpmc_8hpp_source.html#l00097">FIX8::f8_scoped_lock_impl&lt; T &gt;::~f8_scoped_lock_impl()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="acd58cad949e091af80e3a4e3f127d009"></a>
 <div class="memitem">
 <div class="memproto">
@@ -409,19 +475,19 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="ff__wrapper_8hpp_source.html#l00235">235</a> of file <a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00083">83</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="ff__wrapper_8hpp_source.html#l00249">FIX8::f8_scoped_lock_impl&lt; T &gt;::acquire()</a>, <a class="el" href="ff__wrapper_8hpp_source.html#l00263">FIX8::f8_scoped_lock_impl&lt; T &gt;::release()</a>, <a class="el" href="ff__wrapper_8hpp_source.html#l00255">FIX8::f8_scoped_lock_impl&lt; T &gt;::try_acquire()</a>, and <a class="el" href="ff__wrapper_8hpp_source.html#l00243">FIX8::f8_scoped_lock_impl&lt; T &gt;::~f8_scoped_lock_impl()</a>.</p>
+<p>Referenced by <a class="el" href="mpmc_8hpp_source.html#l00103">FIX8::f8_scoped_lock_impl&lt; T &gt;::acquire()</a>, <a class="el" href="mpmc_8hpp_source.html#l00117">FIX8::f8_scoped_lock_impl&lt; T &gt;::release()</a>, <a class="el" href="mpmc_8hpp_source.html#l00109">FIX8::f8_scoped_lock_impl&lt; T &gt;::try_acquire()</a>, and <a class="el" href="mpmc_8hpp_source.html#l00097">FIX8::f8_scoped_lock_impl&lt; T &gt;::~f8_scoped_lock_impl()</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="ff__wrapper_8hpp_source.html">ff_wrapper.hpp</a></li>
+<li><a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:42. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

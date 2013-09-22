@@ -2,17 +2,10 @@ var classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID =
 [
     [ "NoSecurityAltID", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#a1026a2f05faae90a059dfbf087d35a11", null ],
     [ "~NoSecurityAltID", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#afe66f66839bc63687c3d31a48c11ef5f", null ],
-    [ "NoSecurityAltID", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#a1026a2f05faae90a059dfbf087d35a11", null ],
-    [ "~NoSecurityAltID", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#afe66f66839bc63687c3d31a48c11ef5f", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#a145dac83b095448fc5be0178df161892", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#a145dac83b095448fc5be0178df161892", null ],
-    [ "get_msgtype", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#afd55de98348628051e7e6b2853d94faf", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#afd55de98348628051e7e6b2853d94faf", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#ae41cef76cd6cf2aeefe63c29da78d60f", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#ab9bc20d70675d60ad05b566eebfb6727", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#ab9bc20d70675d60ad05b566eebfb6727", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#a6ee59967118ead36a1e458e2eeb3562a", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#a6ee59967118ead36a1e458e2eeb3562a", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#ad06694562b807a14491b506e856fec6d", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#a61dff1dac283fa887d62b6eac93bcf24", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#a2e80515f8f0cf7e2ddfbc17255e3f4a3", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#a75b8656fa976b609fc28a81637d3c39e", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1PositionReport_1_1NoSecurityAltID.html#a481117ea4f54d0a18a0fcc43aa643966", null ]
 ];

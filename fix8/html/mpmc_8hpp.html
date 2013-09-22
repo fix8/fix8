@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -105,7 +105,10 @@ $(document).ready(function(){initNavTree('mpmc_8hpp.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">mpmc.hpp File Reference</div>  </div>
 </div><!--header-->
@@ -116,38 +119,38 @@ $(document).ready(function(){initNavTree('mpmc_8hpp.html','');});
 </div>
 <p><a href="mpmc_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1f8__scoped__lock__impl.html">FIX8::f8_scoped_lock_impl&lt; T &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceFIX8"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html">FIX8</a></td></tr>
+<tr class="memdesc:namespaceFIX8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Your bog standard RAII scoped lock. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ab168b12533d2ef3d57a807fcd1d0a4df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mpmc_8hpp.html#ab168b12533d2ef3d57a807fcd1d0a4df">_FIX8_MPMC_HPP_</a></td></tr>
-<tr class="separator:ab168b12533d2ef3d57a807fcd1d0a4df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09529314cda4fed23b266afef4c4355c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mpmc_8hpp.html#a09529314cda4fed23b266afef4c4355c">f8_atomic</a>&#160;&#160;&#160;tbb::atomic</td></tr>
 <tr class="separator:a09529314cda4fed23b266afef4c4355c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36015b61fefaa115329be75a76f9c418"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mpmc_8hpp.html#a36015b61fefaa115329be75a76f9c418">f8_scoped_lock</a>&#160;&#160;&#160;tbb::mutex::scoped_lock</td></tr>
-<tr class="separator:a36015b61fefaa115329be75a76f9c418"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4783d418099c0817a3f8c398ccd526c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mpmc_8hpp.html#a4783d418099c0817a3f8c398ccd526c3">f8_scoped_spin_lock</a>&#160;&#160;&#160;tbb::spin_mutex::scoped_lock</td></tr>
-<tr class="separator:a4783d418099c0817a3f8c398ccd526c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b3ee434e7062e37caee9a864c73d0dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mpmc_8hpp.html#a8b3ee434e7062e37caee9a864c73d0dd">f8_mutex</a>&#160;&#160;&#160;tbb::mutex</td></tr>
 <tr class="separator:a8b3ee434e7062e37caee9a864c73d0dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adae5f78769c2ce79976f0ced2333e97f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mpmc_8hpp.html#adae5f78769c2ce79976f0ced2333e97f">f8_spin_lock</a>&#160;&#160;&#160;tbb::spin_mutex</td></tr>
 <tr class="separator:adae5f78769c2ce79976f0ced2333e97f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86434e873a3410dba0d42e677288465f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mpmc_8hpp.html#a86434e873a3410dba0d42e677288465f">f8_concurrent_queue</a>&#160;&#160;&#160;tbb::concurrent_bounded_queue</td></tr>
 <tr class="separator:a86434e873a3410dba0d42e677288465f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a4880b1e134d6360c95c8ef460d165897"><td class="memItemLeft" align="right" valign="top">typedef f8_scoped_lock_impl<br class="typebreak"/>
+&lt; <a class="el" href="mpmc_8hpp.html#a8b3ee434e7062e37caee9a864c73d0dd">f8_mutex</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a4880b1e134d6360c95c8ef460d165897">FIX8::f8_scoped_lock</a></td></tr>
+<tr class="separator:a4880b1e134d6360c95c8ef460d165897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5ce42535b8df313bfb2f9a27ec3f718"><td class="memItemLeft" align="right" valign="top">typedef f8_scoped_lock_impl<br class="typebreak"/>
+&lt; <a class="el" href="mpmc_8hpp.html#adae5f78769c2ce79976f0ced2333e97f">f8_spin_lock</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ad5ce42535b8df313bfb2f9a27ec3f718">FIX8::f8_scoped_spin_lock</a></td></tr>
+<tr class="separator:ad5ce42535b8df313bfb2f9a27ec3f718"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ab168b12533d2ef3d57a807fcd1d0a4df"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _FIX8_MPMC_HPP_</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00038">38</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a09529314cda4fed23b266afef4c4355c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -172,7 +175,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00057">57</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00055">55</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
 
 </div>
 </div>
@@ -186,35 +189,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00055">55</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a36015b61fefaa115329be75a76f9c418"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define f8_scoped_lock&#160;&#160;&#160;tbb::mutex::scoped_lock</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
 <p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00053">53</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4783d418099c0817a3f8c398ccd526c3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define f8_scoped_spin_lock&#160;&#160;&#160;tbb::spin_mutex::scoped_lock</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00054">54</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
 
 </div>
 </div>
@@ -228,14 +203,14 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00056">56</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
+<p>Definition at line <a class="el" href="mpmc_8hpp_source.html#l00054">54</a> of file <a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:41. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:14. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

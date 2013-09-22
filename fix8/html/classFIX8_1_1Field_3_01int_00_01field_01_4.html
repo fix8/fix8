@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -147,6 +147,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa4477e3072d0945bc288848522944fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d469252fc6a575a7ba46d5ee616a43c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#a2d469252fc6a575a7ba46d5ee616a43c">Field</a> (const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;<a class="el" href="classFIX8_1_1BaseField.html#a93538fc19a4f590509f7e60cc655e927">from</a>, const <a class="el" href="structFIX8_1_1RealmBase.html">RealmBase</a> *rlm=0)</td></tr>
 <tr class="separator:a2d469252fc6a575a7ba46d5ee616a43c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae65a3f98fe2f94b2fb97a23ba4a47c10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#ae65a3f98fe2f94b2fb97a23ba4a47c10">Field</a> (const char *<a class="el" href="classFIX8_1_1BaseField.html#a93538fc19a4f590509f7e60cc655e927">from</a>, const <a class="el" href="structFIX8_1_1RealmBase.html">RealmBase</a> *rlm=0)</td></tr>
+<tr class="separator:ae65a3f98fe2f94b2fb97a23ba4a47c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa49b4f0ae64163fc48402631f99d7bb4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Field.html">Field</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01int_00_01field_01_4.html#aa49b4f0ae64163fc48402631f99d7bb4">operator=</a> (const <a class="el" href="classFIX8_1_1Field.html">Field</a> &amp;that)</td></tr>
 <tr class="memdesc:aa49b4f0ae64163fc48402631f99d7bb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment operator.  <a href="#aa49b4f0ae64163fc48402631f99d7bb4">More...</a><br/></td></tr>
 <tr class="separator:aa49b4f0ae64163fc48402631f99d7bb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -368,6 +370,52 @@ template&lt;const unsigned short field&gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ae65a3f98fe2f94b2fb97a23ba4a47c10"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;const unsigned short field&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; int, field &gt;::<a class="el" href="classFIX8_1_1Field.html">Field</a> </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structFIX8_1_1RealmBase.html">RealmBase</a> *&#160;</td>
+          <td class="paramname"><em>rlm</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Construct from char * ctor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">from</td><td>char * to construct field from </td></tr>
+    <tr><td class="paramname">rlm</td><td>pointer to the realmbase for this field (if available) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00224">224</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a8647d64a34641e5e864f3c7967126865"></a>
 <div class="memitem">
 <div class="memproto">
@@ -395,7 +443,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Reimplemented in <a class="el" href="classFIX8_1_1Field_3_01DayOfMonth_00_01field_01_4.html#a70d1f4289169f8926ffbd73db0791d89">FIX8::Field&lt; DayOfMonth, field &gt;</a>, <a class="el" href="classFIX8_1_1Field_3_01NumInGroup_00_01field_01_4.html#a9efe1db63e6685617113be2feca4a801">FIX8::Field&lt; NumInGroup, field &gt;</a>, <a class="el" href="classFIX8_1_1Field_3_01SeqNum_00_01field_01_4.html#ac55d045a6e5a7f3d2998160ad465012f">FIX8::Field&lt; SeqNum, field &gt;</a>, <a class="el" href="classFIX8_1_1Field_3_01TagNum_00_01field_01_4.html#ae6c1c9e7beef2498195e653cff2fd8b1">FIX8::Field&lt; TagNum, field &gt;</a>, and <a class="el" href="classFIX8_1_1Field_3_01Length_00_01field_01_4.html#adf24fb9cec153b5a4f6c1b67f9f7f50c">FIX8::Field&lt; Length, field &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00232">232</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00237">237</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -427,7 +475,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Implements <a class="el" href="classFIX8_1_1BaseField.html#adae06a72a6d6f1d2e3f9f2b87c5a5840">FIX8::BaseField</a>.</p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00262">262</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00267">267</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -456,7 +504,7 @@ template&lt;const unsigned short field&gt; </div>
 <p>Get field value. </p>
 <dl class="section return"><dt>Returns</dt><dd>value (int) </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00244">244</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00249">249</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -516,7 +564,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Reimplemented from <a class="el" href="classFIX8_1_1BaseField.html#a374451d87d0136e4ef8dc733122cadf8">FIX8::BaseField</a>.</p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00240">240</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00245">245</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 <p>References <a class="el" href="field_8hpp_source.html#l00108">FIX8::BaseField::_rlm</a>, and <a class="el" href="field_8hpp_source.html#l00090">FIX8::RealmBase::get_rlm_idx()</a>.</p>
 
@@ -547,7 +595,7 @@ template&lt;const unsigned short field&gt; </div>
 <p>Check if this value is a member/in range of the domain set. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if in the set or no domain available </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00236">236</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00241">241</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 <p>References <a class="el" href="field_8hpp_source.html#l00108">FIX8::BaseField::_rlm</a>, and <a class="el" href="field_8hpp_source.html#l00072">FIX8::RealmBase::is_valid()</a>.</p>
 
@@ -578,7 +626,7 @@ template&lt;const unsigned short field&gt; </div>
 <p>Get field value. </p>
 <dl class="section return"><dt>Returns</dt><dd>value (int) </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00248">248</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00253">253</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -615,7 +663,7 @@ template&lt;const unsigned short field&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>field </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00224">224</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00229">229</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -653,7 +701,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Implements <a class="el" href="classFIX8_1_1BaseField.html#a68b4265a14ab3ec76ef65ce8298c5b9c">FIX8::BaseField</a>.</p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00267">267</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00272">272</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -691,9 +739,9 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Implements <a class="el" href="classFIX8_1_1BaseField.html#a2c7b143aae868a9be93b3d735f14ec0a">FIX8::BaseField</a>.</p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00272">272</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00277">277</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l00533">FIX8::itoa()</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00532">FIX8::itoa()</a>.</p>
 
 </div>
 </div>
@@ -729,7 +777,7 @@ template&lt;const unsigned short field&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>original value (int) </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00253">253</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00258">258</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 <p>References <a class="el" href="field_8hpp_source.html#l00145">FIX8::BaseField::from()</a>.</p>
 
@@ -767,7 +815,7 @@ template&lt;const unsigned short field&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>original value (int) </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00258">258</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00263">263</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -802,7 +850,7 @@ template&lt;const unsigned short field&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:42. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:14. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -119,8 +119,6 @@ var namespaceFIX8_1_1TEX =
     [ "SecurityListRequest", "classFIX8_1_1TEX_1_1SecurityListRequest.html", "classFIX8_1_1TEX_1_1SecurityListRequest" ],
     [ "SecurityList", "classFIX8_1_1TEX_1_1SecurityList.html", "classFIX8_1_1TEX_1_1SecurityList" ],
     [ "DerivativeSecurityListRequest", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest.html", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest" ],
-    [ "myfix_custom", "classFIX8_1_1TEX_1_1myfix__custom.html", "classFIX8_1_1TEX_1_1myfix__custom" ],
     [ "Myfix_Router", "classFIX8_1_1TEX_1_1Myfix__Router.html", "classFIX8_1_1TEX_1_1Myfix__Router" ],
-    [ "Perf_Router", "classFIX8_1_1TEX_1_1Perf__Router.html", "classFIX8_1_1TEX_1_1Perf__Router" ],
-    [ "texgw_Router", "classFIX8_1_1TEX_1_1texgw__Router.html", "classFIX8_1_1TEX_1_1texgw__Router" ]
+    [ "Perf_Router", "classFIX8_1_1TEX_1_1Perf__Router.html", "classFIX8_1_1TEX_1_1Perf__Router" ]
 ];

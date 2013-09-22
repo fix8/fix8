@@ -6,6 +6,7 @@ var classFIX8_1_1FIXReader =
     [ "~FIXReader", "classFIX8_1_1FIXReader.html#ae3152f1b56da967cc47d052e022ac762", null ],
     [ "callback_processor", "classFIX8_1_1FIXReader.html#a544af89074e413078c72ffed9781295a", null ],
     [ "is_socket_error", "classFIX8_1_1FIXReader.html#aa593ee9ffa5f5d709fa96fe6fb6827b3", null ],
+    [ "join", "classFIX8_1_1FIXReader.html#a3fbbc89b57d8a92e08ddfe67c939eacd", null ],
     [ "operator()", "classFIX8_1_1FIXReader.html#a380060e6ddcdd0f963dd79298178ff50", null ],
     [ "poll", "classFIX8_1_1FIXReader.html#a5c9ed76959e89bb0b519605e8b7bb854", null ],
     [ "quit", "classFIX8_1_1FIXReader.html#a99c674abad3c6a569b1a0aba8f9d4f0c", null ],

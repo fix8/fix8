@@ -3,17 +3,10 @@ var classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents =
     [ "NoComplexEventDates", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents_1_1NoComplexEventDates.html", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents_1_1NoComplexEventDates" ],
     [ "NoComplexEvents", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#a05debf35e42f1a90fb558dbc11d690ab", null ],
     [ "~NoComplexEvents", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#ac0d412948ae587f4c062f8c9f83690f8", null ],
-    [ "NoComplexEvents", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#a05debf35e42f1a90fb558dbc11d690ab", null ],
-    [ "~NoComplexEvents", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#ac0d412948ae587f4c062f8c9f83690f8", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#ad4f09988cf3af45626fff3373332c5c2", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#ad4f09988cf3af45626fff3373332c5c2", null ],
-    [ "get_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#a1eb1fc5e8a59b85474873787f4db49e0", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#a1eb1fc5e8a59b85474873787f4db49e0", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#abd3282ec966909cbd7ed5ed8066a5bfd", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#a1d9670c894ec11177e24f1e4b3f9235e", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#a1d9670c894ec11177e24f1e4b3f9235e", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#a97efc82a909b3407ad022d0c1f5fe00f", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#a97efc82a909b3407ad022d0c1f5fe00f", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#a981ebfe90183c5c5afac73795dfe8792", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#ad12257989abf276b13de0f54f47a52e6", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#ac21fa677f308149452994598960860bd", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#a15dc8a4ea837f3b6230ebdd75b5eaa64", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoComplexEvents.html#a76cff20c859d025a5176c7f246ec0952", null ]
 ];

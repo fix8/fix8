@@ -16,7 +16,6 @@ var f8utils_8hpp =
     [ "Singleton", "classFIX8_1_1Singleton.html", "classFIX8_1_1Singleton" ],
     [ "fdinbuf", "classFIX8_1_1fdinbuf.html", "classFIX8_1_1fdinbuf" ],
     [ "tty_save_state", "classFIX8_1_1tty__save__state.html", "classFIX8_1_1tty__save__state" ],
-    [ "_F8_UTILS_HPP_", "f8utils_8hpp.html#a3b18bb77e20581a692a3055e28d41239", null ],
     [ "CheckAddTrailingSlash", "f8utils_8hpp.html#aa425fec2bfd5904c8599debe9e6adc9c", null ],
     [ "CopyString", "f8utils_8hpp.html#a8fd1dad50dfe91621755bf3029d0cb56", null ],
     [ "enum_str_get", "f8utils_8hpp.html#a8b82747859379a6711d72608db775233", null ],

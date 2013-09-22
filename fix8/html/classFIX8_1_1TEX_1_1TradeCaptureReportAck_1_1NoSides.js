@@ -10,17 +10,10 @@ var classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides =
     [ "NoStipulations", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides_1_1NoStipulations.html", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides_1_1NoStipulations" ],
     [ "NoSides", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a8023b85979574433a319373fd6d89923", null ],
     [ "~NoSides", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a07e59cf28f2af9584fb15fb509b01a89", null ],
-    [ "NoSides", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a8023b85979574433a319373fd6d89923", null ],
-    [ "~NoSides", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a07e59cf28f2af9584fb15fb509b01a89", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a860c0ed6e706d3f9e63475f0d6f1fd73", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a860c0ed6e706d3f9e63475f0d6f1fd73", null ],
-    [ "get_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a947cb190d9d890f03324e080b196e1b5", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a947cb190d9d890f03324e080b196e1b5", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a6dbc57e4b34f3611e086702742c61b11", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a11abcd1dbec14b25721635a119294836", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a11abcd1dbec14b25721635a119294836", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a1aa68802b99e606201bead8dae44d8a5", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a1aa68802b99e606201bead8dae44d8a5", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a34742adfd4baa993e70e1be9fa7956a7", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#ae1eb118df3e8dd6c51faea98fb77b5a6", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#ab2f197b50d9ab8ce0a2c6e13f19c040e", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a1d1b522ef01f83d54302b5db6ec274fc", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides.html#a3b8f85d8f3a1a7005e63de7f867bbf5e", null ]
 ];

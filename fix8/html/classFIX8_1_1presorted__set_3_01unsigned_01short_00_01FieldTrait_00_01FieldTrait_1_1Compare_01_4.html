@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -135,6 +135,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab4ff18e7e4855b2a344e53fb6efea725"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34e96e088bf5f5912eaa41b8220b52d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a34e96e088bf5f5912eaa41b8220b52d4">presorted_set</a> (<a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#aa2f02512fb8f8a39f0d3b6a14dc21f68">const_iterator</a> arr_start, const size_t sz, const size_t reserve=<a class="el" href="f8config_8h.html#a9b795b8180857ec209f8015b20a52252">RESERVE_PERCENT</a>)</td></tr>
 <tr class="separator:a34e96e088bf5f5912eaa41b8220b52d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd10da81b1b9000d52a79fe359c41a11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#acd10da81b1b9000d52a79fe359c41a11">presorted_set</a> (const <a class="el" href="classFIX8_1_1presorted__set.html">presorted_set</a> &amp;from)</td></tr>
+<tr class="separator:acd10da81b1b9000d52a79fe359c41a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5de2a715fa11d7b7ab76fd6537f1860e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a5de2a715fa11d7b7ab76fd6537f1860e">presorted_set</a> (const size_t sz=0, const size_t reserve=<a class="el" href="f8config_8h.html#a9b795b8180857ec209f8015b20a52252">RESERVE_PERCENT</a>)</td></tr>
 <tr class="separator:a5de2a715fa11d7b7ab76fd6537f1860e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae226323a991ecd9242b47fc9937d5b16"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#ae226323a991ecd9242b47fc9937d5b16">~presorted_set</a> ()</td></tr>
@@ -356,7 +358,7 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 
 <p>Definition at line <a class="el" href="traits_8hpp_source.html#l00209">209</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
 
 </div>
 </div>
@@ -397,10 +399,54 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
   </tr>
 </table>
 </div><div class="memdoc">
+<p>ctor - initialise an empty set; defer memory allocation; </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arr_start</td><td>pointer to start of static array to copy elements from </td></tr>
+    <tr><td class="paramname">sz</td><td>number of elements to initially allocate </td></tr>
+    <tr><td class="paramname">reserve</td><td>percentage of sz to keep in reserve </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00213">213</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00217">217</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acd10da81b1b9000d52a79fe359c41a11"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFIX8_1_1presorted__set.html">FIX8::presorted_set</a>&lt; unsigned short, <a class="el" href="structFIX8_1_1FieldTrait.html">FieldTrait</a>, <a class="el" href="structFIX8_1_1FieldTrait_1_1Compare.html">FieldTrait::Compare</a> &gt;::<a class="el" href="classFIX8_1_1presorted__set.html">presorted_set</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classFIX8_1_1presorted__set.html">presorted_set</a>&lt; unsigned short, <a class="el" href="structFIX8_1_1FieldTrait.html">FieldTrait</a>, <a class="el" href="structFIX8_1_1FieldTrait_1_1Compare.html">FieldTrait::Compare</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>from</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>copy ctor </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">from</td><td><a class="el" href="classFIX8_1_1presorted__set.html">presorted_set</a> object to copy </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00223">223</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
 
 </div>
 </div>
@@ -444,7 +490,7 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00220">220</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00230">230</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
 </div>
 </div>
@@ -471,9 +517,9 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 
 <p>dtor </p>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00224">224</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00234">234</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>.</p>
 
 </div>
 </div>
@@ -508,9 +554,9 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>const_iterator to element or <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end()</a> if not found </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00280">280</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00290">290</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, and <a class="el" href="f8types_8hpp_source.html#l00424">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, and <a class="el" href="f8types_8hpp_source.html#l00436">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>.</p>
 
 <p>Referenced by <a class="el" href="consolemenu_8cpp_source.html#l00118">FIX8::ConsoleMenu::SelectField()</a>.</p>
 
@@ -539,11 +585,11 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 <p>Get a pointer to the first element </p>
 <dl class="section return"><dt>Returns</dt><dd>the first element </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00354">354</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00364">364</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00521">FIX8::FieldTraits::clear_flag()</a>, <a class="el" href="traits_8hpp_source.html#l00448">FIX8::FieldTraits::find_missing()</a>, and <a class="el" href="consolemenu_8cpp_source.html#l00118">FIX8::ConsoleMenu::SelectField()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00531">FIX8::FieldTraits::clear_flag()</a>, <a class="el" href="traits_8hpp_source.html#l00458">FIX8::FieldTraits::find_missing()</a>, and <a class="el" href="consolemenu_8cpp_source.html#l00118">FIX8::ConsoleMenu::SelectField()</a>.</p>
 
 </div>
 </div>
@@ -570,9 +616,9 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 <p>Get a const pointer to the first element </p>
 <dl class="section return"><dt>Returns</dt><dd>the first element </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00362">362</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00372">372</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>.</p>
 
 </div>
 </div>
@@ -643,9 +689,9 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 </div><div class="memdoc">
 <p>Clear the set (does not delete) </p>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00338">338</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00348">348</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
 
 </div>
 </div>
@@ -690,7 +736,7 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>distance in elements </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00324">324</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00334">334</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
 </div>
 </div>
@@ -717,9 +763,9 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 <p>Check if the set is empty </p>
 <dl class="section return"><dt>Returns</dt><dd>true if empty </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00346">346</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00356">356</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
 
 </div>
 </div>
@@ -746,11 +792,11 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 <p>Get a pointer to the last element + 1 </p>
 <dl class="section return"><dt>Returns</dt><dd>the last element + 1 </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00358">358</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00368">368</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8hpp_source.html#l00381">FIX8::MessageBase::add_field()</a>, <a class="el" href="traits_8hpp_source.html#l00486">FIX8::FieldTraits::clear()</a>, <a class="el" href="traits_8hpp_source.html#l00521">FIX8::FieldTraits::clear_flag()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00329">FIX8::ConsoleMenu::EditMsg()</a>, <a class="el" href="traits_8hpp_source.html#l00448">FIX8::FieldTraits::find_missing()</a>, <a class="el" href="traits_8hpp_source.html#l00426">FIX8::FieldTraits::get()</a>, <a class="el" href="traits_8hpp_source.html#l00554">FIX8::FieldTraits::getComp()</a>, <a class="el" href="traits_8hpp_source.html#l00575">FIX8::FieldTraits::getPos()</a>, <a class="el" href="traits_8hpp_source.html#l00412">FIX8::FieldTraits::getval()</a>, <a class="el" href="traits_8hpp_source.html#l00393">FIX8::FieldTraits::has()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00118">FIX8::ConsoleMenu::SelectField()</a>, and <a class="el" href="traits_8hpp_source.html#l00460">FIX8::FieldTraits::set()</a>.</p>
+<p>Referenced by <a class="el" href="message_8hpp_source.html#l00391">FIX8::MessageBase::add_field()</a>, <a class="el" href="traits_8hpp_source.html#l00496">FIX8::FieldTraits::clear()</a>, <a class="el" href="traits_8hpp_source.html#l00531">FIX8::FieldTraits::clear_flag()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00329">FIX8::ConsoleMenu::EditMsg()</a>, <a class="el" href="traits_8hpp_source.html#l00458">FIX8::FieldTraits::find_missing()</a>, <a class="el" href="traits_8hpp_source.html#l00436">FIX8::FieldTraits::get()</a>, <a class="el" href="traits_8hpp_source.html#l00569">FIX8::FieldTraits::getComp()</a>, <a class="el" href="traits_8hpp_source.html#l00590">FIX8::FieldTraits::getPos()</a>, <a class="el" href="traits_8hpp_source.html#l00422">FIX8::FieldTraits::getval()</a>, <a class="el" href="traits_8hpp_source.html#l00403">FIX8::FieldTraits::has()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00118">FIX8::ConsoleMenu::SelectField()</a>, and <a class="el" href="traits_8hpp_source.html#l00470">FIX8::FieldTraits::set()</a>.</p>
 
 </div>
 </div>
@@ -777,9 +823,9 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 <p>Get a const pointer to the last element + 1 </p>
 <dl class="section return"><dt>Returns</dt><dd>the last element + 1 </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00366">366</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00376">376</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, and <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
 
 </div>
 </div>
@@ -824,11 +870,11 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to found element or pointer to location where element would be inserted </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00230">230</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00240">240</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="traits_8hpp_source.html#l00120">FIX8::FieldTrait::_fnum</a>, and <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="traits_8hpp_source.html#l00120">FIX8::FieldTrait::_fnum</a>, and <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00486">FIX8::FieldTraits::clear()</a>, <a class="el" href="traits_8hpp_source.html#l00426">FIX8::FieldTraits::get()</a>, <a class="el" href="traits_8hpp_source.html#l00554">FIX8::FieldTraits::getComp()</a>, <a class="el" href="traits_8hpp_source.html#l00575">FIX8::FieldTraits::getPos()</a>, <a class="el" href="traits_8hpp_source.html#l00412">FIX8::FieldTraits::getval()</a>, <a class="el" href="traits_8hpp_source.html#l00393">FIX8::FieldTraits::has()</a>, and <a class="el" href="traits_8hpp_source.html#l00460">FIX8::FieldTraits::set()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00496">FIX8::FieldTraits::clear()</a>, <a class="el" href="traits_8hpp_source.html#l00436">FIX8::FieldTraits::get()</a>, <a class="el" href="traits_8hpp_source.html#l00569">FIX8::FieldTraits::getComp()</a>, <a class="el" href="traits_8hpp_source.html#l00590">FIX8::FieldTraits::getPos()</a>, <a class="el" href="traits_8hpp_source.html#l00422">FIX8::FieldTraits::getval()</a>, <a class="el" href="traits_8hpp_source.html#l00403">FIX8::FieldTraits::has()</a>, and <a class="el" href="traits_8hpp_source.html#l00470">FIX8::FieldTraits::set()</a>.</p>
 
 </div>
 </div>
@@ -873,11 +919,11 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to found element or pointer to location where element would be inserted </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00243">243</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00253">253</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="traits_8hpp_source.html#l00243">find()</a>.</p>
+<p>References <a class="el" href="traits_8hpp_source.html#l00253">find()</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00243">find()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00253">find()</a>.</p>
 
 </div>
 </div>
@@ -911,11 +957,11 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to found element or <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00248">248</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00258">258</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="traits_8hpp_source.html#l00248">find()</a>.</p>
+<p>References <a class="el" href="traits_8hpp_source.html#l00258">find()</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00248">find()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00258">find()</a>.</p>
 
 </div>
 </div>
@@ -949,9 +995,9 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to found element or <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00253">253</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00263">263</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="traits_8hpp_source.html#l00120">FIX8::FieldTrait::_fnum</a>, <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, and <a class="el" href="f8types_8hpp_source.html#l00424">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="traits_8hpp_source.html#l00120">FIX8::FieldTrait::_fnum</a>, <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, and <a class="el" href="f8types_8hpp_source.html#l00436">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>.</p>
 
 </div>
 </div>
@@ -985,11 +1031,11 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to found element or <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00264">264</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00274">274</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="traits_8hpp_source.html#l00264">find()</a>.</p>
+<p>References <a class="el" href="traits_8hpp_source.html#l00274">find()</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00264">find()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00274">find()</a>.</p>
 
 </div>
 </div>
@@ -1023,9 +1069,9 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to found element or <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00269">269</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00279">279</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="traits_8hpp_source.html#l00120">FIX8::FieldTrait::_fnum</a>, <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, and <a class="el" href="f8types_8hpp_source.html#l00424">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="traits_8hpp_source.html#l00120">FIX8::FieldTrait::_fnum</a>, <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, and <a class="el" href="f8types_8hpp_source.html#l00436">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>.</p>
 
 </div>
 </div>
@@ -1059,11 +1105,11 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>result with iterator to insert location and true or <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end()</a> and false </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00285">285</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00295">295</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00263">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="f8types_8hpp_source.html#l00261">FIX8::presorted_set&lt; K, T, Comp &gt;::_reserve</a>, <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_rsz</a>, <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, <a class="el" href="f8types_8hpp_source.html#l00272">FIX8::presorted_set&lt; K, T, Comp &gt;::calc_reserve()</a>, <a class="el" href="f8types_8hpp_source.html#l00424">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>, and <a class="el" href="f8types_8hpp_source.html#l00302">FIX8::presorted_set&lt; K, T, Comp &gt;::find()</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00269">FIX8::presorted_set&lt; K, T, Comp &gt;::_arr</a>, <a class="el" href="f8types_8hpp_source.html#l00267">FIX8::presorted_set&lt; K, T, Comp &gt;::_reserve</a>, <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_rsz</a>, <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>, <a class="el" href="f8types_8hpp_source.html#l00278">FIX8::presorted_set&lt; K, T, Comp &gt;::calc_reserve()</a>, <a class="el" href="f8types_8hpp_source.html#l00436">FIX8::presorted_set&lt; K, T, Comp &gt;::end()</a>, and <a class="el" href="f8types_8hpp_source.html#l00314">FIX8::presorted_set&lt; K, T, Comp &gt;::find()</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00511">FIX8::FieldTraits::add()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00521">FIX8::FieldTraits::add()</a>.</p>
 
 </div>
 </div>
@@ -1107,9 +1153,9 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00330">330</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00340">340</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00351">FIX8::presorted_set&lt; K, T, Comp &gt;::insert()</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00363">FIX8::presorted_set&lt; K, T, Comp &gt;::insert()</a>.</p>
 
 </div>
 </div>
@@ -1136,9 +1182,9 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 <p>Obtain the number of elements that can be inserted before reallocating </p>
 <dl class="section return"><dt>Returns</dt><dd>reserved + sz </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00350">350</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00360">360</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_rsz</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_rsz</a>.</p>
 
 </div>
 </div>
@@ -1165,11 +1211,11 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 <p>Obtain the number of elements in the set </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of elements </dd></dl>
 
-<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00342">342</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
+<p>Definition at line <a class="el" href="traits_8hpp_source.html#l00352">352</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>References <a class="el" href="f8types_8hpp_source.html#l00262">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00268">FIX8::presorted_set&lt; K, T, Comp &gt;::_sz</a>.</p>
 
-<p>Referenced by <a class="el" href="consolemenu_8cpp_source.html#l00118">FIX8::ConsoleMenu::SelectField()</a>, and <a class="el" href="traits_8hpp_source.html#l00420">FIX8::FieldTraits::size()</a>.</p>
+<p>Referenced by <a class="el" href="consolemenu_8cpp_source.html#l00118">FIX8::ConsoleMenu::SelectField()</a>, and <a class="el" href="traits_8hpp_source.html#l00430">FIX8::FieldTraits::size()</a>.</p>
 
 </div>
 </div>
@@ -1290,7 +1336,7 @@ class FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &g
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:49. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

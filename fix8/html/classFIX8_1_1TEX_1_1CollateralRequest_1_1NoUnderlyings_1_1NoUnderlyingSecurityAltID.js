@@ -2,17 +2,10 @@ var classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecuri
 [
     [ "NoUnderlyingSecurityAltID", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a97863433c397982ebf319d5e264e0bcd", null ],
     [ "~NoUnderlyingSecurityAltID", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#aa88228b9302600f70960e16107d0a526", null ],
-    [ "NoUnderlyingSecurityAltID", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a97863433c397982ebf319d5e264e0bcd", null ],
-    [ "~NoUnderlyingSecurityAltID", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#aa88228b9302600f70960e16107d0a526", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a41958b8745e46b669be4a4c9d7be658c", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a41958b8745e46b669be4a4c9d7be658c", null ],
-    [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a242c84e5b5a434f953b25b63a5d98419", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a242c84e5b5a434f953b25b63a5d98419", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#af20b40ee0006f1ad13aee1ac736d9a3f", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a2346c23b9e51e44edd84e83cbf5aecfe", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a2346c23b9e51e44edd84e83cbf5aecfe", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#abaac29c760cb53afdf1fbc75f9c391d2", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#abaac29c760cb53afdf1fbc75f9c391d2", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a259f5769a7015641aaf75b356702ddcc", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#ad47d592f5228105f05cba42144cc6ed8", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#abfb33ba1415501dce4a0846f760f2339", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#ab6ae5b9e99bc2c92e89903543b9f3c54", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1CollateralRequest_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#a419cc0047986ba756b921beb60eeb14b", null ]
 ];

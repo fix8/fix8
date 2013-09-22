@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -107,7 +107,6 @@ $(document).ready(function(){initNavTree('message_8hpp.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">message.hpp File Reference</div>  </div>
@@ -125,8 +124,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Router.html">FIX8::Router</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for inbound message routing.  <a href="classFIX8_1_1Router.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Minst.html">FIX8::Minst</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structures for framework generated message creation table.  <a href="classFIX8_1_1Minst.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Minst_1_1__gen.html">FIX8::Minst::_gen&lt; T &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1Minst_1_1__gen_3_01void_01_5_01_4.html">FIX8::Minst::_gen&lt; void * &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1BaseMsgEntry.html">FIX8::BaseMsgEntry</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure for framework generated message creation table.  <a href="structFIX8_1_1BaseMsgEntry.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1F8MetaCntx.html">FIX8::F8MetaCntx</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static metadata context class - one per FIX xml schema.  <a href="structFIX8_1_1F8MetaCntx.html#details">More...</a><br/></td></tr>
@@ -141,12 +146,8 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceFIX8"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html">FIX8</a></td></tr>
+<tr class="memdesc:namespaceFIX8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Your bog standard RAII scoped lock. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a55b0c95abd1f9db7df9ea77f542cf9d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message_8hpp.html#a55b0c95abd1f9db7df9ea77f542cf9d3">_FIX8_MESSAGE_HPP_</a></td></tr>
-<tr class="separator:a55b0c95abd1f9db7df9ea77f542cf9d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -158,6 +159,7 @@ short, class GroupBase * &gt;&#160;</td><td class="memItemRight" valign="bottom"
 <tr class="separator:afe4a208faec0a15100e5a0cfcb0a2ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f3bd1c25f56cc69d0bc505f9581a295"><td class="memItemLeft" align="right" valign="top">typedef GeneratedTable&lt; const <br class="typebreak"/>
 char *, BaseMsgEntry &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a0f3bd1c25f56cc69d0bc505f9581a295">FIX8::MsgTable</a></td></tr>
+<tr class="memdesc:a0f3bd1c25f56cc69d0bc505f9581a295"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classFIX8_1_1Field.html" title="Field template. There will ONLY be template specialisations of this class using Int2Type idiom...">Field</a> metadata structure.  <a href="#a0f3bd1c25f56cc69d0bc505f9581a295">More...</a><br/></td></tr>
 <tr class="separator:a0f3bd1c25f56cc69d0bc505f9581a295"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb952d45f30f04ab75c31d53fcc22956"><td class="memItemLeft" align="right" valign="top">typedef GeneratedTable<br class="typebreak"/>
 &lt; unsigned, BaseEntry &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#adb952d45f30f04ab75c31d53fcc22956">FIX8::FieldTable</a></td></tr>
@@ -169,25 +171,10 @@ short, BaseField * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a cl
 &lt; unsigned short, BaseField * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#ab0c8887a36bd17208f8c3fb08f472149">FIX8::Positions</a></td></tr>
 <tr class="separator:ab0c8887a36bd17208f8c3fb08f472149"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a55b0c95abd1f9db7df9ea77f542cf9d3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _FIX8_MESSAGE_HPP_</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00038">38</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:41. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:14. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

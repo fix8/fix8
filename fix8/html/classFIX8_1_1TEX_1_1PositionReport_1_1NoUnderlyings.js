@@ -6,17 +6,10 @@ var classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings =
     [ "NoUndlyInstrumentParties", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties" ],
     [ "NoUnderlyings", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a50d0bd1d518e9c07b7875e1618e50d5b", null ],
     [ "~NoUnderlyings", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a48496f47853e05ef2d4f93df51d04a46", null ],
-    [ "NoUnderlyings", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a50d0bd1d518e9c07b7875e1618e50d5b", null ],
-    [ "~NoUnderlyings", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a48496f47853e05ef2d4f93df51d04a46", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a625c72f88271b30b9f46561a6fb51b2b", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a625c72f88271b30b9f46561a6fb51b2b", null ],
-    [ "get_msgtype", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a079d5d69f3e026dc201b67a965a378a3", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a079d5d69f3e026dc201b67a965a378a3", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#ab1ae0b8203e8597e1856ab13a74e3107", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#ab56b8dbf06c451f6571691241e89bc07", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#ab56b8dbf06c451f6571691241e89bc07", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a4b608bd0835805c50540557f69255c9f", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a4b608bd0835805c50540557f69255c9f", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a818a2055209bdee1602d00328fb35449", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#ac28a6e1810547f10637c363160806425", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a455ea0c938ebe522dd42efdeb5f6c615", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#acc119e882ff238e5bf14629a869f0496", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings.html#a9d4a18714d5fdcdfcaa09573f567ce42", null ]
 ];

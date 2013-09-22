@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -151,7 +151,7 @@ Friends</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>High resolution interval timer. </p>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00218">218</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00229">229</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a62ac8015e34730792fb3df74d5f5280d"></a>
 <div class="memitem">
@@ -176,7 +176,7 @@ Friends</h2></td></tr>
 
 <p>Ctor. RAII. </p>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00224">224</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00242">242</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -203,7 +203,7 @@ Friends</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00227">227</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00246">246</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -231,11 +231,11 @@ Friends</h2></td></tr>
 <p>Get delta as a double. </p>
 <dl class="section return"><dt>Returns</dt><dd>delta as double </dd></dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00240">240</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00266">266</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>References <a class="el" href="timer_8hpp_source.html#l00220">delta_</a>, and <a class="el" href="tickval_8hpp_source.html#l00191">FIX8::Tickval::todouble()</a>.</p>
+<p>References <a class="el" href="timer_8hpp_source.html#l00234">delta_</a>, and <a class="el" href="tickval_8hpp_source.html#l00202">FIX8::Tickval::todouble()</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8cpp_source.html#l00363">FIX8::Message::encode()</a>, <a class="el" href="message_8cpp_source.html#l00209">FIX8::Message::factory()</a>, and <a class="el" href="timer_8hpp_source.html#l00244">Reset()</a>.</p>
+<p>Referenced by <a class="el" href="message_8cpp_source.html#l00362">FIX8::Message::encode()</a>, <a class="el" href="message_8cpp_source.html#l00209">FIX8::Message::factory()</a>, and <a class="el" href="timer_8hpp_source.html#l00271">Reset()</a>.</p>
 
 </div>
 </div>
@@ -262,11 +262,11 @@ Friends</h2></td></tr>
 <p>Calculate elapsed time (delta). </p>
 <dl class="section return"><dt>Returns</dt><dd>reference to this object </dd></dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00231">231</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00250">250</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>References <a class="el" href="timer_8hpp_source.html#l00220">delta_</a>, and <a class="el" href="timer_8hpp_source.html#l00220">startTime_</a>.</p>
+<p>References <a class="el" href="timer_8hpp_source.html#l00234">delta_</a>, and <a class="el" href="timer_8hpp_source.html#l00234">startTime_</a>.</p>
 
-<p>Referenced by <a class="el" href="message_8cpp_source.html#l00363">FIX8::Message::encode()</a>, and <a class="el" href="message_8cpp_source.html#l00209">FIX8::Message::factory()</a>.</p>
+<p>Referenced by <a class="el" href="message_8cpp_source.html#l00362">FIX8::Message::encode()</a>, and <a class="el" href="message_8cpp_source.html#l00209">FIX8::Message::factory()</a>.</p>
 
 </div>
 </div>
@@ -293,9 +293,9 @@ Friends</h2></td></tr>
 <p>Reset the interval start time. </p>
 <dl class="section return"><dt>Returns</dt><dd>the old delta as double </dd></dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00244">244</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00271">271</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>References <a class="el" href="timer_8hpp_source.html#l00240">AsDouble()</a>, <a class="el" href="tickval_8hpp_source.html#l00171">FIX8::Tickval::now()</a>, and <a class="el" href="timer_8hpp_source.html#l00220">startTime_</a>.</p>
+<p>References <a class="el" href="timer_8hpp_source.html#l00266">AsDouble()</a>, <a class="el" href="timer_8hpp_source.html#l00234">delta_</a>, <a class="el" href="tickval_8hpp_source.html#l00182">FIX8::Tickval::now()</a>, and <a class="el" href="timer_8hpp_source.html#l00234">startTime_</a>.</p>
 
 </div>
 </div>
@@ -341,7 +341,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the stream, os </dd></dl>
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00255">255</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00287">287</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
 </div>
 </div>
@@ -364,9 +364,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00220">220</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00234">234</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00240">AsDouble()</a>, and <a class="el" href="timer_8hpp_source.html#l00231">Calculate()</a>.</p>
+<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00266">AsDouble()</a>, <a class="el" href="timer_8hpp_source.html#l00250">Calculate()</a>, and <a class="el" href="timer_8hpp_source.html#l00271">Reset()</a>.</p>
 
 </div>
 </div>
@@ -388,9 +388,9 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00220">220</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
+<p>Definition at line <a class="el" href="timer_8hpp_source.html#l00234">234</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00231">Calculate()</a>, and <a class="el" href="timer_8hpp_source.html#l00244">Reset()</a>.</p>
+<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00250">Calculate()</a>, and <a class="el" href="timer_8hpp_source.html#l00271">Reset()</a>.</p>
 
 </div>
 </div>
@@ -400,7 +400,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:49. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -52,6 +52,7 @@ var structFIX8_1_1FieldTrait =
       [ "component", "structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a200d3ee5a9c49bb65105ab559657f898", null ],
       [ "suppress", "structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a89ed3b58711a61509710ab590e1c3224", null ],
       [ "automatic", "structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a03042135098102a25056a49729a08991", null ],
+      [ "ignore", "structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a14e6fc8479a9f93e607f2170fe586b27", null ],
       [ "count", "structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a6239893bd6efecedbb81c6998749dd20", null ]
     ] ],
     [ "FieldTrait", "structFIX8_1_1FieldTrait.html#ab7783c7a6b1cfbd20ae49b24cace1ba1", null ],

@@ -2,17 +2,10 @@ var classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1
 [
     [ "NoMaturityRules", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a4546ed8f3b869e0d8174a2c959a4c543", null ],
     [ "~NoMaturityRules", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a1d684b389de3a36caa39b46b501ca62f", null ],
-    [ "NoMaturityRules", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a4546ed8f3b869e0d8174a2c959a4c543", null ],
-    [ "~NoMaturityRules", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a1d684b389de3a36caa39b46b501ca62f", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#ab414567e6a2f37c42c4266020aae7600", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#ab414567e6a2f37c42c4266020aae7600", null ],
-    [ "get_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#ae55238c560c9579ab2014f64e17a9903", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#ae55238c560c9579ab2014f64e17a9903", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a56ea522e742b52b29dda1e8f3878b9f0", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a9e41e553f9627f21872c11f36dc4bf7f", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a9e41e553f9627f21872c11f36dc4bf7f", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a4c3a6928e61213380da01382aca731d4", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a4c3a6928e61213380da01382aca731d4", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#ab089e8621b74c38d17f78e61bc276913", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a7c055a763a02503b5fa227f5238bedeb", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a10541b4d0f0f997470f8e447940577fe", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#ab83f3319d237564962726a3695de1966", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoStrikeRules_1_1NoMaturityRules.html#a39d3f4d82d272961b8bb1ac7df8a6266", null ]
 ];

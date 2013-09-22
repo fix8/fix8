@@ -9,7 +9,6 @@ var f8c_8hpp =
     [ "FieldSpec", "structFIX8_1_1FieldSpec.html", "structFIX8_1_1FieldSpec" ],
     [ "MessageSpec", "structFIX8_1_1MessageSpec.html", "structFIX8_1_1MessageSpec" ],
     [ "push_dir", "classFIX8_1_1push__dir.html", "classFIX8_1_1push__dir" ],
-    [ "_F8_F8C_HPP_", "f8c_8hpp.html#a5fabad1b0b5e1e4117b76a08f567f7c2", null ],
     [ "BaseTypeMap", "f8c_8hpp.html#abbef208b1c28a9bb7b9dfda012b9179c", null ],
     [ "Components", "f8c_8hpp.html#a39b9db9bebadb681f3312265f15b6d33", null ],
     [ "CSMap", "f8c_8hpp.html#aeb80f9f92b222aa70c97343ad2922b2d", null ],

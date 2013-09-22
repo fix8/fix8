@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -197,7 +197,9 @@ Public Types</h2></td></tr>
 &#160;&#160;<a class="el" href="structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a200d3ee5a9c49bb65105ab559657f898">component</a>, 
 <a class="el" href="structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a89ed3b58711a61509710ab590e1c3224">suppress</a>, 
 <a class="el" href="structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a03042135098102a25056a49729a08991">automatic</a>, 
-<a class="el" href="structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a6239893bd6efecedbb81c6998749dd20">count</a>
+<a class="el" href="structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a14e6fc8479a9f93e607f2170fe586b27">ignore</a>, 
+<br/>
+&#160;&#160;<a class="el" href="structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092a6239893bd6efecedbb81c6998749dd20">count</a>
 <br/>
  }</td></tr>
 <tr class="memdesc:a7ce0dab4c983bc9ba204654f20543092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trait bits.  <a href="structFIX8_1_1FieldTrait.html#a7ce0dab4c983bc9ba204654f20543092">More...</a><br/></td></tr>
@@ -372,6 +374,8 @@ Friends</h2></td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="a7ce0dab4c983bc9ba204654f20543092a89ed3b58711a61509710ab590e1c3224"></a>suppress</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="a7ce0dab4c983bc9ba204654f20543092a03042135098102a25056a49729a08991"></a>automatic</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a7ce0dab4c983bc9ba204654f20543092a14e6fc8479a9f93e607f2170fe586b27"></a>ignore</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="a7ce0dab4c983bc9ba204654f20543092a6239893bd6efecedbb81c6998749dd20"></a>count</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
@@ -799,7 +803,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="traits_8hpp_source.html#l00122">122</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00554">FIX8::FieldTraits::getComp()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00569">FIX8::FieldTraits::getComp()</a>.</p>
 
 </div>
 </div>
@@ -823,7 +827,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="traits_8hpp_source.html#l00123">123</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00486">FIX8::FieldTraits::clear()</a>, <a class="el" href="traits_8hpp_source.html#l00521">FIX8::FieldTraits::clear_flag()</a>, <a class="el" href="traits_8hpp_source.html#l00426">FIX8::FieldTraits::get()</a>, <a class="el" href="traits_8hpp_source.html#l00575">FIX8::FieldTraits::getPos()</a>, <a class="el" href="traits_8hpp_source.html#l00412">FIX8::FieldTraits::getval()</a>, and <a class="el" href="traits_8hpp_source.html#l00460">FIX8::FieldTraits::set()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00496">FIX8::FieldTraits::clear()</a>, <a class="el" href="traits_8hpp_source.html#l00531">FIX8::FieldTraits::clear_flag()</a>, <a class="el" href="traits_8hpp_source.html#l00436">FIX8::FieldTraits::get()</a>, <a class="el" href="traits_8hpp_source.html#l00590">FIX8::FieldTraits::getPos()</a>, <a class="el" href="traits_8hpp_source.html#l00422">FIX8::FieldTraits::getval()</a>, and <a class="el" href="traits_8hpp_source.html#l00470">FIX8::FieldTraits::set()</a>.</p>
 
 </div>
 </div>
@@ -839,7 +843,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="traits_8hpp_source.html#l00120">120</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00230">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::find()</a>, and <a class="el" href="traits_8hpp_source.html#l00132">FIX8::FieldTrait::Compare::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00240">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;::find()</a>, and <a class="el" href="traits_8hpp_source.html#l00132">FIX8::FieldTrait::Compare::operator()()</a>.</p>
 
 </div>
 </div>
@@ -877,7 +881,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="traits_8hpp_source.html#l00122">122</a> of file <a class="el" href="traits_8hpp_source.html">traits.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00575">FIX8::FieldTraits::getPos()</a>, and <a class="el" href="traits_8hpp_source.html#l00142">FIX8::FieldTrait::PosCompare::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="traits_8hpp_source.html#l00590">FIX8::FieldTraits::getPos()</a>, and <a class="el" href="traits_8hpp_source.html#l00142">FIX8::FieldTrait::PosCompare::operator()()</a>.</p>
 
 </div>
 </div>
@@ -887,7 +891,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:49. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

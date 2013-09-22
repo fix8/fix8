@@ -8,5 +8,6 @@ var structFIX8_1_1MessageSpec =
     [ "_fields", "structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440", null ],
     [ "_groups", "structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145", null ],
     [ "_is_admin", "structFIX8_1_1MessageSpec.html#a2eb3aa22c9fe4f1db425021cf68123d1", null ],
-    [ "_name", "structFIX8_1_1MessageSpec.html#a4497083907089972aec0d549f7f2b871", null ]
+    [ "_name", "structFIX8_1_1MessageSpec.html#a4497083907089972aec0d549f7f2b871", null ],
+    [ "group_refcnt", "structFIX8_1_1MessageSpec.html#a691d567ee95d04527959c3cb94bf38d7", null ]
 ];

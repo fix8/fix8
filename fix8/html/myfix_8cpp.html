@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -143,6 +143,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceFIX8"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html">FIX8</a></td></tr>
+<tr class="memdesc:namespaceFIX8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Your bog standard RAII scoped lock. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespaceFIX8_1_1TEX"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html">FIX8::TEX</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,8 +152,8 @@ Namespaces</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:ae5ad5cbeccaedc03a48d3c7eaa803e79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="myfix_8cpp.html#ae5ad5cbeccaedc03a48d3c7eaa803e79">print_usage</a> ()</td></tr>
 <tr class="separator:ae5ad5cbeccaedc03a48d3c7eaa803e79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0278dae960ecf7362545fbddfc4bbc47"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="myfix_8cpp.html#a0278dae960ecf7362545fbddfc4bbc47">GETARGLIST</a> (&quot;hl:svqc:R:S:rd&quot;)</td></tr>
-<tr class="separator:a0278dae960ecf7362545fbddfc4bbc47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63906880206e68741a010bd9c1d5bf57"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="myfix_8cpp.html#a63906880206e68741a010bd9c1d5bf57">GETARGLIST</a> (&quot;hl:svqc:R:S:rdo&quot;)</td></tr>
+<tr class="separator:a63906880206e68741a010bd9c1d5bf57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53950f1d1b31e114560c2b9b5b57b01e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="myfix_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received</a> (false)</td></tr>
 <tr class="separator:a53950f1d1b31e114560c2b9b5b57b01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c5ccb184efa9859064c91db1aac5c68"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="myfix_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet</a> (false)</td></tr>
@@ -164,7 +165,7 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><br/>
- This is a complete working example of a FIX client/server using <a class="el" href="namespaceFIX8.html">FIX8</a>.<br/>
+ This is a complete working example of a FIX client/server using <a class="el" href="namespaceFIX8.html" title="Your bog standard RAII scoped lock.">FIX8</a>.<br/>
  <br/>
  <code> Usage: f8test [-RSchlqrsv]<br/>
  -R,&ndash;receive set next expected receive sequence number<br/>
@@ -205,14 +206,14 @@ Functions</h2></td></tr>
 
 <p>Definition in file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a0278dae960ecf7362545fbddfc4bbc47"></a>
+<a class="anchor" id="a63906880206e68741a010bd9c1d5bf57"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">const string GETARGLIST </td>
           <td>(</td>
-          <td class="paramtype">&quot;hl:svqc:R:S:rd&quot;&#160;</td>
+          <td class="paramtype">&quot;hl:svqc:R:S:rdo&quot;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -247,7 +248,7 @@ Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="myfix_8cpp_source.html#l00171">171</a> of file <a class="el" href="myfix_8cpp_source.html">myfix.cpp</a>.</p>
 
-<p>References <a class="el" href="Myfix__classes_8hpp_source.html#l00060">FIX8::TEX::ctx</a>, <a class="el" href="xml_8cpp_source.html#l00695">XmlElement::Factory()</a>, <a class="el" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <a class="el" href="hftest_8hpp_source.html#l00202">RandDev::init()</a>, <a class="el" href="f8config_8h_source.html#l00427">PACKAGE</a>, <a class="el" href="f8cutils_8cpp_source.html#l00339">print_usage()</a>, <a class="el" href="harness_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet()</a>, <a class="el" href="harness_8cpp_source.html#l00165">sig_handler()</a>, <a class="el" href="harness_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received()</a>, <a class="el" href="f8utils_8hpp_source.html#l01124">FIX8::tty_save_state::unset_raw_mode()</a>, <a class="el" href="f8config_8h_source.html#l00487">VERSION</a>, and <a class="el" href="f8exception_8hpp_source.html#l00085">FIX8::f8Exception::what()</a>.</p>
+<p>References <a class="el" href="Myfix__classes_8hpp_source.html#l00065">FIX8::TEX::ctx</a>, <a class="el" href="xml_8cpp_source.html#l00689">XmlElement::Factory()</a>, <a class="el" href="f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab">GETARGLIST</a>, <a class="el" href="hftest_8hpp_source.html#l00202">RandDev::init()</a>, <a class="el" href="f8config_8h_source.html#l00376">PACKAGE</a>, <a class="el" href="f8cutils_8cpp_source.html#l00339">print_usage()</a>, <a class="el" href="harness_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet()</a>, <a class="el" href="harness_8cpp_source.html#l00165">sig_handler()</a>, <a class="el" href="harness_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received()</a>, <a class="el" href="f8utils_8hpp_source.html#l01123">FIX8::tty_save_state::unset_raw_mode()</a>, <a class="el" href="f8config_8h_source.html#l00439">VERSION</a>, and <a class="el" href="f8exception_8hpp_source.html#l00085">FIX8::f8Exception::what()</a>.</p>
 
 </div>
 </div>
@@ -323,7 +324,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:41. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:14. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -5,6 +5,7 @@ var classFIX8_1_1Field_3_01Boolean_00_01field_01_4 =
     [ "Field", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#a3f2cfc04b3cd2d1b39d471edf517e0ed", null ],
     [ "Field", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#a059172a878a77266bae98cd71fa566e0", null ],
     [ "Field", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#a396420b4f596fb5b00308c3170763dde", null ],
+    [ "Field", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#a53bf6667043134cbac1e2463097d7fa2", null ],
     [ "~Field", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#ab39dc95e2e07876edb280efbd32dc528", null ],
     [ "copy", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#ac1c9328e987214e33d23d5871a46aea0", null ],
     [ "get", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html#a79f8f2cc81c99e9f62925faac48cd84f", null ],

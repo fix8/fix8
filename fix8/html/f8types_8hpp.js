@@ -7,7 +7,8 @@ var f8types_8hpp =
     [ "GeneratedTable", "classFIX8_1_1GeneratedTable.html", "classFIX8_1_1GeneratedTable" ],
     [ "StaticTable", "structFIX8_1_1StaticTable.html", "structFIX8_1_1StaticTable" ],
     [ "presorted_set", "classFIX8_1_1presorted__set.html", "classFIX8_1_1presorted__set" ],
-    [ "_F8_TYPES_HPP_", "f8types_8hpp.html#ae89fa0b5c6e0e6c49d84d1ffd27de060", null ],
+    [ "Type2Type", "structFIX8_1_1Type2Type.html", "structFIX8_1_1Type2Type" ],
+    [ "Type2Types", "structFIX8_1_1Type2Types.html", "structFIX8_1_1Type2Types" ],
     [ "f8String", "f8types_8hpp.html#a653abc4baa49d96ad764ffc8f3dce148", null ],
     [ "ProcessModel", "f8types_8hpp.html#adf65fd9873c63995c6da40e0a5031f83", [
       [ "pm_thread", "f8types_8hpp.html#adf65fd9873c63995c6da40e0a5031f83a084c5fde2b1e72f800d4de6902d5c014", null ],

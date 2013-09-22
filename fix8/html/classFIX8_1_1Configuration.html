@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -184,6 +184,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a873f1b9a15f2df130a1ae9a2bf622f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77a0bd3c0e02ef8ab382550cc8033266"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83">ProcessModel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a77a0bd3c0e02ef8ab382550cc8033266">get_process_model</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
 <tr class="separator:a77a0bd3c0e02ef8ab382550cc8033266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a931c619f62769de75535cc4da52e9095"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a931c619f62769de75535cc4da52e9095">get_ignore_logon_sequence_check_flag</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from)</td></tr>
+<tr class="separator:a931c619f62769de75535cc4da52e9095"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c173a81e731f1f029291fa7bb8d164e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a5c173a81e731f1f029291fa7bb8d164e">get_no_chksum_flag</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from)</td></tr>
+<tr class="separator:a5c173a81e731f1f029291fa7bb8d164e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b1317e143879bdc346df7ad98d39cfe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a9b1317e143879bdc346df7ad98d39cfe">get_reset_sequence_number_flag</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from)</td></tr>
 <tr class="separator:a9b1317e143879bdc346df7ad98d39cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8859935c271ff239ab4d093a4549c7bf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a8859935c271ff239ab4d093a4549c7bf">get_always_seqnum_assign</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from)</td></tr>
@@ -408,9 +412,9 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00141">141</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00189">XmlElement::FindAttrRef()</a>, <a class="el" href="xml_8cpp_source.html#l00627">XmlElement::GetAttr()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00189">XmlElement::FindAttrRef()</a>, <a class="el" href="xml_8cpp_source.html#l00621">XmlElement::GetAttr()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00392">FIX8::Session::handle_logon()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00391">FIX8::Session::handle_logon()</a>.</p>
 
 </div>
 </div>
@@ -456,9 +460,9 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00102">102</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8hpp_source.html#l00171">XmlElement::FindAttr()</a>, <a class="el" href="session_8hpp_source.html#l00098">FIX8::SessionID::get_senderCompID()</a>, <a class="el" href="session_8hpp_source.html#l00102">FIX8::SessionID::get_targetCompID()</a>, <a class="el" href="xml_8cpp_source.html#l00627">XmlElement::GetAttr()</a>, <a class="el" href="persist_8cpp_source.html#l00068">FIX8::BDBPersister::initialise()</a>, <a class="el" href="filepersist_8cpp_source.html#l00073">FIX8::FilePersister::initialise()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00278">FIX8::scoped_ptr&lt; T &gt;::release()</a>.</p>
+<p>References <a class="el" href="xml_8hpp_source.html#l00171">XmlElement::FindAttr()</a>, <a class="el" href="session_8hpp_source.html#l00098">FIX8::SessionID::get_senderCompID()</a>, <a class="el" href="session_8hpp_source.html#l00102">FIX8::SessionID::get_targetCompID()</a>, <a class="el" href="xml_8cpp_source.html#l00621">XmlElement::GetAttr()</a>, <a class="el" href="persist_8cpp_source.html#l00068">FIX8::BDBPersister::initialise()</a>, <a class="el" href="filepersist_8cpp_source.html#l00073">FIX8::FilePersister::initialise()</a>, and <a class="el" href="f8utils_8hpp_source.html#l00277">FIX8::scoped_ptr&lt; T &gt;::release()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00392">FIX8::Session::handle_logon()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00391">FIX8::Session::handle_logon()</a>.</p>
 
 </div>
 </div>
@@ -643,7 +647,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00091">91</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00627">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00621">XmlElement::GetAttr()</a>.</p>
 
 </div>
 </div>
@@ -682,7 +686,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00213">213</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00325">FIX8::Connection::cn_unknown</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00333">FIX8::Connection::cn_unknown</a>.</p>
 
 </div>
 </div>
@@ -716,7 +720,7 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if always_seqnum_assign flag was passed and was true </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00232">232</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00244">244</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="xml_8hpp_source.html#l00171">XmlElement::FindAttr()</a>.</p>
 
@@ -754,7 +758,7 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>target default_appl_ver_id </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00238">238</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00250">250</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00079">get_string_field()</a>.</p>
 
@@ -795,6 +799,44 @@ Static Private Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00203">203</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="xml_8hpp_source.html#l00171">XmlElement::FindAttr()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a931c619f62769de75535cc4da52e9095"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FIX8::Configuration::get_ignore_logon_sequence_check_flag </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td>
+          <td class="paramname"><em>from</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Extract the ignore_logon_sequence_check flag from a session entity. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">from</td><td>xml entity to search </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if ignore_logon_sequence_check flag was passed and was true </dd></dl>
+
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00226">226</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+
+<p>References <a class="el" href="xml_8hpp_source.html#l00171">XmlElement::FindAttr()</a>.</p>
+
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00350">FIX8::Session::sequence_check()</a>.</p>
 
 </div>
 </div>
@@ -869,7 +911,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00195">195</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="logger_8hpp_source.html#l00261">FIX8::Logger::_bit_names</a>, <a class="el" href="xml_8cpp_source.html#l00627">XmlElement::GetAttr()</a>, <a class="el" href="logger_8hpp_source.html#l00171">FIX8::Logger::num_flags</a>, <a class="el" href="f8utils_8hpp_source.html#l00716">FIX8::ebitset&lt; T, B &gt;::set()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
+<p>References <a class="el" href="logger_8hpp_source.html#l00261">FIX8::Logger::_bit_names</a>, <a class="el" href="xml_8cpp_source.html#l00621">XmlElement::GetAttr()</a>, <a class="el" href="logger_8hpp_source.html#l00171">FIX8::Logger::num_flags</a>, <a class="el" href="f8utils_8hpp_source.html#l00715">FIX8::ebitset&lt; T, B &gt;::set()</a>, and <a class="el" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">FIX8::trim()</a>.</p>
 
 </div>
 </div>
@@ -919,6 +961,44 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a5c173a81e731f1f029291fa7bb8d164e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FIX8::Configuration::get_no_chksum_flag </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classXmlElement.html">XmlElement</a> *&#160;</td>
+          <td class="paramname"><em>from</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Extract the get_no_chksum_flag flag from a session entity. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">from</td><td>xml entity to search </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if get_no_chksum_flag flag was passed and was true </dd></dl>
+
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00232">232</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+
+<p>References <a class="el" href="xml_8hpp_source.html#l00171">XmlElement::FindAttr()</a>.</p>
+
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00054">FIX8::SessionConfig::SessionConfig()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a77a0bd3c0e02ef8ab382550cc8033266"></a>
 <div class="memitem">
 <div class="memproto">
@@ -943,9 +1023,9 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00222">222</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l00871">FIX8::enum_str_get()</a>, <a class="el" href="xml_8cpp_source.html#l00627">XmlElement::GetAttr()</a>, <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_count</a>, <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_pipeline</a>, and <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_thread</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00870">FIX8::enum_str_get()</a>, <a class="el" href="xml_8cpp_source.html#l00621">XmlElement::GetAttr()</a>, <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_count</a>, <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_pipeline</a>, and <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_thread</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00183">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00185">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>.</p>
 
 </div>
 </div>
@@ -979,7 +1059,7 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if reset_sequence_number flag was passed and was true </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00226">226</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00238">238</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="xml_8hpp_source.html#l00171">XmlElement::FindAttr()</a>.</p>
 
@@ -1109,7 +1189,7 @@ Static Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00083">83</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00325">FIX8::Connection::cn_acceptor</a>, <a class="el" href="connection_8hpp_source.html#l00325">FIX8::Connection::cn_initiator</a>, <a class="el" href="connection_8hpp_source.html#l00325">FIX8::Connection::cn_unknown</a>, and <a class="el" href="xml_8cpp_source.html#l00627">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00333">FIX8::Connection::cn_acceptor</a>, <a class="el" href="connection_8hpp_source.html#l00333">FIX8::Connection::cn_initiator</a>, <a class="el" href="connection_8hpp_source.html#l00333">FIX8::Connection::cn_unknown</a>, and <a class="el" href="xml_8cpp_source.html#l00621">XmlElement::GetAttr()</a>.</p>
 
 </div>
 </div>
@@ -1136,7 +1216,7 @@ Static Private Attributes</h2></td></tr>
 <p>Return ptr to the root <a class="el" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> </p>
 <dl class="section return"><dt>Returns</dt><dd>root element </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00275">275</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00287">287</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00050">_root</a>.</p>
 
@@ -1172,7 +1252,7 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>target sender_comp_id </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00244">244</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00256">256</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00079">get_string_field()</a>.</p>
 
@@ -1310,9 +1390,9 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00079">79</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>References <a class="el" href="xml_8cpp_source.html#l00627">XmlElement::GetAttr()</a>.</p>
+<p>References <a class="el" href="xml_8cpp_source.html#l00621">XmlElement::GetAttr()</a>.</p>
 
-<p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00238">get_default_appl_ver_id()</a>, <a class="el" href="configuration_8hpp_source.html#l00244">get_sender_comp_id()</a>, and <a class="el" href="configuration_8hpp_source.html#l00250">get_target_comp_id()</a>.</p>
+<p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00250">get_default_appl_ver_id()</a>, <a class="el" href="configuration_8hpp_source.html#l00256">get_sender_comp_id()</a>, and <a class="el" href="configuration_8hpp_source.html#l00262">get_target_comp_id()</a>.</p>
 
 </div>
 </div>
@@ -1346,7 +1426,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>target target_comp_id </dd></dl>
 
-<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00250">250</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
+<p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00262">262</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
 <p>References <a class="el" href="configuration_8hpp_source.html#l00079">get_string_field()</a>.</p>
 
@@ -1571,7 +1651,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8cpp_source.html#l00066">66</a> of file <a class="el" href="configuration_8cpp_source.html">configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l00883">FIX8::exist()</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00882">FIX8::exist()</a>.</p>
 
 <p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00118">Configuration()</a>.</p>
 
@@ -1692,7 +1772,7 @@ template&lt;typename T &gt; </div>
 
 <p>Definition at line <a class="el" href="configuration_8hpp_source.html#l00050">50</a> of file <a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00275">get_root()</a>, and <a class="el" href="configuration_8hpp_source.html#l00092">load_map()</a>.</p>
+<p>Referenced by <a class="el" href="configuration_8hpp_source.html#l00287">get_root()</a>, and <a class="el" href="configuration_8hpp_source.html#l00092">load_map()</a>.</p>
 
 </div>
 </div>
@@ -1749,7 +1829,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:41. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:14. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

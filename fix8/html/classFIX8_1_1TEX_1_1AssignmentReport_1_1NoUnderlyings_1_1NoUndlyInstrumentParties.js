@@ -3,17 +3,10 @@ var classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentPa
     [ "NoUndlyInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs" ],
     [ "NoUndlyInstrumentParties", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a693d4e93d1ce3048c34f822464316520", null ],
     [ "~NoUndlyInstrumentParties", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a02e60c610465aea29821205c9e4ae4a0", null ],
-    [ "NoUndlyInstrumentParties", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a693d4e93d1ce3048c34f822464316520", null ],
-    [ "~NoUndlyInstrumentParties", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a02e60c610465aea29821205c9e4ae4a0", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a6518411988678e1c427c19e431c00b8e", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a6518411988678e1c427c19e431c00b8e", null ],
-    [ "get_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#aa2a44fe9af47eef057d9e7b485a8a80c", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#aa2a44fe9af47eef057d9e7b485a8a80c", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a66bff01f1e78f1875512d61e3be5f99b", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a5262dbb600f4a6e4322c467613f7f1f7", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a5262dbb600f4a6e4322c467613f7f1f7", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a15ee759a3808408aaf164f12467cde72", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a15ee759a3808408aaf164f12467cde72", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#af4b14930f336ad0e0a6301ae927820e2", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a9a5d03422625434d31297a70c1d06808", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#ace5822cf48bdcb7b6089e5d41d34bef3", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#afa27734b7f601b5c87f51761443d233e", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1AssignmentReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a3a8b73ed8637de426bc5d7b8fb124555", null ]
 ];

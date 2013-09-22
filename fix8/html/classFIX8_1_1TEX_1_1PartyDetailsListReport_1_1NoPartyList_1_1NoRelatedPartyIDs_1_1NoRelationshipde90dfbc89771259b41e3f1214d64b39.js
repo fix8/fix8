@@ -3,17 +3,10 @@ var classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyI
     [ "NoRelationshipRiskSecurityAltID", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipaca4d0dfbe8eca3b3c9dfe64a11d26b3.html", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipaca4d0dfbe8eca3b3c9dfe64a11d26b3" ],
     [ "NoRelationshipRiskInstruments", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#a1a1f0679c488fe75ea7f4b2a3111783a", null ],
     [ "~NoRelationshipRiskInstruments", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#a7c9861f59cb59ec5b0e2369de5e02e3c", null ],
-    [ "NoRelationshipRiskInstruments", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#a1a1f0679c488fe75ea7f4b2a3111783a", null ],
-    [ "~NoRelationshipRiskInstruments", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#a7c9861f59cb59ec5b0e2369de5e02e3c", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#aaf8484b83c90a13f46633cdaca87f8c0", null ],
-    [ "create_group", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#aaf8484b83c90a13f46633cdaca87f8c0", null ],
-    [ "get_msgtype", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#aa194a962e38b8a3a62f6ea4800913566", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#aa194a962e38b8a3a62f6ea4800913566", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#aa700f4951d2b94ca98dfb0118f8a8ae5", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#ae28148a5f54009497cd0b27e29580564", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#ae28148a5f54009497cd0b27e29580564", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#a32a6e5cb83be4c58b4440c65bd41bc98", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#a32a6e5cb83be4c58b4440c65bd41bc98", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#abd04d5897f1efc490aa4d440da5a775e", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#a9400457a53c55218de002260b4961824", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#a796c17014f17e64c7fe442532b4862f7", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#a661a3f64185c98354c448aaa90fb5d17", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelationshipde90dfbc89771259b41e3f1214d64b39.html#aae31101e62ed380a77981a80c4057c02", null ]
 ];

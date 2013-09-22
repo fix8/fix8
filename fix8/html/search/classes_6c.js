@@ -10,6 +10,7 @@ var searchData=
   ['liststrikeprice',['ListStrikePrice',['../classFIX8_1_1TEX_1_1ListStrikePrice.html',1,'FIX8::TEX']]],
   ['log_5ffixture',['log_fixture',['../classlog__fixture.html',1,'']]],
   ['logelement',['LogElement',['../structFIX8_1_1Logger_1_1LogElement.html',1,'FIX8::Logger']]],
+  ['logfileexception',['LogfileException',['../structFIX8_1_1LogfileException.html',1,'FIX8']]],
   ['logger',['Logger',['../classFIX8_1_1Logger.html',1,'FIX8']]],
   ['loginparameters',['LoginParameters',['../structFIX8_1_1LoginParameters.html',1,'FIX8']]],
   ['logon',['Logon',['../classFIX8_1_1TEX_1_1Logon.html',1,'FIX8::TEX']]],

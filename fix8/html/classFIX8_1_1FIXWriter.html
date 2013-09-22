@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -138,6 +138,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3d2612fbcd4ea437476569ffc2257bad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae837724c0bca9b25c188cb352d16ba88"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1FIXWriter.html#ae837724c0bca9b25c188cb352d16ba88">write</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> *from)</td></tr>
 <tr class="separator:ae837724c0bca9b25c188cb352d16ba88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13176a9f9f6bf74b908805626bbf3c7d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1FIXWriter.html#a13176a9f9f6bf74b908805626bbf3c7d">join</a> ()</td></tr>
+<tr class="separator:a13176a9f9f6bf74b908805626bbf3c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1de83e854ad92abdf0bef2984750502"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1FIXWriter.html#af1de83e854ad92abdf0bef2984750502">write</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> &amp;from)</td></tr>
 <tr class="separator:af1de83e854ad92abdf0bef2984750502"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bf9b87b70d0f1ca2d6aa0dc90bc2432"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1FIXWriter.html#a9bf9b87b70d0f1ca2d6aa0dc90bc2432">poll</a> () const </td></tr>
@@ -190,7 +192,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Fix message writer. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00220">220</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00224">224</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a4d27f4d2490da75b25015e5892463ba1"></a>
 <div class="memitem">
@@ -239,7 +241,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00232">232</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00236">236</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -266,11 +268,40 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00236">236</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00240">240</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a13176a9f9f6bf74b908805626bbf3c7d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FIX8::FIXWriter::join </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Wait till writer thead has finished. </p>
+<dl class="section return"><dt>Returns</dt><dd>0 on success </dd></dl>
+
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00261">261</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+
+<p>References <a class="el" href="connection_8hpp_source.html#l00062">FIX8::AsyncSocket&lt; Message * &gt;::_pmodel</a>, <a class="el" href="connection_8hpp_source.html#l00099">FIX8::AsyncSocket&lt; T &gt;::join()</a>, and <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_pipeline</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a2dd0333d28b304e2961c383a2fd8519f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -298,7 +329,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="connection_8cpp_source.html#l00287">287</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
-<p>References <a class="el" href="f8utils_8hpp_source.html#l00286">FIX8::scoped_ptr&lt; T &gt;::get()</a>, <a class="el" href="message_8hpp_source.html#l00760">FIX8::Message::set_in_use()</a>, and <a class="el" href="f8exception_8hpp_source.html#l00085">FIX8::f8Exception::what()</a>.</p>
+<p>References <a class="el" href="f8utils_8hpp_source.html#l00285">FIX8::scoped_ptr&lt; T &gt;::get()</a>, <a class="el" href="message_8hpp_source.html#l00795">FIX8::Message::set_in_use()</a>, and <a class="el" href="f8exception_8hpp_source.html#l00085">FIX8::f8Exception::what()</a>.</p>
 
 </div>
 </div>
@@ -325,11 +356,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Check to see if a write would block </p>
 <dl class="section return"><dt>Returns</dt><dd>true if a write would block </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00273">273</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00281">281</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>References <a class="el" href="connection_8hpp_source.html#l00059">FIX8::AsyncSocket&lt; Message * &gt;::_sock</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00477">FIX8::Connection::writer_poll()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00491">FIX8::Connection::writer_poll()</a>.</p>
 
 </div>
 </div>
@@ -374,11 +405,11 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of bytes sent </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00283">283</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00291">291</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>References <a class="el" href="connection_8hpp_source.html#l00059">FIX8::AsyncSocket&lt; Message * &gt;::_sock</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00392">FIX8::Connection::send()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00406">FIX8::Connection::send()</a>.</p>
 
 </div>
 </div>
@@ -407,7 +438,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classFIX8_1_1AsyncSocket.html#a074e7a0924043facefeeea76504a633d">FIX8::AsyncSocket&lt; Message * &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00309">309</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00317">317</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>References <a class="el" href="connection_8hpp_source.html#l00062">FIX8::AsyncSocket&lt; Message * &gt;::_pmodel</a>, <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_pipeline</a>, and <a class="el" href="connection_8hpp_source.html#l00088">FIX8::AsyncSocket&lt; T &gt;::start()</a>.</p>
 
@@ -436,7 +467,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Send a message to the processing method instructing it to quit. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00316">316</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00324">324</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>References <a class="el" href="connection_8hpp_source.html#l00060">FIX8::AsyncSocket&lt; Message * &gt;::_msg_queue</a>.</p>
 
@@ -472,11 +503,11 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true in success </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00241">241</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00245">245</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00060">FIX8::AsyncSocket&lt; Message * &gt;::_msg_queue</a>, <a class="el" href="connection_8hpp_source.html#l00062">FIX8::AsyncSocket&lt; Message * &gt;::_pmodel</a>, <a class="el" href="connection_8hpp_source.html#l00061">FIX8::AsyncSocket&lt; Message * &gt;::_session</a>, <a class="el" href="f8utils_8hpp_source.html#l00286">FIX8::scoped_ptr&lt; T &gt;::get()</a>, <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_pipeline</a>, <a class="el" href="session_8cpp_source.html#l00782">FIX8::Session::send_process()</a>, and <a class="el" href="message_8hpp_source.html#l00760">FIX8::Message::set_in_use()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00060">FIX8::AsyncSocket&lt; Message * &gt;::_msg_queue</a>, <a class="el" href="connection_8hpp_source.html#l00062">FIX8::AsyncSocket&lt; Message * &gt;::_pmodel</a>, <a class="el" href="connection_8hpp_source.html#l00061">FIX8::AsyncSocket&lt; Message * &gt;::_session</a>, <a class="el" href="f8utils_8hpp_source.html#l00285">FIX8::scoped_ptr&lt; T &gt;::get()</a>, <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_pipeline</a>, <a class="el" href="session_8cpp_source.html#l00781">FIX8::Session::send_process()</a>, and <a class="el" href="message_8hpp_source.html#l00795">FIX8::Message::set_in_use()</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00381">FIX8::Connection::write()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00395">FIX8::Connection::write()</a>.</p>
 
 </div>
 </div>
@@ -510,9 +541,9 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true in success </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00258">258</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00266">266</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00062">FIX8::AsyncSocket&lt; Message * &gt;::_pmodel</a>, <a class="el" href="connection_8hpp_source.html#l00061">FIX8::AsyncSocket&lt; Message * &gt;::_session</a>, <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_pipeline</a>, <a class="el" href="session_8cpp_source.html#l00782">FIX8::Session::send_process()</a>, and <a class="el" href="message_8hpp_source.html#l00760">FIX8::Message::set_in_use()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00062">FIX8::AsyncSocket&lt; Message * &gt;::_pmodel</a>, <a class="el" href="connection_8hpp_source.html#l00061">FIX8::AsyncSocket&lt; Message * &gt;::_session</a>, <a class="el" href="f8types_8hpp_source.html#l00050">FIX8::pm_pipeline</a>, <a class="el" href="session_8cpp_source.html#l00781">FIX8::Session::send_process()</a>, and <a class="el" href="message_8hpp_source.html#l00795">FIX8::Message::set_in_use()</a>.</p>
 
 </div>
 </div>
@@ -523,7 +554,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:41. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:14. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

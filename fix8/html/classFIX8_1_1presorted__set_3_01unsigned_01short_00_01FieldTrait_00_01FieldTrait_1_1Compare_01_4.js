@@ -7,6 +7,7 @@ var classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldT
     [ "result", "classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#aa479dc1c6901c0b1a6c15a4774275e74", null ],
     [ "presorted_set", "classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#ab4ff18e7e4855b2a344e53fb6efea725", null ],
     [ "presorted_set", "classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a34e96e088bf5f5912eaa41b8220b52d4", null ],
+    [ "presorted_set", "classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#acd10da81b1b9000d52a79fe359c41a11", null ],
     [ "presorted_set", "classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a5de2a715fa11d7b7ab76fd6537f1860e", null ],
     [ "~presorted_set", "classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#ae226323a991ecd9242b47fc9937d5b16", null ],
     [ "at", "classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a1ba1d5c6e34f997efa4e384d60f61f75", null ],

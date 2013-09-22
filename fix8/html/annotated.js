@@ -22,8 +22,6 @@ var annotated =
     [ "test_session", "classtest__session.html", "classtest__session" ],
     [ "tex_router_client", "classtex__router__client.html", "classtex__router__client" ],
     [ "tex_router_server", "classtex__router__server.html", "classtex__router__server" ],
-    [ "texgw_router_client", "classtexgw__router__client.html", "classtexgw__router__client" ],
-    [ "texgw_session_client", "classtexgw__session__client.html", "classtexgw__session__client" ],
     [ "UsageMan", "classUsageMan.html", "classUsageMan" ],
     [ "XmlElement", "classXmlElement.html", "classXmlElement" ]
 ];

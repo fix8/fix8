@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -199,6 +199,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a873f1b9a15f2df130a1ae9a2bf622f1d inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77a0bd3c0e02ef8ab382550cc8033266 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83">ProcessModel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a77a0bd3c0e02ef8ab382550cc8033266">get_process_model</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from) const </td></tr>
 <tr class="separator:a77a0bd3c0e02ef8ab382550cc8033266 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a931c619f62769de75535cc4da52e9095 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a931c619f62769de75535cc4da52e9095">get_ignore_logon_sequence_check_flag</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from)</td></tr>
+<tr class="separator:a931c619f62769de75535cc4da52e9095 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c173a81e731f1f029291fa7bb8d164e inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a5c173a81e731f1f029291fa7bb8d164e">get_no_chksum_flag</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from)</td></tr>
+<tr class="separator:a5c173a81e731f1f029291fa7bb8d164e inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b1317e143879bdc346df7ad98d39cfe inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a9b1317e143879bdc346df7ad98d39cfe">get_reset_sequence_number_flag</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from)</td></tr>
 <tr class="separator:a9b1317e143879bdc346df7ad98d39cfe inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8859935c271ff239ab4d093a4549c7bf inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a8859935c271ff239ab4d093a4549c7bf">get_always_seqnum_assign</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from)</td></tr>
@@ -247,7 +251,7 @@ class FIX8::ServerSession&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00248">248</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00252">252</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="a84fcb5bc7e03647abe0631070766c02e"></a>
 <div class="memitem">
@@ -263,7 +267,7 @@ template&lt;typename T&gt; </div>
 
 <p>Convenient scoped pointer for your session. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00280">280</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00284">284</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -310,9 +314,9 @@ template&lt;typename T&gt; </div>
 
 <p>Ctor. Prepares session for receiving inbbound connections (acceptor). </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00255">255</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00259">259</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00051">FIX8::SessionConfig::_loginParameters</a>, <a class="el" href="session_8hpp_source.html#l00198">FIX8::LoginParameters::_recv_buf_sz</a>, <a class="el" href="session_8hpp_source.html#l00198">FIX8::LoginParameters::_send_buf_sz</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00251">FIX8::ServerSession&lt; T &gt;::_server_sock</a>, <a class="el" href="connection_8hpp_source.html#l00431">FIX8::Connection::set_recv_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00443">FIX8::Connection::set_send_buf_sz()</a>.</p>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00051">FIX8::SessionConfig::_loginParameters</a>, <a class="el" href="session_8hpp_source.html#l00200">FIX8::LoginParameters::_recv_buf_sz</a>, <a class="el" href="session_8hpp_source.html#l00200">FIX8::LoginParameters::_send_buf_sz</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00255">FIX8::ServerSession&lt; T &gt;::_server_sock</a>, <a class="el" href="connection_8hpp_source.html#l00445">FIX8::Connection::set_recv_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00457">FIX8::Connection::set_send_buf_sz()</a>.</p>
 
 </div>
 </div>
@@ -341,7 +345,7 @@ template&lt;typename T&gt; </div>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00267">267</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00271">271</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -378,9 +382,9 @@ template&lt;typename T&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the connected socket </dd></dl>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00277">277</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00281">281</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00251">FIX8::ServerSession&lt; T &gt;::_server_sock</a>.</p>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00255">FIX8::ServerSession&lt; T &gt;::_server_sock</a>.</p>
 
 </div>
 </div>
@@ -416,9 +420,9 @@ template&lt;typename T&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if a connection is avaialble </dd></dl>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00272">272</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00276">276</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00251">FIX8::ServerSession&lt; T &gt;::_server_sock</a>.</p>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00255">FIX8::ServerSession&lt; T &gt;::_server_sock</a>.</p>
 
 </div>
 </div>
@@ -443,7 +447,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00250">250</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00254">254</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -467,9 +471,9 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00251">251</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00255">255</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00277">FIX8::ServerSession&lt; T &gt;::accept()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00272">FIX8::ServerSession&lt; T &gt;::poll()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00255">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00281">FIX8::ServerSession&lt; T &gt;::accept()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00276">FIX8::ServerSession&lt; T &gt;::poll()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00259">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
 
 </div>
 </div>
@@ -479,7 +483,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:49. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

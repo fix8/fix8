@@ -308,6 +308,9 @@ int main(int argc, char *argv[])
     nos->encode(output);
     double tt = 0;
 
+    // quickfix doesn't encode chksum till send, so we can suppress here
+    Message::set_no_chksum_flag(true);
+
     for(int i = 0 ; i < 100000; ++i)
     {
         NewOrderSingle *nos(new NewOrderSingle);
@@ -382,9 +385,9 @@ int main(int argc, char *argv[])
 								<td>Quickfix</td>
 								<td>encode</td>
 								<td>100000</td>
-								<td>0.5171085</td>
-								<td>193383</td>
-								<td>5.17</td>
+								<td>0.4560319</td>
+								<td>219282</td>
+								<td>4.57</td>
 								<td>-</td>
 								<td>-</td>
 							</tr>
@@ -392,9 +395,9 @@ int main(int argc, char *argv[])
 								<td></td>
 								<td>decode</td>
 								<td>100000</td>
-								<td>1.601865</td>
-								<td>62427</td>
-								<td>16.02</td>
+								<td>1.364743</td>
+								<td>73274</td>
+								<td>13.65</td>
 								<td>-</td>
 								<td>-</td>
 							</tr>
@@ -402,21 +405,21 @@ int main(int argc, char *argv[])
 								<td>Fix8</td>
 								<td>encode</td>
 								<td>100000</td>
-								<td>0.1625124</td>
-								<td>615337</td>
-								<td>1.63</td>
-								<td><h4>68.6</h4></td>
+								<td>0.1429087</td>
+								<td>699747</td>
+								<td>1.43</td>
+								<td><h4>68.7</h4></td>
 								<td><h4>3.2x</h4></td>
 							</tr>
 							<tr class="success">
 								<td></td>
 								<td>decode</td>
 								<td>100000</td>
-								<td>0.7047655</td>
-								<td>141891</td>
-								<td>7.05</td>
-								<td><h4>56.0</h4></td>
-								<td><h4>2.3x</h4></td>
+								<td>0.4922069</td>
+								<td>203166</td>
+								<td>4.92</td>
+								<td><h4>63.9</h4></td>
+								<td><h4>2.8x</h4></td>
 							</tr>
 						</tbody>
 					</table>
@@ -426,7 +429,7 @@ int main(int argc, char *argv[])
 			<div class="row">
 				<div class="span12">
 					<h2>Conclusion</h2>
-					<p>For the same message, Fix8 encodes <em><b>3.2 times faster</b></em> and decodes <em><b>2.3 times faster</b></em> for an average improvement of <em><b>2.7 times</b></em> over Quickfix. In other words, reduces encode latency by <em><b>69%</b></em> and reduces decode latency by <em><b>56%</b></em>.</p>
+					<p>For the same message, Fix8 encodes <em><b>3.2 times faster</b></em> and decodes <em><b>2.8 times faster</b></em> for an average improvement of <em><b>3.0 times</b></em> over Quickfix. In other words, reduces encode latency by <em><b>69%</b></em> and reduces decode latency by <em><b>64%</b></em>.</p>
 				</div>
 			</div>
 		</div>

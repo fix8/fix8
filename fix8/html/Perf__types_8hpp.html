@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.4</span>
+   &#160;<span id="projectnumber">version  0.9.5</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -113,12 +113,14 @@ $(document).ready(function(){initNavTree('Perf__types_8hpp.html','');});
 <div class="title">Perf_types.hpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
+<div class="textblock"><code>#include &lt;<a class="el" href="f8config_8h_source.html">f8config.h</a>&gt;</code><br/>
+</div>
 <p><a href="Perf__types_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceFIX8"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html">FIX8</a></td></tr>
+<tr class="memdesc:namespaceFIX8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Your bog standard RAII scoped lock. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespaceFIX8_1_1TEX"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html">FIX8::TEX</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,12 +136,8 @@ Typedefs</h2></td></tr>
 <tr class="separator:aa3236cd95873c3a8a5b348c49de83c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae67638f55fca111898fe641fdd6ee35b"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; f8String, 22 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ae67638f55fca111898fe641fdd6ee35b">FIX8::TEX::IDSource</a></td></tr>
 <tr class="separator:ae67638f55fca111898fe641fdd6ee35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fb17feeb37447ed03a85b7c448854ae"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; f8String, 23 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a4fb17feeb37447ed03a85b7c448854ae">FIX8::TEX::IOIid</a></td></tr>
-<tr class="separator:a4fb17feeb37447ed03a85b7c448854ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e34fd33ca71534fe40bc41d931397e8"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; Qty, 32 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a1e34fd33ca71534fe40bc41d931397e8">FIX8::TEX::LastShares</a></td></tr>
 <tr class="separator:a1e34fd33ca71534fe40bc41d931397e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0e631db22cf0e43cc33f3d461a246eb"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; char, 47 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#aa0e631db22cf0e43cc33f3d461a246eb">FIX8::TEX::Rule80A</a></td></tr>
-<tr class="separator:aa0e631db22cf0e43cc33f3d461a246eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5836e31a27c230528ed47f8f89c9a6bb"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; char, 63 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a5836e31a27c230528ed47f8f89c9a6bb">FIX8::TEX::SettlmntTyp</a></td></tr>
 <tr class="separator:a5836e31a27c230528ed47f8f89c9a6bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a475341fc4f20cb03697013ddf2f577e7"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; LocalMktDate, 64 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a475341fc4f20cb03697013ddf2f577e7">FIX8::TEX::FutSettDate</a></td></tr>
@@ -148,39 +146,17 @@ Typedefs</h2></td></tr>
 <tr class="separator:a51a9efbf23cec83a69545a96b6c838d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5675d67a57a517eb32e28fa63a26f80d"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; char, 77 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a5675d67a57a517eb32e28fa63a26f80d">FIX8::TEX::OpenClose</a></td></tr>
 <tr class="separator:a5675d67a57a517eb32e28fa63a26f80d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c29ff2e6f4d5277d7eb6707ac6043ee"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; Qty, 80 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a7c29ff2e6f4d5277d7eb6707ac6043ee">FIX8::TEX::AllocShares</a></td></tr>
-<tr class="separator:a7c29ff2e6f4d5277d7eb6707ac6043ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2da03eb6c0244865b2cb9e427c14d1d5"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; f8String, 109 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a2da03eb6c0244865b2cb9e427c14d1d5">FIX8::TEX::ClientID</a></td></tr>
 <tr class="separator:a2da03eb6c0244865b2cb9e427c14d1d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75e6e2b4e1b5f66b177ccac425c7fbd4"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; LocalMktDate, 193 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a75e6e2b4e1b5f66b177ccac425c7fbd4">FIX8::TEX::FutSettDate2</a></td></tr>
-<tr class="separator:a75e6e2b4e1b5f66b177ccac425c7fbd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a591b501f5107e299d37494a4aeddfbad"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; int, 204 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a591b501f5107e299d37494a4aeddfbad">FIX8::TEX::CustomerOrFirm</a></td></tr>
 <tr class="separator:a591b501f5107e299d37494a4aeddfbad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fde6413acd12b5397e6174ec71114e6"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; DayOfMonth, 205 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a3fde6413acd12b5397e6174ec71114e6">FIX8::TEX::MaturityDay</a></td></tr>
 <tr class="separator:a3fde6413acd12b5397e6174ec71114e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44e65ab9a8bc92357792cfc9eaaf1f0e"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; PriceOffset, 211 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a44e65ab9a8bc92357792cfc9eaaf1f0e">FIX8::TEX::PegDifference</a></td></tr>
-<tr class="separator:a44e65ab9a8bc92357792cfc9eaaf1f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55c77209c808e0d68e86a6e39ecb52fe"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; UTCTimestamp, 370 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a55c77209c808e0d68e86a6e39ecb52fe">FIX8::TEX::OnBehalfOfSendingTime</a></td></tr>
-<tr class="separator:a55c77209c808e0d68e86a6e39ecb52fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af130474bd6d266a5dd3e0911dfa4d5a1"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; PriceOffset, 389 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#af130474bd6d266a5dd3e0911dfa4d5a1">FIX8::TEX::DiscretionOffset</a></td></tr>
-<tr class="separator:af130474bd6d266a5dd3e0911dfa4d5a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72ef24c4d3c74df449bb280b36ac77fc"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; f8String, 439 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a72ef24c4d3c74df449bb280b36ac77fc">FIX8::TEX::ClearingFirm</a></td></tr>
-<tr class="separator:a72ef24c4d3c74df449bb280b36ac77fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07bd73508acb703d75912ba0a9565fcb"><td class="memItemLeft" align="right" valign="top">typedef Field&lt; f8String, 440 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a07bd73508acb703d75912ba0a9565fcb">FIX8::TEX::ClearingAccount</a></td></tr>
-<tr class="separator:a07bd73508acb703d75912ba0a9565fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57b2348a0208eef9c26b2f380e1a8292"><td class="memItemLeft" align="right" valign="top">typedef FieldTable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a57b2348a0208eef9c26b2f380e1a8292">FIX8::TEX::Perf_BaseEntry</a></td></tr>
 <tr class="separator:a57b2348a0208eef9c26b2f380e1a8292"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac2d8736f4c075d0f728c317a79732a08"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ac2d8736f4c075d0f728c317a79732a08">FIX8::TEX::CommType_PER_SHARE</a> ('1')</td></tr>
-<tr class="separator:ac2d8736f4c075d0f728c317a79732a08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39aca049e315f96bb1e7602986feb0a0"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a39aca049e315f96bb1e7602986feb0a0">FIX8::TEX::CommType_PERCENTAGE</a> ('2')</td></tr>
-<tr class="separator:a39aca049e315f96bb1e7602986feb0a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cb647ab8dda62af40eeb72d5f61de56"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a6cb647ab8dda62af40eeb72d5f61de56">FIX8::TEX::CommType_ABSOLUTE</a> ('3')</td></tr>
-<tr class="separator:a6cb647ab8dda62af40eeb72d5f61de56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a472c6f4d8ba919ff257f942d0ec19a3b"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a472c6f4d8ba919ff257f942d0ec19a3b">FIX8::TEX::CommType_realm_els</a> (3)</td></tr>
-<tr class="separator:a472c6f4d8ba919ff257f942d0ec19a3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3126b2e5f01e321aff3f21b30276dfd"><td class="memItemLeft" align="right" valign="top">const f8String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ac3126b2e5f01e321aff3f21b30276dfd">FIX8::TEX::ExecInst_STAY_ON_OFFERSIDE</a> (&quot;0&quot;)</td></tr>
 <tr class="separator:ac3126b2e5f01e321aff3f21b30276dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83fc867839870c1cf7adb47d3259d3bc"><td class="memItemLeft" align="right" valign="top">const f8String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a83fc867839870c1cf7adb47d3259d3bc">FIX8::TEX::ExecInst_NOT_HELD</a> (&quot;1&quot;)</td></tr>
@@ -461,54 +437,6 @@ Functions</h2></td></tr>
 <tr class="separator:ad01232855aaeac9fd6d802c51ebc0dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e9c436a9017d50c13b67dece5ea800d"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a1e9c436a9017d50c13b67dece5ea800d">FIX8::TEX::PossDupFlag_realm_els</a> (2)</td></tr>
 <tr class="separator:a1e9c436a9017d50c13b67dece5ea800d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec201cb37e41f08e6a8b704423d7e7a9"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#aec201cb37e41f08e6a8b704423d7e7a9">FIX8::TEX::Rule80A_AGENCY_SINGLE_ORDER</a> ('A')</td></tr>
-<tr class="separator:aec201cb37e41f08e6a8b704423d7e7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa93edfeb88a4f6cef6ee21a874f0cfb3"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#aa93edfeb88a4f6cef6ee21a874f0cfb3">FIX8::TEX::Rule80A_SHORT_EXEMPT_TRANSACTION_B</a> ('B')</td></tr>
-<tr class="separator:aa93edfeb88a4f6cef6ee21a874f0cfb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a214f07178f9cc082abffee21d057a070"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a214f07178f9cc082abffee21d057a070">FIX8::TEX::Rule80A_PROGRAM_ORDER_NON_INDEX_ARB_FOR_MEMBER_FIRM_ORG</a> ('C')</td></tr>
-<tr class="separator:a214f07178f9cc082abffee21d057a070"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6046805e5c0b283bf0178cf6816296a"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ad6046805e5c0b283bf0178cf6816296a">FIX8::TEX::Rule80A_PROGRAM_ORDER_INDEX_ARB_FOR_MEMBER_FIRM_ORG</a> ('D')</td></tr>
-<tr class="separator:ad6046805e5c0b283bf0178cf6816296a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17da218922587f15944a18e78f308377"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a17da218922587f15944a18e78f308377">FIX8::TEX::Rule80A_REGISTERED_EQUITY_MARKET_MAKER_TRADES</a> ('E')</td></tr>
-<tr class="separator:a17da218922587f15944a18e78f308377"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c48bf3999d85178cf275ff662d3a7c0"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a8c48bf3999d85178cf275ff662d3a7c0">FIX8::TEX::Rule80A_SHORT_EXEMPT_TRANSACTION_F</a> ('F')</td></tr>
-<tr class="separator:a8c48bf3999d85178cf275ff662d3a7c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79a396c2695fd17a9b9dc1016cd183dc"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a79a396c2695fd17a9b9dc1016cd183dc">FIX8::TEX::Rule80A_SHORT_EXEMPT_TRANSACTION_H</a> ('H')</td></tr>
-<tr class="separator:a79a396c2695fd17a9b9dc1016cd183dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04123e274f6125c63a7098646d0b6584"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a04123e274f6125c63a7098646d0b6584">FIX8::TEX::Rule80A_INDIVIDUAL_INVESTOR_SINGLE_ORDER</a> ('I')</td></tr>
-<tr class="separator:a04123e274f6125c63a7098646d0b6584"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa55e57902e7f2cd8366339e06261dbe6"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#aa55e57902e7f2cd8366339e06261dbe6">FIX8::TEX::Rule80A_PROGRAM_ORDER_INDEX_ARB_FOR_INDIVIDUAL_CUSTOMER</a> ('J')</td></tr>
-<tr class="separator:aa55e57902e7f2cd8366339e06261dbe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02611405c1587f11c834788dc4a17f07"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a02611405c1587f11c834788dc4a17f07">FIX8::TEX::Rule80A_PROGRAM_ORDER_NON_INDEX_ARB_FOR_INDIVIDUAL_CUSTOMER</a> ('K')</td></tr>
-<tr class="separator:a02611405c1587f11c834788dc4a17f07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad53b434a105ad343d61baecf3a1278e1"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ad53b434a105ad343d61baecf3a1278e1">FIX8::TEX::Rule80A_SHORT_EXEMPT_TRANSACTION_FOR_MEMBER_COMPETING_MARKET_MAKER_AFFILIATED_WITH_THE_FIRM_CLEARING_THE_TRADE</a> ('L')</td></tr>
-<tr class="separator:ad53b434a105ad343d61baecf3a1278e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3ef01fe61b786a19ecbfeadb4dc2e7c"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#af3ef01fe61b786a19ecbfeadb4dc2e7c">FIX8::TEX::Rule80A_PROGRAM_ORDER_INDEX_ARB_FOR_OTHER_MEMBER</a> ('M')</td></tr>
-<tr class="separator:af3ef01fe61b786a19ecbfeadb4dc2e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8824d537b9f854fb0e3af484e2090ab7"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a8824d537b9f854fb0e3af484e2090ab7">FIX8::TEX::Rule80A_PROGRAM_ORDER_NON_INDEX_ARB_FOR_OTHER_MEMBER</a> ('N')</td></tr>
-<tr class="separator:a8824d537b9f854fb0e3af484e2090ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9df837128a705f54fec232d1ac72f07f"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a9df837128a705f54fec232d1ac72f07f">FIX8::TEX::Rule80A_COMPETING_DEALER_TRADES_O</a> ('O')</td></tr>
-<tr class="separator:a9df837128a705f54fec232d1ac72f07f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1766a7ea956e179328451c973d11f56f"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a1766a7ea956e179328451c973d11f56f">FIX8::TEX::Rule80A_PRINCIPAL</a> ('P')</td></tr>
-<tr class="separator:a1766a7ea956e179328451c973d11f56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b06b517ccd88d9f5f4ec93781042e52"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a5b06b517ccd88d9f5f4ec93781042e52">FIX8::TEX::Rule80A_COMPETING_DEALER_TRADES_R</a> ('R')</td></tr>
-<tr class="separator:a5b06b517ccd88d9f5f4ec93781042e52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92c19376484befaec6a4c9329809524d"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a92c19376484befaec6a4c9329809524d">FIX8::TEX::Rule80A_SPECIALIST_TRADES</a> ('S')</td></tr>
-<tr class="separator:a92c19376484befaec6a4c9329809524d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadd82e208be25ee9e963b3d972a90cc4"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#aadd82e208be25ee9e963b3d972a90cc4">FIX8::TEX::Rule80A_COMPETING_DEALER_TRADES_T</a> ('T')</td></tr>
-<tr class="separator:aadd82e208be25ee9e963b3d972a90cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6784f03e85bfaff2e544399b353b8d8f"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a6784f03e85bfaff2e544399b353b8d8f">FIX8::TEX::Rule80A_PROGRAM_ORDER_INDEX_ARB_FOR_OTHER_AGENCY</a> ('U')</td></tr>
-<tr class="separator:a6784f03e85bfaff2e544399b353b8d8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f0e42960b35b95215ef086dfdaa8dc3"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a7f0e42960b35b95215ef086dfdaa8dc3">FIX8::TEX::Rule80A_ALL_OTHER_ORDERS_AS_AGENT_FOR_OTHER_MEMBER</a> ('W')</td></tr>
-<tr class="separator:a7f0e42960b35b95215ef086dfdaa8dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3b56d0da9677d04e912aa82af1a9164"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#af3b56d0da9677d04e912aa82af1a9164">FIX8::TEX::Rule80A_SHORT_EXEMPT_TRANSACTION_FOR_MEMBER_COMPETING_MARKET_MAKER_NOT_AFFILIATED_WITH_THE_FIRM_CLEARING_THE_TRADE</a> ('X')</td></tr>
-<tr class="separator:af3b56d0da9677d04e912aa82af1a9164"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48891b244d75f678e23243b8f2204dde"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a48891b244d75f678e23243b8f2204dde">FIX8::TEX::Rule80A_PROGRAM_ORDER_NON_INDEX_ARB_FOR_OTHER_AGENCY</a> ('Y')</td></tr>
-<tr class="separator:a48891b244d75f678e23243b8f2204dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d8f89c5f71281a80630bec44d026f4e"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a9d8f89c5f71281a80630bec44d026f4e">FIX8::TEX::Rule80A_SHORT_EXEMPT_TRANSACTION_FOR_NON_MEMBER_COMPETING_MARKET_MAKER</a> ('Z')</td></tr>
-<tr class="separator:a9d8f89c5f71281a80630bec44d026f4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afab9c588cb56edb507b4f4aaab7cd7f1"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#afab9c588cb56edb507b4f4aaab7cd7f1">FIX8::TEX::Rule80A_realm_els</a> (23)</td></tr>
-<tr class="separator:afab9c588cb56edb507b4f4aaab7cd7f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:accbf1d4841f42e9baa8c6575c38f525d"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY</a> ('1')</td></tr>
 <tr class="separator:accbf1d4841f42e9baa8c6575c38f525d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a300cbe3fe9811388b74e3ee3f4c384ac"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a300cbe3fe9811388b74e3ee3f4c384ac">FIX8::TEX::Side_SELL</a> ('2')</td></tr>
@@ -611,16 +539,6 @@ Functions</h2></td></tr>
 <tr class="separator:a2af4a21b828ade20e2da5b052d568e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a146d266dedc4dc6ad5210dc9a66e9531"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a146d266dedc4dc6ad5210dc9a66e9531">FIX8::TEX::EncryptMethod_realm_els</a> (7)</td></tr>
 <tr class="separator:a146d266dedc4dc6ad5210dc9a66e9531"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a160cd42f0eb2ea1c5c71ec95d1667ba0"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a160cd42f0eb2ea1c5c71ec95d1667ba0">FIX8::TEX::CxlRejReason_TOO_LATE_TO_CANCEL</a> (0)</td></tr>
-<tr class="separator:a160cd42f0eb2ea1c5c71ec95d1667ba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28d4119c84598cdb618971563cbbc9b5"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a28d4119c84598cdb618971563cbbc9b5">FIX8::TEX::CxlRejReason_UNKNOWN_ORDER</a> (1)</td></tr>
-<tr class="separator:a28d4119c84598cdb618971563cbbc9b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0064242dc1f1c0f5688e6117833e732a"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a0064242dc1f1c0f5688e6117833e732a">FIX8::TEX::CxlRejReason_BROKER_OPTION</a> (2)</td></tr>
-<tr class="separator:a0064242dc1f1c0f5688e6117833e732a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8130a71c674516fb9a209b7563da688e"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a8130a71c674516fb9a209b7563da688e">FIX8::TEX::CxlRejReason_ORDER_ALREADY_IN_PENDING_CANCEL_OR_PENDING_REPLACE_STATUS</a> (3)</td></tr>
-<tr class="separator:a8130a71c674516fb9a209b7563da688e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2bf9b676d705b83a7b975e5390b85d9"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ad2bf9b676d705b83a7b975e5390b85d9">FIX8::TEX::CxlRejReason_realm_els</a> (4)</td></tr>
-<tr class="separator:ad2bf9b676d705b83a7b975e5390b85d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b6c711852fd1f2688caa3237e943b2e"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a7b6c711852fd1f2688caa3237e943b2e">FIX8::TEX::OrdRejReason_BROKER_OPTION</a> (0)</td></tr>
 <tr class="separator:a7b6c711852fd1f2688caa3237e943b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a906acde2aae8548cd175c640af34b2b3"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a906acde2aae8548cd175c640af34b2b3">FIX8::TEX::OrdRejReason_UNKNOWN_SYMBOL</a> (1)</td></tr>
@@ -653,32 +571,12 @@ Functions</h2></td></tr>
 <tr class="separator:acbe2bea35664ad35d4a2382f5fc4d817"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa477bc90518967b569a8c1cc37e4e7dc"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#aa477bc90518967b569a8c1cc37e4e7dc">FIX8::TEX::LocateReqd_realm_els</a> (2)</td></tr>
 <tr class="separator:aa477bc90518967b569a8c1cc37e4e7dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae359333a818f4e2f941a785b03c9aee9"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ae359333a818f4e2f941a785b03c9aee9">FIX8::TEX::ForexReq_NO</a> ('N')</td></tr>
-<tr class="separator:ae359333a818f4e2f941a785b03c9aee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a938d5d79a286bf38c93ddee3279143bd"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a938d5d79a286bf38c93ddee3279143bd">FIX8::TEX::ForexReq_YES</a> ('Y')</td></tr>
-<tr class="separator:a938d5d79a286bf38c93ddee3279143bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3062ecd4719d5124b0c03ac9e7013ac6"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a3062ecd4719d5124b0c03ac9e7013ac6">FIX8::TEX::ForexReq_realm_els</a> (2)</td></tr>
-<tr class="separator:a3062ecd4719d5124b0c03ac9e7013ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5aa717a8e7d5ab291d47b8cff00001be"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a5aa717a8e7d5ab291d47b8cff00001be">FIX8::TEX::GapFillFlag_NO</a> ('N')</td></tr>
 <tr class="separator:a5aa717a8e7d5ab291d47b8cff00001be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb6b30aa214be024e4b861de35c7a58d"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#abb6b30aa214be024e4b861de35c7a58d">FIX8::TEX::GapFillFlag_YES</a> ('Y')</td></tr>
 <tr class="separator:abb6b30aa214be024e4b861de35c7a58d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac81fecb5ca9aff03921488f5f6549b85"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ac81fecb5ca9aff03921488f5f6549b85">FIX8::TEX::GapFillFlag_realm_els</a> (2)</td></tr>
 <tr class="separator:ac81fecb5ca9aff03921488f5f6549b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ac4e3a0ab33303c08e0bc73d4cb0635"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a8ac4e3a0ab33303c08e0bc73d4cb0635">FIX8::TEX::DKReason_UNKNOWN_SYMBOL</a> ('A')</td></tr>
-<tr class="separator:a8ac4e3a0ab33303c08e0bc73d4cb0635"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a442e778a3d130131b32935bc4fab9e88"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a442e778a3d130131b32935bc4fab9e88">FIX8::TEX::DKReason_WRONG_SIDE</a> ('B')</td></tr>
-<tr class="separator:a442e778a3d130131b32935bc4fab9e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab466c900bbb207b91907c6ee44fab649"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ab466c900bbb207b91907c6ee44fab649">FIX8::TEX::DKReason_QUANTITY_EXCEEDS_ORDER</a> ('C')</td></tr>
-<tr class="separator:ab466c900bbb207b91907c6ee44fab649"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7898bd539866ad661fb0f6024269861f"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a7898bd539866ad661fb0f6024269861f">FIX8::TEX::DKReason_NO_MATCHING_ORDER</a> ('D')</td></tr>
-<tr class="separator:a7898bd539866ad661fb0f6024269861f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30d2d6be0ffb8270538cc9bd3e270d35"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a30d2d6be0ffb8270538cc9bd3e270d35">FIX8::TEX::DKReason_PRICE_EXCEEDS_LIMIT</a> ('E')</td></tr>
-<tr class="separator:a30d2d6be0ffb8270538cc9bd3e270d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f0da779a1d229a463834bec72723450"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a1f0da779a1d229a463834bec72723450">FIX8::TEX::DKReason_OTHER</a> ('Z')</td></tr>
-<tr class="separator:a1f0da779a1d229a463834bec72723450"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a840563856eb44ec9b4d42a0e8b4f4002"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a840563856eb44ec9b4d42a0e8b4f4002">FIX8::TEX::DKReason_realm_els</a> (6)</td></tr>
-<tr class="separator:a840563856eb44ec9b4d42a0e8b4f4002"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32579b71d60c55cb31775cf9cf633c6b"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a32579b71d60c55cb31775cf9cf633c6b">FIX8::TEX::ResetSeqNumFlag_NO</a> ('N')</td></tr>
 <tr class="separator:a32579b71d60c55cb31775cf9cf633c6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab19a0c0945c0cedf1cf199993a83d6f"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#aab19a0c0945c0cedf1cf199993a83d6f">FIX8::TEX::ResetSeqNumFlag_YES</a> ('Y')</td></tr>
@@ -717,12 +615,6 @@ Functions</h2></td></tr>
 <tr class="separator:a43729ba42b80eeca2e3dcdf089e639fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a017d8d75103f2960fb834dcf1c33eab8"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a017d8d75103f2960fb834dcf1c33eab8">FIX8::TEX::ExecType_realm_els</a> (15)</td></tr>
 <tr class="separator:a017d8d75103f2960fb834dcf1c33eab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a899f3cda630c844862c1300b8c3ad8de"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a899f3cda630c844862c1300b8c3ad8de">FIX8::TEX::SettlCurrFxRateCalc_DIVIDE</a> ('D')</td></tr>
-<tr class="separator:a899f3cda630c844862c1300b8c3ad8de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a632c0920d38abbed10c9a912937dab9a"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a632c0920d38abbed10c9a912937dab9a">FIX8::TEX::SettlCurrFxRateCalc_MULTIPLY</a> ('M')</td></tr>
-<tr class="separator:a632c0920d38abbed10c9a912937dab9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d3da39c6f30045d08fceeae791b93c8"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a5d3da39c6f30045d08fceeae791b93c8">FIX8::TEX::SettlCurrFxRateCalc_realm_els</a> (2)</td></tr>
-<tr class="separator:a5d3da39c6f30045d08fceeae791b93c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af36b0e232af110544872d7c8afcb6c7e"><td class="memItemLeft" align="right" valign="top">const f8String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#af36b0e232af110544872d7c8afcb6c7e">FIX8::TEX::SecurityType_WILDCARD_ENTRY</a> (&quot;?&quot;)</td></tr>
 <tr class="separator:af36b0e232af110544872d7c8afcb6c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4e79235a70f191b6b613cf72b8e4127"><td class="memItemLeft" align="right" valign="top">const f8String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#aa4e79235a70f191b6b613cf72b8e4127">FIX8::TEX::SecurityType_BANKERS_ACCEPTANCE</a> (&quot;BA&quot;)</td></tr>
@@ -797,28 +689,12 @@ Functions</h2></td></tr>
 <tr class="separator:ab380221397c0aba0c55678832d832fae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a2d92e00ecc96c5f40b9430ca99ad3a"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a3a2d92e00ecc96c5f40b9430ca99ad3a">FIX8::TEX::PutOrCall_realm_els</a> (2)</td></tr>
 <tr class="separator:a3a2d92e00ecc96c5f40b9430ca99ad3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5fcca7a0214d20f7d47ea4a615c7d8e5"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a5fcca7a0214d20f7d47ea4a615c7d8e5">FIX8::TEX::CoveredOrUncovered_COVERED</a> (0)</td></tr>
-<tr class="separator:a5fcca7a0214d20f7d47ea4a615c7d8e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a099fca707a4af22f5839504d0c326aec"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a099fca707a4af22f5839504d0c326aec">FIX8::TEX::CoveredOrUncovered_UNCOVERED</a> (1)</td></tr>
-<tr class="separator:a099fca707a4af22f5839504d0c326aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad095ba8ddbcb2dceaf9a5f982a94b205"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ad095ba8ddbcb2dceaf9a5f982a94b205">FIX8::TEX::CoveredOrUncovered_realm_els</a> (2)</td></tr>
-<tr class="separator:ad095ba8ddbcb2dceaf9a5f982a94b205"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73bede2197aab1e16c521bc54927b30d"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a73bede2197aab1e16c521bc54927b30d">FIX8::TEX::CustomerOrFirm_CUSTOMER</a> (0)</td></tr>
 <tr class="separator:a73bede2197aab1e16c521bc54927b30d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade2733686005bc9bb0b250965fea3c72"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ade2733686005bc9bb0b250965fea3c72">FIX8::TEX::CustomerOrFirm_FIRM</a> (1)</td></tr>
 <tr class="separator:ade2733686005bc9bb0b250965fea3c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acba15b67c7e7eeafd7a48648c6eb10c3"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#acba15b67c7e7eeafd7a48648c6eb10c3">FIX8::TEX::CustomerOrFirm_realm_els</a> (2)</td></tr>
 <tr class="separator:acba15b67c7e7eeafd7a48648c6eb10c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a456e65c4c9dc1e6f95aaed8d070d4713"><td class="memItemLeft" align="right" valign="top">const f8String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a456e65c4c9dc1e6f95aaed8d070d4713">FIX8::TEX::MessageEncoding_EUC_JP</a> (&quot;EUC-JP&quot;)</td></tr>
-<tr class="separator:a456e65c4c9dc1e6f95aaed8d070d4713"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d187389a164a5358eeee79a497688e9"><td class="memItemLeft" align="right" valign="top">const f8String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a8d187389a164a5358eeee79a497688e9">FIX8::TEX::MessageEncoding_ISO_2022_JP</a> (&quot;ISO-2022-JP&quot;)</td></tr>
-<tr class="separator:a8d187389a164a5358eeee79a497688e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a16dd88caa0483cc79b4853b0ec7df1"><td class="memItemLeft" align="right" valign="top">const f8String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a1a16dd88caa0483cc79b4853b0ec7df1">FIX8::TEX::MessageEncoding_SHIFT_JIS</a> (&quot;SHIFT_JIS&quot;)</td></tr>
-<tr class="separator:a1a16dd88caa0483cc79b4853b0ec7df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adec24c7a6d5d199551d6ec32e6ec597d"><td class="memItemLeft" align="right" valign="top">const f8String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#adec24c7a6d5d199551d6ec32e6ec597d">FIX8::TEX::MessageEncoding_UTF_8</a> (&quot;UTF-8&quot;)</td></tr>
-<tr class="separator:adec24c7a6d5d199551d6ec32e6ec597d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab410782b700255f9aa21ad1b6efa92cf"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ab410782b700255f9aa21ad1b6efa92cf">FIX8::TEX::MessageEncoding_realm_els</a> (4)</td></tr>
-<tr class="separator:ab410782b700255f9aa21ad1b6efa92cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cdedd9fa7b684650df0ad02dbc23099"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a6cdedd9fa7b684650df0ad02dbc23099">FIX8::TEX::SessionRejectReason_INVALID_TAG_NUMBER</a> (0)</td></tr>
 <tr class="separator:a6cdedd9fa7b684650df0ad02dbc23099"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9781620285ecd18a81e9922fbebb4736"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a9781620285ecd18a81e9922fbebb4736">FIX8::TEX::SessionRejectReason_REQUIRED_TAG_MISSING</a> (1)</td></tr>
@@ -845,12 +721,6 @@ Functions</h2></td></tr>
 <tr class="separator:a85fa386dc143bac340877bc49de9770d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac447a8b7b84ed4d360973e3c205a5abf"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ac447a8b7b84ed4d360973e3c205a5abf">FIX8::TEX::SessionRejectReason_realm_els</a> (12)</td></tr>
 <tr class="separator:ac447a8b7b84ed4d360973e3c205a5abf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c8e1ee467f6810ac8cbba1f39324c3d"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a9c8e1ee467f6810ac8cbba1f39324c3d">FIX8::TEX::SolicitedFlag_NO</a> ('N')</td></tr>
-<tr class="separator:a9c8e1ee467f6810ac8cbba1f39324c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a3fa07b156265d1b704fec406001ba0"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a9a3fa07b156265d1b704fec406001ba0">FIX8::TEX::SolicitedFlag_YES</a> ('Y')</td></tr>
-<tr class="separator:a9a3fa07b156265d1b704fec406001ba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac938e3da425af2a98098f137b7676bb0"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ac938e3da425af2a98098f137b7676bb0">FIX8::TEX::SolicitedFlag_realm_els</a> (2)</td></tr>
-<tr class="separator:ac938e3da425af2a98098f137b7676bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a981d03df939dc9399c85557aebc3427e"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a981d03df939dc9399c85557aebc3427e">FIX8::TEX::ExecRestatementReason_GT_CORPORATE_ACTION</a> (0)</td></tr>
 <tr class="separator:a981d03df939dc9399c85557aebc3427e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e44cfe26f5f67c77be4ef1c85175571"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a7e44cfe26f5f67c77be4ef1c85175571">FIX8::TEX::ExecRestatementReason_GT_RENEWAL</a> (1)</td></tr>
@@ -865,62 +735,12 @@ Functions</h2></td></tr>
 <tr class="separator:ab5034856f718f12c29d6a10a6c224871"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af279d00446d39d34aa503334e3473a24"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#af279d00446d39d34aa503334e3473a24">FIX8::TEX::ExecRestatementReason_realm_els</a> (6)</td></tr>
 <tr class="separator:af279d00446d39d34aa503334e3473a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a773581b844761d15e9bba4adba63bd07"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a773581b844761d15e9bba4adba63bd07">FIX8::TEX::BusinessRejectReason_OTHER</a> (0)</td></tr>
-<tr class="separator:a773581b844761d15e9bba4adba63bd07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2b4a6f2ec8eddd246576e74c6898c11"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ab2b4a6f2ec8eddd246576e74c6898c11">FIX8::TEX::BusinessRejectReason_UNKOWN_ID</a> (1)</td></tr>
-<tr class="separator:ab2b4a6f2ec8eddd246576e74c6898c11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc5b3700df02f0237c1590a9fb633ddb"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#acc5b3700df02f0237c1590a9fb633ddb">FIX8::TEX::BusinessRejectReason_UNKNOWN_SECURITY</a> (2)</td></tr>
-<tr class="separator:acc5b3700df02f0237c1590a9fb633ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0ad9cf4e88242bffdf8dd8492257172"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#af0ad9cf4e88242bffdf8dd8492257172">FIX8::TEX::BusinessRejectReason_UNSUPPORTED_MESSAGE_TYPE</a> (3)</td></tr>
-<tr class="separator:af0ad9cf4e88242bffdf8dd8492257172"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefdd1e7a6e18e68b8be1d3db52d2439a"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#aefdd1e7a6e18e68b8be1d3db52d2439a">FIX8::TEX::BusinessRejectReason_APPLICATION_NOT_AVAILABLE</a> (4)</td></tr>
-<tr class="separator:aefdd1e7a6e18e68b8be1d3db52d2439a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6321e20486e62f4844366275cb1f7349"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a6321e20486e62f4844366275cb1f7349">FIX8::TEX::BusinessRejectReason_CONDITIONALLY_REQUIRED_FIELD_MISSING</a> (5)</td></tr>
-<tr class="separator:a6321e20486e62f4844366275cb1f7349"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add5129ee473cbbed14f2b38e552aa04d"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#add5129ee473cbbed14f2b38e552aa04d">FIX8::TEX::BusinessRejectReason_realm_els</a> (6)</td></tr>
-<tr class="separator:add5129ee473cbbed14f2b38e552aa04d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3dfec88de80c2648877c2d0fbae292a5"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a3dfec88de80c2648877c2d0fbae292a5">FIX8::TEX::MsgDirection_RECEIVE</a> ('R')</td></tr>
 <tr class="separator:a3dfec88de80c2648877c2d0fbae292a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9659173af22e5b0bf67cd4fe1140f49c"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a9659173af22e5b0bf67cd4fe1140f49c">FIX8::TEX::MsgDirection_SEND</a> ('S')</td></tr>
 <tr class="separator:a9659173af22e5b0bf67cd4fe1140f49c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a30df6d74e32db4a1c97c776cf09e2c"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a3a30df6d74e32db4a1c97c776cf09e2c">FIX8::TEX::MsgDirection_realm_els</a> (2)</td></tr>
 <tr class="separator:a3a30df6d74e32db4a1c97c776cf09e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a94957b0ae127c486491baa6a1cfe42"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a6a94957b0ae127c486491baa6a1cfe42">FIX8::TEX::DiscretionInst_RELATED_TO_DISPLAYED_PRICE</a> ('0')</td></tr>
-<tr class="separator:a6a94957b0ae127c486491baa6a1cfe42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67bb8d5ed80050535f935252d04f37a9"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a67bb8d5ed80050535f935252d04f37a9">FIX8::TEX::DiscretionInst_RELATED_TO_MARKET_PRICE</a> ('1')</td></tr>
-<tr class="separator:a67bb8d5ed80050535f935252d04f37a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73f51e98623d31cd1fd64981c335b82c"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a73f51e98623d31cd1fd64981c335b82c">FIX8::TEX::DiscretionInst_RELATED_TO_PRIMARY_PRICE</a> ('2')</td></tr>
-<tr class="separator:a73f51e98623d31cd1fd64981c335b82c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a763e3d4a312967c2cfa0bf8a4c4b322c"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a763e3d4a312967c2cfa0bf8a4c4b322c">FIX8::TEX::DiscretionInst_RELATED_TO_LOCAL_PRIMARY_PRICE</a> ('3')</td></tr>
-<tr class="separator:a763e3d4a312967c2cfa0bf8a4c4b322c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fac34303d33d09077164a7a42669e84"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a7fac34303d33d09077164a7a42669e84">FIX8::TEX::DiscretionInst_RELATED_TO_MIDPOINT_PRICE</a> ('4')</td></tr>
-<tr class="separator:a7fac34303d33d09077164a7a42669e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affd11e21f588ec63080d8ceba0afdcd3"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#affd11e21f588ec63080d8ceba0afdcd3">FIX8::TEX::DiscretionInst_RELATED_TO_LAST_TRADE_PRICE</a> ('5')</td></tr>
-<tr class="separator:affd11e21f588ec63080d8ceba0afdcd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2c60dc9e8e4f0055d17890ec5b79d47"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#ad2c60dc9e8e4f0055d17890ec5b79d47">FIX8::TEX::DiscretionInst_realm_els</a> (6)</td></tr>
-<tr class="separator:ad2c60dc9e8e4f0055d17890ec5b79d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a258b401add0e33b3e08cc1e364729399"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a258b401add0e33b3e08cc1e364729399">FIX8::TEX::GTBookingInst_BOOK_OUT_ALL_TRADES_ON_DAY_OF_EXECUTION</a> (0)</td></tr>
-<tr class="separator:a258b401add0e33b3e08cc1e364729399"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11d542f50153f66783c77afe270e8150"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a11d542f50153f66783c77afe270e8150">FIX8::TEX::GTBookingInst_ACCUMULATE_EXECUTIONS_UNTIL_ORDER_IS_FILLED_OR_EXPIRES</a> (1)</td></tr>
-<tr class="separator:a11d542f50153f66783c77afe270e8150"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abce820c0b1b70ca9961edcff0f1678ee"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#abce820c0b1b70ca9961edcff0f1678ee">FIX8::TEX::GTBookingInst_ACCUMULATE_UNTIL_VERBALLY_NOTIFIED_OTHERWISE</a> (2)</td></tr>
-<tr class="separator:abce820c0b1b70ca9961edcff0f1678ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af600d3c2641b641a78dc609c22ab5857"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#af600d3c2641b641a78dc609c22ab5857">FIX8::TEX::GTBookingInst_realm_els</a> (3)</td></tr>
-<tr class="separator:af600d3c2641b641a78dc609c22ab5857"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28a99fb3e39316f5babace7c2c6af154"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a28a99fb3e39316f5babace7c2c6af154">FIX8::TEX::CxlRejResponseTo_ORDER_CANCEL_REQUEST</a> ('1')</td></tr>
-<tr class="separator:a28a99fb3e39316f5babace7c2c6af154"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a147ab389fb3727116aee1eea2a034f50"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a147ab389fb3727116aee1eea2a034f50">FIX8::TEX::CxlRejResponseTo_ORDER_CANCEL_REPLACE_REQUEST</a> ('2')</td></tr>
-<tr class="separator:a147ab389fb3727116aee1eea2a034f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5f83aa66577cfc534ba0df3dce0f017"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#aa5f83aa66577cfc534ba0df3dce0f017">FIX8::TEX::CxlRejResponseTo_realm_els</a> (2)</td></tr>
-<tr class="separator:aa5f83aa66577cfc534ba0df3dce0f017"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd2935ac2d26e9a6f963605fd32e0a1e"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#abd2935ac2d26e9a6f963605fd32e0a1e">FIX8::TEX::MultiLegReportingType_SINGLE_SECURITY</a> ('1')</td></tr>
-<tr class="separator:abd2935ac2d26e9a6f963605fd32e0a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63029b97b33ef37d4962a1c58ef60a1c"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a63029b97b33ef37d4962a1c58ef60a1c">FIX8::TEX::MultiLegReportingType_INDIVIDUAL_LEG_OF_A_MULTI_LEG_SECURITY</a> ('2')</td></tr>
-<tr class="separator:a63029b97b33ef37d4962a1c58ef60a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6eba99448a28769bc0733dba2598e323"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#a6eba99448a28769bc0733dba2598e323">FIX8::TEX::MultiLegReportingType_MULTI_LEG_SECURITY</a> ('3')</td></tr>
-<tr class="separator:a6eba99448a28769bc0733dba2598e323"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea484a0e6ed74881f9c8de2644371a69"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8_1_1TEX.html#aea484a0e6ed74881f9c8de2644371a69">FIX8::TEX::MultiLegReportingType_realm_els</a> (3)</td></tr>
-<tr class="separator:aea484a0e6ed74881f9c8de2644371a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a81d26eaa750eaa3a52639839a9f1193b"></a>
@@ -933,14 +753,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="Perf__types_8hpp_source.html#l00053">53</a> of file <a class="el" href="Perf__types_8hpp_source.html">Perf_types.hpp</a>.</p>
+<p>Definition at line <a class="el" href="Perf__types_8hpp_source.html#l00058">58</a> of file <a class="el" href="Perf__types_8hpp_source.html">Perf_types.hpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Aug 25 2013 16:42:41. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:14. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

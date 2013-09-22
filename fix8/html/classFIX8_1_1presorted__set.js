@@ -6,6 +6,7 @@ var classFIX8_1_1presorted__set =
     [ "iterator", "classFIX8_1_1presorted__set.html#a2de6d386eb790767b34cf1600e0b51cd", null ],
     [ "result", "classFIX8_1_1presorted__set.html#ab80a702156efae6ac6731c0de13939bc", null ],
     [ "presorted_set", "classFIX8_1_1presorted__set.html#aad77674120f69d8e97cbeaa178a857e6", null ],
+    [ "presorted_set", "classFIX8_1_1presorted__set.html#af591292b42ba196216d9993d4e57657f", null ],
     [ "presorted_set", "classFIX8_1_1presorted__set.html#a40e195ca97fdf5f5e949284e82cbacd8", null ],
     [ "~presorted_set", "classFIX8_1_1presorted__set.html#a803f16346b76937f43f2f31f80d7f29a", null ],
     [ "at", "classFIX8_1_1presorted__set.html#a5b64a2e288fdf06f13c910cb48a064c9", null ],
