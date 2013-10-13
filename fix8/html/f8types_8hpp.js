@@ -1,9 +1,7 @@
 var f8types_8hpp =
 [
     [ "_Pair", "structFIX8_1_1__Pair.html", "structFIX8_1_1__Pair" ],
-    [ "Less", "structFIX8_1_1__Pair_1_1Less.html", "structFIX8_1_1__Pair_1_1Less" ],
     [ "_Pair< const char *, Val >", "structFIX8_1_1__Pair_3_01const_01char_01_5_00_01Val_01_4.html", "structFIX8_1_1__Pair_3_01const_01char_01_5_00_01Val_01_4" ],
-    [ "Less", "structFIX8_1_1__Pair_3_01const_01char_01_5_00_01Val_01_4_1_1Less.html", "structFIX8_1_1__Pair_3_01const_01char_01_5_00_01Val_01_4_1_1Less" ],
     [ "GeneratedTable", "classFIX8_1_1GeneratedTable.html", "classFIX8_1_1GeneratedTable" ],
     [ "StaticTable", "structFIX8_1_1StaticTable.html", "structFIX8_1_1StaticTable" ],
     [ "presorted_set", "classFIX8_1_1presorted__set.html", "classFIX8_1_1presorted__set" ],

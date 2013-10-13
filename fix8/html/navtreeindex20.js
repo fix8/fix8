@@ -1,5 +1,7 @@
 var NAVTREEINDEX20 =
 {
+"Perf__types_8hpp.html#a8b479efdd4533cc431636df7c82e7aea":[3,0,55,53],
+"Perf__types_8hpp.html#a8d0f8638297b21cbd59d09b614145dd8":[3,0,55,211],
 "Perf__types_8hpp.html#a8d33e11ebc1a88a5c33ee9da914dde26":[3,0,55,158],
 "Perf__types_8hpp.html#a8ec422c6e5c513eace3583e0ee5048c5":[3,0,55,58],
 "Perf__types_8hpp.html#a8f36b50dc5145082777a8443d2ddff3e":[3,0,55,32],
@@ -247,7 +249,5 @@ var NAVTREEINDEX20 =
 "classFIX8_1_1Configuration.html#ab5e71fcd3c960ca2819eebc950905605":[2,0,0,1,14],
 "classFIX8_1_1Configuration.html#ab68e04de2c9527e5ea8546e90fd4457e":[2,0,0,1,18],
 "classFIX8_1_1Configuration.html#ab7cb14b586b4b9036b7d7d7a47c83965":[2,0,0,1,36],
-"classFIX8_1_1Configuration.html#ac229e692f12c16214544ef6cec359888":[2,0,0,1,33],
-"classFIX8_1_1Configuration.html#ac3e825f73abbf5158e68bd65e67b9107":[2,0,0,1,9],
-"classFIX8_1_1Configuration.html#ace764895c637f1ceb7d466505a6687df":[2,0,0,1,10]
+"classFIX8_1_1Configuration.html#ac229e692f12c16214544ef6cec359888":[2,0,0,1,33]
 };

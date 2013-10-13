@@ -124,7 +124,6 @@ var searchData=
   ['is_5festablished',['is_established',['../structFIX8_1_1States.html#a1739254b6600e1982fbdf7b49baf8b79',1,'FIX8::States']]],
   ['is_5ffloat',['is_float',['../structFIX8_1_1FieldTrait.html#abed859f080e54c91ef5584e8902092cc',1,'FIX8::FieldTrait']]],
   ['is_5fgroup',['is_group',['../classFIX8_1_1FieldTraits.html#a1f2657879503207b0c1a43b4fd181603',1,'FIX8::FieldTraits::is_group(const unsigned short field, Presence::const_iterator &amp;itr) const '],['../classFIX8_1_1FieldTraits.html#ab030d4f830b4431d14b7ada1df19df40',1,'FIX8::FieldTraits::is_group(const unsigned short field) const ']]],
-  ['is_5fignored',['is_ignored',['../classFIX8_1_1FieldTraits.html#acea5e4b1ecf1931d3b67cfb83555367a',1,'FIX8::FieldTraits']]],
   ['is_5fint',['is_int',['../structFIX8_1_1FieldTrait.html#abd4c514c4bca06aa8fbeda03fa056ebe',1,'FIX8::FieldTrait']]],
   ['is_5fmandatory',['is_mandatory',['../classFIX8_1_1FieldTraits.html#aee670bbc6f3e6f1a460e261789a36dd2',1,'FIX8::FieldTraits']]],
   ['is_5fopen',['is_open',['../classgzstreambuf.html#a89e97aaae92b72d41c20223ed7e71308',1,'gzstreambuf']]],

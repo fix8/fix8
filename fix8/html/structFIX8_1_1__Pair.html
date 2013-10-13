@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.5</span>
+   &#160;<span id="projectnumber">version  0.9.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -107,8 +107,7 @@ $(document).ready(function(){initNavTree('structFIX8_1_1__Pair.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structFIX8_1_1__Pair-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -121,17 +120,11 @@ $(document).ready(function(){initNavTree('structFIX8_1_1__Pair.html','');});
 
 <p><code>#include &lt;<a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1__Pair_1_1Less.html">Less</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sort functor.  <a href="structFIX8_1_1__Pair_1_1Less.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:ad87c32828202c40bf351c0604e54245c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1__Pair.html#ad87c32828202c40bf351c0604e54245c">operator==</a> (const <a class="el" href="structFIX8_1_1__Pair.html">_Pair</a> &amp;what) const </td></tr>
-<tr class="memdesc:ad87c32828202c40bf351c0604e54245c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equivalence.  <a href="#ad87c32828202c40bf351c0604e54245c">More...</a><br/></td></tr>
-<tr class="separator:ad87c32828202c40bf351c0604e54245c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a12eb98b40c2f67d0b6ca076db9d98ea8"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1__Pair.html#a12eb98b40c2f67d0b6ca076db9d98ea8">Less</a> (const <a class="el" href="structFIX8_1_1__Pair.html">_Pair</a> &amp;p1, const <a class="el" href="structFIX8_1_1__Pair.html">_Pair</a> &amp;p2)</td></tr>
+<tr class="memdesc:a12eb98b40c2f67d0b6ca076db9d98ea8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sort functor.  <a href="#a12eb98b40c2f67d0b6ca076db9d98ea8">More...</a><br/></td></tr>
+<tr class="separator:a12eb98b40c2f67d0b6ca076db9d98ea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -155,7 +148,7 @@ struct FIX8::_Pair&lt; Key, Val &gt;</h3>
 
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00063">63</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ad87c32828202c40bf351c0604e54245c"></a>
+<a class="anchor" id="a12eb98b40c2f67d0b6ca076db9d98ea8"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -165,25 +158,37 @@ template&lt;typename Key , typename Val &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="structFIX8_1_1__Pair.html">FIX8::_Pair</a>&lt; Key, Val &gt;::operator== </td>
+          <td class="memname">static bool <a class="el" href="structFIX8_1_1__Pair.html">FIX8::_Pair</a>&lt; Key, Val &gt;::Less </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structFIX8_1_1__Pair.html">_Pair</a>&lt; Key, Val &gt; &amp;&#160;</td>
-          <td class="paramname"><em>what</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"><em>p1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structFIX8_1_1__Pair.html">_Pair</a>&lt; Key, Val &gt; &amp;&#160;</td>
+          <td class="paramname"><em>p2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Equivalence. </p>
+<p>Sort functor. </p>
 
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00075">75</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00069">69</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 <p>References <a class="el" href="f8types_8hpp_source.html#l00065">FIX8::_Pair&lt; Key, Val &gt;::_key</a>.</p>
+
+<p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00111">FIX8::GeneratedTable&lt; Key, Val &gt;::_find()</a>.</p>
 
 </div>
 </div>
@@ -202,7 +207,7 @@ template&lt;typename Key , typename Val &gt; </div>
 
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00065">65</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="consolemenu_8cpp_source.html#l00329">FIX8::ConsoleMenu::EditMsg()</a>, <a class="el" href="message_8hpp_source.html#l00203">FIX8::F8MetaCntx::F8MetaCntx()</a>, <a class="el" href="f8types_8hpp_source.html#l00071">FIX8::_Pair&lt; Key, Val &gt;::Less::operator()()</a>, <a class="el" href="f8types_8hpp_source.html#l00089">FIX8::_Pair&lt; const char *, Val &gt;::Less::operator()()</a>, <a class="el" href="f8types_8hpp_source.html#l00075">FIX8::_Pair&lt; Key, Val &gt;::operator==()</a>, <a class="el" href="f8types_8hpp_source.html#l00093">FIX8::_Pair&lt; const char *, Val &gt;::operator==()</a>, and <a class="el" href="consolemenu_8cpp_source.html#l00248">FIX8::ConsoleMenu::SelectFromMsg()</a>.</p>
+<p>Referenced by <a class="el" href="consolemenu_8cpp_source.html#l00329">FIX8::ConsoleMenu::EditMsg()</a>, <a class="el" href="message_8hpp_source.html#l00203">FIX8::F8MetaCntx::F8MetaCntx()</a>, <a class="el" href="f8types_8hpp_source.html#l00069">FIX8::_Pair&lt; Key, Val &gt;::Less()</a>, <a class="el" href="f8types_8hpp_source.html#l00081">FIX8::_Pair&lt; const char *, Val &gt;::Less()</a>, and <a class="el" href="consolemenu_8cpp_source.html#l00248">FIX8::ConsoleMenu::SelectFromMsg()</a>.</p>
 
 </div>
 </div>
@@ -220,7 +225,7 @@ template&lt;typename Key , typename Val &gt; </div>
 
 <p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00066">66</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="consolemenu_8cpp_source.html#l00329">FIX8::ConsoleMenu::EditMsg()</a>, <a class="el" href="message_8hpp_source.html#l00203">FIX8::F8MetaCntx::F8MetaCntx()</a>, <a class="el" href="f8types_8hpp_source.html#l00167">FIX8::GeneratedTable&lt; Key, Val &gt;::find_ptr()</a>, <a class="el" href="f8types_8hpp_source.html#l00147">FIX8::GeneratedTable&lt; Key, Val &gt;::find_ref()</a>, <a class="el" href="f8types_8hpp_source.html#l00158">FIX8::GeneratedTable&lt; Key, Val &gt;::find_val()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00248">FIX8::ConsoleMenu::SelectFromMsg()</a>, and <a class="el" href="consolemenu_8cpp_source.html#l00067">FIX8::ConsoleMenu::SelectMsg()</a>.</p>
+<p>Referenced by <a class="el" href="consolemenu_8cpp_source.html#l00329">FIX8::ConsoleMenu::EditMsg()</a>, <a class="el" href="message_8hpp_source.html#l00203">FIX8::F8MetaCntx::F8MetaCntx()</a>, <a class="el" href="f8types_8hpp_source.html#l00154">FIX8::GeneratedTable&lt; Key, Val &gt;::find_ptr()</a>, <a class="el" href="f8types_8hpp_source.html#l00134">FIX8::GeneratedTable&lt; Key, Val &gt;::find_ref()</a>, <a class="el" href="f8types_8hpp_source.html#l00145">FIX8::GeneratedTable&lt; Key, Val &gt;::find_val()</a>, <a class="el" href="consolemenu_8cpp_source.html#l00248">FIX8::ConsoleMenu::SelectFromMsg()</a>, and <a class="el" href="consolemenu_8cpp_source.html#l00067">FIX8::ConsoleMenu::SelectMsg()</a>.</p>
 
 </div>
 </div>
@@ -230,7 +235,7 @@ template&lt;typename Key , typename Val &gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:14. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:26:07. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

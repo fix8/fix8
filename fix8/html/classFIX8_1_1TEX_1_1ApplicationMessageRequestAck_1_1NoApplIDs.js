@@ -6,7 +6,7 @@ var classFIX8_1_1TEX_1_1ApplicationMessageRequestAck_1_1NoApplIDs =
     [ "create_group", "classFIX8_1_1TEX_1_1ApplicationMessageRequestAck_1_1NoApplIDs.html#a88eee1a799be866f2769f027c018a4bd", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ApplicationMessageRequestAck_1_1NoApplIDs.html#af51fd08676fe9eda298c5ddfb10bdfe6", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ApplicationMessageRequestAck_1_1NoApplIDs.html#a0e4f5807f19959424c3d835373ebe054", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1ApplicationMessageRequestAck_1_1NoApplIDs.html#afbce35ce4d8302c818dd38bcfd8dab92", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1ApplicationMessageRequestAck_1_1NoApplIDs.html#a21c0bd73317c63194a291f53127bcc7f", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1ApplicationMessageRequestAck_1_1NoApplIDs.html#ad9cdec376b6823e7594abc96a4cad82e", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1ApplicationMessageRequestAck_1_1NoApplIDs.html#a9a4567dd8f2d865a4b7b64fa80ce0c53", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1ApplicationMessageRequestAck_1_1NoApplIDs.html#ae7523e56888859aaf0fc90e4bf275aff", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1ApplicationMessageRequestAck_1_1NoApplIDs.html#afa4666c7c68d5b891a90dd66b4480d33", null ]
 ];

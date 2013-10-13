@@ -8,6 +8,8 @@ var classFIX8_1_1Tickval =
     [ "Tickval", "classFIX8_1_1Tickval.html#aa1a1b99a8f1405995536213f13eebb70", null ],
     [ "Tickval", "classFIX8_1_1Tickval.html#a8b9071658e3ea7801dbe311308e0aba4", null ],
     [ "_cvt", "classFIX8_1_1Tickval.html#a28a9c1afd093cbe2f8684755702ffd38", null ],
+    [ "as_tm", "classFIX8_1_1Tickval.html#a180a26768b567214178f746bacae4111", null ],
+    [ "as_ts", "classFIX8_1_1Tickval.html#a5040cb71714108318abc69024cff3e7d", null ],
     [ "get_ticks", "classFIX8_1_1Tickval.html#ad790963ef8cb2b3ed63bab122562d7fa", null ],
     [ "get_tickval", "classFIX8_1_1Tickval.html#a0543385fc89162739f2159e1fc1bdc89", null ],
     [ "get_tickval", "classFIX8_1_1Tickval.html#aebd35b770a0e564ba0f6ef04a0109f07", null ],

@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.5</span>
+   &#160;<span id="projectnumber">version  0.9.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -300,7 +300,7 @@ $(document).ready(function(){initNavTree('harness_8cpp_source.html','');});
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;      <span class="keywordflow">if</span> (server)</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;      {</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">ServerSession&lt;myfix_session_server&gt;::Server_ptr</a></div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            ms(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1ServerSession.html" title="Server wrapper.">ServerSession&lt;myfix_session_server&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>, conf_file, <span class="stringliteral">&quot;TEX1&quot;</span>));</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            ms(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1ServerSession.html" title="Server wrapper.">ServerSession&lt;myfix_session_server&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>(), conf_file, <span class="stringliteral">&quot;TEX1&quot;</span>));</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> scnt(0); !<a class="code" href="harness_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received</a>; )</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;         {</div>
@@ -321,8 +321,8 @@ $(document).ready(function(){initNavTree('harness_8cpp_source.html','');});
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;      <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      {</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;ClientSession&lt;myfix_session_client&gt;</a> &gt;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            mc(reliable ? <span class="keyword">new</span> <a class="code" href="classFIX8_1_1ReliableClientSession.html" title="Reliable Client wrapper. This client attempts to recover from disconnects and login rejects...">ReliableClientSession&lt;myfix_session_client&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>, conf_file, <span class="stringliteral">&quot;DLD1&quot;</span>)</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;                        : <span class="keyword">new</span> <a class="code" href="classFIX8_1_1ClientSession.html" title="Client wrapper.">ClientSession&lt;myfix_session_client&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>, conf_file, <span class="stringliteral">&quot;DLD1&quot;</span>));</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            mc(reliable ? <span class="keyword">new</span> <a class="code" href="classFIX8_1_1ReliableClientSession.html" title="Reliable Client wrapper. This client attempts to recover from disconnects and login rejects...">ReliableClientSession&lt;myfix_session_client&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>(), conf_file, <span class="stringliteral">&quot;DLD1&quot;</span>)</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;                        : <span class="keyword">new</span> <a class="code" href="classFIX8_1_1ClientSession.html" title="Client wrapper.">ClientSession&lt;myfix_session_client&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>(), conf_file, <span class="stringliteral">&quot;DLD1&quot;</span>));</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="harness_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet</a>)</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;            mc-&gt;session_ptr()-&gt;control() |= Session::printnohb;</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
@@ -334,7 +334,7 @@ $(document).ready(function(){initNavTree('harness_8cpp_source.html','');});
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;         <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;            mc-&gt;start(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;         <a class="code" href="classFIX8_1_1ConsoleMenu.html" title="Console test harness menu.">ConsoleMenu</a> cm(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>, mc-&gt;session_ptr(), cin, cout, 50);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;         <a class="code" href="classFIX8_1_1ConsoleMenu.html" title="Console test harness menu.">ConsoleMenu</a> cm(<a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>(), mc-&gt;session_ptr(), cin, cout, 50);</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;         <a class="code" href="classMyMenu.html" title="Simple menu system that will work with most term types.">MyMenu</a> mymenu(*mc-&gt;session_ptr(), 0, cout, &amp;cm);</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;         <span class="keywordtype">char</span> ch;</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;         mymenu.<a class="code" href="classMyMenu.html#a381663b9838cf71aee2307913e1caf04">get_tty</a>().<a class="code" href="classFIX8_1_1tty__save__state.html#a64dbe0f3a2b970a69308bb187909e12a">set_raw_mode</a>();</div>
@@ -492,7 +492,7 @@ $(document).ready(function(){initNavTree('harness_8cpp_source.html','');});
 <div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;      ifs.getline(buffer, <a class="code" href="f8config_8h.html#aae15a57359405fa67f39ff805c6eddd4">MAX_MSG_LENGTH</a> - 1);</div>
 <div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;      <span class="keywordflow">if</span> (!buffer[0])</div>
 <div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;         <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;      <a class="code" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> *msg(Message::factory(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>, buffer));</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;      <a class="code" href="classFIX8_1_1Message.html" title="A complete Fix message with header, body and trailer.">Message</a> *msg(Message::factory(<a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>(), buffer));</div>
 <div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;      <span class="keywordflow">if</span> (msg-&gt;<a class="code" href="classFIX8_1_1Message.html#a0d94fdcac5c21ee76b99417db9a85c3b">is_admin</a>())</div>
 <div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;         <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;      <a class="code" href="classFIX8_1_1Field.html">sender_comp_id</a> sci;</div>
@@ -526,7 +526,7 @@ $(document).ready(function(){initNavTree('harness_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:06. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:25:59. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

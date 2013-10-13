@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['less',['Less',['../structFIX8_1_1__Pair_1_1Less.html',1,'FIX8::_Pair']]],
-  ['less',['Less',['../structFIX8_1_1__Pair_3_01const_01char_01_5_00_01Val_01_4_1_1Less.html',1,'FIX8::_Pair&lt; const char *, Val &gt;']]],
   ['less',['less',['../structFIX8_1_1RealmObject_1_1less.html',1,'FIX8::RealmObject']]],
   ['listcancelrequest',['ListCancelRequest',['../classFIX8_1_1TEX_1_1ListCancelRequest.html',1,'FIX8::TEX']]],
   ['listexecute',['ListExecute',['../classFIX8_1_1TEX_1_1ListExecute.html',1,'FIX8::TEX']]],

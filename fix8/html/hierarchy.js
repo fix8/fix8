@@ -23,9 +23,7 @@ var hierarchy =
       [ "FIX8::dthread<>", "classFIX8_1_1dthread_3_4.html", null ]
     ] ],
     [ "FIX8::_Pair< Key, Val >", "structFIX8_1_1__Pair.html", null ],
-    [ "FIX8::_Pair< Key, Val >::Less", "structFIX8_1_1__Pair_1_1Less.html", null ],
     [ "FIX8::_Pair< const char *, Val >", "structFIX8_1_1__Pair_3_01const_01char_01_5_00_01Val_01_4.html", null ],
-    [ "FIX8::_Pair< const char *, Val >::Less", "structFIX8_1_1__Pair_3_01const_01char_01_5_00_01Val_01_4_1_1Less.html", null ],
     [ "FIX8::AsyncSocket< T >", "classFIX8_1_1AsyncSocket.html", null ],
     [ "FIX8::BaseEntry", "structFIX8_1_1BaseEntry.html", null ],
     [ "FIX8::BaseField", "classFIX8_1_1BaseField.html", [
@@ -42,7 +40,6 @@ var hierarchy =
       ] ],
       [ "FIX8::Field< f8String, field >", "classFIX8_1_1Field_3_01f8String_00_01field_01_4.html", [
         [ "FIX8::Field< data, field >", "classFIX8_1_1Field_3_01data_00_01field_01_4.html", null ],
-        [ "FIX8::Field< MonthYear, field >", "classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html", null ],
         [ "FIX8::Field< MultipleCharValue, field >", "classFIX8_1_1Field_3_01MultipleCharValue_00_01field_01_4.html", null ]
       ] ],
       [ "FIX8::Field< int, field >", "classFIX8_1_1Field_3_01int_00_01field_01_4.html", [
@@ -53,6 +50,7 @@ var hierarchy =
         [ "FIX8::Field< TagNum, field >", "classFIX8_1_1Field_3_01TagNum_00_01field_01_4.html", null ]
       ] ],
       [ "FIX8::Field< LocalMktDate, field >", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html", null ],
+      [ "FIX8::Field< MonthYear, field >", "classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html", null ],
       [ "FIX8::Field< TZTimeOnly, field >", "classFIX8_1_1Field_3_01TZTimeOnly_00_01field_01_4.html", null ],
       [ "FIX8::Field< TZTimestamp, field >", "classFIX8_1_1Field_3_01TZTimestamp_00_01field_01_4.html", null ],
       [ "FIX8::Field< UTCDateOnly, field >", "classFIX8_1_1Field_3_01UTCDateOnly_00_01field_01_4.html", null ],

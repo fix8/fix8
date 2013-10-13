@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.5</span>
+   &#160;<span id="projectnumber">version  0.9.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -109,8 +109,6 @@ $(document).ready(function(){initNavTree('classFIX8_1_1Field_3_01UTCTimestamp_00
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
-<a href="#pri-types">Private Types</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -163,8 +161,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a94ae12e0bdaad274baab253b3df77c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a334d08d9736bcdcc9a8a3caab2b20773"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a334d08d9736bcdcc9a8a3caab2b20773">print</a> (std::ostream &amp;os) const </td></tr>
 <tr class="separator:a334d08d9736bcdcc9a8a3caab2b20773"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4acae541911fa04ee7f60d9d3221682e"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a4acae541911fa04ee7f60d9d3221682e">DateTimeFormat</a> (const <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;tickval, char *to, const <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5">MillisecondIndicator</a> ind) const </td></tr>
-<tr class="separator:a4acae541911fa04ee7f60d9d3221682e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c4560aebdf7570936e9a1a98f9cd91b"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a0c4560aebdf7570936e9a1a98f9cd91b">print</a> (char *to) const </td></tr>
 <tr class="separator:a0c4560aebdf7570936e9a1a98f9cd91b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classFIX8_1_1BaseField"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classFIX8_1_1BaseField')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classFIX8_1_1BaseField.html">FIX8::BaseField</a></td></tr>
@@ -192,24 +188,6 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ac14b97c465c8d77a0484e7ffd4f7ad19"><td class="memItemLeft" align="right" valign="top">static unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#ac14b97c465c8d77a0484e7ffd4f7ad19">get_field_id</a> ()</td></tr>
 <tr class="memdesc:ac14b97c465c8d77a0484e7ffd4f7ad19"><td class="mdescLeft">&#160;</td><td class="mdescRight">The FIX fieldID (tag number).  <a href="#ac14b97c465c8d77a0484e7ffd4f7ad19">More...</a><br/></td></tr>
 <tr class="separator:ac14b97c465c8d77a0484e7ffd4f7ad19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa31acf6e9afa778a269b94d965460723"><td class="memItemLeft" align="right" valign="top">static time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#aa31acf6e9afa778a269b94d965460723">time_to_epoch</a> (const tm &amp;ltm, int utcdiff=0)</td></tr>
-<tr class="separator:aa31acf6e9afa778a269b94d965460723"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
-Static Protected Member Functions</h2></td></tr>
-<tr class="memitem:ab7f92afa341931c0bbe246c8e8276a42"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#ab7f92afa341931c0bbe246c8e8276a42">format0</a> (int <a class="el" href="namespaceFIX8.html#ab11f68f3e9c06fa6309b75faa9e9dae9">data</a>, char *to, int width)</td></tr>
-<tr class="separator:ab7f92afa341931c0bbe246c8e8276a42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b918d0a3c1eac551eba33a24c916b7c"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a4b918d0a3c1eac551eba33a24c916b7c">parseDate</a> (const char *begin, size_t len, int &amp;to)</td></tr>
-<tr class="separator:a4b918d0a3c1eac551eba33a24c916b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3dd8c8fe3699b0a1842b9ee15c6435f6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">Tickval::ticks</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a3dd8c8fe3699b0a1842b9ee15c6435f6">datetimeparse</a> (const char *<a class="el" href="classFIX8_1_1BaseField.html#a93538fc19a4f590509f7e60cc655e927">from</a>, size_t len)</td></tr>
-<tr class="separator:a3dd8c8fe3699b0a1842b9ee15c6435f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
-Private Types</h2></td></tr>
-<tr class="memitem:a8ae35b358d689b6c04c80e40cf0082b5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5">MillisecondIndicator</a> { <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5a2f7c6d486f1bd40042b4bafd9c4a7dd6">_sec_only</a> = 17, 
-<a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5ad1149aa2df651cc019c235594cabfb22">_with_ms</a> = 21
- }</td></tr>
-<tr class="separator:a8ae35b358d689b6c04c80e40cf0082b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -234,39 +212,8 @@ class FIX8::Field&lt; UTCTimestamp, field &gt;</h3>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00707">707</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a class="anchor" id="a8ae35b358d689b6c04c80e40cf0082b5"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;const unsigned short field&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; <a class="el" href="namespaceFIX8.html#a452baded688c6d53e44fdca5debab51a">UTCTimestamp</a>, field &gt;::<a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5">MillisecondIndicator</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a8ae35b358d689b6c04c80e40cf0082b5a2f7c6d486f1bd40042b4bafd9c4a7dd6"></a>_sec_only</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a8ae35b358d689b6c04c80e40cf0082b5ad1149aa2df651cc019c235594cabfb22"></a>_with_ms</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-</table>
-
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00709">709</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00851">851</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="afd47856e7c66731c323523e53c568156"></a>
 <div class="memitem">
 <div class="memproto">
@@ -292,7 +239,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Ctor. </p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00741">741</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00860">860</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -327,7 +274,7 @@ template&lt;const unsigned short field&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00745">745</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00864">864</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -373,7 +320,7 @@ template&lt;const unsigned short field&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00750">750</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00869">869</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -419,7 +366,7 @@ template&lt;const unsigned short field&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00755">755</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00874">874</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -465,7 +412,7 @@ template&lt;const unsigned short field&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00760">760</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00879">879</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -511,7 +458,7 @@ template&lt;const unsigned short field&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00765">765</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00884">884</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -540,7 +487,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00780">780</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00899">899</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -572,156 +519,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Implements <a class="el" href="classFIX8_1_1BaseField.html#adae06a72a6d6f1d2e3f9f2b87c5a5840">FIX8::BaseField</a>.</p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00796">796</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4acae541911fa04ee7f60d9d3221682e"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;const unsigned short field&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t <a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; <a class="el" href="namespaceFIX8.html#a452baded688c6d53e44fdca5debab51a">UTCTimestamp</a>, field &gt;::DateTimeFormat </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classFIX8_1_1Tickval.html">Tickval</a> &amp;&#160;</td>
-          <td class="paramname"><em>tickval</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>to</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a8ae35b358d689b6c04c80e40cf0082b5">MillisecondIndicator</a>&#160;</td>
-          <td class="paramname"><em>ind</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Format <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> into a string. With millisecond, the format string will be "YYYYMMDD-HH:MM:SS.MMM" Without millisecond, the format string will be "YYYYMMDD-HH:MM:SS" </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tickval</td><td>input <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> object </td></tr>
-    <tr><td class="paramname">to</td><td>output buffer, should make sure there is enough space reserved </td></tr>
-    <tr><td class="paramname">ind</td><td>indicating whether need millisecond or not </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>length of formatted string </dd></dl>
-
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00826">826</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
-
-<p>References <a class="el" href="tickval_8hpp_source.html#l00190">FIX8::Tickval::msecs()</a>, and <a class="el" href="tickval_8hpp_source.html#l00186">FIX8::Tickval::secs()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a3dd8c8fe3699b0a1842b9ee15c6435f6"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;const unsigned short field&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classFIX8_1_1Tickval.html#ae868236e7da40dc66da30ae7d00784fa">Tickval::ticks</a> <a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; <a class="el" href="namespaceFIX8.html#a452baded688c6d53e44fdca5debab51a">UTCTimestamp</a>, field &gt;::datetimeparse </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>from</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Decode a DateTime string into ticks </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">from</td><td>input DateTime string </td></tr>
-    <tr><td class="paramname">len</td><td>length of string </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ticks decoded </dd></dl>
-
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00879">879</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
-
-<p>References <a class="el" href="tickval_8hpp_source.html#l00122">FIX8::Tickval::billion</a>, <a class="el" href="tickval_8hpp_source.html#l00121">FIX8::Tickval::million</a>, and <a class="el" href="tickval_8hpp_source.html#l00119">FIX8::Tickval::noticks</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab7f92afa341931c0bbe246c8e8276a42"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;const unsigned short field&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void <a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; <a class="el" href="namespaceFIX8.html#a452baded688c6d53e44fdca5debab51a">UTCTimestamp</a>, field &gt;::format0 </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>to</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00713">713</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00915">915</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -750,7 +548,7 @@ template&lt;const unsigned short field&gt; </div>
 <p>Get field value. </p>
 <dl class="section return"><dt>Returns</dt><dd>value <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a>&amp; </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00784">784</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00903">903</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -779,7 +577,7 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>The FIX fieldID (tag number). </p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00738">738</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00857">857</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -808,7 +606,7 @@ template&lt;const unsigned short field&gt; </div>
 <p>Get field value. </p>
 <dl class="section return"><dt>Returns</dt><dd>value <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a>&amp; </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00788">788</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00907">907</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -845,51 +643,7 @@ template&lt;const unsigned short field&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>field </dd></dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00770">770</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4b918d0a3c1eac551eba33a24c916b7c"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;const unsigned short field&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static size_t <a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; <a class="el" href="namespaceFIX8.html#a452baded688c6d53e44fdca5debab51a">UTCTimestamp</a>, field &gt;::parseDate </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>begin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>to</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00722">722</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00889">889</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -927,9 +681,9 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Implements <a class="el" href="classFIX8_1_1BaseField.html#a68b4265a14ab3ec76ef65ce8298c5b9c">FIX8::BaseField</a>.</p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00801">801</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00920">920</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>References <a class="el" href="classFIX8_1_1BaseField.html#a68b4265a14ab3ec76ef65ce8298c5b9c">FIX8::BaseField::print()</a>.</p>
+<p>References <a class="el" href="namespaceFIX8.html#ac850a69853609eac9d0a7db133b5c55a">FIX8::MAX_MSGTYPE_FIELD_LEN()</a>, and <a class="el" href="classFIX8_1_1BaseField.html#a68b4265a14ab3ec76ef65ce8298c5b9c">FIX8::BaseField::print()</a>.</p>
 
 </div>
 </div>
@@ -967,7 +721,9 @@ template&lt;const unsigned short field&gt; </div>
 
 <p>Implements <a class="el" href="classFIX8_1_1BaseField.html#a2c7b143aae868a9be93b3d735f14ec0a">FIX8::BaseField</a>.</p>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00822">822</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00930">930</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+
+<p>References <a class="el" href="field_8hpp_source.html#l00718">FIX8::_with_ms</a>, and <a class="el" href="field_8hpp_source.html#l00731">FIX8::date_time_format()</a>.</p>
 
 </div>
 </div>
@@ -1002,48 +758,9 @@ template&lt;const unsigned short field&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00792">792</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00911">911</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
-<p>References <a class="el" href="field_8hpp_source.html#l00145">FIX8::BaseField::from()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa31acf6e9afa778a269b94d965460723"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;const unsigned short field&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">time_t <a class="el" href="classFIX8_1_1Field.html">FIX8::Field</a>&lt; <a class="el" href="namespaceFIX8.html#a452baded688c6d53e44fdca5debab51a">UTCTimestamp</a>, field &gt;::time_to_epoch </td>
-          <td>(</td>
-          <td class="paramtype">const tm &amp;&#160;</td>
-          <td class="paramname"><em>ltm</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>utcdiff</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Based on Ghulam M. Babar's "mktime slow? use custom function" see <a href="http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/">http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/</a> </p>
-
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00856">856</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>References <a class="el" href="field_8hpp_source.html#l00150">FIX8::BaseField::from()</a>.</p>
 
 </div>
 </div>
@@ -1068,7 +785,7 @@ template&lt;const unsigned short field&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="field_8hpp_source.html#l00710">710</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
+<p>Definition at line <a class="el" href="field_8hpp_source.html#l00853">853</a> of file <a class="el" href="field_8hpp_source.html">field.hpp</a>.</p>
 
 </div>
 </div>
@@ -1078,7 +795,7 @@ template&lt;const unsigned short field&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:14. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:26:07. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

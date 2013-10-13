@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.5</span>
+   &#160;<span id="projectnumber">version  0.9.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -254,8 +254,8 @@ $(document).ready(function(){initNavTree('hfprint_8cpp_source.html','');});
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;o&#39;</span>: offset = get_value&lt;int&gt;(optarg); <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;s&#39;</span>: <a class="code" href="hfprint_8cpp.html#a43d94b9738327d443a6288e3b41e69d3">summary</a> = <span class="keyword">true</span>; <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;c&#39;</span>:</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;          cout &lt;&lt; <span class="stringliteral">&quot;Context FIX beginstring:&quot;</span> &lt;&lt; <a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#ab60edf3bab787ab4d6447cc3b2cd2439" title="Fix header beginstring.">_beginStr</a> &lt;&lt; endl;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;          cout &lt;&lt; <span class="stringliteral">&quot;Context FIX version:&quot;</span> &lt;&lt; <a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>.<a class="code" href="structFIX8_1_1F8MetaCntx.html#ab1fc890f19e70e7391e8dbbd82367f39">version</a>() &lt;&lt; endl;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;          cout &lt;&lt; <span class="stringliteral">&quot;Context FIX beginstring:&quot;</span> &lt;&lt; <a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>().<a class="code" href="structFIX8_1_1F8MetaCntx.html#ab60edf3bab787ab4d6447cc3b2cd2439" title="Fix header beginstring.">_beginStr</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;          cout &lt;&lt; <span class="stringliteral">&quot;Context FIX version:&quot;</span> &lt;&lt; <a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>().<a class="code" href="structFIX8_1_1F8MetaCntx.html#ab1fc890f19e70e7391e8dbbd82367f39">version</a>() &lt;&lt; endl;</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;          <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      <span class="keywordflow">default</span>: <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      }</div>
@@ -294,7 +294,7 @@ $(document).ready(function(){initNavTree('hfprint_8cpp_source.html','');});
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;         ifs().getline(buffer, bufsz);</div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;         <span class="keywordflow">if</span> (buffer[0])</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;         {</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;            <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;Message&gt;</a> msg(Message::factory(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>, buffer + offset));</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;            <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;Message&gt;</a> msg(Message::factory(<a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>(), buffer + offset));</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="hfprint_8cpp.html#a43d94b9738327d443a6288e3b41e69d3">summary</a>)</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;            {</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;               MessageCount::iterator mitr(mc-&gt;find(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#afdb890848e89e7f3b0b941f20c02a1f1">get_msgtype</a>()));</div>
@@ -325,7 +325,7 @@ $(document).ready(function(){initNavTree('hfprint_8cpp_source.html','');});
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;   {</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      <span class="keywordflow">for</span> (MessageCount::const_iterator mitr(mc-&gt;begin()); mitr != mc-&gt;end(); ++mitr)</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;      {</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;         <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseMsgEntry.html">BaseMsgEntry</a> *bme(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>._bme.find_ptr(mitr-&gt;first.c_str()));</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;         <span class="keyword">const</span> <a class="code" href="structFIX8_1_1BaseMsgEntry.html">BaseMsgEntry</a> *bme(<a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>()._bme.find_ptr(mitr-&gt;first.c_str()));</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;         cout &lt;&lt; setw(20) &lt;&lt; left &lt;&lt; bme-&gt;<a class="code" href="structFIX8_1_1BaseMsgEntry.html#a4a54e08827d42138108fa0d3d36d4650">_name</a> &lt;&lt; <span class="stringliteral">&quot; (\&quot;&quot;</span> &lt;&lt; mitr-&gt;first &lt;&lt; <span class="stringliteral">&quot;\&quot;)&quot;</span> &lt;&lt; <span class="charliteral">&#39;\t&#39;</span> &lt;&lt; mitr-&gt;second &lt;&lt; endl;</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;      }</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;   }</div>
@@ -352,7 +352,7 @@ $(document).ready(function(){initNavTree('hfprint_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:06. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:25:59. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.5</span>
+   &#160;<span id="projectnumber">version  0.9.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -305,7 +305,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;      <span class="keywordflow">if</span> (server)</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;      {</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">ServerSession&lt;myfix_session_server&gt;::Server_ptr</a></div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            ms(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1ServerSession.html" title="Server wrapper.">ServerSession&lt;myfix_session_server&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>, conf_file, <span class="stringliteral">&quot;TEX1&quot;</span>));</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            ms(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1ServerSession.html" title="Server wrapper.">ServerSession&lt;myfix_session_server&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>(), conf_file, <span class="stringliteral">&quot;TEX1&quot;</span>));</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> scnt(0); !<a class="code" href="harness_8cpp.html#a53950f1d1b31e114560c2b9b5b57b01e">term_received</a>; )</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;         {</div>
@@ -328,8 +328,8 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;      <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;      {</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;ClientSession&lt;myfix_session_client&gt;</a> &gt;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            mc(reliable ? <span class="keyword">new</span> <a class="code" href="classFIX8_1_1ReliableClientSession.html" title="Reliable Client wrapper. This client attempts to recover from disconnects and login rejects...">ReliableClientSession&lt;myfix_session_client&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>, conf_file, <span class="stringliteral">&quot;DLD1&quot;</span>)</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;                        : <span class="keyword">new</span> <a class="code" href="classFIX8_1_1ClientSession.html" title="Client wrapper.">ClientSession&lt;myfix_session_client&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">TEX::ctx</a>, conf_file, <span class="stringliteral">&quot;DLD1&quot;</span>));</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            mc(reliable ? <span class="keyword">new</span> <a class="code" href="classFIX8_1_1ReliableClientSession.html" title="Reliable Client wrapper. This client attempts to recover from disconnects and login rejects...">ReliableClientSession&lt;myfix_session_client&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>(), conf_file, <span class="stringliteral">&quot;DLD1&quot;</span>)</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;                        : <span class="keyword">new</span> <a class="code" href="classFIX8_1_1ClientSession.html" title="Client wrapper.">ClientSession&lt;myfix_session_client&gt;</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">TEX::ctx</a>(), conf_file, <span class="stringliteral">&quot;DLD1&quot;</span>));</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="harness_8cpp.html#a8c5ccb184efa9859064c91db1aac5c68">quiet</a>)</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;            mc-&gt;session_ptr()-&gt;control() |= Session::printnohb;</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
@@ -405,7 +405,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;        &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a942e312be5d6a14f19594ab3e6beec5c">TEX::TimeInForce</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a7b04cefae2b7e409cd55f3350720b19a">TEX::TimeInForce_FILL_OR_KILL</a>);</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;   *nos &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ac3cd634174353b8783fea0c356ca6cca">TEX::NoUnderlyings</a>(3);</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   <a class="code" href="classFIX8_1_1GroupBase.html" title="Abstract base class for all repeating groups.">GroupBase</a> *noul(nos-&gt;find_group&lt;<a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoUnderlyings.html" title="NoUnderlyings (711), application, 72 fields, 3 groups.">TEX::NewOrderSingle::NoUnderlyings</a>&gt;());</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;   <a class="code" href="classFIX8_1_1GroupBase.html" title="Abstract base class for all repeating groups.">GroupBase</a> *noul(nos-&gt;find_group&lt;<a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoUnderlyings.html" title="NoUnderlyings (711), application, 72 fields, 3 groups, shares static data.">TEX::NewOrderSingle::NoUnderlyings</a>&gt;());</div>
 <div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;</div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;   <span class="comment">// repeating groups</span></div>
 <div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;   <a class="code" href="classFIX8_1_1MessageBase.html" title="Base class for all fix messages.">MessageBase</a> *gr1(noul-&gt;create_group());</div>
@@ -442,7 +442,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;</div>
 <div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;   <span class="comment">// multiply nested repeating groups</span></div>
 <div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;   *nos &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a78bf19f4536b71b3ea508bb0f0126e93">TEX::NoAllocs</a>(1);</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;   <a class="code" href="classFIX8_1_1GroupBase.html" title="Abstract base class for all repeating groups.">GroupBase</a> *noall(nos-&gt;find_group&lt;<a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoAllocs.html" title="NoAllocs (78), application, 6 fields, 1 group.">TEX::NewOrderSingle::NoAllocs</a>&gt;());</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;   <a class="code" href="classFIX8_1_1GroupBase.html" title="Abstract base class for all repeating groups.">GroupBase</a> *noall(nos-&gt;find_group&lt;<a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoAllocs.html" title="NoAllocs (78), application, 6 fields, 1 group, shares static data.">TEX::NewOrderSingle::NoAllocs</a>&gt;());</div>
 <div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;   <a class="code" href="classFIX8_1_1MessageBase.html" title="Base class for all fix messages.">MessageBase</a> *gr9(noall-&gt;create_group());</div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;   *gr9 &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a66283d29f1f8d8e0754c658b50cbe633">TEX::AllocAccount</a>(<span class="stringliteral">&quot;Account1&quot;</span>)</div>
 <div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a77634a80f283ca095f58f7b4fe9ea29e">TEX::NoNestedPartyIDs</a>(1);</div>
@@ -559,7 +559,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 <div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;         cout &lt;&lt; <span class="stringliteral">&quot;price:&quot;</span> &lt;&lt; <a class="code" href="namespaceFIX8.html#a995f7fbb850fb2c8cdbb1b5c26a9dc43">price</a>() &lt;&lt; endl;</div>
 <div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;</div>
 <div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;      <span class="comment">// This is how you extract values from a repeating group</span></div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;      <span class="keyword">const</span> <a class="code" href="classFIX8_1_1GroupBase.html" title="Abstract base class for all repeating groups.">GroupBase</a> *grnoul(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">find_group</a>&lt;<a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoUnderlyings.html" title="NoUnderlyings (711), application, 72 fields, 3 groups.">TEX::NewOrderSingle::NoUnderlyings</a>&gt;());</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;      <span class="keyword">const</span> <a class="code" href="classFIX8_1_1GroupBase.html" title="Abstract base class for all repeating groups.">GroupBase</a> *grnoul(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">find_group</a>&lt;<a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoUnderlyings.html" title="NoUnderlyings (711), application, 72 fields, 3 groups, shares static data.">TEX::NewOrderSingle::NoUnderlyings</a>&gt;());</div>
 <div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;      <span class="keywordflow">if</span> (grnoul)</div>
 <div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;      {</div>
 <div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> cnt(0); cnt &lt; grnoul-&gt;size(); ++cnt)</div>
@@ -583,7 +583,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 <div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;         }</div>
 <div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;      }</div>
 <div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;      <span class="keyword">const</span> <a class="code" href="classFIX8_1_1GroupBase.html" title="Abstract base class for all repeating groups.">GroupBase</a> *grallocs(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">find_group</a>&lt;<a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoAllocs.html" title="NoAllocs (78), application, 6 fields, 1 group.">TEX::NewOrderSingle::NoAllocs</a>&gt;());</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;      <span class="keyword">const</span> <a class="code" href="classFIX8_1_1GroupBase.html" title="Abstract base class for all repeating groups.">GroupBase</a> *grallocs(msg-&gt;<a class="code" href="classFIX8_1_1MessageBase.html#a223669d4050b4c6c4003caf9cff32223">find_group</a>&lt;<a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoAllocs.html" title="NoAllocs (78), application, 6 fields, 1 group, shares static data.">TEX::NewOrderSingle::NoAllocs</a>&gt;());</div>
 <div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;      <span class="keywordflow">if</span> (grnoul)</div>
 <div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;      {</div>
 <div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;         <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> cnt(0); cnt &lt; grallocs-&gt;size(); ++cnt)</div>
@@ -703,7 +703,7 @@ $(document).ready(function(){initNavTree('myfix_8cpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:06. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:25:59. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

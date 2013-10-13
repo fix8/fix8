@@ -13,5 +13,6 @@ var Perf__classes_8hpp =
     [ "header", "classFIX8_1_1TEX_1_1header.html", "classFIX8_1_1TEX_1_1header" ],
     [ "trailer", "classFIX8_1_1TEX_1_1trailer.html", "classFIX8_1_1TEX_1_1trailer" ],
     [ "_506572665F636C61737365732E687070_", "Perf__classes_8hpp.html#a1e9042a826902cf14bbbd78be7ce97fd", null ],
-    [ "Perf_BaseMsgEntry", "Perf__classes_8hpp.html#ab482135f8cdcad3f4135431f969c1f38", null ]
+    [ "Perf_BaseMsgEntry", "Perf__classes_8hpp.html#ab482135f8cdcad3f4135431f969c1f38", null ],
+    [ "ctx", "Perf__classes_8hpp.html#a81693085746f52d46a98e945e2ec4642", null ]
 ];

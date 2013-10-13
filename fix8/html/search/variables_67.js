@@ -4,5 +4,5 @@ var searchData=
   ['getarglist',['GETARGLIST',['../f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab',1,'f8cutils.cpp']]],
   ['glob_5ferrors',['glob_errors',['../f8c_8cpp.html#aa2fea8f86294eff5752199c5a61714fa',1,'glob_errors():&#160;f8c.cpp'],['../f8cutils_8cpp.html#aa2fea8f86294eff5752199c5a61714fa',1,'glob_errors():&#160;f8cutils.cpp'],['../f8precomp_8cpp.html#aa2fea8f86294eff5752199c5a61714fa',1,'glob_errors():&#160;f8precomp.cpp']]],
   ['glob_5flog0',['glob_log0',['../namespaceFIX8.html#a595619ea9e58f25f16ff139c53723175',1,'FIX8::glob_log0()'],['../persist_8cpp.html#a87caa25c9c1656f45e273a1a338d53fc',1,'glob_log0():&#160;persist.cpp']]],
-  ['group_5frefcnt',['group_refcnt',['../structFIX8_1_1MessageSpec.html#a691d567ee95d04527959c3cb94bf38d7',1,'FIX8::MessageSpec']]]
+  ['glob_5fwarnings',['glob_warnings',['../f8cutils_8cpp.html#a14884c856247759e604a11d9cf6a2573',1,'f8cutils.cpp']]]
 ];

@@ -9,7 +9,7 @@ var classFIX8_1_1TEX_1_1ExecutionReport_1_1NoLegs =
     [ "create_group", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoLegs.html#a0d558275c4fe54818bcbdd933f23f3b4", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoLegs.html#ab2524aa8e868e5656d5646be51300d18", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoLegs.html#a87dfb89e65d2f738635d4dededb10a0b", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoLegs.html#a8d18a19c5e8a68cbe044b14eae322a37", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoLegs.html#a283d0e50b9bd2c94bdd7640a003d3578", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoLegs.html#aafcc28444a7143b97ee6eaa8adbde215", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoLegs.html#a9bceb210cec5b64360d28f6c4a5f26ca", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoLegs.html#abcaa5fc89f57715413fc6e6de7eac14a", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1ExecutionReport_1_1NoLegs.html#a9c82d78e4ac7af91ed36463d2b3882d4", null ]
 ];

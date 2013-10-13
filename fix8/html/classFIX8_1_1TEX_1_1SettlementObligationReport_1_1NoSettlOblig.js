@@ -11,7 +11,7 @@ var classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig =
     [ "create_group", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#af8230298a9b9a56edbedc6919c3e785a", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#ae8e5c98f7b2417aaa3f0748e97daec7e", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#a3cbdb8ce23092da4c47028b2c95b4c16", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#a3ea910e2941994d1fb24c5f33b3d6981", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#a5c784698f71aabd2f34ed3cbcf0a95f7", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#a6237a5d23041bbca8155fce35ff00642", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#ac4c95b306e218c9fadcb81a4018fb5d6", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#aa5c15f2ebe669e0e7d9c2537c68ed21c", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig.html#ab70d129c89ff2598f44cbae6c94a78d4", null ]
 ];

@@ -1,5 +1,6 @@
 var NAVTREEINDEX19 =
 {
+"Myfix__types_8hpp.html#afcbb78c37c26f04fad681006cc69c431":[3,0,48,1071],
 "Myfix__types_8hpp.html#afcc1bab741317ffdc7be5be291af3ed4":[3,0,48,1671],
 "Myfix__types_8hpp.html#afcc211269db0919ab787d75279f0fd58":[3,0,48,1016],
 "Myfix__types_8hpp.html#afccbabd36785d8d1f8b34608ed0c8720":[3,0,48,4668],
@@ -55,10 +56,11 @@ var NAVTREEINDEX19 =
 "Myfix__types_8hpp.html#afff2f5b6f42f587c67d55dbb756f7a66":[3,0,48,2376],
 "Myfix__types_8hpp_source.html":[3,0,48],
 "Perf__classes_8cpp.html":[3,0,50],
-"Perf__classes_8cpp.html#a2c394448acdac687364cc4190b7db5d2":[3,0,50,0],
+"Perf__classes_8cpp.html#a81693085746f52d46a98e945e2ec4642":[3,0,50,0],
 "Perf__classes_8cpp_source.html":[3,0,50],
 "Perf__classes_8hpp.html":[3,0,51],
 "Perf__classes_8hpp.html#a1e9042a826902cf14bbbd78be7ce97fd":[3,0,51,12],
+"Perf__classes_8hpp.html#a81693085746f52d46a98e945e2ec4642":[3,0,51,14],
 "Perf__classes_8hpp.html#ab482135f8cdcad3f4135431f969c1f38":[3,0,51,13],
 "Perf__classes_8hpp_source.html":[3,0,51],
 "Perf__router_8hpp.html":[3,0,52],
@@ -247,7 +249,5 @@ var NAVTREEINDEX19 =
 "Perf__types_8hpp.html#a868f8e08633b3f37c193dc05976eb3af":[3,0,55,21],
 "Perf__types_8hpp.html#a87aa82523e2ed39f45bdb42f05b5b821":[3,0,55,183],
 "Perf__types_8hpp.html#a886e771bd3f5398e9826328910da13a9":[3,0,55,282],
-"Perf__types_8hpp.html#a88fd332738cfec94599dfc550281e4bb":[3,0,55,153],
-"Perf__types_8hpp.html#a8b479efdd4533cc431636df7c82e7aea":[3,0,55,53],
-"Perf__types_8hpp.html#a8d0f8638297b21cbd59d09b614145dd8":[3,0,55,211]
+"Perf__types_8hpp.html#a88fd332738cfec94599dfc550281e4bb":[3,0,55,153]
 };

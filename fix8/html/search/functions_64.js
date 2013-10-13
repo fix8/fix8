@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['datetimeformat',['DateTimeFormat',['../classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a4acae541911fa04ee7f60d9d3221682e',1,'FIX8::Field&lt; UTCTimestamp, field &gt;']]],
-  ['datetimeparse',['datetimeparse',['../classFIX8_1_1Field_3_01UTCTimestamp_00_01field_01_4.html#a3dd8c8fe3699b0a1842b9ee15c6435f6',1,'FIX8::Field&lt; UTCTimestamp, field &gt;']]],
+  ['date_5fparse',['date_parse',['../namespaceFIX8.html#ab164d9631d9191f35859386620d24fc3',1,'FIX8']]],
+  ['date_5ftime_5fformat',['date_time_format',['../namespaceFIX8.html#a9345ebd31f074d22d1898f93eb01d5a2',1,'FIX8']]],
+  ['date_5ftime_5fparse',['date_time_parse',['../namespaceFIX8.html#afbad3871353598ce0fd0a9b12f83dd88',1,'FIX8']]],
   ['daybookinginst_5faccumulate',['DayBookingInst_ACCUMULATE',['../namespaceFIX8_1_1TEX.html#ae00fbdccb5b6b8f7f183f839e958c0fc',1,'FIX8::TEX']]],
   ['daybookinginst_5fcan_5ftrigger_5fbooking_5fwithout_5freference_5fto_5fthe_5forder_5finitiator',['DayBookingInst_CAN_TRIGGER_BOOKING_WITHOUT_REFERENCE_TO_THE_ORDER_INITIATOR',['../namespaceFIX8_1_1TEX.html#a4919a58865eb7e371fd3c2e91e8908f8',1,'FIX8::TEX']]],
   ['daybookinginst_5frealm_5fels',['DayBookingInst_realm_els',['../namespaceFIX8_1_1TEX.html#a99975e2fb4284b50a8437237bf110857',1,'FIX8::TEX']]],

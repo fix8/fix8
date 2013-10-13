@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.5</span>
+   &#160;<span id="projectnumber">version  0.9.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -162,6 +162,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3af59e09beed4c914f5011746e8268ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2a5d6ca7ad5efa2821cd0e43a893b04"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#aa2a5d6ca7ad5efa2821cd0e43a893b04">todouble</a> () const </td></tr>
 <tr class="separator:aa2a5d6ca7ad5efa2821cd0e43a893b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5040cb71714108318abc69024cff3e7d"><td class="memItemLeft" align="right" valign="top">struct timespec&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#a5040cb71714108318abc69024cff3e7d">as_ts</a> () const </td></tr>
+<tr class="separator:a5040cb71714108318abc69024cff3e7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a180a26768b567214178f746bacae4111"><td class="memItemLeft" align="right" valign="top">struct tm *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#a180a26768b567214178f746bacae4111">as_tm</a> (struct tm &amp;result) const </td></tr>
+<tr class="separator:a180a26768b567214178f746bacae4111"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad73e4cb4a9e41a956707c9f16ceefb81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#ad73e4cb4a9e41a956707c9f16ceefb81">set</a> (const time_t <a class="el" href="classFIX8_1_1Tickval.html#a9d5902f81c202a69e38ac20674769377">secs</a>, const long <a class="el" href="classFIX8_1_1Tickval.html#a3af59e09beed4c914f5011746e8268ec">nsecs</a>)</td></tr>
 <tr class="separator:ad73e4cb4a9e41a956707c9f16ceefb81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15b03bebe123fa5fafff16a582addd7d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Tickval.html#a15b03bebe123fa5fafff16a582addd7d">operator!</a> () const </td></tr>
@@ -281,7 +285,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00136">136</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00215">get_tickval()</a>.</p>
+<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00215">get_tickval()</a>, <a class="el" href="tickval_8hpp_source.html#l00363">FIX8::operator+()</a>, and <a class="el" href="tickval_8hpp_source.html#l00352">FIX8::operator-()</a>.</p>
 
 </div>
 </div>
@@ -486,11 +490,78 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>resulting ticks </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00329">329</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00346">346</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00122">billion</a>.</p>
 
 <p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00170">operator=()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a180a26768b567214178f746bacae4111"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct tm* FIX8::Tickval::as_tm </td>
+          <td>(</td>
+          <td class="paramtype">struct tm &amp;&#160;</td>
+          <td class="paramname"><em>result</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">read</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get tickval as struct tm </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">result</td><td>ref to struct tm to fill </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ptr to result </dd></dl>
+
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00242">242</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+
+<p>References <a class="el" href="tickval_8hpp_source.html#l00186">secs()</a>.</p>
+
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l00731">FIX8::date_time_format()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5040cb71714108318abc69024cff3e7d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct timespec FIX8::Tickval::as_ts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">read</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get tickval as struct timespec </p>
+<dl class="section return"><dt>Returns</dt><dd>result </dd></dl>
+
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00233">233</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+
+<p>References <a class="el" href="tickval_8hpp_source.html#l00198">nsecs()</a>, and <a class="el" href="tickval_8hpp_source.html#l00186">secs()</a>.</p>
 
 </div>
 </div>
@@ -636,7 +707,7 @@ Friends</h2></td></tr>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00130">_value</a>, <a class="el" href="tickval_8hpp_source.html#l00122">billion</a>, and <a class="el" href="tickval_8hpp_source.html#l00121">million</a>.</p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00826">FIX8::Field&lt; UTCTimestamp, field &gt;::DateTimeFormat()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l00731">FIX8::date_time_format()</a>.</p>
 
 </div>
 </div>
@@ -667,7 +738,7 @@ Friends</h2></td></tr>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00215">get_tickval()</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00088">FIX8::GetTimeAsStringMS()</a>, <a class="el" href="session_8cpp_source.html#l00595">FIX8::Session::heartbeat_service()</a>, <a class="el" href="timer_8hpp_source.html#l00271">FIX8::IntervalTimer::Reset()</a>, <a class="el" href="session_8cpp_source.html#l00781">FIX8::Session::send_process()</a>, <a class="el" href="session_8hpp_source.html#l00468">FIX8::Session::update_received()</a>, and <a class="el" href="session_8hpp_source.html#l00465">FIX8::Session::update_sent()</a>.</p>
+<p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00088">FIX8::GetTimeAsStringMS()</a>, <a class="el" href="session_8cpp_source.html#l00590">FIX8::Session::heartbeat_service()</a>, <a class="el" href="timer_8hpp_source.html#l00271">FIX8::IntervalTimer::Reset()</a>, <a class="el" href="session_8cpp_source.html#l00779">FIX8::Session::send_process()</a>, <a class="el" href="session_8hpp_source.html#l00468">FIX8::Session::update_received()</a>, and <a class="el" href="session_8hpp_source.html#l00465">FIX8::Session::update_sent()</a>.</p>
 
 </div>
 </div>
@@ -698,7 +769,7 @@ Friends</h2></td></tr>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00130">_value</a>, and <a class="el" href="tickval_8hpp_source.html#l00122">billion</a>.</p>
 
-<p>Referenced by <a class="el" href="f8utils_8cpp_source.html#l00088">FIX8::GetTimeAsStringMS()</a>, and <a class="el" href="tickval_8hpp_source.html#l00234">set()</a>.</p>
+<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00233">as_ts()</a>, <a class="el" href="f8utils_8cpp_source.html#l00088">FIX8::GetTimeAsStringMS()</a>, and <a class="el" href="tickval_8hpp_source.html#l00251">set()</a>.</p>
 
 </div>
 </div>
@@ -725,7 +796,7 @@ Friends</h2></td></tr>
 <p>Cast to double. </p>
 <dl class="section return"><dt>Returns</dt><dd>ticks as double </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00251">251</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00268">268</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00202">todouble()</a>.</p>
 
@@ -754,7 +825,7 @@ Friends</h2></td></tr>
 <p>Cast to unsigned long long. </p>
 <dl class="section return"><dt>Returns</dt><dd>ticks as unsigned long long </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00247">247</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00264">264</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00130">_value</a>.</p>
 
@@ -783,7 +854,7 @@ Friends</h2></td></tr>
 <p>Not 0 operator </p>
 <dl class="section return"><dt>Returns</dt><dd>true if ticks </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00243">243</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00260">260</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00130">_value</a>, and <a class="el" href="tickval_8hpp_source.html#l00119">noticks</a>.</p>
 
@@ -812,7 +883,7 @@ Friends</h2></td></tr>
 <p>Not operator </p>
 <dl class="section return"><dt>Returns</dt><dd>true if no ticks (0) </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00239">239</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00256">256</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00130">_value</a>, and <a class="el" href="tickval_8hpp_source.html#l00119">noticks</a>.</p>
 
@@ -879,7 +950,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00170">170</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
-<p>References <a class="el" href="tickval_8hpp_source.html#l00329">_cvt()</a>, and <a class="el" href="tickval_8hpp_source.html#l00130">_value</a>.</p>
+<p>References <a class="el" href="tickval_8hpp_source.html#l00346">_cvt()</a>, and <a class="el" href="tickval_8hpp_source.html#l00130">_value</a>.</p>
 
 </div>
 </div>
@@ -910,7 +981,7 @@ Friends</h2></td></tr>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00130">_value</a>, and <a class="el" href="tickval_8hpp_source.html#l00122">billion</a>.</p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00826">FIX8::Field&lt; UTCTimestamp, field &gt;::DateTimeFormat()</a>, <a class="el" href="f8utils_8cpp_source.html#l00088">FIX8::GetTimeAsStringMS()</a>, and <a class="el" href="tickval_8hpp_source.html#l00234">set()</a>.</p>
+<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00242">as_tm()</a>, <a class="el" href="tickval_8hpp_source.html#l00233">as_ts()</a>, <a class="el" href="f8utils_8cpp_source.html#l00088">FIX8::GetTimeAsStringMS()</a>, <a class="el" href="session_8cpp_source.html#l00590">FIX8::Session::heartbeat_service()</a>, and <a class="el" href="tickval_8hpp_source.html#l00251">set()</a>.</p>
 
 </div>
 </div>
@@ -954,7 +1025,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00234">234</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00251">251</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00130">_value</a>, <a class="el" href="tickval_8hpp_source.html#l00122">billion</a>, <a class="el" href="tickval_8hpp_source.html#l00198">nsecs()</a>, and <a class="el" href="tickval_8hpp_source.html#l00186">secs()</a>.</p>
 
@@ -987,7 +1058,7 @@ Friends</h2></td></tr>
 
 <p>References <a class="el" href="tickval_8hpp_source.html#l00130">_value</a>, and <a class="el" href="tickval_8hpp_source.html#l00122">billion</a>.</p>
 
-<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00266">FIX8::IntervalTimer::AsDouble()</a>, and <a class="el" href="tickval_8hpp_source.html#l00251">operator double()</a>.</p>
+<p>Referenced by <a class="el" href="timer_8hpp_source.html#l00266">FIX8::IntervalTimer::AsDouble()</a>, and <a class="el" href="tickval_8hpp_source.html#l00268">operator double()</a>.</p>
 
 </div>
 </div>
@@ -1062,7 +1133,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if not equal </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00374">374</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00391">391</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1107,7 +1178,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Result as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00346">346</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00363">363</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1152,7 +1223,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>resulting oldtime </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00363">363</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00380">380</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1197,7 +1268,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>oldtime as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00351">351</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00368">368</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1242,7 +1313,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Result as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00335">335</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00352">352</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1287,7 +1358,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>resulting oldtime </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00340">340</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00357">357</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1332,7 +1403,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>oldtime as <a class="el" href="classFIX8_1_1Tickval.html" title="High resolution time in nanosecond ticks. Thread safe.">Tickval</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00357">357</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00374">374</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1377,7 +1448,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if a is less than b </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00384">384</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00401">401</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1422,7 +1493,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if a is less than or equal to b </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00394">394</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00411">411</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1467,7 +1538,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if equal </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00369">369</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00386">386</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1512,7 +1583,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if a is greater than b </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00379">379</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00396">396</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1557,7 +1628,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if a is greater than or equal to b </dd></dl>
 
-<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00389">389</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
+<p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00406">406</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
 </div>
 </div>
@@ -1582,7 +1653,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00130">130</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00178">get_ticks()</a>, <a class="el" href="tickval_8hpp_source.html#l00190">msecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00198">nsecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00247">operator unsigned long long()</a>, <a class="el" href="tickval_8hpp_source.html#l00243">operator void *()</a>, <a class="el" href="tickval_8hpp_source.html#l00239">operator!()</a>, <a class="el" href="tickval_8hpp_source.html#l00374">FIX8::operator!=()</a>, <a class="el" href="tickval_8hpp_source.html#l00346">FIX8::operator+()</a>, <a class="el" href="tickval_8hpp_source.html#l00351">FIX8::operator+=()</a>, <a class="el" href="tickval_8hpp_source.html#l00335">FIX8::operator-()</a>, <a class="el" href="tickval_8hpp_source.html#l00340">FIX8::operator-=()</a>, <a class="el" href="tickval_8hpp_source.html#l00384">FIX8::operator&lt;()</a>, <a class="el" href="tickval_8hpp_source.html#l00394">FIX8::operator&lt;=()</a>, <a class="el" href="tickval_8hpp_source.html#l00160">operator=()</a>, <a class="el" href="tickval_8hpp_source.html#l00369">FIX8::operator==()</a>, <a class="el" href="tickval_8hpp_source.html#l00379">FIX8::operator&gt;()</a>, <a class="el" href="tickval_8hpp_source.html#l00389">FIX8::operator&gt;=()</a>, <a class="el" href="tickval_8hpp_source.html#l00186">secs()</a>, <a class="el" href="tickval_8hpp_source.html#l00234">set()</a>, <a class="el" href="tickval_8hpp_source.html#l00202">todouble()</a>, and <a class="el" href="tickval_8hpp_source.html#l00194">usecs()</a>.</p>
+<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00178">get_ticks()</a>, <a class="el" href="tickval_8hpp_source.html#l00190">msecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00198">nsecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00264">operator unsigned long long()</a>, <a class="el" href="tickval_8hpp_source.html#l00260">operator void *()</a>, <a class="el" href="tickval_8hpp_source.html#l00256">operator!()</a>, <a class="el" href="tickval_8hpp_source.html#l00391">FIX8::operator!=()</a>, <a class="el" href="tickval_8hpp_source.html#l00363">FIX8::operator+()</a>, <a class="el" href="tickval_8hpp_source.html#l00368">FIX8::operator+=()</a>, <a class="el" href="tickval_8hpp_source.html#l00352">FIX8::operator-()</a>, <a class="el" href="tickval_8hpp_source.html#l00357">FIX8::operator-=()</a>, <a class="el" href="tickval_8hpp_source.html#l00401">FIX8::operator&lt;()</a>, <a class="el" href="tickval_8hpp_source.html#l00411">FIX8::operator&lt;=()</a>, <a class="el" href="tickval_8hpp_source.html#l00160">operator=()</a>, <a class="el" href="tickval_8hpp_source.html#l00386">FIX8::operator==()</a>, <a class="el" href="tickval_8hpp_source.html#l00396">FIX8::operator&gt;()</a>, <a class="el" href="tickval_8hpp_source.html#l00406">FIX8::operator&gt;=()</a>, <a class="el" href="tickval_8hpp_source.html#l00186">secs()</a>, <a class="el" href="tickval_8hpp_source.html#l00251">set()</a>, <a class="el" href="tickval_8hpp_source.html#l00202">todouble()</a>, and <a class="el" href="tickval_8hpp_source.html#l00194">usecs()</a>.</p>
 
 </div>
 </div>
@@ -1606,7 +1677,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00122">122</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00329">_cvt()</a>, <a class="el" href="field_8hpp_source.html#l00879">FIX8::Field&lt; UTCTimestamp, field &gt;::datetimeparse()</a>, <a class="el" href="tickval_8hpp_source.html#l00190">msecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00198">nsecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00186">secs()</a>, <a class="el" href="tickval_8hpp_source.html#l00234">set()</a>, <a class="el" href="tickval_8hpp_source.html#l00202">todouble()</a>, and <a class="el" href="tickval_8hpp_source.html#l00194">usecs()</a>.</p>
+<p>Referenced by <a class="el" href="tickval_8hpp_source.html#l00346">_cvt()</a>, <a class="el" href="field_8hpp_source.html#l00832">FIX8::date_parse()</a>, <a class="el" href="field_8hpp_source.html#l00775">FIX8::date_time_parse()</a>, <a class="el" href="tickval_8hpp_source.html#l00190">msecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00198">nsecs()</a>, <a class="el" href="tickval_8hpp_source.html#l00186">secs()</a>, <a class="el" href="tickval_8hpp_source.html#l00251">set()</a>, <a class="el" href="field_8hpp_source.html#l00808">FIX8::time_parse()</a>, <a class="el" href="tickval_8hpp_source.html#l00202">todouble()</a>, and <a class="el" href="tickval_8hpp_source.html#l00194">usecs()</a>.</p>
 
 </div>
 </div>
@@ -1630,7 +1701,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00121">121</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00879">FIX8::Field&lt; UTCTimestamp, field &gt;::datetimeparse()</a>, <a class="el" href="tickval_8hpp_source.html#l00190">msecs()</a>, and <a class="el" href="timer_8hpp_source.html#l00198">FIX8::Timer&lt; T &gt;::schedule()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l00775">FIX8::date_time_parse()</a>, <a class="el" href="tickval_8hpp_source.html#l00190">msecs()</a>, <a class="el" href="timer_8hpp_source.html#l00198">FIX8::Timer&lt; T &gt;::schedule()</a>, and <a class="el" href="field_8hpp_source.html#l00808">FIX8::time_parse()</a>.</p>
 
 </div>
 </div>
@@ -1654,7 +1725,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="tickval_8hpp_source.html#l00119">119</a> of file <a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="field_8hpp_source.html#l00879">FIX8::Field&lt; UTCTimestamp, field &gt;::datetimeparse()</a>, <a class="el" href="tickval_8hpp_source.html#l00243">operator void *()</a>, and <a class="el" href="tickval_8hpp_source.html#l00239">operator!()</a>.</p>
+<p>Referenced by <a class="el" href="field_8hpp_source.html#l00775">FIX8::date_time_parse()</a>, <a class="el" href="tickval_8hpp_source.html#l00260">operator void *()</a>, <a class="el" href="tickval_8hpp_source.html#l00256">operator!()</a>, and <a class="el" href="field_8hpp_source.html#l00808">FIX8::time_parse()</a>.</p>
 
 </div>
 </div>
@@ -1689,7 +1760,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:18. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:26:11. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

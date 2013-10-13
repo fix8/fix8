@@ -349,7 +349,7 @@ int main(int argc, char *argv[])
     tbb::tick_count start = tbb::tick_count::now();
     for(int i = 0 ; i < 100000; ++i)
     {
-        msg = FIX8::Message::factory(FIX8::COMPAROFIX::ctx, output);
+        msg = FIX8::Message::factory(FIX8::COMPAROFIX::ctx(), output);
         delete msg;
     }
 
@@ -376,7 +376,7 @@ int main(int argc, char *argv[])
 								<th>Time secs</th>
 								<th>Msgs/sec</th>
 								<th>Average &#xb5;s/msg</th>
-								<th>% Improvement</th>
+								<th>% Reduction</th>
 								<th>Thoughput</th>
 							</tr>
 						</thead>
@@ -407,7 +407,7 @@ int main(int argc, char *argv[])
 								<td>100000</td>
 								<td>0.1429087</td>
 								<td>699747</td>
-								<td>1.43</td>
+								<td><h4>1.43</h4></td>
 								<td><h4>68.7</h4></td>
 								<td><h4>3.2x</h4></td>
 							</tr>
@@ -415,11 +415,11 @@ int main(int argc, char *argv[])
 								<td></td>
 								<td>decode</td>
 								<td>100000</td>
-								<td>0.4922069</td>
-								<td>203166</td>
-								<td>4.92</td>
-								<td><h4>63.9</h4></td>
-								<td><h4>2.8x</h4></td>
+								<td>0.4495174</td>
+								<td>222461</td>
+								<td><h4>4.50</h4></td>
+								<td><h4>67.0</h4></td>
+								<td><h4>3.0x</h4></td>
 							</tr>
 						</tbody>
 					</table>
@@ -429,7 +429,7 @@ int main(int argc, char *argv[])
 			<div class="row">
 				<div class="span12">
 					<h2>Conclusion</h2>
-					<p>For the same message, Fix8 encodes <em><b>3.2 times faster</b></em> and decodes <em><b>2.8 times faster</b></em> for an average improvement of <em><b>3.0 times</b></em> over Quickfix. In other words, reduces encode latency by <em><b>69%</b></em> and reduces decode latency by <em><b>64%</b></em>.</p>
+					<p>For the same message, Fix8 encodes <em><b>3.2 times faster</b></em> and decodes <em><b>3.0 times faster</b></em> for an average improvement of <em><b>3.0 times</b></em> over Quickfix. In other words, reduces encode latency by <em><b>69%</b></em> and reduces decode latency by <em><b>67%</b></em>.</p>
 				</div>
 			</div>
 		</div>

@@ -8,7 +8,7 @@ var classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoLegs =
     [ "create_group", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoLegs.html#a67aff24e79a443a1e1c052b44aa56a10", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoLegs.html#a62e0a1139d0afb4a40dd75fb1acda442", null ],
     [ "_fnum", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoLegs.html#a41875ced910efcebccbc515a30613e36", null ],
-    [ "_ftha", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoLegs.html#ae45d90dad9e3115221c4bd430992d4ec", null ],
-    [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoLegs.html#adb992e8c4b3a7f6e3cd59bf67ac837af", null ],
-    [ "_traits", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoLegs.html#a22ec41ab1ef8fff899f2bb7f08c08bb0", null ]
+    [ "_ftha", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoLegs.html#a615a1999cb228807dfc696b9ab371213", null ],
+    [ "_msgtype", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoLegs.html#abf5b87b1f03c67dde73cb2c412233f6e", null ],
+    [ "_traits", "classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoLegs.html#a2d5e319781fc696f654952c5fc29bd2a", null ]
 ];

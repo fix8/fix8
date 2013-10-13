@@ -8,6 +8,7 @@ var classFIX8_1_1MessageBase =
     [ "add_field", "classFIX8_1_1MessageBase.html#a47c9be58836b1269f780aefd6315202e", null ],
     [ "add_field", "classFIX8_1_1MessageBase.html#aa42d74ac11d6e3d768afd0a1ef9a2ee5", null ],
     [ "add_field", "classFIX8_1_1MessageBase.html#af28c421582fea22d34b582269ab89a19", null ],
+    [ "add_field_decoder", "classFIX8_1_1MessageBase.html#ac69cc7199f3876982fac77167f520ff6", null ],
     [ "add_group", "classFIX8_1_1MessageBase.html#ae0112af5750dac37b9642b52c5f59f71", null ],
     [ "add_trait", "classFIX8_1_1MessageBase.html#acc8e3a02e8a2e280cfeb7bd9506bc2f6", null ],
     [ "add_trait", "classFIX8_1_1MessageBase.html#a061999433f017d186c5ccb451424b11a", null ],

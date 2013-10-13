@@ -4,6 +4,7 @@ var classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4 =
     [ "Field", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a08b2c4c81151e400b63929f3ecc3c4db", null ],
     [ "Field", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a7dfdb5f4205ae8ff29c3b3f3cee6ed8e", null ],
     [ "Field", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#ab0c5f64d84d39ecf5a749e194ad9643e", null ],
+    [ "Field", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a280f9fe493c29f4fd914c9b8b4ae3986", null ],
     [ "~Field", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a5cf79d144a58b6011374f69484084aeb", null ],
     [ "copy", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a95b5a70c5b3d055c8e00a77af8bd7fff", null ],
     [ "get", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a554c3228a74791ae34be507d3fb68519", null ],
@@ -13,5 +14,6 @@ var classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4 =
     [ "print", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a8cd312a778f7eda3787991139345cd4d", null ],
     [ "print", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a9a0473e838a05ae18f762f9516a88f33", null ],
     [ "set", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a50eca0968b6e99ce26903adb7fb3a5ce", null ],
+    [ "_sz", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a781d034e4973b010f402325bb25fcfc1", null ],
     [ "_value", "classFIX8_1_1Field_3_01LocalMktDate_00_01field_01_4.html#a7d516403b15e76c084a415628337f58d", null ]
 ];

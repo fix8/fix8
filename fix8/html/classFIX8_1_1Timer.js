@@ -11,6 +11,6 @@ var classFIX8_1_1Timer =
     [ "_event_queue", "classFIX8_1_1Timer.html#a4a3b6d4434a6719c580b7c72e850c044", null ],
     [ "_granularity", "classFIX8_1_1Timer.html#ac1de2d5afb11067dde9b67d39426d8a1", null ],
     [ "_monitor", "classFIX8_1_1Timer.html#a500f5a76dcaa9594bf75af390c23738f", null ],
-    [ "_mutex", "classFIX8_1_1Timer.html#adec480cd5a2eb6a22203b17a4b897505", null ],
+    [ "_spin_lock", "classFIX8_1_1Timer.html#a0e0ba97cc19f31e998c336ff39a2ea95", null ],
     [ "_thread", "classFIX8_1_1Timer.html#a0c56d50a47175ad25b6d4f5e01ad26ed", null ]
 ];

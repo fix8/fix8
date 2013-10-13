@@ -29,6 +29,7 @@ var classXmlElement =
     [ "GetLineCnt", "classXmlElement.html#a5f4bfd4051f8830ccc07d9be39f6cc6e", null ],
     [ "GetMaxDepth", "classXmlElement.html#a66e51ebbe1d40d4454d55bfb7402f1ae", null ],
     [ "GetMaxDepthPermitted", "classXmlElement.html#ae24415f46c327b4fe11af2dbd928b74a", null ],
+    [ "GetParent", "classXmlElement.html#ab5264c0d12fd2c798fe76bb15a356482", null ],
     [ "GetPath", "classXmlElement.html#a255143437fae8f0399bb15d53b48fdaf", null ],
     [ "GetRoot", "classXmlElement.html#a35bb30cd52b82e57a5156c88d6a495fb", null ],
     [ "GetSequence", "classXmlElement.html#a064a0d27918d14e5fe7b7621db3617b7", null ],

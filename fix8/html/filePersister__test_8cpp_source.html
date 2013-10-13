@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.5</span>
+   &#160;<span id="projectnumber">version  0.9.6</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -318,10 +318,10 @@ $(document).ready(function(){initNavTree('filePersister__test_8cpp_source.html',
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
-<div class="line"><a name="l00243"></a><span class="lineno"><a class="code" href="classcheck__session.html#a33e3a3541de6c43bc1d83d429398349b">  243</a></span>&#160;    <a class="code" href="classcheck__session.html" title="A helper session to check retransmitted messages.">check_session</a>(<span class="keyword">const</span> <a class="code" href="structFIX8_1_1F8MetaCntx.html" title="Static metadata context class - one per FIX xml schema.">F8MetaCntx</a>&amp; <a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">ctx</a>):</div>
+<div class="line"><a name="l00243"></a><span class="lineno"><a class="code" href="classcheck__session.html#a33e3a3541de6c43bc1d83d429398349b">  243</a></span>&#160;    <a class="code" href="classcheck__session.html" title="A helper session to check retransmitted messages.">check_session</a>(<span class="keyword">const</span> <a class="code" href="structFIX8_1_1F8MetaCntx.html" title="Static metadata context class - one per FIX xml schema.">F8MetaCntx</a>&amp; <a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">ctx</a>):</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <a class="code" href="classFIX8_1_1Session.html" title="Fix8 Base Session. User sessions derive from this class.">Session</a>(ctx)</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    {</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        _connection = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1Connection.html" title="Complete Fix connection (reader and writer).">Connection</a>(NULL, _addr, *<span class="keyword">this</span>, <a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a084c5fde2b1e72f800d4de6902d5c014">pm_thread</a>, 10);</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        _connection = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1Connection.html" title="Complete Fix connection (reader and writer).">Connection</a>(0, _addr, *<span class="keyword">this</span>, <a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a084c5fde2b1e72f800d4de6902d5c014">pm_thread</a>, 10);</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    };</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
 <div class="line"><a name="l00250"></a><span class="lineno"><a class="code" href="classcheck__session.html#a56a3855927ad0f4f1320090d1f16d5c6">  250</a></span>&#160;    ~<a class="code" href="classcheck__session.html" title="A helper session to check retransmitted messages.">check_session</a>()</div>
@@ -351,8 +351,8 @@ $(document).ready(function(){initNavTree('filePersister__test_8cpp_source.html',
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    Poco::Net::SocketAddress _addr;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <a class="code" href="classcheck__session.html" title="A helper session to check retransmitted messages.">check_session</a> session(<a class="code" href="namespaceFIX8_1_1TEX.html#ad1246a117b197be1c2006254a7b05bfa">UTEST::ctx</a>);</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <a class="code" href="classFIX8_1_1Connection.html" title="Complete Fix connection (reader and writer).">Connection</a> connection(NULL, _addr, session, <a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a084c5fde2b1e72f800d4de6902d5c014">pm_thread</a>, 10);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <a class="code" href="classcheck__session.html" title="A helper session to check retransmitted messages.">check_session</a> session(<a class="code" href="namespaceFIX8_1_1TEX.html#a81693085746f52d46a98e945e2ec4642" title="Compiler generated metadata object, accessed through this function.">UTEST::ctx</a>());</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <a class="code" href="classFIX8_1_1Connection.html" title="Complete Fix connection (reader and writer).">Connection</a> connection(0, _addr, session, <a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a084c5fde2b1e72f800d4de6902d5c014">pm_thread</a>, 10);</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    fixture.<a class="code" href="classpersist__fixture.html#aef517bb241d6614e6e15127282089000" title="file persister">filePer</a>-&gt;<a class="code" href="classFIX8_1_1FilePersister.html#ab6cad69b43368cbbe6c7b5400ecc646a">get</a>(1, 5, session, &amp;<a class="code" href="classFIX8_1_1Session.html#a1d262e8d9d794c158415ac20cd420400">Session::retrans_callback</a>);</div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;</div>
@@ -409,7 +409,7 @@ $(document).ready(function(){initNavTree('filePersister__test_8cpp_source.html',
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Sep 22 2013 12:18:06. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:25:59. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>
