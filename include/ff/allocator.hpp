@@ -1,34 +1,39 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
+ *  \link
  *  \file allocator.hpp
+ *  \ingroup shared_memory_fastflow
+ *  
  *  \brief Implementations of the FastFlow's lock-free allocator.
  */
  
 #ifndef _FF_ALLOCATOR_HPP_
 #define _FF_ALLOCATOR_HPP_
+
 /* ***************************************************************************
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License version 2 as 
- *  published by the Free Software Foundation.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *  This program is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License version 2 as published by
+ *  the Free Software Foundation.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program; if not, write to the Free Software Foundation, Inc., 59
+ *  Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  *  As a special exception, you may use this file as part of a free software
  *  library without restriction.  Specifically, if other files instantiate
  *  templates or use macros or inline functions from this file, or you compile
- *  this file and link it with other files to produce an executable, this
- *  file does not by itself cause the resulting executable to be covered by
- *  the GNU General Public License.  This exception does not however
- *  invalidate any other reasons why the executable file might be covered by
- *  the GNU General Public License.
+ *  this file and link it with other files to produce an executable, this file
+ *  does not by itself cause the resulting executable to be covered by the GNU
+ *  General Public License.  This exception does not however invalidate any
+ *  other reasons why the executable file might be covered by the GNU General
+ *  Public License.
  *
  * **************************************************************************/
 
@@ -98,17 +103,24 @@
 
 namespace ff {
 
-
+/*
+ *  \ingroup shared_memory_fastflow
+ *
+ *  @{
+ */
 
 enum { N_SLABBUFFER=9, MAX_SLABBUFFER_SIZE=8192};
 static const int POW2_MIN  = 5;
 static const int POW2_MAX  = 13;
 
 // array containing different possbile sizes for a slab buffer
-static const int buffersize[N_SLABBUFFER]     = 
+static const int buffersize[N_SLABBUFFER] = 
                                 { 32, 64,128,256,512,1024,2048,4096,8192  };
                                 
-// array containing default dimensions of slab segments ?
+// array containing the allowed numbers (quantity) of buffers. These values will be 
+// used together with the array of possible sizes for buffers: they will be paired 
+// with a specific buffer size and will denote the number of buffers of that size, 
+// present inside the cache.
 static const int nslabs_default[N_SLABBUFFER] =
                                 { 512,512,512,512,128,  64,  32,  16,   8 };
 
@@ -129,7 +141,6 @@ struct all_stats {
     atomic_long_t      segfree;
     atomic_long_t      newallocator;    
     atomic_long_t      deleteallocator;
-
 
     all_stats() {
         atomic_long_set(&nmalloc, 0);
@@ -154,7 +165,9 @@ struct all_stats {
         return &allstats;
     }
 
-
+    /**
+     * Printing trace.
+     */
     void print(std::ostream & out = std::cout) {
         out << "\n--- Allocator Stats ---\n" 
             << "malloc        = " << (unsigned long)atomic_long_read(&nmalloc)     << "\n"
@@ -189,18 +202,13 @@ static inline bool isPowerOfTwoMultiple(size_t alignment, size_t multiple) {
 }
 
 /*!
- *  \ingroup runtime
- *
- *  @{
- */    
-
-
-/**
  * \class SegmentAllocator
+ * \ingroup shared_memory_fastflow
  *
- * \brief Uses standard \p libc allocator to 
- * allocate chunks of (possibly aligned) memory. 
- * It also keeps track of the amount of allocated memory.
+ * \brief Uses standard \p libc allocator to allocate chunks of (possibly
+ * aligned) memory. It also keeps track of the amount of allocated memory.
+ *
+ * This class is defined in \ref allocator.hpp
  * 
  */
 
@@ -210,12 +218,12 @@ public:
     ~SegmentAllocator() {}
     
     /** 
-     * Allocates a new segment of (possibly aligned) memory.  \n
-     * This method uses standard \p malloc to allocate memory (or \p 
-     * posix_memalign when possible). \p malloc should guarantee a sufficiently 
-     * well aligned memory  for any purpose, while \p posix_memalign is used to 
-     * effectively allocate memory aligned in a defined way (i.e. the address of 
-     * the allocated memory will be a multiple of a specific value).
+     * Allocates a new segment of (possibly aligned) memory.  \n This method
+     * uses standard \p malloc to allocate memory (or \p posix_memalign when
+     * possible). \p malloc should guarantee a sufficiently well aligned memory
+     * for any purpose, while \p posix_memalign is used to effectively allocate
+     * memory aligned in a defined way (i.e. the address of the allocated
+     * memory will be a multiple of a specific value).
      *
      * \param segment_size the quantity of memory to be allocated.
      *
@@ -224,12 +232,12 @@ public:
     void * newsegment(size_t segment_size) { 
         //void * ptr = ::malloc(segment_size);
         void * ptr=NULL;
-		// MA: Check if this does not lead to a page swap
-		#if defined (_SC_PAGESIZE)
-        ptr = getAlignedMemory(sysconf(_SC_PAGESIZE),segment_size);
+        // MA: Check if this does not lead to a page swap
+        #if defined (_SC_PAGESIZE)
+            ptr = getAlignedMemory(sysconf(_SC_PAGESIZE),segment_size);
         #else
-		ptr = getAlignedMemory(4096,segment_size); // To be fixed for MSC
-		#endif
+            ptr = getAlignedMemory(4096,segment_size); // To be fixed for MSC
+        #endif
         if (!ptr) return NULL;
 
         memory_allocated += segment_size; // updt quantity of allocated memory
@@ -244,10 +252,9 @@ public:
     }
 
     /**
-     * Free \p segment_size amount of memory from the memory chunk
-     * pointed by \p ptr.\n
-     * First, it checks that the total allocated memory is at least as big 
-     * as \p segment_size. Then, it frees memory and updates the counter 
+     * Free \p segment_size amount of memory from the memory chunk pointed by
+     * \p ptr.\n First, it checks that the total allocated memory is at least
+     * as big as \p segment_size. Then, it frees memory and updates the counter
      * of the total allocated memory.
      *
      * \param ptr pointer to the memory chunk to be freed
@@ -256,108 +263,96 @@ public:
      */
     void   freesegment(void * ptr, size_t segment_size) { 
         DBG(assert(memory_allocated >=segment_size));
-        ::free(ptr);
-        
+        //::free(ptr);
+        freeAlignedMemory(ptr);
+
         memory_allocated -= segment_size;
         ALLSTATS( atomic_long_inc(&all_stats::instance()->segfree); 
               atomic_long_add(segment_size, &all_stats::instance()->memfreed) );
     }
     
-    /* Returns the amount of memry allocated */
-    const size_t getallocated() const { return memory_allocated; }
+    /**
+     * \return Returns the amount of memry allocated 
+     */
+    size_t getallocated() const { return memory_allocated; }
     
 private:
     size_t       memory_allocated;
 };
 
-/*!
- *
- * @}
- */
- 
- 
-    
-    
 // forward declarations
 class SlabCache;
 class ff_allocator;
 
-/*!
- *  \ingroup runtime
- *
- *  @{
- */
-    
 /*! 
  * \struct Buf_ctl
+ * \ingroup shared_memory_fastflow
  *
  * \brief A buffer controller
  *
  * Each slab buffer has a \p Buf_ctl structure at the beginning of the data.
  * This structure holds a back-pointer to the controlling slab.
+ *
+ * This struct is defined in \ref allocator.hpp
+ *
  */
 struct Buf_ctl {  SlabCache  * ptr; };
-/*!
- *
- * @}
- */
- 
- 
- /*!
- *  \ingroup runtime
- *
- *  @{
- */
 
 /*! 
  * \struct Seg_ctl
+ * \ingroup shared_memory_fastflow
  *
  * \brief The segment controller
  *
- * Each slab segment has a \p Seg_ctl structure at the beginning of the 
- * data, responsible for maintaining the linkage with other slabs in the cache, 
- * the number of buffers in use and the number of available buffers.
+ * Each slab segment has a \p Seg_ctl structure at the beginning of the
+ * segment, responsible for maintaining the linkage with other slabs in the
+ * cache, the number of buffers in use and the number of available buffers.
+ *
+ * This struct is defined in \ref allocator.hpp
  */
 struct Seg_ctl {
     // number of buffers in use
-    DBG(size_t     refcount); 
+    DBG(size_t refcount); 
              
     // reference to the SlabCache that owns the segment
-    SlabCache    * cacheentry;   
+    SlabCache * cacheentry;   
     
     // reference to the allocator
     ff_allocator * allocator;  
-      
+    
     // number of items in the buffer freelist (i.e. Buffers available)
     //atomic_long_t        availbuffers; 
     size_t  availbuffers;
 };
 
-/*!
- *
- * @}
- */
- 
- 
- /*!
- *  \ingroup runtime
- *
- *  @{
- */
 
 /*! 
  * \struct xThreadData
+ * \ingroup shared_memory_fastflow
  *
  * \brief A buffer shared among threads (i.e. leak queue) 
  *
- * A buffer that is used as a channel for exchanging 
- * shared data among threads. It is built upon FastFlow's unbounded Single-Writer /
- * Single-Reader queues (\p uSWSR_Ptr_Buffer). These buffers guarantee deadlock 
- * avoidance and scalability in stream-oriented applications.
+ * A buffer that is used as a channel for exchanging shared data among threads.
+ * It is built upon FastFlow's unbounded Single-Writer / Single-Reader queues
+ * (\p uSWSR_Ptr_Buffer). These buffers guarantee deadlock avoidance and
+ * scalability in stream-oriented applications.
+ *
+ * This class is defined in \ref allocator.hpp
+ *
  */
 struct xThreadData {
     enum { MIN_BUFFER_ITEMS=8192, LEAK_CHUNK=1023}; //4096 };  
     
+    /**
+     *
+     * TODO
+     *
+     * \parm allocator TODO
+     * \parm nslabs TODO
+     * \parm key TODO
+     *
+     *
+     */
     xThreadData(const bool allocator, size_t nslabs, const pthread_t key) 
                 : leak(0), key(key) { 
         //leak = (uSWSR_Ptr_Buffer*)::malloc(sizeof(uSWSR_Ptr_Buffer));
@@ -367,20 +362,17 @@ struct xThreadData {
         if (!leak->init()) abort();
     }
 
+    /**
+     * TODO
+     */
     ~xThreadData() { 
-        if (leak) { leak->~uSWSR_Ptr_Buffer(); ::free(leak);}
+        if (leak) { leak->~uSWSR_Ptr_Buffer(); freeAlignedMemory(leak); } // free(leak)
     }
     
     uSWSR_Ptr_Buffer      * leak;   //  
     const pthread_t    key;         // used to identify a thread (threadID)
-    long padding[longxCacheLine-2]; // 
+    long padding[longxCacheLine-((sizeof(const pthread_t)+sizeof(uSWSR_Ptr_Buffer*))/sizeof(long))]; // 
 };
-
-/*!
- *
- * @}
- */
-    
 
 /* 
  *      SlabCache
@@ -397,7 +389,7 @@ struct xThreadData {
  *                          |   |              | p |            | p | 
  *                          |---|- cacheentry  | t |    data    | t |    data 
  *  <---------------------------|- allocator   | r |            | r |
- *   (ptr to ff_allocator)      |  availbuffers|   |            |   | 
+ *   (ptr to ff_allocator)      |- availbuffers|   |            |   | 
  *                              -------------------------------------------------
  *                              |    Seg_ctl   | ^ |               | ^ |
  *                                               |                   |
@@ -408,34 +400,35 @@ struct xThreadData {
  *
  */
  
-/*!
- *  \ingroup runtime
- *
- *  @{
- */
- 
 /**
  * \class SlabCache
+ * \ingroup share_memory_fastflow
  *
  * \brief Cache of slab segments. 
  *
- * A SlabCache is meant to keep commonly used object in an 
- * initialised state, available for use by kernel.
- * Each cache contains blocks of contiguous pages in memory 
- * (i.e. \a slab segments). \n
- * Each slab segment consists of contiguous memory blocks,
- * carved up into equal-size chunks, with a reference count to 
- * indicate the number of allocated chunks. \n
- * \n
- * The SlabCache is used to implement the efficient lock-free 
- * allocator used in FastFlow (\p ff_allocator), which is based on the 
- * <a href="http://www.ibm.com/developerworks/linux/library/l-linux-slab-allocator/" target="_blank">Slab allocator</a> \n
- * \n
- * At the beginning of each segment there is a Seg_ctl structure, that 
- * is responsible for maintaining the linkage with other slabs in the cache, keeps 
- * track of the number of buffers in use and the number of available buffers.\n
- * Each buffer in the segment is managed by a Buf_ctl structure, that 
- * holds a back-pointer to the controlling slab.
+ * A SlabCache is meant to keep commonly used object in an initialised state,
+ * available for use by kernel. Each cache contains blocks of contiguous pages
+ * in memory (i.e. \a slab segments). 
+ *
+ * Each slab segment consists of contiguous memory blocks, carved up into
+ * equal-size chunks, with a reference count to indicate the number of
+ * allocated chunks.
+ *
+ * The SlabCache is used to implement the efficient lock-free allocator used in
+ * FastFlow (\p ff_allocator), which is based on the 
+ *
+ * <a
+ * href="http://www.ibm.com/developerworks/linux/library/l-linux-slab-allocator/"
+ * target="_blank">Slab allocator</a>
+ *
+ * At the beginning of each segment there is a Seg_ctl structure, that is
+ * responsible for maintaining the linkage with other slabs in the cache, keeps
+ * track of the number of buffers in use and the number of available buffers.
+ *
+ * Each buffer in the segment is managed by a Buf_ctl structure, that holds a
+ * back-pointer to the controlling slab.
+ *
+ * This class is defined in file \ref allocator.hpp
  */
 class SlabCache {    
 private:    
@@ -443,21 +436,25 @@ private:
     enum {BUFFER_OVERHEAD=sizeof(Buf_ctl)};
     enum {MIN_FB_CAPACITY=32};
     
-    /* Casts a Buffer controller to a Segment controller and 
-     * return a pointer to it */
-    inline Seg_ctl * const getsegctl(Buf_ctl * buf) { 
+    /**
+     * Casts a Buffer controller to a Segment controller and 
+     * return a pointer to it.
+     *
+     * \return A pointer to the segment controller.
+     */
+    inline Seg_ctl * getsegctl(Buf_ctl * buf) { 
         return *((Seg_ctl **)buf); 
     }
 
-    /*
-     * This method creates a new slab, that is, it allocates a new segment of 
+    /**
+     * This method creates a new slab, that is, it allocates a new segment of
      * large and possibly aligned memory. 
      * 
-     * \returns 0 if the creation of a new Slab succeedes; a negative
-     * value otherwise.
+     * \returns 0 if the creation of a new Slab succeedes; a negative value
+     * otherwise.
      */
     inline int newslab() {        
-        /*
+        /**
          * Allocate a large chunk of memory. The size of each chunk is equal to
          * the size of the slab buffer times the num of slubs in the segment
          * plus the segment overhead. 
@@ -467,9 +464,9 @@ private:
         void * ptr = alloc->newsegment( size*nslabs + sizeof(Seg_ctl) +
                                                      nslabs * BUFFER_OVERHEAD );
         
-        /*
-         * If the allocation of the new segment succeedes, the pointer to the 
-         * newly allocated segment of memory becomes the new Segment controller 
+        /**
+         * If the allocation of the new segment succeedes, the pointer to the
+         * newly allocated segment of memory becomes the new Segment controller
          * and all its embedded data are reset.
          */
         if (ptr) {
@@ -492,21 +489,23 @@ private:
         return -1;
     }
 
-    /*
-     * Free a slab of memory previously allocated.
-     * This method frees the memory segment pointed by 'ptr'. The size of the 
-     * freed memory is exactly the same size of the allocated segment: the 
-     * size of the slab buffer times the num of slubs in the segment plus 
-     * the segment overhead.
+    /**
+     * Free a slab of memory previously allocated. This method frees the memory
+     * segment pointed by 'ptr'. The size of the freed memory is exactly the
+     * same size of the allocated segment: the size of the slab buffer times
+     * the num of slubs in the segment plus the segment overhead.
      * 
-     * By default, the 'seglist_rem'' is set to true. It means that
-     * it has to remove the given pointer from the list of pointers 
-     * that point to active memory chunks.
+     * By default, the 'seglist_rem'' is set to true. It means that it has to
+     * remove the given pointer from the list of pointers that point to active
+     * memory chunks.
+     *
+     * \parm ptr TODO
+     * \parm seglist_rem TODO
+     *
+     * \return TODO
      */
     inline void freeslab(void * ptr, bool seglist_rem=true) { 
-        alloc->freesegment( ptr, size*nslabs +  sizeof(Seg_ctl) +
-                                                nslabs * BUFFER_OVERHEAD ); 
-
+        alloc->freesegment( ptr, size*nslabs +  sizeof(Seg_ctl) + nslabs * BUFFER_OVERHEAD ); 
         
         if (seglist_rem) {      /* remove ptr from seglist */
             svector<void *>::iterator b(seglist.begin()), e(seglist.end());
@@ -519,15 +518,15 @@ private:
         }
     }
 
-    /* 
-     * REW
-     * First it asserts that the number of available buffers in the 
-     * segment is smaller-or-equal than the total number of buffers 
-     * in the segment. \n
-     * Then, if freeing the given segment of memory will increase
-     * the number of available buffers up to the total number of 
-     * buffers, it frees the given segment of memory and returns true.
-     * False otherwise.
+    /**
+     * This function is called when freeing a slab and the allocator has been
+     * deregistered. It checks whether the memory occupied by the slab segment
+     * given as argument can actually be deallocated. And this is possible when
+     * none of the slab buffers are in use. In this case, the memory occupied
+     * by the slab segment can be deallocated and the segment removed from the
+     * list of segments. 
+     *
+     * \returns true if the operation suceeds; false otherwise.
      */
     inline bool checkReclaim(Seg_ctl  * seg) {
         bool r=false;
@@ -542,8 +541,12 @@ private:
     }
 
 
-    // like the above, but it does not check the num of available
-    // buffers against the totel num of slabs. No mutex here.
+    /**
+     * like the above, but No mutex here.
+     *
+     * \parm seg TODO
+     *
+     */
     inline void checkReclaimD(Seg_ctl  * seg) {
         if (++(seg->availbuffers) == (unsigned long)nslabs) {
             freeslab(seg); /* Free the given segment of memory (a slab) */
@@ -554,6 +557,12 @@ private:
     // REW
     // TODO: The following have to be checked if it can use the last queue 
     //       index  as in the getfrom_fb() method !!!!!
+    //
+    /**
+     * TOO
+     *
+     * \return TODO
+     */
     inline void * getfrom_fb_delayed() {
         if (fb_size==1) return 0;
         for(register unsigned i=1;i<fb_size;++i) {
@@ -562,11 +571,12 @@ private:
             }
         }
 
-        union { Buf_ctl * buf; void * ptr; } b;
+        union { Buf_ctl * buf; void * ptr; } b={NULL};
+
         for(register unsigned i=2;i<fb_size;++i) {
             fb[i]->leak->pop(&b.ptr); 
             DBG(assert(b.ptr));
-            checkReclaimD(getsegctl(b.buf)); //FT: I get a lot of warnings here!
+            checkReclaimD(getsegctl(b.buf)); 
         }
 
         fb[1]->leak->pop(&b.ptr);  
@@ -574,7 +584,11 @@ private:
         return b.ptr;
     }
 
-    // try to pop something out from the leak queue of one thread
+    /**
+     * It tries to pop something out from the leak queue of one thread
+     *
+     * \return TODO
+     */
     inline void * getfrom_fb() {
         void * buf = 0;
         for(unsigned i=0;i<fb_size;++i) {
@@ -590,8 +604,12 @@ private:
         return 0;
     }
 
-    /* search for a thread (ID) in the leak queue
-     * Returns a negative value if not found */
+    /**
+     * It search for a thread (ID) in the leak queue Returns a negative value
+     * if not found 
+     *
+     * \return TODO
+     */
     inline int searchfb(const pthread_t key) {
         for(register unsigned i=0;i<fb_size;++i) 
             if (fb[i]->key == key) return (int)i;
@@ -599,7 +617,8 @@ private:
     }
         
 public: 
-    /** Default Constructor 
+    /** 
+     * Default Constructor 
      * 
      *  \param mainalloc a pointer to the allocator used (must be of type 
      *  \p ff_allocator). 
@@ -610,6 +629,7 @@ public:
      *  \param ns number of buffers (slabs) in each segment (note that, as the 
      *  size of each buffer increases, the number of buffers in each segment 
      *  decreases).
+     *
      */   
     SlabCache( ff_allocator * const mainalloc, const int delayedReclaim,
                SegmentAllocator * const alloc, size_t sz, int ns ) 
@@ -617,7 +637,11 @@ public:
                  buffptr(0), availbuffers(0), alloc(alloc), 
                  mainalloc(mainalloc), delayedReclaim(delayedReclaim) { }
     
-    /** Destructor */
+    /** 
+     * Destructor 
+     *
+     * \return TODO
+     */
     ~SlabCache() { 
         if (!nslabs) return;
 
@@ -637,19 +661,20 @@ public:
     }
 
     /** 
-     * Initialise a new SlabCache.\n
-     * This method creates a new slab, that is, it allocates space for an unbounded
-     * buffer built upon the uSWSR_Ptr_Buffer. Then it creates a new segment of 
-     * large and (possibly) 
-     * aligned memory. The initial size of the buffer - set to a minimum value 
+     * Initialise a new SlabCache.
+     *
+     * This method creates a new slab, that is,
+     * it allocates space for an unbounded buffer built upon the
+     * uSWSR_Ptr_Buffer. Then it creates a new segment of large and (possibly)
+     * aligned memory. The initial size of the buffer - set to a minimum value
      * equal to 32 - can be later increased, if necessary.
      * 
-     * \param prealloc flag that act as a mask against the creation of a new Slab. 
-     * By default it is set to \p true.
+     * \param prealloc flag that act as a mask against the creation of a new
+     * Slab. By default it is set to \p true.
      *
-     * \returns 0 if the creation of a new Slab succeedes and the prealloc mask 
-     * is set to \p true OR if the creation of a new Slab fails and the prealloc 
-     * mask is set to \p false. Gives a negative value otherwise.
+     * \returns 0 if the creation of a new Slab succeedes and the prealloc mask
+     * is set to \p true OR if the creation of a new Slab fails and the
+     * prealloc mask is set to \p false. Gives a negative value otherwise.
      */
     int init(bool prealloc=true) {
         if (!nslabs) return 0;
@@ -672,7 +697,7 @@ public:
      * In case the thread (ID) is already registered in the buffer, it returns a
      * pointer to its position in the buffer. If it is not registered, then 
      * allocates space for a new thread's buffer and initialise the new buffer 
-     * with the key of the new thread.
+     * with the key of the new thread. The \p allocator flag is set to false.
      *
      * \param allocator \p true if the calling thread is the allocator thread; 
      * \p false by default.
@@ -705,16 +730,18 @@ public:
                 }
                 fb = fb_new;
                 fb_capacity += MIN_FB_CAPACITY;
-			}
-			// add the new buffer to the leak queue and release lock
+            }
+            // add the new buffer to the leak queue and release lock
             fb[entry=(int) fb_size++] = xtd;
             spin_unlock(lock);
-		}
+        }
         DBG(assert(fb[entry]->key == key)); 
         return fb[entry];                   // position of new entry in buffer
     }
 
-    /** Deregister the allocator thread and reclaim memory */
+    /** 
+     * Deregister the allocator thread and reclaim memory 
+     */
     inline void deregisterAllocator(const bool reclaim) {
         DBG(assert(nslabs>0));
         DBG(assert(delayedReclaim==0));
@@ -727,7 +754,8 @@ public:
         for(register unsigned i=0;i<fb_size;++i) {
             DBG(assert(fb[i]));
             if (reclaim) {
-                union { Buf_ctl * buf2; void * ptr; } b;
+                union { Buf_ctl * buf2; void * ptr; } b={NULL};
+
                 while(fb[i]->leak->pop(&b.ptr)) {   // while pop  succeedes
                     checkReclaim(getsegctl(b.buf2));                        
                 }
@@ -736,7 +764,7 @@ public:
     }
 
     /**
-     * Get an item from a Slab buffer.
+     * Get an item from a Slab segment.
      *
      * \returns a pointer to the item obtained
      */
@@ -767,7 +795,7 @@ public:
             return item;
         } 
 
-        // try to get a free item from cache
+        // else, try to get a free item from cache
         item = delayedReclaim ? getfrom_fb_delayed() : getfrom_fb();
 
         if (item) {
@@ -787,16 +815,15 @@ public:
     /**
      * Push an item into the slab 
      *
-     * \returns false if the operation succedes; 
-     *          true if some memory has been reclaimed 
-     * 
+     * \returns false if the operation succedes; true if some memory has been
+     * reclaimed
      */
     inline bool putitem(Buf_ctl * buf) {        
         DBG(assert(buf)); DBG(assert(nslabs>0));
         
-        /* 
-         * if nomoremalloc is set to 1, it means the allocator has been 
-         * deregistered and the memory in segment 'seg' could have been 
+        /**
+         * If nomoremalloc is set to 1, it means the allocator has been
+         * deregistered and the memory in segment 'seg' could have been
          * reclaimed.
          */
         if (atomic_long_read(&nomoremalloc)) {  
@@ -807,7 +834,7 @@ public:
             return checkReclaim(seg);   // true if some memory can be reclaimed
         }
         
-        /* 
+        /**
          * If nomorealloc is 0, 
          */
         int entry = searchfb(pthread_self());   // look for calling thread
@@ -820,10 +847,10 @@ public:
     }
 
     /// Get the size of the SlabCache
-    inline const size_t getsize() const { return size; }
+    inline size_t getsize() const { return size; }
     /// Get the number of slabs in the cache
-    inline const size_t getnslabs() const { return nslabs;}
-    inline const size_t allocatedsize() const { 
+    inline size_t getnslabs() const { return nslabs;}
+    inline size_t allocatedsize() const { 
         return (alloc?alloc->getallocated():0);
     }
     
@@ -850,44 +877,35 @@ private:
 };
 
 /*!
- *
- * @}
- */
-
-/*!
- *  \ingroup runtime
- *
- *  @{
- */
-
-/*!
  * \class ff_allocator
+ * \ingroup shared_memory_fastflow
  *
  * \brief The ff_allocator, based on the idea of the 
  * <a href="http://www.ibm.com/developerworks/linux/library/l-linux-slab-allocator/" target="_blank"> Slab allocator</a>
  *
- * The ff_allocator works over the SlabCache and is tuned to outperform standard 
- * allocators' performance in a multi-threaded envirnoment. When it is initialised, 
- * it creates 
- * a (predefined) number of SlabCaches, each one containing a (predefined) number of 
- * buffers of different sizes, from 32 to 8192 bytes. The thread that calls first the 
- * allocator object and wants to allocate memory has to register itself to the 
- * shared leak queue. Only one thread can perform this operation. The allocator 
- * obtains memory from the pre-allocated SlabCache: if there is a slab (i.e. a 
- * buffer) big enough to contain an object of the requested size, the pointer to 
- * that buffer is passed to the thread that requested the memory. This latter 
- * thread has to register as well to the same shared leak queue, so that when 
- * it has finished its operations, it can return memory to the allocator thread.
+ * The ff_allocator works over the SlabCache and is tuned to outperform
+ * standard allocators' performance in a multi-threaded envirnoment. When it is
+ * initialised, it creates a (predefined) number of SlabCaches, each one
+ * containing a (predefined) number of buffers of different sizes, from 32 to
+ * 8192 bytes. The thread that calls first the allocator object and wants to
+ * allocate memory has to register itself to the shared leak queue. Only one
+ * thread can perform this operation. The allocator obtains memory from the
+ * pre-allocated SlabCache: if there is a slab (i.e. a buffer) big enough to
+ * contain an object of the requested size, the pointer to that buffer is
+ * passed to the thread that requested the memory. This latter thread has to
+ * register as well to the same shared leak queue, so that when it has finished
+ * its operations, it can return memory to the allocator thread.
  */
 class ff_allocator {
     friend class FFAllocator;
 public:
 
     /** 
-     * Check if there is a slab big enough to contain an 
-     * object as big as \p size.\n
-     * Since there is a limited number of possible slab sizes, and these 
-     * predefined dimensions are all powers of 2, it is easy to find which slub 
+     * Check if there is a slab big enough to contain an object as big as \p
+     * size.
+     *
+     * Since there is a limited number of possible slab sizes, and these
+     * predefined dimensions are all powers of 2, it is easy to find which slub
      * can contain the object of the given size. 
      *
      * \param size the size of the object that must be contained in a slab.
@@ -915,21 +933,32 @@ public:
     }
     
 private:
-    inline Seg_ctl * const getsegctl(Buf_ctl * buf) { 
+
+    /**
+     * TODO
+     */
+    inline Seg_ctl * getsegctl(Buf_ctl * buf) { 
         return *((Seg_ctl **)buf); 
     }
 
-    inline SlabCache * const getslabs(Buf_ctl * buf) {
+    /**
+     * TODO
+     */
+    inline SlabCache * getslabs(Buf_ctl * buf) {
         return (getsegctl(buf))->cacheentry;
     }
     
-    /*
+    /**
      * Buf_ctl type is a pointer to SlabCache
      */
 
 protected:
 
-    /** \return \p true if some memory has been reclaimed */
+    /**
+     * Frees the buffer \p buf and returns it to its slab segment
+     *
+     * \returns \p true if some memory has been reclaimed 
+     */
     virtual inline bool   free(Buf_ctl * buf) {
         SlabCache * const entry = getslabs(buf);
         DBG( if (!entry) abort() );
@@ -937,6 +966,9 @@ protected:
         return entry->putitem(buf);
     }
 
+    /**
+     * TODO
+     */
     inline size_t allocatedsize() {
         size_t s=0;
         svector<SlabCache *>::iterator b(slabcache.begin()), e(slabcache.end());
@@ -950,10 +982,15 @@ protected:
 public:
     // FIX: we have to implement max_size !!!!
     /// Default Constructor
+    /**
+     * TODO
+     */
     ff_allocator(size_t max_size=0, const int delayedReclaim=0) :
         alloc(0), max_size(max_size), delayedReclaim(delayedReclaim) { }
 
-    /// Destructor
+    /**
+     * Destructor
+     */
     virtual ~ff_allocator() {
         for(size_t i=0;i<slabcache.size(); ++i) {
             if (slabcache[i]) { 
@@ -995,7 +1032,7 @@ public:
             for (int i=0;i<N_SLABBUFFER; ++i) 
                 nslabs.push_back(nslabs_default[i]);
         
-        /* 
+        /**
          * Allocate space for a SegmenAllocator object and
          * initialise it.
          */
@@ -1007,10 +1044,11 @@ public:
         slabcache.reserve(N_SLABBUFFER);
         
         
-        /* Allocate space for 'N_SLABBUFFER' caches and 
-         * create SlabCache objects. Buffers size within a cache size grows from 
-         * 32 to 8192. if not otherwise specified, the number of slab buffers in a 
-         * segment decreases as the size of the slab increases.
+        /**
+         * Allocate space for 'N_SLABBUFFER' caches and create SlabCache
+         * objects. Buffers size within a cache size grows from 32 to 8192. if
+         * not otherwise specified, the number of slab buffers in a segment
+         * decreases as the size of the slab increases.
          */
         for(int i=0; i<N_SLABBUFFER; ++i) {
             s = (SlabCache*)::malloc(sizeof(SlabCache));
@@ -1027,10 +1065,9 @@ public:
     }
 
     /** 
-     * The thread that allocates memory have to call this method 
-     * in order to register itself to the shared buffer. With this
-     * method, a thread is allowed to allocate memory. Only one thread
-     * can allocate memory.
+     * The thread that allocates memory have to call this method in order to
+     * register itself to the shared buffer. With this method, a thread is
+     * allowed to allocate memory. Only one thread can allocate memory.
      *  
      * \returns 0 if operation succedes, -1 otherwise
      */
@@ -1044,9 +1081,9 @@ public:
     }
     
     /**
-     * Deregister the allocator (i.e. stop asking for memory) and 
-     * reclaim allocated memory back to the allocator.
-     * Every thread can perform this action.
+     * Deregister the allocator (i.e. stop asking for memory) and reclaim
+     * allocated memory back to the allocator. Every thread can perform this
+     * action.
      * 
      * \param reclaimMemory \p true if reclaim; \p false if deregister only
      */
@@ -1060,12 +1097,14 @@ public:
     
 
     /** 
-     * Threads different from the allocator (i.e. those threads that do not 
-     * allocate memory) have to register themselves to the shared buffer 
-     * by calling this method. In this way they are provided with a chunk 
-     * of memory. Since they are registered, once their taks terminates they free 
-     * the memory assigned and that memory returns back to the allocator thread's 
-     * buffer, so that it can be reused.
+     * Threads different from the allocator (i.e. those threads that do not
+     * allocate memory) have to register themselves to the shared buffer by
+     * calling this method. In this way they are provided with a chunk of
+     * memory. Since they are registered, once their taks terminates they free
+     * the memory assigned and that memory returns back to the allocator
+     * thread's buffer, so that it can be reused.
+     *
+     * \return TODO
      */
     inline int register4free() {
         svector<SlabCache *>::iterator b(slabcache.begin()), e(slabcache.end());
@@ -1078,19 +1117,23 @@ public:
     }
     
     /** 
-     * Custom \p ff malloc.\n
-     * Requests to allocate \p size bytes of dynamic memory. In case 
-     * the requested size is bigger than the maximum size for a buffer OR 
-     * there are no more free buffers in the existing SlabCaches, a new 
-     * chunk of dynamic memory is allocated. The size of the allocated 
-     * chunk is equal to the size requested.\n
-     * Otherwise it returns a pointer to an available buffer in the cache 
+     * Custom \p ff malloc.
+     *
+     * Requests to allocate \p size bytes of dynamic memory. If the requested
+     * size is bigger than the maximum size for a buffer OR there are no more
+     * free buffers in the existing SlabCaches, a new chunk of dynamic memory
+     * is allocated. The size of the allocated chunk is equal to the size
+     * requested.
+     *
+     * Otherwise it returns a pointer to an available buffer in the slabs cache
      * that fits the requested size.
      * 
      * \param size the size of memory requested
+     *
+     * \return TODO
      */    
     inline void * malloc(size_t size) { 
-        /* 
+        /**
          * use standard allocator if the size is too big or 
          * we don't want to use the ff_allocator for that size
          */
@@ -1122,6 +1165,7 @@ public:
      * which must be a power of two and a multiple  of  sizeof(void  *).
      * \param size the size of memory requested.
      * 
+     * \return TODO
      */
     inline int posix_memalign(void **memptr, size_t alignment, size_t size) {
         if (!isPowerOfTwoMultiple(alignment, sizeof(void *))) return -1;
@@ -1170,12 +1214,14 @@ public:
      * Custom \p ff free.\n
      * It frees a buffer (slab) of the SlabCache pointed by \p ptr. Not only it 
      * frees the memory but also takes care of the correct positioning of pointers 
-     * within the SlabCache structures, in order to maintain the integrity og the 
+     * within the SlabCache structures, in order to maintain the integrity of the 
      * cache and avoid fragmentation.\n
      * WARNING: this function might fail if memory has been previously allocated 
      * using the posix_memalign method with a size grater than MAX_SLABBUFFER_SIZE
      *
      * \param ptr a pointer to the buffer.
+     *
+     * \return TODO
      */
     inline void   free(void * ptr) {
         if (!ptr) return;
@@ -1199,8 +1245,10 @@ public:
      * It changes the size of the memory block pointed to by \p ptr to \p newsize 
      * bytes.
      *
-     * \param ptr pointer to the buffer
+     * \param ptr pointer to the buffer.
      * \param newsize the new size.
+     *
+     * \return TODO
      */
     inline void * realloc(void * ptr, size_t newsize) {
         if (ptr) {
@@ -1229,7 +1277,14 @@ public:
         return this->malloc(newsize);
     }
     
-    /* like realloc but it doesn't copy data */
+    /**
+     * It is like realloc but it doesn't copy data 
+     *
+     * \parm ptr TODO
+     * \parm newsize TODO
+     *
+     * \return TODO
+     */
     inline void * growsup(void * ptr, size_t newsize) {
         if (ptr) {
             size_t oldsize;
@@ -1264,13 +1319,6 @@ private:
     const int              delayedReclaim;
 };
 
-/*!
- *
- * @}
- */
-
-/* ----------------------------------- */
-
 // forward decl
 class ffa_wrapper;
 static void FFAkeyDestructorHandler(void * kv);
@@ -1278,22 +1326,30 @@ static void killMyself(ffa_wrapper * ptr);
 
 /*
  * \class ffa_wrapper
+ * \ingroup shared_memory_fastflow
  *
- * \brief A wrapper of the fff_allocator.
+ * \brief A wrapper of the ff_allocator.
  *
- * This wrapper acts as an intermediate level between the ff_allocator
- * (which it extends) and the FFAllocator (which uses the wrapper through
- * the FFAxThreadData structure).
+ * This wrapper acts as an intermediate level between the ff_allocator (which
+ * it extends) and the FFAllocator (which uses the wrapper through the
+ * FFAxThreadData structure).
+ *
+ * This class is defined in \ref allocator.hpp
  */
 class ffa_wrapper: public ff_allocator {
 protected:
 
-    virtual inline bool   free(Buf_ctl * buf) {
+    /**
+     * TODO
+     *
+     * \parm buf TODO
+     * \return TODO
+     */
+    virtual inline bool free(Buf_ctl * buf) {
         bool reclaimed = ff_allocator::free(buf);
 
         // Do I have to kill myself?
-        if (reclaimed && atomic_long_read(&nomorealloc) && 
-                                            (allocatedsize()==0)) {
+        if (reclaimed && atomic_long_read(&nomorealloc) && (allocatedsize()==0)) {
             killMyself(this); 
         }
         return reclaimed;
@@ -1303,38 +1359,67 @@ public:
     friend void FFAkeyDestructorHandler(void * kv);
 
     // FIX: we have to implement max_size !!!!
+    /**
+     * Constructor
+     *
+     * \parm TODO
+     *
+     */
     ffa_wrapper(size_t max_size=0,const int delayedReclaim=0) : 
                             ff_allocator(max_size,delayedReclaim) {
         atomic_long_set(&nomorealloc,0);
     }
     
+    /**
+     * Destructor
+     */
     virtual ~ffa_wrapper() {}
 
-    // Malloc
+    /**
+     * Malloc
+     *
+     * \return TODO
+     */
     inline void * malloc(size_t size) { 
         return ff_allocator::malloc(size);
     }
 
-    // posix_memalign
+    /**
+     * posix_memalign
+     *
+     * \parm memptr TODO
+     *
+     * \return TODO
+     */
     inline int posix_memalign(void **memptr, size_t alignment, size_t size) {
         return ff_allocator::posix_memalign(memptr,alignment,size);
     }
 
-    // just to be safe.... - better not to call this one.
+    /**
+     * It is used to be safe.... - better not to call this one.
+     */
     inline void   free(void * ptr) {  abort();  }
 
-    // realloc
+    /**
+     * realloc
+     *
+     * \return TODO
+     */
     inline void * realloc(void * ptr, size_t newsize) {
         return ff_allocator::realloc(ptr,newsize);
     }
     
-    /* like realloc but it doesn't copy data */
+    /**
+     * It is like realloc but it doesn't copy data 
+     */
     inline void * growsup(void * ptr, size_t newsize) {
         return ff_allocator::growsup(ptr,newsize);
     }
 private:
+    /**
+     * TODO
+     */
     inline void nomoremalloc() {
-
         atomic_long_set(&nomorealloc,1);
     }
 
@@ -1342,16 +1427,14 @@ private:
     atomic_long_t    nomorealloc;  
 };
 
-/*!
- *  \ingroup runtime
- *
- *  @{
- */
 
- /**
+ /*!
  * \struct FFAxThreadData
+ * \ingroup shared_memory_fastflow
  *
  * A wrapper of the ff_allocator.
+ *
+ * This struct is defined in \ref allocator.hpp
  */ 
 struct FFAxThreadData {
     FFAxThreadData(ffa_wrapper * f): f(f) { }
@@ -1360,37 +1443,34 @@ struct FFAxThreadData {
 };
 
 /*!
- *
- * @}
- */
-
-/*!
- *  \ingroup runtime
- *
- *  @{
- */
-
-/*!
  * \class FFAllocator
+ * \ingroup shared_memory_fastflow
  *
  * \brief The FFAllocator, based on the \p ff_allocator
  *
  * Based on the ff_allocator, the FFAllocator might be used by any number 
  * of threads to dynamically allocate/deallocate memory. 
+ *
+ * This class is defined in \ref allocator.hpp
  */
 class FFAllocator {
     enum {MIN_A_CAPACITY=32};
 
-
 protected:
-    /// Get the pointer tho the Seg_ctl structure.
-    inline Seg_ctl * const getsegctl(Buf_ctl * buf) { 
+    /**
+     * Get the pointer tho the Seg_ctl structure.
+     *
+     * \return TODO
+     */
+    inline Seg_ctl * getsegctl(Buf_ctl * buf) { 
         return *((Seg_ctl **)buf); 
     }
 
-    /*
-     * Initialise a new allocator and register the thread in the shared leak queue 
-     * as allocator thread.
+    /**
+     * Initialise a new allocator and register the thread in the shared leak
+     * queue as allocator thread.
+     *
+     * \return TODO
      */
     inline FFAxThreadData * newAllocator( bool prealloc,
                                           int _nslabs[N_SLABBUFFER],
@@ -1439,7 +1519,9 @@ protected:
 
 public:
 
-    /// Default constructor
+    /**
+     * Default constructor
+     */
     FFAllocator(int delayedReclaim=0) : 
         AA(0), A(0), A_capacity(0), A_size(0),
         delayedReclaim(delayedReclaim)  
@@ -1453,7 +1535,9 @@ public:
         }
     }
     
-    /// Destructor
+    /**
+     * Destructor
+     */
     ~FFAllocator() {
         if (delayedReclaim) {
             if (A) {
@@ -1466,17 +1550,22 @@ public:
 
     }
     
-    /** Returns an instance of the FFAllocator object */
+    /**
+     * It returns an instance of the FFAllocator object 
+     *
+     * \return TODO
+     */
     static inline FFAllocator * instance() {
         static FFAllocator FFA;
         return &FFA;
     }
 
     /**
-     * Allocator factory method.\n
-     * Each time this method is called it spawns a new memory allocator.
-     * The calling thread is registered as an allocator thread. Other threads 
-     * willing to use this SlabCache have to register themselves to the shared 
+     * Allocator factory method.
+     *
+     * Each time this method is called it spawns a new memory allocator. The
+     * calling thread is registered as an allocator thread. Other threads
+     * willing to use this SlabCache have to register themselves to the shared
      * leak queue of the allocator.
      *
      * \param max_size PARAMETER NOT USED!
@@ -1488,19 +1577,18 @@ public:
      * \returns a \p ffa_wrapper object, that is in turn an extension of 
      * a \ff_allocator object.
      */
-    inline ffa_wrapper * const newAllocator( size_t max_size=0, 
-                                             int _nslabs[N_SLABBUFFER]=0,
-                                             bool prealloc=true ) 
+    inline ffa_wrapper * newAllocator( size_t max_size=0, 
+                                       int _nslabs[N_SLABBUFFER]=0,
+                                       bool prealloc=true ) 
     {
         FFAxThreadData * ffaxtd = newAllocator(prealloc, _nslabs, max_size);
         if (!ffaxtd) return NULL;
         return ffaxtd->f; 
     }
 
-    // REW
     /**
-     * Delete the allocator \p f passed as argument and reclaim the used memory.\n
-     * Also updates the counter of the available size in the slab
+     * Delete the allocator \p f passed as argument and reclaim the used
+     * memory.\n Also updates the counter of the available size in the slab
      *
      * \param f an object of type ffa_wrapper.
      * \param reclaimMemory flag to decide whether to reclaim memory or not.
@@ -1528,7 +1616,9 @@ public:
     }
 
     /**
-     * Delete allocator owned by calling thread
+     * Delete allocator owned by calling thread and reclaim memory
+     *
+     * \return TODO
      */
     inline void deleteAllocator() {
         FFAxThreadData * ffaxtd = (FFAxThreadData*)pthread_getspecific(A_key);
@@ -1591,6 +1681,8 @@ public:
      * \params alignment the returned memory  will be a multiple of alignment, 
      * which must be a power of two and a multiple  of  sizeof(void  *).
      * \param size the size of memory requested.
+     *
+     * \return TODO
      * 
      */
     inline int posix_memalign(void **memptr, size_t alignment, size_t size) {
@@ -1633,13 +1725,16 @@ public:
     }
 
     /**
-     * Custom \p ff free.\n
+     * Custom \p ff free.
+     *
      * It frees a buffer (slab) of the SlabCache pointed by \p ptr. Not only it 
      * frees the memory but also takes care of the correct positioning of pointers 
      * within the SlabCache structures, in order to maintain the integrity og the 
-     * cache and avoid fragmentation.\n
+     * cache and avoid fragmentation.
      *
      * \param ptr a pointer to the buffer.
+     *
+     * \return TODO
      */
     inline void   free(void * ptr) {
         if (!ptr) return;
@@ -1660,12 +1755,15 @@ public:
     }
 
     /**
-     * Custom \p ff realloc. \n
+     * Custom \p ff realloc.
+     *
      * It changes the size of the memory block pointed to by \p ptr to \p newsize 
      * bytes.
      *
      * \param ptr pointer to the buffer
      * \param newsize the new size.
+     *
+     * \return TODO
      */
     inline void * realloc(void * ptr, size_t newsize) {
         if (ptr) {
@@ -1685,7 +1783,14 @@ public:
         return this->malloc(newsize);
     }
     
-    /* REW - like realloc but it doesn't copy data */
+    /**
+     * REW - like realloc but it doesn't copy data 
+     *
+     * \parm ptr TODO
+     * \parm newsize TODO
+     *
+     * \return TODO
+     */
     inline void * growsup(void * ptr, size_t newsize) {
         if (ptr) {
             Buf_ctl  * buf = (Buf_ctl *)((char *)ptr - sizeof(Buf_ctl));
@@ -1704,6 +1809,9 @@ public:
         return this->malloc(newsize);
     }
 
+    /**
+     * TODO
+     */
     ALLSTATS(void printstats(std::ostream & out) { 
             all_stats::instance()->print(out);
     })
@@ -1719,11 +1827,6 @@ private:
     const int       delayedReclaim; 
 };
 
-/*!
- *
- * @}
- */
-
 /* REW - Document these? */
 static void FFAkeyDestructorHandler(void * kv) {
     FFAxThreadData * ffaxtd = (FFAxThreadData*)kv;
@@ -1735,6 +1838,7 @@ static inline void killMyself(ffa_wrapper * ptr) {
 }
 
 
+// Static functions below are not documented, but their usage is quite obvious
 static inline void * ff_malloc(size_t size) {
     return FFAllocator::instance()->malloc(size);
 }
@@ -1748,6 +1852,10 @@ static inline int    ff_posix_memalign(void **memptr, size_t alignment, size_t s
     return FFAllocator::instance()->posix_memalign(memptr,alignment,size);
 }
 
+/*!
+ *  @}
+ *  \endlink
+ */
 
 } // namespace ff
 

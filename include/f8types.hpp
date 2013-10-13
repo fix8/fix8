@@ -66,13 +66,7 @@ struct _Pair
 	Val _value;
 
 	/// Sort functor
-	struct Less
-	{
-		bool operator()(const _Pair& p1, const _Pair& p2) const { return p1._key < p2._key; }
-	};
-
-	/// Equivalence
-	bool operator==(const _Pair& what) const { return _key == what._key; }
+	static bool Less(const _Pair& p1, const _Pair& p2) { return p1._key < p2._key; }
 };
 
 /// Partial specialisation of Pair abstraction for use with GeneratedTable
@@ -84,13 +78,7 @@ struct _Pair<const char *, Val>
 	Val _value;
 
 	/// Sort functor
-	struct Less
-	{
-		bool operator()(const _Pair& p1, const _Pair& p2) const { return ::strcmp(p1._key, p2._key) < 0; }
-	};
-
-	/// Equivalence
-	bool operator==(const _Pair& what) const { return ::strcmp(_key, what._key) == 0; }
+	static bool Less(const _Pair& p1, const _Pair& p2) { return ::strcmp(p1._key, p2._key) < 0; }
 };
 
 /// Fast map for statically generated data types. Assumes table is sorted. Complexity is O(logN).
@@ -122,10 +110,9 @@ private:
 	  \return Pair * if found, 0 if not found */
    static const Pair *_find(const Key& key)
    {
-		const Pair *res(std::lower_bound (begin(), end(),
-			reinterpret_cast<const Pair&>(key), typename Pair::Less()));
+		const Pair *res(std::lower_bound (begin(), end(), reinterpret_cast<const Pair&>(key), Pair::Less));
       /// res != end && key >= res
-      return res != end() && !typename Pair::Less()(reinterpret_cast<const Pair&>(key), *res) ? res : 0;
+      return res != end() && !Pair::Less(reinterpret_cast<const Pair&>(key), *res) ? res : 0;
    }
 
 public:
@@ -383,7 +370,7 @@ public:
 		else
 		{
 			iterator new_arr(new T[_rsz = _sz + calc_reserve(_sz, _reserve)]);
-			size_t wptr(where - _arr);
+			const size_t wptr(where - _arr);
 			if (wptr > 0)
 				memcpy(new_arr, _arr, sizeof(T) * wptr);
 			memcpy(new_arr + wptr, what, sizeof(T));

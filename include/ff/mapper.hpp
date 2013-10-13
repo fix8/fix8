@@ -1,26 +1,30 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
+ *  \link
  *  \file mapper.hpp
+ *  \ingroup shared_memory_fastflow
+ *
  *  \brief This file contains the thread mapper definition used in FastFlow
  */
   
 #ifndef __THREAD_MAPPER_HPP_
 #define __THREAD_MAPPER_HPP_
+
 /* ***************************************************************************
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *
+ *  This program is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ *  License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ *  along with this program; if not, write to the Free Software Foundation,
+ *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  ****************************************************************************
  */
@@ -33,28 +37,35 @@
 namespace ff {
 
 /*!
- *  \ingroup runtime
+ *  \ingroup shared_memory_fastflow
  *
  *  @{
  */
 
 /*! 
   * \class threadMapper
+  * \ingroup shared_memory_fastflow
   *
-  * \brief The thread mapper allows to map threads to specific core using a 
-  *  predefined mapping policy.
+  * \brief The thread mapper allows to map threads to specific core using a
+  * predefined mapping policy.
   *
-  * The threadMapper stores a list of CPU ids. By default the list is simply a 
-  * linear sequence of core ids of the system, for example in a quad-core system 
-  * the default list is 0 1 2 3. It is possible to change the default list using 
-  * the method setMappingList by passing a string of space-serated 
-  * (or comma-separated) CPU ids. The policy implemented in the threadManager is 
-  * to pick up a CPU id from the list using a round-robin policy.
+  * The threadMapper stores a list of CPU ids. By default the list is simply a
+  * linear sequence of core ids of the system, for example in a quad-core
+  * system the default list is 0 1 2 3. It is possible to change the default
+  * list using the method setMappingList by passing a string of space-serated
+  * (or comma-separated) CPU ids. The policy implemented in the threadManager
+  * is to pick up a CPU id from the list using a round-robin policy.
+  *
+  * This class is defined in \ref mapper.hpp
   *
   */ 
 class threadMapper {
 public:
-    /** Get a static instance of the threadMapper object */
+    /** 
+     * Get a static instance of the threadMapper object 
+     *
+     * \return TODO
+     */
     static inline threadMapper* instance() {
         static threadMapper thm;
         return &thm;
@@ -63,33 +74,39 @@ public:
     /**
      * Default constructor. 
      */
-    threadMapper():rrcnt(-1),mask(0),num_cores(ff_numCores()),CList(num_cores) {
-        if (num_cores <= 0) {
+    threadMapper():rrcnt(-1),mask(0) {
+        int nc = ff_numCores();
+        if (nc <= 0) {
             error("threadMapper: invalid num_cores\n");
             return;
         }
-        
-        unsigned long size=num_cores;
+        num_cores = nc;
+
+        unsigned int size=num_cores;
         // usually num_cores is a power of two....!
         if (!isPowerOf2(size)) size = nextPowerOf2(size);
         CList.reserve(size);
- 
+
         mask = size-1;
-        
-        for(size_t i=0;i<num_cores;++i) CList.push_back(i);
-        for(size_t i=num_cores,j=0; i<size;++i,j++) CList.push_back(j);
-        
+
+        for(int i=0;i<nc;++i) CList.push_back(i);
+        for(unsigned int i= nc,j=0; i<size;++i,j++) CList.push_back(j);
+
+        //std::cout << "MASK [" << mask << "][" << CList.size() << "\n";
+        //std::cout.flush();
+
         rrcnt=0;
     }
-    /*!
-     * Allows to set a new list of CPU ids.
+    /**
+     * It allows to set a new list of CPU ids.
      *
-     * The str variable should contain a space-separated or a comma-separated list 
-     * of CPU ids.
-     * For example if the string str is "0 1 1 2 3", then the first thread will be 
-     * bind to CPU 0, the second to CPU 1, the third to CPU 1, the fourth to CPU 2, 
-     * the fifth to CPU 3. Then it follows the same rule for the subsequent 
-     * threads.
+     * The str variable should contain a space-separated or a comma-separated
+     * list of CPU ids. For example if the string str is "0 1 1 2 3", then the
+     * first thread will be bind to CPU 0, the second to CPU 1, the third to
+     * CPU 1, the fourth to CPU 2, the fifth to CPU 3. Then it follows the same
+     * rule for the subsequent threads.
+     *
+     * \return TODO
      */
     void setMappingList(const char* str) {
         rrcnt=0;// reset rrcnt
@@ -114,7 +131,7 @@ public:
             if (*_str == '\0')	break;
         } while (1);
 
-        unsigned long size=List.size();
+        unsigned int size= (unsigned int) List.size();
         if (!isPowerOf2(size)) {
             size=nextPowerOf2(size);
             List.reserve(size);
@@ -125,9 +142,12 @@ public:
     }
     
     /**
-     *  Returns the next CPU id using a round-robin mapping access on the 
-     *  mapping list. 
+     *  Returns the next CPU id using a round-robin mapping access on the
+     *  mapping list. This is clearly a raound robind scheduling!
+     *
+     *  \return The identifier of the core.
      */ 
+
     int getCoreId() { 
         assert(rrcnt>=0);
         int id=CList[rrcnt++];
@@ -135,19 +155,50 @@ public:
         return id;
     }
 
-    int getCoreId(unsigned long tid) { 
+    /**
+     * It is used for debugging.
+     *
+     * \return TODO
+     */
+    unsigned int getMask() {
+        return mask;
+    }
+
+    /**
+     * It is used for debugging.
+     *
+     * \return TODO
+     */
+    unsigned int getCListSize() {
+        return (unsigned int) CList.size();
+    }
+
+    /**
+     * It is used to get the identifier of the core.
+     *
+     * \return The identifier of the core.
+     */
+    int getCoreId(unsigned int tid) { 
         int id=CList[tid & mask];
+        //std::cerr << "Mask is " << mask << "\n";
+        //int id = CList[tid % (mask+1)];
         return id;
     }
 
-    inline const bool checkCPUId(const int cpuId) const {
+    /**
+     * It checks whether the taken core is within the range of the cores
+     * available on the machine.
+     *
+     * \return It will return either \p true of \p false.
+     */
+    inline bool checkCPUId(const int cpuId) const {
         return ((unsigned)cpuId < num_cores);
     }
 
 protected:
-    long          rrcnt;
-    unsigned long mask;
-    unsigned long num_cores;
+    long rrcnt;
+    unsigned int mask;
+    unsigned int num_cores;
     svector<int> CList;
 };
 
@@ -156,6 +207,7 @@ protected:
 /*!
  *
  * @}
+ * \link
  */
 
 #endif /* __THREAD_MAPPER_HPP_ */

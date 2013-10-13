@@ -1,26 +1,29 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
+ *  \link
  *  \file spin-lock.hpp
+ *  \ingroup streaming_network_arbitrary
+ *
  *  \brief This file contains the spin lock(s) used in FastFlow
  */
  
 #ifndef _FF_SPINLOCK_HPP_
 #define _FF_SPINLOCK_HPP_
 /* ***************************************************************************
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *  
+ *  This program is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ *  License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ *  along with this program; if not, write to the Free Software Foundation,
+ *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  ****************************************************************************
  */
@@ -46,7 +49,6 @@ namespace ff {
 #define __sync_lock_test_and_set(_PTR,_VAL)  InterlockedExchangePointer( ( _PTR ), ( _VAL ))
 #endif
 
-
 #if defined(USE_TICKETLOCK)
 
 // NOTE: ticket lock implementation is experimental and for Linux only!
@@ -55,15 +57,12 @@ namespace ff {
 #error "Ticket-lock implementation only for Linux!"
 #endif
 
-
 #if !defined(LOCK_PREFIX)
 #define LOCK_PREFIX "lock ; "
 #endif
 
-
 typedef  struct {unsigned int slock;}  lock_t[1];
 enum { UNLOCKED=0 };
-
 
 static inline void init_unlocked(lock_t l) { l[0].slock=UNLOCKED;}
 static inline void init_locked(lock_t l)   { abort(); }
@@ -71,31 +70,31 @@ static inline void init_locked(lock_t l)   { abort(); }
 /* Ticket-Lock from Linux kernel 2.6.37 */
 static __always_inline void spin_lock(lock_t lock)
 {
-	int inc = 0x00010000;
-	int tmp;
+    int inc = 0x00010000;
+    int tmp;
 
-	asm volatile(LOCK_PREFIX "xaddl %0, %1\n"
-		     "movzwl %w0, %2\n\t"
-		     "shrl $16, %0\n\t"
-		     "1:\t"
-		     "cmpl %0, %2\n\t"
-		     "je 2f\n\t"
-		     "rep ; nop\n\t"
-		     "movzwl %1, %2\n\t"
-		     /* don't need lfence here, because loads are in-order */
-		     "jmp 1b\n"
-		     "2:"
-		     : "+r" (inc), "+m" (lock->slock), "=&r" (tmp)
-		     :
-		     : "memory", "cc");
+    asm volatile(LOCK_PREFIX "xaddl %0, %1\n"
+         "movzwl %w0, %2\n\t"
+         "shrl $16, %0\n\t"
+         "1:\t"
+         "cmpl %0, %2\n\t"
+         "je 2f\n\t"
+         "rep ; nop\n\t"
+         "movzwl %1, %2\n\t"
+         /* don't need lfence here, because loads are in-order */
+         "jmp 1b\n"
+         "2:"
+         : "+r" (inc), "+m" (lock->slock), "=&r" (tmp)
+         :
+         : "memory", "cc");
 }
 
 static __always_inline void spin_unlock(lock_t lock)
 {
-	asm volatile(LOCK_PREFIX "incw %0"
-		     : "+m" (lock->slock)
-		     :
-		     : "memory", "cc");
+    asm volatile(LOCK_PREFIX "incw %0"
+         : "+m" (lock->slock)
+         :
+         : "memory", "cc");
 }
 
 
@@ -123,28 +122,40 @@ ALIGN_TO_PRE(CACHE_LINE_SIZE) struct CLHSpinLock {
         char align[CACHE_LINE_SIZE];
     } CLHLockNode;
     
-    volatile ALIGN_TO_PRE(CACHE_LINE_SIZE) CLHLockNode *Tail  ALIGN_TO_POST(CACHE_LINE_SIZE);
+    volatile ALIGN_TO_PRE(CACHE_LINE_SIZE) CLHLockNode *Tail                    ALIGN_TO_POST(CACHE_LINE_SIZE);
     volatile ALIGN_TO_PRE(CACHE_LINE_SIZE) CLHLockNode *MyNode[MAX_NUM_THREADS] ALIGN_TO_POST(CACHE_LINE_SIZE);
     volatile ALIGN_TO_PRE(CACHE_LINE_SIZE) CLHLockNode *MyPred[MAX_NUM_THREADS] ALIGN_TO_POST(CACHE_LINE_SIZE);
 
-    void init() {
+    CLHSpinLock():Tail(NULL) {
+        for (int j = 0; j < MAX_NUM_THREADS; j++) {
+            MyNode[j] = NULL;
+            MyPred[j] = NULL;
+        }
+    }
+    ~CLHSpinLock() {
+        if (Tail) freeAlignedMemory((void*)Tail);
+        for (int j = 0; j < MAX_NUM_THREADS; j++) 
+            if (MyNode[j]) freeAlignedMemory((void*)(MyNode[j]));
+    }
+    int init() {
+        if (Tail != NULL) return -1;
         Tail = (CLHLockNode*)getAlignedMemory(CACHE_LINE_SIZE, sizeof(CLHLockNode));
         Tail->locked = false;
-        for (int j = 0; j < MAX_NUM_THREADS; j++) {
+        for (int j = 0; j < MAX_NUM_THREADS; j++) 
             MyNode[j] = (CLHLockNode*)getAlignedMemory(CACHE_LINE_SIZE, sizeof(CLHLockNode));
-            MyPred[j] = NULL;
-        }	
+        
+        return 0;
     }
 
-	// FIX
+    // FIX
     inline void spin_lock(const int pid) {
         MyNode[pid]->locked = true;
 #if defined(_MSC_VER) // To be tested
-		MyPred[pid] = (CLHLockNode *) __sync_lock_test_and_set((void *volatile *)&Tail, (void *)MyNode[pid]);
+    MyPred[pid] = (CLHLockNode *) __sync_lock_test_and_set((void *volatile *)&Tail, (void *)MyNode[pid]);
 #else //defined(__GNUC__)
-		MyPred[pid] = (CLHLockNode *) __sync_lock_test_and_set((long *)&Tail, (long)MyNode[pid]);
+    MyPred[pid] = (CLHLockNode *) __sync_lock_test_and_set((long *)&Tail, (long)MyNode[pid]);
 #endif
-		while (MyPred[pid]->locked == true) ;
+    while (MyPred[pid]->locked == true) ;
     }
     
     inline void spin_unlock(const int pid) {
@@ -183,7 +194,7 @@ _INLINE void init_locked(lock_t l)   { l[0]=!UNLOCKED;}
 #include <WinBase.h>
 // windows platform
 _INLINE void spin_lock(lock_t l) {
-	while (InterlockedExchange((long *)l, 1) != UNLOCKED) {	
+    while (InterlockedExchange((long *)l, 1) != UNLOCKED) {	
         while (l[0]) ;  /* spin using only reads - reduces bus traffic */
     }
 }
@@ -225,6 +236,7 @@ _INLINE void spin_unlock(lock_t l) {
 /*!
  *
  * @}
+ * \endlink
  */
 
 #endif /* _FF_SPINLOCK_HPP_ */

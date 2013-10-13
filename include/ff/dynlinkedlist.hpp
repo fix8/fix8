@@ -1,26 +1,33 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
+
+/*!
+ * \link
+ * \file dynlinkedlist.hpp
+ * \ingroup shared_memory_fastflow
+ *
+ * \brief Dynamic linked list Single-Writer Single-Reader unbounded queue.
+ * No lock is needed around pop and push methods.
+ *
+ */
 #ifndef __FF_DYNLINKEDLIST_HPP_ 
 #define __FF_DYNLINKEDLIST_HPP_ 
+
 /* ***************************************************************************
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *
+ *  This program is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ *  License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ *  along with this program; if not, write to the Free Software Foundation,
+ *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  ****************************************************************************
- */
-
-/* Dynamic linked list Single-Writer Single-Reader unbounded queue.
- * No lock is needed around pop and push methods.
  */
 
 #include <stdlib.h>
@@ -30,12 +37,34 @@
 
 namespace ff {
 
+/*!
+ * \ingroup shared_memory_fastflow
+ *
+ * @{
+ */
 
+/*!
+ * \class dynlinkedlist
+ * \ingroup shared_memory_fastflow
+ *
+ * \brief TODO
+ *
+ * This class is defined in \ref dynlinkedlist.hpp
+ *
+ */
 class dynlinkedlist {
 
 #define CAST_TO_UL(X) ((unsigned long)X)
 
 private:
+    /*!
+     * \class Node
+     * \ingroup shared_memory_fastflow
+     *
+     * \brief TODO
+     *
+     * This class is defined in \ref dynlinkedlist.hpp
+     */
     struct Node {
         void        * data;
         struct Node * next;
@@ -56,6 +85,9 @@ private:
     int min_cache_size;
     void * cache_mem;
 private:
+    /**
+     * TODO
+     */
     bool isincahce(Node * n){
         if(((unsigned long) n ) - ((unsigned long)min_cache) < 0){
             return false;
@@ -66,8 +98,14 @@ private:
         }
     }
 public:
+    /**
+     * TODO
+     */
     enum {DEFAULT_CACHE_SIZE=1024};
 
+    /**
+     * TODO
+     */
     dynlinkedlist(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false){
         //Node * n = (Node *)::malloc(sizeof(Node));
         assert(sizeof(Node) == longxCacheLine);
@@ -96,6 +134,9 @@ public:
         tail = &min_cache[0];
     }
     
+    /**
+     * TODO
+     */
     ~dynlinkedlist() {
         Node * start_free = min_cache[0].next;
         min_cache[0].next=NULL;
@@ -111,6 +152,9 @@ public:
         free(cache_mem);
     }
     
+    /**
+     * TODO
+     */
     inline bool push(void * const data) {
         assert(data!=NULL);
         if(likely(tail->next_data == NULL)){
@@ -129,7 +173,10 @@ public:
         return true;
     }
 
-    inline bool  pop(void ** data) {        
+    /**
+     * TODO
+     */
+    inline bool  pop(void ** data) {
         if (likely(head->data)) {
             *data = head->data;
             head->data = NULL;
@@ -137,9 +184,14 @@ public:
             return true;
         }
         return false;
-    }    
+    }
 };
 
-} // namespace
+/*!
+ * @}
+ * \endlink
+ */
+
+} // namespace ff
 
 #endif /* __FF_DYNQUEUE_HPP_ */

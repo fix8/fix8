@@ -186,15 +186,13 @@ public:
         pLogger = new PipeLogger(cmd, flag);
 #endif // _MSC_VER
 
-        ss = new test_session(ctx, id, per, sLogger, pLogger);
+        ss = new test_session(ctx(), id, per, sLogger, pLogger);
     };
 
     /// Dtor
     ~session_fixture()
     {
         delete ss;
-        delete sLogger;
-        delete pLogger;
         delete per;
     };
 
@@ -210,7 +208,7 @@ public:
     initiator_fixture()
     {
         Poco::Net::SocketAddress addr("127.0.0.1:80");
-        initiator = new ClientConnection(NULL, addr, *ss, pm_thread, false);
+        initiator = new ClientConnection(0, addr, *ss, pm_thread, false);
         initiator->connect();
         ss->start(initiator, false);
     };
@@ -379,7 +377,7 @@ TEST_F(sessionTest, handle_resend_request)
     resend->encode(resend_str);
     delete resend;
 
-    initiator_test->ss->set_persister(NULL);
+    initiator_test->ss->set_persister(0);
     initiator_test->ss->update_received();
     initiator_test->ss->process(resend_str);
 

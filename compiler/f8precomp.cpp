@@ -67,15 +67,16 @@ extern unsigned glob_errors;
 extern string shortName;
 
 //-----------------------------------------------------------------------------------------
-void output_field(const XmlElement& xf, const int depth, ostream& outf, const string& compon=string());
-void output_attributes(const XmlElement& xf, ostream& outf);
-void process_component(const XmlElement& xf, const Components& components, const int depth, ostream& outf);
+void output_field(const XmlElement& xf, const int depth, ostream& outf, const string& compon=string(), bool required=false);
+void output_attributes(const XmlElement& xf, ostream& outf, bool required=false);
+void process_component(const XmlElement& xf, const Components& components, const int depth, ostream& outf, bool required=false);
 void process_group(const XmlElement& xf, const Components& components, const int depth,
-	ostream& outf, const string& compon=string());
-void process_messages(const XmlElement& xf, const Components& components, const string& tag, const int depth, ostream& outf);
+	ostream& outf, const string& compon=string(), bool required=false);
+void process_messages(const XmlElement& xf, const Components& components, const string& tag, const int depth,
+	ostream& outf, bool required=false);
 void process_elements(XmlElement::XmlSet::const_iterator itr, const Components& components, const int depth,
-	ostream& outf, const string& compon=string());
-void process_fields(const XmlElement::XmlSet& fldlist, const int depth, ostream& outf);
+	ostream& outf, const string& compon=string(), bool required=false);
+void process_fields(const XmlElement::XmlSet& fldlist, const int depth, ostream& outf, bool required=false);
 void load_components(const XmlElement::XmlSet& comlist, Components& components);
 void dump_components(const Components& components, ostream& outf);
 int precomp(XmlElement& xf, ostream& outf);
@@ -165,7 +166,7 @@ int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique)
 		process_messages(**itr, components, "message", depth, outf);
 	outf << string(depth * 2, ' ') << "</messages>" << endl;
 
-	process_fields(fldlist, depth, outf);
+	process_fields(fldlist, depth, outf, false);
 
 	dump_components(components, outf);
 
@@ -205,13 +206,13 @@ void load_components(const XmlElement::XmlSet& comlist, Components& components)
 }
 
 //-----------------------------------------------------------------------------------------
-void process_fields(const XmlElement::XmlSet& fldlist, const int depth, ostream& outf)
+void process_fields(const XmlElement::XmlSet& fldlist, const int depth, ostream& outf, bool required)
 {
 	outf << string(depth * 2, ' ') << "<fields>" << endl;
 	for(XmlElement::XmlSet::const_iterator itr(fldlist.begin()); itr != fldlist.end(); ++itr)
 	{
 		outf << string((depth + 1) * 2, ' ') << "<field";
-		output_attributes(**itr, outf);
+		output_attributes(**itr, outf, required);
 
 		if ((*itr)->GetChildCnt())
 		{
@@ -219,7 +220,7 @@ void process_fields(const XmlElement::XmlSet& fldlist, const int depth, ostream&
 			for(XmlElement::XmlSet::const_iterator fitr((*itr)->begin()); fitr != (*itr)->end(); ++fitr)
 			{
 				outf << string((depth + 2) * 2, ' ') << '<' << (*fitr)->GetTag();
-				output_attributes(**fitr, outf);
+				output_attributes(**fitr, outf, required);
 				outf << "/>" << endl;
 			}
 			outf << string((depth + 1) * 2, ' ') << "</field>" << endl;
@@ -231,67 +232,73 @@ void process_fields(const XmlElement::XmlSet& fldlist, const int depth, ostream&
 }
 
 //-----------------------------------------------------------------------------------------
-void output_field(const XmlElement& xf, const int depth, ostream& outf, const string& compon)
+void output_field(const XmlElement& xf, const int depth, ostream& outf, const string& compon, bool required)
 {
 	outf << string(depth * 2, ' ') << "<field";
-	output_attributes(xf, outf);
+	output_attributes(xf, outf, required);
 	if (!compon.empty())
 		outf << " component=\'" << compon << '\'';
 	outf << "/>" << endl;
 }
 
 //-----------------------------------------------------------------------------------------
-void output_attributes(const XmlElement& xf, ostream& outf)
+void output_attributes(const XmlElement& xf, ostream& outf, bool required)
 {
 	for (XmlElement::XmlAttrs::const_iterator itr(xf.abegin()); itr != xf.aend(); ++itr)
-		outf << ' ' << itr->first << "='" << itr->second << '\'';
+		outf << ' ' << itr->first << "='"
+			<< (itr->first == "required" && itr->second == "Y" && !required ? "N" : itr->second) << '\'';
 	if (xf.GetLine())
 		outf << " line=\'" << xf.GetLine() << '\'';
 }
 
 //-----------------------------------------------------------------------------------------
 void process_elements(XmlElement::XmlSet::const_iterator itr, const Components& components, const int depth,
-	ostream& outf, const string& compon)
+	ostream& outf, const string& compon, bool required)
 {
 	if ((*itr)->GetTag() == "field")
-		output_field(**itr, depth, outf, compon);
+		output_field(**itr, depth, outf, compon, required);
 	else if ((*itr)->GetTag() == "component")
-		process_component(**itr, components, depth, outf);
+		process_component(**itr, components, depth, outf, required);
 	else if ((*itr)->GetTag() == "group")
-		process_group(**itr, components, depth, outf, compon);
+		process_group(**itr, components, depth, outf, compon, required);
 }
 
 //-----------------------------------------------------------------------------------------
-void process_messages(const XmlElement& xf, const Components& components, const string& tag, const int depth, ostream& outf)
+void process_messages(const XmlElement& xf, const Components& components, const string& tag, const int depth, ostream& outf, bool required)
 {
 	outf << string((depth + 1) * 2, ' ') << '<' << tag;
 	output_attributes(xf, outf);
 	outf << '>' << endl;
 
 	for(XmlElement::XmlSet::const_iterator mitr(xf.begin()); mitr != xf.end(); ++mitr)
-		process_elements(mitr, components, depth + 2, outf);
+		process_elements(mitr, components, depth + 2, outf, string(), required);
 	outf << string((depth + 1) * 2, ' ') << "</" << tag << '>' << endl;
 }
 
 //-----------------------------------------------------------------------------------------
-void process_component(const XmlElement& xf, const Components& components, const int depth, ostream& outf)
+void process_component(const XmlElement& xf, const Components& components, const int depth, ostream& outf, bool required)
 {
 	string name;
 	xf.GetAttr("name", name);
+	bool comp_required(xf.FindAttr("required", false));
+
 	Components::const_iterator citr(components.find(name));
 	if (citr == components.end())
 	{
-		cerr << shortName << ':' << recover_line(xf) << ": error: Could not find component " << name << endl;
+		cerr << shortName << ':' << recover_line(xf) << ": error: Could not find component '" << name << '\'' << endl;
 		++glob_errors;
 	}
 	else
+	{
 		for(XmlElement::XmlSet::const_iterator itr(citr->second->begin()); itr != citr->second->end(); ++itr)
-			process_elements(itr, components, depth, outf, name);
+			process_elements(itr, components, depth, outf, name,
+				depth == 3 ? comp_required : comp_required && required);
+	}
 }
 
 //-----------------------------------------------------------------------------------------
 void process_group(const XmlElement& xf, const Components& components, const int depth,
-	ostream& outf, const string& compon)
+	ostream& outf, const string& compon, bool required)
 {
 	outf << string(depth * 2, ' ') << "<group";
 	output_attributes(xf, outf);
@@ -300,7 +307,7 @@ void process_group(const XmlElement& xf, const Components& components, const int
 	outf << '>' << endl;
 
 	for(XmlElement::XmlSet::const_iterator itr(xf.begin()); itr != xf.end(); ++itr)
-		process_elements(itr, components, depth + 1, outf);
+		process_elements(itr, components, depth + 1, outf, string(), required);
 	outf << string(depth * 2, ' ') << "</group>" << endl;
 }
 

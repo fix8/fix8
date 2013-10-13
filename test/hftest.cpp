@@ -250,7 +250,7 @@ int main(int argc, char **argv)
 		if (server)
 		{
 			ServerSession<hf_session_server>::Server_ptr
-				ms(new ServerSession<hf_session_server>(TEX::ctx, conf_file, "TEX1"));
+				ms(new ServerSession<hf_session_server>(TEX::ctx(), conf_file, "TEX1"));
 
 			XmlElement::XmlSet eset;
 
@@ -283,8 +283,8 @@ int main(int argc, char **argv)
 		else
 		{
 			scoped_ptr<ClientSession<hf_session_client> >
-				mc(reliable ? new ReliableClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1")
-							   : new ClientSession<hf_session_client>(TEX::ctx, conf_file, "DLD1"));
+				mc(reliable ? new ReliableClientSession<hf_session_client>(TEX::ctx(), conf_file, "DLD1")
+							   : new ClientSession<hf_session_client>(TEX::ctx(), conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::print;
 

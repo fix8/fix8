@@ -195,8 +195,7 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 				_next_receive_seq = recv_seqnum;
 		}
 
-		Message *msg(generate_logon(_connection->get_hb_interval(), davi));
-		send(msg);
+		send(generate_logon(_connection->get_hb_interval(), davi));
 		_state = States::st_logon_sent;
 	}
 	else
@@ -306,8 +305,7 @@ bool Session::process(const f8String& from)
 		log(e.what());
 		if (!e.force_logoff())
 		{
-			Message *msg(generate_reject(seqnum, e.what()));
-			send(msg);
+			send(generate_reject(seqnum, e.what()));
 		}
 		else
 		{
@@ -358,9 +356,8 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 			log("Resend request already sent");
 		if (_state == States::st_continuous)
 		{
-			Message *rmsg(generate_resend_request(_next_receive_seq));
+			send(generate_resend_request(_next_receive_seq));
 			_state = States::st_resend_request_sent;
-			send(rmsg);
 		}
 		else if (!_sf->get_ignore_logon_sequence_check_flag(_sf->_ses))
 			throw InvalidMsgSequence(seqnum, _next_receive_seq);
@@ -450,8 +447,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		{
 			_sid = id;
 			enforce(seqnum, msg);
-			Message *msg(generate_logon(_connection->get_hb_interval(), davi()));
-			send(msg);
+			send(generate_logon(_connection->get_hb_interval(), davi()));
 			_state = States::st_continuous;
 		}
 		else
@@ -586,8 +582,7 @@ bool Session::handle_test_request(const unsigned seqnum, const Message *msg)
 
 	test_request_id testReqID;
 	msg->get(testReqID);
-	Message *trmsg(generate_heartbeat(testReqID()));
-	send(trmsg);
+	send(generate_heartbeat(testReqID()));
 	return true;
 }
 
@@ -600,16 +595,14 @@ bool Session::heartbeat_service()
 	//cerr << "heartbeat_service" << endl;
 
 	Tickval now(true);
-	if ((now - _last_sent).secs() >= _connection->get_hb_interval())
+	if ((now - _last_sent).secs() >= static_cast<time_t>(_connection->get_hb_interval()))
 	{
 		const f8String testReqID;
-		Message *msg(generate_heartbeat(testReqID));
-		//if (_connection->get_role() == Connection::cn_initiator)
-			send(msg);
+		send(generate_heartbeat(testReqID));
 	}
 
 	now.now();
-	if ((now - _last_received).secs() > _connection->get_hb_interval20pc())
+	if ((now - _last_received).secs() > static_cast<time_t>(_connection->get_hb_interval20pc()))
 	{
 		if (_state == States::st_test_request_sent)	// already sent
 		{
@@ -635,7 +628,12 @@ bool Session::heartbeat_service()
 		else
 		{
 			ostringstream ostr;
-			ostr << "Have not received anything from remote for " << (now - _last_received).secs() << " secs. Sending test request";
+			ostr << "Have not received anything from remote for ";
+			if (_last_received.secs())
+				ostr << (now - _last_received).secs();
+			else
+				ostr << "more than " << _connection->get_hb_interval20pc();
+			ostr << " secs. Sending test request";
 			log(ostr.str());
 			const f8String testReqID("TEST");
 			send(generate_test_request(testReqID));

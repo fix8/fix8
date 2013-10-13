@@ -126,6 +126,8 @@ case "$CXX" in
 		if test $gcc_major -ge 4 -a $gcc_minor -ge 7; then
 			is_late_gcc=yes
 		fi ;;
+	*clang*)
+		LIBS="$LIBS -lstdc++ -lm " ;;
 esac
 
 # use -fvar-tracking-assignments-toggle
@@ -145,6 +147,15 @@ esac])
 
 AM_CONDITIONAL([USEDOXYGEN],
 	[test -n "$DOXYGEN" && test $oktodox = yes])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
+
+DOXYGEN_WARNINGS=YES
+AC_ARG_ENABLE([doxygen-warnings],
+[AS_HELP_STRING([--enable-doxygen-warnings],[permit doxygen to generate warnings (default=yes)])],
+[case "${enableval}" in
+	no) DOXYGEN_WARNINGS=NO ;;
+	yes) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-doxygen-warnings) ;;
+esac])
 
 AC_CHECK_FUNCS([getopt_long sysconf popen getcwd gettimeofday localtime_r regcomp socket strcasecmp \
 		strerror strtol strtoul random srandom
@@ -549,6 +560,9 @@ BUILD_NUMBER_DATE=`date +%d%m%y`
 AC_DEFINE_UNQUOTED([CONFIGURE_SDATE],["$CONFIGURE_SDATE"],[Short Date system was configured])
 AC_DEFINE_UNQUOTED([CONFIGURE_TIME_NUM],[`date +%s`],[date/time as seconds since start epoch])
 AC_DEFINE_UNQUOTED([HOST_SYSTEM],["$host_cpu-$host_vendor-$host_os"],[Default system])
+AC_DEFINE_UNQUOTED([CPPFLAGS],["$CPPFLAGS"],[compiler spec])
+AC_DEFINE_UNQUOTED([LDFLAGS],["$LDFLAGS"],[Additional library flags])
+AC_DEFINE_UNQUOTED([LIBS],["$LIBS"],[Library spec])
 
 INTSYSCONF=`eval echo $sysconfdir`
 if test $prefix/etc = $INTSYSCONF; then
@@ -564,6 +578,7 @@ AC_SUBST(PIDDIR)
 AC_SUBST(INTSYSCONF)
 AC_SUBST(CONFIGURE_TIME)
 AC_SUBST(CONFIGURE_SDATE)
+AC_SUBST(DOXYGEN_WARNINGS)
 AC_SUBST(CONFIGURE_TIME_NUM)
 AC_SUBST(BUILD_NUMBER_DATE)
 AC_SUBST(LIBS)

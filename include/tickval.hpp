@@ -228,6 +228,23 @@ public:
 		return to = ts;
 	}
 
+	/*! Get tickval as struct timespec
+	  \return result */
+	struct timespec as_ts() const
+	{
+		const timespec ts = { secs(), static_cast<long>(nsecs()) };
+		return ts;
+	}
+
+	/*! Get tickval as struct tm
+	  \param result ref to struct tm to fill
+	  \return ptr to result */
+	struct tm *as_tm(struct tm& result) const
+	{
+		const time_t insecs(secs());
+		return gmtime_r(&insecs, &result);
+	}
+
 	/*! Set from secs/nsecs
 	  \param secs seconds
 	  \param nsecs nanoseconds */

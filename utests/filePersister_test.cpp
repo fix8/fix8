@@ -243,7 +243,7 @@ public:
     check_session(const F8MetaCntx& ctx):
         Session(ctx)
     {
-        _connection = new Connection(NULL, _addr, *this, pm_thread, 10);
+        _connection = new Connection(0, _addr, *this, pm_thread, 10);
     };
 
     /// Dtor
@@ -280,8 +280,8 @@ TEST(filePersister, resend_get)
 
 
 	 Poco::Net::SocketAddress _addr;
-    check_session session(UTEST::ctx);
-    Connection connection(NULL, _addr, session, pm_thread, 10);
+    check_session session(UTEST::ctx());
+    Connection connection(0, _addr, session, pm_thread, 10);
 
     fixture.filePer->get(1, 5, session, &Session::retrans_callback);
 

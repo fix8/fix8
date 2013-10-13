@@ -51,12 +51,12 @@ libutest_la_SOURCES = utest_types.hpp utest_types.cpp utest_traits.cpp \
 
 CLEANFILES = $(libutest_la_SOURCES)
 
-.NOTPARALLEL: $(XML_42_SCHEMA)
+.NOTPARALLEL: $(XML_42_UTEST_SCHEMA)
 
-XML_42_SCHEMA = $(top_srcdir)/schema/FIX42.xml
+XML_42_UTEST_SCHEMA = $(top_srcdir)/schema/FIX42UTEST.xml
 
-$(libutest_la_SOURCES): $(XML_42_SCHEMA)
-	$(top_srcdir)/compiler/f8c -sVp utest -n UTEST $(XML_42_SCHEMA)
+$(libutest_la_SOURCES): $(XML_42_UTEST_SCHEMA)
+	$(top_srcdir)/compiler/f8c -sVp utest -n UTEST $(XML_42_UTEST_SCHEMA)
 
 AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lgtest -lgtest_main
 

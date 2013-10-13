@@ -156,11 +156,11 @@ struct MessageSpec
 {
 	FieldTraits _fields;
 	GroupMap _groups;
-   int group_refcnt;
+   uint32_t _group_refcnt, _hash;
 	std::string _name, _description, _comment;
 	bool _is_admin;
 
-	MessageSpec(const std::string& name, bool admin=false) : group_refcnt(), _name(name), _is_admin(admin) {}
+	MessageSpec(const std::string& name, bool admin=false) : _group_refcnt(), _hash(), _name(name), _is_admin(admin) {}
 	virtual ~MessageSpec() {}
 
 	friend std::ostream& operator<<(std::ostream& os, const MessageSpec& what);
@@ -168,6 +168,10 @@ struct MessageSpec
 
 typedef std::map<const std::string, MessageSpec> MessageSpecMap;
 typedef std::multiset<const FieldTrait *, FieldTrait::PosCompare> FieldTraitOrder;
+
+//-----------------------------------------------------------------------------------------
+typedef std::map<uint32_t, struct MessageSpec> CommonGroups;
+typedef std::map<unsigned, CommonGroups> CommonGroupMap;
 
 //-----------------------------------------------------------------------------------------
 typedef std::map<std::string, const XmlElement *> Components;
@@ -237,3 +241,4 @@ public:
 } // FIX8
 
 #endif // _F8_F8C_HPP_
+/* vim: set ts=3 sw=3 tw=0 noet :*/

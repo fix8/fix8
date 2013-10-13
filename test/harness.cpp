@@ -241,7 +241,7 @@ int main(int argc, char **argv)
 		if (server)
 		{
 			ServerSession<myfix_session_server>::Server_ptr
-				ms(new ServerSession<myfix_session_server>(TEX::ctx, conf_file, "TEX1"));
+				ms(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX1"));
 
 			for (unsigned scnt(0); !term_received; )
 			{
@@ -262,8 +262,8 @@ int main(int argc, char **argv)
 		else
 		{
 			scoped_ptr<ClientSession<myfix_session_client> >
-				mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1")
-							   : new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
+				mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1")
+							   : new ClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::printnohb;
 
@@ -275,7 +275,7 @@ int main(int argc, char **argv)
 			else
 				mc->start(false);
 
-			ConsoleMenu cm(TEX::ctx, mc->session_ptr(), cin, cout, 50);
+			ConsoleMenu cm(TEX::ctx(), mc->session_ptr(), cin, cout, 50);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
@@ -433,7 +433,7 @@ bool MyMenu::load_msgs(const string& fname)
 		ifs.getline(buffer, MAX_MSG_LENGTH - 1);
 		if (!buffer[0])
 			continue;
-		Message *msg(Message::factory(TEX::ctx, buffer));
+		Message *msg(Message::factory(TEX::ctx(), buffer));
 		if (msg->is_admin())
 			continue;
 		sender_comp_id sci;

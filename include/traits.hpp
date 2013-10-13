@@ -65,7 +65,7 @@ struct FieldTrait
 	};
 
 	/// Trait bits
-	enum TraitTypes { mandatory, present, position, group, component, suppress, automatic, ignore, count };
+	enum TraitTypes { mandatory, present, position, group, component, suppress, automatic, count };
 
 	/*! Check if this FieldType is an int.
 	  \param ftype field to check
@@ -104,6 +104,10 @@ struct FieldTrait
 		: _fnum(fnum), _ftype(FieldType(ftype)), _pos(pos), _component(compon), _field_traits(field_traits)  {}
 
 	/*! Ctor.
+	  \param field field num (tag number) */
+	FieldTrait(const unsigned short field) : _fnum(field) {}
+
+	/*! Ctor.
 	  \param field field num (tag number)
 	  \param ftype field type
 	  \param pos field position (in FIX message)
@@ -111,7 +115,7 @@ struct FieldTrait
 	  \param isgroup true if this is a group
 	  \param compon component idx
 	  \param ispresent true if field is present (should be false until set). */
-	FieldTrait(const unsigned short field, const FieldType ftype=ft_untyped, const unsigned short pos=0,
+	FieldTrait(const unsigned short field, const FieldType ftype, const unsigned short pos=0,
 		bool ismandatory=false, bool isgroup=false, const unsigned compon=0, bool ispresent=false) :
 		_fnum(field), _ftype(ftype), _pos(pos), _component(compon),
 		_field_traits((ismandatory ? 1 : 0) | (ispresent ? 1 : 0) << present
@@ -192,7 +196,7 @@ public:
 	}
 
 private:
-	const size_t _reserve;
+	size_t _reserve;
 	size_t _sz, _rsz;
 	FieldTrait *_arr;
 	const FieldTrait_Hash_Array *_ftha;
@@ -201,13 +205,12 @@ private:
 	typedef std::pair<const_iterator, const_iterator> const_internal_result;
 
 public:
-	/*! ctor - initialise from static sorted set
+	/*! ctor - initialise from static sorted set. Used by Message encoder/decoder.
 	  \param arr_start pointer to start of static array to copy elements from
 	  \param sz number of elements in set to copy
-	  \param ftha pointer to field hash array
-	  \param reserve percentage of sz to keep in reserve */
-	presorted_set(const_iterator arr_start, const size_t sz, const FieldTrait_Hash_Array *ftha, const size_t reserve=RESERVE_PERCENT)
-		: _reserve(reserve), _sz(sz), _rsz(_sz + calc_reserve(_sz, _reserve)), _arr(new FieldTrait[_rsz]), _ftha(ftha)
+	  \param ftha pointer to field hash array */
+	presorted_set(const_iterator arr_start, const size_t sz, const FieldTrait_Hash_Array *ftha)
+		: _reserve(), _sz(sz), _arr(new FieldTrait[_sz]), _ftha(ftha)
 			{ memcpy(_arr, arr_start, _sz * sizeof(FieldTrait)); }
 
 	/*! ctor - initialise an empty set; defer memory allocation;
@@ -255,7 +258,14 @@ public:
 	/*! Find an element with the given key (const version)
 	  \param key to find
 	  \return pointer to found element or end() */
-	const_iterator find(const unsigned short key) const { return find(FieldTrait(key)); }
+	const_iterator find(const unsigned short key) const
+	{
+		if (_ftha)
+			return key < _ftha->_sz && (_arr + _ftha->_arr[key])->_fnum == key ? _arr + _ftha->_arr[key] : end();
+		const FieldTrait what(key);
+		const const_internal_result res(std::equal_range (_arr, _arr + _sz, what, FieldTrait::Compare()));
+		return res.first != res.second ? res.first : end();
+	}
 
 	/*! Find an element with the given value (const version)
 	  \param what element to find
@@ -271,15 +281,20 @@ public:
 	/*! Find an element with the given key
 	  \param key to find
 	  \return pointer to found element or end() */
-	iterator find(const unsigned short key) { return find(FieldTrait(key)); }
+	iterator find(const unsigned short key)
+	{
+		if (_ftha)
+			return key < _ftha->_sz && (_arr + _ftha->_arr[key])->_fnum == key ? _arr + _ftha->_arr[key] : end();
+		const FieldTrait what(key);
+		internal_result res(std::equal_range (_arr, _arr + _sz, what, FieldTrait::Compare()));
+		return res.first != res.second ? res.first : end();
+	}
 
 	/*! Find an element with the given value
 	  \param what value to find
 	  \return pointer to found element or end() */
 	iterator find(const FieldTrait what)
 	{
-		if (_ftha)
-			return what._fnum < _ftha->_sz && (_arr + _ftha->_arr[what._fnum])->_fnum == what._fnum ? _arr + _ftha->_arr[what._fnum] : end();
 		internal_result res(std::equal_range (_arr, _arr + _sz, what, FieldTrait::Compare()));
 		return res.first != res.second ? res.first : end();
 	}
@@ -299,13 +314,13 @@ public:
 			_arr = new FieldTrait[_rsz];
 			memcpy(_arr, what, sizeof(FieldTrait));
 			++_sz;
-			return result(_arr, true);
+			return std::make_pair(_arr, true);
 		}
 
 		bool answer;
 		iterator where(find(*what, answer));
 		if (answer) // sorry already here
-			return result(end(), false);
+			return std::make_pair(end(), false);
 
 		if (_sz < _rsz) // we have space
 		{
@@ -315,7 +330,7 @@ public:
 		else // we have to make space
 		{
 			iterator new_arr(new FieldTrait[_rsz = _sz + calc_reserve(_sz, _reserve)]);
-			size_t wptr(where - _arr);
+			const size_t wptr(where - _arr);
 			if (wptr > 0)
 				memcpy(new_arr, _arr, sizeof(FieldTrait) * wptr);
 			memcpy(new_arr + wptr, what, sizeof(FieldTrait));
@@ -324,7 +339,7 @@ public:
 			_arr = new_arr;
 		}
 		++_sz;
-		return result(where, true);
+		return std::make_pair(where, true);
 	}
 
 	/*! Find the distance between two iterators
@@ -535,11 +550,6 @@ public:
 	  \param field field to check
 	  \return true if present */
 	bool is_present(const unsigned short field) const { return get(field, FieldTrait::present); }
-
-	/*! Check if a specified field has the ignore bit set.
-	  \param field field to check
-	  \return true if ignore set */
-	bool is_ignored(const unsigned short field) const { return get(field, FieldTrait::ignore); }
 
 	/*! Check if a specified field has the mandator bit set.
 	  \param field field to check

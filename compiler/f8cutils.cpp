@@ -62,11 +62,11 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 extern string shortName, odir, prefix;
-extern bool verbose;
+extern bool verbose, nocheck, nowarn;
 extern string spacer;
 extern const string GETARGLIST;
 extern const CSMap _csMap;
-extern unsigned glob_errors;
+extern unsigned glob_errors, glob_warnings;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
@@ -80,7 +80,7 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 void process_ordering(MessageSpecMap& mspec);
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
-void process_group_ordering(const GroupMap& gm);
+void process_group_ordering(const CommonGroupMap& gm);
 unsigned lookup_component(const Components& compon, const f8String& name);
 string bintoaschex(const string& from);
 
@@ -183,7 +183,6 @@ void process_special_traits(const unsigned short field, FieldTraits& fts)
 		fts.set(field, FieldTrait::suppress);	// drop through
 	case Common_MsgType:
 		fts.set(field, FieldTrait::automatic);
-		fts.set(field, FieldTrait::ignore);			// don't decode
 		fts.clear(field, FieldTrait::mandatory);	// don't check for presence
 	default:
 		break;
@@ -272,7 +271,11 @@ int process_message_fields(const std::string& where, const XmlElement *xt, Field
 
 				// add FieldTrait
 				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, compidx)))
-					cerr << shortName << ':' << recover_line(**fitr) << ": error: Could not add trait object " << fname << endl;
+				{
+					if (!nowarn)
+						cerr << shortName << ':' << recover_line(**fitr) << ": warning: Could not add trait object '" << fname << "' (duplicate ?)" << endl;
+					++glob_warnings;
+				}
 				else
 				{
 					process_special_traits(fs_itr->first, fts);
@@ -317,7 +320,7 @@ void process_ordering(MessageSpecMap& mspec)
 }
 
 //-----------------------------------------------------------------------------------------
-void process_group_ordering(const GroupMap& gm)
+void process_message_group_ordering(const GroupMap& gm)
 {
 	for (GroupMap::const_iterator gitr(gm.begin()); gitr != gm.end(); ++gitr)
 	{
@@ -331,8 +334,16 @@ void process_group_ordering(const GroupMap& gm)
 			(*fto)->_pos = ++gcnt;
 
 		if (!gitr->second._groups.empty())
-			process_group_ordering(gitr->second._groups);
+			process_message_group_ordering(gitr->second._groups);
 	}
+}
+
+//-----------------------------------------------------------------------------------------
+void process_group_ordering(const CommonGroupMap& globmap)
+{
+	for (CommonGroupMap::const_iterator gcitr(globmap.begin()); gcitr != globmap.end(); ++gcitr)
+      for (CommonGroups::const_iterator gitr(gcitr->second.begin()); gitr != gcitr->second.end(); ++gitr)
+			process_message_group_ordering(gitr->second._groups);
 }
 
 //-----------------------------------------------------------------------------------------
@@ -348,9 +359,12 @@ void print_usage()
 	um.add('i', "ignore", "ignore errors, attempt to generate code anyhow (default no)");
 	um.add('k', "keep", "retain generated temporaries even if there are errors (.*.tmp)");
 	um.add('v', "version", "print version, exit");
+	um.add('I', "info", "print package info, exit");
 	um.add('s', "second", "2nd pass only, no precompile (default both)");
 	um.add('N', "nounique", "do not enforce unique field parsing (default false)");
 	um.add('R', "norealm", "do not generate realm constructed field instantiators (default false)");
+	um.add('W', "nowarn", "suppress warning messages (default false)");
+	um.add('C', "nocheck", "do not embed version checking in generated code (default false)");
 	um.add('r', "retain", "retain 1st pass code (default delete)");
 	um.add('b', "binary", "print binary/ABI details, exit");
 	um.add('c', "classes <server|client>", "generate user session classes (default neither)");
@@ -411,9 +425,12 @@ void generate_preamble(ostream& to, const string& fname, bool donotedit)
 	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
 	to << _csMap.find_ref(cs_divider) << endl;
 	to << "#include <f8config.h>" << endl;
-	to << "#if MAGIC_NUM > " << MAGIC_NUM << 'L' << endl;
-	to << "#error " << fname << " version (" << PACKAGE_VERSION << ") is out of date. Please regenerate with f8c." << endl;
-	to << "#endif" << endl;
+	if (!nocheck)
+	{
+		to << "#if defined MAGIC_NUM && MAGIC_NUM > " << MAGIC_NUM << 'L' << endl;
+		to << "#error " << fname << " version (" << PACKAGE_VERSION << ") is out of date. Please regenerate with f8c." << endl;
+		to << "#endif" << endl;
+	}
 	to << _csMap.find_ref(cs_divider) << endl;
 	to << "// " << fname << endl;
 	to << _csMap.find_ref(cs_divider) << endl;

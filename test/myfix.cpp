@@ -244,7 +244,7 @@ int main(int argc, char **argv)
 		if (server)
 		{
 			ServerSession<myfix_session_server>::Server_ptr
-				ms(new ServerSession<myfix_session_server>(TEX::ctx, conf_file, "TEX1"));
+				ms(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX1"));
 
 			for (unsigned scnt(0); !term_received; )
 			{
@@ -267,8 +267,8 @@ int main(int argc, char **argv)
 		else
 		{
 			scoped_ptr<ClientSession<myfix_session_client> >
-				mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1")
-							   : new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
+				mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1")
+							   : new ClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1"));
 			if (!quiet)
 				mc->session_ptr()->control() |= Session::printnohb;
 

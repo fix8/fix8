@@ -1,7 +1,10 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
+ *  \link
  *  \file MPMCqueues.hpp
+ *  \ingroup streaming_network_arbitrary_shared_memory
+ *
  *  \brief This file contains several MPMC queue implementations.
  */
  
@@ -52,7 +55,7 @@
 namespace ff {
 
 /*!
- *  \ingroup runtime
+ *  \ingroup streaming_network_arbitrary_shared_memory
  *
  *  @{
  */
@@ -77,25 +80,37 @@ namespace ff {
 
 /*! 
  * \class MPMC_Ptr_Queue
+ *  \ingroup streaming_network_arbitrary_shared_memory
  *
  * \brief An implementation of the \a bounded Multi-Producer/Multi-Consumer queue
  *
  * This class describes an implementation of the MPMC queue inspired by the solution 
  * proposed by <a href="https://sites.google.com/site/1024cores/home/lock-free-algorithms/queues/bounded-mpmc-queue" target="_blank">Dmitry Vyukov</a>. \n
  *
- * This version uses the new C++0X standard
+ * This version uses the new C++0X standard.
+ *
+ * This class is defined in \ref MPMCqueues.hpp
+ *
  */
 class MPMC_Ptr_Queue {
 private:
+    /**
+     * TODO
+     */
     struct element_t {
         std::atomic<unsigned long> seq;
         void *                     data;
     };
     
 public:
-    /** Default constructor */
+    /** 
+     * Default constructor
+     */
     MPMC_Ptr_Queue() {}
     
+    /**
+     * Destructor
+     */
     ~MPMC_Ptr_Queue() {
         if (buf) {
             delete [] buf;
@@ -115,6 +130,9 @@ public:
     /**
      * This method initialises the underlying bounded buffer using
      * the operator 'new'.
+     *
+     * \prm size TODO
+     * \return TODO
      */
     inline bool init(size_t size) {
         if (size<2) size=2;
@@ -144,8 +162,11 @@ public:
     }
     
     /** 
-     * Push method: enqueue data in the queue. \n
+     * Push method: enqueue data in the queue.
+     *
      * This method is non-blocking and costs one CAS per operation. 
+     *
+     * \return TODO
      */
     inline bool push(void *const data) {
         unsigned long pw, seq;
@@ -177,8 +198,11 @@ public:
     }
 
     /**
-     * Pop method: dequeue data from the queue. \n
+     * Pop method: dequeue data from the queue.
+     *
      * This is a non-blocking method.
+     *
+     * \return TODO
      */
     inline bool pop(void** data) {
         unsigned long pr, seq;
@@ -223,16 +247,23 @@ private:
 
 /*! 
  * \class MPMC_Ptr_Queue
+ *  \ingroup streaming_network_arbitrary_shared_memory
  *
  * \brief An implementation of the \a bounded Multi-Producer/Multi-Consumer queue
  *
  * This class describes an implementation of the MPMC queue inspired by the solution 
  * proposed by <a href="http://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue" target="_blank">Dmitry Vyukov</a>. \n
  *
- * This version uses internal atomic operations
+ * This version uses internal atomic operations.
+ *
+ * This class is defined in \ref MPMCqueues.hpp
+ *
  */
 class MPMC_Ptr_Queue {
 protected:
+    /**
+     * TODO
+     */
     struct element_t {
         atomic_long_t seq;
         void *        data;
@@ -241,10 +272,15 @@ protected:
 public:
     /** 
      *  Default constructor 
+     *
      *  @param[in] size The size of the queue.
      */
     MPMC_Ptr_Queue() {}
 
+    /**
+     *
+     * Destructor
+     */
     ~MPMC_Ptr_Queue() { 
         if (buf) {
             freeAlignedMemory(buf);
@@ -263,6 +299,8 @@ public:
     
     /**
      * This method initialises the underlying bounded buffer.
+     *
+     * \return TODO
      */
     inline bool init(size_t size) {
         if (size<2) size=2;
@@ -283,8 +321,11 @@ public:
     }
 
     /**
-     * Push method: enqueue data in the queue. \n
+     * Push method: enqueue data in the queue.
+     *
      * This method is non-blocking and costs one CAS per operation. 
+     *
+     * \return TODO
      */
     inline bool push(void *const data) {
         unsigned long pw, seq;
@@ -315,8 +356,11 @@ public:
     }
         
     /**
-     * Pop method: dequeue data from the queue. \n
+     * Pop method: dequeue data from the queue.
+     *
      * This is a non-blocking method.
+     *
+     * \return TODO
      */
     inline bool pop(void** data) {
         unsigned long pr , seq;
@@ -361,6 +405,7 @@ protected:
  
 /*! 
  * \class uMPMC_Ptr_Queue
+ *  \ingroup streaming_network_arbitrary_shared_memory
  *
  * \brief An implementation of the \a unbounded Multi-Producer/Multi-Consumer queue
  *
@@ -369,6 +414,9 @@ protected:
  * together the MPMC_Ptr_Queue and the uSWSR_Ptr_Buffer. \n
  *
  * It uses internal atomic operations.
+ *
+ * This class is defined in \ref MPMCqueues.hpp
+ *
  */
 class uMPMC_Ptr_Queue {
 protected:
@@ -379,8 +427,14 @@ protected:
     typedef atomic_long_t sequenceC_t;
 
 public:
+    /**
+     * Constructor
+     */
     uMPMC_Ptr_Queue() {}
     
+    /**
+     * Destructor
+     */
     ~uMPMC_Ptr_Queue() {
         if (buf) {
             for(size_t i=0;i<(mask+1);++i) {
@@ -393,6 +447,9 @@ public:
         if (seqC) freeAlignedMemory(seqC);
     }
 
+    /**
+     * TODO
+     */
     inline bool init(unsigned long nqueues=DEFAULT_NUM_QUEUES, size_t size=DEFAULT_uSPSC_SIZE) {
         if (nqueues<2) nqueues=2;
         if (!isPowerOf2(nqueues)) nqueues = nextPowerOf2(nqueues);
@@ -413,7 +470,11 @@ public:
         return true;
     }
 
-    // it always returns true
+    /**
+     * TODO
+     *
+     * \return It always returns true
+     */
     inline bool push(void *const data) {
         unsigned long pw,seq,idx;
         unsigned long bk = BACKOFF_MIN;
@@ -436,7 +497,11 @@ public:
         return true;               
     }
     
-    // non-blocking pop
+    /**
+     * non-blocking pop
+     *
+     * \return TODO
+     */
     inline bool pop(void ** data) {
         unsigned long pr,seq,idx;
         unsigned long bk = BACKOFF_MIN;
@@ -475,12 +540,15 @@ protected:
 
 };
 
-#endif // USE_STD_C0X
-
 /*!
  *  @}
+ *  \endlink
  */
 
+#endif // USE_STD_C0X
+
+//-------------------------------------****-------------------------------
+// No doxygen documentation from below.
 
 /*! 
  * \class MSqueue

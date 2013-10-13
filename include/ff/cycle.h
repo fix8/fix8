@@ -81,6 +81,11 @@
 #ifndef __CYCLE_H
 #define __CYCLE_H
 
+// Mauro Mulatero: ARM
+#if defined(__linux__) && defined(__arm__)
+  #define TIME_WITH_SYS_TIME 1
+#endif
+
 #if TIME_WITH_SYS_TIME
 # include <sys/time.h>
 # include <time.h>
@@ -188,6 +193,70 @@ INLINE_ELAPSED(__inline__)
 
 #define HAVE_TICK_COUNTER
 #define TIME_MIN 5000.0   /* unreliable pentium IV cycle counter */
+#endif
+
+/*----------------------------------------------------------------*/
+/*
+ * ARM cycle counter (Mauro Mulatero)
+ */
+#if (defined(__GNUC__) || defined(__ICC)) && defined(__linux__) && defined(__arm__) && !defined(HAVE_TICK_COUNTER)
+
+typedef unsigned long ticks;
+
+
+/****
+  Come indicato nella documentazione ARM il registro P15 non può essere
+  letto in user space e di conseguenza bisogna appoggiarsi alle API esposte
+  dal S.O.
+  Anche sperimentalmente l'accesso a questo registro causa "illegal instruction";
+  prova effettuata con la funzione ff_read_ccnt riportata di seguito il cui
+  contenuto è analogo a quanto svolto all'interno delle librerie real time in
+  kernel space di Linux per ARM.
+
+#define TC_HW_BITS      31
+static inline unsigned long ff_read_ccnt(void)
+{
+  unsigned long val;
+
+  __asm__ __volatile__ ("mrc p15, 0, %0, c9, c13, 0" : "=r" (val));
+
+  return val & ~(1 << TC_HW_BITS);
+}
+
+*****/
+
+/***
+  Su ARM non è possibile implementare in assembly un modo portabile e corretto
+  di getticks in spazio utente; bisogna appoggiarsi alle API esposte dal S.O.
+  Su Linux+ARM uso la funzione di S.O.: clock_gettime(...)
+  Le opzioni sono:
+  - CLOCK_REALTIME
+  - CLOCK_MONOTONIC
+  - CLOCK_PROCESS_CPUTIME_ID
+  - CLOCK_THREAD_CPUTIME_ID
+  - CLOCK_MONOTONIC_RAW        (scelta questa opzione)
+  - CLOCK_REALTIME_COARSE
+  - CLOCK_MONOTONIC_COARSE
+  - CLOCK_BOOTTIME
+  - CLOCK_REALTIME_ALARM
+  - CLOCK_BOOTTIME_ALARM
+  - CLOCK_TRACE_FREQ
+  - CLOCK_TRACE
+  **/
+static __inline__ ticks getticks(void)
+{
+  ticks ret = 0;
+  timespec time_tick;
+  if( clock_gettime(CLOCK_MONOTONIC_RAW, &time_tick) == 0 ) {
+    ret = time_tick.tv_nsec;        // time in nanoseconds
+  }
+  return ret;
+}
+
+INLINE_ELAPSED(__inline__)
+
+#define HAVE_TICK_COUNTER
+#define TIME_MIN 5000.0
 #endif
 
 /*----------------------------------------------------------------

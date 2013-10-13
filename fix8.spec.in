@@ -15,7 +15,7 @@ Requires: poco-net >= 1.4
 Requires: poco-foundation >= 1.4
 BuildRequires: poco-devel >= 1.4
 BuildRequires: perl-XML-Parser
-ExcludeArch: armv7hl
+#ExcludeArch: %{arm}
 
 %description
 A modern open source C++ FIX framework featuring complete schema driven customisation, high
@@ -31,7 +31,7 @@ Incorporates lock free queues, atomics and many other modern techniques.
 Fix8 is a complete C++ FIX framework, including client/server session and connection classes;
 support for the standard FIX field types; FIX printer, async logger, async message persister
 and XML configuration classes.
-Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average 66% faster
+Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average 68% faster
 encoding/decoding the same message than Quickfix.
 Fix8 statically supports nested components and groups.
 The Fix8 compiler and runtime library takes the pain out of using repeating groups.
@@ -48,7 +48,7 @@ Fix8 runs on industry standard Linux. Other NIX variants may work too.
 %setup -n %{name}-%{version}
 
 %build
-%configure --with-sleep=250 --enable-gtest=no
+%configure --with-sleep=250 --enable-gtest=no --enable-doxygen-warnings=no
 %{__make}
 
 %install

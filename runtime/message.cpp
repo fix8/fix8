@@ -112,13 +112,11 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 
 	for (unsigned pos(_pos.size()); s_offset <= fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 	{
-		const unsigned tv(fast_atoi<unsigned>(tag));
+		const unsigned short tv(fast_atoi<unsigned short>(tag));
 		Presence::const_iterator itr(_fp.get_presence().find(tv));
 		if (itr == _fp.get_presence().end())
 			break;
 		s_offset += result;
-		if (itr->_field_traits.has(FieldTrait::ignore))
-			continue;
 		if (itr->_field_traits.has(FieldTrait::present))
 		{
 			if (!itr->_field_traits.has(FieldTrait::automatic))
@@ -129,8 +127,9 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 			const BaseEntry *be(_ctx.find_be(tv));
 			if (!be)
 				throw InvalidField(tv);
-			add_field(tv, itr, ++pos, be->_create._do(val, be->_rlm, -1), false);
-			if (_fp.is_group(tv, itr))
+			add_field_decoder(tv, ++pos, be->_create._do(val, be->_rlm, -1));
+			itr->_field_traits.set(FieldTrait::present);
+			if (itr->_field_traits.has(FieldTrait::group))
 				s_offset = decode_group(tv, from, s_offset, ignore);
 		}
 	}
@@ -225,7 +224,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 #if defined CODECTIMING
 	IntervalTimer itm;
 #endif
-	msg->decode(from, hlen, 7); // skip already decoded mandatory 8, 9 & 35
+	msg->decode(from, hlen, 7); // skip already decoded mandatory 8, 9, 35 and 10
 #if defined CODECTIMING
 	_decode_timings._cpu_used += itm.Calculate().AsDouble();
 	++_decode_timings._msg_count;
@@ -304,7 +303,7 @@ size_t MessageBase::encode(char *to) const
 		if (!_fp.get(itr->second->_fnum, fpitr, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
 		{
 			to += itr->second->encode(to);
-			if (_fp.get(itr->second->_fnum, fpitr, FieldTrait::group))
+			if (fpitr->_field_traits.has(FieldTrait::group))
 				to += encode_group(itr->second->_fnum, to);
 		}
 	}
@@ -325,7 +324,7 @@ size_t MessageBase::encode(ostream& to) const
 		if (!_fp.get(itr->second->_fnum, fpitr, FieldTrait::suppress))	// some fields are not encoded until unsuppressed (eg. checksum)
 		{
 			itr->second->encode(to);
-			if (_fp.get(itr->second->_fnum, fpitr, FieldTrait::group))
+			if (fpitr->_field_traits.has(FieldTrait::group))
 				encode_group(itr->second->_fnum, to);
 		}
 	}
@@ -391,6 +390,7 @@ size_t Message::encode(char **hmsg_store) const
 	if (!_header->get_body_length())
 		throw MissingMandatoryField(Common_BodyLength);
 	_header->_fp.clear(Common_BodyLength, FieldTrait::suppress);
+
 	_header->get_body_length()->set(msgLen);
 	hmsg += _header->get_body_length()->encode(hmsg);
 #if defined MSGRECYCLING
@@ -611,7 +611,7 @@ void Message::print(ostream& os, int) const
 void Message::format_codec_timings(const f8String& str, ostream& os, codec_timings& ct)
 {
 	os << str << ": " << setprecision(9) << ct._cpu_used << " secs, "
-		<< ct._msg_count << " msgs, "
+		<< setw(8) << right << ct._msg_count << " msgs, "
 		<< (ct._cpu_used / ct._msg_count) << " secs/msg, "
 		<< setprecision(2) << (ct._msg_count / ct._cpu_used) << " msgs/sec";
 }

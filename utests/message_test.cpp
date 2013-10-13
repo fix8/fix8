@@ -51,7 +51,8 @@ using namespace FIX8::UTEST;
 
 TEST(message, missing_field)
 {
-    EXPECT_THROW(Message::factory(ctx, "8=FIX.4.2\0019=12\001\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\00198=0\00110=098\001"), std::exception);
+    EXPECT_THROW(Message::factory(ctx(),
+		 "8=FIX.4.2\0019=12\001\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\00198=0\00110=098\001"), std::exception);
 }
 
 /*!logon decoding test
@@ -60,15 +61,16 @@ TEST(message, missing_field)
 
 TEST(message, logon_decode)
 {
-    Message * logon = Message::factory(ctx, "8=FIX.4.2\0019=12\00135=A\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\00198=0\00110=185\001");
+    Message * logon = Message::factory(ctx(),
+		 "8=FIX.4.2\0019=12\00135=A\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\00198=0\00110=185\001");
 
     EXPECT_EQ("A", logon->get_msgtype());
     EXPECT_TRUE(logon->is_admin());
-    EXPECT_TRUE(logon->Header() != NULL);
-    EXPECT_TRUE(logon->Trailer() != NULL);
+    EXPECT_TRUE(logon->Header() != 0);
+    EXPECT_TRUE(logon->Trailer() != 0);
 
     delete logon;
-    logon = NULL;
+    logon = 0;
 }
 
 #define FIELD_TEST(field, expect, message, test_fun) {\
@@ -83,12 +85,16 @@ TEST(message, logon_decode)
 
 TEST(message, neworder_decode)
 {
-    Message * neworder = Message::factory(ctx, "8=FIX.4.2\0019=190\00135=D\00149=CLIENT\00156=SERVER\00134=78\00150=S\001142=US,IL\00157=G\00152=20130304-05:06:14\00111=4\0011=54129\00121=1\00155=OC\001167=OPT\001107=TEST SYMBOL\00154=1\00160=20130304-05:06:14\00138=50.00\00140=2\00144=400.50\00159=0\00158=TEST\00110=077\001");
+    Message * neworder = Message::factory(ctx(),
+		 "8=FIX.4.2\0019=220\00135=D\00149=CLIENT\00156=SERVER\00134=78\00150=S\001"
+		 "142=US,IL\00157=G\00152=20130304-05:06:14\00111=4\0011=54129\00121=1\00155=OC\001"
+		 "167=OPT\001107=TEST SYMBOL\00154=1\001449=20130304\001450=05:06:14\001743=201303\001"
+		 "60=20130304-05:06:14\00138=50.00\00140=2\00144=400.50\00159=0\00158=TEST\00110=051\001");
 
     EXPECT_EQ("D", neworder->get_msgtype());
     EXPECT_FALSE(neworder->is_admin());
-    EXPECT_TRUE(neworder->Header() != NULL);
-    EXPECT_TRUE(neworder->Trailer() != NULL);
+    EXPECT_TRUE(neworder->Header() != 0);
+    EXPECT_TRUE(neworder->Trailer() != 0);
 
     MessageBase * header = neworder->Header();
 
@@ -112,11 +118,16 @@ TEST(message, neworder_decode)
     EXPECT_TRUE(neworder->has<UTEST::Price>());
     EXPECT_TRUE(neworder->has<UTEST::TimeInForce>());
 
+    EXPECT_TRUE(neworder->has<UTEST::TotalVolumeTradedDate>());
+    EXPECT_TRUE(neworder->has<UTEST::TotalVolumeTradedTime>());
+    EXPECT_TRUE(neworder->has<UTEST::DeliveryDate>());
+
     FIELD_TEST(BeginString, "FIX.4.2", header, EXPECT_EQ);
     //FIELD_TEST(SendingTime, Poco::DateTime(2013, 3, 4, 5, 6, 14), header, EXPECT_EQ);
     tm tms = { 14, 6, 5, 4, 2, 113 }; // mon is 0-11, year is from 1900
     SendingTime st(tms);
     FIELD_TEST(SendingTime, st.get(), header, EXPECT_EQ);
+
     FIELD_TEST(MsgSeqNum, 78, header, EXPECT_EQ);
     FIELD_TEST(SenderCompID, "CLIENT", header, EXPECT_EQ);
     FIELD_TEST(TargetCompID , "SERVER", header, EXPECT_EQ);
@@ -139,8 +150,21 @@ TEST(message, neworder_decode)
     FIELD_TEST(TimeInForce, '0', neworder, EXPECT_EQ);
     FIELD_TEST(Text, "TEST", neworder, EXPECT_EQ);
 
+	 // test UTCDateOnly
+    tm tvtds = { 0, 0, 0, 4, 2, 113 };
+    TotalVolumeTradedDate tvtd(tvtds);
+    FIELD_TEST(TotalVolumeTradedDate, tvtd.get(), neworder, EXPECT_EQ);
+	 // test UTCTimeOnly
+    tm tvtts = { 14, 6, 5 };
+    TotalVolumeTradedTime tvtt(tvtts);
+    FIELD_TEST(TotalVolumeTradedTime, tvtt.get(), neworder, EXPECT_EQ);
+	 // test MonthYear
+    tm tvdds = { 0, 0, 0, 0, 2, 113 };
+    DeliveryDate tvdd(tvdds);
+    FIELD_TEST(DeliveryDate, tvdd.get(), neworder, EXPECT_EQ);
+
     delete neworder;
-    neworder = NULL;
+    neworder = 0;
 }
 
 
@@ -150,10 +174,14 @@ TEST(message, neworder_decode)
 
 TEST(message, neworder_group_decode)
 {
-    Message * neworder = Message::factory(ctx, "8=FIX.4.2\0019=190\00135=D\00149=CLIENT\00156=SERVER\00134=78\00150=S\001142=US,IL\00157=G\00152=20130304-05:06:14\00111=4\0011=54129\00121=1\00155=OC\001167=OPT\001107=TEST SYMBOL\00154=1\00160=20130304-05:06:14\00138=50.00\00140=2\00144=400.50\00159=0\00158=TEST\00178=2\00179=FIRST\00180=20\00179=SECOND\00180=30\00110=221\001");
+    Message * neworder = Message::factory(ctx(),
+		 "8=FIX.4.2\0019=190\00135=D\00149=CLIENT\00156=SERVER\00134=78\00150=S\001142=US,IL\00157=G\001"
+		 "52=20130304-05:06:14\00111=4\0011=54129\00121=1\00155=OC\001167=OPT\001107=TEST SYMBOL\00154=1\001"
+		 "60=20130304-05:06:14\00138=50.00\00140=2\00144=400.50\00159=0\00158=TEST\00178=2\00179=FIRST\001"
+		 "80=20\00179=SECOND\00180=30\00110=221\001");
 
     const GroupBase *grnoul(neworder->find_group<NewOrderSingle::NoAllocs>());
-    EXPECT_TRUE(grnoul != NULL);
+    EXPECT_TRUE(grnoul != 0);
     EXPECT_EQ(size_t(2), grnoul->size());
 
     FIELD_TEST(AllocAccount, "FIRST", grnoul->get_element(0), EXPECT_EQ);
@@ -163,7 +191,7 @@ TEST(message, neworder_group_decode)
     FIELD_TEST(AllocShares, 30, grnoul->get_element(1), EXPECT_EQ);
 
     delete neworder;
-    neworder = NULL;
+    neworder = 0;
 }
 
 /*!checksum test
@@ -172,7 +200,9 @@ TEST(message, neworder_group_decode)
 
 TEST(message, calc_chksum)
 {
-    f8String msg("8=FIX.4.2\0019=117\00135=5\00134=3725\001369=617\00152=20130304-07:25:37.403\00149=CME\00150=G\00156=1G9125N\00157=ADMIN\001143=US,IL\00158=Logout confirmed.\001789=618\00110=121\001");
+    f8String msg(
+		 "8=FIX.4.2\0019=117\00135=5\00134=3725\001369=617\00152=20130304-07:25:37.403\001"
+		 "49=CME\00150=G\00156=1G9125N\00157=ADMIN\001143=US,IL\00158=Logout confirmed.\001789=618\00110=121\001");
 
     EXPECT_EQ(unsigned(172), Message::calc_chksum(msg));
     EXPECT_EQ(unsigned(121), Message::calc_chksum(msg, 0, msg.length()-7));
@@ -247,7 +277,7 @@ TEST(message, logon_encode)
     EXPECT_EQ(expect, output);
 
     delete logon;
-    logon = NULL;
+    logon = 0;
 }
 
 /*!new order entry encoding test
@@ -277,17 +307,25 @@ TEST(message, neworder_encode)
          << new Text("NIGEL")
          << new TimeInForce(TimeInForce_DAY)
          << new SecurityDesc("AOZ3 C02000")
-         << new SecurityType(SecurityType_OPTION);
+         << new SecurityType(SecurityType_OPTION)
+			<< new TotalVolumeTradedDate("20130305")
+			<< new TotalVolumeTradedTime("02:19:46.123")
+			<< new DeliveryDate("201303");
 
     f8String output;
     nos->encode(output);
 
-    f8String expect("8=FIX.4.2\0019=203\00135=D\00149=A12345B\00156=COMPARO\00134=78\00150=2DEFGH4\001142=AU,SY\00157=G\00152=20130305-02:19:46.108\00111=4\0011=01234567\00121=1\00155=OC\001167=OPT\001107=AOZ3 C02000\00154=1\00160=20130305-02:19:46.108\00138=50.00\00140=2\00144=400.50\00159=0\00158=NIGEL\00110=089\001");
+    f8String expect(
+		 "8=FIX.4.2\0019=244\00135=D\00149=A12345B\00156=COMPARO\00134=78\00150=2DEFGH4\001"
+		 "142=AU,SY\00157=G\00152=20130305-02:19:46.108\00111=4\0011=01234567\00121=1\001"
+		 "449=20130305\001450=02:19:46.123\001743=201303\00155=OC\001"
+		 "167=OPT\001107=AOZ3 C02000\00154=1\00160=20130305-02:19:46.108\00138=50.00\00140=2\001"
+		 "44=400.50\00159=0\00158=NIGEL\00110=021\001");
 
     EXPECT_EQ(expect, output);
 
     delete nos;
-    nos = NULL;
+    nos = 0;
 }
 
 /*!new order entry (with repeating groups) encoding test
@@ -336,13 +374,15 @@ TEST(message, nestedGroup_encode)
     f8String output;
     nol->encode(output);
 
-    f8String expect("8=FIX.4.2\0019=176\00135=E\00149=A12345B\00156=COMPARO\00134=78\00150=2DEFGH4\001142=AU,SY\00157=G\00152=20130305-02:19:46.108\00166=123\001394=1\00168=2\00173=2\00111=1\00167=1\0011=TEST\00111=2\00167=2\00178=2\00179=first\00180=10.00\00179=second\00180=20.00\00110=162\001");
+    f8String expect(
+		 "8=FIX.4.2\0019=176\00135=E\00149=A12345B\00156=COMPARO\00134=78\00150=2DEFGH4\001"
+		 "142=AU,SY\00157=G\00152=20130305-02:19:46.108\00166=123\001394=1\00168=2\00173=2\001"
+		 "11=1\00167=1\0011=TEST\00111=2\00167=2\00178=2\00179=first\00180=10.00\001"
+		 "79=second\00180=20.00\00110=162\001");
 
     EXPECT_EQ(expect, output);
 
     delete nol;
-    nol = NULL;
-
+    nol = 0;
 }
-
 

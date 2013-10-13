@@ -253,12 +253,12 @@ public:
 	const std::string *GetVal() const { return value_; }
 
 	/*! Get the declaration if available.
-	  \return the depth */
+	  \return the declaration */
 	const std::string *GetDecl() const { return decl_; }
 
 	/*! Create a new root element (and recursively parse) from a given xml filename.
 	  \param fname the xml filename
-	  \return the depth */
+	  \return the new element */
 	static XmlElement *Factory(const std::string& fname);
 
 	/*! Get an iterator to the first child attribute.
@@ -280,6 +280,10 @@ public:
 	/*! Get the root element of this tree, const version
 	  \return the root element */
 	const XmlElement *GetRoot() const { return parent_ ? parent_->root_ : this; }
+
+	/*! Get the parent element of this tree, const version
+	  \return the parent element, 0 if no parent */
+	const XmlElement *GetParent() const { return parent_; }
 
 	/*! Inserter friend.
 	    \param os stream to send to

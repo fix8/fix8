@@ -91,7 +91,7 @@ class Timer
 {
    T& _monitor;
    dthread<Timer> _thread;
-	f8_mutex _mutex;
+	f8_spin_lock _spin_lock;
    unsigned _granularity;
 
    std::priority_queue<TimerEvent<T> > _event_queue;
@@ -140,7 +140,7 @@ int Timer<T>::operator()()
    {
       bool shouldsleep(false);
       {
-			f8_scoped_lock guard(_mutex);
+			f8_scoped_spin_lock guard(_spin_lock);
 
          if (_event_queue.size())
          {
@@ -182,7 +182,7 @@ template<typename T>
 size_t Timer<T>::clear()
 {
 	size_t result(0);
-	f8_scoped_lock guard(_mutex);
+	f8_scoped_spin_lock guard(_spin_lock);
 
 	while (_event_queue.size())
 	{
@@ -207,7 +207,7 @@ bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWait)
    }
 
 	what.set(tofire);
-	f8_scoped_lock guard(_mutex);
+	f8_scoped_spin_lock guard(_spin_lock);
 	_event_queue.push(what);
 
    return true;

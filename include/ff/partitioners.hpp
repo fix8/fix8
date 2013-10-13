@@ -2,24 +2,28 @@
 
 /*! 
  *  \file partitioners.hpp
+ *  \ingroup shared_memory_fastflow
+ *
  *  \brief This file describes the partitioner used in the map skeleton.
  */
  
 #ifndef _FF_PART_HPP_
 #define _FF_PART_HPP_
+
 /* ***************************************************************************
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *
+ *  This program is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ *  License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *  along with this program; if not, write to the Free Software Foundation,
+ *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  *
  ****************************************************************************
@@ -30,11 +34,19 @@
 namespace ff {
 
 /*!
- *  \ingroup runtime
+ *  \ingroup shared_memory_fastflow
  *
  *  @{
  */
 
+/*!
+ * \class basePartition
+ * \ingroup shared_memory_fastflow
+ *
+ * \brief TODO
+ *
+ * This class is defined in \ref partitioners.hpp
+ */
 struct basePartition {
     basePartition():task(NULL), len(0) {}
     
@@ -47,7 +59,14 @@ struct basePartition {
     size_t len;
 };
 
-// REW
+/**
+ * \class basePartitionList
+ * \ingroup shared_memory_fastflow
+ *
+ * \brief TODO
+ *
+ * \This struct is defined in \ref partitioners.hpp
+ */
 struct basePartitionList: public basePartition {
     basePartition& operator[](size_t n) { return pList[n]; }    
     const basePartition& operator[](size_t n) const { return pList[n]; }
@@ -57,48 +76,55 @@ struct basePartitionList: public basePartition {
 
 /*!
  * \class basePartitioner
+ * \ingroup shared_memory_fastflow
  *
  * \brief A basic interface for the partitioner used by the Map skeleton.
+ *
+ * This class is defined in \ref partitioners.hpp
  */    
 class basePartitioner {
 public:
+    /**
+     * TODO
+     */
     virtual void   getPartition(const int threadId, basePartition& P)=0;
+
+    /**
+     * TODO
+     */
     virtual void   setTask(void* task)=0;
+
+    /**
+     * TODO
+     */
     virtual size_t getParts() const = 0;
 };
-
-/*!
- *  @}
- */
-
- 
-/*!
- *  \ingroup runtime
- *
- *  @{
- */
     
-// one dimensional array partitioner
 /*!
  * \class LinearPartitioner
+ * \ingroup shared_memory_fastflow
  *
  * \brief A linear partitioner.
  *
  * A one-dimensional array partitioner for the Map skeleton.
+ *
+ * This class is defined in \ref partitioners.hpp
  */
 template<typename T>
 class LinearPartitioner: public basePartitioner {
 public:
     typedef basePartition partition_t;
 
-    /** Default constructor */
+    /** 
+     * Default constructor 
+     */
     LinearPartitioner(size_t nElements, int nThreads) :
          task(NULL), 
          p((nElements>(size_t)nThreads) ? nThreads : nElements), 
          q(nElements / nThreads), r(nElements % nThreads) 
-         {
-         }
-          
+    {
+    }
+
     /**
      *  Get a partition
      */
@@ -108,10 +134,16 @@ public:
         P.setLength(((size_t)threadId<r)?(q+1):q);
     }
     
-    /// Set the task
+    /**
+     * It sets the task.
+     */
     inline void setTask(void* t) { task = (T*)t; }
 
-    // Returns the n. of partitions
+    /**
+     * It returns the number of partitions.
+     *
+     * \return TODO
+     */
     inline size_t getParts() const { return p; }
 
 protected:
@@ -120,12 +152,6 @@ protected:
     const size_t q;  // Num_of_Elements / Num_of_threads
     const size_t r;  // Num_of_Elements % Num_of_threads
 };
-
-/*!
- *  @}
- */
-
-
 
 #if 0
     // caso base list di N elementi tutti della stessa size e dello stesso tipo
@@ -177,8 +203,11 @@ protected:
     
 #endif
 
-    
-    
+/*!
+ * @}
+ * \endlink
+ */
+
 } // namespace ff
 
 #endif /* _FF_PART_HPP_ */

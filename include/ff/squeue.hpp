@@ -1,41 +1,66 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
+
 #ifndef _FF_SQUEUE_HPP_
 #define _FF_SQUEUE_HPP_
+
+/*!
+ * \link
+ * \file squeue.hpp
+ * \ingroup streaming_network_simple_shared_memory
+ *
+ * \brief Simple yet efficient unbounded FIFO queue.
+ *
+ * This queue have to be used by one single thread at a time, or, each method
+ * call have to be protected by a mutex lock. For an unbounded
+ * producer-consumer queue implementation see \ref ubuffer.hpp
+ *
+ */
+
 /* ***************************************************************************
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *
+ *  This program is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ *  License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *  along with this program; if not, write to the Free Software Foundation,
+ *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  *
  ****************************************************************************
  */
 
-
-/* Simple yet efficient unbounded FIFO queue.
- *
- * This queue have to be used by one single thread at a time,
- * or, each method call have to be protected by a mutex lock. 
- * For an unbounded producer-consumer queue implementation
- * see ubuffer.hpp
- *
- */
 #include <stdlib.h>
 
+
 namespace ff {
-        
+/*!
+ * \ingroup streaming_network_simple_shared_memory
+ *
+ * @{
+ */
+
+/*!
+ * class squeue
+ * \ingroup streaming_network_simple_shared_memory
+ *
+ * TODO
+ *
+ * This class is defined in \ref squeue.hpp
+ *
+ */
+
 template <typename T>
 class squeue {
 private:
-    
+    /**
+     * TODO
+     */
     struct data_type {
         data_type():h(-1),t(-1),entry(0) {};
         data_type(int h, int t, T * entry):h(h),t(t),entry(entry) {}
@@ -45,25 +70,34 @@ private:
         T     * entry;
     };
 
-
     typedef T          elem_type;
     
 protected:
+    /**
+     * TODO
+     */
     enum {DATA_CHUNK=1024, SQUEUE_CHUNK=4096};
     
+    /**
+     * TODO
+     */
     inline T * newchunk() {
         T * v =(T *)malloc(chunk*sizeof(T));
         return v;
     }
     
+    /**
+     * TODO
+     */
     inline void deletechunk(int idx) { 
         free(data[idx].entry);   
         data[idx].entry = NULL;
     }
 
-    
 public:
-    
+    /**
+     * TODO
+     */
     squeue(size_t chunk=SQUEUE_CHUNK):data(0),datacap(DATA_CHUNK),
                                       nelements(0),
                                       head(0),tail(0),chunk(chunk)  {
@@ -71,6 +105,9 @@ public:
         data[0] = data_type(0, -1, newchunk());
     }
     
+    /**
+     * TODO
+     */
     ~squeue() {
         if (!data) return;
         for(unsigned int i=0;i<=tail;++i)
@@ -78,7 +115,9 @@ public:
         free(data);
     }
     
-    /* enqueue operation */
+    /**
+     * It defines the enqueue operation 
+     */
     inline void push_back(const elem_type & elem) {
         T * current       = data[tail].entry;
         int current_tail  = data[tail].t++;
@@ -97,7 +136,12 @@ public:
         ++nelements;
     }
 
-    /* dequeue one element from the back */
+    /**
+     *
+     * It defines the dequeue one element from the back 
+     *
+     * \return TODO
+     */
     inline void pop_back() { 
         if (!nelements) return;
         
@@ -114,6 +158,13 @@ public:
         }
         
     }
+
+    /**
+     *
+     * TODO
+     *
+     * \return TODO
+     */
     
     inline elem_type& back() { 
         if (!nelements) return *(elem_type*)0;
@@ -123,7 +174,11 @@ public:
         return current[current_tail];
     }
 
-    /* dequeue one element from the head */
+    /**
+     * It defines the dequeue one element from the head.
+     *
+     * \return TODO
+     */
     inline void pop_front() { 
         if (!nelements) return;
 
@@ -139,6 +194,11 @@ public:
         }        
     }
     
+    /**
+     * TODO
+     *
+     * \return TODO
+     */
     inline elem_type& front() { 
         if (!nelements) return *(elem_type*)0;
 
@@ -147,6 +207,12 @@ public:
         return current[current_head];
     }
 
+    /**
+     *
+     * TODO
+     *
+     * \return TODO
+     */
     inline elem_type& at(size_t idx) {
         if (!nelements || idx > nelements) return *(elem_type*)0;
         
@@ -155,7 +221,11 @@ public:
         return current[current_head];
     } 
     
-    /* return the number of items in the queue */
+    /**
+     * It return the number of items in the queue.
+     *
+     * \retun The number of items in the queue.
+     * */
     inline size_t size() const { return nelements; }
     
     
@@ -168,7 +238,12 @@ private:
     size_t         chunk;    
 };
 
-}
+/*!
+ *  @}
+ *  \endlink
+ */
+
+} // namespace ff
 
 #endif /* _FF_SQUEUE_HPP_ */
 

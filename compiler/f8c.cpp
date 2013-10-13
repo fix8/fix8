@@ -40,9 +40,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 f8c -- compile FIX xml schema\n
 \n
 <tt>
-Usage: f8c [-NRVbcdfhiknoprstvx] \<input xml schema\>\n
+Usage: f8c [-CINRVWbcdfhiknoprstvx] \<input xml schema\>\n
+   -C,--nocheck            do not embed version checking in generated code (default false)\n
+   -I,--info               print package info, exit\n
    -N,--nounique           do not enforce unique field parsing (default false)\n
-   -R,--norealm            do not generate realm constructed field instantiators (default false)
+   -R,--norealm            do not generate realm constructed field instantiators (default false)\n
+   -W,--nowarn             suppress warning messages (default false)\n
    -V,--verbose            be more verbose when processing\n
    -c,--classes \<server|client\> generate user session classes (default no)\n
    -d,--dump               dump 1st pass parsed source xml file, exit\n
@@ -123,10 +126,10 @@ const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "
 	"_classes.hpp", "_router.hpp", "_session.hpp" };
 
 string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"), prefix("Myfix"), gen_classes;
-bool verbose(false), error_ignore(false), gen_fields(false), norealm(false);
+bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fb");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIW");
 extern string spacer, shortName;
 
 //-----------------------------------------------------------------------------------------
@@ -146,26 +149,30 @@ void process_special_traits(const unsigned short field, FieldTraits& fts);
 int process_message_fields(const std::string& where, const XmlElement *xt, FieldTraits& fts,
 	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, const Components& compon);
 int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec,
-	FieldSpecMap& fspec, Components& compon, GroupMap& globmap);
+	FieldSpecMap& fspec, Components& compon, CommonGroupMap& globmap);
 void process_ordering(MessageSpecMap& mspec);
 ostream *open_ofile(const string& odir, const string& fname, string& target);
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
 const string& filepart(const string& source, string& where);
 void generate_preamble(ostream& to, const string& fname, bool donotedit=true);
-unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr, const string& name,
+unsigned parse_groups(MessageSpec& ritr, const string& name,
 	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist,
-   const Components& compon, GroupMap& globmap);
+   const Components& compon, CommonGroupMap& globmap);
 int precomp(XmlElement& xf, ostream& outf);
-void process_group_ordering(const GroupMap& gm);
+void process_group_ordering(const CommonGroupMap& gm);
 int precompfixt(XmlElement& xft, XmlElement& xf, ostream& outf, bool nounique);
 void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int depth,
-	const string& msname, ostream& outp, ostream& outh, const string cls_prefix=string());
-void generate_common_group_bodies(const FieldSpecMap& fspec, ostream& outp, GroupMap& globmap);
+	const string& msname, ostream& outp, ostream& outh, const CommonGroupMap& globmap, const string cls_prefix=string());
+void generate_common_group_bodies(const FieldSpecMap& fspec, ostream& outp, CommonGroupMap& globmap);
 void load_components(const XmlElement::XmlSet& comlist, Components& components);
 unsigned lookup_component(const Components& compon, const f8String& name);
 void binary_report();
 string bintoaschex(const string& from);
+bool group_equal(const MessageSpec& p1, const MessageSpec& p2);
+uint32_t group_hash(const MessageSpec& p1);
+const MessageSpec *find_group(const CommonGroupMap& globmap, int& vers, unsigned tp, uint32_t key);
+void generate_group_traits(const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp);
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
@@ -182,9 +189,12 @@ int main(int argc, char **argv)
 		{ "verbose",		0,	0,	'V' },
 		{ "nounique",		0,	0,	'N' },
 		{ "norealm",		0,	0,	'R' },
+		{ "nowarn",		   0,	0,	'W' },
 		{ "odir",			1,	0,	'o' },
 		{ "dump",			0,	0,	'd' },
 		{ "ignore",			0,	0,	'i' },
+		{ "nocheck",		0,	0,	'C' },
+		{ "info",		   0,	0,	'I' },
 		{ "fields",			0,	0,	'f' },
 		{ "keep",			0,	0,	'k' },
 		{ "retain",			0,	0,	'r' },
@@ -211,10 +221,34 @@ int main(int argc, char **argv)
 				  << _csMap.find_ref(cs_copyright_short2) << endl;
 			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
+		case 'I':
+			cout << "Package info for " PACKAGE " version " VERSION << endl;
+         cout << "MAGIC_NUM: " << MAGIC_NUM << endl;
+         cout << "CONFIGURE_OPTIONS:" << CONFIGURE_OPTIONS << endl;
+         cout << "CPPFLAGS:" << CPPFLAGS << endl;
+         cout << "LIBS:" << LIBS << endl;
+         cout << "LDFLAGS:" << LDFLAGS << endl;
+         cout << "CONFIGURE_SDATE: " << CONFIGURE_SDATE << endl;
+         cout << "CONFIGURE_TIME: " << CONFIGURE_TIME << endl;
+         cout << "CONFIGURE_TIME_NUM: " << CONFIGURE_TIME_NUM << endl;
+         cout << "HOST_SYSTEM: " << HOST_SYSTEM << endl;
+         cout << "MAX_FLD_LENGTH: " << MAX_FLD_LENGTH << endl;
+         cout << "MAX_MSG_LENGTH: " << MAX_MSG_LENGTH << endl;
+         cout << "MPMC_FF: " << MPMC_FF << endl;
+         cout << "MPMC_TBB: " << MPMC_TBB << endl;
+         cout << "MPMC_SYSTEM: " << MPMC_SYSTEM << endl;
+#if defined SLEEP_NO_YIELD
+         cout << "SLEEP_NO_YIELD: " << SLEEP_NO_YIELD << endl;
+#endif
+#if defined CODECTIMING
+         cout << "CODECTIMING: " << CODECTIMING << endl;
+#endif
+			return 0;
 		case 'V': verbose = true; break;
 		case 'f': gen_fields = true; break;
 		case 'N': nounique = true; break;
 		case 'R': norealm = true; break;
+		case 'C': nocheck = true; break;
 		case 'c': gen_classes = optarg; break;
 		case 'h': print_usage(); return 0;
 		case ':': case '?': return 1;
@@ -420,7 +454,8 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 				result = fspec.insert(FieldSpecMap::value_type(get_value<unsigned>(number), FieldSpec(name, ft)));
 			else
 			{
-				cerr << shortName << ':' << recover_line(**itr) << ": warning: Unknown field type: " << type << " in " << name << endl;
+            if (!nowarn)
+               cerr << shortName << ':' << recover_line(**itr) << ": warning: Unknown field type: " << type << " in " << name << endl;
 				++glob_warnings;
 				continue;
 			}
@@ -453,7 +488,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 					}
 					else
 					{
-						cerr << shortName << ':' << recover_line(**itr) << ": error: Value element missing required attributes." << endl;
+						cerr << shortName << ':' << recover_line(**itr) << ": error: field value element missing required attribute (enum)." << endl;
 						++glob_errors;
 					}
 				}
@@ -461,7 +496,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 		}
 		else
 		{
-			cerr << shortName << ':' << recover_line(**itr) << ": error: Field element missing required attributes" << endl;
+			cerr << shortName << ':' << recover_line(**itr) << ": error: field definition element missing required attributes (number, name or type)" << endl;
 			++glob_errors;
 		}
 	}
@@ -471,7 +506,7 @@ int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 
 //-----------------------------------------------------------------------------------------
 int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec,
-	FieldSpecMap& fspec, Components& compon, GroupMap& globmap)
+	FieldSpecMap& fspec, Components& compon, CommonGroupMap& globmap)
 {
 	int msgssLoaded(0), grpsparsed(0);
 
@@ -501,8 +536,8 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 	FieldSpecMap::const_iterator fsitr(fspec.find(35));	// always 35
 	if (fsitr == fspec.end() || !fsitr->second._dvals)
 	{
-		cerr << "error: Could not locate MsgType realm defintions in " << shortName
-			<< ". See FAQ for more details." << endl;
+		cerr << "error: Could not locate MsgType realm defintions in '" << shortName
+			<< "'. See FAQ for more details." << endl;
 		++glob_errors;
 		return 0;
 	}
@@ -520,8 +555,8 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 			RealmMap::const_iterator ditr(fsitr->second._dvals->find(&srealm));
 			if (ditr == fsitr->second._dvals->end())
 			{
-				cerr << shortName << ':' << recover_line(**itr) << ": error: Message "
-				  << name << " does not have corrresponding entry in MsgType field realm. See FAQ for more details." << endl;
+				cerr << shortName << ':' << recover_line(**itr) << ": error: Message '"
+				  << name << "' does not have corrresponding entry in MsgType field realm. See FAQ for more details." << endl;
 				++glob_errors;
 				continue;
 			}
@@ -539,7 +574,7 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 			mspec.insert(MessageSpecMap::value_type(msgtype, MessageSpec(name, msgcat % "admin"))));
 		if (!result.second)
 		{
-			cerr << shortName << ':' << recover_line(**itr) << ": error: Could not add message " << name << " (" << msgtype << ")" << endl;
+			cerr << shortName << ':' << recover_line(**itr) << ": error: Could not add message '" << name << "' (" << msgtype << ")" << endl;
 			++glob_errors;
 			continue;
 		}
@@ -547,7 +582,7 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 		string elpart;
 		XmlElement::XmlSet grplist;
 		if ((*itr)->find(mkel(elname, "group", elpart), grplist))
-			grpsparsed += parse_groups(result.first->second, itr, name, ftonSpec, fspec, grplist, compon, globmap);
+			grpsparsed += parse_groups(result.first->second, name, ftonSpec, fspec, grplist, compon, globmap);
 
 		(*itr)->GetAttr("comment", result.first->second._comment);
 
@@ -557,15 +592,15 @@ int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ft
 	}
 
 	if (verbose)
-		cout << grpsparsed << " groups processed" << endl;
+		cout << grpsparsed << " repeating groups defined" << endl;
 
 	return msgssLoaded;
 }
 
 //-----------------------------------------------------------------------------------------
-unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr, const string& name,
+unsigned parse_groups(MessageSpec& ritr, const string& name,
 	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist,
-   const Components& compon, GroupMap& globmap)
+   const Components& compon, CommonGroupMap& globmap)
 {
 	unsigned result(0);
 
@@ -585,8 +620,9 @@ unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr
 				if (!ritr._fields.add(FieldTrait(fs_itr->first, FieldTrait::ft_int, (*gitr)->GetSubIdx(),
 					required == "Y", true, compidx)))
 				{
-					cerr << "error: Could not add group trait object " << gname << endl;
-					++glob_errors;
+					if (!nowarn)
+                  cerr << "warning: Could not add group trait object '" << gname << "' (duplicate ?)" << endl;
+					++glob_warnings;
 				}
 				else
 				{
@@ -599,40 +635,50 @@ unsigned parse_groups(MessageSpec& ritr, XmlElement::XmlSet::const_iterator& itr
                   XmlElement::XmlSet comlist;
                   ++result;
                   if ((*gitr)->find("group/group", comlist))
-                     result += parse_groups(gresult.first->second, gitr, gname, ftonSpec, fspec, comlist, compon, globmap);
-                  globmap.insert(*gresult.first);
-                  GroupMap::iterator ritr(globmap.find(fs_itr->first));
-                  if (ritr != globmap.end())
-                     ritr->second.group_refcnt++;
+                     result += parse_groups(gresult.first->second, gname, ftonSpec, fspec, comlist, compon, globmap);
+                  CommonGroupMap::iterator cgitr(globmap.find(fs_itr->first));
+                  if (cgitr == globmap.end())
+                     cgitr = globmap.insert(make_pair(fs_itr->first, CommonGroups())).first;
+                  const uint32_t hv(group_hash(gresult.first->second));
+                  gresult.first->second._hash = hv;
+                  cgitr->second.insert(make_pair(hv, gresult.first->second));
+                  CommonGroups::iterator cghitr(cgitr->second.find(hv));
+                  if (cghitr != cgitr->second.end())
+                  {
+                     cghitr->second._group_refcnt++;
+                     cghitr->second._hash = hv;
+                  }
                }
                else
                {
-                  cerr << "error: Could not add group map " << fs_itr->first << endl;
-                  ++glob_errors;
+                  if (!nowarn)
+                     cerr << "warning: Could not add group map '" << fs_itr->first << "' (duplicate ?)" << endl;
+                  ++glob_warnings;
                }
 				}
 			}
 			else
 			{
-				cerr << shortName << ':' << recover_line(**itr)
-					<< ": error: Could not locate group Field " << gname << " from known field types in " << shortName << endl;
+				cerr << shortName << ':' << recover_line(**gitr)
+					<< ": error: Could not locate group Field '" << gname << "' from known field types in " << shortName << endl;
 				++glob_errors;
 				continue;
 			}
 		}
 		else
 		{
-			cerr << shortName << ':' << recover_line(**itr) << ": error: Group element missing required attributes" << endl;
+			cerr << shortName << ':' << recover_line(**gitr) << ": error: group element missing required attributes (name or required)" << endl;
 			++glob_errors;
 		}
 	}
+   ritr._hash = group_hash(ritr);
 
 	return result;
 }
 
 //-----------------------------------------------------------------------------------------
 void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int depth, const string& msname,
-	ostream& outp, ostream& outh, const string cls_prefix)
+	ostream& outp, ostream& outh, const CommonGroupMap& globmap, const string cls_prefix)
 {
 	const string dspacer(depth * tabsize, ' '), d2spacer((depth + 1) * tabsize, ' ');
 
@@ -645,14 +691,35 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
 		outp << _csMap.find_ref(cs_divider) << endl;
 
-		outp << "const FieldTrait *" << prefix << ms._name << "::" << gsitr->second._name << "::_traits("
-			<< gsitr->second._name << "_traits);" << endl;
+      int vers(0);
+      const MessageSpec *tgroup (find_group(globmap, vers, gitr->first, gitr->second._hash));
+      if (!tgroup)
+      {
+         cout << gitr->first << " not found" << endl;
+         continue;
+      }
 
-		outp << "const FieldTrait_Hash_Array& " << prefix << ms._name << "::" << gsitr->second._name << "::_ftha("
-			<< gsitr->second._name << "_ftha);" << endl;
+      ostringstream rnme;
+      rnme << gsitr->second._name;
+      if (tgroup->_group_refcnt > 1)
+         rnme << 'V' << vers;
 
-		outp << "const MsgType& " << prefix << ms._name << "::" << gsitr->second._name << "::_msgtype("
-			<< gsitr->second._name << "_msgtype);" << endl;
+      if (tgroup->_group_refcnt > 1)
+         outp << "const FieldTrait *" << prefix << ms._name << "::" << gsitr->second._name << "::_traits("
+            << rnme.str() << "_traits);" << endl;
+      else
+         generate_group_traits(*tgroup, rnme.str(), prefix + ms._name + "::", outp);
+
+      if (tgroup->_group_refcnt > 1)
+      {
+         outp << "const FieldTrait_Hash_Array" << "& " << prefix << ms._name << "::" << gsitr->second._name << "::_ftha("
+            << rnme.str() << "_ftha);" << endl;
+         outp << "const MsgType" << "& " << prefix << ms._name << "::" << gsitr->second._name << "::_msgtype("
+            << rnme.str() << "_msgtype);" << endl;
+      }
+      else
+         outp << "const MsgType " << prefix << ms._name << "::" << gsitr->second._name << "::_msgtype("
+            << '"' << gsitr->second._name << "\");" << endl;
 
 #ifdef _MSC_VER
 		outp << "#ifndef _MSC_EXTENSIONS" << endl;
@@ -663,31 +730,41 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 #endif
 
 		// nested class decl.
-		outh << endl << dspacer << "/// " << gitr->second._name << " (" << gitr->first << "), "
-			<< (gitr->second._is_admin ? "admin" : "application") << ", " <<  gitr->second._fields.get_presence().size()
-			<< " fiel" << (gitr->second._fields.get_presence().size() == 1 ? "d, " : "ds, ")
-			<< gitr->second._groups.size() << " grou" << (gitr->second._groups.size() == 1 ? "p." : "ps.");
-		outh << endl << dspacer << "// " << prefix << ms._name << "::" << gsitr->second._name << endl;
+		outh << endl << dspacer << "/// " << tgroup->_name << " (" << gitr->first << "), "
+			<< (tgroup->_is_admin ? "admin" : "application") << ", " <<  tgroup->_fields.get_presence().size()
+			<< " fiel" << (tgroup->_fields.get_presence().size() == 1 ? "d, " : "ds, ")
+			<< tgroup->_groups.size() << " grou" << (tgroup->_groups.size() == 1 ? "p, " : "ps, ")
+         << (tgroup->_group_refcnt > 1 ? "shares static data." : "is unique.") << endl;
+		outh << dspacer << "// " << prefix << ms._name << "::" << gsitr->second._name << endl;
 		outh << dspacer << "class " << gsitr->second._name
 			<< " : public GroupBase // depth: " << depth << endl << dspacer << '{' << endl;
-		outh << d2spacer << "static const FieldTrait *_traits;" << endl;
-		outh << d2spacer << "static const FieldTrait_Hash_Array& _ftha;" << endl;
-		outh << d2spacer << "static const MsgType& _msgtype;" << endl << endl;
+      if (tgroup->_group_refcnt > 1)
+      {
+         outh << d2spacer << "static const FieldTrait *_traits;" << endl;
+         outh << d2spacer << "static const FieldTrait_Hash_Array& _ftha;" << endl;
+         outh << d2spacer << "static const MsgType& _msgtype;" << endl << endl;
+      }
+      else
+      {
+         outh << d2spacer << "static const FieldTrait _traits[];" << endl;
+         outh << d2spacer << "static const FieldTrait_Hash_Array _ftha;" << endl;
+         outh << d2spacer << "static const MsgType _msgtype;" << endl << endl;
+      }
 		outh << dspacer << "public:" << endl;
 		outh << d2spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl << endl;
 		outh << d2spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
 		outh << d2spacer << "~" << gsitr->second._name << "() {}" << endl;
-		if (gitr->second._groups.empty())
-			outh << d2spacer << "MessageBase *create_group() const { return new MessageBase(ctx, _msgtype(), _traits, "
-				<< gitr->second._fields.get_presence().size()
+		if (tgroup->_groups.empty())
+			outh << d2spacer << "MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, "
+				<< tgroup->_fields.get_presence().size()
 				<< ", &_ftha); }" << endl;
 		else
 		{
 			outh << d2spacer << "MessageBase *create_group() const" << endl << d2spacer << '{' << endl;
-			outh << d2spacer << spacer << "MessageBase *mb(new MessageBase(ctx, _msgtype(), _traits, "
-				<< gitr->second._fields.get_presence().size()
+			outh << d2spacer << spacer << "MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, "
+				<< tgroup->_fields.get_presence().size()
 				<< ", &_ftha));" << endl;
-			for (GroupMap::const_iterator gsitr(gitr->second._groups.begin()); gsitr != gitr->second._groups.end(); ++gsitr)
+			for (GroupMap::const_iterator gsitr(tgroup->_groups.begin()); gsitr != tgroup->_groups.end(); ++gsitr)
 				outh << d2spacer << spacer << "mb->append_group(new " << gsitr->second._name << "); // "
 					<< gsitr->first << endl;
 			outh << d2spacer << spacer << "return mb;" << endl;
@@ -696,49 +773,71 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		outh << endl << d2spacer << "static const " << msname << "& get_msgtype() { return _msgtype; }" << endl;
 
 		// process nested groups
-		if (!gitr->second._groups.empty())
-			generate_group_bodies(gitr->second, fspec, depth + 1, msname, outp, outh, prefix + ms._name);
+		if (!tgroup->_groups.empty())
+			generate_group_bodies(*tgroup, fspec, depth + 1, msname, outp, outh, globmap, prefix + ms._name);
 
 		outh << dspacer << "};" << endl;
 	}
 }
 
 //-----------------------------------------------------------------------------------------
-void generate_common_group_bodies(const FieldSpecMap& fspec, ostream& outp, GroupMap& globmap)
+void generate_group_traits(const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp)
 {
-	for (GroupMap::const_iterator gitr(globmap.begin()); gitr != globmap.end(); ++gitr)
-	{
-		FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
-		outp << _csMap.find_ref(cs_divider) << endl;
-		outp << "const FieldTrait " << gsitr->second._name << "_traits[] =" << " // refs: " << gitr->second.group_refcnt
-			<< endl << '{' << endl;
-		for (Presence::const_iterator flitr(gitr->second._fields.get_presence().begin());
-			flitr != gitr->second._fields.get_presence().end(); ++flitr)
-		{
-			bool spaceme(true);
-			if (flitr != gitr->second._fields.get_presence().begin())
-			{
-				outp << ',';
-				if (Presence::distance(gitr->second._fields.get_presence().begin(), flitr) % 3 == 0)
-					outp << endl;
-				else
-					spaceme = false;
-			}
+   if (prefix.empty())
+      outp << "const FieldTrait " << gname << "_traits[] ="
+         << " // refs:" << ms._group_refcnt << endl << '{' << endl;
+   else
+      outp << "const FieldTrait " << prefix << gname << "::_traits[] =" << endl << '{' << endl;
+   for (Presence::const_iterator flitr(ms._fields.get_presence().begin());
+      flitr != ms._fields.get_presence().end(); ++flitr)
+   {
+      bool spaceme(true);
+      if (flitr != ms._fields.get_presence().begin())
+      {
+         outp << ',';
+         if (Presence::distance(ms._fields.get_presence().begin(), flitr) % 3 == 0)
+            outp << endl;
+         else
+            spaceme = false;
+      }
 
-			ostringstream tostr;
-			tostr << "0x" << setfill('0') << setw(2) << hex << flitr->_field_traits.get();
-			outp << (spaceme ? spacer : " ");
-			outp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ',' << setw(2)
-				<< right << flitr->_ftype << ',' << setw(3) << right << flitr->_pos <<
-				',' << setw(3) << right << flitr->_component << ',' << tostr.str() << ')';
-		}
-		outp << endl << "};" << endl;
-		outp << "const FieldTrait_Hash_Array " << gsitr->second._name << "_ftha("
-			<< gsitr->second._name << "_traits, "
-			<< gitr->second._fields.get_presence().size() << ");" << endl;
-		outp << "const MsgType " << gsitr->second._name << "_msgtype(\""
-			<< gsitr->second._name << "\");" << endl;
-	}
+      ostringstream tostr;
+      tostr << "0x" << setfill('0') << setw(2) << hex << flitr->_field_traits.get();
+      outp << (spaceme ? spacer : " ");
+      outp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ',' << setw(2)
+         << right << flitr->_ftype << ',' << setw(3) << right << flitr->_pos <<
+         ',' << setw(3) << right << flitr->_component << ',' << tostr.str() << ')';
+   }
+   outp << endl << "};" << endl;
+   if (prefix.empty())
+   {
+      outp << "const FieldTrait_Hash_Array " << gname << "_ftha(" << gname << "_traits, "
+         << ms._fields.get_presence().size() << ");" << endl;
+      outp << "const MsgType " << gname << "_msgtype(\"" << gname << "\");" << endl;
+   }
+   else
+      outp << "const FieldTrait_Hash_Array " << endl << spacer << prefix << gname
+         << "::_ftha(" << prefix << gname << "::_traits, " << ms._fields.get_presence().size() << ");" << endl;
+}
+
+//-----------------------------------------------------------------------------------------
+void generate_common_group_bodies(const FieldSpecMap& fspec, ostream& outp, CommonGroupMap& globmap)
+{
+	for (CommonGroupMap::const_iterator gcitr(globmap.begin()); gcitr != globmap.end(); ++gcitr)
+	{
+      int vers(1);
+      for (CommonGroups::const_iterator gitr(gcitr->second.begin()); gitr != gcitr->second.end(); ++gitr, ++vers)
+      {
+         if (gitr->second._group_refcnt <= 1)   // if there is only one variant, don't generate code in common section
+            continue;
+         FieldSpecMap::const_iterator gsitr(fspec.find(gcitr->first));
+         outp << _csMap.find_ref(cs_divider) << endl;
+         ostringstream gostr;
+         gostr << gsitr->second._name << 'V' << vers;
+
+         generate_group_traits(gitr->second, gostr.str(), string(), outp);
+      }
+   }
 }
 
 //-----------------------------------------------------------------------------------------
@@ -759,7 +858,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	if (!fields || glob_errors)
 		return 0;
 	if (verbose)
-		cout << fields << " fields processed" << endl;
+		cout << fields << " fields defined" << endl;
 
 // ================================= Message processing ===================================
 
@@ -773,18 +872,33 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	load_components(comlist, components);
 
 	MessageSpecMap mspec;
-   GroupMap globmap;
+   CommonGroupMap globmap;
 
 	int msgsloaded(load_messages(xf, mspec, ftonSpec, fspec, components, globmap));
 	if (!msgsloaded)
 		return result;
 	if (verbose)
 	{
-		cout << msgsloaded << " messages processed" << endl;
+		cout << msgsloaded << " messages defined" << endl;
 		if (components.size())
-			cout << components.size() << " components processed" << endl;
+			cout << components.size() << " components defined" << endl;
 		if (globmap.size())
-			cout << globmap.size() << " common repeating groups processed" << endl;
+      {
+         unsigned cgs(0), ugs(0), vars(0);
+         for (CommonGroupMap::const_iterator gcitr(globmap.begin()); gcitr != globmap.end(); ++gcitr)
+         {
+            vars += gcitr->second.size();
+            for (CommonGroups::const_iterator gitr(gcitr->second.begin()); gitr != gcitr->second.end(); ++gitr)
+            {
+               if (gitr->second._group_refcnt > 1)
+                  ugs += gitr->second._group_refcnt;
+               else
+                  ++cgs;
+            }
+         }
+         cout << globmap.size() << " repeating group catagories (" << vars << " variants, "
+            << ugs << " common, " << cgs << " unique) processed" << endl;
+      }
 	}
 
 	process_ordering(mspec);
@@ -806,7 +920,8 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	osc_hpp << endl << _csMap.find_ref(cs_divider) << endl;
 	osc_hpp << "typedef MsgTable " << ctxt._clname << "_BaseMsgEntry;" << endl;
-	osc_hpp << "extern F8MetaCntx ctx;" << endl;
+	osc_hpp << "/// Compiler generated metadata object, accessed through this function" << endl;
+	osc_hpp << "const F8MetaCntx& ctx();" << endl;
 	osc_hpp << "class " << ctxt._clname << "_Router;" << endl;
 	osc_hpp << endl << _csMap.find_ref(cs_divider) << endl;
 
@@ -837,7 +952,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osr_cpp << "// Common group traits" << endl;
 	osr_cpp << "namespace {" << endl;
 	generate_common_group_bodies(fspec, osr_cpp, globmap);
-	osr_cpp << "} // namespace" << endl;
+	osr_cpp << "} // namespace" << endl << endl;
 	osr_cpp << _csMap.find_ref(cs_divider) << endl;
 	osr_cpp << "// Message traits" << endl;
 
@@ -906,13 +1021,13 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		osc_hpp << spacer << mitr->second._name << "()";
 		if (mitr->second._fields.get_presence().size())
 			osc_hpp << " : " << (isTrailer || isHeader ? "MessageBase" : "Message")
-				<< "(ctx, _msgtype(), _traits, " << mitr->second._fields.get_presence().size()
+				<< "(ctx(), _msgtype(), _traits, " << mitr->second._fields.get_presence().size()
 				<< ", &_ftha)";
 		if (isHeader || isTrailer)
 		{
 			osc_hpp << ',' << endl << spacer << spacer;
 			if (isHeader)
-				osc_hpp << "_begin_string(new begin_string(ctx._beginStr)), _body_length(new body_length), _msg_type(new msg_type)";
+				osc_hpp << "_begin_string(new begin_string(ctx()._beginStr)), _body_length(new body_length), _msg_type(new msg_type)";
 			else
 				osc_hpp << "_check_sum(new check_sum)";
 			osc_hpp << " { add_preamble(); }" << endl;
@@ -951,7 +1066,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 // =============================== Repeating group nested classes ==============================
 
-		generate_group_bodies(mitr->second, fspec, 1, fsitr->second._name, osr_cpp, osc_hpp);
+		generate_group_bodies(mitr->second, fspec, 1, fsitr->second._name, osr_cpp, osc_hpp, globmap);
 
 		osc_hpp << "};" << endl << endl;
 		osc_hpp << _csMap.find_ref(cs_divider) << endl;
@@ -1004,7 +1119,12 @@ int process(XmlElement& xf, Ctxt& ctxt)
 #endif
 	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::NotFoundType "
 		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = { Minst(Type2Type<void *>()) };" << endl;
-	osc_cpp << "namespace " << ctxt._fixns << " { F8MetaCntx ctx(" << ctxt._version << ", bme, be, cn, \"" << ctxt._beginstr << "\"); }" << endl;
+	osc_cpp << "namespace " << ctxt._fixns << endl
+         << '{' << endl << spacer << "/// Compiler generated metadata object, accessed through this function" << endl
+         << spacer << "const F8MetaCntx& ctx() // avoid SIOF" << endl << spacer << '{' << endl
+         << spacer << spacer << "static const F8MetaCntx _ctx(" << ctxt._version << ", bme, be, cn, \"" << ctxt._beginstr << "\");" << endl
+         << spacer << spacer << "return _ctx;" << endl << spacer << '}' << endl;
+   osc_cpp << '}' << endl << endl;
 
 // ==================================== Message router ==================================
 
@@ -1195,7 +1315,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			else
 			{
 				ost_cpp << "unknown";
-				cerr << shortName << ": error: unknown FieldTrait::type in realm " << fitr->second._name << endl;
+				cerr << shortName << ": error: unknown FieldTrait::type in realm '" << fitr->second._name << '\'' << endl;
 				++glob_errors;
 			}
       }
@@ -1241,6 +1361,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 				++cnt;
 		cout << cnt << " of " << fspec.size() << " fields used in messages" << endl;
 	}
+
 	return result;
 }
 
@@ -1274,6 +1395,39 @@ unsigned lookup_component(const Components& compon, const f8String& name)
 {
 	Components::const_iterator citr(compon.find(name));
 	return citr != compon.end() ? 1 + distance(compon.begin(), citr) : 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool group_equal(const MessageSpec& p1, const MessageSpec& p2)
+{
+   return group_hash(p1) == group_hash(p2);
+}
+
+//-------------------------------------------------------------------------------------------------
+uint32_t group_hash(const MessageSpec& p1)
+{
+   uint32_t result(0);
+
+	for (Presence::const_iterator flitr(p1._fields.get_presence().begin());
+		flitr != p1._fields.get_presence().end(); ++flitr)
+         result += flitr->_fnum;
+   for (GroupMap::const_iterator gmitr(p1._groups.begin()); gmitr != p1._groups.end(); ++gmitr)
+      result += group_hash(gmitr->second) << 16;
+
+   return result;
+}
+
+//-------------------------------------------------------------------------------------------------
+const MessageSpec *find_group(const CommonGroupMap& globmap, int& vers, unsigned tp, uint32_t key)
+{
+   CommonGroupMap::const_iterator tp_result(globmap.find(tp));
+   if (tp_result == globmap.end())
+      return 0;
+   CommonGroups::const_iterator key_result(tp_result->second.find(key));
+   if (key_result == tp_result->second.end())
+      return 0;
+   vers = 1 + distance(tp_result->second.begin(), key_result);
+   return &key_result->second;
 }
 
 /* vim: set ts=3 sw=3 tw=0 et :*/

@@ -42,8 +42,8 @@ f8print_SOURCES = myprint.cpp myfix.hpp
 harness_SOURCES = harness.cpp myfix.hpp
 hftest_SOURCES = hftest.cpp hftest.hpp
 hfprint_SOURCES = hfprint.cpp hftest.hpp
-libmyfix_la_SOURCES = Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
-					 		 Myfix_router.hpp Myfix_classes.hpp Myfix_classes.cpp
+libmyfix_la_SOURCES = Myfix_classes.cpp Myfix_types.hpp Myfix_types.cpp Myfix_traits.cpp \
+					 		 Myfix_router.hpp Myfix_classes.hpp
 libhftest_la_SOURCES = Perf_types.hpp Perf_types.cpp Perf_traits.cpp \
 					 		 Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
 

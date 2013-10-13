@@ -44,6 +44,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
+// Misc consts
+const size_t MAX_MSGTYPE_FIELD_LEN(32);
+const size_t HEADER_CALC_OFFSET(32);
+
+//-------------------------------------------------------------------------------------------------
 /// Int2Type idiom. Kudos to Andrei Alexandrescu
 /*! \tparam field integer value to make type from */
 template<unsigned field>
@@ -639,36 +644,6 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_MonthYear> MonthYear;
-
-/// Partial specialisation for MonthYear field type.
-/*! \tparam field field number (fix tag) */
-template<const unsigned short field>
-class Field<MonthYear, field> : public Field<f8String, field>
-{
-public:
-	/// Ctor.
-	Field () : Field<f8String, field>(field) {}
-
-	/// Copy Ctor.
-	/* \param from field to copy */
-	Field (const Field& from) : Field<f8String, field>(from) {}
-
-	/*! Construct from string ctor.
-	  \param from string to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
-
-	/*! Construct from char * ctor.
-	  \param from char * to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
-
-	/// Dtor.
-	~Field() {}
-};
-
-//-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_data> data;
 
 /// Partial specialisation for data field type.
@@ -699,6 +674,175 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+inline void format0(int data, char *to, int width)
+{
+	while(width-- > 0)
+	{
+		to[width] = data % 10 + '0';
+		data /= 10;
+	}
+}
+
+inline size_t parseDate(const char *begin, size_t len, int &to)
+{
+	const char *bsv(begin);
+	while(len-- > 0)
+		to = (to << 3) + (to << 1) + (*begin++ - '0');
+	return begin - bsv;
+}
+
+/// Based on Ghulam M. Babar's "mktime slow? use custom function"
+/// see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
+inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
+{
+   static const int mon_days[] = {0,
+      31,
+      31 + 28,
+      31 + 28 + 31,
+      31 + 28 + 31 + 30,
+      31 + 28 + 31 + 30 + 31,
+      31 + 28 + 31 + 30 + 31 + 30,
+      31 + 28 + 31 + 30 + 31 + 30 + 31,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30 + 31
+   };
+
+   const int tyears(ltm.tm_year ? ltm.tm_year - 70 : 0); // tm->tm_year is from 1900.
+   const int tdays(ltm.tm_mon ? mon_days[ltm.tm_mon] + (ltm.tm_mday ? ltm.tm_mday - 1 : 0) + tyears * 365 + (tyears + 2) / 4 : 0);
+   return tdays * 86400 + (ltm.tm_hour + utcdiff) * 3600 + ltm.tm_min * 60 + ltm.tm_sec;
+}
+
+enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _sec_only, _with_ms };
+
+/*! Format Tickval into a string.
+	_time_only, the format string will be "HH:MM:SS"
+	_time_with_ms, the format string will be "HH:MM:SS.mmm"
+	_short_date_only, the format string will be "YYYYMM"
+	_date_only, the format string will be "YYYYMMDD"
+	_sec_only, the format string will be "YYYYMMDD-HH:MM:SS"
+	_with_ms, the format string will be "YYYYMMDD-HH:MM:SS.mmm"
+  \param tickval input Tickval object
+  \param to output buffer, should make sure there is enough space reserved
+  \param ind indicating whether need millisecond or not
+  \return length of formatted string */
+inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndicator ind)
+{
+   tm result;
+	tickval.as_tm(result);
+	const char *start(to);
+
+	if (ind > _time_with_ms)
+	{
+		format0(result.tm_year + 1900, to, 4);
+		to += 4;
+		format0(result.tm_mon + 1, to, 2);
+		to += 2;
+		if (ind == _short_date_only)
+			return to - start;
+		format0(result.tm_mday, to, 2);
+		to += 2;
+		if (ind == _date_only)
+			return to - start;
+		*to++ = '-';
+	}
+
+	format0(result.tm_hour, to, 2);
+	to += 2;
+	*to++ = ':';
+	format0(result.tm_min, to, 2);
+	to += 2;
+	*to++ = ':';
+	format0(result.tm_sec, to, 2);
+	to += 2;
+
+	if (ind == _time_with_ms || ind == _with_ms)
+	{
+		*to++ = '.';
+		format0(tickval.msecs(), to, 3);
+		to += 3;
+	}
+
+	return to - start;
+}
+
+/*! Decode a DateTime string into ticks
+  \param ptr input DateTime string
+  \param len length of string
+  \return ticks decoded */
+inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
+{
+	Tickval::ticks result(Tickval::noticks);
+   int millisecond(0);
+   tm tms = {};
+
+	ptr += parseDate(ptr, 4, tms.tm_year);
+	tms.tm_year -= 1900;
+	ptr += parseDate(ptr, 2, tms.tm_mon);
+	--tms.tm_mon;
+	ptr += parseDate(ptr, 2, tms.tm_mday);
+	ptr += parseDate(++ptr, 2, tms.tm_hour);
+	ptr += parseDate(++ptr, 2, tms.tm_min);
+	ptr += parseDate(++ptr, 2, tms.tm_sec);
+   switch(len)
+   {
+	case 21: //_with_ms: // 19981231-23:59:59.123
+      parseDate(++ptr, 3, millisecond);
+      result = millisecond * Tickval::million; // drop through
+   case 17: //: // 19981231-23:59:59
+      result += time_to_epoch(tms) * Tickval::billion;
+      break;
+   default:
+      break;
+   }
+
+   return result;
+}
+
+/*! Decode a DateTime string into ticks
+  \param ptr input DateTime string
+  \param len length of string
+  \return ticks decoded */
+inline Tickval::ticks time_parse(const char *ptr, size_t len)
+{
+	Tickval::ticks result(Tickval::noticks);
+   int millisecond(0);
+   tm tms = {};
+
+	ptr += parseDate(ptr, 2, tms.tm_hour);
+	ptr += parseDate(++ptr, 2, tms.tm_min);
+	ptr += parseDate(++ptr, 2, tms.tm_sec);
+   switch(len)
+   {
+	case 12: // 23:59:59.123
+      parseDate(++ptr, 3, millisecond);
+      result = millisecond * Tickval::million; // drop through
+   case 8: // 23:59:59
+      result += time_to_epoch(tms) * Tickval::billion;
+      break;
+   default:
+      break;
+   }
+
+   return result;
+}
+
+inline Tickval::ticks date_parse(const char *ptr, size_t len)
+{
+   tm tms = {};
+
+	ptr += parseDate(ptr, 4, tms.tm_year);
+	tms.tm_year -= 1900;
+	ptr += parseDate(ptr, 2, tms.tm_mon);
+	--tms.tm_mon;
+	if (len == 8)
+		parseDate(ptr, 2, tms.tm_mday);
+	return time_to_epoch(tms) * Tickval::billion;
+}
+
+//-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_UTCTimestamp> UTCTimestamp;
 
 /// Partial specialisation for UTCTimestamp field type.
@@ -706,32 +850,7 @@ typedef EnumType<FieldTrait::ft_UTCTimestamp> UTCTimestamp;
 template<const unsigned short field>
 class Field<UTCTimestamp, field> : public BaseField
 {
-	enum MillisecondIndicator { _sec_only = 17, _with_ms = 21 };
 	Tickval _value;
-
-protected:
-	static void format0(int data, char *to, int width)
-	{
-		while(width-- > 0)
-		{
-			to[width] = data % 10 + '0';
-			data /= 10;
-		}
-	}
-
-	static size_t parseDate(const char *begin, size_t len, int &to)
-	{
-      const char *bsv(begin);
-		while(len-- > 0)
-			to = (to << 3) + (to << 1) + (*begin++ - '0');
-      return begin - bsv;
-	}
-
-	/*! Decode a DateTime string into ticks
-	  \param from input DateTime string
-	  \param len length of string
-	  \return ticks decoded */
-   static Tickval::ticks datetimeparse(const char *from, size_t len);
 
 public:
 	/// The FIX fieldID (tag number).
@@ -752,12 +871,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(datetimeparse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(date_time_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(datetimeparse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(date_time_parse(from, ::strlen(from))) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
@@ -800,110 +919,16 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[_with_ms + 1] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
       print(buf);
       return os << buf;
    }
 
-   static time_t time_to_epoch (const tm& ltm, int utcdiff=0);
-
-	/*! Format Tickval into a string.
-		 With millisecond, the format string will be "YYYYMMDD-HH:MM:SS.MMM"
-		 Without millisecond, the format string will be "YYYYMMDD-HH:MM:SS"
-	  \param tickval input Tickval object
-	  \param to output buffer, should make sure there is enough space reserved
-	  \param ind indicating whether need millisecond or not
-	  \return length of formatted string */
-   size_t DateTimeFormat(const Tickval& tickval, char *to, const MillisecondIndicator ind) const;
-
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
 	  \return number bytes encoded */
-	size_t print(char *to) const { return DateTimeFormat(_value, to, _with_ms); }
+	size_t print(char *to) const { return date_time_format(_value, to, _with_ms); }
 };
-
-template<const unsigned short field>
-inline size_t Field<UTCTimestamp, field>::DateTimeFormat(const Tickval& tickval, char *to, const MillisecondIndicator ind) const
-{
-   tm result;
-   const time_t secs(tickval.secs());
-   gmtime_r(&secs, &result);
-
-	format0(result.tm_year + 1900, to, 4);
-	format0(result.tm_mon + 1, to + 4, 2);
-	format0(result.tm_mday, to + 6, 2);
-	to[8] = '-';
-
-	format0(result.tm_hour, to + 9, 2);
-	to[11] = ':';
-
-	format0(result.tm_min, to + 12, 2);
-	to[14] = ':';
-
-	format0(result.tm_sec, to + 15, 2);
-
-	if(ind != _with_ms)
-		return _sec_only; //length of "YYYYMMDD-HH:MM:SS"
-
-	to[17] = '.';
-	format0(tickval.msecs(), to + 18, 3);
-	return _with_ms; //length of "YYYYMMDD-HH:MM:SS.MMM"
-}
-
-/// Based on Ghulam M. Babar's "mktime slow? use custom function"
-/// see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
-template<const unsigned short field>
-inline time_t Field<UTCTimestamp, field>::time_to_epoch (const tm& ltm, int utcdiff)
-{
-   static const int mon_days[] = {0,
-      31,
-      31 + 28,
-      31 + 28 + 31,
-      31 + 28 + 31 + 30,
-      31 + 28 + 31 + 30 + 31,
-      31 + 28 + 31 + 30 + 31 + 30,
-      31 + 28 + 31 + 30 + 31 + 30 + 31,
-      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31,
-      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30,
-      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31,
-      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30,
-      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30 + 31
-   };
-
-   const int tyears(ltm.tm_year - 70); // tm->tm_year is from 1900.
-   const int tdays(mon_days[ltm.tm_mon] + ltm.tm_mday - 1 + tyears * 365 + (tyears + 2) / 4);
-   return tdays * 86400 + (ltm.tm_hour + utcdiff) * 3600 + ltm.tm_min * 60 + ltm.tm_sec;
-}
-
-template<const unsigned short field>
-inline Tickval::ticks Field<UTCTimestamp, field>::datetimeparse(const char *ptr, size_t len)
-{
-	Tickval::ticks result(Tickval::noticks);
-   int millisecond(0);
-   tm tms = {};
-
-	ptr += parseDate(ptr, 4, tms.tm_year);
-	tms.tm_year -= 1900;
-	ptr += parseDate(ptr, 2, tms.tm_mon);
-	--tms.tm_mon;
-	ptr += parseDate(ptr, 2, tms.tm_mday);
-	ptr += parseDate(++ptr, 2, tms.tm_hour);
-	ptr += parseDate(++ptr, 2, tms.tm_min);
-	ptr += parseDate(++ptr, 2, tms.tm_sec);
-   switch(len)
-   {
-   case _with_ms: // 19981231-23:59:59.123
-      ptr += parseDate(++ptr, 3, millisecond);
-      result = millisecond * Tickval::million; // drop through
-   case _sec_only: // 19981231-23:59:59
-      result += time_to_epoch(tms) * Tickval::billion;
-      break;
-   default:
-      break;
-   }
-
-   return result;
-}
 
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_UTCTimeOnly> UTCTimeOnly;
@@ -929,12 +954,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(time_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(time_parse(from, ::strlen(from))) {}
+
+	/*! Construct from tm struct
+	  \param from string to construct field from
+	  \param rlm tm struct with broken out values */
+	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -968,12 +998,17 @@ public:
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
+	std::ostream& print(std::ostream& os) const
+   {
+      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      print(buf);
+      return os << buf;
+   }
 
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
 	  \return number bytes encoded */
-	size_t print(char *to) const { return 0; }  	// TODO
+	size_t print(char *to) const { return date_time_format(_value, to, _time_with_ms); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1000,12 +1035,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
+
+	/*! Construct from tm struct
+	  \param from string to construct field from
+	  \param rlm tm struct with broken out values */
+	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1039,12 +1079,17 @@ public:
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
+	std::ostream& print(std::ostream& os) const
+   {
+      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      print(buf);
+      return os << buf;
+   }
 
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
 	  \return number bytes encoded */
-	size_t print(char *to) const { return 0; }  	// TODO
+	size_t print(char *to) const { return date_time_format(_value, to, _date_only); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1054,6 +1099,88 @@ typedef EnumType<FieldTrait::ft_LocalMktDate> LocalMktDate;
 /*! \tparam field field number (fix tag) */
 template<const unsigned short field>
 class Field<LocalMktDate, field> : public BaseField
+{
+	size_t _sz;
+	Tickval _value;
+
+public:
+	/// The FIX fieldID (tag number).
+	static unsigned short get_field_id() { return field; }
+
+	/// Ctor.
+	Field () : BaseField(field) {}
+
+	/// Copy Ctor.
+	/* \param from field to copy */
+	Field (const Field& from) : BaseField(field),  _sz(from._sz), _value(from._value) {}
+
+	/*! Construct from string ctor.
+	  \param from string to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _sz(from.size()), _value(date_parse(from.data(), _sz)) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _sz(::strlen(from)), _value(date_parse(from, _sz)) {}
+
+	/*! Construct from tm struct
+	  \param from string to construct field from
+	  \param rlm tm struct with broken out values */
+	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _sz(8), _value(time_to_epoch(from) * Tickval::billion) {}
+
+	/// Assignment operator.
+	/*! \param that field to assign from
+	    \return field */
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
+
+	/// Dtor.
+	~Field() {}
+
+	/*! Get field value.
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
+
+	/*! Get field value.
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
+
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
+
+	/*! Copy (clone) this field.
+	  \return copy of field */
+	Field *copy() { return new Field(*this); }
+
+	/*! Print this field to the supplied stream. Used to format for FIX output.
+	  \param os stream to insert to
+	  \return stream */
+	std::ostream& print(std::ostream& os) const
+   {
+      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      print(buf);
+      return os << buf;
+   }
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { return date_time_format(_value, to, _sz == 6 ? _short_date_only : _date_only); }
+};
+
+//-------------------------------------------------------------------------------------------------
+typedef EnumType<FieldTrait::ft_MonthYear> MonthYear;
+
+/// Partial specialisation for MonthYear field type.
+/*! \tparam field field number (fix tag) */
+template<const unsigned short field>
+class Field<MonthYear, field> : public BaseField
 {
 	Tickval _value;
 
@@ -1071,12 +1198,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from.data(), from.size())) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
+
+	/*! Construct from tm struct
+	  \param from string to construct field from
+	  \param rlm tm struct with broken out values */
+	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1110,12 +1242,17 @@ public:
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
+	std::ostream& print(std::ostream& os) const
+   {
+      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      print(buf);
+      return os << buf;
+   }
 
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
 	  \return number bytes encoded */
-	size_t print(char *to) const { return 0; }  	// TODO
+	size_t print(char *to) const { return date_time_format(_value, to, _date_only); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1636,7 +1773,7 @@ struct Inst::_gen<void *>
 
 struct BaseEntry
 {
-   const Inst& _create;
+   const Inst _create;
 	const RealmBase *_rlm;
 	const char *_name, *_comment;
 };
@@ -1707,10 +1844,8 @@ typedef Field<int, Common_HeartBtInt> heartbeat_interval;
 typedef Field<int, Common_EncryptMethod> encrypt_method;
 
 //-------------------------------------------------------------------------------------------------
-// Misc consts
-const size_t MAX_MSGTYPE_FIELD_LEN(32);
-const size_t HEADER_CALC_OFFSET(32);
 
 } // FIX8
 
 #endif // _FIX8_FIELD_HPP_
+/* vim: set ts=3 sw=3 tw=0 noet :*/

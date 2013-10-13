@@ -1,3 +1,20 @@
+* Sun Oct 13 2013 David L. Dight <fix@fix8.org> 0.9.6
+- Fixed Jira tickets FX-76, FX-93, FX-94, FX-95, FX-96, FX-97, FX-98, FX-99, FX-100, FX-101
+- Decode latency reduced; throughput now 3x quickfix
+- Fixed SIOF - static initialisation inconsistent on different platforms; use ctx() instead of ctx
+- Fixed compiler treats all repeating groups with the same name as common
+- Fixed core dump on message or field instantiation
+- Resolved not build tests on centos 6.4
+- Fixed required Fields in Optional Components Should be Flagged as Optional
+- Fixed remove FieldTraits reserve behaviour
+- Added provide switch to suppress doxygen warnings
+- Added missing some date/time related fields
+- Fixed Fix8 does not build properly on arm. Test cases build and pass on ARMv7
+- Fixed link dependencies for clang compilation
+- Added -C switch to f8c to turn off version checking
+- Added -I switch to f8c, providing more info about build config and platform
+- Added -W switch to f8c, to suppress warning messages
+
 * Sun Sep 22 2013 David L. Dight <fix@fix8.org> 0.9.5
 - Fixed Jira tickets FX-78, FX-79, FX-80, FX-81, FX-82, FX-83, FX-84, FX-85, FX-86, FX-87, FX-88,
 - 							FX-89, FX-90, FX-91, FX-29, FX-92

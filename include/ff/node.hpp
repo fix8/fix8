@@ -1,27 +1,33 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*!
- *  \file node.hpp
- *  \brief This file contains the definition of the \p ff_node class, which acts as the basic 
- *  structure of each skeleton. Other supplementary classes are defined here.
+ *  \link
+ *  \file node.hpp 
+ *  \ingroup streaming_network_arbitrary_shared_memory
+ *
+ *  \brief This file contains the definition of the \p ff_node class, which
+ *  acts as the basic structure of each skeleton on shared-memory architecture.
+ *  Other supplementary classes are also defined here.
+ *
  */
 
 #ifndef _FF_NODE_HPP_
 #define _FF_NODE_HPP_
+
 /* ***************************************************************************
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *
+ *  This program is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ *  License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ *  along with this program; if not, write to the Free Software Foundation,
+ *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  ****************************************************************************
  */
@@ -38,32 +44,45 @@
 
 namespace ff {
 
-/*
- *  \ingroup runtime
+/*!
+ *  \ingroup streaming_network_arbitrary_shared_memory
  *
  *  @{
  */
 
-/*
+/*!
  *  \class Barrier
+ *  \ingroup streaming_network_arbitrary_shared_memory
  *
- *  \brief This class models a classical \a Mutex 
+ *  \brief Models a classical mutex
  *
- *  This class provides the methods necessary to implement a low-level \p pthread 
- *  mutex.
+ *  This class models a classical \a Mutex. This class provides the
+ *  methods necessary to implement a low-level \p pthread mutex.
+ *
+ *  This class is defined in \ref node.hpp
  */
+
 class Barrier {
 public:
+    /**
+     * \brief Creates instance of barrier
+     *
+     * It creates an instance of barrier.
+     *
+     * \return A pointer to the barrier.
+     */
     static inline Barrier * instance() {
         static Barrier b;
         return &b;
     }
 
-    /*
-     *  Default Constructor.
+    /**
+     *  \brief Constructor
      *
-     *  Checks whether the mutex variable(s) and the conditional variable(s) can 
-     *  be propetly initialised
+     *  It checks whether the mutex variable(s) and the conditional variable(s)
+     *  can be properly initialised. In case initialization fails, the program
+     *  is aborted.
+     *
      */
     Barrier():_barrier(0),threadCounter(0) {
         if (pthread_mutex_init(&bLock,NULL)!=0) {
@@ -76,13 +95,26 @@ public:
         }
     }
     
-    inline void barrierSetup(int init) {        
-        if (!_barrier && init>0) _barrier = init; 
+    /**
+     * \brief Setup barrier 
+     *
+     * It initialize barrier.
+     *
+     * \parm init determine the barrier
+     *
+     */
+    inline void barrierSetup(int init) {
+        if (!_barrier && init>0) _barrier = init;
         return;
     }
 
-    /* Performs the barrier and waits on the condition variable */
-    inline void doBarrier(int) {                
+    /** 
+     * \brief Performs barrier operation
+     *
+     * It performs the barrier operation and waits on the condition variable.
+     * 
+     */
+    inline void doBarrier(int) {
         pthread_mutex_lock(&bLock);
         if (!--_barrier) pthread_cond_broadcast(&bCond);
         else {
@@ -92,46 +124,70 @@ public:
         pthread_mutex_unlock(&bLock);
     }
    
+    /**
+     * \brief Get the thread counter
+     *
+     * It gets the counter of the pthread.
+     *
+     * \return An integet value, showing the counter of the pthread.
+     */
     unsigned getCounter() const { return threadCounter;}
+
+    /**
+     * \brief Increments the counter
+     *
+     * It increaments the counter of the pthread.
+     */
     void     incCounter()       { ++threadCounter;}
+
+    /**
+     * \brief Decrements the counter
+     *
+     * It decremetns the counter of the pthread.
+     */
     void     decCounter()       { --threadCounter;}
 
 private:
-    int _barrier;           // num threads in the barrier
-    // this is just a counter, it is used to set the ff_node::tid value.
+    int _barrier;           
+    // _barrier represent the number of threads in the barrier. This is just a
+    // counter, and is used to set the ff_node::tid value.
     unsigned threadCounter;
     pthread_mutex_t bLock;  // Mutex variable
     pthread_cond_t  bCond;  // Condition variable
 };
-
-/*!
- *  @}
- */
-
-/*
- *  \ingroup runtime
- *
- *  @{
- */
  
-/*
+/*!
  *  \class spinBarrier
+ *  \ingroup streaming_network_arbitrary_shared_memory
  *
- *  \brief This class models a classical \a Mutex 
+ *  \brief Models a classical \a Mutex.
  *
- *  This class provides the methods necessary to implement a low-level \p pthread 
- *  mutex.
+ *  This class provides the methods necessary to implement a low-level
+ *  pthread mutex.
+ *
+ *  This class is defined in file \ref node.hpp
+ *
  */ 
 class spinBarrier {
 public:
-    /* Get a static instance of the spinBarrier object */
+    /**
+     * \brief Gets an instance of the spinBarrier
+     *
+     * It gets a static instance of the spinBarrier object.
+     *
+     * \return A pointer to the spinBarrier.
+     */
     static inline spinBarrier * instance() {
         static spinBarrier b;
         return &b;
     }
 
-    /*
-     *  Default Constructor.
+    /**
+     *  \brief Constructor
+     *
+     *  It creates an instnce of the spin barrier.
+     *
+     *  \parm MAX_NUM_THREADS maximum number of threads
      *
      */
     spinBarrier(const int maxNThreads=MAX_NUM_THREADS):_barrier(0),threadCounter(0),maxNThreads(maxNThreads) {
@@ -141,18 +197,40 @@ public:
         for(int i=0;i<maxNThreads;++i) barArray[i]=false;
     }
 
+    /**
+     * \brief Destructor
+     *
+     * It deletes the elements in the barrier array.
+     *
+     */
     ~spinBarrier() {
         if (barArray != NULL) delete [] barArray;
         barArray=NULL;
     }
     
-    inline void barrierSetup(int init) {        
+    /**
+     *
+     * \brief Setsup the barrier 
+     *
+     * It setup the barrier.
+     *
+     * \parm init initializes the barrier
+     * 
+     */
+    inline void barrierSetup(int init) {
         if (!_barrier && init>0) _barrier = init; 
         return;
     }
 
-    /* Performs the barrier */
-    inline void doBarrier(int tid) {        
+    /**
+     * \brief Performs the barrier
+     *
+     * It performs the barrier.
+     *
+     * \parm tid is the thread id.
+     *
+     */
+    inline void doBarrier(int tid) {
         assert(tid<maxNThreads);
         const int whichBar = (barArray[tid] ^= true); // computes % 2
         long c = atomic_long_inc_return(&B[whichBar]);
@@ -165,97 +243,160 @@ public:
             }
     }
 
+    /**
+     * \brief Gets counter
+     *
+     * It gets the counter of the thread.
+     *
+     * \return An integer value showing the counter of the thread.
+     */
     unsigned long getCounter() const { return threadCounter;}
+
+    /**
+     * \brief Increments counter
+     * 
+     * It increments the thread counter.
+     */
     void          incCounter()       { ++threadCounter;}
+
+    /**
+     * \brief Decrements counter
+     *
+     * It decrements the thread counter.
+     */
     void          decCounter()       { --threadCounter;}
     
 private:
-    long _barrier;          // num threads in the barrier    
-    // this is just a counter, it is used to set the ff_node::tid value.
+    long _barrier;
+    /* 
+     * _barrier represents the number of threads in the barrier. This is just a
+     * counter, it is used to set the ff_node::tid value.
+     */
     unsigned long threadCounter;
-    const long maxNThreads; // max number of threads
-    // each thread has an entry in the barArray, it is used to 
-    // point to the current barrier counter either B[0] or B[1]
+    /* 
+     * maximum number of threads
+     */
+    const long maxNThreads;
+    /* 
+     * each thread has an entry in the barArray, it is used to 
+     * point to the current barrier counter either B[0] or B[1]
+     */
     bool* barArray;          
-    atomic_long_t B[2];   // barrier counter 
+    atomic_long_t B[2];
 };
-
-/*!
- *  @}
- */
-    
 
 // TODO: Should be rewritten in terms of mapping_utils.hpp 
 #if defined(HAVE_PTHREAD_SETAFFINITY_NP) && !defined(NO_DEFAULT_MAPPING)
-static inline void init_thread_affinity(pthread_attr_t*attr, int cpuId) {
-    /*
-    int ret;
-    if (cpuId<0)
-        ret = ff_mapThreadToCpu(threadMapper::instance()->getCoreId());
-    else
-        ret = ff_mapThreadToCpu(cpuId);
-    if (ret==EINVAL) std::cerr << "ff_mapThreadToCpu failed\n";
-    */
-    
+
+    /**
+     *
+     * \brief Initialize thread affinity 
+     * It initializes thread affinity i.e. which cpu the thread should be
+     * assigned.
+     *
+     * \parm attr is the pthread attribute
+     * \parm cpuID is the identifier the core
+     * \return -2  if error, the cpu identifier if successful
+     */
+static inline int init_thread_affinity(pthread_attr_t*attr, int cpuId) {
     cpu_set_t cpuset;    
     CPU_ZERO(&cpuset);
 
-    if (cpuId<0)
-        CPU_SET (threadMapper::instance()->getCoreId(), &cpuset);
-    else 
+    int id;
+    if (cpuId<0) {
+        id = threadMapper::instance()->getCoreId();
+        CPU_SET (id, &cpuset);
+    } else  {
+        id = cpuId;
         CPU_SET (cpuId, &cpuset);
+    }
 
     if (pthread_attr_setaffinity_np (attr, sizeof(cpuset), &cpuset)<0) {
         perror("pthread_attr_setaffinity_np");
+        return -2;
     }
-    
+    return id;    
+}
+#elif !defined(HAVE_PTHREAD_SETAFFINITY_NP) && !defined(NO_DEFAULT_MAPPING)
+
+/**
+ * \brief Initializes thread affinity
+ *
+ * It initializes thread affinity i.e. it defines to which core ths thread
+ * should be assigned.
+ *
+ * \return always return -1 because no thread mapping is done
+ */
+static inline int init_thread_affinity(pthread_attr_t*,int) {
+    // Just ensure that the threadMapper constructor is called.
+    threadMapper::instance();
+    return -1;
 }
 #else
-static inline void init_thread_affinity(pthread_attr_t*,int) {}
-#endif /* HAVE_PTHREAD_SETAFFINITY_NP */
-
-/*
- * @}
+/**
+ * \brief Initializes thread affinity
+ *
+ * It initializes thread affinity i.e. it defines to which core ths thread
+ * should be assigned.
+ *
+ * \return always return -1 because no thread mapping is done
  */
-
+static inline int init_thread_affinity(pthread_attr_t*,int) {
+    // do nothing
+    return -1;
+}
+#endif /* HAVE_PTHREAD_SETAFFINITY_NP */
 
 
 // forward decl
+/**
+ * \brief Proxy thread routine
+ *
+ */
 static void * proxy_thread_routine(void * arg);
 
 /*!
- *  \ingroup runtime
- *
- *  @{
- */
-
-/*!
  *  \class ff_thread
+ *  \ingroup streaming_network_arbitrary_shared_memory
  *
- *  \brief FastFlow's  threads. 
+ *  \brief Defines FastFlow's threads
  *
- *  This class manages all the low-level communications and 
- *  synchronisations needed among threads. It is responsible for threads creation and 
- *  destruction, suspension, freezing and thawing.
+ *  It defines FastFlow's threads. This class manages all the low-level
+ *  communications and synchronisations needed among threads. It is responsible
+ *  for threads creation and destruction, suspension, freezing and thawing.
+ *
+ *  This class is defined in \ref node.hpp
+ *
  */
 class ff_thread {
+    /**
+     * \brief Proxy thread routine
+     *
+     */
+
     friend void * proxy_thread_routine(void *arg);
 
 protected:
     /*! 
-     *  Constructor 
+     *  \brief Constructor
      *
-     *  \param barrier a Barrier object (i.e a custom Mutex) as input paramenter.
+     *  It checks initializations of mutex and conditional variable and then
+     *  create the FastFlow thread.
+     *
+     *  \param barrier is a Barrier object (i.e a custom Mutex) as input
+     *  paramenter.
      */
     ff_thread(BARRIER_T * barrier=NULL):
         tid((unsigned)-1),barrier(barrier),
         stp(true), // only one shot by default
         spawned(false),
-        freezing(false), frozen(false),thawed(false),
+        freezing(0), frozen(false),thawed(false),
         init_error(false) {
         
-        /* Attr is NULL, default mutex attributes are used. Upon successful initialization, 
-         * the state of the mutex becomes initialized and unlocked. */
+        /* Attr is NULL, default mutex attributes are used. Upon successful
+         * initialization, the state of the mutex becomes initialized and
+         * unlocked. 
+         * */
         if (pthread_mutex_init(&mutex,NULL)!=0) {
             error("ERROR: ff_thread: pthread_mutex_init fails!\n");
             abort();
@@ -270,17 +411,18 @@ protected:
         }
     }
 
-    /// Default destructor
-    virtual ~ff_thread() {
-        // MarcoA 27/04/12: Moved to wait
-        /*
-        if (pthread_attr_destroy(&attr)) {
-            error("ERROR: ~ff_thread: pthread_attr_destroy fails!");
-        }
-        */
-    }
+    /**
+     * \brief Destructor
+     *
+     */
+    virtual ~ff_thread() {}
     
-    /** Each thread's life cycle  */
+    /**
+     * \brief The life cycle of FastFlow thread
+     *
+     * It defines the life cycle of the FastFlow thread. 
+     *
+     */
     void thread_routine() {
         if (barrier) barrier->doBarrier(tid);
         void * ret;
@@ -290,7 +432,10 @@ protected:
                 error("ff_thread, svc_init failed, thread exit!!!\n");
                 init_error=true;
                 break;
-            } else  ret = svc(NULL);
+            } else  {
+                ret = svc(NULL);
+                svc_releaseOCL();
+            }
             svc_end();
             
             if (disable_cancelability()) {
@@ -301,25 +446,24 @@ protected:
             // acquire lock. While freezing is true,
             // freeze and wait. 
             pthread_mutex_lock(&mutex);
-            if (ret != (void*)FF_EOS_NOFREEZE) {
-                while(freezing) {
+            if (ret != (void*)FF_EOS_NOFREEZE && !stp) {  // <-------------- CONTROLLARE aggiunto !stp
+                while(freezing==1) { // NOTE: freezing can change to 2
                     frozen=true; 
                     pthread_cond_signal(&cond_frozen);
                     pthread_cond_wait(&cond,&mutex);
                 }
             }
-
-            thawed=frozen;
+            
+            thawed=true;     // <----------------- CONTROLLARE !!!! era thawed = frozen;
             pthread_cond_signal(&cond);
-            frozen=false;            
+            frozen=false; 
+            if (freezing != 0) freezing = 1; // freeze again next time 
             pthread_mutex_unlock(&mutex);
 
             if (enable_cancelability()) {
                 error("ff_thread, thread_routine, could not change thread cancelability");
                 return;
             }
-
-         
         } while(!stp);
 
         if (init_error && freezing) {
@@ -327,12 +471,17 @@ protected:
             frozen=true;
             pthread_cond_signal(&cond_frozen);
             pthread_mutex_unlock(&mutex);
-        } 
+        }
     }
 
     /**
-     * Make thread not cancelable. If a cancellation request is received,
-     * it is blocked until cancelability is enabled.
+     *
+     * \brief Disable the cancelation of thread
+     *
+     * It makes thread to be not cancelable. If a cancellation request is received, it is
+     * blocked until cancelability is enabled.
+     *
+     * \return 0 if successful, otherwise a negative value.
      */
     int disable_cancelability()
     {
@@ -343,7 +492,13 @@ protected:
         return 0;
     }
 
-    /// Make thread cancelable.
+    /**
+     * \brief Makes thread cancelable
+     *
+     * It makes thread cancelable.
+     *
+     * \return 0 if successful, otherwise a negative value.
+     */
     int enable_cancelability()
     {
         if (pthread_setcancelstate(old_cancelstate, 0)) {
@@ -355,48 +510,98 @@ protected:
     
 public:
     /** 
-     * Pure virtual function.
+     *
+     * \brief the \p svc method
+     *
+     * It defines the \p svc method as pure virtual function.
      */
     virtual void* svc(void * task) = 0;
-    /// Virtual (overridable) function.
+
+    /**
+     * \brief The \p svc_init method
+     *
+     * It defines the virtual (overridable) function.
+     *
+     * \return 0 is returned always.
+     */
     virtual int   svc_init() { return 0; };
-    /// Virtual (overridable) function.
+    
+    /**
+     *
+     * \brief The svc_end method
+     *
+     * It defines the virtual (overridable) function.
+     */
     virtual void  svc_end()  {}
 
     /**
-     * Set a Barrier object for the ff_thread.
+     * \brief The \p svc_createOCL method
      *
-     * \param b a barrier object
+     * It defines the virtual function.
+     */
+    virtual void  svc_createOCL()  {}
+
+    /**
+     * \brief The \p svc_releaseOCL
+     *
+     * It defines teh virtual function.
+     */
+    virtual void  svc_releaseOCL() {}
+
+    /**
+     * \brief Sets the barrier object
+     *
+     * It sets the Barrier object for the ff_thread.
+     *
+     * \param b is a barrier object.
+     *
      */
     void set_barrier(BARRIER_T * const b) { barrier=b;}
 
-    /// Create a new thread
+    /**
+     * \brief Creates a new thread
+     *
+     * It create a new FastFlow thread
+     *
+     * \parm cpuID is the identifier of the core.
+     *
+     * \return the -2 in case of error, 
+     *             -1 in case the thread is not assigned to any CPU
+     *             CPU-id if successful
+     */
     int spawn(int cpuId=-1) {
         if (spawned) return -1;
 
         if (pthread_attr_init(&attr)) {
-                perror("pthread_attr_init");
+                perror("pthread_attr_init: pthread can not be created.");
                 return -1;
         }
 
-        init_thread_affinity(&attr, cpuId);
+        int CPUId = init_thread_affinity(&attr, cpuId);
+        if (CPUId==-2) return -2;
         if (barrier) tid=barrier->getCounter();
         if (pthread_create(&th_handle, &attr,
                            proxy_thread_routine, this) != 0) {
-            perror("pthread_create");
-            return -1;
+            perror("pthread_create: pthread creation failed.");
+            return -2;
         }
         if (barrier) barrier->incCounter();
         spawned = true;
-        return 0;
+        return CPUId;
     }
    
-    /// Wait thread termination
+    /**
+     * \brief Waits for thread termination
+     *
+     * It defines the wait for thread termination.
+     * 
+     * \return 0 if successful.
+     */
     int wait() {
         stp=true;
         if (isfrozen()) {
             wait_freezing();
-            thaw();           
+            thaw();
         }
         if (spawned) {
             pthread_join(th_handle, NULL);
@@ -409,27 +614,47 @@ public:
         return 0;
     }
 
-    /// Wait for the thread to freeze (uses Mutex)
+    /**
+     * \brief Waits for thread freezing
+     *
+     * It waits for the thread to freeze (uses Mutex).
+     *
+     * \return 0 if successful, otherwise a negative value.
+     */
     int wait_freezing() {
         pthread_mutex_lock(&mutex);
-        while(!frozen) pthread_cond_wait(&cond_frozen,&mutex);        
-        pthread_mutex_unlock(&mutex);        
+        while(!frozen) pthread_cond_wait(&cond_frozen,&mutex);
+        pthread_mutex_unlock(&mutex);
         return (init_error?-1:0);
     }
 
-    /// Force the thread to stop at next EOS or next thawing
+    /**
+     * \brief Forces the thread to stop
+     *
+     * It forces the thread to stop at next EOS or next thawing.
+     *
+     */
     void stop() { stp = true; };
 
-    /// Force the thread to freeze himself
+    /**
+     * \brief Forces the thread to freeze
+     *
+     * It forces the thread to freeze himself.
+     */
     void freeze() {  
         stp=false;
-        freezing=true; 
+        freezing = 1;
     }
     
-    /// If the thread is frozen, then thaw it
-    void thaw() {
+    /**
+     * \brief Thaw the thread, if it is frozen
+     *
+     * If the thread is frozen, then thaw it. 
+     */
+    void thaw(bool _freeze=false) {
         pthread_mutex_lock(&mutex);
-        freezing=false;
+        if (_freeze) freezing=2; // next time freeze again the thread
+        else freezing=0;
         assert(thawed==false);
         pthread_cond_signal(&cond);
         pthread_mutex_unlock(&mutex);
@@ -440,10 +665,31 @@ public:
         pthread_mutex_unlock(&mutex);
     }
 
-    /// Check whether the thread is frozen
-    bool isfrozen() { return freezing;} 
+    /**
+     *
+     * \brief Checks if the thread is frozen
+     *
+     * It checks whether the thread is frozen.
+     *
+     * \return A booleon value shoing the status of freezing.
+     */
+    bool isfrozen() { return freezing>0;} 
 
+    /**
+     *
+     * \brief Gets the pthread handler
+     *
+     * It retrives the pthread handler.
+     *
+     * \return The handle for pthread.
+     */
     pthread_t get_handle() const { return th_handle;}
+
+    /**
+     *  \brief Gets the internal unique thread identifier.
+     *
+     */
+    inline int getTid() const { return tid; }
 
 protected:
     unsigned        tid;
@@ -451,7 +697,7 @@ private:
     BARRIER_T    *  barrier;            /// A \p Barrier object
     bool            stp;
     bool            spawned;
-    bool            freezing;
+    int             freezing;   // changed from bool to int
     bool            frozen;
     bool            thawed;
     bool            init_error;
@@ -471,38 +717,24 @@ static void * proxy_thread_routine(void * arg) {
 }
 
 /*!
- *  @}
- */
-
-// -------------------------------------------------------------------------------------------------
-
-/*!
- *  \ingroup low_level
- *
- *  @{
- */
-
-/*!
  *  \class ff_node
+ *  \ingroup streaming_network_arbitrary_shared_memory
  *
- *  \brief This class describes the \p ff_node, the basic building block of every 
- *  skeleton.
+ *  \brief Describes the FastFlow node
  *
- *  This class desribes the Node object, the basic unit of parallelism in a 
- *  streaming network.
- *  It is used to encapsulate sequential portions of code implementing functions, 
- *  as well as higher
- *  level parallel patterns such as pipelines and farms.
- *  \p ff_node defines 3 basic 
- *  methods, two optional - \p svc_init and \p svc_end - and one mandatory - 
- *  \p svc (pure virtual 
- *  method). The \p svc_init method is called once at node initialization, 
- *  while the \p svn_end method 
- *  is called once when the end-of-stream (EOS) is received in input or when the 
- *  \p svc method returns 
- *  \p NULL. The \p svc method is called each time an input task is ready to be 
- *  processed.
+ *  This class describes the \p ff_node, which is the basic building
+ *  block of every skeleton in stream programming. It is used to encapsulate
+ *  sequential portions of code implementing functions. \p ff_node defines 3
+ *  methods; two optional and one mandatory. The optional methods are (1) \p
+ *  svc_init and (2) \p svc_end. The mandatory method is \p svc (pure virtual
+ *  method). The \p svc_init method is called once at node initialization,
+ *  while the \p svn_end method is called once when the end-of-stream (EOS) is
+ *  received in input or when the \p svc method returns \p NULL. the \p svc
+ *  method is called each time an input task is ready to be procedded.
+ *
+ *  This class is defined in \ref node.hpp
  */
+
 class ff_node {
 private:
 
@@ -513,29 +745,68 @@ private:
     friend class ff_gatherer;
 
 protected:
-    /// Set node ID
-    void set_id(int id) { myid = id;}
     /**
-     *  Virtual method. Pushes data into the output buffer.
+     * \brief Sets the node identifer
+     *
+     * It sets node identifier.
+     *
+     * \parm id is the identifier of the node.
+     */
+    void set_id(int id) { myid = id;}
+
+    /**
+     *  \brief Pushes to output buffer
+     *
+     *  It is a virtual method. It pushes data into the output buffer.
      *
      *  \param ptr pointer to the data to be pushed out.
+     *
+     *  \return Boolean value showing the status of push operation.
      */
     virtual inline bool push(void * ptr) { return out->push(ptr); }
+    
     /**
-     *  Virtual method. Pop data from the input buffer.
+     *  \brief Pops the data from input buffer
      *
-     *  \param ptr pointer to the location where to store the data.
+     *  It is a virtual method. It pops data from the input buffer.
+     *
+     *  \param ptr pointer to the location where the data is located
+     *
+     *  \return A boolean value showing the status of the pop operation.
      */
-    virtual inline bool pop(void ** ptr) { return in->pop(ptr);   } 
+    virtual inline bool pop(void ** ptr) { 
+        if (!in_active) return false; // it does not want to receive data
+        return in->pop(ptr);
+    }
+
+    /**
+     * \brief Skips the first element popped
+     *
+     * It skips the first element popped.
+     *
+     * \parm sk Boolean value showing if the first element should be skipped.
+     */
     virtual inline void skipfirstpop(bool sk)   { skip1pop=sk;}
+
+    /**
+     * \brief Gets the status of \p skipfirstpop
+     *
+     * It returns the status of \p ski1pop 
+     * 
+     * \return A booleon value showing the status of \p ski1pop
+     */
     bool skipfirstpop() const { return skip1pop; }
     
     /** 
-     *  Create an input buffer for the ff_node. 
+     * \brief Creates the input buffer
+     *
+     *  It create an input buffer for the \p ff_node. 
      *
      *  \param nentries the size of the buffer
-     *  \param fixedsize flag to decide whether the buffer is resizable. 
+     *  \param fixedsize flag to decide whether the buffer is resizable.
      *  Default is \p true
+     *
+     *  \return 0 if successful, otherwise a negative value.
      */
     virtual int create_input_buffer(int nentries, bool fixedsize=true) {
         if (in) return -1;
@@ -546,25 +817,32 @@ protected:
     }
     
     /** 
-     *  Create an output buffer for the ff_node. 
+     *  \brief Creates the output buffer
      *
-     *  \param nentries the size of the buffer
-     *  \param fixedsize flag to decide whether the buffer is resizable. 
-     *  Default is \p false
+     *  It creates an output buffer for the \p ff_node. 
+     *
+     *  \param nentries the size of the buffer 
+     *  \param fixedsize flag to decide whether the buffer is resizable.
+     *  Default is \p false .
+     *
+     *  \return 0 if successful, otherwise a negative value.
      */
     virtual int create_output_buffer(int nentries, bool fixedsize=false) {
         if (out) return -1;
-        out = new FFBUFFER(nentries,fixedsize);        
+        out = new FFBUFFER(nentries,fixedsize); 
         if (!out) return -1;
         myoutbuffer=true;
         return (out->init()?0:-1);
     }
 
     /** 
-     *  Set the output buffer for the ff_node.
+     *  \brief Sets the output buffer
      *
-     *  \param o a buffer object, which can be of type \p SWSR_Ptr_Buffer or 
-     *  \p uSWSR_Ptr_Buffer
+     *  It sets the output buffer for the ff_node.
+     *
+     *  \param o a buffer object of type \p FFBUFFER
+     *
+     *  \return 0 if successful, otherwise a negative value is returned.
      */
     virtual int set_output_buffer(FFBUFFER * const o) {
         if (myoutbuffer) return -1;
@@ -573,10 +851,13 @@ protected:
     }
 
     /** 
-     *  Set the input buffer for the ff_node.
+     *  \brief Sets the input buffer
      *
-     *  \param i a buffer object, which can be of type \p SWSR_Ptr_Buffer or 
-     *  \p uSWSR_Ptr_Buffer
+     *  It sets the input buffer for the ff_node.
+     *
+     *  \param i a buffer object of type \p FFBUFFER
+     *
+     *  \return 0 if successful otherwise a negative value is returned.
      */
     virtual int set_input_buffer(FFBUFFER * const i) {
         if (myinbuffer) return -1;
@@ -584,14 +865,28 @@ protected:
         return 0;
     }
 
-    /// Run the thread
-    virtual int   run(bool=false) { 
+    /**
+     * \brief Executes the FastFlow thread
+     *
+     * It executes the FastFlow thread.
+     *
+     * \return The state of the run method if successful, otherwise a negative
+     * value is returned.
+     */
+    virtual int run(bool=false) { 
         thread = new thWorker(this);
         if (!thread) return -1;
         return thread->run();
     }
     
-    /// Freeze thread and then run.
+    /**
+     * \brief Freezes the thread and then run
+     *
+     * It freezes the thread and then run.
+     *
+     * \return It returns the state of the run method if successful, otherwise
+     * a negative value is returned.
+     */
     virtual int freeze_and_run(bool=false) {
         thread = new thWorker(this);
         if (!thread) return -1;
@@ -599,100 +894,190 @@ protected:
         return thread->run();
     }
 
-    /// Wait thread termination
+    /**
+     * \brief Waits for thread termination
+     *
+     * It lets the thread to wait until termination.
+     *
+     * \return If successful the state of the wait method otherwise a negative
+     * value.
+     */
     virtual int  wait() { 
         if (!thread) return -1;
         return thread->wait(); 
     }
     
-    /// Wait for thread to thaw
+    /**
+     * \brief Waits for thread to thaw
+     *
+     * It wait for thread to thaw.
+     *
+     * \return If successful the state of the \p wait_freezing method, otherwise a
+     * negative value.
+     */
     virtual int  wait_freezing() { 
         if (!thread) return -1;
         return thread->wait_freezing(); 
     }
     
-    /// Stop thread
+    /**
+     * \brief Stops the thread
+     *
+     * It stops thread.
+     *
+     * \return If the thread does not exist, then the method is returned.
+     */
     virtual void stop() {
         if (!thread) return; 
         thread->stop(); 
     }
     
-    /// Freeze thread
+    /**
+     * \brief Freezes the thread
+     *
+     * It freezes the thread.
+     *
+     * \return If thread does not exist, then the method returns.
+     */
     virtual void freeze() { 
         if (!thread) return; 
         thread->freeze(); 
     }
     
-    /// If thread is frozem then thaw it
-    virtual void thaw() { 
+    /**
+     * \brief Checks to thaw a thread
+     *
+     * It checks if the thread is created then thaw it.
+     *
+     * \return If the thread does not exist then the method is returned,
+     * otherwise the thread is thawed.
+     */
+    virtual void thaw(bool _freeze=false) { 
         if (!thread) return; 
-        thread->thaw();
+        thread->thaw(_freeze);
     }
     
-    /// Check whether the thread is frozen
+    /**
+     * \brief Checks if the thread is frozen
+     *
+     * It checks whether the thread is frozen.
+     *
+     * \return If the thread does not exists then false is returned, otherwise
+     * the status of \p isfrozen() is returned.
+     */
     virtual bool isfrozen() { 
         if (!thread) 
             return false;
         return thread->isfrozen();
     }
     
-
+    /**
+     * \brief Counts how many threads there are in this node.
+     *
+     * Counts the n. of threads that should block in the barrier.
+     *
+     * \parm b is the barrier.
+     *
+     * \return always 1
+     */
     virtual int  cardinality(BARRIER_T * const b) { 
         barrier = b;
         return 1;
     }
     
-    /// Set the barrier.
+    /**
+     * \brief Sets the barrier
+     *
+     * It sets the barrier.
+     *
+     * \parmm b is the barrier.
+     */
     virtual void set_barrier(BARRIER_T * const b) {
         barrier = b;
     }
 
+    /**
+     * \brief Gets the time
+     *
+     * It retrives the tim spent in FastFlow pattern.
+     *
+     * \return The difference in the time spent.
+     */
     virtual double ffTime() {
         return diffmsec(tstop,tstart);
     }
 
+    /**
+     * \brief Gets the time
+     *
+     * It retrieves the time spend in FastFlow skeleton.
+     *
+     * \return The difference in the time spent.
+     */
     virtual double wffTime() {
         return diffmsec(wtstop,wtstart);
     }
 
 public:
-	enum {TICKS2WAIT=1000};
+    
     /**
-     * Pure virtual function.\n
-     * If \p svc returns a NULL value then End-Of-Stream (EOS) is produced
-     * on the output channel.
+     * Defines the number of ticks to wait.
+     */
+    enum {TICKS2WAIT=1000};
+
+    /**
+     * \brief The \p svc method
+     *
+     * It is a pure virtual function. If \p svc returns a NULL value then
+     * End-Of-Stream (EOS) is produced on the output channel.
+     *
+     * \parm task is the input data stream.
      */
     virtual void* svc(void * task) = 0;
     
     /**
-     * Virtual function.\n
-     * This is called only once for each thread, right before the \p svc method
+     * \brief The \p svc_init()
+     *
+     * It is a virtual function. This is called only once for each
+     * thread, right before the \p svc method.
+     *
+     * \return 0 is always returned.
      */
-    virtual int   svc_init() { return 0; }
+    virtual int svc_init() { return 0; }
     
     /**
-     * Virtual function.\n
-     * This is called only once for each thread, right after the \p svc method
+     * \brief The \p svc_end()
+     *
+     * It is a virtual function. This is called only once for each
+     * thread, right after the \p svc method.
      */
     virtual void  svc_end() {}
 
     /**
-     * Virtual function.\n
-     * Called once just after the EOS has arrived.
+     * \brief Notifies EOS
      *
-     * \param id is the ID of the input channel, it makes sense only for
-     * N-to-1 input channels.
+     * It is a virtual function. It is called once just after the EOS
+     * has arrived.
+     *
+     * \param id is the ID of the input channel, it makes sense only for N-to-1
+     * input channels.
      */
-    virtual void  eosnotify(int id=-1) {}
-    
-    /// Virtual function.\n Get thread's ID
-    virtual int   get_my_id() const { return myid; };
+    virtual void eosnotify(int id=-1) {}
     
     /**
-     * Virtual function.\n 
-     * Map the working thread to the chosen CPU.
+     * \brief Gets the ID of the ff_node 
      *
-     * \param cpuID the ID of the CPU to which the thread will be pinned.
+     * \return The ID of the ff_node
+     */
+    virtual int get_my_id() const { return myid; };
+    
+    /**
+     * \brief Sets threads affinity 
+     *
+     * It is a virtual function. It maps the working thread to the
+     * chosen CPU.
+     *
+     * \param cpuID is the ID of the CPU to which the thread will be pinned.
      */
     virtual void  setAffinity(int cpuID) { 
         if (cpuID<0 || !threadMapper::instance()->checkCPUId(cpuID) ) {
@@ -701,16 +1086,43 @@ public:
         CPUId=cpuID;
     }
     
-    /// Get the ID of the CPU where the thread is running
-    virtual int   getCPUId() const { return CPUId;}
+    /** 
+     * \brief Gets the CPU id (if set) of this node is pinned
+     *
+     * It gets the ID of the CPU where the thread is running.
+     *
+     * \return The identifier of the CPU.
+     */
+    virtual int getCPUId() const { return CPUId; }
 
 #if defined(TEST_QUEUE_SPIN_LOCK)
-    virtual bool  put(void * ptr) { 
+    /**
+     * \brief Pushes the task
+     *
+     * It tries to acquire the lock, pushes the task to the input queue and
+     * then releaes the lock
+     *
+     * \parm ptr is pointing to the task
+     *
+     * \return The status of \p push operation as Boolean value
+     */
+    virtual bool put(void * ptr) { 
         spin_lock(lock);
         bool r= in->push(ptr);
         spin_unlock(lock);
         return r;
     }
+
+    /**
+     * \brief Pops the task
+     *
+     * It tries to acquire the lock, pop the data from the output queue and
+     * then releases the lock. 
+     *
+     * \parm ptr is pointing to the task
+     *
+     * \return The status of \p pop operation as Boolean value
+     */
     virtual bool  get(void **ptr) { 
         spin_lock(lock);
         register bool r = out->pop(ptr);
@@ -718,23 +1130,106 @@ public:
         return r;
     }
 #else
-    /// See push.
-    virtual bool  put(void * ptr) { return in->push(ptr);}
-    /// See pop.
-    virtual bool  get(void **ptr) { return out->pop(ptr);}
+    /**
+     * \brief Pushes the task
+     *
+     * It pushes task without using locks.
+     *
+     * \parm ptr is a pointer to the task
+     *
+     * \return The status of \p push as Boolean value
+     */
+    virtual inline bool  put(void * ptr) { 
+        return in->push(ptr);
+    }
+    
+    /**
+     * \brief Pops the task
+     *
+     * It pops the task without acquiring the lock.
+     *
+     * \parm ptr is a pointer to the task
+     *
+     * \return The status of \p pop operation as Boolean value
+     */
+    virtual inline bool  get(void **ptr) { return out->pop(ptr);}
 #endif
-    /// Returns a pointer to the input buffer
-    virtual FFBUFFER * const get_in_buffer() const { return in;}
-    /// Returns a pointer to the output buffer    
-    virtual FFBUFFER * const get_out_buffer() const { return out;}
 
+    /**
+     * \brief Gets input buffer
+     *
+     * It returns a pointer to the input buffer.
+     *
+     * \return A pointer to the input buffer
+     */
+    virtual FFBUFFER * get_in_buffer() const { return in;}
+
+    /**
+     * \brief Gets pointer to the output buffer
+     *
+     * It returns a pointer to the output buffer.
+     *
+     * \return A pointer to the output buffer.
+     */
+    virtual FFBUFFER * get_out_buffer() const { return out;}
+
+    /**
+     * \brief Gets start time
+     *
+     * It resturns the starting time.
+     *
+     * \return Starting time.
+     */
     virtual const struct timeval getstarttime() const { return tstart;}
-    virtual const struct timeval getstoptime()  const { return tstop;}
-    virtual const struct timeval getwstartime() const { return wtstart;}
-    virtual const struct timeval getwstoptime() const { return wtstop;}
 
-#if defined(TRACE_FASTFLOW)    
-    virtual void ffStats(std::ostream & out) { 
+    /**
+     * \brief Gets stop time
+     *
+     * It returns the stopping time.
+     *
+     * \return Stopping time.
+     */
+    virtual const struct timeval getstoptime()  const { return tstop;}
+
+    /**
+     * \brief Gets start time
+     *
+     * It returns the starting time.
+     *
+     * \return Starting time.
+     */
+    virtual const struct timeval getwstartime() const { return wtstart;}
+
+    /**
+     * \brief Gets the stop time
+     *
+     * It returns the stopping time.
+     *
+     * \return Stopping time.
+     */
+    virtual const struct timeval getwstoptime() const { return wtstop;}    
+
+    /**
+     * \brief Create OCL
+     *
+     * It creates OCL. FIXME: How it creates?
+     */
+    virtual inline void svc_createOCL()  {} 
+
+    /**
+     * \brief Releases OCL
+     *
+     * It releases OCL. FIXME: How it releases?
+     */
+    virtual inline void svc_releaseOCL() {}
+
+#if defined(TRACE_FASTFLOW)
+    /**
+     * \brief Prints the trace
+     *
+     * It prints the trace for debugging.
+     */
+    virtual void ffStats(std::ostream & out) {
         out << "ID: " << get_my_id()
             << "  work-time (ms): " << wttime    << "\n"
             << "  n. tasks      : " << taskcnt   << "\n"
@@ -744,11 +1239,24 @@ public:
     }
 #endif
 
+    /** \brief Resets input/output queues.
+     * 
+     *  Warning resetting queues while the node is running may produce to unexpected results.
+     */
+    void reset() {
+        if (in)  in->reset();
+        if (out) out->reset();
+    }
+
 protected:
-    /// Protected constructor
+    /**
+     * \brief Protected constructor
+     *
+     * It is the protected constructor. It initializes the FastFlow node.
+     */
     ff_node():in(0),out(0),myid(-1),CPUId(-1),
               myoutbuffer(false),myinbuffer(false),
-              skip1pop(false), thread(NULL),callback(NULL),barrier(NULL) {
+              skip1pop(false), in_active(true), thread(NULL),callback(NULL),barrier(NULL) {
         time_setzero(tstart);time_setzero(tstop);
         time_setzero(wtstart);time_setzero(wtstop);
         wttime=0;
@@ -759,17 +1267,31 @@ protected:
     };
     
     /** 
-     *  Destructor 
+     *  \brief Destructor
      *
-     *  Deletes input and output buffers and the working threads
+     *  It is a desctructor and it deletes input buffers and output buffers and
+     *  the working thread.
      */
     virtual  ~ff_node() {
-        if (in && myinbuffer)  delete in;
+        if (in && myinbuffer) delete in;
         if (out && myoutbuffer) delete out;
         if (thread) delete thread;
     };
     
-    /** Allows to queue tasks without returning from the \p svc method */
+    /**
+     * \brief Sends out the task
+     *
+     * It allows to queue tasks without returning from the \p svc method 
+     *
+     * \parm task a pointer to the task
+     * \parm retry number of tries to push the task to the buffer
+     * \parm ticks number of ticks to wait
+     * 
+     * \return If call back is defined, then returns the status of \p callback
+     * function. Otherwise, if tries to push an element with the number of
+     * \retry and if succesfful \p true is returned, and if after the number of
+     * \retry the push is not successful \p false is returned.
+     */
     virtual bool ff_send_out(void * task, 
                              unsigned int retry=((unsigned int)-1),
                              unsigned int ticks=(TICKS2WAIT)) { 
@@ -781,24 +1303,66 @@ protected:
         }     
         return false;
     }
+    
+    virtual inline void input_active(const bool onoff) {
+        if (in_active != onoff)
+            in_active= onoff;
+    }
 
 private:
-
+    
+    /**
+     * \brief Registers the call back
+     *
+     * It registers the call back method and arguments.
+     *
+     * \parm cb is the callback function
+     * \parm arg is a pointer to arguments
+     */
     void registerCallback(bool (*cb)(void *,unsigned int,unsigned int,void *), void * arg) {
         callback=cb;
         callback_arg=arg;
     }
-    
-    /*!
-     *  @}
-     */
 
-    /* Inner class that wraps ff_thread functions and adds \p push and \p pop methods */
+    /**
+     * Sets the CPU id for this node (used only in the run-time)  
+     *
+     */
+    void  setCPUId(int id) { CPUId = id;}
+
+    /**
+     *  Returns the internal thread identifier.
+     *
+     */
+    inline int   getTid() const { return thread->getTid();} 
+    
+    /**
+     * \brief An inner class for FastFlow's thread
+     *
+     * It is an inner class that wraps ff_thread functions and adds \p push and \p pop methods. 
+     */
     class thWorker: public ff_thread {
     public:
+        /**
+         * \brief Constructor
+         *
+         * It is contructor to create FastFlow thread.
+         *
+         * \parm filter is a pointer to FastFlow's node
+         *
+         */
         thWorker(ff_node * const filter):
             ff_thread(filter->barrier),filter(filter) {}
         
+        /**
+         * \brief Pushes the task
+         *
+         * It pushes the task to the \p filter
+         *
+         * \parm task is a pointer to the task.
+         *
+         * \return \p true is always returned.
+         */
         inline bool push(void * task) {
             //register int cnt = 0;
             /* NOTE: filter->push and not buffer->push because of the filter can be a dnode
@@ -811,15 +1375,27 @@ private:
 
                 FFTRACE(filter->lostpushticks+=ff_node::TICKS2WAIT; ++filter->pushwait);
                 ticks_wait(ff_node::TICKS2WAIT);
-            }     
+            }
             return true;
         }
         
+        /**
+         * \brief Pops the task
+         *
+         * It pops the task from the buffer of the filter.
+         *
+         * \task is a pointer to the task
+         *
+         * \return \p true is always returned.
+         */
         inline bool pop(void ** task) {
-            //register int cnt = 0;       
-            /* NOTE: filter->push and not buffer->push because of the filter can be a dnode
+            //register int cnt = 0;
+            /* 
+             * NOTE: filter->pop and not buffer->pop because of the filter can be a dnode
              */
             while (! filter->pop(task)) {
+                if (!filter->in_active) { *task=NULL; return false;}
+
                 //if (ch->thxcore>1) {
                 //if (++cnt>PUSH_POP_CNT) { sched_yield(); cnt=0;}
                 //else ticks_wait(TICKS2WAIT);
@@ -831,9 +1407,44 @@ private:
             return true;
         }
         
+        /**
+         * \brief Puts the task in buffer
+         *
+         * It pushes the task in the filter.
+         *
+         * \parm ptr is a pointer to the task.
+         */
         inline bool put(void * ptr) { return filter->put(ptr);}
+
+        /**
+         * \brief Gets the task from the buffer.
+         *
+         * It gets the task from the buffer.
+         *
+         * \return The status of \p get function as Boolean value.
+         */
         inline bool get(void **ptr) { return filter->get(ptr);}
+
+        /**
+         * \brief Creates OCL
+         *
+         * It creates OCL.
+         */
+        inline void svc_createOCL()  { filter-> svc_createOCL();}
         
+        /**
+         * \brief Releases OCL.
+         *
+         * It releases OCL.
+         */
+        inline void svc_releaseOCL() { filter-> svc_releaseOCL();}
+
+        
+        /**
+         * \brief The \p svc method
+         *
+         * It defines the \p svc method of the FastFlow.
+         */
         void* svc(void * ) {
             void * task = NULL;
             void * ret = (void*)FF_EOS;
@@ -844,6 +1455,8 @@ private:
 
             gettimeofday(&filter->wtstart,NULL);
             do {
+                svc_createOCL();
+
                 if (inpresent) {
                     if (!skipfirstpop) pop(&task); 
                     else skipfirstpop=false;
@@ -851,7 +1464,7 @@ private:
                         (task == (void*)FF_EOS_NOFREEZE)) {
                         ret = task;
                         filter->eosnotify();
-                        if (outpresent)  push(task); 
+                        if (outpresent)  push(task);
                         break;
                     }
                 }
@@ -878,63 +1491,113 @@ private:
             
             gettimeofday(&filter->wtstop,NULL);
             filter->wttime+=diffmsec(filter->wtstop,filter->wtstart);
-
+            
             return ret;
         }
         
+        /**
+         * \brief The \p svc_init method
+         *
+         * It defines the \p svc_init method of FastFlow.
+         *
+         * \return The status of \p svc_init() method.
+         */
         int svc_init() {
 #if !defined(HAVE_PTHREAD_SETAFFINITY_NP) && !defined(NO_DEFAULT_MAPPING)
-            int cpuId = filter->getCPUId();            
-            if (ff_mapThreadToCpu((cpuId<0) ? threadMapper::instance()->getCoreId(tid) : cpuId)!=0)
-                error("Cannot map thread %d to CPU %d, going on...\n",tid,
-                      (cpuId<0) ? threadMapper::instance()->getCoreId(tid) : cpuId);
+            int cpuId = filter->getCPUId();  
+            if (ff_mapThreadToCpu((cpuId<0) ? (cpuId=threadMapper::instance()->getCoreId(tid)) : cpuId)!=0)
+                error("Cannot map thread %d to CPU %d, mask is %u,  size is %u,  going on...\n",tid, (cpuId<0) ? threadMapper::instance()->getCoreId(tid) : cpuId, threadMapper::instance()->getMask(), threadMapper::instance()->getCListSize());            
+            filter->setCPUId(cpuId);
 #endif
-            
             gettimeofday(&filter->tstart,NULL);
             return filter->svc_init(); 
         }
         
+        /**
+         * \brief The \p svc_end method
+         *
+         * It defines the \p svc_end method of the FastFlow.
+         */
         virtual void svc_end() {
             filter->svc_end();
             gettimeofday(&filter->tstop,NULL);
         }
         
-        int run() { return ff_thread::spawn(filter->getCPUId()); }
+        /**
+         * \brief Executes FastFlow thread
+         *
+         * It executs the FastFlow thread.
+         *
+         * \return The status of \p spawn method.
+         */
+        int run() { 
+            int CPUId = ff_thread::spawn(filter->getCPUId());             
+            filter->setCPUId(CPUId);
+            return (CPUId==-2)?-1:0;
+        }
+
+        /**
+         * \brief Waits the thread
+         *
+         * It waits for the thread.
+         *
+         * \return The staus of \p wait() method.
+         */
         int wait() { return ff_thread::wait();}
+
+        /**
+         * \brief Waits for freezing
+         *
+         * It waits the thread to freeze.
+         *
+         * \return The status of \p wait_freezing() method.
+         */
         int wait_freezing() { return ff_thread::wait_freezing();}
+
+        /**
+         * \brief Freezes the thread
+         *
+         * It freezes the thread.
+         */
         void freeze() { ff_thread::freeze();}
+
+        /**
+         * \brief Checks if the thread is frozen
+         * 
+         * It checks if the thread is frozen.
+         *
+         * \return the status of the \p isfrozen() method.
+         */
         bool isfrozen() { return ff_thread::isfrozen();}
 
+        /**
+         * \brief Gets the ID of the thread
+         *
+         * It returns the ID of the thread.
+         *
+         * \return An integer value showing the identifier of the thread.
+         */
         int get_my_id() const { return filter->get_my_id(); };
         
     protected:    
         ff_node * const filter;
     };
-    
-    
-/*!
- *  \ingroup low_level
- *
- *  @{
- */
 
 private:
     FFBUFFER        * in;           ///< Input buffer, built upon SWSR lock-free (wait-free) 
                                     ///< (un)bounded FIFO queue                                 
-                                     
     FFBUFFER        * out;          ///< Output buffer, built upon SWSR lock-free (wait-free) 
                                     ///< (un)bounded FIFO queue 
-                                                                        
     int               myid;         ///< This is the node id, it is valid only for farm's workers
     int               CPUId;    
     bool              myoutbuffer;
     bool              myinbuffer;
     bool              skip1pop;
+    bool              in_active;    // allows to disable/enable input tasks receiving   
     thWorker        * thread;       /// A \p thWorker object, which extends the \p ff_thread class 
     bool (*callback)(void *,unsigned int,unsigned int, void *);
     void            * callback_arg;
     BARRIER_T       * barrier;      /// A \p Barrier object
-
     struct timeval tstart;
     struct timeval tstop;
     struct timeval wtstart;
@@ -955,13 +1618,12 @@ private:
     ticks         ticksmax;
     ticks         tickstot;
 #endif
-
 };
 
 /*!
  *  @}
+ *  \endlink
  */
-
 
 } // namespace ff
 

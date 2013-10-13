@@ -14,7 +14,7 @@ and framework; and a set of complete client/server test applications.
 
 * Statically compile your FIX xml schema and quickly build your FIX application on top. If you need to add customised messages or fields, simply update the schema and recompile.
 
-* Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average 66% faster encoding/decoding the same message than Quickfix. See [Performance](http://fix8.org/performance.html) to see how we substantiate this shameless bragging.
+* Fix8 is the fastest C++ Open Source FIX framework. Our testing shows that Fix8 is on average 68% faster encoding/decoding the same message than Quickfix. See [Performance](http://fix8.org/performance.html) to see how we substantiate this shameless bragging.
 
 * Fix8 supports standard `FIX4.X` to `FIX5.X` and `FIXT1.X`. If you have a custom FIX variant Fix8 can use that too. New FIX versions will be supported.
 
@@ -32,7 +32,7 @@ and framework; and a set of complete client/server test applications.
 
 * Fix8 supports field and value domain validation, mandatory/optional field assertion, field ordering, well-formedness testing, retransmission and standard session semantics.
 
-* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC and ARM. It also now runs on *Windows*. Other \*NIX variants may work too.
+* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC and ARMv7. It also now runs on *Windows*. Other \*NIX variants may work too.
 
 ## Directory Layout
 
@@ -144,8 +144,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 0.9.5.tar.gz
-	% cd fix8-0.9.5
+	% tar xvzf 0.9.6.tar.gz
+	% cd fix8-0.9.6
 	% ./bootstrap
 	% ./configure
 	% make
@@ -158,6 +158,14 @@ If you have built the test cases, you can also run them as follows:
 ## Building on Windows
 
 Please see [this document](https://fix8engine.atlassian.net/wiki/display/FX/Building) for detailed instructions on building for Windows.
+
+## Support
+
+Please refer to the following pages for help:
+- [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support)
+- [FAQ](http://fix8.org/faq.html)
+- [API Documentation](http://fix8.org/fix8/html)
+- [Jira Issues page](https://fix8engine.atlassian.net/)
 
 ## License
 

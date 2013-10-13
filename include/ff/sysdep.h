@@ -112,6 +112,63 @@ static inline int xchg(volatile int *ptr, int x)
 #endif /* __i386__ */
 
 /*------------------------
+   ARM (Mauro Mulatero)
+ ------------------------*/
+#ifdef __arm__
+
+#define isb() __asm__ __volatile__ ("isb" : : : "memory")
+#define dsb() __asm__ __volatile__ ("dsb" : : : "memory")
+#define dmb() __asm__ __volatile__ ("dmb" : : : "memory")
+#define smp_mb()  dmb()
+#define smp_rmb() dmb()
+#define smp_wmb() dmb()
+
+#define WMB()   __asm__ __volatile__ ("dmb st": : : "memory")
+#define PAUSE()
+
+#define xchg(ptr,x) \
+  ((__typeof__(*(ptr)))__xchg((unsigned long)(x),(ptr),sizeof(*(ptr))))
+
+static inline unsigned long __xchg(unsigned long x, volatile void *ptr, int size)
+{
+  unsigned long ret;
+  unsigned int tmp;
+
+  smp_mb();
+
+  switch (size) {
+  case 1:
+    asm volatile("@ __xchg1\n"
+    "1: ldrexb  %0, [%3]\n"
+    " strexb  %1, %2, [%3]\n"
+    " teq %1, #0\n"
+    " bne 1b"
+      : "=&r" (ret), "=&r" (tmp)
+      : "r" (x), "r" (ptr)
+      : "memory", "cc");
+    break;
+  case 4:
+    asm volatile("@ __xchg4\n"
+    "1: ldrex %0, [%3]\n"
+    " strex %1, %2, [%3]\n"
+    " teq %1, #0\n"
+    " bne 1b"
+      : "=&r" (ret), "=&r" (tmp)
+      : "r" (x), "r" (ptr)
+      : "memory", "cc");
+    break;
+  default:
+    break;
+  }
+
+  smp_mb();
+
+  return ret;
+}
+
+#endif /* __arm__ */
+
+/*------------------------
          amd_64
  ------------------------*/
 #ifdef __x86_64
@@ -134,9 +191,12 @@ static inline void *getAlignedMemory(size_t align, size_t size) {
     // malloc should guarantee a sufficiently well aligned memory for any purpose.
 #if (defined(MAC_OS_X_VERSION_MIN_REQUIRED) && (MAC_OS_X_VERSION_MIN_REQUIRED < 1060))    
     ptr = ::malloc(size);
-#elif (defined(_MSC_VER) || defined(__INTEL_COMPILER)) && defined(_WIN32)
-    ptr = ::malloc(size); // FIX ME
-#else
+#elif (defined(_WIN32)) // || defined(__INTEL_COMPILER)) && defined(_WIN32)
+	if (posix_memalign(&ptr,align,size)!=0)  // defined in platform.h
+		return NULL; 
+	// Fallback solution in case of strange segfaults on memory allocator
+    //ptr = ::malloc(size);
+#else // linux or MacOS >= 10.6
     if (posix_memalign(&ptr,align,size)!=0)
         return NULL; 
 #endif
@@ -148,8 +208,10 @@ static inline void *getAlignedMemory(size_t align, size_t size) {
 }
 
 static inline void freeAlignedMemory(void* ptr) {
-#if defined(_MSC_VER)
-        if (ptr) ::posix_memalign_free(ptr);    
+#if defined(_WIN32)
+		if (ptr) posix_memalign_free(ptr); // defined in platform.h
+		// Fallback solution in case of strange segfaults
+		//::free(ptr);
 #else	
         if (ptr) ::free(ptr);
 #endif  

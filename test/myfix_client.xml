@@ -14,7 +14,7 @@
 				default_appl_ver_id="8"
 				heartbeat_interval="10"
 				tcp_nodelay="true"
-				always_seqnum_assign="true"
+				always_seqnum_assign="false"
 				process_mode="threaded"
 				login_retries="5"
 				persist="file0" />

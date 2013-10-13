@@ -1,28 +1,37 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
+
+/*!
+ *  \link
+ *  \file staticlinkedlist.hpp
+ *  \ingroup shared_memory_fastflow
+ *
+ *  \brief TODO
+ */
 #ifndef __FF_STATICLINKEDLIST_HPP_ 
 #define __FF_STATICLINKEDLIST_HPP_ 
+
 /* ***************************************************************************
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *
+ *  This program is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ *  License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ *  along with this program; if not, write to the Free Software Foundation,
+ *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  ****************************************************************************
  */
 
 /* *
  *  
- * Static linked list Single-Writer Single-Reader unbounded queue.
- * No lock is needed around pop and push methods.
+ * Static linked list Single-Writer Single-Reader unbounded queue. No lock is
+ * needed around pop and push methods.
  *  
  * -- Massimiliano Meneghin: themaxmail@gmail.com 
  */
@@ -74,13 +83,34 @@
 
 namespace ff {
 
+/*!
+ *  \ingroup shared_memory_fastflow
+ *
+ *  @{
+ */
 
+/*!
+ *  \class staticlinkedlist
+ *  \ingroup shared_memory_fastflow
+ *
+ *  \brief TODO
+ *
+ *  This class is defined in \ref staticlinklist.hpp
+ */
 class staticlinkedlist {
 #if POSTPOLLING_VERSION
+    /*!
+     *  \class Node
+     *  \ingroup shared_memory_fastflow
+     *
+     *  \brief Inner struct
+     *
+     *  This struct is defined in \ref staticlinklist.hpp
+     */
     struct Node {
         unsigned long data;
         #if POINTERS_VERSION
-        struct Node * previous;
+      struct Node * previous;
         struct Node * next;
         #else
         unsigned int previous;
@@ -93,23 +123,20 @@ class staticlinkedlist {
         long padding[longxCacheLine-3];
         #endif
     };
-    
-    
 
-    
 private:
 #if POINTERS_VERSION
-    Node *    head;
-    long padding1[longxCacheLine-1];
-    Node *    tail;
-    long padding2[longxCacheLine-1];
+    Node *  head;
+    long    padding1[longxCacheLine-1];
+    Node *  tail;
+    long    padding2[longxCacheLine-1];
 #else
-    int head;
-    int head_padding;
-    long padding1[longxCacheLine-1];
-    int    tail;
-    int tail_previous;
-    long padding2[longxCacheLine-1];
+    int     head;
+    int     head_padding;
+    long    padding1[longxCacheLine-1];
+    int     tail;
+    int     tail_previous;
+    long    padding2[longxCacheLine-1];
 #endif
     /*
       This is a vector of Node elemens.  
@@ -119,8 +146,14 @@ private:
     int min_cache_size;
     void * cache_mem;
 public:
+    /**
+     * TODO
+     */
     enum {DEFAULT_CACHE_SIZE=1024};
 
+    /**
+     * Constructor
+     */
     staticlinkedlist(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false){
         cache_mem =::malloc((sizeof(Node))*(cachesize+5));
         unsigned int CPU_cachesize = longxCacheLine*sizeof(void*);
@@ -156,13 +189,17 @@ public:
 #endif
     }
     
+    /**
+     * Destructor
+     */
     ~staticlinkedlist() {
         free(cache_mem);
     }
 
-
-    
 #if WHILE_VERSION
+    /**
+     * It pushes the data element.
+     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         do{}
@@ -182,6 +219,9 @@ public:
         return true;
     }
 #else
+    /**
+     * TODO
+     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         if(likely(CAST_TO_VUL(tail->data) == 0)){
@@ -204,6 +244,9 @@ public:
 }
 #endif
 #if POINTERS_VERSION
+    /**
+     * TODO
+     */
     inline bool  pop(void ** data) { 
         if (likely(CAST_TO_VUL(head->data) != 0)) {        
             *data = (void *)head->data;
@@ -214,6 +257,9 @@ public:
         return false;
     }    
 #else
+    /**
+     * TODO
+     */
     inline bool  pop(void ** data) { 
         if (likely(CAST_TO_VUL(min_cache[head].data) != 0)) {        
             *data = (void *)min_cache[head].data;
@@ -226,6 +272,15 @@ public:
 #endif
 #else //NO POSTPOLLING_VERSION
     
+    /*!
+     *  \class Node
+     *  \ingroup shared_memory_fastflow
+     *
+     * TODO
+     * 
+     * This struct is defined in \ref staticlinkedlist.hpp
+     *
+     */
     struct Node {
         unsigned long data;
 #if POINTERS_VERSION
@@ -245,23 +300,20 @@ public:
         long padding[longxCacheLine-3];
 #endif
     };
-    
-    
 
-    
 private:
 #if POINTERS_VERSION
-    Node *    head;
-    long padding1[longxCacheLine-1];
-    Node *    tail;
-    long padding2[longxCacheLine-1];
+    Node *  head;
+    long    padding1[longxCacheLine-1];
+    Node *  tail;
+    long    padding2[longxCacheLine-1];
 #else
-    int head;
-    int head_padding;
-    long padding1[longxCacheLine-1];
-    int    tail;
-    int tail_previous;
-    long padding2[longxCacheLine-1];
+    int     head;
+    int     head_padding;
+    long    padding1[longxCacheLine-1];
+    int     tail;
+    int     tail_previous;
+    long    padding2[longxCacheLine-1];
 #endif
     /*
       This is a vector of Node elemens.  
@@ -271,8 +323,14 @@ private:
     int min_cache_size;
     void * cache_mem;
 public:
+    /**
+     * TODO
+     */
     enum {DEFAULT_CACHE_SIZE=1024};
 
+    /**
+     * Constructor
+     */
     staticlinkedlist(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false){
         cache_mem =::malloc((sizeof(Node))*(cachesize+5));
         unsigned int CPU_cachesize = longxCacheLine*sizeof(void*);
@@ -305,13 +363,17 @@ public:
 #endif
     }
     
+    /**
+     * TODO
+     */
     ~staticlinkedlist() {
         free(cache_mem);
     }
 
-
-    
 #if WHILE_VERSION
+    /**
+     * TODO
+     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         do{}
@@ -330,6 +392,9 @@ public:
         return true;
     }
 #else
+    /**
+     * TODO
+     */
     inline bool push(void * const data) {
 #if POINTERS_VERSION
         if(likely(CAST_TO_VUL(tail->data) == 0)){
@@ -351,6 +416,9 @@ public:
 }
 #endif
 #if POINTERS_VERSION
+    /**
+     * TODO
+     */
     inline bool  pop(void ** data) { 
         if (likely(CAST_TO_VUL(head->data) != 0)) {        
             *data = (void *)head->data;
@@ -361,6 +429,9 @@ public:
         return false;
     }    
 #else
+    /**
+     * TODO
+     */
     inline bool  pop(void ** data) { 
         if (likely(CAST_TO_VUL(min_cache[head].data) != 0)) {        
             *data = (void *)min_cache[head].data;
@@ -375,6 +446,11 @@ public:
 #endif
 };
 
-} // namespace
+/*!
+ *  @}
+ *  \endlink
+ */
+
+} // namespace ff
 
 #endif /* __FF_DYNQUEUE_HPP_ */

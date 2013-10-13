@@ -1,20 +1,31 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
+
+/*!
+ * \link
+ * \file dynqueue.hpp
+ * \ingroup streaming_network_simple_shared_memory
+ *
+ * \brief This file defines the dynamic queue.
+ *
+ */
+
 #ifndef __FF_DYNQUEUE_HPP_ 
 #define __FF_DYNQUEUE_HPP_ 
+
 /* ***************************************************************************
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *
+ *  This program is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ *  License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ *  along with this program; if not, write to the Free Software Foundation,
+ *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  ****************************************************************************
  */
@@ -35,8 +46,22 @@
 
 namespace ff {
 
+/*!
+ * \ingroup streaming_network_simple_shared_memory
+ *
+ * @{
+ */
 
 #if !defined(_FF_DYNQUEUE_OPTIMIZATION)
+
+/*!
+ * \class dynqueue
+ * \ingroup streaming_network_simple_shared_memory
+ *
+ * \brief TODO
+ *
+ * This class is defined in \ref dynqueue.hpp
+ */
 class dynqueue {
 private:
     struct Node {
@@ -71,6 +96,9 @@ private:
 #endif
 
 private:
+    /**
+     * TODO
+     */
     inline Node * allocnode() {
         union { Node * n; void * n2; } p;
 #if !defined(NO_CACHE)
@@ -80,6 +108,9 @@ private:
         return p.n;
     }
 
+    /**
+     * TODO
+     */
     inline Node * mp_allocnode() {
         union { Node * n; void * n2; } p;
 #if !defined(NO_CACHE)
@@ -95,8 +126,14 @@ private:
     }
 
 public:
+    /**
+     * TODO
+     */
     enum {DEFAULT_CACHE_SIZE=1024};
 
+    /**
+     * TODO
+     */
     dynqueue(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false):cache(cachesize) {
         Node * n = (Node *)::malloc(sizeof(Node));
         n->data = NULL; n->next = NULL;
@@ -112,9 +149,14 @@ public:
         init_unlocked(C_lock);
     }
 
-    // FIX: move code from constructor to here
+    /**
+     * TODO
+     */
     bool init() { return true;}
 
+    /**
+     * TODO
+     */
     ~dynqueue() {
         union { Node * n; void * n2; } p;
         if (cache.buffersize()>0) while(cache.pop(&p.n2)) free(p.n);
@@ -126,6 +168,9 @@ public:
         if (head) free((void*)head);
     }
     
+    /**
+     * TODO
+     */
     inline bool push(void * const data) {
         if (!data) return false;
         Node * n = allocnode();
@@ -137,6 +182,9 @@ public:
         return true;
     }
 
+    /**
+     * TODO
+     */
     inline bool  pop(void ** data) {        
         if (!data) return false;
 #if defined(STRONG_WAIT_FREE)
@@ -158,12 +206,14 @@ public:
         return false;
     }    
 
-    // TODO:
+    /**
+     * TODO
+     */
     inline unsigned long length() const { return 0;}
 
-/* ------------------------------------------------------ */
-
-    /* MS 2-lock MPMC algorithm PUSH method */
+    /**
+     * MS 2-lock MPMC algorithm PUSH method 
+     */
     inline bool mp_push(void * const data) {
         if (!data) return false;
         Node* n = mp_allocnode();
@@ -174,7 +224,10 @@ public:
         spin_unlock(P_lock);
         return true;
     }
-    /* MS 2-lock MPMC algorithm POP method */
+
+    /**
+     * MS 2-lock MPMC algorithm POP method 
+     */
     inline bool  mp_pop(void ** data) {        
         if (!data) return false;
         spin_lock(C_lock);
@@ -197,6 +250,15 @@ public:
  * Experimental code
  */
 
+/*!
+ * \class dynqueue
+ * \ingroup streaming_network_simple_shared_memory
+ *
+ * \brief TODO
+ *
+ * This class is defined in \ref dynqueue.hpp
+ */
+
 class dynqueue {
 private:
     struct Node {
@@ -216,6 +278,9 @@ private:
 
 private:
 
+    /**
+     * TODO
+     */
     inline bool cachepush(void * const data) {
         
         if (!cache[pwrite]) {
@@ -234,6 +299,9 @@ private:
         return false;
     }
 
+    /**
+     * TODO
+     */
     inline bool  cachepop(void ** data) {
         if (!cache[pread]) return false;
         
@@ -244,8 +312,14 @@ private:
     }    
     
 public:
+    /**
+     * TODO
+     */
     enum {DEFAULT_CACHE_SIZE=1024};
 
+    /**
+     * TODO
+     */
     dynqueue(int cachesize=DEFAULT_CACHE_SIZE, bool fillcache=false):cachesize(cachesize) {
         Node * n = (Node *)::malloc(sizeof(Node));
         n->data = NULL; n->next = NULL;
@@ -262,6 +336,9 @@ public:
         }
     }
 
+    /**
+     * TODO
+     */
     ~dynqueue() {
         union { Node * n; void * n2; } p;
         while(cachepop(&p.n2)) free(p.n);
@@ -274,6 +351,9 @@ public:
         if (cache) freeAlignedMemory(cache);
     }
 
+    /**
+     * TODO
+     */
     inline bool push(void * const data) {
         if (!data) return false;
 
@@ -289,6 +369,9 @@ public:
         return true;
     }
 
+    /**
+     * TODO
+     */
     inline bool  pop(void ** data) {
         if (!data) return false;
         if (head->next) {
@@ -305,7 +388,11 @@ public:
 
 #endif // _FF_DYNQUEUE_OPTIMIZATION
 
-} // namespace
+/*!
+ * @}
+ * \endlink
+ */
 
+} // namespace
 
 #endif /* __FF_DYNQUEUE_HPP_ */

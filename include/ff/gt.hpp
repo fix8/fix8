@@ -1,13 +1,18 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-/*! \file gt.hpp
- *  \brief Contains the \p ff_gatherer class and methods used to model the \a Collector node, 
- *  which is optionally used to gather tasks coming from workers.
+/*! 
+ *  \file gt.hpp
+ *  \ingroup streaming_network_arbitrary_shared_memory
+ *
+ *  \brief It Contains the \p ff_gatherer class and methods which are used to model the \a
+ *  Collector node, which is optionally used to gather tasks coming from
+ *  workers.
  */
 
 #ifndef _FF_GT_HPP_
 #define _FF_GT_HPP_
 /* ***************************************************************************
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License version 3 as 
  *  published by the Free Software Foundation.
@@ -34,23 +39,28 @@
 namespace ff {
 
 /*!
- *  \ingroup low_level
+ *  \ingroup streaming_network_arbitrary_shared_memory
  *
  *  @{
  */
 
 /*!
  *  \class ff_gatherer
+ *  \ingroup streaming_network_arbitrary_shared_memory
  *
  *  \brief A class representing the \a Collector node in a \a Farm skeleton.
  *
- *  This class models the \p gatherer, which wraps all the methods and structures used by the \a 
- *  Collector node in a \p Farm skeleton. The \p farm can be seen as a three-stages \p pipeline, the 
- *  stages being a \p ff_node called \a emitter, a pool of \p ff_node called \a workers and - 
- *  optionally - a \p ff_node called \a collector. The \a Collector node can be used to gather the 
- *  results outcoming from the computations executed by the pool of \a workers. The \a collector can 
- *  also be connected to the \a emitter node via a feedback channel, in order to create a 
- *  \p farm-with-feedback skeleton.
+ *  This class models the \p gatherer, which wraps all the methods and
+ *  structures used by the \a Collector node in a \p Farm skeleton. The \p farm
+ *  can be seen as a three-stages \p pipeline, the stages being a \p
+ *  ff_loadbalancer called \a emitter, a pool of \p ff_node called \a workers
+ *  and - optionally - a \p ff_gatherer called \a collector. The \a Collector
+ *  node can be used to gather the results coming from the computations
+ *  executed by the pool of \a workers. The \a collector can also be
+ *  connected to the \a emitter node via a feedback channel, in order to create
+ *  a \p farm-with-feedback skeleton.
+ *
+ *  This class is defined in \ref gt.hpp
  *
  */
 
@@ -64,10 +74,13 @@ public:
 protected:
 
     /**
-     * Virtual function. \n Select a worker
+     * \brief Selects a worker.
      * 
-     * Gets the next one using the RR policy.
-     * The one selected has to be alive (and kicking).
+     * It gets the next worker using the Round Robin policy. The selected
+     * worker has to be alive (and kicking).
+     *
+     * \return The next worker to be selected.
+     *
      */
     virtual inline int selectworker() { 
         do nextr = (nextr+1) % nworkers;
@@ -75,33 +88,52 @@ protected:
         return nextr;
     }
 
+    /**
+     * \brief Notifies the EOS
+     *
+     * It is a virtual function and is used to notify EOS
+     */
     virtual inline void notifyeos(int id) {}
 
-    /* number of tentative before wasting some times and than retry */
+    /**
+     * \brief Gets the number of tentatives.
+     *
+     * The number of tentative before wasting some times and than retry 
+     */
     virtual inline unsigned int ntentative() { return nworkers;}
 
+    /**
+     * \brief Loses the time out.
+     *
+     * It is a virutal function which defines the number of ticks to be waited.
+     *
+     */
     virtual inline void losetime_out() { 
         FFTRACE(lostpushticks+=TICKS2WAIT;++pushwait);
         ticks_wait(TICKS2WAIT); 
-#if 0
-        FFTRACE(register ticks t0 = getticks());
-        usleep(TICKS2WAIT);
-        FFTRACE(register ticks diff=(getticks()-t0));
-        FFTRACE(lostpushticks+=diff;++pushwait);
-#endif
     }
     
+    /**
+     * \brief Loses the time in 
+     *
+     * It is a virutal function which defines the number of ticks to be waited.
+     *
+     */
     virtual inline void losetime_in() { 
         FFTRACE(lostpopticks+=TICKS2WAIT;++popwait);
         ticks_wait(TICKS2WAIT);
-#if 0        
-        FFTRACE(register ticks t0 = getticks());
-        usleep(TICKS2WAIT);
-        FFTRACE(register ticks diff=(getticks()-t0));
-        FFTRACE(lostpopticks+=diff;++popwait);
-#endif
     }    
 
+    /**
+     * \brief It gathers the tasks.
+     *
+     * It keeps selecting the worker. If a worker has task, then the worker is
+     * returned. Otherwise a tick is wasted and then keep looking for the
+     * worker with the task.
+     *
+     * \return It returns the workers with a taks if successful. Otherwise -1
+     * is returned.
+     */
     virtual int gather_task(void ** task) {
         register unsigned int cnt;
         do {
@@ -120,7 +152,16 @@ protected:
     }
 
 
-    /// Virtual function. \n Gather tasks' results from all workers
+    /**
+     *
+     * \brief It gathers all tasks.
+     *
+     * It is a virtual function, and gathers results from the workers. 
+     *
+     * \return It returns 0 if the tasks from all the workers are collected.
+     * Otherwise a negative value is returned.
+     *
+     */
     virtual int all_gather(void *task, void **V) {
         V[channelid]=task;
         int nw=getnworkers();
@@ -146,7 +187,12 @@ protected:
         return 0;
     }
 
-    /// Push the task in the tasks queue.
+    /**
+     * \brief Pushes the task in the tasks queue.
+     *
+     * It pushes the tasks in a queue. 
+     */
+
     void push(void * task) {
         //register int cnt = 0;
         if (!filter) {
@@ -159,16 +205,24 @@ protected:
             }     
             return;
         }
+
         while (! filter->push(task)) {
             // if (ch->thxcore>1) {
             // if (++cnt>PUSH_POP_CNT) { sched_yield(); cnt=0;}
             //    else ticks_wait(TICKS2WAIT);
             //} else 
             losetime_out();
-        }     
+        }
     }
 
-    /// Pop a task out of the queue.
+    /**
+     * \brief Pop a task out of the queue.
+     *
+     * It pops the task out of the queue.
+     *
+     * \return \p false if not successful, otherwise \p true is returned.
+     *
+     */
     bool pop(void ** task) {
         //register int cnt = 0;       
         if (!get_out_buffer()) return false;
@@ -178,31 +232,43 @@ protected:
         return true;
     }
 
+    /**
+     * \brief Pop a tak from un unbounded queue.
+     *
+     * It pops the task from an unbounded queue.
+     *
+     * \return The task popped from the buffer.
+     */
     bool pop_nb(void ** task) {
         if (!get_out_buffer()) return false;
         return buffer->pop(task);
-    }  
-
-
+    }
 
 public:
 
     /**
-     *  Constructor
+     *  \brief Constructor
      *
-     *  Creates \a max_num_workers \p NULL pointers to worker objects
+     *  It creates \p max_num_workers and \p NULL pointers to worker objects.
      */
     ff_gatherer(int max_num_workers):
         max_nworkers(max_num_workers),nworkers(0),nextr(0),
         neos(0),neosnofreeze(0),channelid(-1),
-        filter(NULL), workers(max_nworkers), offline(max_nworkers), buffer(NULL) {
+        filter(NULL), workers(max_nworkers), offline(max_nworkers), buffer(NULL),
+        skip1pop(false) {
         time_setzero(tstart);time_setzero(tstop);
         time_setzero(wtstart);time_setzero(wtstop);
-        wttime=0;        
-        FFTRACE(taskcnt=0;lostpushticks=0;pushwait=0;lostpopticks=0;popwait=0;ticksmin=(ticks)-1;ticksmax=0;tickstot=0);        
+        wttime=0;
+        FFTRACE(taskcnt=0;lostpushticks=0;pushwait=0;lostpopticks=0;popwait=0;ticksmin=(ticks)-1;ticksmax=0;tickstot=0);
     }
 
-
+    /**
+     * \brief Sets the filer
+     *
+     * It sents the \p ff_node to the filter.
+     *
+     * \return 0 if successful, otherwise a negative value is returned.
+     */
     int set_filter(ff_node * f) { 
         if (filter) {
             error("GT, setting collector filter\n");
@@ -212,21 +278,56 @@ public:
         return 0;
     }
 
-    /// Set output buffer
+    /**
+     * \brief Sets output buffer
+     *
+     * It sets the output buffer.
+     */
     void set_out_buffer(FFBUFFER * const buff) { buffer=buff;}
 
     /**
-     * Get the channel id of the last pop.  
+     * \brief Gets the channel id
+     *
+     * It gets the \p channelid.
+     *
+     * \return The \p channelid is returned.
      */
-    const int get_channel_id() const { return channelid;}
+    int get_channel_id() const { return channelid;}
 
-    /// Gets the number of worker threads currently running.
-    inline const int getnworkers() const { return workers.size()-neos-neosnofreeze; }
+    /**
+     * \brief Gets the number of worker threads currently running.
+     *
+     * It gets the number of threads currently running.
+     *
+     * \return Number of worker threads
+     */
+    inline int getnworkers() const { return (int) workers.size()-neos-neosnofreeze; }
     
-    /// Get the ouput buffer
-    FFBUFFER * const get_out_buffer() const { return buffer;}
+    /**
+     * \brief Skips the first pop
+     *
+     * It determine whether the first pop should be skipped or not.
+     *
+     * \return Always \true is returned.
+     */
+    void skipfirstpop() { skip1pop=true; }
 
-    /// Register the given worker to the list of workers
+    /**
+     * \brief Gets the ouput buffer
+     *
+     * It gets the output buffer
+     *
+     * \return \p buffer is returned. 
+     */
+    FFBUFFER * get_out_buffer() const { return buffer;}
+
+    /**
+     * \brief Register the given worker to the list of workers.
+     *
+     * It registers the given worker to the list of workers.
+     *
+     * \return 0 if successful, or -1 if not successful.
+     */
     int  register_worker(ff_node * w) {
         if (nworkers>=max_nworkers) {
             error("GT, max number of workers reached (max=%d)\n",max_nworkers);
@@ -237,7 +338,13 @@ public:
         return 0;
     }
 
-    /// Virtual function: initialise the gatherer task.
+    /**
+     * \brief Initializes the gatherer task.
+     *
+     * It is a virtual function to initialise the gatherer task.
+     *
+     * \return It returns the task if successful, otherwise 0 is returned.
+     */
     virtual int svc_init() { 
         gettimeofday(&tstart,NULL);
         for(unsigned i=0;i<workers.size();++i)  offline[i]=false;
@@ -245,11 +352,18 @@ public:
         return 0;
     }
 
-    /// Virtual function: the gatherer task.
+    /**
+     * \brief The gatherer task
+     *
+     * It is a virtual function to be used as the gatherer task.
+     *
+     * \return It returns the task.
+     */
     virtual void * svc(void *) {
         void * ret  = (void*)FF_EOS;
         void * task = NULL;
         bool outpresent  = (get_out_buffer() != NULL);
+        bool skipfirstpop = skip1pop;
 
         // the following case is possible when the collector is a dnode
         if (!outpresent && filter && (filter->get_out_buffer()!=NULL)) {
@@ -260,7 +374,10 @@ public:
         gettimeofday(&wtstart,NULL);
         do {
             task = NULL;
-            nextr = gather_task(&task); 
+            if (!skipfirstpop) 
+                nextr = gather_task(&task); 
+            else skipfirstpop=false;
+
             if (task == (void *)FF_EOS) {
                 if (filter) filter->eosnotify(workers[nextr]->get_my_id());
                 offline[nextr]=true;
@@ -320,25 +437,50 @@ public:
         return ret;
     }
 
-    /// Virtual function: finalise the gatherer task.
+    /**
+     * \brief Finializes the gatherer.
+     *
+     * It is a virtual function used to finalise the gatherer task.
+     *
+     */
     virtual void svc_end() {
         if (filter) filter->svc_end();
         gettimeofday(&tstop,NULL);
     }
 
-    /// Execute the gatherer task.
+    /**
+     * \brief Execute the gatherer task.
+     *
+     * It executes the gatherer task.
+     *
+     * \return 0 if successful, otherwise -1 is returned.
+     */
     int run(bool=false) {  
-        if (this->spawn(filter?filter->getCPUId():-1)<0) {
+        if (this->spawn(filter?filter->getCPUId():-1)== -2) {
             error("GT, spawning GT thread\n");
             return -1; 
         }
         return 0;
     }
 
+    /**
+     * \brief Start counting time
+     *
+     * It defines the counting of start time.
+     *
+     * \return Difference in milli seconds.
+     */
     virtual double ffTime() {
         return diffmsec(tstop,tstart);
     }
 
+    /**
+     * \brief Complete counting time
+     *
+     * It defines the counting of finished time.
+     *
+     * \return Difference in milli seconds.
+     */
     virtual double wffTime() {
         return diffmsec(wtstop,wtstart);
     }
@@ -348,7 +490,13 @@ public:
     virtual const struct timeval & getwstartime() const { return wtstart;}
     virtual const struct timeval & getwstoptime() const { return wtstop;}
 
-#if defined(TRACE_FASTFLOW)    
+#if defined(TRACE_FASTFLOW)  
+    /**
+     * \brief The trace of FastFlow
+     *
+     * It prints the trace for FastFlow.
+     *
+     */
     virtual void ffStats(std::ostream & out) { 
         out << "Collector: "
             << "  work-time (ms): " << wttime    << "\n"
@@ -372,6 +520,7 @@ private:
     svector<ff_node*> workers;
     svector<bool>     offline;
     FFBUFFER        * buffer;
+    bool              skip1pop;
 
     struct timeval tstart;
     struct timeval tstop;
@@ -393,6 +542,8 @@ private:
 
 /*!
  *  @}
+ *  \endlink
+ *
  */
 
 } // namespace ff

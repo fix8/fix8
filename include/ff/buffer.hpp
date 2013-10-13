@@ -1,46 +1,48 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-/*!
- *  \file buffer.hpp
- *  \brief This file contains the definition of the bounded \p SWSR circular 
- *  buffer used in FastFlow
- */
- 
 #ifndef __SWSR_PTR_BUFFER_HPP_
 #define __SWSR_PTR_BUFFER_HPP_
-/* ***************************************************************************
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
- *  published by the Free Software Foundation.
+
+/*!
+ *  \link
+ *  \file buffer.hpp
+ *  \ingroup streaming_network_simple_shared_memory
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ *  \brief This file contains the definition of the bounded \p SWSR circular
+ *  buffer used in FastFlow
  *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *  Single-Writer Single-Reader circular buffer.
+ *  No lock is needed around pop and push methods.
+ * 
+ *  A single NULL value is used to indicate buffer full and 
+ *  buffer empty conditions.
+ * 
+ *  More details about the SWSR_Ptr_Buffer implementation 
+ *  can be found in the following report:
  *
+ *  Massimo Torquati, "Single-Producer/Single-Consumer Queue on Shared Cache 
+ *  Multi-Core Systems", TR-10-20, Computer Science Department, University
+ *  of Pisa Italy,2010
+ *  ( http://compass2.di.unipi.it/TR/Files/TR-10-20.pdf.gz )
  *
- ****************************************************************************
  */
 
-/* Single-Writer Single-Reader circular buffer.
- * No lock is needed around pop and push methods.
- * 
- * A single NULL value is used to indicate buffer full and 
- * buffer empty conditions.
- * 
- * More details about the SWSR_Ptr_Buffer implementation 
- * can be found in the following report:
+/* ***************************************************************************
  *
- * Massimo Torquati, "Single-Producer/Single-Consumer Queue on Shared Cache 
- * Multi-Core Systems", TR-10-20, Computer Science Department, University
- * of Pisa Italy,2010
- * ( http://compass2.di.unipi.it/TR/Files/TR-10-20.pdf.gz )
+ *  This program is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU Lesser General Public License version 3 as
+ *  published by the Free Software Foundation.
  *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ *  License for more details.
  *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software Foundation,
+ *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *
+ ****************************************************************************
  */
 
 #include <stdlib.h>
@@ -53,33 +55,39 @@
 #include <AvailabilityMacros.h>
 #endif
 
-
 namespace ff {
 
 // 64 bytes is the common size of a cache line
 static const int longxCacheLine = (CACHE_LINE_SIZE/sizeof(long));
     
 /*!
- *  \ingroup runtime
+ *  \ingroup streaming_network_simple_shared_memory
  *
  *  @{
  */
  
  /*! 
   * \class SWSR_Ptr_Buffer
-  *
+  *  \ingroup streaming_network_simple_shared_memory
+  * 
   * \brief Single-Writer/Single-Reader circular buffer.
   *
-  * This class describes the SWSR circular buffer, used in FastFlow to implement
-  * a lock-free (wait-free) bounded FIFO queue. No lock is needed around pop and 
-  * push methods.\n
-  * A single NULL value is used to indicate buffer full and 
-  * buffer empty conditions.
+  * This class describes the SWSR circular buffer, used in FastFlow to
+  * implement a lock-free (wait-free) bounded FIFO queue. No lock is needed
+  * around pop and push methods.
+  *
+  * A single NULL value is used to indicate buffer full and buffer empty
+  * conditions.
+  *
+  * This class is defined in \ref buffer.hpp
+  *
   */ 
 
 class SWSR_Ptr_Buffer {
-    // experimentally we found that a good value is between 
-    // 2 and 6 cache lines (16 to 48 entries respectively)
+    /**
+     * experimentally we found that a good value is between 
+     * 2 and 6 cache lines (16 to 48 entries respectively)
+     */
     enum {MULTIPUSH_BUFFER_SIZE=16};
 
 private:
@@ -119,16 +127,20 @@ public:
         pread(0),pwrite(0),size(n),buf(0) {
     }
     
-    /** Default destructor */
+    /** 
+     * Default destructor 
+     */
     ~SWSR_Ptr_Buffer() {
         // freeAlignedMemory is a function defined in 'sysdep.h'
         freeAlignedMemory(buf);
-	}
+    }
     
     /** 
-     *  Initialise the buffer. Allocate space (\p size) of possibly
-     *  aligned memory and reset the pointers (read pointer and write pointer) 
-     *  by placing them at the beginning of the buffer. 
+     *  It initialise the buffer. Allocate space (\p size) of possibly aligned
+     *  memory and reset the pointers (read pointer and write pointer) by
+     *  placing them at the beginning of the buffer.
+     *
+     *  \return TODO
      */
     bool init(const bool startatlineend=false) {
         if (buf || (size==0)) return false;
@@ -144,7 +156,9 @@ public:
         return true;
     }
 
-    /** Returns true if the buffer is empty */
+    /** 
+     * It returns true if the buffer is empty.
+     */
     inline bool empty() {
 #if defined(NO_VOLATILE_POINTERS)
         return ((*(volatile unsigned long *)(&buf[pread]))==0);
@@ -153,7 +167,9 @@ public:
 #endif
     }
     
-    /** Returns true if there is at least one room in the buffer */
+    /** 
+     * It returns true if there is at least one room in the buffer.
+     */
     inline bool available()   { 
 #if defined(NO_VOLATILE_POINTERS)
         return ((*(volatile unsigned long *)(&buf[pwrite]))==0);
@@ -162,25 +178,31 @@ public:
 #endif
     }
 
-    /** Returns the size of the buffer */
+    /** 
+     * It returns the size of the buffer.
+     *
+     * \return The size of the buffer.
+     */
     inline unsigned long buffersize() const { return size; };
     
     /** 
-     *  Push method: push the input value into the queue. \n
-     *  A Write Memory Barrier (WMB) ensures that all previous memory writes 
-     *  are visible to the other processors before any later
-     *  write is executed.  This is an "expensive" memory fence
-     *  operation needed in all the architectures with a weak-ordering 
-     *  memory model, where stores can be executed out-of-order 
+     *  Push method: push the input value into the queue. A Write Memory
+     *  Barrier (WMB) ensures that all previous memory writes are visible to
+     *  the other processors before any later write is executed.  This is an
+     *  "expensive" memory fence operation needed in all the architectures with
+     *  a weak-ordering memory model, where stores can be executed out-of-order
      *  (e.g. PowerPc). This is a no-op on Intel x86/x86-64 CPUs.
      *
      *  \param data Element to be pushed in the buffer
+     *
+     *  \return TODO
      */
     inline bool push(void * const data) {     /* modify only pwrite pointer */
         if (!data) return false;
 
         if (available()) {
-            /* Write Memory Barrier: ensure all previous memory write 
+            /**
+             * Write Memory Barrier: ensure all previous memory write 
              * are visible to the other processors before any later
              * writes are executed.  This is an "expensive" memory fence
              * operation needed in all the architectures with a weak-ordering 
@@ -195,16 +217,17 @@ public:
         return false;
     }
 
-    /*
-     * the multipush method, which pushes a batch of elements (array) in the queue.
-     * NOTE: len should be a multiple of  longxCacheLine/sizeof(void*)
+    /**
+     * The multipush method, which pushes a batch of elements (array) in the
+     * queue. NOTE: len should be a multiple of longxCacheLine/sizeof(void*)
      *
      */
     inline bool multipush(void * const data[], int len) {
         if ((unsigned)len>=size) return false;
         register unsigned long last = pwrite + ((pwrite+ --len >= size) ? (len-size): len);
         register unsigned long r    = len-(last+1), l=last;
-		register unsigned long i;
+        register unsigned long i;
+
         if (buf[last]==NULL) {
             
             if (last < pwrite) {
@@ -263,7 +286,7 @@ public:
      *  Pop method: get the next value from the FIFO buffer.
      *
      *  \param data Pointer to the location where to store the 
-     *  data popped from the buffer
+     *  data popped from the buffer.
      */
     inline bool  pop(void ** data) {  /* modify only pread pointer */
         if (!data || empty()) return false;
@@ -272,7 +295,11 @@ public:
         return inc();
     } 
     
-    /* like pop but doesn't copy any data */
+    /**
+     * It is like pop but doesn't copy any data.
+     *
+     * \return \p true is alway returned.
+     */
     inline bool  inc() {
         buf[pread]=NULL;
         pread += (pread+1 >= size) ? (1-size): 1; // circular buffer       
@@ -280,24 +307,24 @@ public:
     }           
     
     /** 
-     *  Returns the "head" of the buffer, i.e. the element pointed by the 
-     *  read pointer (it is a FIFO queue, so \p push on the tail and \p pop from 
-     *  the head). 
+     *  It returns the "head" of the buffer, i.e. the element pointed by the read
+     *  pointer (it is a FIFO queue, so \p push on the tail and \p pop from the
+     *  head). 
+     *
+     *  \return The head of the buffer.
      */
-    inline void * const top() const { 
-        return buf[pread];  
-    }    
+    inline void * top() const { return buf[pread]; }    
 
     /** 
-     * Reset the buffer and move \p read and \p write pointers to
-     * the beginning of the buffer (i.e. position 0).\n
-     * Also, the entire buffer is cleaned and set to 0  
+     * Reset the buffer and move \p read and \p write pointers to the beginning
+     * of the buffer (i.e. position 0). Also, the entire buffer is cleaned and
+     * set to 0  
      */
     inline void reset(const bool startatlineend=false) { 
         if (startatlineend) {
-            /*
-             *  This is a good starting point if the multipush method 
-             *  will be used in order to reduce cache trashing.
+            /**
+             *  This is a good starting point if the multipush method will be
+             *  used in order to reduce cache trashing.
              */
             pwrite = longxCacheLine-1;
             pread  = longxCacheLine-1;
@@ -310,8 +337,9 @@ public:
         memset(buf,0,size*sizeof(void*));
     }
 
-    /** Returns the length of the buffer
-     * (i.e. the actual number of elements it contains) 
+    /** 
+     * It returns the length of the buffer (i.e. the actual number of elements
+     * it contains) 
      */
     inline unsigned long length() const {
         long len = pwrite-pread;
@@ -322,12 +350,13 @@ public:
 };
 
 /*!
- *  @}
- */
- 
-
-/* Implementation of the well-known 
- * Lamport's wait-free circular buffer.
+ * \class Lamport_Buffer
+ *  \ingroup streaming_network_simple_shared_memory
+ *
+ * \brief Implementation of the well-known Lamport's wait-free circular
+ * buffer.
+ *
+ * \This class is defined in \ref buffer.hpp
  *
  */
 class Lamport_Buffer {
@@ -343,15 +372,26 @@ private:
     void                   ** buf;
     
 public:
+    /**
+     * Constructor
+     */
     Lamport_Buffer(unsigned long n, const bool=true):
         pread(0),pwrite(0),size(n),buf(0) {
     }
     
+    /**
+     * Destructor
+     */
     ~Lamport_Buffer() {
         freeAlignedMemory(buf);
-	}
+    }
     
-    /* Initialize the circular buffer. */
+    /**
+     * It initialize the circular buffer. 
+     *
+     * \return If successful \p true is returned, otherwise \p false is
+     * returned.
+     */
     bool init() {
         if (buf) return false;
         buf=(void**)getAlignedMemory(longxCacheLine*sizeof(long),size*sizeof(void*));
@@ -360,17 +400,27 @@ public:
         return true;
     }
 
-    /* return true if the buffer is empty */
+    /**
+     * It return true if the buffer is empty 
+     */
     inline bool empty() { return (pwrite == pread);  }
     
-    /* return true if there is at least one room in the buffer */
+    /**
+     * It return true if there is at least one room in the buffer 
+     */
     inline bool available()   { 
         const unsigned long next = pwrite + ((pwrite+1>=size)?(1-size):1);
         return (next != pread);
     }
-   
+
+    /**
+     * TODO
+     */
     inline unsigned long buffersize() const { return size; };
     
+    /**
+     * TODO
+     */
     inline bool push(void * const data) {
         if (!data) return false;
 
@@ -388,6 +438,9 @@ public:
         return false;
     }
 
+    /**
+     * TODO
+     */
     inline bool  pop(void ** data) {
         if (!data) return false;       
 
@@ -397,19 +450,29 @@ public:
         return true;
     }    
     
+    /**
+     * TODO
+     */
     inline void reset() { 
         pread=pwrite=0; 
         memset(buf,0,size*sizeof(void*));
     }
 
+    /**
+     * TODO
+     */
     inline unsigned long length() const {
         long len = pwrite-pread;
         if (len>=0) return len;
         return size+len;
     }
-
 };
 
-} // namespace
+/*!
+ *  @}
+ *  \endlink
+ */
+
+} // namespace ff
 
 #endif /* __SWSR_PTR_BUFFER_HPP_ */

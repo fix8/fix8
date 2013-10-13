@@ -1,26 +1,29 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
 /*! 
+ *  \link
  *  \file config.hpp
- *  \brief This file contains general settings.
+ *  \ingroup shared_memory_fastflow
+ *
+ *  \brief This file contains general settings for the FastFlow framework.
  */
 
 #ifndef _FF_CONFIG_HPP_
 #define _FF_CONFIG_HPP_
 /* ***************************************************************************
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License version 3 as 
+ *
+ *  This program is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU Lesser General Public License version 3 as
  *  published by the Free Software Foundation.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ *  License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
+ *  along with this program; if not, write to the Free Software Foundation,
+ *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  ****************************************************************************
  */
@@ -42,7 +45,15 @@
 #endif
 
 namespace ff {
-    enum { FF_EOS=ULONG_MAX, FF_EOS_NOFREEZE=(FF_EOS-0x1) , FF_GO_ON=(FF_EOS-0x2)};
+     /*!
+     *  \ingroup shared_memory_fastflow
+     *
+     *  @{
+     */
+//    enum { FF_EOS=ULONG_MAX, FF_EOS_NOFREEZE=(FF_EOS-0x1) , FF_GO_ON=(FF_EOS-0x2)};
+static const unsigned long FF_EOS           = (ULONG_MAX);
+static const unsigned long FF_EOS_NOFREEZE  = (FF_EOS-0x1);
+static const unsigned long FF_GO_ON         = (FF_EOS-0x2);
 }
 
 #define GO_ON         (void*)ff::FF_GO_ON
@@ -62,7 +73,7 @@ namespace ff {
 
 // maximum number of threads that can be spawned
 #if !defined(MAX_NUM_THREADS)
-#define MAX_NUM_THREADS       128 
+#define MAX_NUM_THREADS       256 
 #endif
 
 // NOTE: BACKOFF_MIN/MAX are lower and upper bound backoff values.
@@ -99,5 +110,9 @@ namespace ff {
 //#include <ff/config.h>
 //#endif // NO_CMAKE_CONFIG
 
+/*!
+ *  @}
+ *  \endlink
+ */
 
 #endif /* _FF_CONFIG_HPP_ */
