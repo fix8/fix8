@@ -183,8 +183,12 @@ void Logger::purge_thread_codes()
 		if (pthread_kill(itr->first, 0) == ESRCH)
 #else
 		// a little trick to see if a thread is still alive
+#ifdef __APPLE__
+		if(pthread_kill(itr->first, 0) == ESRCH)
+#else
 		clockid_t clock_id;
 		if (pthread_getcpuclockid(itr->first, &clock_id) == ESRCH)
+#endif
 #endif
 		{
 			_rev_thread_codes.erase(itr->second);

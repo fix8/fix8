@@ -78,7 +78,7 @@ public:
 
 	struct less
 	{
-		bool operator()(const RealmObject *p1, const RealmObject *p2)
+		bool operator()(const RealmObject *p1, const RealmObject *p2) const
 			{ return const_cast<RealmObject*>(p1)->comp(p1, p2); }
 	};
 };

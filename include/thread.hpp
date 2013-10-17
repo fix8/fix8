@@ -137,7 +137,11 @@ public:
 	/*! Yield CPU.
 		\return result of yield */
 	#ifndef _MSC_VER
+#ifdef __APPLE__
+    int yield() const { return sched_yield(); }
+#else
 	int yield() const { return pthread_yield(); }
+#endif
 	#endif
 
 	/*! Kill the thread.

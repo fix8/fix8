@@ -37,7 +37,11 @@ seqedit_SOURCES = seqedit.cpp
 CLEANFILES =
 AM_CPPFLAGS = -I$(top_srcdir)/include
 
-GEN_LIBS = -lrt -lstdc++
+GEN_LIBS = -lstdc++
+
+if LINK_RT
+GEN_LIBS += -lrt
+endif
 
 ALL_LIBS = $(GEN_LIBS) -L$(top_srcdir)/runtime
 
