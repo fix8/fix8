@@ -1100,6 +1100,58 @@ public:
 	}
 };
 #else
+#ifdef __APPLE__
+class tty_save_state
+{
+    bool _raw_mode;
+    int _fd;
+    termios _tty_state;
+public:
+    explicit tty_save_state(int fd) : _raw_mode(), _fd(fd) {}
+
+    tty_save_state& operator=(const tty_save_state& from)
+    {
+        if (&from != this)
+        {
+            _raw_mode = from._raw_mode;
+            _fd = from._fd;
+            _tty_state = from._tty_state;
+        }
+        return *this;
+    }
+
+    void unset_raw_mode()
+    {
+        if (_raw_mode)
+        {
+            if (ioctl(_fd, TIOCSETA, &_tty_state) < 0)
+                std::cerr << Str_error(errno, "Cannot reset ioctl") << std::endl;
+            else
+                _raw_mode = false;
+        }
+    }
+
+    void set_raw_mode()
+    {
+        if (!_raw_mode)
+        {
+            if (ioctl(_fd, TIOCGETA, &_tty_state) < 0)
+            {
+                std::cerr << Str_error(errno, "Cannot get ioctl") << std::endl;
+                return;
+            }
+            termios tty_state(_tty_state);
+            tty_state.c_lflag = 0;
+            tty_state.c_cc[VTIME] = 0;
+            tty_state.c_cc[VMIN] = 1;
+            if (ioctl(_fd, TIOCSETA, &tty_state) < 0)
+                std::cerr << Str_error(errno, "Cannot reset ioctl") << std::endl;
+            else
+                _raw_mode = true;
+        }
+    }
+};
+#else
 class tty_save_state
 {
 	bool _raw_mode;
@@ -1151,6 +1203,7 @@ public:
 		}
 	}
 };
+#endif // __APPLE__
 #endif // _MSC_VER
 
 //----------------------------------------------------------------------------------------

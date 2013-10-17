@@ -42,6 +42,28 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <sys/time.h>
 #endif
 
+#ifdef __APPLE__
+#include <mach/clock.h>
+#include <mach/mach.h>
+#endif
+
+// OS X does not have clock_gettime, use clock_get_time
+static void current_utc_time(struct timespec *ts)
+{
+#ifdef __APPLE__
+  clock_serv_t cclock;
+  mach_timespec_t mts;
+  host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+  clock_get_time(cclock, &mts);
+  mach_port_deallocate(mach_task_self(), cclock);
+  ts->tv_sec = mts.tv_sec;
+  ts->tv_nsec = mts.tv_nsec;
+#else
+  clock_gettime(CLOCK_REALTIME, ts);
+#endif
+}
+
+
 //-------------------------------------------------------------------------------------------------
 namespace FIX8
 {
@@ -206,7 +228,7 @@ public:
 	static timespec get_timespec()
 	{
 		timespec ts;
-		clock_gettime(CLOCK_REALTIME, &ts);
+		current_utc_time(&ts);
 		return ts;
 	}
 
@@ -215,7 +237,7 @@ public:
 	static Tickval get_tickval()
 	{
 		timespec ts;
-		clock_gettime(CLOCK_REALTIME, &ts);
+        current_utc_time(&ts);
 		return Tickval(ts);
 	}
 
@@ -224,7 +246,7 @@ public:
 	static Tickval& get_tickval(Tickval& to)
 	{
 		timespec ts;
-		clock_gettime(CLOCK_REALTIME, &ts);
+        current_utc_time(&ts);
 		return to = ts;
 	}
 
