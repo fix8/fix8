@@ -161,7 +161,7 @@ struct Minst::_gen<void *>
 
 struct BaseMsgEntry
 {
-   const Minst& _create;
+   const Minst _create;
 	const char *_name, *_comment;
 };
 
@@ -226,13 +226,7 @@ struct F8MetaCntx
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef std::
-#if defined HAS_TR1_UNORDERED_MAP
-	tr1::unordered_map
-#else
-	map
-#endif
-		<unsigned short, BaseField *> Fields;
+typedef std::map <unsigned short, BaseField *> Fields;
 typedef std::multimap<unsigned short, BaseField *> Positions;
 
 /// Base class for all fix messages
@@ -361,6 +355,16 @@ public:
 	/*! Get the message type as a string.
 	    \return the Fix message type as a string */
 	const f8String& get_msgtype() const { return _msgType; }
+
+	/*! Add fix field to this message.
+	    \param fnum field tag
+	    \param pos position of field in message
+	    \param what pointer to field */
+	void add_field_decoder(const unsigned short fnum, const unsigned pos, BaseField *what)
+	{
+		_fields.insert(Fields::value_type(fnum, what));
+		_pos.insert(Positions::value_type(pos, what));
+	}
 
 	/*! Add fix field to this message.
 	    \param fnum field tag
