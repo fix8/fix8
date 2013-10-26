@@ -205,8 +205,9 @@ struct LoginParameters
 class Session
 {
 	typedef StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)> Handlers;
-	Handlers _handlers;
-
+	static const Handlers _handlers;
+    static const Handlers::TypePair cs_valueTable[];
+    
 	/*! Initialise atomic members.
 	  \param st the initial session state */
 	void atomic_init(States::SessionStates st);

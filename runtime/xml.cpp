@@ -77,28 +77,23 @@ RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&([a-z]{
    XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
 
 //----------------------------------------------------------------------------------------
-template<>
-const Str2Chr::TypePair Str2Chr::_valueTable[] =
+static const Str2Chr::TypePair cs_valueTable[] =
 {
-	Str2Chr::TypePair("amp", '&'),	Str2Chr::TypePair("lt", '<'),		Str2Chr::TypePair("gt", '>'),
-	Str2Chr::TypePair("apos", '\''),	Str2Chr::TypePair("quot", '"'),	Str2Chr::TypePair("nbsp", 160),
-	Str2Chr::TypePair("iexcl", 161),	Str2Chr::TypePair("cent", 162),	Str2Chr::TypePair("pound", 163),
-	Str2Chr::TypePair("curren", 164),Str2Chr::TypePair("yen", 165),	Str2Chr::TypePair("brvbar", 166),
-	Str2Chr::TypePair("sect", 167),	Str2Chr::TypePair("uml", 168),	Str2Chr::TypePair("copy", 169),
-	Str2Chr::TypePair("ordf", 170),	Str2Chr::TypePair("laquo", 171),	Str2Chr::TypePair("not", 172),
-	Str2Chr::TypePair("shy", 173),	Str2Chr::TypePair("reg", 174),	Str2Chr::TypePair("macr", 175),
-	Str2Chr::TypePair("deg", 176),	Str2Chr::TypePair("plusmn", 177),Str2Chr::TypePair("sup2", 178),
-	Str2Chr::TypePair("sup3", 179),	Str2Chr::TypePair("acute", 180),	Str2Chr::TypePair("micro", 181),
-	Str2Chr::TypePair("para", 182),	Str2Chr::TypePair("middot", 183),Str2Chr::TypePair("cedil", 184),
-	Str2Chr::TypePair("sup1", 185),	Str2Chr::TypePair("ordm", 186),	Str2Chr::TypePair("raquo", 187),
-	Str2Chr::TypePair("frac14", 188),Str2Chr::TypePair("frac12", 189),Str2Chr::TypePair("frac34", 190),
-	Str2Chr::TypePair("iquest", 191)
+    Str2Chr::TypePair("amp", '&'),  Str2Chr::TypePair("lt", '<'),       Str2Chr::TypePair("gt", '>'),
+    Str2Chr::TypePair("apos", '\''),    Str2Chr::TypePair("quot", '"'), Str2Chr::TypePair("nbsp", 160),
+    Str2Chr::TypePair("iexcl", 161),    Str2Chr::TypePair("cent", 162), Str2Chr::TypePair("pound", 163),
+    Str2Chr::TypePair("curren", 164),Str2Chr::TypePair("yen", 165), Str2Chr::TypePair("brvbar", 166),
+    Str2Chr::TypePair("sect", 167), Str2Chr::TypePair("uml", 168),  Str2Chr::TypePair("copy", 169),
+    Str2Chr::TypePair("ordf", 170), Str2Chr::TypePair("laquo", 171),    Str2Chr::TypePair("not", 172),
+    Str2Chr::TypePair("shy", 173),  Str2Chr::TypePair("reg", 174),  Str2Chr::TypePair("macr", 175),
+    Str2Chr::TypePair("deg", 176),  Str2Chr::TypePair("plusmn", 177),Str2Chr::TypePair("sup2", 178),
+    Str2Chr::TypePair("sup3", 179), Str2Chr::TypePair("acute", 180),    Str2Chr::TypePair("micro", 181),
+    Str2Chr::TypePair("para", 182), Str2Chr::TypePair("middot", 183),Str2Chr::TypePair("cedil", 184),
+    Str2Chr::TypePair("sup1", 185), Str2Chr::TypePair("ordm", 186), Str2Chr::TypePair("raquo", 187),
+    Str2Chr::TypePair("frac14", 188),Str2Chr::TypePair("frac12", 189),Str2Chr::TypePair("frac34", 190),
+    Str2Chr::TypePair("iquest", 191)
 };
-template<>
-const Str2Chr::TypeMap Str2Chr::_valuemap(Str2Chr::_valueTable, Str2Chr::get_table_end());
-template<>
-const Str2Chr::NotFoundType Str2Chr::_noval('?');
-const Str2Chr XmlElement::stringtochar_;
+const Str2Chr XmlElement::stringtochar_( cs_valueTable, '?' );
 
 //-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlElement& en)

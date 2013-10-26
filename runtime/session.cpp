@@ -73,23 +73,17 @@ const Tickval::ticks Tickval::billion;
 //-------------------------------------------------------------------------------------------------
 namespace FIX8
 {
-	template<>
-	const Session::Handlers::TypePair Session::Handlers::_valueTable[] =
-	{
-		Session::Handlers::TypePair(Common_MsgType_HEARTBEAT, &Session::handle_heartbeat),
-		Session::Handlers::TypePair(Common_MsgType_TEST_REQUEST, &Session::handle_test_request),
-		Session::Handlers::TypePair(Common_MsgType_RESEND_REQUEST, &Session::handle_resend_request),
-		Session::Handlers::TypePair(Common_MsgType_REJECT, &Session::handle_reject),
-		Session::Handlers::TypePair(Common_MsgType_SEQUENCE_RESET, &Session::handle_sequence_reset),
-		Session::Handlers::TypePair(Common_MsgType_LOGOUT, &Session::handle_logout),
-		Session::Handlers::TypePair(Common_MsgType_LOGON, &Session::handle_logon),
-	};
-	template<>
-	const Session::Handlers::NotFoundType Session::Handlers::_noval(&Session::handle_application);
-
-	template<>
-	const Session::Handlers::TypeMap Session::Handlers::_valuemap(Session::Handlers::_valueTable,
-		Session::Handlers::get_table_end());
+    const Session::Handlers::TypePair Session::cs_valueTable[] =
+    {
+        Session::Handlers::TypePair(Common_MsgType_HEARTBEAT, &Session::handle_heartbeat),
+        Session::Handlers::TypePair(Common_MsgType_TEST_REQUEST, &Session::handle_test_request),
+        Session::Handlers::TypePair(Common_MsgType_RESEND_REQUEST, &Session::handle_resend_request),
+        Session::Handlers::TypePair(Common_MsgType_REJECT, &Session::handle_reject),
+        Session::Handlers::TypePair(Common_MsgType_SEQUENCE_RESET, &Session::handle_sequence_reset),
+        Session::Handlers::TypePair(Common_MsgType_LOGOUT, &Session::handle_logout),
+        Session::Handlers::TypePair(Common_MsgType_LOGON, &Session::handle_logon),
+    };
+    const Session::Handlers Session::_handlers( cs_valueTable, &Session::handle_application );
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -807,12 +801,12 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 
 		if (_loginParameters._always_seqnum_assign)
 			//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
-			*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
+			*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq.load());
 	}
 	else
 	{
 		//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
-		*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
+		*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq.load());
 	}
 	*msg->Header() << new sending_time;
 
