@@ -93,7 +93,7 @@ static const Str2Chr::TypePair cs_valueTable[] =
     Str2Chr::TypePair("frac14", 188),Str2Chr::TypePair("frac12", 189),Str2Chr::TypePair("frac34", 190),
     Str2Chr::TypePair("iquest", 191)
 };
-const Str2Chr XmlElement::stringtochar_( cs_valueTable, '?' );
+const Str2Chr XmlElement::stringtochar_( cs_valueTable, sizeof( cs_valueTable ) / sizeof( Str2Chr::TypePair ), '?' );
 
 //-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlElement& en)

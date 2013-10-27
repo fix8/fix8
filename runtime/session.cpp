@@ -83,7 +83,7 @@ namespace FIX8
         Session::Handlers::TypePair(Common_MsgType_LOGOUT, &Session::handle_logout),
         Session::Handlers::TypePair(Common_MsgType_LOGON, &Session::handle_logon),
     };
-    const Session::Handlers Session::_handlers( cs_valueTable, &Session::handle_application );
+    const Session::Handlers Session::_handlers( cs_valueTable, sizeof( cs_valueTable ) / sizeof( Session::Handlers::TypePair ), &Session::handle_application );
 }
 
 //-------------------------------------------------------------------------------------------------

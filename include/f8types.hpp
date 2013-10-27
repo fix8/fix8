@@ -198,9 +198,9 @@ struct StaticTable
 	const NotFoundType _noval;
 
 	/// Ctor.
-	StaticTable( const TypePair * valueTable, const NotFoundType& noval )
+	StaticTable( const TypePair * valueTable, size_t valueTableSz, const NotFoundType& noval )
         : _valueTable( valueTable )
-        , _valuemap( _valueTable, get_table_end() )
+        , _valuemap( _valueTable, _valueTable + valueTableSz )
         , _noval( noval )
     {
     }
@@ -235,10 +235,6 @@ struct StaticTable
 	/*! Get the number of elements in the data set.
 	  \return number of elements */
 	size_t get_count() const { return _valuemap.size(); }
-
-	/*! Get a pointer to the end of the data set. Used as an end inputiterator for initialisation.
-	  \return pointer to end of table */
-	const TypePair *get_table_end() const { return _valueTable + sizeof(_valueTable)/sizeof(TypePair); }
 };
 
 //-------------------------------------------------------------------------------------------------

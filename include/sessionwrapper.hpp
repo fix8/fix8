@@ -63,7 +63,8 @@ struct SessionConfig : public Configuration
 			get_default_appl_ver_id(_ses), get_reset_sequence_number_flag(_ses),
 			get_always_seqnum_assign(_ses), get_silent_disconnect(_ses),
 			get_no_chksum_flag(_ses),
-			get_tcp_recvbuf_sz(_ses), get_tcp_sendbuf_sz(_ses));
+			get_tcp_recvbuf_sz(_ses), get_tcp_sendbuf_sz(_ses),
+            get_heartbeat_interval(_ses));
 		_loginParameters = lparam;
 	}
 
@@ -193,7 +194,7 @@ public:
 				//std::cout << "operator()():try" << std::endl;
 
 				this->_sock = new Poco::Net::StreamSocket,
-				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session, this->get_process_model(this->_ses));
+				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session, this->_loginParameters._hb_int, this->get_process_model(this->_ses));
 				this->_session->set_login_parameters(this->_loginParameters);
 				this->_session->set_session_config(this);
 				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, this->_loginParameters._davi());
