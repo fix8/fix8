@@ -127,9 +127,10 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 			const BaseEntry *be(_ctx.find_be(tv));
 			if (!be)
 				throw InvalidField(tv);
-			add_field_decoder(tv, ++pos, be->_create._do(val, be->_rlm, -1));
+            BaseField *bf(be->_create._do(val, be->_rlm, -1));
+            add_field_decoder(tv, ++pos, bf);
 			itr->_field_traits.set(FieldTrait::present);
-			if (itr->_field_traits.has(FieldTrait::group))
+			if (itr->_field_traits.has(FieldTrait::group) && static_cast<Field<int, 0> *>(bf)->get() > 0)
 				s_offset = decode_group(tv, from, s_offset, ignore);
 		}
 	}

@@ -1,3 +1,4 @@
+#if defined(WIN32) || defined(WIN64)
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include <f8config.h>
 
@@ -16,4 +17,4 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	}
 	return TRUE;
 }
-
+#endif
