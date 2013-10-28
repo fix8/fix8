@@ -529,7 +529,8 @@ T fast_atoi(const char *str, const char term='\0')
  * Released under GPLv3.
  * see http://www.strudel.org.uk/itoa
  */
-inline size_t itoa(int value, char *result, const int base=10)
+template<typename T>
+inline size_t itoa(T value, char *result, const int base=10)
 {
 	// check that the base if valid
 	if (base < 2 || base > 36)
@@ -539,7 +540,7 @@ inline size_t itoa(int value, char *result, const int base=10)
 	}
 
 	char *ptr(result), *ptr1(result);
-	int tmp_value;
+	T tmp_value;
 
 	do
 	{
@@ -561,7 +562,10 @@ inline size_t itoa(int value, char *result, const int base=10)
 	}
 	return ::strlen(result);
 }
-
+inline size_t itoa(int value, char *result, const int base=10)
+{
+    return itoa<int>( value, result, base);
+}
 //----------------------------------------------------------------------------------------
 /*! Simple and fast atof (ascii to float) function.
 Executes about 5x faster than standard MSCRT library atof().
