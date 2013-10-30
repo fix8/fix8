@@ -63,7 +63,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <set>
 #include <iterator>
 #include <algorithm>
-#include <bitset>
 #include <typeinfo>
 #include <sys/ioctl.h>
 #include <signal.h>

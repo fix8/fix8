@@ -208,6 +208,13 @@ AC_ARG_WITH(maxfldlen,
 	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=1024)])
 ],[])
 
+AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default precision for floating point fields])
+AC_ARG_WITH(precision,
+  AS_HELP_STRING([--with-precision=VALUE],[Default precision for floating point fields (default=2)]),
+[
+	AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, ${withval}, [Default precision for floating point fields (default=2)])
+],[])
+
 AC_ARG_WITH(tbb,
   AS_HELP_STRING([--with-tbb=DIR],[location of TBB]),
 [

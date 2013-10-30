@@ -96,7 +96,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <set>
 #include <iterator>
 #include <algorithm>
-#include <bitset>
 #include <typeinfo>
 #include <sys/ioctl.h>
 #include <signal.h>
@@ -131,25 +130,18 @@ const string GETARGLIST("hl:svqc:R:S:rdo");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
-namespace FIX8
+const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
 {
-	template<>
-	const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
-	{
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('T', "1000 New Order Singles"), &MyMenu::new_order_single_1000),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('R', "Resend request"), &MyMenu::resend_request),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
-	};
-	template<>
-	const MyMenu::Handlers::NotFoundType MyMenu::Handlers::_noval = &MyMenu::nothing;
-	template<>
-	const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
-		MyMenu::Handlers::get_table_end());
-}
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('T', "1000 New Order Singles"), &MyMenu::new_order_single_1000),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('R', "Resend request"), &MyMenu::resend_request),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+};
+const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
+	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
 
 bool quiet(false);
 
@@ -336,13 +328,14 @@ bool MyMenu::new_order_single()
 	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
 	*nos << new TEX::TransactTime
 	     << new TEX::OrderQty(1 + RandDev::getrandom(9999))
-	     << new TEX::Price(RandDev::getrandom(500.))
+	     << new TEX::Price(RandDev::getrandom(500.), 5)	// 5 decimal places if necessary
 	     << new TEX::ClOrdID(oistr.str())
 	     << new TEX::Symbol("BHP")
 	     << new TEX::OrdType(TEX::OrdType_LIMIT)
 	     << new TEX::Side(TEX::Side_BUY)
 	     << new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
 
+	*nos << new TEX::NoPartyIDs(unsigned(0));
 	*nos << new TEX::NoUnderlyings(3);
 	GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
 

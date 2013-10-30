@@ -67,7 +67,6 @@ e.g.\n
 #include <set>
 #include <iterator>
 #include <algorithm>
-#include <bitset>
 
 #include <regex.h>
 #include <errno.h>

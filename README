@@ -155,16 +155,18 @@ If you have built the test cases, you can also run them as follows:
 Building on Windows
 ===================
 
-Please see https://fix8engine.atlassian.net/wiki/display/FX/Building for detailed instructions on building for Windows.
+Please see https://fix8engine.atlassian.net/wiki/display/FX/Building for detailed instructions for building on Windows.
 
 Support
 =======
 
 Please refer to the following pages for help:
-- [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support)
 - [FAQ](http://fix8.org/faq.html)
+- [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support)
+- [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer)
 - [API Documentation](http://fix8.org/fix8/html)
 - [Jira Issues page](https://fix8engine.atlassian.net/)
+- [Fix8 News](http://blog.fix8.org/)
 
 License
 =======

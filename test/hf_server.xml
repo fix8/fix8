@@ -8,7 +8,7 @@
 				heartbeat_interval="10"
 				ip="127.0.0.1" port="11002"
 				sender_comp_id="TEX_DLD"
-				tcp_nodelay="true"
+				tcp_nodelay="false"
 			   tcp_recv_buffer="100663296"
 			   tcp_send_buffer="100663296"
 			   process_model="threaded" />

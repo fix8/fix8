@@ -362,6 +362,8 @@ Optional Packages:
                           additional fields
   --with-maxmsglen=VALUE  Maximum length of a FIX message (default=8192)
   --with-maxfldlen=VALUE  Maximum length of a FIX field (default=1024)
+  --with-precision=VALUE  Default precision for floating point fields
+	                       (default=2)
   --with-tbb=DIR          location of TBB
   --with-gtest=DIR        location of gtest
   --with-gperf=DIR        location of gperf libraries

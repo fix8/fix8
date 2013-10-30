@@ -45,7 +45,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
-#include <bitset>
 
 #ifndef _MSC_VER
 #include <strings.h>

@@ -90,25 +90,23 @@ class GeneratedTable
 public:
 	typedef _Pair<Key, Val> Pair;
 
-#ifdef _MSC_VER
-public:
-#else
+#ifndef _MSC_VER
 private:
 #endif
 	/// The actual data set
-	static const Pair _pairs[];
+	const Pair *_pairs;
 
 	/// The number of elements in the data set
-	static const size_t _pairsz;
+	const size_t _pairsz;
 
 	typedef Val NotFoundType;
 	/// The value to return when the key is not found
-	static const NotFoundType _noval;
+	const NotFoundType& _noval;
 
 	/*! Find a key; complexity log2(N)+2
 	  \param key the key to find
 	  \return Pair * if found, 0 if not found */
-   static const Pair *_find(const Key& key)
+   const Pair *_find(const Key& key) const
    {
 		const Pair *res(std::lower_bound (begin(), end(), reinterpret_cast<const Pair&>(key), Pair::Less));
       /// res != end && key >= res
@@ -117,21 +115,22 @@ private:
 
 public:
 	///Ctor.
-	GeneratedTable() {}
+	GeneratedTable(const Pair *pairs, const size_t pairsz, const NotFoundType& noval)
+		: _pairs(pairs), _pairsz(pairsz), _noval(noval) {}
 
 	/*! Get iterator to start of Pairs
 	  \return pointer to first pair */
-	static const Pair *begin() { return _pairs; }
+	const Pair *begin() const { return _pairs; }
 
 	/*! Get iterator to last + 1 of Pairs
 	  \return pointer to last + 1 pair */
-	static const Pair *end() { return _pairs + _pairsz; }
+	const Pair *end() const { return _pairs + _pairsz; }
 
 	/*! Find a key (reference). If not found, throw InvalidMetadata.
 	  Ye Olde Binary Chop
 	  \param key the key to find
 	  \return value found (reference) */
-	static const Val& find_ref(const Key& key)
+	const Val& find_ref(const Key& key) const
 	{
 		const Pair *res(_find(key));
 		if (res)
@@ -142,7 +141,7 @@ public:
 	/*! Find a key (value).
 	  \param key the key to find
 	  \return value found (value) or _noval if not found */
-	static const Val find_val(const Key& key)
+	const Val find_val(const Key& key) const
 	{
 		const Pair *res(_find(key));
 		return res ? res->_value : _noval;
@@ -151,7 +150,7 @@ public:
 	/*! Find a key (pointer).
 	  \param key the key to find
 	  \return value found (pointer) or 0 if not found */
-	static const Val *find_ptr(const Key& key)
+	const Val *find_ptr(const Key& key) const
 	{
 		const Pair *res(_find(key));
 		return res ? &res->_value : 0;
@@ -160,7 +159,7 @@ public:
 	/*! Find a key pair record (pointer).
 	  \param key the key to find
 	  \return key/value pair (pointer) or 0 if not found */
-	static const Pair *find_pair_ptr(const Key& key)
+	const Pair *find_pair_ptr(const Key& key) const
 	{
 		const Pair *res(_find(key));
 		return res ? res : 0;
@@ -169,11 +168,11 @@ public:
 	/*! Get the pair at index location
 	  \param idx of the pair to retrieve
 	  \return reference to pair or _noval if not found */
-	static const Pair *at(const size_t idx) { return idx < _pairsz ? _pairs + idx : 0; }
+	const Pair *at(const size_t idx) const { return idx < _pairsz ? _pairs + idx : 0; }
 
 	/*! Get the number of elements in the data set.
 	  \return number of elements */
-	static size_t size() { return _pairsz; }
+	size_t size() const { return _pairsz; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -188,22 +187,20 @@ struct StaticTable
 	typedef typename TypeMap::value_type TypePair;
 	typedef Val NotFoundType;
 
-	/// The actual data set
-	static const TypePair _valueTable[];
-
 	/// The container
-	static const TypeMap _valuemap;
+	const TypeMap _valuemap;
 
 	/// The value to return when the key is not found
-	static const NotFoundType _noval;
+	const NotFoundType _noval;
 
 	/// Ctor.
-	StaticTable() {}
+	StaticTable(const TypePair *valueTable, size_t valueTableSz, const NotFoundType& noval)
+		: _valuemap(valueTable, valueTable + valueTableSz), _noval(noval) {}
 
 	/*! Find a key (value).
 	  \param key the key to find
 	  \return value found (value) or _noval if not found */
-	static const Val find_value(const Key& key)
+	Val find_value(const Key& key) const
 	{
 		typename TypeMap::const_iterator itr(_valuemap.find(key));
 		return itr != _valuemap.end() ? itr->second : _noval;
@@ -212,7 +209,7 @@ struct StaticTable
 	/*! Find a key (reference).
 	  \param key the key to find
 	  \return value found (reference) or _noval if not found */
-	static const Val& find_ref(const Key& key)
+	const Val& find_ref(const Key& key) const
 	{
 		typename TypeMap::const_iterator itr(_valuemap.find(key));
 		return itr != _valuemap.end() ? itr->second : _noval;
@@ -221,7 +218,7 @@ struct StaticTable
 	/*! Find a key (pointer).
 	  \param key the key to find
 	  \return value found (pointer) or 0 if not found */
-	static const Val *find_ptr(const Key& key)
+	const Val *find_ptr(const Key& key) const
 	{
 		typename TypeMap::const_iterator itr(_valuemap.find(key));
 		return itr != _valuemap.end() ? &itr->second : 0;
@@ -229,11 +226,7 @@ struct StaticTable
 
 	/*! Get the number of elements in the data set.
 	  \return number of elements */
-	static size_t get_count() { return _valuemap.size(); }
-
-	/*! Get a pointer to the end of the data set. Used as an end inputiterator for initialisation.
-	  \return pointer to end of table */
-	static const TypePair *get_table_end() { return _valueTable + sizeof(_valueTable)/sizeof(TypePair); }
+	size_t get_count() const { return _valuemap.size(); }
 };
 
 //-------------------------------------------------------------------------------------------------

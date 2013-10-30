@@ -46,7 +46,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
-#include <bitset>
 
 #ifndef _MSC_VER
 #include <strings.h>
@@ -75,6 +74,7 @@ int Configuration::process()
 
 	load_map("fix8/persist", _persisters);
 	load_map("fix8/log", _loggers);
+	load_map("fix8/server_group", _server_group);
 
 	return _sessions.size();
 }
@@ -96,6 +96,23 @@ Poco::Net::SocketAddress Configuration::get_address(const XmlElement *from) cons
 		to = Poco::Net::SocketAddress(ip, port);
 
 	return to;
+}
+
+//-------------------------------------------------------------------------------------------------
+size_t Configuration::get_addresses(const XmlElement *from, vector<Poco::Net::SocketAddress>& target) const
+{
+	string name;
+	const XmlElement *which;
+	if (from && from->GetAttr("server_group", name) && (which = find_server_group(name)))
+	{
+		XmlElement::XmlSet slist;
+		if (which->find("server", slist))
+			for(XmlElement::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
+				target.push_back(get_address(*itr));
+		return target.size();
+	}
+
+	return 0;
 }
 
 //-------------------------------------------------------------------------------------------------

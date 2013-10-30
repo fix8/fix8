@@ -37,8 +37,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-template<>
-const BaseTypeMap::TypePair BaseTypeMap::_valueTable[] =
+const BaseTypeMap::TypePair bt_valueTable[] =
 {
 	BaseTypeMap::TypePair("INT", FieldTrait::ft_int),
 	BaseTypeMap::TypePair("LENGTH", FieldTrait::ft_Length),
@@ -81,14 +80,11 @@ const BaseTypeMap::TypePair BaseTypeMap::_valueTable[] =
 	BaseTypeMap::TypePair("RESERVED1000PLUS", FieldTrait::ft_Reserved1000Plus),
 	BaseTypeMap::TypePair("RESERVED4000PLUS", FieldTrait::ft_Reserved4000Plus)
 };
-template<>
-const BaseTypeMap::TypeMap BaseTypeMap::_valuemap(BaseTypeMap::_valueTable, BaseTypeMap::get_table_end());
-template<>
-const BaseTypeMap::NotFoundType BaseTypeMap::_noval(FieldTrait::ft_untyped);
+const BaseTypeMap FieldSpec::_baseTypeMap(bt_valueTable, sizeof(bt_valueTable)/sizeof(BaseTypeMap::TypePair),
+		FieldTrait::ft_untyped);
 
 //-------------------------------------------------------------------------------------------------
-template<>
-const TypeToCPP::TypePair TypeToCPP::_valueTable[] =
+const TypeToCPP::TypePair tc_valueTable[] =
 {
 	TypeToCPP::TypePair(FieldTrait::ft_int, "int"),
 	TypeToCPP::TypePair(FieldTrait::ft_Length, "Length"),
@@ -126,14 +122,11 @@ const TypeToCPP::TypePair TypeToCPP::_valueTable[] =
 	TypeToCPP::TypePair(FieldTrait::ft_Reserved4000Plus, "f8String"),
 	TypeToCPP::TypePair(FieldTrait::ft_Language, "Language")
 };
-template<>
-const TypeToCPP::TypeMap TypeToCPP::_valuemap(TypeToCPP::_valueTable, TypeToCPP::get_table_end());
-template<>
-const TypeToCPP::NotFoundType TypeToCPP::_noval("Unknown");
+const TypeToCPP FieldSpec::_typeToCPP(tc_valueTable, sizeof(tc_valueTable)/sizeof(TypeToCPP::TypePair),
+	"Unknown");
 
 //-------------------------------------------------------------------------------------------------
-template<>
-const CSMap::TypePair CSMap::_valueTable[] =
+const CSMap::TypePair cs_valueTable[] =
 {
 	CSMap::TypePair(cs_do_not_edit, "// *** f8c generated file: DO NOT EDIT! Created: "),
 	CSMap::TypePair(cs_start_namespace, "namespace FIX8 {"),
@@ -151,23 +144,12 @@ const CSMap::TypePair CSMap::_valueTable[] =
 "#include <set>\n"
 "#include <iterator>\n"
 "#include <algorithm>\n"
-"#include <bitset>\n"
 "#include <regex.h>\n"
 "#include <cerrno>\n"
 "#include <string.h>\n"
 "#if defined HAS_TR1_UNORDERED_MAP\n"
 "#include <tr1/unordered_map>\n"
-"#endif\n"
-"// f8 includes\n"
-"#include <f8exception.hpp>\n"
-"#include <hypersleep.hpp>\n"
-"#include <mpmc.hpp>\n"
-"#include <f8utils.hpp>\n"
-"#include <f8types.hpp>\n"
-"#include <traits.hpp>\n"
-"#include <tickval.hpp>\n"
-"#include <field.hpp>\n"
-"#include <message.hpp>"),
+"#endif"),
 	CSMap::TypePair(cs_divider,
 "//-------------------------------------------------------------------------------------------------"),
 CSMap::TypePair(cs_copyright,
@@ -236,10 +218,6 @@ CSMap::TypePair(cs_copyright2,
 "		add_field(Common_CheckSum, 3, _check_sum, false);\n"
 "	}"),
 };
-template<>
-const CSMap::TypeMap CSMap::_valuemap(CSMap::_valueTable, CSMap::get_table_end());
-template<>
-const CSMap::NotFoundType CSMap::_noval("not found");
 
 } // namespace FIX8
 //-------------------------------------------------------------------------------------------------

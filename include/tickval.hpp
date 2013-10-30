@@ -52,22 +52,15 @@ namespace FIX8
 
 inline LARGE_INTEGER getFILETIMEoffset()
 {
-	SYSTEMTIME s;
+	SYSTEMTIME s = { 1970, 1, 1, 0, 0, 0, 0 };
 	FILETIME f;
 	LARGE_INTEGER t;
 
-	s.wYear = 1970;
-	s.wMonth = 1;
-	s.wDay = 1;
-	s.wHour = 0;
-	s.wMinute = 0;
-	s.wSecond = 0;
-	s.wMilliseconds = 0;
 	SystemTimeToFileTime(&s, &f);
 	t.QuadPart = f.dwHighDateTime;
 	t.QuadPart <<= 32;
 	t.QuadPart |= f.dwLowDateTime;
-	return (t);
+	return t;
 }
 
 inline int clock_gettime(int X, struct timespec *tv)
@@ -242,7 +235,12 @@ public:
 	struct tm *as_tm(struct tm& result) const
 	{
 		const time_t insecs(secs());
+#ifdef _MSC_VER
+		gmtime_s(&result, &insecs);
+		return &result;
+#else
 		return gmtime_r(&insecs, &result);
+#endif
 	}
 
 	/*! Set from secs/nsecs

@@ -44,7 +44,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <set>
 #include <iterator>
 #include <algorithm>
-#include <bitset>
 
 #include <regex.h>
 #include <errno.h>

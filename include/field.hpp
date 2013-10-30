@@ -470,7 +470,7 @@ public:
 	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
-	Field () : BaseField(field), _value(), _precision(2) {}
+	Field () : BaseField(field), _value(), _precision(DEFAULT_PRECISION) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -479,7 +479,7 @@ public:
 	/*! Value ctor.
 	  \param val value to set
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const double& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val), _precision(2) {}
+	Field (const double& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val), _precision(DEFAULT_PRECISION) {}
 
 	/*! Value ctor.
 	  \param val value to set
@@ -490,12 +490,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(2) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(DEFAULT_PRECISION) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from)), _precision(2) {}
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from)), _precision(DEFAULT_PRECISION) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1663,75 +1663,36 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_float> Qty;
-typedef EnumType<FieldTrait::ft_float> Amt;
-typedef EnumType<FieldTrait::ft_float> price;
-typedef EnumType<FieldTrait::ft_float> PriceOffset;
-typedef EnumType<FieldTrait::ft_float> Percentage;
+// C++11 will permit proper type aliasing
+// typedef EnumType<FieldTrait::ft_float> Qty;
+// typedef EnumType<FieldTrait::ft_float> Amt;
+// typedef EnumType<FieldTrait::ft_float> price;
+// typedef EnumType<FieldTrait::ft_float> PriceOffset;
+// typedef EnumType<FieldTrait::ft_float> Percentage;
 
-/// Partial specialisation for Qty field type.
-/*! \tparam field field number (fix tag) */
-template<const unsigned short field>
-class Field<Qty, field> : public Field<double, field>
-{
-public:
-	/// The FIX fieldID (tag number).
-	static unsigned short get_field_id() { return field; }
-
-	/// Ctor.
-	Field () : Field<double, field>() {}
-
-	/*! Value ctor.
-	  \param val value to set
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const double& val, const RealmBase *rlm=0) : Field<double, field>(val, rlm) {}
-
-	/*! Construct from string ctor.
-	  \param from string to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<double, field>(from.c_str(), rlm) {}
-
-	/*! Construct from char * ctor.
-	  \param from char * to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : Field<double, field>(from, rlm) {}
-
-	/// Dtor.
-	~Field() {}
-};
+typedef double Qty;
+typedef double Amt;
+typedef double price;
+typedef double PriceOffset;
+typedef double Percentage;
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_string> MultipleCharValue;
-typedef EnumType<FieldTrait::ft_string> MultipleStringValue;
-typedef EnumType<FieldTrait::ft_string> country;
-typedef EnumType<FieldTrait::ft_string> currency;
-typedef EnumType<FieldTrait::ft_string> Exchange;
-typedef EnumType<FieldTrait::ft_string> Language;
-typedef EnumType<FieldTrait::ft_string> XMLData;
+// C++11 will permit proper type aliasing
+// typedef EnumType<FieldTrait::ft_string> MultipleCharValue;
+// typedef EnumType<FieldTrait::ft_string> MultipleStringValue;
+// typedef EnumType<FieldTrait::ft_string> country;
+// typedef EnumType<FieldTrait::ft_string> currency;
+// typedef EnumType<FieldTrait::ft_string> Exchange;
+// typedef EnumType<FieldTrait::ft_string> Language;
+// typedef EnumType<FieldTrait::ft_string> XMLData;
 
-/// Partial specialisation for MultipleCharValue field type.
-/*! \tparam field field number (fix tag) */
-template<const unsigned short field>
-class Field<MultipleCharValue, field> : public Field<f8String, field>
-{
-public:
-	/*! Value ctor.
-	  \param val value to set */
-	Field (const f8String& val) : Field<f8String, field>(val) {}
-
-	/*! Construct from string ctor.
-	  \param from string to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm) : Field<f8String, field>(from, rlm) {}
-
-	/*! Construct from char * ctor.
-	  \param from char * to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm) : Field<f8String, field>(from, rlm) {}
-
-	/// Dtor.
-	~Field() {}
-};
+typedef f8String MultipleCharValue;
+typedef f8String MultipleStringValue;
+typedef f8String country;
+typedef f8String currency;
+typedef f8String Exchange;
+typedef f8String Language;
+typedef f8String XMLData;
 
 //-------------------------------------------------------------------------------------------------
 /// Field metadata structures
@@ -1754,7 +1715,11 @@ class Inst
 		}
 	};
 
+	static BaseField *dummy(const char *from, const RealmBase *db, const int) { return 0; }
+
 public:
+	Inst() : _do(dummy) {}
+
 	BaseField *(&_do)(const char *from, const RealmBase *db, const int);
 
    template<typename T>

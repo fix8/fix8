@@ -40,10 +40,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 f8c -- compile FIX xml schema\n
 \n
 <tt>
-Usage: f8c [-CINRVWbcdfhiknoprstvx] \<input xml schema\>\n
+Usage: f8c [-CINPRVWbcdfhiknoprstvx] \<input xml schema\>\n
    -C,--nocheck            do not embed version checking in generated code (default false)\n
    -I,--info               print package info, exit\n
    -N,--nounique           do not enforce unique field parsing (default false)\n
+   -P,--incpath            prefix system include path with "fix8" in generated compilation units (default no)\n
    -R,--norealm            do not generate realm constructed field instantiators (default false)\n
    -W,--nowarn             suppress warning messages (default false)\n
    -V,--verbose            be more verbose when processing\n
@@ -62,9 +63,9 @@ Usage: f8c [-CINRVWbcdfhiknoprstvx] \<input xml schema\>\n
    -v,--version            print version, exit\n
    -x,--fixt \<file\>        For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file\n
 e.g.\n
-   f8c -p Texfix -n TEX myfix.xml\n
-   f8c -rp Texfix -n TEX -x ../schema/FIXT11.xml myfix.xml\n
-   f8c -p Texfix -n TEX -c client -x ../schema/FIXT11.xml myfix.xml\n
+   f8c -Vp Texfix -n TEX myfix.xml\n
+   f8c -Vrp Texfix -n TEX -x ../schema/FIXT11.xml myfix.xml\n
+   f8c -Vp Texfix -n TEX -c client -x ../schema/FIXT11.xml myfix.xml\n
 </tt>
 \n
 */
@@ -79,7 +80,6 @@ e.g.\n
 #include <set>
 #include <iterator>
 #include <algorithm>
-#include <bitset>
 
 #include <regex.h>
 #include <errno.h>
@@ -99,45 +99,21 @@ using namespace std;
 using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
-namespace FIX8
-{
-	template<>
-	const size_t GeneratedTable<unsigned int, BaseEntry>::_pairsz(0);
-#ifdef _MSC_VER
-	template<>
-	const GeneratedTable<unsigned int, BaseEntry>::Pair GeneratedTable<unsigned int, BaseEntry>::_pairs[1] = {};
-#else
-	template<>
-	const GeneratedTable<unsigned int, BaseEntry>::Pair GeneratedTable<unsigned int, BaseEntry>::_pairs[] = {};
-#endif
-	template<>
-	const size_t GeneratedTable<const char *, BaseMsgEntry>::_pairsz(0);
-#ifdef _MSC_VER
-	template<>
-	const GeneratedTable<const char *, BaseMsgEntry>::Pair GeneratedTable<const char *, BaseMsgEntry>::_pairs[1] = {};
-#else
-	template<>
-	const GeneratedTable<const char *, BaseMsgEntry>::Pair GeneratedTable<const char *, BaseMsgEntry>::_pairs[] = {};
-#endif
-}
-
-//-----------------------------------------------------------------------------------------
 const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp",
 	"_classes.hpp", "_router.hpp", "_session.hpp" };
 
 string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"), prefix("Myfix"), gen_classes;
-bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false);
+bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false), incpath(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIW");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWP");
 extern string spacer, shortName;
-
-//-----------------------------------------------------------------------------------------
-const CSMap _csMap;
 
 //-----------------------------------------------------------------------------------------
 // static data
 #include <f8cstatic.hpp>
+extern const CSMap _csMap;
+const CSMap _csMap(cs_valueTable, sizeof(cs_valueTable)/sizeof(CSMap::TypePair), "not found");
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
@@ -156,6 +132,7 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 const string& mkel(const string& base, const string& compon, string& where);
 const string& filepart(const string& source, string& where);
 void generate_preamble(ostream& to, const string& fname, bool donotedit=true);
+void generate_includes(ostream& to);
 unsigned parse_groups(MessageSpec& ritr, const string& name,
 	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist,
    const Components& compon, CommonGroupMap& globmap);
@@ -189,6 +166,7 @@ int main(int argc, char **argv)
 		{ "verbose",		0,	0,	'V' },
 		{ "nounique",		0,	0,	'N' },
 		{ "norealm",		0,	0,	'R' },
+		{ "incpath",		0,	0,	'P' },
 		{ "nowarn",		   0,	0,	'W' },
 		{ "odir",			1,	0,	'o' },
 		{ "dump",			0,	0,	'd' },
@@ -255,6 +233,7 @@ int main(int argc, char **argv)
 		case 'o': CheckAddTrailingSlash(odir = optarg); break;
 		case 'd': dump = true; break;
 		case 'i': error_ignore = true; break;
+		case 'P': incpath = true; break;
 		case 'k': keep_failed = true; break;
 		case 'r': retain_precomp = true; break;
 		case 's': second_only = true; break;
@@ -927,6 +906,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	generate_preamble(osc_cpp, ctxt._out[Ctxt::classes_cpp].first.second);
 	osc_cpp << _csMap.find_ref(cs_generated_includes) << endl;
+   generate_includes(osc_cpp);
 	osc_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first.second << '"' << endl;
 	osc_cpp << "#include \"" << ctxt._out[Ctxt::router_hpp].first.second << '"' << endl;
 	osc_cpp << "#include \"" << ctxt._out[Ctxt::classes_hpp].first.second << '"' << endl;
@@ -938,6 +918,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	generate_preamble(osr_cpp, ctxt._out[Ctxt::traits_cpp].first.second);
 	osr_cpp << _csMap.find_ref(cs_generated_includes) << endl;
+   generate_includes(osr_cpp);
 	osr_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first.second << '"' << endl;
 	osr_cpp << "#include \"" << ctxt._out[Ctxt::router_hpp].first.second << '"' << endl;
 	osr_cpp << "#include \"" << ctxt._out[Ctxt::classes_hpp].first.second << '"' << endl;
@@ -1075,8 +1056,6 @@ int process(XmlElement& xf, Ctxt& ctxt)
 // =============================== Message class instantiation ==============================
 
 	osc_cpp << endl;
-	osc_cpp << "const " << ctxt._clname << "_BaseMsgEntry bme;" << endl;
-	osc_cpp << "const " << ctxt._clname << "_BaseEntry be;" << endl;
 
 	osc_cpp << "const char *cn[] = // Component names" << endl << '{' << endl;
 	osc_cpp << spacer << "\"\"," << endl;
@@ -1085,11 +1064,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_cpp << "};" << endl;
 
 	osc_cpp << endl << _csMap.find_ref(cs_end_anon_namespace) << endl;
-	osc_cpp << endl << "} // namespace " << ctxt._fixns << endl;
 
 	osc_cpp << endl << _csMap.find_ref(cs_divider) << endl;
-	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::Pair "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_pairs[] =" << endl << '{' << endl;
+	osc_cpp << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::Pair "
+		<< "msgpairs[] =" << endl << '{' << endl;
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 	{
 		if (mitr != mspec.begin())
@@ -1106,25 +1084,25 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			osc_cpp << ", 0 }";
 		osc_cpp << " }";
 	}
-	osc_cpp << endl << "};" << endl;
-#ifdef _MSC_VER
-	osc_cpp << "template<>" << endl << "const size_t "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_pairsz(sizeof("
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_pairs)/sizeof("
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::Pair));" << endl;
-#else
-	osc_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname
-		<< "_BaseMsgEntry::_pairsz(sizeof(_pairs)/sizeof(" << ctxt._fixns << "::"
-		<< ctxt._clname << "_BaseMsgEntry::Pair));" << endl;
-#endif
-	osc_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::NotFoundType "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::_noval = { Minst(Type2Type<void *>()) };" << endl;
-	osc_cpp << "namespace " << ctxt._fixns << endl
-         << '{' << endl << spacer << "/// Compiler generated metadata object, accessed through this function" << endl
-         << spacer << "const F8MetaCntx& ctx() // avoid SIOF" << endl << spacer << '{' << endl
-         << spacer << spacer << "static const F8MetaCntx _ctx(" << ctxt._version << ", bme, be, cn, \"" << ctxt._beginstr << "\");" << endl
-         << spacer << spacer << "return _ctx;" << endl << spacer << '}' << endl;
-   osc_cpp << '}' << endl << endl;
+	osc_cpp << endl << "}; // " << mspec.size() << endl;
+
+   size_t fields_generated(0);
+	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
+		if (gen_fields || fitr->second._used)
+         ++fields_generated;
+
+	osc_cpp << endl << "extern const " << ctxt._clname << "_BaseEntry::Pair fldpairs[];" << endl << endl
+      << "/// Compiler generated metadata object, accessed through this function" << endl
+      << "const F8MetaCntx& ctx() // avoid SIOF" << endl << '{' << endl
+      << spacer << "static const BaseMsgEntry nvbme = { Minst(Type2Type<void *>()) };" << endl
+      << spacer << "static const " << ctxt._clname << "_BaseMsgEntry "
+         << "bme(msgpairs, " << mspec.size() << ", nvbme);" << endl
+      << spacer << "static const BaseEntry nvbe = { Inst(Type2Type<void *>()) };" << endl
+      << spacer << "static const " << ctxt._clname << "_BaseEntry "
+         << "be(fldpairs, " << fields_generated << ", nvbe);" << endl
+      << spacer << "static const F8MetaCntx _ctx(" << ctxt._version << ", bme, be, cn, \"" << ctxt._beginstr << "\");" << endl
+      << spacer << "return _ctx;" << endl << '}' << endl;
+	osc_cpp << endl << "} // namespace " << ctxt._fixns << endl;
 
 // ==================================== Message router ==================================
 
@@ -1246,6 +1224,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	ost_hpp << endl << _csMap.find_ref(cs_divider) << endl;
 	generate_preamble(ost_cpp, ctxt._out[Ctxt::types_cpp].first.second);
 	ost_cpp << _csMap.find_ref(cs_generated_includes) << endl;
+   generate_includes(ost_cpp);
 	ost_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first.second << '"' << endl;
 	ost_cpp << _csMap.find_ref(cs_divider) << endl;
 	ost_cpp << _csMap.find_ref(cs_start_namespace) << endl;
@@ -1286,14 +1265,14 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	// generate field instantiators
 	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
 	ost_cpp << endl << _csMap.find_ref(cs_end_anon_namespace) << endl;
-	ost_cpp << "} // namespace " << ctxt._fixns << endl;
 
 	// generate field instantiator lookup
 	ost_hpp << "typedef FieldTable " << ctxt._clname << "_BaseEntry;" << endl;
 
 	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
-	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairs[] =" << endl << '{' << endl;
+	ost_cpp << "extern const " << ctxt._clname << "_BaseEntry::Pair fldpairs[];" << endl;
+	ost_cpp << "const " << ctxt._clname << "_BaseEntry::Pair fldpairs[] ="
+      << endl << '{' << endl;
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
 		if (!gen_fields && !fitr->second._used)
@@ -1334,20 +1313,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			ost_cpp << ", 0";
 		ost_cpp << " } }";
 	}
-	ost_cpp << endl << "};" << endl;
-#ifdef _MSC_VER
-	ost_cpp << "template<>" << endl << "const size_t "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairsz(sizeof("
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairs)/sizeof("
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair));" << endl;
-#else
-	ost_cpp << "template<>" << endl << "const size_t " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_pairsz(sizeof(_pairs)/sizeof("
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::Pair));" << endl;
-#endif
-	ost_cpp << "template<>" << endl << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::NotFoundType "
-		<< ctxt._fixns << "::" << ctxt._clname << "_BaseEntry::_noval = { Inst(Type2Type<void *>()) };" << endl;
+	ost_cpp << endl << "}; // " << fields_generated << endl;
 
 	// terminate files
+	ost_cpp << "} // namespace " << ctxt._fixns << endl;
 	ost_hpp << endl << "} // namespace " << ctxt._fixns << endl;
 	ost_hpp << _csMap.find_ref(cs_end_namespace) << endl;
 	ost_hpp << "#endif // " << bintoaschex(ctxt._out[Ctxt::types_hpp].first.second) << endl;

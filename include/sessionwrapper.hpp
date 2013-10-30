@@ -59,11 +59,12 @@ struct SessionConfig : public Configuration
 		if (!_ses)
 			throw InvalidConfiguration(session_name);
 
-		LoginParameters lparam(get_retry_interval(_ses), get_retry_count(_ses),
+		const LoginParameters lparam(get_retry_interval(_ses), get_retry_count(_ses),
 			get_default_appl_ver_id(_ses), get_reset_sequence_number_flag(_ses),
 			get_always_seqnum_assign(_ses), get_silent_disconnect(_ses),
-			get_no_chksum_flag(_ses),
-			get_tcp_recvbuf_sz(_ses), get_tcp_sendbuf_sz(_ses));
+			get_no_chksum_flag(_ses), get_tcp_recvbuf_sz(_ses),
+			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses));
+
 		_loginParameters = lparam;
 	}
 
@@ -101,13 +102,32 @@ public:
 		_plog(create_logger(_ses, protocol_log)),
 		_sci(get_sender_comp_id(_ses)), _tci(get_target_comp_id(_ses)),
 		_id(_ctx._beginStr, _sci, _tci),
-		_persist(create_persister(_ses, 0, _loginParameters._reset_sequence_numbers)),
+		_persist(create_persister(_ses, 0, this->_loginParameters._reset_sequence_numbers)),
 		_session(new T(_ctx, _id, _persist, _log, _plog)),
 		_sock(init_con_later ? 0 : new Poco::Net::StreamSocket),
 		_addr(get_address(_ses)),
-        _cc(init_con_later ? 0 : new ClientConnection(_sock, _addr, *_session, get_heartbeat_interval(_ses), get_process_model(_ses)))
+		_cc(init_con_later ? 0
+			: new ClientConnection(_sock, _addr, *_session, this->_loginParameters._hb_int, get_process_model(_ses)))
 	{
-		_session->set_login_parameters(_loginParameters);
+		_session->set_login_parameters(this->_loginParameters);
+		_session->set_session_config(this);
+	}
+
+	/// Ctor. Prepares session for connection as an initiator, failover version.
+	ClientSession (const F8MetaCntx& ctx, const std::string& conf_file,
+		const std::string& session_name, const Poco::Net::SocketAddress& addr) :
+		SessionConfig(ctx, conf_file, session_name),
+		_log(create_logger(_ses, session_log)),
+		_plog(create_logger(_ses, protocol_log)),
+		_sci(get_sender_comp_id(_ses)), _tci(get_target_comp_id(_ses)),
+		_id(_ctx._beginStr, _sci, _tci),
+		_persist(create_persister(_ses, 0, this->_loginParameters._reset_sequence_numbers)),
+		_session(new T(_ctx, _id, _persist, _log, _plog)),
+		_sock(),
+		_addr(addr),
+		_cc()
+	{
+		_session->set_login_parameters(this->_loginParameters);
 		_session->set_session_config(this);
 	}
 
@@ -149,11 +169,22 @@ class ReliableClientSession : public ClientSession<T>
 	dthread<ReliableClientSession<T> > _thread;
 	unsigned _send_seqnum, _recv_seqnum;
 	f8_atomic<bool> _giving_up;
+	const bool _failover;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
 	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
-		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this)), _send_seqnum(), _recv_seqnum()
+		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this)),
+		_send_seqnum(), _recv_seqnum(), _failover()
+	{
+		_giving_up = false;
+	}
+
+	/// Ctor. Prepares session for connection as an initiator, failover version.
+	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file,
+		const std::string& session_name, const Poco::Net::SocketAddress& addr)
+		: ClientSession<T>(ctx, conf_file, session_name, addr), _thread(ref(*this)),
+		_send_seqnum(), _recv_seqnum(), _failover(true)
 	{
 		_giving_up = false;
 	}
@@ -193,7 +224,8 @@ public:
 				//std::cout << "operator()():try" << std::endl;
 
 				this->_sock = new Poco::Net::StreamSocket,
-				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session, this->get_process_model(this->_ses));
+				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session, this->_loginParameters._hb_int,
+					this->get_process_model(this->_ses));
 				this->_session->set_login_parameters(this->_loginParameters);
 				this->_session->set_session_config(this);
 				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, this->_loginParameters._davi());
@@ -206,6 +238,7 @@ public:
 			}
 			catch (Poco::Net::NetException& e)
 			{
+				// inline int Exception::code() can be used to further discriminate
 				this->_session->log(e.what());
 			}
 			catch (std::exception& e)

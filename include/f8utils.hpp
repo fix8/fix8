@@ -483,7 +483,7 @@ template<typename T>
 inline T get_value(const std::string& source)
 {
 	std::istringstream istr(source);
-	T result;
+	T result((T()));
 	istr >> result;
 	return result;
 }
@@ -526,11 +526,16 @@ T fast_atoi(const char *str, const char term='\0')
 /**
  * C++ version 0.4 char* style "itoa":
  * Written by Lukas Chmela
- * Released under GPLv3.
  * see http://www.strudel.org.uk/itoa
  */
+/// Fast itoa
+/*! \tparam T source type
+    \param value source value
+    \param result target
+    \param base base
+    \return size in bytes encoded */
 template<typename T>
-inline size_t itoa(T value, char *result, const int base=10)
+inline size_t itoa(T value, char *result, const T base=10)
 {
 	// check that the base if valid
 	if (base < 2 || base > 36)
@@ -562,10 +567,7 @@ inline size_t itoa(T value, char *result, const int base=10)
 	}
 	return ::strlen(result);
 }
-inline size_t itoa(int value, char *result, const int base=10)
-{
-    return itoa<int>( value, result, base);
-}
+
 //----------------------------------------------------------------------------------------
 /*! Simple and fast atof (ascii to float) function.
 Executes about 5x faster than standard MSCRT library atof().
@@ -1068,47 +1070,13 @@ public:
 };
 
 //---------------------------------------------------------------------------------------------------
-#ifdef _MSC_VER
 class tty_save_state
 {
 	bool _raw_mode;
 	int _fd;
-
-public:
-	explicit tty_save_state(int fd) : _raw_mode(), _fd(fd) {}
-
-	tty_save_state& operator=(const tty_save_state& from)
-	{
-		if (&from != this)
-		{
-			_raw_mode = from._raw_mode;
-			_fd = from._fd;
-		}
-		return *this;
-	}
-
-	void unset_raw_mode()
-	{
-		if (_raw_mode)
-		{
-			_raw_mode = false;
-		}
-	}
-
-	void set_raw_mode()
-	{
-		if (!_raw_mode)
-		{
-			_raw_mode = true;
-		}
-	}
-};
-#else
-class tty_save_state
-{
-	bool _raw_mode;
-	int _fd;
+#ifndef _MSC_VER
 	termio _tty_state;
+#endif
 
 public:
 	explicit tty_save_state(int fd) : _raw_mode(), _fd(fd) {}
@@ -1119,7 +1087,9 @@ public:
 		{
 			_raw_mode = from._raw_mode;
 			_fd = from._fd;
+#ifndef _MSC_VER
 			_tty_state = from._tty_state;
+#endif
 		}
 		return *this;
 	}
@@ -1128,9 +1098,11 @@ public:
 	{
 		if (_raw_mode)
 		{
+#ifndef _MSC_VER
 			if (ioctl(_fd, TCSETA, &_tty_state) < 0)
 				std::cerr << Str_error(errno, "Cannot reset ioctl") << std::endl;
 			else
+#endif
 				_raw_mode = false;
 		}
 	}
@@ -1139,6 +1111,7 @@ public:
 	{
 		if (!_raw_mode)
 		{
+#ifndef _MSC_VER
 			if (ioctl(_fd, TCGETA, &_tty_state) < 0)
 			{
 				std::cerr << Str_error(errno, "Cannot get ioctl") << std::endl;
@@ -1151,11 +1124,11 @@ public:
 			if (ioctl(_fd, TCSETA, &tty_state) < 0)
 				std::cerr << Str_error(errno, "Cannot reset ioctl") << std::endl;
 			else
+#endif
 				_raw_mode = true;
 		}
 	}
 };
-#endif // _MSC_VER
 
 //----------------------------------------------------------------------------------------
 } // namespace FIX8

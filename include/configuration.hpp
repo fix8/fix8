@@ -46,10 +46,10 @@ class Configuration
 {
 	static RegExp _ipexp;
 
-	std::string _xmlfile;
-	XmlElement *_root;
+	const std::string _xmlfile;
+	const XmlElement *_root;
 	typedef std::map<const std::string, const XmlElement *> ConfigMap;
-	ConfigMap _sessions, _persisters, _loggers;
+	ConfigMap _sessions, _persisters, _loggers, _server_group;
 	std::vector<const XmlElement *> _allsessions;
 
 	/*! Find an xml entity by tag in the supplied map.
@@ -69,6 +69,11 @@ class Configuration
 	  \return the found entity or 0 if not found */
 	const XmlElement *find_persister(const std::string& tag) const { return find_element(tag, _persisters); }
 
+	/*! Find a _server_group by tag.
+	  \param tag the tag to find
+	  \return the found entity or 0 if not found */
+	const XmlElement *find_server_group(const std::string& tag) const { return find_element(tag, _server_group); }
+
 	/*! Find a fix8 field typed value by tag from an xml entity.
 	  \tparam location type
 	  \param tag the tag to find
@@ -83,6 +88,16 @@ class Configuration
 			to.set(val);
 		return to;
 	}
+
+	/*! Find an attribute in the given XmlElement
+	  \tparam default type
+	  \param from the xml entity to search
+	  \param tag the tag to find
+	  \param def the default value if not found
+	  \return the found attribute vakue or the default value if not found */
+	template<typename T>
+	T find_or_default(const XmlElement *from, const std::string& tag, const T def) const
+		{	return from ? from->FindAttr(tag, def) : def; }
 
 	/*! Load a repeating group into a supplied map.
 	  \param tag the tag to find
@@ -141,6 +156,12 @@ public:
 	  \return the connection role or Connection::cn_unknown if not found */
 	Connection::Role get_role(const XmlElement *from) const;
 
+	/*! Extract the ip addresses from a server_group entity.
+	  \param from xml entity to search
+	  \param target target vector to store addresses
+	  \return number of addresses stored */
+	size_t get_addresses(const XmlElement *from, std::vector<Poco::Net::SocketAddress>& target) const;
+
 	/*! Extract the ip address from a session entity.
 	  \param from xml entity to search
 	  \return Poco::Net::SocketAddress */
@@ -163,86 +184,86 @@ public:
 	  \param def default value if not found
 	  \return the retry wait interval or 5000 if not found */
 	unsigned get_retry_interval(const XmlElement *from, const unsigned def=5000) const
-		{ if (from) return from->FindAttr("login_retry_interval", def); return def; }
+		{ return find_or_default(from, "login_retry_interval", def); }
 
 	/*! Extract the login retry count from a session entity.
 	  \param from xml entity to search
 	  \param def default value if not found
 	  \return the retry count or 10 if not found */
 	unsigned get_retry_count(const XmlElement *from, const unsigned def=10) const
-		{ if (from) return from->FindAttr("login_retries", def); return def; }
+		{ return find_or_default(from, "login_retries", def); }
 
 	/*! Extract the tcp recv buffer size
 	  \param from xml entity to search
 	  \return the recv buffer size count or 0 if the default should be used */
-	unsigned get_tcp_recvbuf_sz(const XmlElement *from) const
-		{ if (from) return from->FindAttr("tcp_recv_buffer", 0); return 0; }
+	unsigned get_tcp_recvbuf_sz(const XmlElement *from, const unsigned def=0) const
+		{ return find_or_default(from, "tcp_recv_buffer", def); }
 
 	/*! Extract the tcp send buffer size
 	  \param from xml entity to search
 	  \return the send buffer size count or 0 if the default should be used */
-	unsigned get_tcp_sendbuf_sz(const XmlElement *from) const
-		{ if (from) return from->FindAttr("tcp_send_buffer", 0); return 0; }
+	unsigned get_tcp_sendbuf_sz(const XmlElement *from, const unsigned def=0) const
+		{ return find_or_default(from, "tcp_send_buffer", def); }
 
 	/*! Extract the FIX version from a session entity.
 	  \param from xml entity to search
 	  \return the FIX version or 0 if not found */
-	unsigned get_version(const XmlElement *from) const
-		{ if (from) return from->FindAttr("fix_version", 0); return 0; }
+	unsigned get_version(const XmlElement *from, const unsigned def=0) const
+		{ return find_or_default(from, "fix_version", def); }
 
 	/*! Extract the logfile rotation count.
 	  \param from xml entity to search
 	  \param def default value if not found
 	  \return the logfile rotation value or 5 if not found */
 	unsigned get_logfile_rotation(const XmlElement *from, const unsigned def=5) const
-		{ if (from) return from->FindAttr("rotation", def); return def; }
+		{ return find_or_default(from, "rotation", def); }
 
 	/*! Extract the heartbeat interval from a session entity.
 	  \param from xml entity to search
 	  \return the heartbeat interval version or 0 if not found */
-	unsigned get_heartbeat_interval(const XmlElement *from) const
-		{ if (from) return from->FindAttr("heartbeat_interval", 0); return 0; }
+	unsigned get_heartbeat_interval(const XmlElement *from, const unsigned def=0) const
+		{ return find_or_default(from, "heartbeat_interval", def); }
 
 	/*! Extract the tcp nodelay flag.
 	  \param from xml entity to search
 	  \return false if nodelay flag was passed and was false */
-	bool get_tcp_nodelay(const XmlElement *from)
-		{ return from && from->FindAttr("tcp_nodelay", true); }
+	bool get_tcp_nodelay(const XmlElement *from, const bool def=true) const
+		{ return find_or_default(from, "tcp_nodelay", def); }
 
 	/*! Extract the silent disconnect flag.
 	  \param from xml entity to search
 	  \return true if silent_disconnect flag was passed and was true */
-	bool get_silent_disconnect(const XmlElement *from)
-		{ return from && from->FindAttr("silent_disconnect", false); }
+	bool get_silent_disconnect(const XmlElement *from, const bool def=false) const
+		{ return find_or_default(from, "silent_disconnect", def); }
+
+	/*! Extract the ignore_logon_sequence_check flag from a session entity.
+	  \param from xml entity to search
+	  \return true if ignore_logon_sequence_check flag was passed and was true */
+	bool get_ignore_logon_sequence_check_flag(const XmlElement *from, const bool def=false) const
+		{ return find_or_default(from, "ignore_logon_sequence_check", def); }
+
+	/*! Extract the get_no_chksum_flag flag from a session entity.
+	  \param from xml entity to search
+	  \return true if get_no_chksum_flag flag was passed and was true */
+	bool get_no_chksum_flag(const XmlElement *from, const bool def=false) const
+		{ return find_or_default(from, "no_chksum", def); }
+
+	/*! Extract the reset_sequence_number flag from a session entity.
+	  \param from xml entity to search
+	  \return true if reset_sequence_number flag was passed and was true */
+	bool get_reset_sequence_number_flag(const XmlElement *from, const bool def=false) const
+		{ return find_or_default(from, "reset_sequence_numbers", def); }
+
+	/*! Extract the always_seqnum_assign flag from a session entity.
+	  \param from xml entity to search
+	  \return true if always_seqnum_assign flag was passed and was true */
+	bool get_always_seqnum_assign(const XmlElement *from, const bool def=false) const
+		{ return find_or_default(from, "always_seqnum_assign", def); }
 
 	/*! Extract process model.
 	  \param from xml entity to search
 	  \return pm_thread, pm_pipeline or pm_coro */
 	ProcessModel get_process_model(const XmlElement *from) const;
-
-	/*! Extract the ignore_logon_sequence_check flag from a session entity.
-	  \param from xml entity to search
-	  \return true if ignore_logon_sequence_check flag was passed and was true */
-	bool get_ignore_logon_sequence_check_flag(const XmlElement *from)
-		{ return from && from->FindAttr("ignore_logon_sequence_check", false); }
-
-	/*! Extract the get_no_chksum_flag flag from a session entity.
-	  \param from xml entity to search
-	  \return true if get_no_chksum_flag flag was passed and was true */
-	bool get_no_chksum_flag(const XmlElement *from)
-		{ return from && from->FindAttr("no_chksum", false); }
-
-	/*! Extract the reset_sequence_number flag from a session entity.
-	  \param from xml entity to search
-	  \return true if reset_sequence_number flag was passed and was true */
-	bool get_reset_sequence_number_flag(const XmlElement *from)
-		{ return from && from->FindAttr("reset_sequence_numbers", false); }
-
-	/*! Extract the always_seqnum_assign flag from a session entity.
-	  \param from xml entity to search
-	  \return true if always_seqnum_assign flag was passed and was true */
-	bool get_always_seqnum_assign(const XmlElement *from)
-		{ return from && from->FindAttr("always_seqnum_assign", false); }
 
 	/*! Extract default_appl_ver_id from a session entity.
 	  \param from xml entity to search

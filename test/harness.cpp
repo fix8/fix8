@@ -98,7 +98,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <set>
 #include <iterator>
 #include <algorithm>
-#include <bitset>
 #include <typeinfo>
 #ifdef _MSC_VER
 #include <signal.h>
@@ -137,27 +136,20 @@ const string GETARGLIST("hl:svqc:R:S:rp:");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
-namespace FIX8
+const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
 {
-	template<>
-	const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
-	{
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('c', "Create messages"), &MyMenu::create_msgs),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('e', "Edit messages"), &MyMenu::edit_msgs),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('d', "Delete messages"), &MyMenu::delete_msgs),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Print messages"), &MyMenu::print_msgs),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('s', "Send messages"), &MyMenu::send_msgs),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('r', "Read messages from disk"), &MyMenu::read_msgs),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
-	};
-	template<>
-	const MyMenu::Handlers::NotFoundType MyMenu::Handlers::_noval = &MyMenu::nothing;
-	template<>
-	const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
-		MyMenu::Handlers::get_table_end());
-}
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('c', "Create messages"), &MyMenu::create_msgs),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('e', "Edit messages"), &MyMenu::edit_msgs),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('d', "Delete messages"), &MyMenu::delete_msgs),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Print messages"), &MyMenu::print_msgs),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('s', "Send messages"), &MyMenu::send_msgs),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('r', "Read messages from disk"), &MyMenu::read_msgs),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+};
+const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
+	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
 
 bool quiet(false);
 

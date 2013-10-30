@@ -52,13 +52,7 @@ class Session;
 typedef std::vector<MessageBase *> GroupElement;
 
 //-------------------------------------------------------------------------------------------------
-typedef std::
-#if defined HAS_TR1_UNORDERED_MAP
-	tr1::unordered_map
-#else
-	map
-#endif
-	<unsigned short, class GroupBase *> Groups;
+typedef std::map<unsigned short, class GroupBase *> Groups;
 
 /// Abstract base class for all repeating groups
 class GroupBase
@@ -143,7 +137,11 @@ class Minst
 		static Message *_make_cast() { return reinterpret_cast<Message *>(new T); }
 	};
 
+	static Message *dummy() { return 0; }
+
 public:
+	Minst() : _do(dummy) {}
+
 	Message *(&_do)();
 
    template<typename T>

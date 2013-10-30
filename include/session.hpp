@@ -157,25 +157,26 @@ class Connection;
 //-------------------------------------------------------------------------------------------------
 struct LoginParameters
 {
-	enum { default_retry_interval=5000, default_login_retries=100 };
+	enum { default_retry_interval=5000, default_login_retries=100, default_hb_interval=30 };
 
 	LoginParameters() : _login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
 		_reset_sequence_numbers(), _always_seqnum_assign(), _silent_disconnect(), _no_chksum_flag(),
-		_recv_buf_sz(), _send_buf_sz() {}
+		_recv_buf_sz(), _send_buf_sz(), _hb_int(default_hb_interval) {}
 
 	LoginParameters(const unsigned login_retry_interval, const unsigned login_retries,
 		const default_appl_ver_id& davi, const bool reset_seqnum=false, const bool always_seqnum_assign=false,
-		const bool silent_disconnect=false, const bool no_chksum_flag=false, unsigned recv_buf_sz=0, unsigned send_buf_sz=0)
+		const bool silent_disconnect=false, const bool no_chksum_flag=false, unsigned recv_buf_sz=0,
+		unsigned send_buf_sz=0, unsigned hb_int=default_hb_interval)
 		: _login_retry_interval(login_retry_interval), _login_retries(login_retries),
 		_reset_sequence_numbers(reset_seqnum), _always_seqnum_assign(always_seqnum_assign),
 		_silent_disconnect(silent_disconnect), _no_chksum_flag(no_chksum_flag),
-		_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz) {}
+		_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz), _hb_int(default_hb_interval) {}
 
 	LoginParameters(const LoginParameters& from)
 		: _login_retry_interval(from._login_retry_interval), _login_retries(from._login_retries),
 		_reset_sequence_numbers(from._reset_sequence_numbers), _always_seqnum_assign(from._always_seqnum_assign),
 		_silent_disconnect(from._silent_disconnect), _no_chksum_flag(from._no_chksum_flag), _davi(from._davi),
-		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz) {}
+		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz), _hb_int(from._hb_int) {}
 
 	LoginParameters& operator=(const LoginParameters& that)
 	{
@@ -190,6 +191,7 @@ struct LoginParameters
 			_davi = that._davi;
 			_recv_buf_sz = that._recv_buf_sz;
 			_send_buf_sz = that._send_buf_sz;
+			_hb_int = that._hb_int;
 		}
 		return *this;
 	}
@@ -197,7 +199,7 @@ struct LoginParameters
 	unsigned _login_retry_interval, _login_retries;
 	bool _reset_sequence_numbers, _always_seqnum_assign, _silent_disconnect, _no_chksum_flag;
 	default_appl_ver_id _davi;
-	unsigned _recv_buf_sz, _send_buf_sz;
+	unsigned _recv_buf_sz, _send_buf_sz, _hb_int;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -205,7 +207,8 @@ struct LoginParameters
 class Session
 {
 	typedef StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)> Handlers;
-	Handlers _handlers;
+	static const Handlers _handlers;
+	static const Handlers::TypePair _valueTable[];
 
 	/*! Initialise atomic members.
 	  \param st the initial session state */

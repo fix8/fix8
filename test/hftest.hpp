@@ -167,7 +167,8 @@ class MyMenu
 	std::ostream& _ostr;
 
 	typedef FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem> Handlers;
-	Handlers _handlers;
+	static const Handlers _handlers;
+	static const Handlers::TypePair _valueTable[];
 
 public:
 	MyMenu(hf_session_client& session, int infd, std::ostream& ostr)
@@ -202,7 +203,7 @@ struct RandDev
 	static void init()
 	{
 #ifdef _MSC_VER
-	    srand (static_cast<unsigned>(time(0) % _getpid()));
+	   srand (static_cast<unsigned>(time(0) % _getpid()));
 #else
 		srandom (static_cast<unsigned>(time(0) % getpid()));
 #endif

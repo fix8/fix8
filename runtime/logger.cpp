@@ -45,7 +45,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
-#include <bitset>
 #include <time.h>
 #ifndef _MSC_VER
 #include <strings.h>
@@ -234,9 +233,7 @@ bool FileLogger::rotate(bool force)
 {
 	f8_scoped_lock guard(_mutex);
 
-#ifdef _MSC_VER
 	delete _ofs;
-#endif
 
 	string thislFile(_pathname);
 #ifdef HAVE_COMPRESSION
@@ -260,10 +257,6 @@ bool FileLogger::rotate(bool force)
 		for (unsigned ii(_rotnum); ii; --ii)
 			rename (rlst[ii - 1].c_str(), rlst[ii].c_str());
 	}
-
-#ifndef _MSC_VER
-	delete _ofs;
-#endif
 
 	const ios_base::openmode mode (_flags & append ? ios_base::out | ios_base::app : ios_base::out);
 #ifdef HAVE_COMPRESSION

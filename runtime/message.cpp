@@ -45,7 +45,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
-#include <bitset>
 
 #ifndef _MSC_VER
 #include <strings.h>
@@ -127,9 +126,11 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 			const BaseEntry *be(_ctx.find_be(tv));
 			if (!be)
 				throw InvalidField(tv);
-			add_field_decoder(tv, ++pos, be->_create._do(val, be->_rlm, -1));
+			BaseField *bf(be->_create._do(val, be->_rlm, -1));
+			add_field_decoder(tv, ++pos, bf);
 			itr->_field_traits.set(FieldTrait::present);
-			if (itr->_field_traits.has(FieldTrait::group))
+			// check if repeating group and num elements > 0
+			if (itr->_field_traits.has(FieldTrait::group) && static_cast<Field<int, 0> *>(bf)->get() > 0)
 				s_offset = decode_group(tv, from, s_offset, ignore);
 		}
 	}
@@ -375,7 +376,9 @@ size_t Message::encode(char **hmsg_store) const
 		throw MissingMessageComponent("trailer");
 	msg += _trailer->encode(msg);
 	const size_t msgLen(msg - moffs); // checksummable msglength
-	const size_t hlen(_ctx._preamble_sz + (msgLen < 10 ? 1 : msgLen < 100 ? 2 : msgLen < 1000 ? 3 : 4));
+	const size_t hlen(_ctx._preamble_sz +
+		(msgLen < 10 ? 1 : msgLen < 100 ? 2 : msgLen < 1000 ? 3 : msgLen < 10000 ? 4 :
+		 msgLen < 100000 ? 5 : msgLen < 1000000 ? 6 : 7));
 	char *hmsg(moffs - hlen);
 	*hmsg_store = hmsg;
 

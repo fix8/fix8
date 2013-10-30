@@ -77,8 +77,7 @@ RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&([a-z]{
    XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
 
 //----------------------------------------------------------------------------------------
-template<>
-const Str2Chr::TypePair Str2Chr::_valueTable[] =
+const Str2Chr::TypePair valueTable[] =
 {
 	Str2Chr::TypePair("amp", '&'),	Str2Chr::TypePair("lt", '<'),		Str2Chr::TypePair("gt", '>'),
 	Str2Chr::TypePair("apos", '\''),	Str2Chr::TypePair("quot", '"'),	Str2Chr::TypePair("nbsp", 160),
@@ -94,11 +93,7 @@ const Str2Chr::TypePair Str2Chr::_valueTable[] =
 	Str2Chr::TypePair("frac14", 188),Str2Chr::TypePair("frac12", 189),Str2Chr::TypePair("frac34", 190),
 	Str2Chr::TypePair("iquest", 191)
 };
-template<>
-const Str2Chr::TypeMap Str2Chr::_valuemap(Str2Chr::_valueTable, Str2Chr::get_table_end());
-template<>
-const Str2Chr::NotFoundType Str2Chr::_noval('?');
-const Str2Chr XmlElement::stringtochar_;
+const Str2Chr XmlElement::stringtochar_(valueTable, sizeof(valueTable)/sizeof(Str2Chr::TypePair), '?');
 
 //-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlElement& en)

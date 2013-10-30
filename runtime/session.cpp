@@ -46,7 +46,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
-#include <bitset>
 
 #ifndef _MSC_VER
 #include <strings.h>
@@ -73,8 +72,7 @@ const Tickval::ticks Tickval::billion;
 //-------------------------------------------------------------------------------------------------
 namespace FIX8
 {
-	template<>
-	const Session::Handlers::TypePair Session::Handlers::_valueTable[] =
+	const Session::Handlers::TypePair Session::_valueTable[] =
 	{
 		Session::Handlers::TypePair(Common_MsgType_HEARTBEAT, &Session::handle_heartbeat),
 		Session::Handlers::TypePair(Common_MsgType_TEST_REQUEST, &Session::handle_test_request),
@@ -84,12 +82,9 @@ namespace FIX8
 		Session::Handlers::TypePair(Common_MsgType_LOGOUT, &Session::handle_logout),
 		Session::Handlers::TypePair(Common_MsgType_LOGON, &Session::handle_logon),
 	};
-	template<>
-	const Session::Handlers::NotFoundType Session::Handlers::_noval(&Session::handle_application);
-
-	template<>
-	const Session::Handlers::TypeMap Session::Handlers::_valuemap(Session::Handlers::_valueTable,
-		Session::Handlers::get_table_end());
+	const Session::Handlers Session::_handlers(Session::_valueTable,
+		sizeof(Session::_valueTable)/sizeof(Session::Handlers::TypePair),
+		&Session::handle_application);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -175,7 +170,7 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 	log("Starting session");
 	_connection = connection; // takes owership
 	if (!_connection->connect()) // if already connected returns true
-		return -1;;
+		return -1;
 	if (_connection->get_role() == Connection::cn_acceptor)
 		atomic_init(States::st_wait_for_logon); // important for server that this is done before connect
 	_connection->start();

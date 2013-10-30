@@ -98,7 +98,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <set>
 #include <iterator>
 #include <algorithm>
-#include <bitset>
 #include <typeinfo>
 #ifdef _MSC_VER
 #include <signal.h>
@@ -138,26 +137,19 @@ bool term_received(false);
 unsigned batch_size(1000), preload_count(0), update_count(5000);
 
 //-----------------------------------------------------------------------------------------
-namespace FIX8
+const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
 {
-	template<>
-	const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
-	{
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "Send a NewOrderSingle msg"), &MyMenu::new_order_single),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Preload n NewOrderSingle msgs"), &MyMenu::preload_new_order_single),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('b', "Batch preload and send n NewOrderSingle msgs"), &MyMenu::batch_preload_new_order_single),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "Send n NewOrderSingle msgs"), &MyMenu::multi_new_order_single),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('a', "Send all Preloaded NewOrderSingle msgs"), &MyMenu::send_all_preloaded),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
-		MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
-	};
-	template<>
-	const MyMenu::Handlers::NotFoundType MyMenu::Handlers::_noval = &MyMenu::nothing;
-	template<>
-	const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
-	MyMenu::Handlers::get_table_end());
-}
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "Send a NewOrderSingle msg"), &MyMenu::new_order_single),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Preload n NewOrderSingle msgs"), &MyMenu::preload_new_order_single),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('b', "Batch preload and send n NewOrderSingle msgs"), &MyMenu::batch_preload_new_order_single),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "Send n NewOrderSingle msgs"), &MyMenu::multi_new_order_single),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('a', "Send all Preloaded NewOrderSingle msgs"), &MyMenu::send_all_preloaded),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+};
+const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
+	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
 
 bool quiet(true);
 
@@ -574,6 +566,7 @@ void print_usage()
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
 	um.add('r', "reliable", "start in reliable mode");
+	um.add('u', "update", "message count update frequency (default 5000)");
 	um.print(cerr);
 }
 

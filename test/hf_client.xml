@@ -12,7 +12,7 @@
            login_retry_interval="15000"
 			  heartbeat_interval="10"
            reset_sequence_numbers="false"
-           tcp_nodelay="true"
+           tcp_nodelay="false"
            login_retries="100"
 			  tcp_recv_buffer="100663296"
 			  tcp_send_buffer="100663296"
