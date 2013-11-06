@@ -45,6 +45,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 using namespace FIX8;
 using namespace FIX8::UTEST;
 
+#ifdef _MSC_VER
+
+bool operator==(const Tickval& a, const Tickval& b)
+{
+	return a.get_ticks() == b.get_ticks();
+}
+
+#endif
+
 /*!message missing mandatory field
     \param message test suit name
     \param missing_field test case name*/
