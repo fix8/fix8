@@ -2,13 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <Poco>C:\Users\Richard Bourne\Source\poco\poco-1.4.6p1</Poco>
-    <TBB>C:\Users\Richard Bourne\Source\tbb\tbb41_20130613oss</TBB>
-    <Boost>C:\Users\Richard Bourne\Source\boost\boost_1_54_0</Boost>
-    <pthreads>C:\Users\Richard Bourne\Source\pthreads\pthreads-w32-2-9-1</pthreads>
-    <zlib>C:\Users\Richard Bourne\Source\zlib\zlib128</zlib>
-    <GetOpt>C:\Users\Richard Bourne\Source\getopt</GetOpt>
-    <gtest>C:\Users\Richard Bourne\Source\gtest\gtest-1.6.0</gtest>
+    <Poco>D:\development\jsu_LCC-JSU-T\BuildKit\BuildKit\windows\x86_vs2012\poco-1.3.3p1</Poco>
+    <TBB>D:\development\jsu_LCC-JSU-T\BuildKit\BuildKit\windows\x86_vs2012\tbb41_20130314oss</TBB>
+    <Boost>D:\fix8_winbuild\boost_1_54_0</Boost>
+    <pthreads>D:\fix8_winbuild\pthreads-w32-2-9-1-release</pthreads>
+    <zlib>D:\fix8_winbuild\zlib128-dll</zlib>
+    <GetOpt>D:\fix8_winbuild\getopt</GetOpt>
+    <gtest>D:\fix8_winbuild\gtest-1.7.0</gtest>
   </PropertyGroup>
   <PropertyGroup>
     <IntDir>$(MSBuildProjectName)\$(Configuration)\</IntDir>

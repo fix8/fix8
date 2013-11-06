@@ -62,7 +62,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* #undef CLOSEDIR_VOID */
 
 /* Define to 1 to enable CODEC timing testing code */
-#define CODECTIMING
+#define CODECTIMING 0
 #undef POPULATE_METADATA
 
 /* configure options */
@@ -76,6 +76,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* date/time as seconds since start epoch */
 #define CONFIGURE_TIME_NUM 1374801765
+
+/* compiler spec */
+#define CPPFLAGS "" 
+
+/* Default precision for floating point fields (default=2) */
+#define DEFAULT_PRECISION 2
 
 /* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
    systems. This function is required for `alloca.c' support on those systems.
@@ -406,6 +412,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Define to 1 if `lstat' dereferences a symlink specified with a trailing
    slash. */
 #define LSTAT_FOLLOWS_SLASHED_SYMLINK 1
+
+/* Additional library flags */
+#define LDFLAGS ""
+
+/* Library spec */
+#define LIBS ""
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
