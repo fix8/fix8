@@ -144,8 +144,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 0.9.6.tar.gz
-	% cd fix8-0.9.6
+	% tar xvzf 0.10.0.tar.gz
+	% cd fix8-0.10.0
 	% ./bootstrap
 	% ./configure
 	% make
