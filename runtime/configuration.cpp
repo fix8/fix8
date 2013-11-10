@@ -99,7 +99,7 @@ Poco::Net::SocketAddress Configuration::get_address(const XmlElement *from) cons
 }
 
 //-------------------------------------------------------------------------------------------------
-size_t Configuration::get_addresses(const XmlElement *from, vector<Poco::Net::SocketAddress>& target) const
+size_t Configuration::get_addresses(const XmlElement *from, vector<Server>& target) const
 {
 	string name;
 	const XmlElement *which;
@@ -107,8 +107,17 @@ size_t Configuration::get_addresses(const XmlElement *from, vector<Poco::Net::So
 	{
 		XmlElement::XmlSet slist;
 		if (which->find("server", slist))
+		{
+			const Poco::Net::SocketAddress empty_addr;
 			for(XmlElement::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
-				target.push_back(get_address(*itr));
+			{
+				string name;
+				Poco::Net::SocketAddress addr(get_address(*itr));
+				if ((*itr)->GetAttr("name", name) && addr != empty_addr && (*itr)->FindAttr("active", true))
+					target.push_back(Server(name, (*itr)->FindAttr("max_retries",
+						static_cast<int>(default_max_retries)), addr));
+			}
+		}
 		return target.size();
 	}
 

@@ -137,6 +137,13 @@ inline unsigned ROT13Hash (const std::string& str)
 	return hash;
 }
 
+//-------------------------------------------------------------------------------------------------
+inline unsigned rothash(unsigned result, unsigned value)
+{
+   // hash derived from http://stackoverflow.com/users/905902/wildplasser
+   return result ^= (result >> 2) ^ (result << 5) ^ (result << 13) ^ value ^ 0x80001801;
+}
+
 //----------------------------------------------------------------------------------------
 /*! case insensitive std::string == std::string operator
   \tparam _CharT char type

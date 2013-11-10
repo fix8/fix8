@@ -94,6 +94,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <map>
 #include <list>
 #include <set>
+#include <vector>
 #include <iterator>
 #include <algorithm>
 #include <typeinfo>
@@ -308,19 +309,19 @@ int main(int argc, char **argv)
 }
 
 //-----------------------------------------------------------------------------------------
-bool myfix_session_client::handle_application(const unsigned seqnum, const Message *msg)
+bool myfix_session_client::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
 }
 
 //-----------------------------------------------------------------------------------------
-bool myfix_session_server::handle_application(const unsigned seqnum, const Message *msg)
+bool myfix_session_server::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
 }
 
 //-----------------------------------------------------------------------------------------
-bool MyMenu::new_order_single()
+Message *MyMenu::generate_new_order_single()
 {
 	static unsigned oid(0);
 	ostringstream oistr;
@@ -389,26 +390,35 @@ bool MyMenu::new_order_single()
 	*gr11 << new TEX::NestedPartySubID("subnestedpartyID1");
 	*nonpsid << gr11;
 
-	_session.send(nos);
+	return nos;
+}
 
+//-----------------------------------------------------------------------------------------
+bool MyMenu::new_order_single()
+{
+	_session.send(generate_new_order_single());
 	return true;
 }
 
 //-----------------------------------------------------------------------------------------
 bool MyMenu::new_order_single_50()
 {
+	vector<Message *> msgs;
 	for (int ii(0); ii < 50; ++ii)
-		new_order_single();
+		msgs.push_back(generate_new_order_single());
 
+	_session.send_batch(msgs);
 	return true;
 }
 
 //-----------------------------------------------------------------------------------------
 bool MyMenu::new_order_single_1000()
 {
+	vector<Message *> msgs;
 	for (int ii(0); ii < 1000; ++ii)
-		new_order_single();
+		msgs.push_back(generate_new_order_single());
 
+	_session.send_batch(msgs);
 	return true;
 }
 
@@ -552,13 +562,8 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		}
 	}
 
-#if defined MSGRECYCLING
-	scoped_ptr<TEX::ExecutionReport> er(new TEX::ExecutionReport);
-	msg->copy_legal(er.get());
-#else
 	TEX::ExecutionReport *er(new TEX::ExecutionReport);
 	msg->copy_legal(er);
-#endif
 	if (!quiet)
 		cout << endl;
 
@@ -573,14 +578,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 	    << new TEX::LastCapacity('5')
 	    << new TEX::ReportToExch('Y')
 	    << new TEX::ExecID(oistr.str());
-#if defined MSGRECYCLING
-	er->set_in_use(true);	// indicate this message is in use again
-	delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
-	*er << new TEX::AvgPx(9999); // will replace and delete original
-	_session.send_wait(er.get());
-#else
 	_session.send(er);
-#endif
 
 	unsigned remaining_qty(qty()), cum_qty(0);
 	while (remaining_qty > 0)
@@ -588,15 +586,8 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		unsigned trdqty(RandDev::getrandom(remaining_qty));
 		if (!trdqty)
 			trdqty = 1;
-#if defined MSGRECYCLING
-		while(er->get_in_use())
-			hypersleep<h_microseconds>(10);
-		er->set_in_use(true);	// indicate this message is in use again
-		delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
-#else
 		er = new TEX::ExecutionReport;
 		msg->copy_legal(er);
-#endif
 		ostringstream eistr;
 		eistr << "exec" << ++eoid;
 		remaining_qty -= trdqty;
@@ -609,11 +600,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		    << new TEX::CumQty(cum_qty)
 		    << new TEX::LastQty(trdqty)
 		    << new TEX::AvgPx(price());
-#if defined MSGRECYCLING
-		_session.send_wait(er.get());
-#else
 		_session.send(er);
-#endif
 	}
 
 	return true;

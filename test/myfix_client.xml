@@ -73,4 +73,14 @@
 				rotation="5"
 				flags_old="append|inbound"
 				flags="append|inbound|outbound|direction|sequence"/>
+
+	<server_group name="FO_Group0">
+		<server name="Host_01" ip="192.168.1.121" port="12345" max_retries="100"/>
+		<server name="Host_02" ip="192.168.1.122" port="12345" max_retries="100"/>
+		<server name="Host_03" ip="192.168.1.123" port="12345" max_retries="100" active="false"/>
+		<server name="Host_04" ip="192.168.1.124" port="12345" max_retries="100"/>
+		<server name="Host_05" ip="192.168.1.125" port="12345" max_retries="100"/>
+		<server name="Host_06" ip="192.168.1.126" port="12345" max_retries="100"/>
+	</server_group>
+
 </fix8>

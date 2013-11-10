@@ -301,13 +301,13 @@ int main(int argc, char **argv)
 }
 
 //-----------------------------------------------------------------------------------------
-bool myfix_session_client::handle_application(const unsigned seqnum, const Message *msg)
+bool myfix_session_client::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
 }
 
 //-----------------------------------------------------------------------------------------
-bool myfix_session_server::handle_application(const unsigned seqnum, const Message *msg)
+bool myfix_session_server::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
 }

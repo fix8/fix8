@@ -94,11 +94,8 @@ public:
 		if (!_disabled)
 			acquire(mutex);
 	}
-	~f8_scoped_lock_impl()
-	{
-		if (!_disabled && _local_mutex)
-			release();
-	}
+
+	~f8_scoped_lock_impl() { release(); }
 
 	void acquire(T& mutex)
 	{
@@ -116,8 +113,11 @@ public:
 
 	void release()
 	{
-		_local_mutex->unlock();
-		_local_mutex = 0;
+		if (!_disabled && _local_mutex)
+		{
+			_local_mutex->unlock();
+			_local_mutex = 0;
+		}
 	}
 };
 

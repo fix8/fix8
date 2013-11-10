@@ -146,7 +146,6 @@ void load_components(const XmlElement::XmlSet& comlist, Components& components);
 unsigned lookup_component(const Components& compon, const f8String& name);
 void binary_report();
 string bintoaschex(const string& from);
-bool group_equal(const MessageSpec& p1, const MessageSpec& p2);
 uint32_t group_hash(const MessageSpec& p1);
 const MessageSpec *find_group(const CommonGroupMap& globmap, int& vers, unsigned tp, uint32_t key);
 void generate_group_traits(const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp);
@@ -713,7 +712,8 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 			<< (tgroup->_is_admin ? "admin" : "application") << ", " <<  tgroup->_fields.get_presence().size()
 			<< " fiel" << (tgroup->_fields.get_presence().size() == 1 ? "d, " : "ds, ")
 			<< tgroup->_groups.size() << " grou" << (tgroup->_groups.size() == 1 ? "p, " : "ps, ")
-         << (tgroup->_group_refcnt > 1 ? "shares static data." : "is unique.") << endl;
+         << (tgroup->_group_refcnt > 1 ? "shares static data" : "is unique") << ", hash: 0x"
+         << hex << tgroup->_hash << dec << endl;
 		outh << dspacer << "// " << prefix << ms._name << "::" << gsitr->second._name << endl;
 		outh << dspacer << "class " << gsitr->second._name
 			<< " : public GroupBase // depth: " << depth << endl << dspacer << '{' << endl;
@@ -1183,27 +1183,27 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		}
 
 		oss_hpp << spacer << "// Override these methods if required but remember to call the base class method first." << endl
-			<< spacer << "// bool handle_logon(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// bool handle_logon(const unsigned seqnum, const FIX8::Message *msg);" << endl
 			<< spacer << "// Message *generate_logon(const unsigned heartbeat_interval, const f8String davi=f8String());" << endl
-			<< spacer << "// bool handle_logout(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// bool handle_logout(const unsigned seqnum, const FIX8::Message *msg);" << endl
 			<< spacer << "// Message *generate_logout();" << endl
-			<< spacer << "// bool handle_heartbeat(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// bool handle_heartbeat(const unsigned seqnum, const FIX8::Message *msg);" << endl
 			<< spacer << "// Message *generate_heartbeat(const f8String& testReqID);" << endl
-			<< spacer << "// bool handle_resend_request(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// bool handle_resend_request(const unsigned seqnum, const FIX8::Message *msg);" << endl
 			<< spacer << "// Message *generate_resend_request(const unsigned begin, const unsigned end=0);" << endl
-			<< spacer << "// bool handle_sequence_reset(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// bool handle_sequence_reset(const unsigned seqnum, const FIX8::Message *msg);" << endl
 			<< spacer << "// Message *generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag=false);" << endl
-			<< spacer << "// bool handle_test_request(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// bool handle_test_request(const unsigned seqnum, const FIX8::Message *msg);" << endl
 			<< spacer << "// Message *generate_test_request(const f8String& testReqID);" << endl
-			<< spacer << "// bool handle_reject(const unsigned seqnum, const Message *msg);" << endl
+			<< spacer << "// bool handle_reject(const unsigned seqnum, const FIX8::Message *msg);" << endl
 			<< spacer << "// Message *generate_reject(const unsigned seqnum, const char *what);" << endl
-			<< spacer << "// bool handle_admin(const unsigned seqnum, const Message *msg);" << endl
-			<< spacer << "// void modify_outbound(Message *msg);" << endl
-			<< spacer << "// bool authenticate(SessionID& id, const Message *msg);" << endl << endl;
+			<< spacer << "// bool handle_admin(const unsigned seqnum, const FIX8::Message *msg);" << endl
+			<< spacer << "// void modify_outbound(FIX8::Message *msg);" << endl
+			<< spacer << "// bool authenticate(SessionID& id, const FIX8::Message *msg);" << endl << endl;
 
 		oss_hpp << spacer << "// Override these methods to intercept admin and application methods." << endl
 				<< spacer << "// bool handle_admin(const unsigned seqnum, const FIX8::Message *msg);" << endl
-				<< spacer << "bool handle_application(const unsigned seqnum, const FIX8::Message *msg)" << endl
+				<< spacer << "bool handle_application(const unsigned seqnum, const FIX8::Message *&msg)" << endl
 				<< spacer << '{' << endl << spacer << spacer << "return enforce(seqnum, msg) || msg->process(_router);"
 				<< endl << spacer << '}' << endl;
 
@@ -1367,21 +1367,15 @@ unsigned lookup_component(const Components& compon, const f8String& name)
 }
 
 //-------------------------------------------------------------------------------------------------
-bool group_equal(const MessageSpec& p1, const MessageSpec& p2)
-{
-   return group_hash(p1) == group_hash(p2);
-}
-
-//-------------------------------------------------------------------------------------------------
 uint32_t group_hash(const MessageSpec& p1)
 {
    uint32_t result(0);
 
 	for (Presence::const_iterator flitr(p1._fields.get_presence().begin());
 		flitr != p1._fields.get_presence().end(); ++flitr)
-         result += flitr->_fnum;
+         result = rothash(result, flitr->_fnum);
    for (GroupMap::const_iterator gmitr(p1._groups.begin()); gmitr != p1._groups.end(); ++gmitr)
-      result += group_hash(gmitr->second) << 16;
+      result = rothash(result, group_hash(gmitr->second));
 
    return result;
 }

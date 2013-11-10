@@ -262,6 +262,9 @@ public:
         return true;
     }
 
+	 /// All sessions must provide this method
+	 bool handle_application(const unsigned seqnum, const Message *&msg) { return true; }
+
     std::map<unsigned, f8String> _resends;
 };
 

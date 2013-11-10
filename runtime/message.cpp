@@ -386,9 +386,6 @@ size_t Message::encode(char **hmsg_store) const
 		throw MissingMandatoryField(Common_BeginString);
 	_header->_fp.clear(Common_BeginString, FieldTrait::suppress);
 	hmsg += _header->get_begin_string()->encode(hmsg);
-#if defined MSGRECYCLING
-	_header->_fp.set(Common_BeginString, FieldTrait::suppress); // in case we want to reuse
-#endif
 
 	if (!_header->get_body_length())
 		throw MissingMandatoryField(Common_BodyLength);
@@ -396,18 +393,12 @@ size_t Message::encode(char **hmsg_store) const
 
 	_header->get_body_length()->set(msgLen);
 	hmsg += _header->get_body_length()->encode(hmsg);
-#if defined MSGRECYCLING
-	_header->_fp.set(Common_BodyLength, FieldTrait::suppress); // in case we want to reuse
-#endif
 
 	if (!_trailer->get_check_sum())
 		throw MissingMandatoryField(Common_CheckSum);
 	_trailer->get_check_sum()->set(fmt_chksum(calc_chksum(moffs - hlen, msgLen + hlen)));
 	_trailer->_fp.clear(Common_CheckSum, FieldTrait::suppress);
 	msg += _trailer->get_check_sum()->encode(msg);
-#if defined MSGRECYCLING
-	_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress); // in case we want to reuse
-#endif
 
 #if defined CODECTIMING
 	_encode_timings._cpu_used += itm.Calculate().AsDouble();

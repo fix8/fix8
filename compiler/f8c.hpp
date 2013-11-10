@@ -222,7 +222,7 @@ public:
 		if (::chdir(to.c_str()))
 		{
 			std::ostringstream ostr;
-			ostr << "Error setting current directory '" << to << "' (" << ::strerror(errno) << ')';
+			ostr << "Error setting new directory '" << to << "' (" << ::strerror(errno) << ')';
 			throw f8Exception(ostr.str());
 		}
 	}
@@ -232,7 +232,7 @@ public:
 		if (_cwd[0] && ::chdir(_cwd))
 		{
 			std::ostringstream ostr;
-			ostr << "Error restoring current directory '" << _cwd << "' (" << ::strerror(errno) << ')';
+			ostr << "Error restoring previous directory '" << _cwd << "' (" << ::strerror(errno) << ')';
 			throw f8Exception(ostr.str());
 		}
 	}

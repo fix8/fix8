@@ -199,7 +199,7 @@ public:
 		}
 	}
 
-	/*! Wait till writer thead has finished.
+	/*! Wait till writer thread has finished.
 	    \return 0 on success */
    int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
 
@@ -223,6 +223,8 @@ public:
 /// Fix message writer
 class FIXWriter : public AsyncSocket<Message *>
 {
+	f8_spin_lock _con_spl;
+
 protected:
 	/*! Writer thread method. Reads messages from the queue and sends them over the socket.
 	    \return 0 on success */
@@ -241,19 +243,19 @@ public:
 
 	/*! Place Fix message on outbound message queue.
 	    \param from message to send
+	    \param destroy if true delete after send
 	    \return true in success */
-	bool write(Message *from)
+	bool write(Message *from, bool destroy)
 	{
-		if (_pmodel == pm_pipeline)
+		if (_pmodel == pm_pipeline) // pipeline mode ignores destroy flag
 			return _msg_queue.try_push(from);
-#if defined MSGRECYCLING
-		const bool result(_session.send_process(from));
-		from->set_in_use(false);
-#else
-		scoped_ptr<Message> msg(from);
-		const bool result(_session.send_process(msg.get()));
-#endif
-		return result;
+		f8_scoped_spin_lock guard(_con_spl);
+		if (destroy)
+		{
+			scoped_ptr<Message> msg(from);
+			return _session.send_process(msg.get());
+		}
+		return _session.send_process(from);
 	}
 
 	/*! Wait till writer thead has finished.
@@ -267,13 +269,8 @@ public:
 	{
 		if (_pmodel == pm_pipeline) // not permitted if pipeling
 			throw f8Exception("cannot send message directly if pipelining");
-#if defined MSGRECYCLING
-		const bool result(_session.send_process(&from));
-		from.set_in_use(false);
-		return result;
-#else
+		f8_scoped_spin_lock guard(_con_spl);
 		return _session.send_process(&from);
-#endif
 	}
 
 	/*! Check to see if a write would block
@@ -392,7 +389,7 @@ public:
 	/*! Write a message to the underlying socket.
 	    \param from Message to write
 	    \return true on success */
-	virtual bool write(Message *from) { return _writer.write(from); }
+	virtual bool write(Message *from, bool destroy=true) { return _writer.write(from, destroy); }
 
 	/*! Write a message to the underlying socket. Non-pipelined version.
 	    \param from Message to write
@@ -469,6 +466,15 @@ public:
 	/*! Set the socket send buffer sz
 	    \param sz new size */
 	void set_send_buf_sz(const unsigned sz) const { set_send_buf_sz(sz, _sock); }
+
+	/*! Set the tcp_cork flag
+	    \param way boolean true (on) or false(clear) */
+	void set_tcp_cork_flag(bool way) const
+	{
+#if defined HAVE_DECL_TCP_CORK && TCP_CORK != 0
+		_sock->setOption(IPPROTO_TCP, TCP_CORK, way ? 1 : 0);
+#endif
+	}
 
 	/*! Get the session associated with this connection.
 	    \return the session */

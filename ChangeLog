@@ -1,13 +1,21 @@
-* Sun Nov 03 2013 David L. Dight <fix@fix8.org> 0.9.7
-- Fixed Jira tickets FX-102, FX-103, FX-104, FX-105, FX-107, FX-110, FX-113
+* Sun Nov 10 2013 David L. Dight <fix@fix8.org> 0.10.0
+- Fixed Jira tickets FX-102, FX-103, FX-104, FX-105, FX-107, FX-110, FX-113, FX-114, FX-115, FX-116, FX-119, FX-120,
+-                    FX-122, FX-124, FX-127
+- Fixed allow sender to take ownership of messages after send
+- Fixed removed message recycling
+- Fixed session::send not thread safe with multiple senders in threaded mode
+- Fixed TBB allocator is not used when linking to tbb
+- Fixed there is no itoa for int64
+- Fixed hb interval is set 1 when using reliable connection
 - Fixed multiple instances of FIX8 session share the last messages table
-- Fixed FIX8 include path in generated files are not configurable
-- Added -P switch to f8c to embed fix8 in include paths
-- Added support for basic client failover capability
 - Fixed groups with 0 elements are not processed
 - Fixed error when sending message with BodyLength > 9999
-- Fixed issue with Windows build
-- Added way to set default precison for floating point values
+- Fixed issues with Windows build
+- Added Fix8 include path in generated files are now configurable
+- Added -P switch to f8c to embed fix8 in include paths
+- Added order batch send mode
+- Added allow application to detach messages when received from framework: Session::handle_application API change
+- Added provide way to set default precison for floating point values
 
 * Sun Oct 13 2013 David L. Dight <fix@fix8.org> 0.9.6
 - Fixed Jira tickets FX-76, FX-93, FX-94, FX-95, FX-96, FX-97, FX-98, FX-99, FX-100, FX-101

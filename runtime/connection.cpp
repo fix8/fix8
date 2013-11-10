@@ -295,13 +295,8 @@ int FIXWriter::operator()()
 			_msg_queue.pop (inmsg); // will block
 			if (!inmsg)
 				break;
-#if defined MSGRECYCLING
-			_session.send_process(inmsg);
-			inmsg->set_in_use(false);
-#else
 			scoped_ptr<Message> msg(inmsg);
 			_session.send_process(msg.get());
-#endif
 			++processed;
 		}
 		catch (PeerResetConnection& e)

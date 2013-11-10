@@ -469,6 +469,7 @@ bool MyMenu::send_all_preloaded(coroutine& coro, FIX8::Session *ses)
 
 	reenter(coro)
 	{
+		ses->get_connection()->set_tcp_cork_flag(true);
 		while (_session.cached())
 		{
 			if (ses->get_connection()->writer_poll())
@@ -479,9 +480,11 @@ bool MyMenu::send_all_preloaded(coroutine& coro, FIX8::Session *ses)
 				if (++snt % batch_size)
 					continue;
 			}
+			ses->get_connection()->set_tcp_cork_flag(false);
 			coro_yield;
 		}
 	}
+	ses->get_connection()->set_tcp_cork_flag(false);
 	return _session.cached();
 }
 
@@ -572,7 +575,7 @@ void print_usage()
 
 //-----------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------
-bool hf_session_client::handle_application(const unsigned seqnum, const FIX8::Message *msg)
+bool hf_session_client::handle_application(const unsigned seqnum, const FIX8::Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
 }
@@ -660,7 +663,7 @@ bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 }
 
 //-----------------------------------------------------------------------------------------
-bool hf_session_server::handle_application(const unsigned seqnum, const FIX8::Message *msg)
+bool hf_session_server::handle_application(const unsigned seqnum, const FIX8::Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
 }

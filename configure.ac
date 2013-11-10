@@ -161,6 +161,8 @@ AC_CHECK_FUNCS([getopt_long sysconf popen getcwd gettimeofday localtime_r regcom
 		strerror strtol strtoul random srandom
 	])
 
+AC_CHECK_DECLS([TCP_CORK], [], [], [[#include <netinet/tcp.h>]])
+
 fillmetadata=yes
 AC_ARG_ENABLE([fillmetadata],
 [AS_HELP_STRING([--enable-fillmetadata],[enable metadata population (default=yes)])],
@@ -238,22 +240,21 @@ AC_ARG_ENABLE([tcmalloc],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-tcmalloc) ;;
 esac])
 
+usetbbmalloc=no
+AC_ARG_ENABLE([tbbmalloc],
+[AS_HELP_STRING([--enable-tbbmalloc],[enable TBB tbbmalloc (default=no)])],
+[case "${enableval}" in
+	yes) usetbbmalloc=yes;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-tbbmalloc) ;;
+esac])
+
 AC_ARG_WITH(gperf,
   AS_HELP_STRING([--with-gperf=DIR],[location of gperf libraries]),
 [
 	CPPFLAGS="$CPPFLAGS -I${withval}/include"
 	LDFLAGS="$LDFLAGS -L${withval}/lib"
 ],[])
-
-AC_CHECK_LIB(tcmalloc_minimal, malloc, have_tcmalloc_minimal_lib=yes)
-AC_CHECK_LIB(tcmalloc, malloc, have_tcmalloc_lib=yes)
-
-if test "$have_tcmalloc_minimal_lib" = yes && test x$usetcmalloc = xyes; then
-	LIBS="$LIBS -ltcmalloc_minimal"
-else if test "$have_tcmalloc_lib" = yes && test x$usetcmalloc = xyes; then
-	LIBS="$LIBS -ltcmalloc"
-fi
-fi
 
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
@@ -294,6 +295,19 @@ if test "$mpmc_set" = no; then
 fi
 
 AM_CONDITIONAL(TBBSUPPORT, [test x$have_tbb = xyes])
+
+AC_CHECK_LIB(tcmalloc_minimal, malloc, have_tcmalloc_minimal_lib=yes)
+AC_CHECK_LIB(tcmalloc, malloc, have_tcmalloc_lib=yes)
+
+if test "$have_tbb" = yes && test x$usetbbmalloc = xyes; then
+	LIBS="$LIBS -ltbbmalloc -ltbbmalloc_proxy"
+else if test "$have_tcmalloc_minimal_lib" = yes && test x$usetcmalloc = xyes; then
+	LIBS="$LIBS -ltcmalloc_minimal"
+else if test "$have_tcmalloc_lib" = yes && test x$usetcmalloc = xyes; then
+	LIBS="$LIBS -ltcmalloc"
+fi
+fi
+fi
 
 AC_ARG_WITH(sleep,
 	AS_HELP_STRING([--with-sleep=VAL],[If using fastflow, sleep for VAL ns instead of yield when waiting for input(default=no)]),
@@ -474,14 +488,6 @@ AC_ARG_ENABLE([gprof],
 			fi ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-gprof) ;;
-esac])
-
-AC_ARG_ENABLE([msgrecycle],
-[AS_HELP_STRING([--enable-msgrecycle],[enable Message Recycling (default=no)])],
-[case "${enableval}" in
-	yes) AC_DEFINE(MSGRECYCLING, 1, [Define to 1 to enable Message Recycling]) ;;
-	no)  ;;
-	*) AC_MSG_ERROR(bad value ${enableval} for --enable-msgrecycle) ;;
 esac])
 
 AC_ARG_ENABLE([codectiming],

@@ -78,7 +78,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define CONFIGURE_TIME_NUM 1374801765
 
 /* compiler spec */
-#define CPPFLAGS "" 
+#define CPPFLAGS ""
 
 /* Default precision for floating point fields (default=2) */
 #define DEFAULT_PRECISION 2
@@ -446,9 +446,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* MPMC system used */
 #define MPMC_SYSTEM MPMC_TBB
-
-/* Define to 1 to enable Message Recycling */
-/* #undef MSGRECYCLING */
 
 /* Name of package */
 #define PACKAGE "fix8"

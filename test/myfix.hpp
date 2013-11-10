@@ -81,11 +81,7 @@ public:
 	    \param seqnum Fix sequence number of the message
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
-	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
-
-#if defined MSGRECYCLING
-	//int preload_nos(const std::string& sym, TEX::Side side, TEX::OrdType ordtype, TEX::TimeInForce tif);
-#endif
+	bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);
 };
 
 //-----------------------------------------------------------------------------------------
@@ -131,7 +127,7 @@ public:
 	    \param seqnum Fix sequence number of the message
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
-	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
+	bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -187,6 +183,7 @@ public:
 	bool read_msgs();
 
 	bool load_msgs(const std::string& fname);
+	FIX8::Message *generate_new_order_single();
 	void send_lst();
 
 	FIX8::tty_save_state& get_tty() { return _tty; }

@@ -83,7 +83,7 @@ public:
 	    \param seqnum Fix sequence number of the message
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
-	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
+	bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);
 
 	void push(FIX8::TEX::NewOrderSingle *nos) { _nos_queue.push(nos); }
 	FIX8::TEX::NewOrderSingle *pop()
@@ -142,7 +142,7 @@ public:
 	    \param seqnum Fix sequence number of the message
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
-	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
+	bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);
 };
 
 //-------------------------------------------------------------------------------------------------

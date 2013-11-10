@@ -1752,6 +1752,13 @@ const f8String Common_MsgType_REJECT("3");
 const f8String Common_MsgType_SEQUENCE_RESET("4");
 const f8String Common_MsgType_LOGOUT("5");
 const f8String Common_MsgType_LOGON("A");
+const char Common_MsgByte_HEARTBEAT('0');
+const char Common_MsgByte_TEST_REQUEST('1');
+const char Common_MsgByte_RESEND_REQUEST('2');
+const char Common_MsgByte_REJECT('3');
+const char Common_MsgByte_SEQUENCE_RESET('4');
+const char Common_MsgByte_LOGOUT('5');
+const char Common_MsgByte_LOGON('A');
 
 //-------------------------------------------------------------------------------------------------
 // Common FIX field numbers

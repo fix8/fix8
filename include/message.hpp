@@ -763,10 +763,6 @@ struct codec_timings
 /// A complete Fix message with header, body and trailer
 class Message : public MessageBase
 {
-#if defined MSGRECYCLING
-	f8_atomic<bool> _in_use;
-#endif
-
 #if defined CODECTIMING
 	static codec_timings _encode_timings, _decode_timings;
 #endif
@@ -788,22 +784,8 @@ public:
 	template<typename InputIterator>
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt,
 		const FieldTrait_Hash_Array *ftha) : MessageBase(ctx, msgType, begin, cnt, ftha),
-		_header(ctx._mk_hdr()), _trailer(ctx._mk_trl()), _custom_seqnum(), _no_increment()
-#if defined MSGRECYCLING
-		{
-			_in_use = true;
-		}
+		_header(ctx._mk_hdr()), _trailer(ctx._mk_trl()), _custom_seqnum(), _no_increment() {}
 
-	/*! Indicate that this message is currently being used.
-	    \param way if true, set inuse as true */
-	void set_in_use(bool way=false) { _in_use = way; }
-
-	/*! Indicate that this message is currently unused.
-	    \return true if message is in use */
-	bool get_in_use() const { return _in_use; }
-#else
-		{}
-#endif
 	/// Dtor.
 	virtual ~Message() { delete _header; delete _trailer; }
 

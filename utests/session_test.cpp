@@ -129,7 +129,8 @@ public:
     /// Dtor
     ~test_session(){}
 
-    bool handle_application(const unsigned seqnum, const FIX8::Message *msg)
+	 /// All sessions must provide this method
+    bool handle_application(const unsigned seqnum, const FIX8::Message *&msg)
     {
         return enforce(seqnum, msg) || msg->process(_router);
     }

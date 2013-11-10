@@ -330,9 +330,12 @@ Optional Features:
   --enable-dependency-tracking   do not reject slow dependency extractors
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-doxygen        enable doxygen generation (default=yes if available)
+  --enable-doxygen-warnings
+                          permit doxygen to generate warnings (default=yes)
   --enable-fillmetadata   enable metadata population (default=yes)
   --enable-rdtsc          use rdtsc for interval timer if available
   --enable-tcmalloc       enable gperftools tcmalloc (default=yes)
+  --enable-tbbmalloc      enable TBB tbbmalloc (default=no)
   --enable-gtest          enable gtest unit test case building if available
                           (default=yes if available)
   --enable-f8test         permit f8test client/server to be built
@@ -344,7 +347,6 @@ Optional Features:
                           (default=no)
   --enable-valgrind       enable internal support for valgrind (default=no)
   --enable-gprof          enable internal support for gprof (default=no)
-  --enable-msgrecycle     enable Message Recycling (default=no)
   --enable-codectiming    enable CODEC timing testing code (default=no)
   --enable-debug          enable DEBUG support (default=no)
   --enable-ssl            enable SSL support (through OpenSSL, default=no)
@@ -363,7 +365,7 @@ Optional Packages:
   --with-maxmsglen=VALUE  Maximum length of a FIX message (default=8192)
   --with-maxfldlen=VALUE  Maximum length of a FIX field (default=1024)
   --with-precision=VALUE  Default precision for floating point fields
-	                       (default=2)
+                          (default=2)
   --with-tbb=DIR          location of TBB
   --with-gtest=DIR        location of gtest
   --with-gperf=DIR        location of gperf libraries
@@ -391,4 +393,4 @@ Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
 
 Report bugs to http://groups.google.com/group/fix8-support
-fix8 home page: <http://www.fix8.org>.
+fix8 home page: <http://www.fix8.org>

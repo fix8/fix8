@@ -140,7 +140,7 @@ public:
 
     /*!empty function
           \return always return true*/
-    bool write(Message *from)
+    bool write(Message *from, bool)
     {
         return true;
     }
@@ -222,7 +222,7 @@ public:
           \param from message to be sent
           \return always return true*/
 
-    virtual bool write(Message *from)
+    virtual bool write(Message *from, bool)
     {
 		  char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
         from->encode(&ptr);
@@ -322,6 +322,9 @@ public:
 
     /// empty function
     void set_send_buf_sz(const unsigned sz) const {}
+
+    /// empty function
+    void set_tcp_cork_flag(bool way) const {}
 
     ///Get the session associated with this connection
     Session& get_session() { return _session; }

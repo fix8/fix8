@@ -203,13 +203,9 @@ struct LoginParameters
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Fix8 Base Session. User sessions derive from this class.
+/// Fix8 Base Session. User sessions are derived from this class.
 class Session
 {
-	typedef StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)> Handlers;
-	static const Handlers _handlers;
-	static const Handlers::TypePair _valueTable[];
-
 	/*! Initialise atomic members.
 	  \param st the initial session state */
 	void atomic_init(States::SessionStates st);
@@ -239,7 +235,7 @@ protected:
 	Timer<Session> _timer;
 	TimerEvent<Session> _hb_processor;
 
-	/// Heartbeat generation service thread.
+	/// Heartbeat generation service thread method.
 	bool heartbeat_service();
 
 	/*! Logon callback.
@@ -296,11 +292,13 @@ protected:
 	    \return true on success */
 	virtual bool handle_admin(const unsigned seqnum, const Message *msg) { return true; }
 
-	/*! Application message callback. Called on receipt of all non-admin messages.
+	/*! Application message callback. Called on receipt of all non-admin messages. You must implement this method.
+	  The message is passed as a reference to a pointer. Your application can detach and take ownership. If you want
+	  to take ownership, take a copy of the pointer and then set msg to 0. See Session::detach()
 	    \param seqnum message sequence number
-	    \param msg Message
+	    \param msg reference to Message ptr
 	    \return true on success */
-	virtual bool handle_application(const unsigned seqnum, const Message *msg);
+	virtual bool handle_application(const unsigned seqnum, const Message *&msg) = 0;
 
 	/*! Permit modification of message just prior to sending.
 	     \param msg Message */
@@ -394,10 +392,11 @@ public:
 
 	/*! Send message.
 	    \param msg Message
+	    \param destroy if true, destroy message after send
 	    \param custom_seqnum override sequence number with this value
 	    \param no_increment if true, don't increment the seqnum after sending
 	    \return true on success */
-	virtual bool send(Message *msg, const unsigned custom_seqnum=0, const bool no_increment=false);
+	virtual bool send(Message *msg, bool destroy=true, const unsigned custom_seqnum=0, const bool no_increment=false);
 
 	/*! Send message - non-pipelined version.
 	    \param msg Message
@@ -405,22 +404,13 @@ public:
 	    \param no_increment if true, don't increment the seqnum after sending
 	    \return true on success */
 	virtual bool send(Message& msg, const unsigned custom_seqnum=0, const bool no_increment=false);
-#if defined MSGRECYCLING
 
-	/*! Send message and wait till no longer in use.
-	    \param msg Message
-	    \param custom_seqnum override sequence number with this value
-	    \param waitval time to sleep(ms) before rechecking inuse
-	    \return true on success */
-	virtual bool send_wait(Message *msg, const unsigned custom_seqnum=0, const int waitval=10);
-
-	/*! Send message and wait till no longer in use - non-pipelined version
-	    \param msg Message
-	    \param custom_seqnum override sequence number with this value
-	    \param waitval time to sleep(ms) before rechecking inuse
-	    \return true on success */
-	virtual bool send_wait(Message& msg, const unsigned custom_seqnum=0, const int waitval=10);
-#endif
+	/*! Send a batch of messages.
+	    \param msgs vector of Message ptrs
+	    \param destroy if true, destroy message after send
+	    \return size_t number of messages sent - if destroy was true those sent messages will have been destroyed
+	 			with the reamining messages in the vector still allocated */
+	virtual size_t send_batch(const std::vector<Message *>& msgs, bool destroy=true);
 
 	/*! Process message (encode) and send.
 	    \param msg Message
@@ -555,7 +545,17 @@ public:
 	    \return new Message */
 	virtual Message *generate_reject(const unsigned seqnum, const char *what);
 
-	friend struct StaticTable<const f8String, bool (Session::*)(const unsigned, const Message *)>;
+	/*! Detach message passed to handle_application. Will set source to 0;
+	    Not thread safe however this method should never be called across threads. It should
+		 only be called from Session::handle_application().
+	    \param msg ref to ptr containing message
+	    \return detahced Message * */
+	static const Message *detach(const Message *&msg)
+	{
+		const Message *tmp(msg);
+		msg = 0;
+		return tmp;
+	}
 };
 
 //-------------------------------------------------------------------------------------------------
