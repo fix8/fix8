@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.6</span>
+   &#160;<span id="projectnumber">version  0.10.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -109,8 +109,7 @@ $(document).ready(function(){initNavTree('structFIX8_1_1StaticTable.html','');})
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structFIX8_1_1StaticTable-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">FIX8::StaticTable&lt; Key, Val, Compare &gt; Struct Template Reference</div>  </div>
@@ -134,34 +133,26 @@ Compare &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aaaa32b9b3236f916c7af53c9b2cdc480"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#aaaa32b9b3236f916c7af53c9b2cdc480">StaticTable</a> ()</td></tr>
-<tr class="memdesc:aaaa32b9b3236f916c7af53c9b2cdc480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ctor.  <a href="#aaaa32b9b3236f916c7af53c9b2cdc480">More...</a><br/></td></tr>
-<tr class="separator:aaaa32b9b3236f916c7af53c9b2cdc480"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88d1b8355ca6f5957fabc10aa357b977"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#a88d1b8355ca6f5957fabc10aa357b977">StaticTable</a> (const <a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">TypePair</a> *<a class="el" href="xml_8cpp.html#a2dcd834ff4be2ca48473019d5a7201e1">valueTable</a>, size_t valueTableSz, const <a class="el" href="structFIX8_1_1StaticTable.html#a267de06cd639bc971f139143308713cb">NotFoundType</a> &amp;noval)</td></tr>
+<tr class="memdesc:a88d1b8355ca6f5957fabc10aa357b977"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ctor.  <a href="#a88d1b8355ca6f5957fabc10aa357b977">More...</a><br/></td></tr>
+<tr class="separator:a88d1b8355ca6f5957fabc10aa357b977"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddd41390291863ea0eb08fdfe9828e6"><td class="memItemLeft" align="right" valign="top">Val&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#a0ddd41390291863ea0eb08fdfe9828e6">find_value</a> (const Key &amp;key) const </td></tr>
+<tr class="separator:a0ddd41390291863ea0eb08fdfe9828e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af270b08176d7e223c0bbd0c9edf96b3a"><td class="memItemLeft" align="right" valign="top">const Val &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#af270b08176d7e223c0bbd0c9edf96b3a">find_ref</a> (const Key &amp;key) const </td></tr>
+<tr class="separator:af270b08176d7e223c0bbd0c9edf96b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40a8c21d5fe3399e2d8f7477c18e9c7d"><td class="memItemLeft" align="right" valign="top">const Val *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#a40a8c21d5fe3399e2d8f7477c18e9c7d">find_ptr</a> (const Key &amp;key) const </td></tr>
+<tr class="separator:a40a8c21d5fe3399e2d8f7477c18e9c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a256e198603e82f8b927682adb2281304"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#a256e198603e82f8b927682adb2281304">get_count</a> () const </td></tr>
+<tr class="separator:a256e198603e82f8b927682adb2281304"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:afabf5526a631a7a632031673e481eeb2"><td class="memItemLeft" align="right" valign="top">static const Val&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#afabf5526a631a7a632031673e481eeb2">find_value</a> (const Key &amp;key)</td></tr>
-<tr class="separator:afabf5526a631a7a632031673e481eeb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e039205676d71c27d3d8c39059b5b21"><td class="memItemLeft" align="right" valign="top">static const Val &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#a7e039205676d71c27d3d8c39059b5b21">find_ref</a> (const Key &amp;key)</td></tr>
-<tr class="separator:a7e039205676d71c27d3d8c39059b5b21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a475af9295994ff2d9e7d36ca5eaacef9"><td class="memItemLeft" align="right" valign="top">static const Val *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#a475af9295994ff2d9e7d36ca5eaacef9">find_ptr</a> (const Key &amp;key)</td></tr>
-<tr class="separator:a475af9295994ff2d9e7d36ca5eaacef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af47d00dfda2de96cdb88e1af9f0d079f"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#af47d00dfda2de96cdb88e1af9f0d079f">get_count</a> ()</td></tr>
-<tr class="separator:af47d00dfda2de96cdb88e1af9f0d079f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01f50857699799ca7537a1a550ae67a5"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">TypePair</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#a01f50857699799ca7537a1a550ae67a5">get_table_end</a> ()</td></tr>
-<tr class="separator:a01f50857699799ca7537a1a550ae67a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:a9621b152183d9cd42ad199b88aff9d4b"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">TypePair</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#a9621b152183d9cd42ad199b88aff9d4b">_valueTable</a> []</td></tr>
-<tr class="memdesc:a9621b152183d9cd42ad199b88aff9d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The actual data set.  <a href="#a9621b152183d9cd42ad199b88aff9d4b">More...</a><br/></td></tr>
-<tr class="separator:a9621b152183d9cd42ad199b88aff9d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f99cd0d5bc1be93d43c0bf71fd204f5"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structFIX8_1_1StaticTable.html#a2ad0208949fe9e985ca78d0ae3edff05">TypeMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#a2f99cd0d5bc1be93d43c0bf71fd204f5">_valuemap</a></td></tr>
-<tr class="memdesc:a2f99cd0d5bc1be93d43c0bf71fd204f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The container.  <a href="#a2f99cd0d5bc1be93d43c0bf71fd204f5">More...</a><br/></td></tr>
-<tr class="separator:a2f99cd0d5bc1be93d43c0bf71fd204f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff7cd3306d16b9a89b4c403784663c9f"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structFIX8_1_1StaticTable.html#a267de06cd639bc971f139143308713cb">NotFoundType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#aff7cd3306d16b9a89b4c403784663c9f">_noval</a></td></tr>
-<tr class="memdesc:aff7cd3306d16b9a89b4c403784663c9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value to return when the key is not found.  <a href="#aff7cd3306d16b9a89b4c403784663c9f">More...</a><br/></td></tr>
-<tr class="separator:aff7cd3306d16b9a89b4c403784663c9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a5988f8af31730212ab748c79b6381df0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structFIX8_1_1StaticTable.html#a2ad0208949fe9e985ca78d0ae3edff05">TypeMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#a5988f8af31730212ab748c79b6381df0">_valuemap</a></td></tr>
+<tr class="memdesc:a5988f8af31730212ab748c79b6381df0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The container.  <a href="#a5988f8af31730212ab748c79b6381df0">More...</a><br/></td></tr>
+<tr class="separator:a5988f8af31730212ab748c79b6381df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99ddd3f4948cef595c6b1b68048760b9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structFIX8_1_1StaticTable.html#a267de06cd639bc971f139143308713cb">NotFoundType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1StaticTable.html#a99ddd3f4948cef595c6b1b68048760b9">_noval</a></td></tr>
+<tr class="memdesc:a99ddd3f4948cef595c6b1b68048760b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value to return when the key is not found.  <a href="#a99ddd3f4948cef595c6b1b68048760b9">More...</a><br/></td></tr>
+<tr class="separator:a99ddd3f4948cef595c6b1b68048760b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt;<br/>
@@ -177,48 +168,16 @@ struct FIX8::StaticTable&lt; Key, Val, Compare &gt;</h3>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00185">185</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00184">184</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="a267de06cd639bc971f139143308713cb"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
+template&lt;typename Key , typename Val , typename Compare  = std::less&lt;Key&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">typedef Val <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::<a class="el" href="structFIX8_1_1StaticTable.html#a267de06cd639bc971f139143308713cb">NotFoundType</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00189">189</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a2ad0208949fe9e985ca78d0ae3edff05"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::map&lt;Key, Val, Compare&gt; <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::<a class="el" href="structFIX8_1_1StaticTable.html#a2ad0208949fe9e985ca78d0ae3edff05">TypeMap</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00187">187</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ac86564eefb2ebdfb77ca8572fd26fb34"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef TypeMap::value_type <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::<a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">TypePair</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -227,12 +186,44 @@ template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&
 
 </div>
 </div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aaaa32b9b3236f916c7af53c9b2cdc480"></a>
+<a class="anchor" id="a2ad0208949fe9e985ca78d0ae3edff05"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
+template&lt;typename Key , typename Val , typename Compare  = std::less&lt;Key&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::map&lt;Key, Val, Compare&gt; <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::<a class="el" href="structFIX8_1_1StaticTable.html#a2ad0208949fe9e985ca78d0ae3edff05">TypeMap</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00186">186</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac86564eefb2ebdfb77ca8572fd26fb34"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Key , typename Val , typename Compare  = std::less&lt;Key&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef TypeMap::value_type <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::<a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">TypePair</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00187">187</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a88d1b8355ca6f5957fabc10aa357b977"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Key , typename Val , typename Compare  = std::less&lt;Key&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -240,8 +231,25 @@ template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&
         <tr>
           <td class="memname"><a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::<a class="el" href="structFIX8_1_1StaticTable.html">StaticTable</a> </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">TypePair</a> *&#160;</td>
+          <td class="paramname"><em>valueTable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>valueTableSz</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structFIX8_1_1StaticTable.html#a267de06cd639bc971f139143308713cb">NotFoundType</a> &amp;&#160;</td>
+          <td class="paramname"><em>noval</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -253,31 +261,31 @@ template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&
 
 <p>Ctor. </p>
 
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00201">201</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00197">197</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a475af9295994ff2d9e7d36ca5eaacef9"></a>
+<a class="anchor" id="a40a8c21d5fe3399e2d8f7477c18e9c7d"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
+template&lt;typename Key , typename Val , typename Compare  = std::less&lt;Key&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static const Val* <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::find_ptr </td>
+          <td class="memname">const Val* <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::find_ptr </td>
           <td>(</td>
           <td class="paramtype">const Key &amp;&#160;</td>
           <td class="paramname"><em>key</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -290,30 +298,32 @@ template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>value found (pointer) or 0 if not found </dd></dl>
 
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00224">224</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00221">221</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+
+<p>References <a class="el" href="f8types_8hpp_source.html#l00191">FIX8::StaticTable&lt; Key, Val, Compare &gt;::_valuemap</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7e039205676d71c27d3d8c39059b5b21"></a>
+<a class="anchor" id="af270b08176d7e223c0bbd0c9edf96b3a"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
+template&lt;typename Key , typename Val , typename Compare  = std::less&lt;Key&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static const Val&amp; <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::find_ref </td>
+          <td class="memname">const Val&amp; <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::find_ref </td>
           <td>(</td>
           <td class="paramtype">const Key &amp;&#160;</td>
           <td class="paramname"><em>key</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -326,32 +336,34 @@ template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>value found (reference) or _noval if not found </dd></dl>
 
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00215">215</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00212">212</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00824">generate_common_group_bodies()</a>, <a class="el" href="f8c_8cpp_source.html#l00680">generate_group_bodies()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00416">generate_preamble()</a>, <a class="el" href="f8c_8cpp_source.html#l00178">main()</a>, <a class="el" href="f8c_8cpp_source.html#l00844">process()</a>, <a class="el" href="hftest_8hpp_source.html#l00179">MyMenu::process()</a>, and <a class="el" href="session_8cpp_source.html#l00252">FIX8::Session::process()</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00194">FIX8::StaticTable&lt; Key, Val, Compare &gt;::_noval</a>, and <a class="el" href="f8types_8hpp_source.html#l00191">FIX8::StaticTable&lt; Key, Val, Compare &gt;::_valuemap</a>.</p>
+
+<p>Referenced by <a class="el" href="f8c_8cpp_source.html#l00803">generate_common_group_bodies()</a>, <a class="el" href="f8c_8cpp_source.html#l00658">generate_group_bodies()</a>, <a class="el" href="f8cutils_8cpp_source.html#l00416">generate_preamble()</a>, <a class="el" href="f8c_8cpp_source.html#l00154">main()</a>, <a class="el" href="f8c_8cpp_source.html#l00823">process()</a>, and <a class="el" href="hftest_8hpp_source.html#l00180">MyMenu::process()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afabf5526a631a7a632031673e481eeb2"></a>
+<a class="anchor" id="a0ddd41390291863ea0eb08fdfe9828e6"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
+template&lt;typename Key , typename Val , typename Compare  = std::less&lt;Key&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static const Val <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::find_value </td>
+          <td class="memname">Val <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::find_value </td>
           <td>(</td>
           <td class="paramtype">const Key &amp;&#160;</td>
           <td class="paramname"><em>key</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -364,180 +376,93 @@ template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>value found (value) or _noval if not found </dd></dl>
 
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00206">206</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00203">203</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00637">XmlElement::InplaceXlate()</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00194">FIX8::StaticTable&lt; Key, Val, Compare &gt;::_noval</a>, and <a class="el" href="f8types_8hpp_source.html#l00191">FIX8::StaticTable&lt; Key, Val, Compare &gt;::_valuemap</a>.</p>
+
+<p>Referenced by <a class="el" href="xml_8cpp_source.html#l00632">XmlElement::InplaceXlate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af47d00dfda2de96cdb88e1af9f0d079f"></a>
+<a class="anchor" id="a256e198603e82f8b927682adb2281304"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
+template&lt;typename Key , typename Val , typename Compare  = std::less&lt;Key&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static size_t <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::get_count </td>
+          <td class="memname">size_t <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::get_count </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>Get the number of elements in the data set. </p>
 <dl class="section return"><dt>Returns</dt><dd>number of elements </dd></dl>
 
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00232">232</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00229">229</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
-</div>
-</div>
-<a class="anchor" id="a01f50857699799ca7537a1a550ae67a5"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static const <a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">TypePair</a>* <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::get_table_end </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get a pointer to the end of the data set. Used as an end inputiterator for initialisation. </p>
-<dl class="section return"><dt>Returns</dt><dd>pointer to end of table </dd></dl>
-
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00236">236</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+<p>References <a class="el" href="f8types_8hpp_source.html#l00191">FIX8::StaticTable&lt; Key, Val, Compare &gt;::_valuemap</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="aff7cd3306d16b9a89b4c403784663c9f"></a>
+<a class="anchor" id="a99ddd3f4948cef595c6b1b68048760b9"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
+template&lt;typename Key , typename Val , typename Compare  = std::less&lt;Key&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="structFIX8_1_1StaticTable.html#a267de06cd639bc971f139143308713cb">CSMap::NotFoundType</a> FIX8::CSMap::_noval</td>
+          <td class="memname">const <a class="el" href="structFIX8_1_1StaticTable.html#a267de06cd639bc971f139143308713cb">NotFoundType</a> <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::_noval</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>The value to return when the key is not found. </p>
 
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00198">198</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00194">194</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00215">FIX8::StaticTable&lt; const f8String, bool(Session::*)(const unsigned, const Message *)&gt;::find_ref()</a>, and <a class="el" href="f8types_8hpp_source.html#l00206">FIX8::StaticTable&lt; const f8String, bool(Session::*)(const unsigned, const Message *)&gt;::find_value()</a>.</p>
+<p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00212">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, and <a class="el" href="f8types_8hpp_source.html#l00203">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_value()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2f99cd0d5bc1be93d43c0bf71fd204f5"></a>
+<a class="anchor" id="a5988f8af31730212ab748c79b6381df0"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
+template&lt;typename Key , typename Val , typename Compare  = std::less&lt;Key&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="structFIX8_1_1StaticTable.html#a2ad0208949fe9e985ca78d0ae3edff05">CSMap::TypeMap</a> FIX8::CSMap::_valuemap</td>
+          <td class="memname">const <a class="el" href="structFIX8_1_1StaticTable.html#a2ad0208949fe9e985ca78d0ae3edff05">TypeMap</a> <a class="el" href="structFIX8_1_1StaticTable.html">FIX8::StaticTable</a>&lt; Key, Val, Compare &gt;::_valuemap</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>The container. </p>
 
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00195">195</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
+<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00191">191</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00224">FIX8::StaticTable&lt; const f8String, bool(Session::*)(const unsigned, const Message *)&gt;::find_ptr()</a>, <a class="el" href="f8types_8hpp_source.html#l00215">FIX8::StaticTable&lt; const f8String, bool(Session::*)(const unsigned, const Message *)&gt;::find_ref()</a>, <a class="el" href="f8types_8hpp_source.html#l00206">FIX8::StaticTable&lt; const f8String, bool(Session::*)(const unsigned, const Message *)&gt;::find_value()</a>, and <a class="el" href="f8types_8hpp_source.html#l00232">FIX8::StaticTable&lt; const f8String, bool(Session::*)(const unsigned, const Message *)&gt;::get_count()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a9621b152183d9cd42ad199b88aff9d4b"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Key, typename Val, typename Compare = std::less&lt;Key&gt;&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">CSMap::TypePair</a> FIX8::CSMap::_valueTable</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">{</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;amp&quot;</span>, <span class="charliteral">&#39;&amp;&#39;</span>),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;lt&quot;</span>, <span class="charliteral">&#39;&lt;&#39;</span>),    <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;gt&quot;</span>, <span class="charliteral">&#39;&gt;&#39;</span>),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;apos&quot;</span>, <span class="charliteral">&#39;\&#39;&#39;</span>), <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;quot&quot;</span>, <span class="charliteral">&#39;&quot;&#39;</span>),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;nbsp&quot;</span>, 160),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;iexcl&quot;</span>, 161), <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;cent&quot;</span>, 162),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;pound&quot;</span>, 163),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;curren&quot;</span>, 164),<a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;yen&quot;</span>, 165),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;brvbar&quot;</span>, 166),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;sect&quot;</span>, 167),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;uml&quot;</span>, 168),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;copy&quot;</span>, 169),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;ordf&quot;</span>, 170),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;laquo&quot;</span>, 171), <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;not&quot;</span>, 172),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;shy&quot;</span>, 173),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;reg&quot;</span>, 174),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;macr&quot;</span>, 175),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;deg&quot;</span>, 176),   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;plusmn&quot;</span>, 177),<a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;sup2&quot;</span>, 178),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;sup3&quot;</span>, 179),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;acute&quot;</span>, 180), <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;micro&quot;</span>, 181),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;para&quot;</span>, 182),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;middot&quot;</span>, 183),<a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;cedil&quot;</span>, 184),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;sup1&quot;</span>, 185),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;ordm&quot;</span>, 186),  <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;raquo&quot;</span>, 187),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;frac14&quot;</span>, 188),<a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;frac12&quot;</span>, 189),<a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;frac34&quot;</span>, 190),</div>
-<div class="line">   <a class="code" href="structFIX8_1_1StaticTable.html#ac86564eefb2ebdfb77ca8572fd26fb34">Str2Chr::TypePair</a>(<span class="stringliteral">&quot;iquest&quot;</span>, 191)</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-<p>The actual data set. </p>
-
-<p>Definition at line <a class="el" href="f8types_8hpp_source.html#l00192">192</a> of file <a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>.</p>
-
-<p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00236">FIX8::StaticTable&lt; const f8String, bool(Session::*)(const unsigned, const Message *)&gt;::get_table_end()</a>.</p>
+<p>Referenced by <a class="el" href="f8types_8hpp_source.html#l00221">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ptr()</a>, <a class="el" href="f8types_8hpp_source.html#l00212">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_ref()</a>, <a class="el" href="f8types_8hpp_source.html#l00203">FIX8::StaticTable&lt; Key, Val, Compare &gt;::find_value()</a>, and <a class="el" href="f8types_8hpp_source.html#l00229">FIX8::StaticTable&lt; Key, Val, Compare &gt;::get_count()</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following files:<ul>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="f8types_8hpp_source.html">f8types.hpp</a></li>
-<li><a class="el" href="xml_8cpp_source.html">xml.cpp</a></li>
-<li><a class="el" href="f8cstatic_8hpp_source.html">f8cstatic.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:26:07. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:51. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

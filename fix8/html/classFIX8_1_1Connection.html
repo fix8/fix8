@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.6</span>
+   &#160;<span id="projectnumber">version  0.10.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -162,8 +162,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9a584ddd21bf93a9d721c0be9f87ab59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a506c527366cc53efdeeeaf5012573398"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a506c527366cc53efdeeeaf5012573398">connect</a> ()</td></tr>
 <tr class="separator:a506c527366cc53efdeeeaf5012573398"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2daf511c15cdfdb04bcade284e63292b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a2daf511c15cdfdb04bcade284e63292b">write</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> *from)</td></tr>
-<tr class="separator:a2daf511c15cdfdb04bcade284e63292b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a106f21a277dc451611241127c096c59c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a106f21a277dc451611241127c096c59c">write</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> *from, bool destroy=true)</td></tr>
+<tr class="separator:a106f21a277dc451611241127c096c59c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4df0059db3ffccabd58c1b0ad367ff03"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a4df0059db3ffccabd58c1b0ad367ff03">write</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> &amp;from)</td></tr>
 <tr class="separator:a4df0059db3ffccabd58c1b0ad367ff03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54605d1259a21986a24bdf3d7f126320"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a54605d1259a21986a24bdf3d7f126320">send</a> (const char *from, size_t sz)</td></tr>
@@ -188,6 +188,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4c4b1dcb9561db6c1eeef6c25e7ac3c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a405268dd993f89ad97d83653bde6a6fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a405268dd993f89ad97d83653bde6a6fe">set_send_buf_sz</a> (const unsigned sz) const </td></tr>
 <tr class="separator:a405268dd993f89ad97d83653bde6a6fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaacffd53265064f696230c8b7cda9223"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#aaacffd53265064f696230c8b7cda9223">set_tcp_cork_flag</a> (bool way) const </td></tr>
+<tr class="separator:aaacffd53265064f696230c8b7cda9223"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10936aa571fd03ceef536387a816d3da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a10936aa571fd03ceef536387a816d3da">get_session</a> ()</td></tr>
 <tr class="separator:a10936aa571fd03ceef536387a816d3da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a544bc4a1bc8ae150f5cb938982f0170f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a544bc4a1bc8ae150f5cb938982f0170f">reader_execute</a> ()</td></tr>
@@ -232,7 +234,7 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Complete Fix connection (reader and writer). </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00329">329</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00326">326</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="ac7c5a73f9b3727fce73c3240bb57e804"></a>
 <div class="memitem">
@@ -254,7 +256,7 @@ Protected Attributes</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00333">333</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00330">330</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -320,7 +322,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00354">354</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00351">351</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -385,7 +387,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00365">365</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00362">362</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -412,7 +414,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00372">372</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00369">369</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -442,11 +444,11 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classFIX8_1_1ClientConnection.html#af4f8e04fc19787d8b18c25d7262b4451">FIX8::ClientConnection</a>.</p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00390">390</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00387">387</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00338">_connected</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00335">_connected</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00162">FIX8::Session::start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00139">FIX8::Session::start()</a>.</p>
 
 </div>
 </div>
@@ -473,11 +475,11 @@ Protected Attributes</h2></td></tr>
 <p>Get the heartbeat interval for this connection. </p>
 <dl class="section return"><dt>Returns</dt><dd>the heartbeat interval </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00420">420</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00417">417</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00342">_hb_interval</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00339">_hb_interval</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00388">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00590">FIX8::Session::heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00162">FIX8::Session::start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00397">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00599">FIX8::Session::heartbeat_service()</a>, and <a class="el" href="session_8cpp_source.html#l00139">FIX8::Session::start()</a>.</p>
 
 </div>
 </div>
@@ -504,11 +506,11 @@ Protected Attributes</h2></td></tr>
 <p>Get the heartbeat interval + %20 for this connection. </p>
 <dl class="section return"><dt>Returns</dt><dd>the heartbeat interval + %20 </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00424">424</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00421">421</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00342">_hb_interval20pc</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00339">_hb_interval20pc</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00590">FIX8::Session::heartbeat_service()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00599">FIX8::Session::heartbeat_service()</a>.</p>
 
 </div>
 </div>
@@ -535,11 +537,11 @@ Protected Attributes</h2></td></tr>
 <p>Get the peer socket address </p>
 <dl class="section return"><dt>Returns</dt><dd>peer socket address reference </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00428">428</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00425">425</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00336">_sock</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00333">_sock</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00388">FIX8::Session::handle_logon()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00397">FIX8::Session::handle_logon()</a>.</p>
 
 </div>
 </div>
@@ -566,11 +568,11 @@ Protected Attributes</h2></td></tr>
 <p>Get the process model </p>
 <dl class="section return"><dt>Returns</dt><dd>the process model </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00380">380</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00377">377</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00341">_pmodel</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00338">_pmodel</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00388">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00507">FIX8::Session::handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00252">FIX8::Session::process()</a>, <a class="el" href="session_8cpp_source.html#l00872">FIX8::Session::recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00779">FIX8::Session::send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00218">FIX8::Session::stop()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00397">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00516">FIX8::Session::handle_resend_request()</a>, <a class="el" href="session_8cpp_source.html#l00229">FIX8::Session::process()</a>, <a class="el" href="session_8cpp_source.html#l00867">FIX8::Session::recover_seqnums()</a>, <a class="el" href="session_8cpp_source.html#l00780">FIX8::Session::send_process()</a>, and <a class="el" href="session_8cpp_source.html#l00195">FIX8::Session::stop()</a>.</p>
 
 </div>
 </div>
@@ -597,11 +599,11 @@ Protected Attributes</h2></td></tr>
 <p>Get the role for this connection. </p>
 <dl class="section return"><dt>Returns</dt><dd>the role </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00376">376</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00373">373</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00340">_role</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00337">_role</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00388">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00162">FIX8::Session::start()</a>, <a class="el" href="session_8cpp_source.html#l00218">FIX8::Session::stop()</a>, and <a class="el" href="session_8cpp_source.html#l00150">FIX8::Session::~Session()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00397">FIX8::Session::handle_logon()</a>, <a class="el" href="session_8cpp_source.html#l00139">FIX8::Session::start()</a>, <a class="el" href="session_8cpp_source.html#l00195">FIX8::Session::stop()</a>, and <a class="el" href="session_8cpp_source.html#l00127">FIX8::Session::~Session()</a>.</p>
 
 </div>
 </div>
@@ -628,9 +630,9 @@ Protected Attributes</h2></td></tr>
 <p>Get the session associated with this connection. </p>
 <dl class="section return"><dt>Returns</dt><dd>the session </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00475">475</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00481">481</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00339">_session</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00336">_session</a>.</p>
 
 </div>
 </div>
@@ -657,9 +659,9 @@ Protected Attributes</h2></td></tr>
 <p>Get the socket address </p>
 <dl class="section return"><dt>Returns</dt><dd>socket address reference </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00432">432</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00429">429</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00337">_addr</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00334">_addr</a>.</p>
 
 </div>
 </div>
@@ -686,9 +688,9 @@ Protected Attributes</h2></td></tr>
 <p>Check to see if the socket is in error </p>
 <dl class="section return"><dt>Returns</dt><dd>true if there was a socket error </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00440">440</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00437">437</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00344">_reader</a>, and <a class="el" href="connection_8hpp_source.html#l00211">FIX8::FIXReader::is_socket_error()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00341">_reader</a>, and <a class="el" href="connection_8hpp_source.html#l00211">FIX8::FIXReader::is_socket_error()</a>.</p>
 
 </div>
 </div>
@@ -715,11 +717,11 @@ Protected Attributes</h2></td></tr>
 <p>Wait till reader thead has finished. </p>
 <dl class="section return"><dt>Returns</dt><dd>0 on success </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00436">436</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00433">433</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00344">_reader</a>, and <a class="el" href="connection_8hpp_source.html#l00204">FIX8::FIXReader::join()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00341">_reader</a>, and <a class="el" href="connection_8hpp_source.html#l00204">FIX8::FIXReader::join()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00162">FIX8::Session::start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00139">FIX8::Session::start()</a>.</p>
 
 </div>
 </div>
@@ -746,9 +748,9 @@ Protected Attributes</h2></td></tr>
 <p>Call the FIXreader method </p>
 <dl class="section return"><dt>Returns</dt><dd>result of call </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00479">479</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00485">485</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00344">_reader</a>, and <a class="el" href="connection_8hpp_source.html#l00085">FIX8::AsyncSocket&lt; T &gt;::execute()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00341">_reader</a>, and <a class="el" href="connection_8hpp_source.html#l00085">FIX8::AsyncSocket&lt; T &gt;::execute()</a>.</p>
 
 </div>
 </div>
@@ -775,9 +777,9 @@ Protected Attributes</h2></td></tr>
 <p>Check if the reader will block </p>
 <dl class="section return"><dt>Returns</dt><dd>true if won't block </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00483">483</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00489">489</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00344">_reader</a>, and <a class="el" href="connection_8hpp_source.html#l00215">FIX8::FIXReader::poll()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00341">_reader</a>, and <a class="el" href="connection_8hpp_source.html#l00215">FIX8::FIXReader::poll()</a>.</p>
 
 </div>
 </div>
@@ -822,11 +824,11 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of bytes written </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00406">406</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00403">403</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00345">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00291">FIX8::FIXWriter::send()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00342">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00288">FIX8::FIXWriter::send()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00779">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00780">FIX8::Session::send_process()</a>.</p>
 
 </div>
 </div>
@@ -860,9 +862,9 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of bytes written </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00411">411</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00408">408</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00345">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00291">FIX8::FIXWriter::send()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00342">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00288">FIX8::FIXWriter::send()</a>.</p>
 
 </div>
 </div>
@@ -895,11 +897,11 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00415">415</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00412">412</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00342">_hb_interval</a>, and <a class="el" href="connection_8hpp_source.html#l00342">_hb_interval20pc</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00339">_hb_interval</a>, and <a class="el" href="connection_8hpp_source.html#l00339">_hb_interval20pc</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00388">FIX8::Session::handle_logon()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00397">FIX8::Session::handle_logon()</a>.</p>
 
 </div>
 </div>
@@ -943,11 +945,11 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00445">445</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00442">442</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00369">FIX8::SingleLogger&lt; fn &gt;::log()</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00259">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00326">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
 
 </div>
 </div>
@@ -980,11 +982,11 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00467">467</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00464">464</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00336">_sock</a>, and <a class="el" href="connection_8hpp_source.html#l00467">set_recv_buf_sz()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00333">_sock</a>, and <a class="el" href="connection_8hpp_source.html#l00464">set_recv_buf_sz()</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00467">set_recv_buf_sz()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00464">set_recv_buf_sz()</a>.</p>
 
 </div>
 </div>
@@ -1028,11 +1030,11 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00457">457</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00454">454</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 <p>References <a class="el" href="logger_8hpp_source.html#l00369">FIX8::SingleLogger&lt; fn &gt;::log()</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00259">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00326">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
 
 </div>
 </div>
@@ -1065,11 +1067,48 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00471">471</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00468">468</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00336">_sock</a>, and <a class="el" href="connection_8hpp_source.html#l00471">set_send_buf_sz()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00333">_sock</a>, and <a class="el" href="connection_8hpp_source.html#l00468">set_send_buf_sz()</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00471">set_send_buf_sz()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00468">set_send_buf_sz()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaacffd53265064f696230c8b7cda9223"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FIX8::Connection::set_tcp_cork_flag </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>way</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the tcp_cork flag </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">way</td><td>boolean true (on) or false(clear) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00472">472</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+
+<p>References <a class="el" href="connection_8hpp_source.html#l00333">_sock</a>.</p>
+
+<p>Referenced by <a class="el" href="hftest_8cpp_source.html#l00465">MyMenu::send_all_preloaded()</a>, and <a class="el" href="session_8cpp_source.html#l00763">FIX8::Session::send_batch()</a>.</p>
 
 </div>
 </div>
@@ -1088,9 +1127,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Start the reader and writer threads. </p>
 
-<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00337">337</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00331">331</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00162">FIX8::Session::start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00139">FIX8::Session::start()</a>.</p>
 
 </div>
 </div>
@@ -1109,13 +1148,13 @@ Protected Attributes</h2></td></tr>
 
 <p>Stop the reader and writer threads. </p>
 
-<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00344">344</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00338">338</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00218">FIX8::Session::stop()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00195">FIX8::Session::stop()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2daf511c15cdfdb04bcade284e63292b"></a>
+<a class="anchor" id="a106f21a277dc451611241127c096c59c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1126,8 +1165,18 @@ Protected Attributes</h2></td></tr>
           <td class="memname">virtual bool FIX8::Connection::write </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classFIX8_1_1Message.html">Message</a> *&#160;</td>
-          <td class="paramname"><em>from</em></td><td>)</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>destroy</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -1145,11 +1194,11 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00395">395</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00392">392</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00345">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00245">FIX8::FIXWriter::write()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00342">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00248">FIX8::FIXWriter::write()</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00735">FIX8::Session::send()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00744">FIX8::Session::send()</a>, and <a class="el" href="session_8cpp_source.html#l00763">FIX8::Session::send_batch()</a>.</p>
 
 </div>
 </div>
@@ -1183,9 +1232,9 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00400">400</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00397">397</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00345">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00245">FIX8::FIXWriter::write()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00342">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00248">FIX8::FIXWriter::write()</a>.</p>
 
 </div>
 </div>
@@ -1212,9 +1261,9 @@ Protected Attributes</h2></td></tr>
 <p>Call the FIXreader method </p>
 <dl class="section return"><dt>Returns</dt><dd>result of call </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00487">487</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00493">493</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00345">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00085">FIX8::AsyncSocket&lt; T &gt;::execute()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00342">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00085">FIX8::AsyncSocket&lt; T &gt;::execute()</a>.</p>
 
 </div>
 </div>
@@ -1241,11 +1290,11 @@ Protected Attributes</h2></td></tr>
 <p>Check if the writer will block </p>
 <dl class="section return"><dt>Returns</dt><dd>true if won't block </dd></dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00491">491</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00497">497</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>References <a class="el" href="connection_8hpp_source.html#l00345">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00281">FIX8::FIXWriter::poll()</a>.</p>
+<p>References <a class="el" href="connection_8hpp_source.html#l00342">_writer</a>, and <a class="el" href="connection_8hpp_source.html#l00278">FIX8::FIXWriter::poll()</a>.</p>
 
-<p>Referenced by <a class="el" href="hftest_8cpp_source.html#l00473">MyMenu::send_all_preloaded()</a>.</p>
+<p>Referenced by <a class="el" href="hftest_8cpp_source.html#l00465">MyMenu::send_all_preloaded()</a>.</p>
 
 </div>
 </div>
@@ -1268,9 +1317,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00337">337</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00334">334</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00432">get_socket_address()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00429">get_socket_address()</a>.</p>
 
 </div>
 </div>
@@ -1292,9 +1341,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00338">338</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00335">335</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00390">connect()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00387">connect()</a>.</p>
 
 </div>
 </div>
@@ -1316,9 +1365,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00342">342</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00339">339</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00420">get_hb_interval()</a>, and <a class="el" href="connection_8hpp_source.html#l00415">set_hb_interval()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00417">get_hb_interval()</a>, and <a class="el" href="connection_8hpp_source.html#l00412">set_hb_interval()</a>.</p>
 
 </div>
 </div>
@@ -1340,9 +1389,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00342">342</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00339">339</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00424">get_hb_interval20pc()</a>, and <a class="el" href="connection_8hpp_source.html#l00415">set_hb_interval()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00421">get_hb_interval20pc()</a>, and <a class="el" href="connection_8hpp_source.html#l00412">set_hb_interval()</a>.</p>
 
 </div>
 </div>
@@ -1364,9 +1413,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00341">341</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00338">338</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00380">get_pmodel()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00377">get_pmodel()</a>.</p>
 
 </div>
 </div>
@@ -1388,9 +1437,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00344">344</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00341">341</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00440">is_socket_error()</a>, <a class="el" href="connection_8hpp_source.html#l00436">join()</a>, <a class="el" href="connection_8hpp_source.html#l00479">reader_execute()</a>, and <a class="el" href="connection_8hpp_source.html#l00483">reader_poll()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00437">is_socket_error()</a>, <a class="el" href="connection_8hpp_source.html#l00433">join()</a>, <a class="el" href="connection_8hpp_source.html#l00485">reader_execute()</a>, and <a class="el" href="connection_8hpp_source.html#l00489">reader_poll()</a>.</p>
 
 </div>
 </div>
@@ -1412,9 +1461,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00340">340</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00337">337</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00376">get_role()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00373">get_role()</a>.</p>
 
 </div>
 </div>
@@ -1436,9 +1485,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00339">339</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00336">336</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00475">get_session()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00481">get_session()</a>.</p>
 
 </div>
 </div>
@@ -1460,9 +1509,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00336">336</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00333">333</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00428">get_peer_socket_address()</a>, <a class="el" href="connection_8hpp_source.html#l00532">FIX8::ServerConnection::ServerConnection()</a>, <a class="el" href="connection_8hpp_source.html#l00467">set_recv_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00471">set_send_buf_sz()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00425">get_peer_socket_address()</a>, <a class="el" href="connection_8hpp_source.html#l00538">FIX8::ServerConnection::ServerConnection()</a>, <a class="el" href="connection_8hpp_source.html#l00464">set_recv_buf_sz()</a>, <a class="el" href="connection_8hpp_source.html#l00468">set_send_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00472">set_tcp_cork_flag()</a>.</p>
 
 </div>
 </div>
@@ -1484,9 +1533,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00345">345</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00342">342</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00406">send()</a>, <a class="el" href="connection_8hpp_source.html#l00395">write()</a>, <a class="el" href="connection_8hpp_source.html#l00487">writer_execute()</a>, and <a class="el" href="connection_8hpp_source.html#l00491">writer_poll()</a>.</p>
+<p>Referenced by <a class="el" href="connection_8hpp_source.html#l00403">send()</a>, <a class="el" href="connection_8hpp_source.html#l00392">write()</a>, <a class="el" href="connection_8hpp_source.html#l00493">writer_execute()</a>, and <a class="el" href="connection_8hpp_source.html#l00497">writer_poll()</a>.</p>
 
 </div>
 </div>
@@ -1497,7 +1546,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:26:07. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:51. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

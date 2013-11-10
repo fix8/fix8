@@ -10,6 +10,7 @@ var searchData=
   ['regmatch',['RegMatch',['../classFIX8_1_1RegMatch.html',1,'FIX8']]],
   ['reject',['Reject',['../classFIX8_1_1TEX_1_1Reject.html',1,'FIX8::TEX']]],
   ['reliableclientsession',['ReliableClientSession',['../classFIX8_1_1ReliableClientSession.html',1,'FIX8']]],
+  ['reliableclientsessionfo',['ReliableClientSessionFO',['../classFIX8_1_1ReliableClientSessionFO.html',1,'FIX8']]],
   ['requestforpositions',['RequestForPositions',['../classFIX8_1_1TEX_1_1RequestForPositions.html',1,'FIX8::TEX']]],
   ['requestforpositionsack',['RequestForPositionsAck',['../classFIX8_1_1TEX_1_1RequestForPositionsAck.html',1,'FIX8::TEX']]],
   ['resendrequest',['ResendRequest',['../classFIX8_1_1TEX_1_1ResendRequest.html',1,'FIX8::TEX']]],

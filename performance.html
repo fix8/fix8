@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Fix8 Performance</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Modern open source low latency C++ FIX framework featuring complete schema driven customisation, high performance and fast application development. 3.2x faster encdoding than Quickfix. Production client encode latency is 2.2us, decode 4.5us. Free, community supported.">
+    <meta name="description" content="Modern open source low latency C++ FIX framework featuring complete schema driven customisation, high performance and fast application development. 3.2x faster encdoding than Quickfix. Production client encode latency is 2.1us, decode 2.7us. Free, community supported.">
     <meta name="author" content="David L. Dight">
 
     <!-- Le styles -->
@@ -429,7 +429,7 @@ int main(int argc, char *argv[])
 			<div class="row">
 				<div class="span12">
 					<h2>Conclusion</h2>
-					<p>For the same message, Fix8 encodes <em><b>3.2 times faster</b></em> and decodes <em><b>3.0 times faster</b></em> for an average improvement of <em><b>3.0 times</b></em> over Quickfix. In other words, reduces encode latency by <em><b>69%</b></em> and reduces decode latency by <em><b>67%</b></em>.</p>
+					<p>For the same message, Fix8 <u>encodes <em><b>3.2 times faster</b></em></u> and <u>decodes <em><b>3.0 times faster</b></em></u> for an average improvement of <em><b>3.0 times</b></em> over Quickfix. In other words, reduces encode latency by <em><b>69%</b></em> and reduces decode latency by <em><b>67%</b></em>.</p>
 				</div>
 			</div>
 		</div>
@@ -547,7 +547,7 @@ trailer ("trailer")
 			<div class="row">
 				<div class="span12">
 					<h2>The test client/server</h2>
-					<p><i class="icon-exclamation-sign"></i> Note that we used <code>tcmalloc</code> for this test. See the <a href="faq.html">FAQ</a> for details.</p>
+					<p><i class="icon-exclamation-sign"></i> Note that we used <code>tcmalloc</code> and <code>tbb</code> for this test. See the <a href="faq.html">FAQ</a> for details.</p>
 					<p>Before you begin, set your compiler optimisation to <code>-O3</code>
 <pre>
 % export CXXFLAGS=-O3
@@ -567,7 +567,7 @@ trailer ("trailer")
 						<p><i class="icon-exclamation-sign"></i> Do not use the configure switches shown above when building the other supplied test applications.</p>
 						<p>To run the server, execute the following command (assuming the xml config files are in the current directory):</p>
 <pre>
-% ./hftest -sl server
+% ./hftest -sol server
 </pre>
 					In another terminal, run the client:
 <pre>
@@ -608,7 +608,7 @@ x       Exit
 </pre>
 					<p>When all the execution reports have been received (in the client window), press <code>'l'</code> to logout and exit. Wait a few moments for the
 					logging buffer to empty. When the client has disconnected the server will also flush its logging buffer so wait a bit longer for this as well.
-					Occasionally you may get a core dump on exit - you can ignore this for now. Switch to your server and press <code>^C</code> to terminate the server.
+					Occasionally you may get a core dump on exit - you can ignore this for now. Your server should have also now exited (we passed the <code>o</code> option).
 					</p>
 					<p>You can use the supplied printer application <code>hfprint</code> to examine the protocol log output (you will need to enable the file protocol target in the xml configuration).<p>
 					<br>
@@ -622,10 +622,10 @@ x       Exit
 						two files to see the results.
 <pre>
 % cat client server|egrep "Encode|Decode"
-0000003 A 2013-05-27 13:41:02.397570013 client Encode: 1.112242210 secs, 500004 msgs, 0.000002224 secs/msg, 449545.97 msgs/sec
-0000004 A 2013-05-27 13:41:02.397596513 client Decode: 8.827292199 secs, 1963686 msgs, 0.000004495 secs/msg, 222456.21 msgs/sec
-0000005 A 2013-05-27 13:40:00.590843911 server Encode: 3.688396327 secs, 1974055 msgs, 0.000001868 secs/msg, 535206.86 msgs/sec
-0000006 A 2013-05-27 13:40:00.590862452 server Decode: 1.564008368 secs, 500003 msgs, 0.000003128 secs/msg, 319693.30 msgs/sec
+0000004 A 2013-11-05 13:51:25.203329321 client Encode: 1.027829627 secs,   500003 msgs, 0.000002056 secs/msg, 486464.86 msgs/sec
+0000005 A 2013-11-05 13:51:25.203390025 client Decode: 6.196271045 secs,  1960918 msgs, 0.000003160 secs/msg, 316467.43 msgs/sec
+0000006 A 2013-11-05 13:51:24.224960404 server Encode: 4.069362531 secs,  1960918 msgs, 0.000002075 secs/msg, 481873.51 msgs/sec
+0000007 A 2013-11-05 13:51:24.225002281 server Decode: 1.109719646 secs,   500003 msgs, 0.000002219 secs/msg, 450566.95 msgs/sec
 </pre>
 					<br>
 				</div>
@@ -650,34 +650,34 @@ x       Exit
 							<tr class="success">
 								<td>client</td>
 								<td>encode</td>
-								<td>500004</td>
-								<td>1.11</td>
-								<td>449545</td>
-								<td><b>2.22</b></td>
+								<td>500003</td>
+								<td>1.03</td>
+								<td>486465</td>
+								<td><b>2.06</b></td>
 							</tr>
 							<tr class="success">
 								<td></td>
 								<td>decode</td>
-								<td>1963686</td>
-								<td>8.83</td>
-								<td>222456</td>
-								<td><b>4.46</b></td>
+								<td>1960918</td>
+								<td>6.20</td>
+								<td>316467</td>
+								<td><b>3.16</b></td>
 							</tr>
 							<tr class="success">
 								<td>server</td>
 								<td>encode</td>
-								<td>1974055</td>
-								<td>3.69</td>
-								<td>535206</td>
-								<td><b>1.87</b></td>
+								<td>1960918</td>
+								<td>4.07</td>
+								<td>481874</td>
+								<td><b>2.08</b></td>
 							</tr>
 							<tr class="success">
 								<td></td>
 								<td>decode</td>
 								<td>500003</td>
-								<td>1.56</td>
-								<td>319693</td>
-								<td><b>3.13</b></td>
+								<td>1.11</td>
+								<td>450567</td>
+								<td><b>2.22</b></td>
 							</tr>
 						</tbody>
 					</table>
@@ -693,11 +693,11 @@ x       Exit
 						<tbody>
 							<tr class="success">
 								<td>encode</td>
-								<td><b>2.05</b></td>
+								<td><b>2.07</b></td>
 							</tr>
 							<tr class="success">
 								<td>decode</td>
-								<td><b>3.81</b></td>
+								<td><b>2.69</b></td>
 							</tr>
 						</tbody>
 					</table>
@@ -708,7 +708,7 @@ x       Exit
 				<div class="span12">
 					<h2>Conclusion</h2>
 					<p>Most users will be interested in client encode and decode. On our test hardware, Fix8 encodes a <code>NewOrderSingle(D)</code> in
-					<em><b>2.22 &#xb5;s</b></em> and decodes an <code>ExecutionReport(8)</code> in <em><b>4.46 &#xb5;s</b></em> when compiled with gcc. It can also be seen that when averaged across client and server, encode performance is better than decode.</p>
+					<em><b>2.07 &#xb5;s</b></em> and decodes an <code>ExecutionReport(8)</code> in <em><b>2.69 &#xb5;s</b></em> when compiled with gcc. It can also be seen that when averaged across client and server, encode performance is better than decode.</p>
 				</div>
 			</div>
 		</div>

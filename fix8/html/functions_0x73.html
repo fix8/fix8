@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.6</span>
+   &#160;<span id="projectnumber">version  0.10.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -224,10 +224,13 @@ $(document).ready(function(){initNavTree('functions_0x73.html','');});
 : <a class="el" href="classFIX8_1_1FIXWriter.html#a83da2b7666c2ee4a36ee720b78a1f597">FIX8::FIXWriter</a>
 , <a class="el" href="classFIX8_1_1Connection.html#a54605d1259a21986a24bdf3d7f126320">FIX8::Connection</a>
 , <a class="el" href="classFIX8_1_1Logger.html#a41aff49ccaf67b09eee5e2991949b98b">FIX8::Logger</a>
-, <a class="el" href="classFIX8_1_1Session.html#a3598effb83b3912939e2841826adbdd0">FIX8::Session</a>
+, <a class="el" href="classFIX8_1_1Session.html#a6c47fc8e186e75cd09a123976015f441">FIX8::Session</a>
 </li>
 <li>send_all_preloaded()
 : <a class="el" href="classMyMenu.html#ae8b731aa4bfcff89e1a9f16afaaf3e2a">MyMenu</a>
+</li>
+<li>send_batch()
+: <a class="el" href="classFIX8_1_1Session.html#a506f5683e733041acc7c6500bf22cd4f">FIX8::Session</a>
 </li>
 <li>send_lst()
 : <a class="el" href="classMyMenu.html#a1ac18be56e314f876643a39b8b011a56">MyMenu</a>
@@ -237,9 +240,6 @@ $(document).ready(function(){initNavTree('functions_0x73.html','');});
 </li>
 <li>send_process()
 : <a class="el" href="classFIX8_1_1Session.html#a07611f696bffa6982dfa5b340ee9524f">FIX8::Session</a>
-</li>
-<li>send_wait()
-: <a class="el" href="classFIX8_1_1Session.html#ac9ed55f61e7d0aa57c36a47d42af2b88">FIX8::Session</a>
 </li>
 <li>seq_
 : <a class="el" href="classXmlElement.html#ad3bf155ed5555c2dbb725d7c41baee8d">XmlElement</a>
@@ -258,6 +258,9 @@ $(document).ready(function(){initNavTree('functions_0x73.html','');});
 </li>
 <li>SequenceReset()
 : <a class="el" href="classFIX8_1_1TEX_1_1SequenceReset.html#a645bdad195cebbf87e37d2189d4992b3">FIX8::TEX::SequenceReset</a>
+</li>
+<li>Server()
+: <a class="el" href="structFIX8_1_1Server.html#adac7b291b80735d1cea75021453ca0de">FIX8::Server</a>
 </li>
 <li>Server_ptr
 : <a class="el" href="classFIX8_1_1ServerSession.html#a84fcb5bc7e03647abe0631070766c02e">FIX8::ServerSession&lt; T &gt;</a>
@@ -338,9 +341,6 @@ $(document).ready(function(){initNavTree('functions_0x73.html','');});
 <li>set_hb_interval()
 : <a class="el" href="classFIX8_1_1Connection.html#a62796cd45b362a0e14fbe2d6e0786710">FIX8::Connection</a>
 </li>
-<li>set_in_use()
-: <a class="el" href="classFIX8_1_1Message.html#ab48f5b2c6cff765f3c620cd4d6226979">FIX8::Message</a>
-</li>
 <li>set_last_received()
 : <a class="el" href="classtest__session.html#acc3816ca070127a425413fb65a46b620">test_session</a>
 </li>
@@ -369,10 +369,13 @@ $(document).ready(function(){initNavTree('functions_0x73.html','');});
 : <a class="el" href="classFIX8_1_1Connection.html#a9cff80bec2b2243a458ab2f939697c6e">FIX8::Connection</a>
 </li>
 <li>set_send_buf_sz()
-: <a class="el" href="classFIX8_1_1Connection.html#a95bcc108abf0a366438731b5b81606b2">FIX8::Connection</a>
+: <a class="el" href="classFIX8_1_1Connection.html#a405268dd993f89ad97d83653bde6a6fe">FIX8::Connection</a>
 </li>
 <li>set_session_config()
 : <a class="el" href="classFIX8_1_1Session.html#ad2cc8ce275b30649db1baeeacb6d7623">FIX8::Session</a>
+</li>
+<li>set_tcp_cork_flag()
+: <a class="el" href="classFIX8_1_1Connection.html#aaacffd53265064f696230c8b7cda9223">FIX8::Connection</a>
 </li>
 <li>set_used()
 : <a class="el" href="structFIX8_1_1FieldSpec.html#a4f9e7cdd418f7cccc901d3176b8e9ef7">FIX8::FieldSpec</a>
@@ -416,7 +419,7 @@ $(document).ready(function(){initNavTree('functions_0x73.html','');});
 , <a class="el" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a9d41259e89ee0a82a038b14c2e2d13ac">FIX8::presorted_set&lt; unsigned short, FieldTrait, FieldTrait::Compare &gt;</a>
 , <a class="el" href="classFIX8_1_1FieldTraits.html#a846307fa006f68fa382687c0c70f1425">FIX8::FieldTraits</a>
 , <a class="el" href="classhf__session__client.html#ae80b1616ccd90405e235687be9cf621e">hf_session_client</a>
-, <a class="el" href="classFIX8_1_1GeneratedTable.html#a9919b15dbd3a17e01e1fffa4ef89f443">FIX8::GeneratedTable&lt; Key, Val &gt;</a>
+, <a class="el" href="classFIX8_1_1GeneratedTable.html#ae41ece5825e18111b7ea11e06f09d67a">FIX8::GeneratedTable&lt; Key, Val &gt;</a>
 , <a class="el" href="classFIX8_1_1presorted__set.html#a301d17d8701529ab1a6d59aed8716b02">FIX8::presorted_set&lt; K, T, Comp &gt;</a>
 , <a class="el" href="classFIX8_1_1GroupBase.html#ab6703c76e42e7cef1f74dd8d3726f908">FIX8::GroupBase</a>
 </li>
@@ -477,31 +480,29 @@ $(document).ready(function(){initNavTree('functions_0x73.html','');});
 <li>start()
 : <a class="el" href="classFIX8_1_1FIXReader.html#a3a61fad7bb4692dc7b1b7191e3f36d12">FIX8::FIXReader</a>
 , <a class="el" href="classFIX8_1_1FIXWriter.html#a92503dc513d2c24021e89dceaa879acc">FIX8::FIXWriter</a>
+, <a class="el" href="classFIX8_1_1Timer.html#aa57170841069bcafd9aed79595e3d962">FIX8::Timer&lt; T &gt;</a>
 , <a class="el" href="classFIX8_1_1Connection.html#a47c25a31352a71e2a6902d37fc5fa2ba">FIX8::Connection</a>
 , <a class="el" href="classFIX8_1_1ClientSession.html#a4dc939ee494c1a217e28d3c089bb1724">FIX8::ClientSession&lt; T &gt;</a>
 , <a class="el" href="classFIX8_1_1ReliableClientSession.html#a97c13086d807222d92659a6d821dc96c">FIX8::ReliableClientSession&lt; T &gt;</a>
 , <a class="el" href="classFIX8_1_1AsyncSocket.html#a074e7a0924043facefeeea76504a633d">FIX8::AsyncSocket&lt; T &gt;</a>
-, <a class="el" href="classFIX8_1_1Timer.html#aa57170841069bcafd9aed79595e3d962">FIX8::Timer&lt; T &gt;</a>
-, <a class="el" href="classFIX8_1_1dthread.html#a823143e50af903d40a43f1f11372ad61">FIX8::dthread&lt; T &gt;</a>
-, <a class="el" href="classFIX8_1_1Session.html#afaa979ddebd207aa19bf8f71f5f50e63">FIX8::Session</a>
 , <a class="el" href="classFIX8_1_1dthread_3_4.html#acf22edeadd182267a005965fbff6f1c4">FIX8::dthread&lt;&gt;</a>
-, <a class="el" href="classFIX8_1_1SessionInstance.html#a9109f4b0cc403c34d2ce9ae9c82258ea">FIX8::SessionInstance&lt; T &gt;</a>
 , <a class="el" href="classFIX8_1_1__dthreadcore.html#ad2854ff0445872b2bb9ada4b128a9543">FIX8::_dthreadcore</a>
+, <a class="el" href="classFIX8_1_1Session.html#afaa979ddebd207aa19bf8f71f5f50e63">FIX8::Session</a>
+, <a class="el" href="classFIX8_1_1dthread.html#a823143e50af903d40a43f1f11372ad61">FIX8::dthread&lt; T &gt;</a>
+, <a class="el" href="classFIX8_1_1SessionInstance.html#a9109f4b0cc403c34d2ce9ae9c82258ea">FIX8::SessionInstance&lt; T &gt;</a>
+, <a class="el" href="classFIX8_1_1ReliableClientSessionFO.html#a5d48ed93e002abb74c1b97ef7e225872">FIX8::ReliableClientSessionFO&lt; T &gt;</a>
 </li>
 <li>startTime_
 : <a class="el" href="classFIX8_1_1IntervalTimer.html#ac61f4cb8c2b93c84b974860ffea30d61">FIX8::IntervalTimer</a>
 </li>
 <li>StaticTable()
-: <a class="el" href="structFIX8_1_1StaticTable.html#aaaa32b9b3236f916c7af53c9b2cdc480">FIX8::StaticTable&lt; Key, Val, Compare &gt;</a>
-</li>
-<li>StaticTable&lt; const f8String, bool(Session::*)(const unsigned, const Message *)&gt;
-: <a class="el" href="classFIX8_1_1Session.html#a77a8b472014a429664281807366d0026">FIX8::Session</a>
+: <a class="el" href="structFIX8_1_1StaticTable.html#a88d1b8355ca6f5957fabc10aa357b977">FIX8::StaticTable&lt; Key, Val, Compare &gt;</a>
 </li>
 <li>stop()
-: <a class="el" href="classFIX8_1_1FIXReader.html#ab5612c34ff96435657fd44fb0f691ad0">FIX8::FIXReader</a>
+: <a class="el" href="classFIX8_1_1BDBPersister.html#a220415a4b3eaf16fede750d1435b6355">FIX8::BDBPersister</a>
 , <a class="el" href="classFIX8_1_1Persister.html#a7cd911c314b215c6dba3433fbed45a71">FIX8::Persister</a>
+, <a class="el" href="classFIX8_1_1FIXReader.html#ab5612c34ff96435657fd44fb0f691ad0">FIX8::FIXReader</a>
 , <a class="el" href="classFIX8_1_1Session.html#ae4c637cd36d88ddac5a1db2565f82ef1">FIX8::Session</a>
-, <a class="el" href="classFIX8_1_1BDBPersister.html#a220415a4b3eaf16fede750d1435b6355">FIX8::BDBPersister</a>
 , <a class="el" href="classFIX8_1_1FIXWriter.html#acaa271b6f8da55c941fc62b03c3a0133">FIX8::FIXWriter</a>
 , <a class="el" href="classFIX8_1_1SingleLogger.html#a67141e88dbc7d1237ff1f8712b27709e">FIX8::SingleLogger&lt; fn &gt;</a>
 , <a class="el" href="classFIX8_1_1Connection.html#a9a584ddd21bf93a9d721c0be9f87ab59">FIX8::Connection</a>
@@ -542,7 +543,7 @@ $(document).ready(function(){initNavTree('functions_0x73.html','');});
 : <a class="el" href="classXmlElement.html#a128c2239e81510b79b38de65b3aaf8ec">XmlElement</a>
 </li>
 <li>SubLimit_
-: <a class="el" href="classFIX8_1_1RegMatch.html#a6bb4e56c48b8cec75db80a8dfc7e3fe0a58b255649a49f4e7bd77c790d4ec71bb">FIX8::RegMatch</a>
+: <a class="el" href="classFIX8_1_1RegMatch.html#ad5418361e095dc04ca707a68011826fea58b255649a49f4e7bd77c790d4ec71bb">FIX8::RegMatch</a>
 </li>
 <li>SubPos()
 : <a class="el" href="classFIX8_1_1RegMatch.html#ac8da32633c0f9a472c1a20d08ef6b726">FIX8::RegMatch</a>
@@ -560,7 +561,7 @@ $(document).ready(function(){initNavTree('functions_0x73.html','');});
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:26:25. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:57:10. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

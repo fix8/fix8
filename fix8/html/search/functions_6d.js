@@ -234,7 +234,7 @@ var searchData=
   ['messageencoding_5fshift_5fjis',['MessageEncoding_SHIFT_JIS',['../namespaceFIX8_1_1TEX.html#a1a16dd88caa0483cc79b4853b0ec7df1',1,'FIX8::TEX']]],
   ['messageencoding_5futf_5f8',['MessageEncoding_UTF_8',['../namespaceFIX8_1_1TEX.html#adec24c7a6d5d199551d6ec32e6ec597d',1,'FIX8::TEX']]],
   ['messagespec',['MessageSpec',['../structFIX8_1_1MessageSpec.html#a271b5ca4e612f108aae98f76840970de',1,'FIX8::MessageSpec']]],
-  ['minst',['Minst',['../classFIX8_1_1Minst.html#a96ce68feb59b1776f2c7546a03887aaa',1,'FIX8::Minst::Minst(Type2Type&lt; T &gt;)'],['../classFIX8_1_1Minst.html#a6f730d928a43cbcb7b3e405d317032ba',1,'FIX8::Minst::Minst(Type2Types&lt; T, R &gt;)']]],
+  ['minst',['Minst',['../classFIX8_1_1Minst.html#a3c5ef4d5800b2b0403dc9695715af54f',1,'FIX8::Minst::Minst()'],['../classFIX8_1_1Minst.html#a96ce68feb59b1776f2c7546a03887aaa',1,'FIX8::Minst::Minst(Type2Type&lt; T &gt;)'],['../classFIX8_1_1Minst.html#a6f730d928a43cbcb7b3e405d317032ba',1,'FIX8::Minst::Minst(Type2Types&lt; T, R &gt;)']]],
   ['miscfeebasis_5fabsolute',['MiscFeeBasis_ABSOLUTE',['../namespaceFIX8_1_1TEX.html#ae5ddc586048c63c5b9448eef61f432b6',1,'FIX8::TEX']]],
   ['miscfeebasis_5fper_5funit',['MiscFeeBasis_PER_UNIT',['../namespaceFIX8_1_1TEX.html#a7a063aa602c7d74610cad354aac38bb9',1,'FIX8::TEX']]],
   ['miscfeebasis_5fpercentage',['MiscFeeBasis_PERCENTAGE',['../namespaceFIX8_1_1TEX.html#ad8764a469e059e56353dbc53c4fad9b6',1,'FIX8::TEX']]],

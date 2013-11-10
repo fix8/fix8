@@ -81,6 +81,7 @@ var searchData=
   ['desktype_5ftrading',['DeskType_TRADING',['../namespaceFIX8_1_1TEX.html#aa3ee9b734500130d52e6c7e0a93e6fce',1,'FIX8::TEX']]],
   ['desktypesource_5fnasd_5foats',['DeskTypeSource_NASD_OATS',['../namespaceFIX8_1_1TEX.html#a98554ea9f325363b481d71d8a040ffb6',1,'FIX8::TEX']]],
   ['desktypesource_5frealm_5fels',['DeskTypeSource_realm_els',['../namespaceFIX8_1_1TEX.html#a96578784417850f28fa42c5a47d31827',1,'FIX8::TEX']]],
+  ['detach',['detach',['../classFIX8_1_1Session.html#ade27505af2ed36beb24b0f6e135f6e32',1,'FIX8::Session']]],
   ['discretioninst_5faverage_5fprice_5fguarantee',['DiscretionInst_AVERAGE_PRICE_GUARANTEE',['../namespaceFIX8_1_1TEX.html#acbebc0b7ad4797451c1c32ae2fd34e3b',1,'FIX8::TEX']]],
   ['discretioninst_5frealm_5fels',['DiscretionInst_realm_els',['../namespaceFIX8_1_1TEX.html#a35f7b6dbc182f117e364bf5fcbaaf8da',1,'FIX8::TEX']]],
   ['discretioninst_5frelated_5fto_5fdisplayed_5fprice',['DiscretionInst_RELATED_TO_DISPLAYED_PRICE',['../namespaceFIX8_1_1TEX.html#a6a94957b0ae127c486491baa6a1cfe42',1,'FIX8::TEX']]],
@@ -140,7 +141,6 @@ var searchData=
   ['dkreason_5frealm_5fels',['DKReason_realm_els',['../namespaceFIX8_1_1TEX.html#a355536274f96a48fc26c269c2043cfee',1,'FIX8::TEX']]],
   ['dkreason_5funknown_5fsymbol',['DKReason_UNKNOWN_SYMBOL',['../namespaceFIX8_1_1TEX.html#a8ac4e3a0ab33303c08e0bc73d4cb0635',1,'FIX8::TEX']]],
   ['dkreason_5fwrong_5fside',['DKReason_WRONG_SIDE',['../namespaceFIX8_1_1TEX.html#a442e778a3d130131b32935bc4fab9e88',1,'FIX8::TEX']]],
-  ['dllmain',['DllMain',['../dllmain_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9',1,'dllmain.cpp']]],
   ['dlvyinsttype_5fcash',['DlvyInstType_CASH',['../namespaceFIX8_1_1TEX.html#ae3f64d094ea28f5a7d7cea53a2f7522d',1,'FIX8::TEX']]],
   ['dlvyinsttype_5frealm_5fels',['DlvyInstType_realm_els',['../namespaceFIX8_1_1TEX.html#a7d33b2bf9438042a4d99b14d80602dce',1,'FIX8::TEX']]],
   ['dlvyinsttype_5fsecurities',['DlvyInstType_SECURITIES',['../namespaceFIX8_1_1TEX.html#a5dbe36eebc85e61cac21c457a0d55072',1,'FIX8::TEX']]],
@@ -153,6 +153,7 @@ var searchData=
   ['duetorelated_5fno',['DueToRelated_NO',['../namespaceFIX8_1_1TEX.html#aa2807312184afc7ff980ff973751b2c4',1,'FIX8::TEX']]],
   ['duetorelated_5frealm_5fels',['DueToRelated_realm_els',['../namespaceFIX8_1_1TEX.html#aafe5060479c6891994139d5a222eefc4',1,'FIX8::TEX']]],
   ['duetorelated_5fyes',['DueToRelated_YES',['../namespaceFIX8_1_1TEX.html#a9014839ff009d1ad965d9a36660a3cfe',1,'FIX8::TEX']]],
+  ['dummy',['dummy',['../classFIX8_1_1Inst.html#a80271ff815f4d2b08f647a8f06b4ab5d',1,'FIX8::Inst::dummy()'],['../classFIX8_1_1Minst.html#a882a0c116e16ef44cbc2c42484c71aea',1,'FIX8::Minst::dummy()']]],
   ['dump_5fcomponents',['dump_components',['../f8precomp_8cpp.html#a65faa14e3ce40cdc92fccac9d9b85c87',1,'f8precomp.cpp']]],
   ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html#ab1df1a8ca0df0ef108b6149d6d960d9a',1,'FIX8::DuplicateField']]]
 ];

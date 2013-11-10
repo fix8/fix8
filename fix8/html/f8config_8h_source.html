@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.6</span>
+   &#160;<span id="projectnumber">version  0.10.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -161,16 +161,16 @@ $(document).ready(function(){initNavTree('f8config_8h_source.html','');});
 <div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="f8config_8h.html#a7517bfdc6242fe5186b818774a86efb2">   51</a></span>&#160;<span class="preprocessor">#define CODECTIMING 1</span></div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">/* configure options */</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2c90b46e6c2ae53cbbf439080a01fd91">   54</a></span>&#160;<span class="preprocessor">#define CONFIGURE_OPTIONS &quot; &#39;--with-gtest=/usr/src/gtest-1.7.0&#39; &#39;--enable-doxygen=yes&#39; &#39;--enable-f8test=yes&#39; &#39;--enable-codectiming&#39; &#39;--prefix=/home/davidd/tmp&#39; &#39;--enable-doxygen-warnings=yes&#39; &#39;CC=ccache gcc&#39; &#39;CXX=ccache g++&#39; &#39;CXXFLAGS=-O3&#39;&quot;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2c90b46e6c2ae53cbbf439080a01fd91">   54</a></span>&#160;<span class="preprocessor">#define CONFIGURE_OPTIONS &quot; &#39;--with-mpmc=tbb&#39; &#39;--with-gtest=/usr/src/gtest-1.7.0&#39; &#39;--enable-doxygen=yes&#39; &#39;--enable-f8test=yes&#39; &#39;--enable-codectiming&#39; &#39;--prefix=/home/davidd/tmp&#39; &#39;--enable-doxygen-warnings=no&#39; &#39;CC=ccache gcc&#39; &#39;CXX=ccache g++&#39; &#39;CXXFLAGS=-O3&#39;&quot;</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">/* Short Date system was configured */</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac42e21b7a399c6a4665e84349bca5177">   57</a></span>&#160;<span class="preprocessor">#define CONFIGURE_SDATE &quot;13/10/2013&quot;</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac42e21b7a399c6a4665e84349bca5177">   57</a></span>&#160;<span class="preprocessor">#define CONFIGURE_SDATE &quot;10/11/2013&quot;</span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">/* Date system was configured */</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="code" href="f8config_8h.html#a661078846f76fdf65bb222943a71a844">   60</a></span>&#160;<span class="preprocessor">#define CONFIGURE_TIME &quot;Sun Oct 13 13:23:09 EST 2013&quot;</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="code" href="f8config_8h.html#a661078846f76fdf65bb222943a71a844">   60</a></span>&#160;<span class="preprocessor">#define CONFIGURE_TIME &quot;Sun Nov 10 21:55:54 EST 2013&quot;</span></div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">/* date/time as seconds since start epoch */</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="code" href="f8config_8h.html#aa9f4b710a2fbad8c48c513fd1e654a05">   63</a></span>&#160;<span class="preprocessor">#define CONFIGURE_TIME_NUM 1381630989</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="code" href="f8config_8h.html#aa9f4b710a2fbad8c48c513fd1e654a05">   63</a></span>&#160;<span class="preprocessor">#define CONFIGURE_TIME_NUM 1384080954</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment">/* compiler spec */</span></div>
 <div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="f8config_8h.html#a4750de4ea54cca67d6fa77427e198f26">   66</a></span>&#160;<span class="preprocessor">#define CPPFLAGS &quot; -I/usr/src/gtest-1.7.0/include&quot;</span></div>
@@ -186,453 +186,457 @@ $(document).ready(function(){initNavTree('f8config_8h_source.html','');});
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">/* Define to 1 for debugging extensions */</span></div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">/* #undef DEBUG */</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">/* Define to 1 if gtest available */</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="code" href="f8config_8h.html#a818fc31639b2ef683f875d4a372b3138">   80</a></span>&#160;<span class="preprocessor">#define HAS_GTEST 1</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">/* Default precision for floating point fields (default=2) */</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="code" href="f8config_8h.html#a6d81881a7883657dbc659ca545d9085d">   80</a></span>&#160;<span class="preprocessor">#define DEFAULT_PRECISION 2</span></div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">/* Define to 1 if Poco available */</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="code" href="f8config_8h.html#a5dce2e44217226f8c8a4157bcd073c39">   83</a></span>&#160;<span class="preprocessor">#define HAS_POCO 1</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">/* Define to 1 if gtest available */</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="code" href="f8config_8h.html#a818fc31639b2ef683f875d4a372b3138">   83</a></span>&#160;<span class="preprocessor">#define HAS_GTEST 1</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">/* Define to 1 if TR1 hashmaps are available */</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="code" href="f8config_8h.html#a425e4a7e299e173b7c8aa0c895af5835">   86</a></span>&#160;<span class="preprocessor">#define HAS_TR1_UNORDERED_MAP 1</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">/* Define to 1 if Poco available */</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="code" href="f8config_8h.html#a5dce2e44217226f8c8a4157bcd073c39">   86</a></span>&#160;<span class="preprocessor">#define HAS_POCO 1</span></div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">/* Define to 1 if you have the `alarm&#39; function. */</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="code" href="f8config_8h.html#a777e1baef81548a6bd84c0da28443435">   89</a></span>&#160;<span class="preprocessor">#define HAVE_ALARM 1</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">/* Define to 1 if TR1 hashmaps are available */</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="code" href="f8config_8h.html#a425e4a7e299e173b7c8aa0c895af5835">   89</a></span>&#160;<span class="preprocessor">#define HAS_TR1_UNORDERED_MAP 1</span></div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">/* Define to 1 if you have `alloca&#39;, as a function or macro. */</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="code" href="f8config_8h.html#aaf5250164f8a3c52b7820317aee7d9ce">   92</a></span>&#160;<span class="preprocessor">#define HAVE_ALLOCA 1</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">/* Define to 1 if you have the `alarm&#39; function. */</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="code" href="f8config_8h.html#a777e1baef81548a6bd84c0da28443435">   92</a></span>&#160;<span class="preprocessor">#define HAVE_ALARM 1</span></div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;alloca.h&gt; header file. */</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno"><a class="code" href="f8config_8h.html#a277c3d138498b9267fe43589b6b7d91e">   95</a></span>&#160;<span class="preprocessor">#define HAVE_ALLOCA_H 1</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">/* Define to 1 if you have `alloca&#39;, as a function or macro. */</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="code" href="f8config_8h.html#aaf5250164f8a3c52b7820317aee7d9ce">   95</a></span>&#160;<span class="preprocessor">#define HAVE_ALLOCA 1</span></div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;arpa/inet.h&gt; header file. */</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="code" href="f8config_8h.html#a7d1a71461e07569d0c9003da24c30a59">   98</a></span>&#160;<span class="preprocessor">#define HAVE_ARPA_INET_H 1</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;alloca.h&gt; header file. */</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="code" href="f8config_8h.html#a277c3d138498b9267fe43589b6b7d91e">   98</a></span>&#160;<span class="preprocessor">#define HAVE_ALLOCA_H 1</span></div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">/* Define to 1 if you have berkeley DB */</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment">/* #undef HAVE_BDB */</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">/* Define if you have clock_gettime() */</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1ff16bcadba18da452e2d7b2d7371e44">  104</a></span>&#160;<span class="preprocessor">#define HAVE_CLOCK_GETTIME 1</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">/* Define if you have clock_nanosleep() */</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2b64ab16acc8558fefa94848db6d04ed">  107</a></span>&#160;<span class="preprocessor">#define HAVE_CLOCK_NANOSLEEP 1</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;arpa/inet.h&gt; header file. */</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="code" href="f8config_8h.html#a7d1a71461e07569d0c9003da24c30a59">  101</a></span>&#160;<span class="preprocessor">#define HAVE_ARPA_INET_H 1</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">/* Define to 1 if you have berkeley DB */</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">/* #undef HAVE_BDB */</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">/* Define if you have clock_gettime() */</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1ff16bcadba18da452e2d7b2d7371e44">  107</a></span>&#160;<span class="preprocessor">#define HAVE_CLOCK_GETTIME 1</span></div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment">/* Define to 1 if zlib headers and library were found */</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno"><a class="code" href="f8config_8h.html#a6218b1d9d8c7c8cad89b631eb83f2dbf">  110</a></span>&#160;<span class="preprocessor">#define HAVE_COMPRESSION 1</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment">/* Define if you have clock_nanosleep() */</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2b64ab16acc8558fefa94848db6d04ed">  110</a></span>&#160;<span class="preprocessor">#define HAVE_CLOCK_NANOSLEEP 1</span></div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">/* Define to 1 if crypt is present in -lcrypt */</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="code" href="f8config_8h.html#acba86befdbaa214237a79fe6272ea219">  113</a></span>&#160;<span class="preprocessor">#define HAVE_CRYPT 1</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">/* Define to 1 if zlib headers and library were found */</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="code" href="f8config_8h.html#a6218b1d9d8c7c8cad89b631eb83f2dbf">  113</a></span>&#160;<span class="preprocessor">#define HAVE_COMPRESSION 1</span></div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;crypt.h&gt; header file. */</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="code" href="f8config_8h.html#a134a590602cc9f715368618f26910815">  116</a></span>&#160;<span class="preprocessor">#define HAVE_CRYPT_H 1</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">/* Define to 1 if crypt is present in -lcrypt */</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="code" href="f8config_8h.html#acba86befdbaa214237a79fe6272ea219">  116</a></span>&#160;<span class="preprocessor">#define HAVE_CRYPT 1</span></div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;db.h&gt; header file. */</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment">/* #undef HAVE_DB_H */</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;dirent.h&gt; header file, and it defines `DIR&#39;.</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno"><a class="code" href="f8config_8h.html#af9fbe15f58004c91c2d8b1fbaf91c1a3">  123</a></span>&#160;<span class="preprocessor">#define HAVE_DIRENT_H 1</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;dlfcn.h&gt; header file. */</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno"><a class="code" href="f8config_8h.html#a0ee1617ff2f6885ef384a3dd46f9b9d7">  126</a></span>&#160;<span class="preprocessor">#define HAVE_DLFCN_H 1</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;crypt.h&gt; header file. */</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="code" href="f8config_8h.html#a134a590602cc9f715368618f26910815">  119</a></span>&#160;<span class="preprocessor">#define HAVE_CRYPT_H 1</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;db.h&gt; header file. */</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">/* #undef HAVE_DB_H */</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">/* Define to 1 if you have the declaration of `TCP_CORK&#39;, and to 0 if you</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">   don&#39;t. */</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="code" href="f8config_8h.html#acffc078efe08f8132abc80205610c153">  126</a></span>&#160;<span class="preprocessor">#define HAVE_DECL_TCP_CORK 1</span></div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;fcntl.h&gt; header file. */</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno"><a class="code" href="f8config_8h.html#a765d75020849aa0a9b6becd9a5b7a193">  129</a></span>&#160;<span class="preprocessor">#define HAVE_FCNTL_H 1</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment">/* Define to 1 if you have the `fork&#39; function. */</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno"><a class="code" href="f8config_8h.html#af5eda00981183c9820f5930f0933c293">  132</a></span>&#160;<span class="preprocessor">#define HAVE_FORK 1</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment">/* Define to 1 if you have the `getcwd&#39; function. */</span></div>
-<div class="line"><a name="l00135"></a><span class="lineno"><a class="code" href="f8config_8h.html#a88f2f3e38594f0902031b6c14c75c399">  135</a></span>&#160;<span class="preprocessor">#define HAVE_GETCWD 1</span></div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;getopt.h&gt; header file. */</span></div>
-<div class="line"><a name="l00138"></a><span class="lineno"><a class="code" href="f8config_8h.html#adef727f8c4ab3443958aaab933f2d12f">  138</a></span>&#160;<span class="preprocessor">#define HAVE_GETOPT_H 1</span></div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="comment">/* Define to 1 if you have the `getopt_long&#39; function. */</span></div>
-<div class="line"><a name="l00141"></a><span class="lineno"><a class="code" href="f8config_8h.html#a7d8d14d69f60bd296d253130f912bfc0">  141</a></span>&#160;<span class="preprocessor">#define HAVE_GETOPT_LONG 1</span></div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="comment">/* Define to 1 if you have the `getpagesize&#39; function. */</span></div>
-<div class="line"><a name="l00144"></a><span class="lineno"><a class="code" href="f8config_8h.html#add281e88fe03de68eb6833a0f7832cbc">  144</a></span>&#160;<span class="preprocessor">#define HAVE_GETPAGESIZE 1</span></div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment">/* Define to 1 if you have the `gettimeofday&#39; function. */</span></div>
-<div class="line"><a name="l00147"></a><span class="lineno"><a class="code" href="f8config_8h.html#a32e7ff1da5763e68f44097cb23826415">  147</a></span>&#160;<span class="preprocessor">#define HAVE_GETTIMEOFDAY 1</span></div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;inttypes.h&gt; header file. */</span></div>
-<div class="line"><a name="l00150"></a><span class="lineno"><a class="code" href="f8config_8h.html#ab90a030ff2790ebdc176660a6dd2a478">  150</a></span>&#160;<span class="preprocessor">#define HAVE_INTTYPES_H 1</span></div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="comment">/* Define to 1 if libz is present */</span></div>
-<div class="line"><a name="l00153"></a><span class="lineno"><a class="code" href="f8config_8h.html#ab52774670674c949e48837976b331e33">  153</a></span>&#160;<span class="preprocessor">#define HAVE_LIBZ 1</span></div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;limits.h&gt; header file. */</span></div>
-<div class="line"><a name="l00156"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac70f0930238c8d095d7cc2ee8b522c77">  156</a></span>&#160;<span class="preprocessor">#define HAVE_LIMITS_H 1</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="comment">/* Define to 1 if you have the `localtime_r&#39; function. */</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno"><a class="code" href="f8config_8h.html#a9998e788d1738e06ada9064cea53af2e">  159</a></span>&#160;<span class="preprocessor">#define HAVE_LOCALTIME_R 1</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">/* Define to 1 if the type `long double&#39; works and has more range or precision</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="comment">   than `double&#39;. */</span></div>
-<div class="line"><a name="l00163"></a><span class="lineno"><a class="code" href="f8config_8h.html#afd9e56d00ff7bdb2c6d88abfc58e9433">  163</a></span>&#160;<span class="preprocessor">#define HAVE_LONG_DOUBLE 1</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;dirent.h&gt; header file, and it defines `DIR&#39;.</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="code" href="f8config_8h.html#af9fbe15f58004c91c2d8b1fbaf91c1a3">  130</a></span>&#160;<span class="preprocessor">#define HAVE_DIRENT_H 1</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;dlfcn.h&gt; header file. */</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno"><a class="code" href="f8config_8h.html#a0ee1617ff2f6885ef384a3dd46f9b9d7">  133</a></span>&#160;<span class="preprocessor">#define HAVE_DLFCN_H 1</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;fcntl.h&gt; header file. */</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno"><a class="code" href="f8config_8h.html#a765d75020849aa0a9b6becd9a5b7a193">  136</a></span>&#160;<span class="preprocessor">#define HAVE_FCNTL_H 1</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="comment">/* Define to 1 if you have the `fork&#39; function. */</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="code" href="f8config_8h.html#af5eda00981183c9820f5930f0933c293">  139</a></span>&#160;<span class="preprocessor">#define HAVE_FORK 1</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="comment">/* Define to 1 if you have the `getcwd&#39; function. */</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="code" href="f8config_8h.html#a88f2f3e38594f0902031b6c14c75c399">  142</a></span>&#160;<span class="preprocessor">#define HAVE_GETCWD 1</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;getopt.h&gt; header file. */</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno"><a class="code" href="f8config_8h.html#adef727f8c4ab3443958aaab933f2d12f">  145</a></span>&#160;<span class="preprocessor">#define HAVE_GETOPT_H 1</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="comment">/* Define to 1 if you have the `getopt_long&#39; function. */</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno"><a class="code" href="f8config_8h.html#a7d8d14d69f60bd296d253130f912bfc0">  148</a></span>&#160;<span class="preprocessor">#define HAVE_GETOPT_LONG 1</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="comment">/* Define to 1 if you have the `getpagesize&#39; function. */</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno"><a class="code" href="f8config_8h.html#add281e88fe03de68eb6833a0f7832cbc">  151</a></span>&#160;<span class="preprocessor">#define HAVE_GETPAGESIZE 1</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="comment">/* Define to 1 if you have the `gettimeofday&#39; function. */</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno"><a class="code" href="f8config_8h.html#a32e7ff1da5763e68f44097cb23826415">  154</a></span>&#160;<span class="preprocessor">#define HAVE_GETTIMEOFDAY 1</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;inttypes.h&gt; header file. */</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="code" href="f8config_8h.html#ab90a030ff2790ebdc176660a6dd2a478">  157</a></span>&#160;<span class="preprocessor">#define HAVE_INTTYPES_H 1</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="comment">/* Define to 1 if libz is present */</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno"><a class="code" href="f8config_8h.html#ab52774670674c949e48837976b331e33">  160</a></span>&#160;<span class="preprocessor">#define HAVE_LIBZ 1</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;limits.h&gt; header file. */</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac70f0930238c8d095d7cc2ee8b522c77">  163</a></span>&#160;<span class="preprocessor">#define HAVE_LIMITS_H 1</span></div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="comment">/* Define to 1 if the type `long double&#39; works and has more range or precision</span></div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="comment">   than `double&#39;. */</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno"><a class="code" href="f8config_8h.html#a7e1663f640783a22269305f33a86a895">  167</a></span>&#160;<span class="preprocessor">#define HAVE_LONG_DOUBLE_WIDER 1</span></div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="comment">/* Define to 1 if the system has the type `long long int&#39;. */</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno"><a class="code" href="f8config_8h.html#a235b3fe6fcd0c29253a2f5ca13346ada">  170</a></span>&#160;<span class="preprocessor">#define HAVE_LONG_LONG_INT 1</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="comment">/* Define to 1 if you have the `localtime_r&#39; function. */</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno"><a class="code" href="f8config_8h.html#a9998e788d1738e06ada9064cea53af2e">  166</a></span>&#160;<span class="preprocessor">#define HAVE_LOCALTIME_R 1</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="comment">/* Define to 1 if the type `long double&#39; works and has more range or precision</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="comment">   than `double&#39;. */</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno"><a class="code" href="f8config_8h.html#afd9e56d00ff7bdb2c6d88abfc58e9433">  170</a></span>&#160;<span class="preprocessor">#define HAVE_LONG_DOUBLE 1</span></div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="comment">/* Define to 1 if your system has a GNU libc compatible `malloc&#39; function, and</span></div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="comment">   to 0 otherwise. */</span></div>
-<div class="line"><a name="l00174"></a><span class="lineno"><a class="code" href="f8config_8h.html#a14503280ca0cb757db915eea09282bfc">  174</a></span>&#160;<span class="preprocessor">#define HAVE_MALLOC 1</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="comment">/* Define to 1 if the type `long double&#39; works and has more range or precision</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="comment">   than `double&#39;. */</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno"><a class="code" href="f8config_8h.html#a7e1663f640783a22269305f33a86a895">  174</a></span>&#160;<span class="preprocessor">#define HAVE_LONG_DOUBLE_WIDER 1</span></div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;memory.h&gt; header file. */</span></div>
-<div class="line"><a name="l00177"></a><span class="lineno"><a class="code" href="f8config_8h.html#ae93a78f9d076138897af441c9f86f285">  177</a></span>&#160;<span class="preprocessor">#define HAVE_MEMORY_H 1</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="comment">/* Define to 1 if the system has the type `long long int&#39;. */</span></div>
+<div class="line"><a name="l00177"></a><span class="lineno"><a class="code" href="f8config_8h.html#a235b3fe6fcd0c29253a2f5ca13346ada">  177</a></span>&#160;<span class="preprocessor">#define HAVE_LONG_LONG_INT 1</span></div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="comment">/* Define to 1 if you have a working `mmap&#39; system call. */</span></div>
-<div class="line"><a name="l00180"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac24e9c0562704d17896d14869e748fcc">  180</a></span>&#160;<span class="preprocessor">#define HAVE_MMAP 1</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;ndir.h&gt; header file, and it defines `DIR&#39;. */</span></div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="comment">/* #undef HAVE_NDIR_H */</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;netdb.h&gt; header file. */</span></div>
-<div class="line"><a name="l00186"></a><span class="lineno"><a class="code" href="f8config_8h.html#a9fe2d1d4726a6b846483a2276866dc6e">  186</a></span>&#160;<span class="preprocessor">#define HAVE_NETDB_H 1</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;netinet/in.h&gt; header file. */</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno"><a class="code" href="f8config_8h.html#a0938658b988a082864efcee2d1b2bfd2">  189</a></span>&#160;<span class="preprocessor">#define HAVE_NETINET_IN_H 1</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="comment">/* Define to 1 if you have openssl */</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="comment">/* #undef HAVE_OPENSSL */</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;openssl/ssl.h&gt; header file. */</span></div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="comment">/* #undef HAVE_OPENSSL_SSL_H */</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="comment">/* Define to 1 if you have the `popen&#39; function. */</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno"><a class="code" href="f8config_8h.html#a42f2de81cc9398f23045b483488d082d">  198</a></span>&#160;<span class="preprocessor">#define HAVE_POPEN 1</span></div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="comment">/* Define to 1 if the system has the type `ptrdiff_t&#39;. */</span></div>
-<div class="line"><a name="l00201"></a><span class="lineno"><a class="code" href="f8config_8h.html#a4e62300203d0b0f776e7f2d56f63000e">  201</a></span>&#160;<span class="preprocessor">#define HAVE_PTRDIFF_T 1</span></div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="comment">/* Define to 1 if you have the `random&#39; function. */</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno"><a class="code" href="f8config_8h.html#a635a22df95c3b9f98ab0c4961292d027">  204</a></span>&#160;<span class="preprocessor">#define HAVE_RANDOM 1</span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="comment">/* Define to 1 if your system has a GNU libc compatible `realloc&#39; function,</span></div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="comment">   and to 0 otherwise. */</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno"><a class="code" href="f8config_8h.html#a0302094a0ee567c610a36c63104ebda5">  208</a></span>&#160;<span class="preprocessor">#define HAVE_REALLOC 1</span></div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="comment">/* Define to 1 if your system has a GNU libc compatible `malloc&#39; function, and</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="comment">   to 0 otherwise. */</span></div>
+<div class="line"><a name="l00181"></a><span class="lineno"><a class="code" href="f8config_8h.html#a14503280ca0cb757db915eea09282bfc">  181</a></span>&#160;<span class="preprocessor">#define HAVE_MALLOC 1</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;memory.h&gt; header file. */</span></div>
+<div class="line"><a name="l00184"></a><span class="lineno"><a class="code" href="f8config_8h.html#ae93a78f9d076138897af441c9f86f285">  184</a></span>&#160;<span class="preprocessor">#define HAVE_MEMORY_H 1</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="comment">/* Define to 1 if you have a working `mmap&#39; system call. */</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac24e9c0562704d17896d14869e748fcc">  187</a></span>&#160;<span class="preprocessor">#define HAVE_MMAP 1</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;ndir.h&gt; header file, and it defines `DIR&#39;. */</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="comment">/* #undef HAVE_NDIR_H */</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;netdb.h&gt; header file. */</span></div>
+<div class="line"><a name="l00193"></a><span class="lineno"><a class="code" href="f8config_8h.html#a9fe2d1d4726a6b846483a2276866dc6e">  193</a></span>&#160;<span class="preprocessor">#define HAVE_NETDB_H 1</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;netinet/in.h&gt; header file. */</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno"><a class="code" href="f8config_8h.html#a0938658b988a082864efcee2d1b2bfd2">  196</a></span>&#160;<span class="preprocessor">#define HAVE_NETINET_IN_H 1</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="comment">/* Define to 1 if you have openssl */</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="comment">/* #undef HAVE_OPENSSL */</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;openssl/ssl.h&gt; header file. */</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="comment">/* #undef HAVE_OPENSSL_SSL_H */</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="comment">/* Define to 1 if you have the `popen&#39; function. */</span></div>
+<div class="line"><a name="l00205"></a><span class="lineno"><a class="code" href="f8config_8h.html#a42f2de81cc9398f23045b483488d082d">  205</a></span>&#160;<span class="preprocessor">#define HAVE_POPEN 1</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="comment">/* Define to 1 if the system has the type `ptrdiff_t&#39;. */</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno"><a class="code" href="f8config_8h.html#a4e62300203d0b0f776e7f2d56f63000e">  208</a></span>&#160;<span class="preprocessor">#define HAVE_PTRDIFF_T 1</span></div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="comment">/* Define to 1 if you have the `regcomp&#39; function. */</span></div>
-<div class="line"><a name="l00211"></a><span class="lineno"><a class="code" href="f8config_8h.html#a4524e47c3ee7837bfe9b2d11c9e0087f">  211</a></span>&#160;<span class="preprocessor">#define HAVE_REGCOMP 1</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="comment">/* Define to 1 if you have the `random&#39; function. */</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno"><a class="code" href="f8config_8h.html#a635a22df95c3b9f98ab0c4961292d027">  211</a></span>&#160;<span class="preprocessor">#define HAVE_RANDOM 1</span></div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;regex.h&gt; header file. */</span></div>
-<div class="line"><a name="l00214"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1e1157647a73b72648b3270310aee117">  214</a></span>&#160;<span class="preprocessor">#define HAVE_REGEX_H 1</span></div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;select.h&gt; header file. */</span></div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="comment">/* #undef HAVE_SELECT_H */</span></div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;signal.h&gt; header file. */</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno"><a class="code" href="f8config_8h.html#a494d1ecf5a4567ccbf7901e3be337bc7">  220</a></span>&#160;<span class="preprocessor">#define HAVE_SIGNAL_H 1</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="comment">/* Define to 1 if you have the `socket&#39; function. */</span></div>
-<div class="line"><a name="l00223"></a><span class="lineno"><a class="code" href="f8config_8h.html#a4cd6234bfe3f7c10968a1151f43ce280">  223</a></span>&#160;<span class="preprocessor">#define HAVE_SOCKET 1</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="comment">/* Define to 1 if you have the `srandom&#39; function. */</span></div>
-<div class="line"><a name="l00226"></a><span class="lineno"><a class="code" href="f8config_8h.html#a65b8ba62d91e017f717f834db5455989">  226</a></span>&#160;<span class="preprocessor">#define HAVE_SRANDOM 1</span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="comment">/* Define to 1 if `stat&#39; has the bug that it succeeds when given the</span></div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="comment">   zero-length file name argument. */</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="comment">/* #undef HAVE_STAT_EMPTY_STRING_BUG */</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="comment">/* Define to 1 if stdbool.h conforms to C99. */</span></div>
-<div class="line"><a name="l00233"></a><span class="lineno"><a class="code" href="f8config_8h.html#a8c3fa1b2f1be8c6f6929548c548cf50a">  233</a></span>&#160;<span class="preprocessor">#define HAVE_STDBOOL_H 1</span></div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="comment">/* Define to 1 if your system has a GNU libc compatible `realloc&#39; function,</span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="comment">   and to 0 otherwise. */</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno"><a class="code" href="f8config_8h.html#a0302094a0ee567c610a36c63104ebda5">  215</a></span>&#160;<span class="preprocessor">#define HAVE_REALLOC 1</span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="comment">/* Define to 1 if you have the `regcomp&#39; function. */</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno"><a class="code" href="f8config_8h.html#a4524e47c3ee7837bfe9b2d11c9e0087f">  218</a></span>&#160;<span class="preprocessor">#define HAVE_REGCOMP 1</span></div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;regex.h&gt; header file. */</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1e1157647a73b72648b3270310aee117">  221</a></span>&#160;<span class="preprocessor">#define HAVE_REGEX_H 1</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;select.h&gt; header file. */</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="comment">/* #undef HAVE_SELECT_H */</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;signal.h&gt; header file. */</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno"><a class="code" href="f8config_8h.html#a494d1ecf5a4567ccbf7901e3be337bc7">  227</a></span>&#160;<span class="preprocessor">#define HAVE_SIGNAL_H 1</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="comment">/* Define to 1 if you have the `socket&#39; function. */</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno"><a class="code" href="f8config_8h.html#a4cd6234bfe3f7c10968a1151f43ce280">  230</a></span>&#160;<span class="preprocessor">#define HAVE_SOCKET 1</span></div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="comment">/* Define to 1 if you have the `srandom&#39; function. */</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno"><a class="code" href="f8config_8h.html#a65b8ba62d91e017f717f834db5455989">  233</a></span>&#160;<span class="preprocessor">#define HAVE_SRANDOM 1</span></div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;stdint.h&gt; header file. */</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno"><a class="code" href="f8config_8h.html#ab6cd6d1c63c1e26ea2d4537b77148354">  236</a></span>&#160;<span class="preprocessor">#define HAVE_STDINT_H 1</span></div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;stdlib.h&gt; header file. */</span></div>
-<div class="line"><a name="l00239"></a><span class="lineno"><a class="code" href="f8config_8h.html#a9e0e434ec1a6ddbd97db12b5a32905e0">  239</a></span>&#160;<span class="preprocessor">#define HAVE_STDLIB_H 1</span></div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="comment">/* Define to 1 if you have the `strcasecmp&#39; function. */</span></div>
-<div class="line"><a name="l00242"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1569275063253ce85180e755a82e536d">  242</a></span>&#160;<span class="preprocessor">#define HAVE_STRCASECMP 1</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="comment">/* Define to 1 if you have the `strcoll&#39; function and it is properly defined.</span></div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac73edf9fd27ca6fae96d670fa8ab6742">  246</a></span>&#160;<span class="preprocessor">#define HAVE_STRCOLL 1</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="comment">/* Define to 1 if `stat&#39; has the bug that it succeeds when given the</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="comment">   zero-length file name argument. */</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="comment">/* #undef HAVE_STAT_EMPTY_STRING_BUG */</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="comment">/* Define to 1 if stdbool.h conforms to C99. */</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno"><a class="code" href="f8config_8h.html#a8c3fa1b2f1be8c6f6929548c548cf50a">  240</a></span>&#160;<span class="preprocessor">#define HAVE_STDBOOL_H 1</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;stdint.h&gt; header file. */</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno"><a class="code" href="f8config_8h.html#ab6cd6d1c63c1e26ea2d4537b77148354">  243</a></span>&#160;<span class="preprocessor">#define HAVE_STDINT_H 1</span></div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;stdlib.h&gt; header file. */</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno"><a class="code" href="f8config_8h.html#a9e0e434ec1a6ddbd97db12b5a32905e0">  246</a></span>&#160;<span class="preprocessor">#define HAVE_STDLIB_H 1</span></div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="comment">/* Define to 1 if you have the `strerror&#39; function. */</span></div>
-<div class="line"><a name="l00249"></a><span class="lineno"><a class="code" href="f8config_8h.html#a992653625041edef146772df96f7bca9">  249</a></span>&#160;<span class="preprocessor">#define HAVE_STRERROR 1</span></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="comment">/* Define to 1 if you have the `strcasecmp&#39; function. */</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1569275063253ce85180e755a82e536d">  249</a></span>&#160;<span class="preprocessor">#define HAVE_STRCASECMP 1</span></div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="comment">/* Define to 1 if you have the `strftime&#39; function. */</span></div>
-<div class="line"><a name="l00252"></a><span class="lineno"><a class="code" href="f8config_8h.html#a6b330b2b5b42f73953ceab4f33e76baa">  252</a></span>&#160;<span class="preprocessor">#define HAVE_STRFTIME 1</span></div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;strings.h&gt; header file. */</span></div>
-<div class="line"><a name="l00255"></a><span class="lineno"><a class="code" href="f8config_8h.html#a405d10d46190bcb0320524c54eafc850">  255</a></span>&#160;<span class="preprocessor">#define HAVE_STRINGS_H 1</span></div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;string.h&gt; header file. */</span></div>
-<div class="line"><a name="l00258"></a><span class="lineno"><a class="code" href="f8config_8h.html#ad4c234dd1625255dc626a15886306e7d">  258</a></span>&#160;<span class="preprocessor">#define HAVE_STRING_H 1</span></div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="comment">/* Define to 1 if you have the `strtol&#39; function. */</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno"><a class="code" href="f8config_8h.html#adca0e8e7c3827189abcd6ceae6f60c32">  261</a></span>&#160;<span class="preprocessor">#define HAVE_STRTOL 1</span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="comment">/* Define to 1 if you have the `strtoul&#39; function. */</span></div>
-<div class="line"><a name="l00264"></a><span class="lineno"><a class="code" href="f8config_8h.html#a0f08977476bc5b181092cf8b3ddaf368">  264</a></span>&#160;<span class="preprocessor">#define HAVE_STRTOUL 1</span></div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="comment">/* Define to 1 if you have the `sysconf&#39; function. */</span></div>
-<div class="line"><a name="l00267"></a><span class="lineno"><a class="code" href="f8config_8h.html#ad76c46a2d87e56f7f1098ee68544bcc5">  267</a></span>&#160;<span class="preprocessor">#define HAVE_SYSCONF 1</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;syslog.h&gt; header file. */</span></div>
-<div class="line"><a name="l00270"></a><span class="lineno"><a class="code" href="f8config_8h.html#a695d4e005378df4a1f286cb3d0f4b333">  270</a></span>&#160;<span class="preprocessor">#define HAVE_SYSLOG_H 1</span></div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/dir.h&gt; header file, and it defines `DIR&#39;.</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="comment">/* #undef HAVE_SYS_DIR_H */</span></div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/gmon.h&gt; header file. */</span></div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="comment">/* #undef HAVE_SYS_GMON_H */</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/ioctl.h&gt; header file. */</span></div>
-<div class="line"><a name="l00280"></a><span class="lineno"><a class="code" href="f8config_8h.html#a3c53bc046c95078b26f13b3cfecdf210">  280</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_IOCTL_H 1</span></div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/ndir.h&gt; header file, and it defines `DIR&#39;.</span></div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="comment">/* #undef HAVE_SYS_NDIR_H */</span></div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="comment">/* Define to 1 if you have the `strcoll&#39; function and it is properly defined.</span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac73edf9fd27ca6fae96d670fa8ab6742">  253</a></span>&#160;<span class="preprocessor">#define HAVE_STRCOLL 1</span></div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="comment">/* Define to 1 if you have the `strerror&#39; function. */</span></div>
+<div class="line"><a name="l00256"></a><span class="lineno"><a class="code" href="f8config_8h.html#a992653625041edef146772df96f7bca9">  256</a></span>&#160;<span class="preprocessor">#define HAVE_STRERROR 1</span></div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="comment">/* Define to 1 if you have the `strftime&#39; function. */</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno"><a class="code" href="f8config_8h.html#a6b330b2b5b42f73953ceab4f33e76baa">  259</a></span>&#160;<span class="preprocessor">#define HAVE_STRFTIME 1</span></div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;strings.h&gt; header file. */</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno"><a class="code" href="f8config_8h.html#a405d10d46190bcb0320524c54eafc850">  262</a></span>&#160;<span class="preprocessor">#define HAVE_STRINGS_H 1</span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;string.h&gt; header file. */</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno"><a class="code" href="f8config_8h.html#ad4c234dd1625255dc626a15886306e7d">  265</a></span>&#160;<span class="preprocessor">#define HAVE_STRING_H 1</span></div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="comment">/* Define to 1 if you have the `strtol&#39; function. */</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno"><a class="code" href="f8config_8h.html#adca0e8e7c3827189abcd6ceae6f60c32">  268</a></span>&#160;<span class="preprocessor">#define HAVE_STRTOL 1</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="comment">/* Define to 1 if you have the `strtoul&#39; function. */</span></div>
+<div class="line"><a name="l00271"></a><span class="lineno"><a class="code" href="f8config_8h.html#a0f08977476bc5b181092cf8b3ddaf368">  271</a></span>&#160;<span class="preprocessor">#define HAVE_STRTOUL 1</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="comment">/* Define to 1 if you have the `sysconf&#39; function. */</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno"><a class="code" href="f8config_8h.html#ad76c46a2d87e56f7f1098ee68544bcc5">  274</a></span>&#160;<span class="preprocessor">#define HAVE_SYSCONF 1</span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;syslog.h&gt; header file. */</span></div>
+<div class="line"><a name="l00277"></a><span class="lineno"><a class="code" href="f8config_8h.html#a695d4e005378df4a1f286cb3d0f4b333">  277</a></span>&#160;<span class="preprocessor">#define HAVE_SYSLOG_H 1</span></div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/dir.h&gt; header file, and it defines `DIR&#39;.</span></div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="comment">/* #undef HAVE_SYS_DIR_H */</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/gmon.h&gt; header file. */</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="comment">/* #undef HAVE_SYS_GMON_H */</span></div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/param.h&gt; header file. */</span></div>
-<div class="line"><a name="l00287"></a><span class="lineno"><a class="code" href="f8config_8h.html#a05aa9fc25e1231d8eb347390558e4e22">  287</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_PARAM_H 1</span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/ioctl.h&gt; header file. */</span></div>
+<div class="line"><a name="l00287"></a><span class="lineno"><a class="code" href="f8config_8h.html#a3c53bc046c95078b26f13b3cfecdf210">  287</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_IOCTL_H 1</span></div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/socket.h&gt; header file. */</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno"><a class="code" href="f8config_8h.html#afb96c2bc08ebf33cca68c714f624a58d">  290</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_SOCKET_H 1</span></div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/stat.h&gt; header file. */</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno"><a class="code" href="f8config_8h.html#ace156430ba007d19b4348a950d0c692b">  293</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_STAT_H 1</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/time.h&gt; header file. */</span></div>
-<div class="line"><a name="l00296"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2aae46056558e9d6fef6380f9678ffe3">  296</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_TIME_H 1</span></div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/types.h&gt; header file. */</span></div>
-<div class="line"><a name="l00299"></a><span class="lineno"><a class="code" href="f8config_8h.html#a69dc70bea5d1f8bd2be9740e974fa666">  299</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_TYPES_H 1</span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/wait.h&gt; header file. */</span></div>
-<div class="line"><a name="l00302"></a><span class="lineno"><a class="code" href="f8config_8h.html#af249315f5939884ce5b4585ca81a1e39">  302</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_WAIT_H 1</span></div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;termios.h&gt; header file. */</span></div>
-<div class="line"><a name="l00305"></a><span class="lineno"><a class="code" href="f8config_8h.html#a55e62c01f41f9c5850dfce5f89a6bb98">  305</a></span>&#160;<span class="preprocessor">#define HAVE_TERMIOS_H 1</span></div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;time.h&gt; header file. */</span></div>
-<div class="line"><a name="l00308"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2397007ae170bf57faa808bacaaa2499">  308</a></span>&#160;<span class="preprocessor">#define HAVE_TIME_H 1</span></div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;unistd.h&gt; header file. */</span></div>
-<div class="line"><a name="l00311"></a><span class="lineno"><a class="code" href="f8config_8h.html#a219b06937831d0da94d801ab13987639">  311</a></span>&#160;<span class="preprocessor">#define HAVE_UNISTD_H 1</span></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="comment">/* Define to 1 for valgrind support */</span></div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="comment">/* #undef HAVE_VALGRIND */</span></div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;valgrind/valgrind.h&gt; header file. */</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="comment">/* #undef HAVE_VALGRIND_VALGRIND_H */</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="comment">/* Define to 1 if you have /var/run */</span></div>
-<div class="line"><a name="l00320"></a><span class="lineno"><a class="code" href="f8config_8h.html#aba4d71b29215284e61bb98bc77693da1">  320</a></span>&#160;<span class="preprocessor">#define HAVE_VAR_RUN 1</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="comment">/* Define to 1 if you have the `vfork&#39; function. */</span></div>
-<div class="line"><a name="l00323"></a><span class="lineno"><a class="code" href="f8config_8h.html#a6e660eb97fa8ec4462facdd5d3721aed">  323</a></span>&#160;<span class="preprocessor">#define HAVE_VFORK 1</span></div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;vfork.h&gt; header file. */</span></div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="comment">/* #undef HAVE_VFORK_H */</span></div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="comment">/* Define to 1 if `fork&#39; works. */</span></div>
-<div class="line"><a name="l00329"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac5b8a9a863350e942e04a4ad13fe905a">  329</a></span>&#160;<span class="preprocessor">#define HAVE_WORKING_FORK 1</span></div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="comment">/* Define to 1 if `vfork&#39; works. */</span></div>
-<div class="line"><a name="l00332"></a><span class="lineno"><a class="code" href="f8config_8h.html#a3f110f0b36f0c6ef25501e5a10e9a0de">  332</a></span>&#160;<span class="preprocessor">#define HAVE_WORKING_VFORK 1</span></div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;zlib.h&gt; header file. */</span></div>
-<div class="line"><a name="l00335"></a><span class="lineno"><a class="code" href="f8config_8h.html#aad5eed50844aa0073171213cb654363d">  335</a></span>&#160;<span class="preprocessor">#define HAVE_ZLIB_H 1</span></div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="comment">/* Define to 1 if the system has the type `_Bool&#39;. */</span></div>
-<div class="line"><a name="l00338"></a><span class="lineno"><a class="code" href="f8config_8h.html#a862ffdbac7ac8323712310a418b7d9a3">  338</a></span>&#160;<span class="preprocessor">#define HAVE__BOOL 1</span></div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;<span class="comment">/* Default system */</span></div>
-<div class="line"><a name="l00341"></a><span class="lineno"><a class="code" href="f8config_8h.html#ae5fab594d5bdd846078cfff1da6d85fa">  341</a></span>&#160;<span class="preprocessor">#define HOST_SYSTEM &quot;x86_64-unknown-linux-gnu&quot;</span></div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="comment">/* Additional library flags */</span></div>
-<div class="line"><a name="l00344"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2dd4b41234e5a632ac37afce55156d7d">  344</a></span>&#160;<span class="preprocessor">#define LDFLAGS &quot; -L/usr/src/gtest-1.7.0/lib -L/usr/src/gtest-1.7.0/lib/.libs&quot;</span></div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="comment">/* Library spec */</span></div>
-<div class="line"><a name="l00347"></a><span class="lineno"><a class="code" href="f8config_8h.html#a197cb6313b54a1db304962625cc31903">  347</a></span>&#160;<span class="preprocessor">#define LIBS &quot; -ltcmalloc_minimal&quot;</span></div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="comment">/* Define to 1 if `lstat&#39; dereferences a symlink specified with a trailing</span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="comment">   slash. */</span></div>
-<div class="line"><a name="l00351"></a><span class="lineno"><a class="code" href="f8config_8h.html#a34ef112da2cd333b13939ec3dc368af3">  351</a></span>&#160;<span class="preprocessor">#define LSTAT_FOLLOWS_SLASHED_SYMLINK 1</span></div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/ndir.h&gt; header file, and it defines `DIR&#39;.</span></div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="comment">/* #undef HAVE_SYS_NDIR_H */</span></div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/param.h&gt; header file. */</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno"><a class="code" href="f8config_8h.html#a05aa9fc25e1231d8eb347390558e4e22">  294</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_PARAM_H 1</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/socket.h&gt; header file. */</span></div>
+<div class="line"><a name="l00297"></a><span class="lineno"><a class="code" href="f8config_8h.html#afb96c2bc08ebf33cca68c714f624a58d">  297</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_SOCKET_H 1</span></div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/stat.h&gt; header file. */</span></div>
+<div class="line"><a name="l00300"></a><span class="lineno"><a class="code" href="f8config_8h.html#ace156430ba007d19b4348a950d0c692b">  300</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_STAT_H 1</span></div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/time.h&gt; header file. */</span></div>
+<div class="line"><a name="l00303"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2aae46056558e9d6fef6380f9678ffe3">  303</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_TIME_H 1</span></div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/types.h&gt; header file. */</span></div>
+<div class="line"><a name="l00306"></a><span class="lineno"><a class="code" href="f8config_8h.html#a69dc70bea5d1f8bd2be9740e974fa666">  306</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_TYPES_H 1</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;sys/wait.h&gt; header file. */</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno"><a class="code" href="f8config_8h.html#af249315f5939884ce5b4585ca81a1e39">  309</a></span>&#160;<span class="preprocessor">#define HAVE_SYS_WAIT_H 1</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;termios.h&gt; header file. */</span></div>
+<div class="line"><a name="l00312"></a><span class="lineno"><a class="code" href="f8config_8h.html#a55e62c01f41f9c5850dfce5f89a6bb98">  312</a></span>&#160;<span class="preprocessor">#define HAVE_TERMIOS_H 1</span></div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;time.h&gt; header file. */</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2397007ae170bf57faa808bacaaa2499">  315</a></span>&#160;<span class="preprocessor">#define HAVE_TIME_H 1</span></div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;unistd.h&gt; header file. */</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno"><a class="code" href="f8config_8h.html#a219b06937831d0da94d801ab13987639">  318</a></span>&#160;<span class="preprocessor">#define HAVE_UNISTD_H 1</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="comment">/* Define to 1 for valgrind support */</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="comment">/* #undef HAVE_VALGRIND */</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;valgrind/valgrind.h&gt; header file. */</span></div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="comment">/* #undef HAVE_VALGRIND_VALGRIND_H */</span></div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="comment">/* Define to 1 if you have /var/run */</span></div>
+<div class="line"><a name="l00327"></a><span class="lineno"><a class="code" href="f8config_8h.html#aba4d71b29215284e61bb98bc77693da1">  327</a></span>&#160;<span class="preprocessor">#define HAVE_VAR_RUN 1</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;<span class="comment">/* Define to 1 if you have the `vfork&#39; function. */</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno"><a class="code" href="f8config_8h.html#a6e660eb97fa8ec4462facdd5d3721aed">  330</a></span>&#160;<span class="preprocessor">#define HAVE_VFORK 1</span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;vfork.h&gt; header file. */</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="comment">/* #undef HAVE_VFORK_H */</span></div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="comment">/* Define to 1 if `fork&#39; works. */</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac5b8a9a863350e942e04a4ad13fe905a">  336</a></span>&#160;<span class="preprocessor">#define HAVE_WORKING_FORK 1</span></div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="comment">/* Define to 1 if `vfork&#39; works. */</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno"><a class="code" href="f8config_8h.html#a3f110f0b36f0c6ef25501e5a10e9a0de">  339</a></span>&#160;<span class="preprocessor">#define HAVE_WORKING_VFORK 1</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;<span class="comment">/* Define to 1 if you have the &lt;zlib.h&gt; header file. */</span></div>
+<div class="line"><a name="l00342"></a><span class="lineno"><a class="code" href="f8config_8h.html#aad5eed50844aa0073171213cb654363d">  342</a></span>&#160;<span class="preprocessor">#define HAVE_ZLIB_H 1</span></div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="comment">/* Define to 1 if the system has the type `_Bool&#39;. */</span></div>
+<div class="line"><a name="l00345"></a><span class="lineno"><a class="code" href="f8config_8h.html#a862ffdbac7ac8323712310a418b7d9a3">  345</a></span>&#160;<span class="preprocessor">#define HAVE__BOOL 1</span></div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="comment">/* Default system */</span></div>
+<div class="line"><a name="l00348"></a><span class="lineno"><a class="code" href="f8config_8h.html#ae5fab594d5bdd846078cfff1da6d85fa">  348</a></span>&#160;<span class="preprocessor">#define HOST_SYSTEM &quot;x86_64-unknown-linux-gnu&quot;</span></div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="comment">/* Additional library flags */</span></div>
+<div class="line"><a name="l00351"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2dd4b41234e5a632ac37afce55156d7d">  351</a></span>&#160;<span class="preprocessor">#define LDFLAGS &quot; -L/usr/src/gtest-1.7.0/lib -L/usr/src/gtest-1.7.0/lib/.libs&quot;</span></div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="comment">/* Define to the sub-directory in which libtool stores uninstalled libraries.</span></div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00355"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac2d5925d76379847dd9fc4747b061659">  355</a></span>&#160;<span class="preprocessor">#define LT_OBJDIR &quot;.libs/&quot;</span></div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="comment">/* Encoded Version */</span></div>
-<div class="line"><a name="l00358"></a><span class="lineno"><a class="code" href="f8config_8h.html#a23f15b5855019d8ac0c75f82484f8047">  358</a></span>&#160;<span class="preprocessor">#define MAGIC_NUM (MAJOR_VERSION_NUM &lt;&lt; 24 | MINOR_VERSION_NUM &lt;&lt; 12 | PATCH_VERSION_NUM)</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="comment">/* Library spec */</span></div>
+<div class="line"><a name="l00354"></a><span class="lineno"><a class="code" href="f8config_8h.html#a197cb6313b54a1db304962625cc31903">  354</a></span>&#160;<span class="preprocessor">#define LIBS &quot; -ltcmalloc_minimal&quot;</span></div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="comment">/* Define to 1 if `lstat&#39; dereferences a symlink specified with a trailing</span></div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="comment">   slash. */</span></div>
+<div class="line"><a name="l00358"></a><span class="lineno"><a class="code" href="f8config_8h.html#a34ef112da2cd333b13939ec3dc368af3">  358</a></span>&#160;<span class="preprocessor">#define LSTAT_FOLLOWS_SLASHED_SYMLINK 1</span></div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="comment">/* Major version number */</span></div>
-<div class="line"><a name="l00361"></a><span class="lineno"><a class="code" href="f8config_8h.html#ab0321c14ceb0d62f8093d79f29da520a">  361</a></span>&#160;<span class="preprocessor">#define MAJOR_VERSION_NUM 0</span></div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="comment">/* Maximum length of a FIX field (default=1024) */</span></div>
-<div class="line"><a name="l00364"></a><span class="lineno"><a class="code" href="f8config_8h.html#aaaea75bb49416feeca9692988a596cd9">  364</a></span>&#160;<span class="preprocessor">#define MAX_FLD_LENGTH 1024</span></div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;<span class="comment">/* Maximum length of a FIX message (default=8192) */</span></div>
-<div class="line"><a name="l00367"></a><span class="lineno"><a class="code" href="f8config_8h.html#aae15a57359405fa67f39ff805c6eddd4">  367</a></span>&#160;<span class="preprocessor">#define MAX_MSG_LENGTH 8192</span></div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="comment">/* Minor version number */</span></div>
-<div class="line"><a name="l00370"></a><span class="lineno"><a class="code" href="f8config_8h.html#a37f45b01bad6430f4367b95004c5176f">  370</a></span>&#160;<span class="preprocessor">#define MINOR_VERSION_NUM 9</span></div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="comment">/* FF MPMC */</span></div>
-<div class="line"><a name="l00373"></a><span class="lineno"><a class="code" href="f8config_8h.html#a94102a049c050bfde55ae2d68a41b7df">  373</a></span>&#160;<span class="preprocessor">#define MPMC_FF 2</span></div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="comment">/* MPMC system used */</span></div>
-<div class="line"><a name="l00376"></a><span class="lineno"><a class="code" href="f8config_8h.html#aa8ca454008db79971bcf97328e0fa449">  376</a></span>&#160;<span class="preprocessor">#define MPMC_SYSTEM MPMC_FF</span></div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="comment">/* TBB MPMC */</span></div>
-<div class="line"><a name="l00379"></a><span class="lineno"><a class="code" href="f8config_8h.html#a0e907525944a6dd0912e5040d1a90019">  379</a></span>&#160;<span class="preprocessor">#define MPMC_TBB 1</span></div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="comment">/* Define to 1 to enable Message Recycling */</span></div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="comment">/* #undef MSGRECYCLING */</span></div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="comment">/* Name of package */</span></div>
-<div class="line"><a name="l00385"></a><span class="lineno"><a class="code" href="f8config_8h.html#aca8570fb706c81df371b7f9bc454ae03">  385</a></span>&#160;<span class="preprocessor">#define PACKAGE &quot;fix8&quot;</span></div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="comment">/* Define to the address where bug reports for this package should be sent. */</span></div>
-<div class="line"><a name="l00388"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1d1d2d7f8d2f95b376954d649ab03233">  388</a></span>&#160;<span class="preprocessor">#define PACKAGE_BUGREPORT &quot;fix@fix8.org&quot;</span></div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="comment">/* Define to the full name of this package. */</span></div>
-<div class="line"><a name="l00391"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1c0439e4355794c09b64274849eb0279">  391</a></span>&#160;<span class="preprocessor">#define PACKAGE_NAME &quot;fix8&quot;</span></div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="comment">/* Define to the full name and version of this package. */</span></div>
-<div class="line"><a name="l00394"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac73e6f903c16eca7710f92e36e1c6fbf">  394</a></span>&#160;<span class="preprocessor">#define PACKAGE_STRING &quot;fix8 0.9.6&quot;</span></div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="comment">/* Define to the one symbol short name of this package. */</span></div>
-<div class="line"><a name="l00397"></a><span class="lineno"><a class="code" href="f8config_8h.html#af415af6bfede0e8d5453708afe68651c">  397</a></span>&#160;<span class="preprocessor">#define PACKAGE_TARNAME &quot;fix8&quot;</span></div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="comment">/* Define to the home page for this package. */</span></div>
-<div class="line"><a name="l00400"></a><span class="lineno"><a class="code" href="f8config_8h.html#a5c93853116d5a50307b6744f147840aa">  400</a></span>&#160;<span class="preprocessor">#define PACKAGE_URL &quot;http://www.fix8.org&quot;</span></div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="comment">/* Define to the version of this package. */</span></div>
-<div class="line"><a name="l00403"></a><span class="lineno"><a class="code" href="f8config_8h.html#aa326a05d5e30f9e9a4bb0b4469d5d0c0">  403</a></span>&#160;<span class="preprocessor">#define PACKAGE_VERSION &quot;0.9.6&quot;</span></div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;<span class="comment">/* Patch number */</span></div>
-<div class="line"><a name="l00406"></a><span class="lineno"><a class="code" href="f8config_8h.html#a8d9556de1e767d55bb4d961702101c56">  406</a></span>&#160;<span class="preprocessor">#define PATCH_VERSION_NUM 6</span></div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="comment">/* Define to 1 to enable metatdata population in encode/decodes */</span></div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="comment">/* #undef POPULATE_METADATA */</span></div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="comment">/* Define to 1 if your os supports gprof and you wish to enable profiling */</span></div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;<span class="comment">/* #undef PROFILING_BUILD */</span></div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="comment">/* Percentage of message fields to reserve for additional fields */</span></div>
-<div class="line"><a name="l00415"></a><span class="lineno"><a class="code" href="f8config_8h.html#a9b795b8180857ec209f8015b20a52252">  415</a></span>&#160;<span class="preprocessor">#define RESERVE_PERCENT 30</span></div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;<span class="comment">/* Define as the return type of signal handlers (`int&#39; or `void&#39;). */</span></div>
-<div class="line"><a name="l00418"></a><span class="lineno"><a class="code" href="f8config_8h.html#adbe5dcee9c146b338794974137c55e70">  418</a></span>&#160;<span class="preprocessor">#define RETSIGTYPE void</span></div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="comment">/* Define to 1 if when using fastflow, sleep for VAL ns instead of yield when</span></div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="comment">   waiting for input */</span></div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;<span class="comment">/* #undef SLEEP_NO_YIELD */</span></div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;<span class="comment">/* If using the C implementation of alloca, define if you know the</span></div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;<span class="comment">   direction of stack growth for your system; otherwise it will be</span></div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="comment">   automatically deduced at runtime.</span></div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;<span class="comment">   STACK_DIRECTION &gt; 0 =&gt; grows toward higher addresses</span></div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;<span class="comment">   STACK_DIRECTION &lt; 0 =&gt; grows toward lower addresses</span></div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;<span class="comment">   STACK_DIRECTION = 0 =&gt; direction of growth unknown */</span></div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;<span class="comment">/* #undef STACK_DIRECTION */</span></div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="comment">/* Define to 1 if you have the ANSI C header files. */</span></div>
-<div class="line"><a name="l00433"></a><span class="lineno"><a class="code" href="f8config_8h.html#a550e5c272cc3cf3814651721167dcd23">  433</a></span>&#160;<span class="preprocessor">#define STDC_HEADERS 1</span></div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;<span class="comment">/* Location of the system config directory */</span></div>
-<div class="line"><a name="l00436"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2f62cb1c6f014272be957f002103552e">  436</a></span>&#160;<span class="preprocessor">#define SYSCONFDIR &quot;/etc&quot;</span></div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="comment">/* Define to 1 if you can safely include both &lt;sys/time.h&gt; and &lt;time.h&gt;. */</span></div>
-<div class="line"><a name="l00439"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2b44ef64cf38e064ef11e11f35271380">  439</a></span>&#160;<span class="preprocessor">#define TIME_WITH_SYS_TIME 1</span></div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="comment">/* Define to 1 if your &lt;sys/time.h&gt; declares `struct tm&#39;. */</span></div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="comment">/* #undef TM_IN_SYS_TIME */</span></div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="comment">/* Define to 1 to enable rdtsc for interval timer if available */</span></div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="comment">/* #undef USE_RDTSC */</span></div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;<span class="comment">/* Version number of package */</span></div>
-<div class="line"><a name="l00448"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1c6d5de492ac61ad29aec7aa9a436bbf">  448</a></span>&#160;<span class="preprocessor">#define VERSION &quot;0.9.6&quot;</span></div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;<span class="comment">/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most</span></div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;<span class="comment">   significant byte first (like Motorola and SPARC, unlike Intel). */</span></div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;<span class="preprocessor">#if defined AC_APPLE_UNIVERSAL_BUILD</span></div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># if defined __BIG_ENDIAN__</span></div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#  define WORDS_BIGENDIAN 1</span></div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># endif</span></div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># ifndef WORDS_BIGENDIAN</span></div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;<span class="preprocessor"></span><span class="comment">/* #  undef WORDS_BIGENDIAN */</span></div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;<span class="preprocessor"># endif</span></div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;<span class="comment">/* Define to 1 if you wish to enforce strict bool */</span></div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;<span class="comment">/* #undef XMLENTITY_STRICT_BOOL */</span></div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;<span class="comment">/* Define for Solaris 2.5.1 so the uint32_t typedef from &lt;sys/synch.h&gt;,</span></div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;<span class="comment">   &lt;pthread.h&gt;, or &lt;semaphore.h&gt; is not used. If the typedef were allowed, the</span></div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;<span class="comment">   #define below would cause a syntax error. */</span></div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;<span class="comment">/* #undef _UINT32_T */</span></div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;<span class="comment">/* Define for Solaris 2.5.1 so the uint64_t typedef from &lt;sys/synch.h&gt;,</span></div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<span class="comment">   &lt;pthread.h&gt;, or &lt;semaphore.h&gt; is not used. If the typedef were allowed, the</span></div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;<span class="comment">   #define below would cause a syntax error. */</span></div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;<span class="comment">/* #undef _UINT64_T */</span></div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;<span class="comment">/* Define for Solaris 2.5.1 so the uint8_t typedef from &lt;sys/synch.h&gt;,</span></div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;<span class="comment">   &lt;pthread.h&gt;, or &lt;semaphore.h&gt; is not used. If the typedef were allowed, the</span></div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;<span class="comment">   #define below would cause a syntax error. */</span></div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;<span class="comment">/* #undef _UINT8_T */</span></div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="comment">/* Define to empty if `const&#39; does not conform to ANSI C. */</span></div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;<span class="comment">/* #undef const */</span></div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;<span class="comment">/* Define to `__inline__&#39; or `__inline&#39; if that&#39;s what the C compiler</span></div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;<span class="comment">   calls it, or to nothing if &#39;inline&#39; is not supported under any name.  */</span></div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;<span class="preprocessor">#ifndef __cplusplus</span></div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;<span class="preprocessor"></span><span class="comment">/* #undef inline */</span></div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;<span class="comment">/* Define to rpl_malloc if the replacement function should be used. */</span></div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;<span class="comment">/* #undef malloc */</span></div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="comment">/* Define to `long int&#39; if &lt;sys/types.h&gt; does not define. */</span></div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;<span class="comment">/* #undef off_t */</span></div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;<span class="comment">/* Define to `int&#39; if &lt;sys/types.h&gt; does not define. */</span></div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;<span class="comment">/* #undef pid_t */</span></div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;<span class="comment">/* Define to rpl_realloc if the replacement function should be used. */</span></div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;<span class="comment">/* #undef realloc */</span></div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;<span class="comment">/* Define to `unsigned int&#39; if &lt;sys/types.h&gt; does not define. */</span></div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;<span class="comment">/* #undef size_t */</span></div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;<span class="comment">/* Define to the type of an unsigned integer type of width exactly 16 bits if</span></div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;<span class="comment">   such a type exists and the standard includes do not define it. */</span></div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;<span class="comment">/* #undef uint16_t */</span></div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="comment">/* Define to the sub-directory in which libtool stores uninstalled libraries.</span></div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac2d5925d76379847dd9fc4747b061659">  362</a></span>&#160;<span class="preprocessor">#define LT_OBJDIR &quot;.libs/&quot;</span></div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="comment">/* Encoded Version */</span></div>
+<div class="line"><a name="l00365"></a><span class="lineno"><a class="code" href="f8config_8h.html#a23f15b5855019d8ac0c75f82484f8047">  365</a></span>&#160;<span class="preprocessor">#define MAGIC_NUM (MAJOR_VERSION_NUM &lt;&lt; 24 | MINOR_VERSION_NUM &lt;&lt; 12 | PATCH_VERSION_NUM)</span></div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="comment">/* Major version number */</span></div>
+<div class="line"><a name="l00368"></a><span class="lineno"><a class="code" href="f8config_8h.html#ab0321c14ceb0d62f8093d79f29da520a">  368</a></span>&#160;<span class="preprocessor">#define MAJOR_VERSION_NUM 0</span></div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;<span class="comment">/* Maximum length of a FIX field (default=1024) */</span></div>
+<div class="line"><a name="l00371"></a><span class="lineno"><a class="code" href="f8config_8h.html#aaaea75bb49416feeca9692988a596cd9">  371</a></span>&#160;<span class="preprocessor">#define MAX_FLD_LENGTH 1024</span></div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="comment">/* Maximum length of a FIX message (default=8192) */</span></div>
+<div class="line"><a name="l00374"></a><span class="lineno"><a class="code" href="f8config_8h.html#aae15a57359405fa67f39ff805c6eddd4">  374</a></span>&#160;<span class="preprocessor">#define MAX_MSG_LENGTH 8192</span></div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="comment">/* Minor version number */</span></div>
+<div class="line"><a name="l00377"></a><span class="lineno"><a class="code" href="f8config_8h.html#a37f45b01bad6430f4367b95004c5176f">  377</a></span>&#160;<span class="preprocessor">#define MINOR_VERSION_NUM 10</span></div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;<span class="comment">/* FF MPMC */</span></div>
+<div class="line"><a name="l00380"></a><span class="lineno"><a class="code" href="f8config_8h.html#a94102a049c050bfde55ae2d68a41b7df">  380</a></span>&#160;<span class="preprocessor">#define MPMC_FF 2</span></div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="comment">/* MPMC system used */</span></div>
+<div class="line"><a name="l00383"></a><span class="lineno"><a class="code" href="f8config_8h.html#aa8ca454008db79971bcf97328e0fa449">  383</a></span>&#160;<span class="preprocessor">#define MPMC_SYSTEM MPMC_TBB</span></div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;<span class="comment">/* TBB MPMC */</span></div>
+<div class="line"><a name="l00386"></a><span class="lineno"><a class="code" href="f8config_8h.html#a0e907525944a6dd0912e5040d1a90019">  386</a></span>&#160;<span class="preprocessor">#define MPMC_TBB 1</span></div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="comment">/* Name of package */</span></div>
+<div class="line"><a name="l00389"></a><span class="lineno"><a class="code" href="f8config_8h.html#aca8570fb706c81df371b7f9bc454ae03">  389</a></span>&#160;<span class="preprocessor">#define PACKAGE &quot;fix8&quot;</span></div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="comment">/* Define to the address where bug reports for this package should be sent. */</span></div>
+<div class="line"><a name="l00392"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1d1d2d7f8d2f95b376954d649ab03233">  392</a></span>&#160;<span class="preprocessor">#define PACKAGE_BUGREPORT &quot;fix@fix8.org&quot;</span></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="comment">/* Define to the full name of this package. */</span></div>
+<div class="line"><a name="l00395"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1c0439e4355794c09b64274849eb0279">  395</a></span>&#160;<span class="preprocessor">#define PACKAGE_NAME &quot;fix8&quot;</span></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="comment">/* Define to the full name and version of this package. */</span></div>
+<div class="line"><a name="l00398"></a><span class="lineno"><a class="code" href="f8config_8h.html#ac73e6f903c16eca7710f92e36e1c6fbf">  398</a></span>&#160;<span class="preprocessor">#define PACKAGE_STRING &quot;fix8 0.10.0&quot;</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="comment">/* Define to the one symbol short name of this package. */</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno"><a class="code" href="f8config_8h.html#af415af6bfede0e8d5453708afe68651c">  401</a></span>&#160;<span class="preprocessor">#define PACKAGE_TARNAME &quot;fix8&quot;</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;<span class="comment">/* Define to the home page for this package. */</span></div>
+<div class="line"><a name="l00404"></a><span class="lineno"><a class="code" href="f8config_8h.html#a5c93853116d5a50307b6744f147840aa">  404</a></span>&#160;<span class="preprocessor">#define PACKAGE_URL &quot;http://www.fix8.org&quot;</span></div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;<span class="comment">/* Define to the version of this package. */</span></div>
+<div class="line"><a name="l00407"></a><span class="lineno"><a class="code" href="f8config_8h.html#aa326a05d5e30f9e9a4bb0b4469d5d0c0">  407</a></span>&#160;<span class="preprocessor">#define PACKAGE_VERSION &quot;0.10.0&quot;</span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="comment">/* Patch number */</span></div>
+<div class="line"><a name="l00410"></a><span class="lineno"><a class="code" href="f8config_8h.html#a8d9556de1e767d55bb4d961702101c56">  410</a></span>&#160;<span class="preprocessor">#define PATCH_VERSION_NUM 0</span></div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;<span class="comment">/* Define to 1 to enable metatdata population in encode/decodes */</span></div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;<span class="comment">/* #undef POPULATE_METADATA */</span></div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;<span class="comment">/* Define to 1 if your os supports gprof and you wish to enable profiling */</span></div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;<span class="comment">/* #undef PROFILING_BUILD */</span></div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;<span class="comment">/* Percentage of message fields to reserve for additional fields */</span></div>
+<div class="line"><a name="l00419"></a><span class="lineno"><a class="code" href="f8config_8h.html#a9b795b8180857ec209f8015b20a52252">  419</a></span>&#160;<span class="preprocessor">#define RESERVE_PERCENT 30</span></div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="comment">/* Define as the return type of signal handlers (`int&#39; or `void&#39;). */</span></div>
+<div class="line"><a name="l00422"></a><span class="lineno"><a class="code" href="f8config_8h.html#adbe5dcee9c146b338794974137c55e70">  422</a></span>&#160;<span class="preprocessor">#define RETSIGTYPE void</span></div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;<span class="comment">/* Define to 1 if when using fastflow, sleep for VAL ns instead of yield when</span></div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;<span class="comment">   waiting for input */</span></div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="comment">/* #undef SLEEP_NO_YIELD */</span></div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;<span class="comment">/* If using the C implementation of alloca, define if you know the</span></div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;<span class="comment">   direction of stack growth for your system; otherwise it will be</span></div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;<span class="comment">   automatically deduced at runtime.</span></div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;<span class="comment">   STACK_DIRECTION &gt; 0 =&gt; grows toward higher addresses</span></div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="comment">   STACK_DIRECTION &lt; 0 =&gt; grows toward lower addresses</span></div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;<span class="comment">   STACK_DIRECTION = 0 =&gt; direction of growth unknown */</span></div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="comment">/* #undef STACK_DIRECTION */</span></div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;<span class="comment">/* Define to 1 if you have the ANSI C header files. */</span></div>
+<div class="line"><a name="l00437"></a><span class="lineno"><a class="code" href="f8config_8h.html#a550e5c272cc3cf3814651721167dcd23">  437</a></span>&#160;<span class="preprocessor">#define STDC_HEADERS 1</span></div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="comment">/* Location of the system config directory */</span></div>
+<div class="line"><a name="l00440"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2f62cb1c6f014272be957f002103552e">  440</a></span>&#160;<span class="preprocessor">#define SYSCONFDIR &quot;/etc&quot;</span></div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="comment">/* Define to 1 if you can safely include both &lt;sys/time.h&gt; and &lt;time.h&gt;. */</span></div>
+<div class="line"><a name="l00443"></a><span class="lineno"><a class="code" href="f8config_8h.html#a2b44ef64cf38e064ef11e11f35271380">  443</a></span>&#160;<span class="preprocessor">#define TIME_WITH_SYS_TIME 1</span></div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="comment">/* Define to 1 if your &lt;sys/time.h&gt; declares `struct tm&#39;. */</span></div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;<span class="comment">/* #undef TM_IN_SYS_TIME */</span></div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;<span class="comment">/* Define to 1 to enable rdtsc for interval timer if available */</span></div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;<span class="comment">/* #undef USE_RDTSC */</span></div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;<span class="comment">/* Version number of package */</span></div>
+<div class="line"><a name="l00452"></a><span class="lineno"><a class="code" href="f8config_8h.html#a1c6d5de492ac61ad29aec7aa9a436bbf">  452</a></span>&#160;<span class="preprocessor">#define VERSION &quot;0.10.0&quot;</span></div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;<span class="comment">/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most</span></div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;<span class="comment">   significant byte first (like Motorola and SPARC, unlike Intel). */</span></div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;<span class="preprocessor">#if defined AC_APPLE_UNIVERSAL_BUILD</span></div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># if defined __BIG_ENDIAN__</span></div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#  define WORDS_BIGENDIAN 1</span></div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># endif</span></div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># ifndef WORDS_BIGENDIAN</span></div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;<span class="preprocessor"></span><span class="comment">/* #  undef WORDS_BIGENDIAN */</span></div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;<span class="preprocessor"># endif</span></div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;<span class="comment">/* Define to 1 if you wish to enforce strict bool */</span></div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;<span class="comment">/* #undef XMLENTITY_STRICT_BOOL */</span></div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;<span class="comment">/* Define for Solaris 2.5.1 so the uint32_t typedef from &lt;sys/synch.h&gt;,</span></div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;<span class="comment">   &lt;pthread.h&gt;, or &lt;semaphore.h&gt; is not used. If the typedef were allowed, the</span></div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<span class="comment">   #define below would cause a syntax error. */</span></div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;<span class="comment">/* #undef _UINT32_T */</span></div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;<span class="comment">/* Define for Solaris 2.5.1 so the uint64_t typedef from &lt;sys/synch.h&gt;,</span></div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;<span class="comment">   &lt;pthread.h&gt;, or &lt;semaphore.h&gt; is not used. If the typedef were allowed, the</span></div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;<span class="comment">   #define below would cause a syntax error. */</span></div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;<span class="comment">/* #undef _UINT64_T */</span></div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;<span class="comment">/* Define for Solaris 2.5.1 so the uint8_t typedef from &lt;sys/synch.h&gt;,</span></div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="comment">   &lt;pthread.h&gt;, or &lt;semaphore.h&gt; is not used. If the typedef were allowed, the</span></div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;<span class="comment">   #define below would cause a syntax error. */</span></div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;<span class="comment">/* #undef _UINT8_T */</span></div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;<span class="comment">/* Define to empty if `const&#39; does not conform to ANSI C. */</span></div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;<span class="comment">/* #undef const */</span></div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="comment">/* Define to `__inline__&#39; or `__inline&#39; if that&#39;s what the C compiler</span></div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;<span class="comment">   calls it, or to nothing if &#39;inline&#39; is not supported under any name.  */</span></div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;<span class="preprocessor">#ifndef __cplusplus</span></div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;<span class="preprocessor"></span><span class="comment">/* #undef inline */</span></div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;<span class="comment">/* Define to rpl_malloc if the replacement function should be used. */</span></div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="comment">/* #undef malloc */</span></div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;<span class="comment">/* Define to `long int&#39; if &lt;sys/types.h&gt; does not define. */</span></div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;<span class="comment">/* #undef off_t */</span></div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;<span class="comment">/* Define to `int&#39; if &lt;sys/types.h&gt; does not define. */</span></div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;<span class="comment">/* #undef pid_t */</span></div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;<span class="comment">/* Define to rpl_realloc if the replacement function should be used. */</span></div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;<span class="comment">/* #undef realloc */</span></div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;<span class="comment">/* Define to `unsigned int&#39; if &lt;sys/types.h&gt; does not define. */</span></div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;<span class="comment">/* #undef size_t */</span></div>
 <div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;<span class="comment">/* Define to the type of an unsigned integer type of width exactly 32 bits if</span></div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;<span class="comment">/* Define to the type of an unsigned integer type of width exactly 16 bits if</span></div>
 <div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;<span class="comment">   such a type exists and the standard includes do not define it. */</span></div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;<span class="comment">/* #undef uint32_t */</span></div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;<span class="comment">/* #undef uint16_t */</span></div>
 <div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;<span class="comment">/* Define to the type of an unsigned integer type of width exactly 64 bits if</span></div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;<span class="comment">/* Define to the type of an unsigned integer type of width exactly 32 bits if</span></div>
 <div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;<span class="comment">   such a type exists and the standard includes do not define it. */</span></div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;<span class="comment">/* #undef uint64_t */</span></div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;<span class="comment">/* #undef uint32_t */</span></div>
 <div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;<span class="comment">/* Define to the type of an unsigned integer type of width exactly 8 bits if</span></div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;<span class="comment">/* Define to the type of an unsigned integer type of width exactly 64 bits if</span></div>
 <div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;<span class="comment">   such a type exists and the standard includes do not define it. */</span></div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="comment">/* #undef uint8_t */</span></div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="comment">/* #undef uint64_t */</span></div>
 <div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;<span class="comment">/* Define as `fork&#39; if `vfork&#39; does not work. */</span></div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;<span class="comment">/* #undef vfork */</span></div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;<span class="comment">/* Define to the type of an unsigned integer type of width exactly 8 bits if</span></div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;<span class="comment">   such a type exists and the standard includes do not define it. */</span></div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;<span class="comment">/* #undef uint8_t */</span></div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;<span class="comment">/* Define as `fork&#39; if `vfork&#39; does not work. */</span></div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;<span class="comment">/* #undef vfork */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:25:58. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:43. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

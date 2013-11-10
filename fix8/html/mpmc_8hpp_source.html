@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.6</span>
+   &#160;<span id="projectnumber">version  0.10.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -203,30 +203,30 @@ $(document).ready(function(){initNavTree('mpmc_8hpp_source.html','');});
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a261ae2b1617ab2eb288db663bbb87ea2">_disabled</a>)</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;         <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">acquire</a>(mutex);</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;   }</div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a31d7f3851efbb20022510d8c71084343">   97</a></span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a31d7f3851efbb20022510d8c71084343">~f8_scoped_lock_impl</a>()</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;   {</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a261ae2b1617ab2eb288db663bbb87ea2">_disabled</a> &amp;&amp; <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a>)</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;         <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aa1b520bd4bf807da834ff8b24dd6bd28">release</a>();</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;   }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">  103</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">acquire</a>(T&amp; mutex)</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      mutex.lock();</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a> = &amp;mutex;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   }</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a7ee0e80f261d2da0de8f6572f948163e">  109</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a7ee0e80f261d2da0de8f6572f948163e">try_acquire</a>(T&amp; mutex)</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <span class="keywordtype">bool</span> result(mutex.try_lock());</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <span class="keywordflow">if</span>(result)</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;         <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a> = &amp;mutex;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   }</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aa1b520bd4bf807da834ff8b24dd6bd28">  117</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aa1b520bd4bf807da834ff8b24dd6bd28">release</a>()</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;   {</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a>-&gt;unlock();</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a> = 0;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a31d7f3851efbb20022510d8c71084343">   98</a></span>&#160;   <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a31d7f3851efbb20022510d8c71084343">~f8_scoped_lock_impl</a>() { <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aa1b520bd4bf807da834ff8b24dd6bd28">release</a>(); }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">  100</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aff2f90393c490ad57556690c12bc6d48">acquire</a>(T&amp; mutex)</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;   {</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      mutex.lock();</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a> = &amp;mutex;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a7ee0e80f261d2da0de8f6572f948163e">  106</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a7ee0e80f261d2da0de8f6572f948163e">try_acquire</a>(T&amp; mutex)</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   {</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <span class="keywordtype">bool</span> result(mutex.try_lock());</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      <span class="keywordflow">if</span>(result)</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;         <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a> = &amp;mutex;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;   }</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aa1b520bd4bf807da834ff8b24dd6bd28">  114</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#aa1b520bd4bf807da834ff8b24dd6bd28">release</a>()</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   {</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#a261ae2b1617ab2eb288db663bbb87ea2">_disabled</a> &amp;&amp; <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a>)</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      {</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;         <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a>-&gt;unlock();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;         <a class="code" href="classFIX8_1_1f8__scoped__lock__impl.html#acd58cad949e091af80e3a4e3f127d009">_local_mutex</a> = 0;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      }</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;   }</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;};</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('mpmc_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:25:59. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:43. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

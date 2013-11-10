@@ -12,7 +12,7 @@ var message_8hpp =
     [ "Fields", "message_8hpp.html#ae954f89a75abad4c7b024390ef297b1e", null ],
     [ "FieldTable", "message_8hpp.html#adb952d45f30f04ab75c31d53fcc22956", null ],
     [ "GroupElement", "message_8hpp.html#abf2c99f2bfa2523a2df690654e6462aa", null ],
-    [ "Groups", "message_8hpp.html#afe4a208faec0a15100e5a0cfcb0a2ac6", null ],
+    [ "Groups", "message_8hpp.html#a655430ffeedc199978850bb8c1fc813e", null ],
     [ "MsgTable", "message_8hpp.html#a0f3bd1c25f56cc69d0bc505f9581a295", null ],
     [ "Positions", "message_8hpp.html#ab0c8887a36bd17208f8c3fb08f472149", null ]
 ];

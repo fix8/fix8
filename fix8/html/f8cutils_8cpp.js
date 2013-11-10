@@ -2,6 +2,7 @@ var f8cutils_8cpp =
 [
     [ "bintoaschex", "f8cutils_8cpp.html#ac8310c2dbf9fa1a76d372afc4e703a9c", null ],
     [ "filepart", "f8cutils_8cpp.html#aecd3ea6ae0d04dff1f968e6cd187d535", null ],
+    [ "generate_includes", "f8cutils_8cpp.html#a0e91c3583eeac297449067b6b075d679", null ],
     [ "generate_preamble", "f8cutils_8cpp.html#abf2bd5ed37218c8fa0cb28e859e79deb", null ],
     [ "insert_year", "f8cutils_8cpp.html#a30fbaa2d987bab8161dd64206f4371f4", null ],
     [ "load_fields", "f8cutils_8cpp.html#a9118f1751c9009c164e197ad3ea541da", null ],
@@ -23,6 +24,7 @@ var f8cutils_8cpp =
     [ "GETARGLIST", "f8cutils_8cpp.html#ad496a798b8707579e49cb2b9dbc38aab", null ],
     [ "glob_errors", "f8cutils_8cpp.html#aa2fea8f86294eff5752199c5a61714fa", null ],
     [ "glob_warnings", "f8cutils_8cpp.html#a14884c856247759e604a11d9cf6a2573", null ],
+    [ "incpath", "f8cutils_8cpp.html#a9601bada5266e32af5f83d45099f4558", null ],
     [ "nocheck", "f8cutils_8cpp.html#a350872a217553d88391c972cba379a05", null ],
     [ "nowarn", "f8cutils_8cpp.html#a795aee12a1cc2e6f9741c657d63bb1b1", null ],
     [ "odir", "f8cutils_8cpp.html#a9146d081d771a7d977d6b1ba92bbf0e5", null ],

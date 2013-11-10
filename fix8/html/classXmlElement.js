@@ -4,7 +4,7 @@ var classXmlElement =
     [ "XmlAttrs", "classXmlElement.html#ae85eace076ada6f09b8d40efc60d8d0a", null ],
     [ "XmlSet", "classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf", null ],
     [ "XmlSubEls", "classXmlElement.html#a6a45eea88fecd1c55694985085e90e08", null ],
-    [ "MaxDepth", "classXmlElement.html#ab5ea1bfa45ec1296705a5a01343c06cdacc6863a02162cb1a1bc3dc07c4331650", null ],
+    [ "MaxDepth", "classXmlElement.html#a87427e040c89ce93093247b6a1dbb4c4acc6863a02162cb1a1bc3dc07c4331650", null ],
     [ "XmlElement", "classXmlElement.html#a604980b35f37a37c635fd606ebe25682", null ],
     [ "XmlElement", "classXmlElement.html#a36be7064eccbff1faf63f5f9c61750c8", null ],
     [ "~XmlElement", "classXmlElement.html#a1e67b1dfcd561d1d602988d100d80d9b", null ],

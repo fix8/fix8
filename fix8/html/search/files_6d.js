@@ -14,5 +14,6 @@ var searchData=
   ['myfix_5ftraits_2ecpp',['Myfix_traits.cpp',['../Myfix__traits_8cpp.html',1,'']]],
   ['myfix_5ftypes_2ecpp',['Myfix_types.cpp',['../Myfix__types_8cpp.html',1,'']]],
   ['myfix_5ftypes_2ehpp',['Myfix_types.hpp',['../Myfix__types_8hpp.html',1,'']]],
+  ['myfix_5ftypes_5f1_2ehpp',['Myfix_types_1.hpp',['../Myfix__types__1_8hpp.html',1,'']]],
   ['myprint_2ecpp',['myprint.cpp',['../myprint_8cpp.html',1,'']]]
 ];

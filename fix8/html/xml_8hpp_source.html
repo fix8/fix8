@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.6</span>
+   &#160;<span id="projectnumber">version  0.10.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -158,7 +158,7 @@ $(document).ready(function(){initNavTree('xml_8hpp_source.html','');});
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
 <div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="classXmlElement.html#a2f9d92b7c9a7197648babbc5d4a51984">   51</a></span>&#160;   <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="structFIX8_1_1StaticTable.html" title="A specialised map to enable native static initalisation.">Str2Chr</a> <a class="code" href="classXmlElement.html#a2f9d92b7c9a7197648babbc5d4a51984" title="XML entity char lookup.">stringtochar_</a>;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="code" href="classXmlElement.html#ab5ea1bfa45ec1296705a5a01343c06cdacc6863a02162cb1a1bc3dc07c4331650">   54</a></span>&#160;   <span class="keyword">enum</span> { <a class="code" href="classXmlElement.html#ab5ea1bfa45ec1296705a5a01343c06cdacc6863a02162cb1a1bc3dc07c4331650">MaxDepth</a> = 128 };</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="code" href="classXmlElement.html#a87427e040c89ce93093247b6a1dbb4c4acc6863a02162cb1a1bc3dc07c4331650">   54</a></span>&#160;   <span class="keyword">enum</span> { <a class="code" href="classXmlElement.html#a87427e040c89ce93093247b6a1dbb4c4acc6863a02162cb1a1bc3dc07c4331650">MaxDepth</a> = 128 };</div>
 <div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="classXmlElement.html#a71fb8f90def54bf13b967e0f0cf2e063">   55</a></span>&#160;   <span class="keyword">static</span> <a class="code" href="classFIX8_1_1RegExp.html" title="POSIX regex wrapper class.">FIX8::RegExp</a> <a class="code" href="classXmlElement.html#a19ad3a90ff235dd17343f7f602b4dec0">rCE_</a>, <a class="code" href="classXmlElement.html#a67fb445cd0c0cd39982945373942e105">rCX_</a>, <a class="code" href="classXmlElement.html#a71fb8f90def54bf13b967e0f0cf2e063">rIn_</a>, <a class="code" href="classXmlElement.html#a1d3e675692a01cff94d0f871611fbf4c">rEn_</a>, <a class="code" href="classXmlElement.html#adc19c07619a18551e547f7e4115d6a00">rEv_</a>;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
 <div class="line"><a name="l00057"></a><span class="lineno"><a class="code" href="classXmlElement.html#a9b03aa156b9de6ca25b737e298a0d0bb">   57</a></span>&#160;   <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *<a class="code" href="classXmlElement.html#a6b035a09f886af613864ee4dba6dd534">parent_</a>, *<a class="code" href="classXmlElement.html#a9b03aa156b9de6ca25b737e298a0d0bb">root_</a>;</div>
@@ -264,7 +264,7 @@ $(document).ready(function(){initNavTree('xml_8hpp_source.html','');});
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
 <div class="line"><a name="l00233"></a><span class="lineno"><a class="code" href="classXmlElement.html#a064a0d27918d14e5fe7b7621db3617b7">  233</a></span>&#160;   <span class="keywordtype">int</span> <a class="code" href="classXmlElement.html#a064a0d27918d14e5fe7b7621db3617b7">GetSequence</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classXmlElement.html#a4663b3e9a3a67d46d0d9f332b938588c">sequence_</a>; }</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
-<div class="line"><a name="l00237"></a><span class="lineno"><a class="code" href="classXmlElement.html#ae24415f46c327b4fe11af2dbd928b74a">  237</a></span>&#160;   <span class="keywordtype">int</span> <a class="code" href="classXmlElement.html#ae24415f46c327b4fe11af2dbd928b74a">GetMaxDepthPermitted</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classXmlElement.html#ab5ea1bfa45ec1296705a5a01343c06cdacc6863a02162cb1a1bc3dc07c4331650">MaxDepth</a>; }</div>
+<div class="line"><a name="l00237"></a><span class="lineno"><a class="code" href="classXmlElement.html#ae24415f46c327b4fe11af2dbd928b74a">  237</a></span>&#160;   <span class="keywordtype">int</span> <a class="code" href="classXmlElement.html#ae24415f46c327b4fe11af2dbd928b74a">GetMaxDepthPermitted</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classXmlElement.html#a87427e040c89ce93093247b6a1dbb4c4acc6863a02162cb1a1bc3dc07c4331650">MaxDepth</a>; }</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
 <div class="line"><a name="l00241"></a><span class="lineno"><a class="code" href="classXmlElement.html#a66e51ebbe1d40d4454d55bfb7402f1ae">  241</a></span>&#160;   <span class="keywordtype">int</span> <a class="code" href="classXmlElement.html#a66e51ebbe1d40d4454d55bfb7402f1ae">GetMaxDepth</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classXmlElement.html#aa5d9b1996c7f59f47e6007f748a6850e">maxdepth_</a>; }</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
@@ -298,7 +298,7 @@ $(document).ready(function(){initNavTree('xml_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:26:06. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:51. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

@@ -14,6 +14,7 @@ var searchData=
   ['dthread_3c_20fix8_3a_3afixreader_20_3e',['dthread&lt; FIX8::FIXReader &gt;',['../classFIX8_1_1dthread.html',1,'FIX8']]],
   ['dthread_3c_20fix8_3a_3alogger_20_3e',['dthread&lt; FIX8::Logger &gt;',['../classFIX8_1_1dthread.html',1,'FIX8']]],
   ['dthread_3c_20fix8_3a_3areliableclientsession_3c_20t_20_3e_20_3e',['dthread&lt; FIX8::ReliableClientSession&lt; T &gt; &gt;',['../classFIX8_1_1dthread.html',1,'FIX8']]],
+  ['dthread_3c_20fix8_3a_3areliableclientsessionfo_3c_20t_20_3e_20_3e',['dthread&lt; FIX8::ReliableClientSessionFO&lt; T &gt; &gt;',['../classFIX8_1_1dthread.html',1,'FIX8']]],
   ['dthread_3c_20fix8_3a_3atimer_20_3e',['dthread&lt; FIX8::Timer &gt;',['../classFIX8_1_1dthread.html',1,'FIX8']]],
   ['dthread_3c_3e',['dthread&lt;&gt;',['../classFIX8_1_1dthread_3_4.html',1,'FIX8']]],
   ['dthreadexception',['dthreadException',['../structFIX8_1_1dthreadException.html',1,'FIX8']]],

@@ -285,7 +285,7 @@ var searchData=
   ['tradsesstatusrejreason_5fother',['TradSesStatusRejReason_OTHER',['../namespaceFIX8_1_1TEX.html#a3e92502b4722dd0382a1f10f22aab8a8',1,'FIX8::TEX']]],
   ['tradsesstatusrejreason_5frealm_5fels',['TradSesStatusRejReason_realm_els',['../namespaceFIX8_1_1TEX.html#ae7a0aad7279f51e3c089e1730a1a168d',1,'FIX8::TEX']]],
   ['tradsesstatusrejreason_5funknown_5for_5finvalid_5ftradingsessionid',['TradSesStatusRejReason_UNKNOWN_OR_INVALID_TRADINGSESSIONID',['../namespaceFIX8_1_1TEX.html#a5119ae43e628f6debe7f6c5b60b8eacc',1,'FIX8::TEX']]],
-  ['trailer',['Trailer',['../classFIX8_1_1Message.html#ac28982f16a861f4d033a26626b2c9ffb',1,'FIX8::Message::Trailer()'],['../classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df',1,'FIX8::TEX::trailer::trailer()'],['../classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df',1,'FIX8::TEX::trailer::trailer()']]],
+  ['trailer',['trailer',['../classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df',1,'FIX8::TEX::trailer::trailer()'],['../classFIX8_1_1TEX_1_1trailer.html#a8e34239804632c8bede1e85e58b624df',1,'FIX8::TEX::trailer::trailer()'],['../classFIX8_1_1Message.html#ac28982f16a861f4d033a26626b2c9ffb',1,'FIX8::Message::Trailer()']]],
   ['trdregtimestamptype_5fbroker_5fexecution',['TrdRegTimestampType_BROKER_EXECUTION',['../namespaceFIX8_1_1TEX.html#a506f38a9c01992183f7b878b9d51adc2',1,'FIX8::TEX']]],
   ['trdregtimestamptype_5fbroker_5freceipt',['TrdRegTimestampType_BROKER_RECEIPT',['../namespaceFIX8_1_1TEX.html#aef770d4a9c7e7c0f0bc17b095db3f2fc',1,'FIX8::TEX']]],
   ['trdregtimestamptype_5fdesk_5freceipt',['TrdRegTimestampType_DESK_RECEIPT',['../namespaceFIX8_1_1TEX.html#ab30735a3205baef0081aaa80f7539a3c',1,'FIX8::TEX']]],

@@ -15,6 +15,7 @@ var classMyMenu =
     [ "do_logout", "classMyMenu.html#a2db3de9a9680bfe1b042eb12933b79e8", null ],
     [ "do_logout", "classMyMenu.html#a2db3de9a9680bfe1b042eb12933b79e8", null ],
     [ "edit_msgs", "classMyMenu.html#a4a2d294d88e9d5cfda98d502f32da302", null ],
+    [ "generate_new_order_single", "classMyMenu.html#a1ed8ddfe718515fb3430a3cf8a9ed26e", null ],
     [ "get_istr", "classMyMenu.html#a4101b8c2b9630547e9791f6d9b6b373b", null ],
     [ "get_istr", "classMyMenu.html#a4101b8c2b9630547e9791f6d9b6b373b", null ],
     [ "get_ostr", "classMyMenu.html#a80cd0d96336dcc982f76feee799c4b8f", null ],
@@ -44,11 +45,12 @@ var classMyMenu =
     [ "write_msgs", "classMyMenu.html#aa702d8304303510898b9938e1dc15c07", null ],
     [ "FIX8::StaticTable< const MenuItem, bool(MyMenu::*)(), MenuItem >", "classMyMenu.html#aed7525c78af0f64c017c25f387505aa3", null ],
     [ "_cm", "classMyMenu.html#a3be5a89b79d4d00d3edfbc3e30da8d20", null ],
-    [ "_handlers", "classMyMenu.html#a16e8958dbfe5bc3e02853c5b879ca4c6", null ],
+    [ "_handlers", "classMyMenu.html#a8e39a3aa13bcc19c50c49fed5293373e", null ],
     [ "_istr", "classMyMenu.html#a055f1c3989a51d8c3ddbbb6419fba9ca", null ],
     [ "_lst", "classMyMenu.html#a8558e3322b5a4b12304370f29c3560fa", null ],
     [ "_ostr", "classMyMenu.html#a54cc0c6893d0882490a635b6953e7b14", null ],
     [ "_session", "classMyMenu.html#aed350734aeb2d40c962d1a1cd48e2f4c", null ],
     [ "_session", "classMyMenu.html#a37d27c828b8ffc1e905102246bc7c5d3", null ],
-    [ "_tty", "classMyMenu.html#ae54f829ac876b713097705a6073dff1f", null ]
+    [ "_tty", "classMyMenu.html#ae54f829ac876b713097705a6073dff1f", null ],
+    [ "_valueTable", "classMyMenu.html#a97eb24f469103b13b6a5c0fa78a3c932", null ]
 ];

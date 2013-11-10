@@ -18,6 +18,7 @@ var hierarchy =
       [ "FIX8::dthread< FIX8::FIXReader >", "classFIX8_1_1dthread.html", null ],
       [ "FIX8::dthread< FIX8::Logger >", "classFIX8_1_1dthread.html", null ],
       [ "FIX8::dthread< FIX8::ReliableClientSession< T > >", "classFIX8_1_1dthread.html", null ],
+      [ "FIX8::dthread< FIX8::ReliableClientSessionFO< T > >", "classFIX8_1_1dthread.html", null ],
       [ "FIX8::dthread< FIX8::Timer >", "classFIX8_1_1dthread.html", null ],
       [ "FIX8::dthread< T >", "classFIX8_1_1dthread.html", null ],
       [ "FIX8::dthread<>", "classFIX8_1_1dthread_3_4.html", null ]
@@ -35,12 +36,9 @@ var hierarchy =
       [ "FIX8::Field< Boolean, field >", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html", null ],
       [ "FIX8::Field< char *, field >", "classFIX8_1_1Field_3_01char_01_5_00_01field_01_4.html", null ],
       [ "FIX8::Field< char, field >", "classFIX8_1_1Field_3_01char_00_01field_01_4.html", null ],
-      [ "FIX8::Field< double, field >", "classFIX8_1_1Field_3_01double_00_01field_01_4.html", [
-        [ "FIX8::Field< Qty, field >", "classFIX8_1_1Field_3_01Qty_00_01field_01_4.html", null ]
-      ] ],
+      [ "FIX8::Field< double, field >", "classFIX8_1_1Field_3_01double_00_01field_01_4.html", null ],
       [ "FIX8::Field< f8String, field >", "classFIX8_1_1Field_3_01f8String_00_01field_01_4.html", [
-        [ "FIX8::Field< data, field >", "classFIX8_1_1Field_3_01data_00_01field_01_4.html", null ],
-        [ "FIX8::Field< MultipleCharValue, field >", "classFIX8_1_1Field_3_01MultipleCharValue_00_01field_01_4.html", null ]
+        [ "FIX8::Field< data, field >", "classFIX8_1_1Field_3_01data_00_01field_01_4.html", null ]
       ] ],
       [ "FIX8::Field< int, field >", "classFIX8_1_1Field_3_01int_00_01field_01_4.html", [
         [ "FIX8::Field< DayOfMonth, field >", "classFIX8_1_1Field_3_01DayOfMonth_00_01field_01_4.html", null ],
@@ -66,6 +64,7 @@ var hierarchy =
         [ "FIX8::ClientSession< T >", "classFIX8_1_1ClientSession.html", [
           [ "FIX8::ReliableClientSession< T >", "classFIX8_1_1ReliableClientSession.html", null ]
         ] ],
+        [ "FIX8::ReliableClientSessionFO< T >", "classFIX8_1_1ReliableClientSessionFO.html", null ],
         [ "FIX8::ServerSession< T >", "classFIX8_1_1ServerSession.html", null ]
       ] ]
     ] ],
@@ -1883,6 +1882,7 @@ var hierarchy =
       ] ]
     ] ],
     [ "FIX8::scoped_ptr< T >", "classFIX8_1_1scoped__ptr.html", null ],
+    [ "FIX8::Server", "structFIX8_1_1Server.html", null ],
     [ "FIX8::Session", "classFIX8_1_1Session.html", [
       [ "check_session", "classcheck__session.html", null ],
       [ "hf_session_client", "classhf__session__client.html", null ],
@@ -1917,8 +1917,6 @@ var hierarchy =
     [ "FIX8::Singleton< SingleLogger< fn > >", "classFIX8_1_1Singleton.html", [
       [ "FIX8::SingleLogger< fn >", "classFIX8_1_1SingleLogger.html", null ]
     ] ],
-    [ "FIX8::StaticTable< const f8String, bool(Session::*)(const unsigned, const Message *)>", "structFIX8_1_1StaticTable.html", null ],
-    [ "FIX8::StaticTable< const MenuItem, bool(MyMenu::*)(), MenuItem >", "structFIX8_1_1StaticTable.html", null ],
     [ "exception", null, [
       [ "FIX8::f8Exception", "classFIX8_1_1f8Exception.html", [
         [ "FIX8::BadCheckSum", "structFIX8_1_1BadCheckSum.html", null ],

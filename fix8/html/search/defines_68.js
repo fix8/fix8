@@ -13,6 +13,7 @@ var searchData=
   ['have_5fcompression',['HAVE_COMPRESSION',['../f8config_8h.html#a6218b1d9d8c7c8cad89b631eb83f2dbf',1,'f8config.h']]],
   ['have_5fcrypt',['HAVE_CRYPT',['../f8config_8h.html#acba86befdbaa214237a79fe6272ea219',1,'f8config.h']]],
   ['have_5fcrypt_5fh',['HAVE_CRYPT_H',['../f8config_8h.html#a134a590602cc9f715368618f26910815',1,'f8config.h']]],
+  ['have_5fdecl_5ftcp_5fcork',['HAVE_DECL_TCP_CORK',['../f8config_8h.html#acffc078efe08f8132abc80205610c153',1,'f8config.h']]],
   ['have_5fdirent_5fh',['HAVE_DIRENT_H',['../f8config_8h.html#af9fbe15f58004c91c2d8b1fbaf91c1a3',1,'f8config.h']]],
   ['have_5fdlfcn_5fh',['HAVE_DLFCN_H',['../f8config_8h.html#a0ee1617ff2f6885ef384a3dd46f9b9d7',1,'f8config.h']]],
   ['have_5ffcntl_5fh',['HAVE_FCNTL_H',['../f8config_8h.html#a765d75020849aa0a9b6becd9a5b7a193',1,'f8config.h']]],

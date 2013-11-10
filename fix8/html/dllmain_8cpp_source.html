@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.6</span>
+   &#160;<span id="projectnumber">version  0.10.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -109,28 +109,30 @@ $(document).ready(function(){initNavTree('dllmain_8cpp_source.html','');});
 </div><!--header-->
 <div class="contents">
 <a href="dllmain_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// dllmain.cpp : Defines the entry point for the DLL application.</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8config_8h.html">f8config.h</a>&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno"><a class="code" href="dllmain_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9">    4</a></span>&#160;BOOL APIENTRY <a class="code" href="dllmain_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9">DllMain</a>( HMODULE hModule,</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;                       DWORD  ul_reason_for_call,</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                       LPVOID lpReserved</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;                )</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;   <span class="keywordflow">switch</span> (ul_reason_for_call)</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;   {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;   <span class="keywordflow">case</span> DLL_PROCESS_ATTACH:</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;   <span class="keywordflow">case</span> DLL_THREAD_ATTACH:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;   <span class="keywordflow">case</span> DLL_THREAD_DETACH:</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;   <span class="keywordflow">case</span> DLL_PROCESS_DETACH:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;   }</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;   <span class="keywordflow">return</span> TRUE;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="f8config_8h.html">f8config.h</a>&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;BOOL APIENTRY DllMain( HMODULE hModule,</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                       DWORD  ul_reason_for_call,</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;                       LPVOID lpReserved</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;                )</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;   <span class="keywordflow">switch</span> (ul_reason_for_call)</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;   {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;   <span class="keywordflow">case</span> DLL_PROCESS_ATTACH:</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;   <span class="keywordflow">case</span> DLL_THREAD_ATTACH:</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;   <span class="keywordflow">case</span> DLL_THREAD_DETACH:</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;   <span class="keywordflow">case</span> DLL_PROCESS_DETACH:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;   }</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;   <span class="keywordflow">return</span> TRUE;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:25:58. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:43. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

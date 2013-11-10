@@ -1,7 +1,7 @@
 var classFIX8_1_1FIXReader =
 [
-    [ "_max_msg_len", "classFIX8_1_1FIXReader.html#abf8deaf46fe9f8c0082620a14280b675a99b3b3e5ed44aa26b7ca561990e09261", null ],
-    [ "_chksum_sz", "classFIX8_1_1FIXReader.html#abf8deaf46fe9f8c0082620a14280b675a45267b778030e109c9531f77b089ad50", null ],
+    [ "_max_msg_len", "classFIX8_1_1FIXReader.html#ac3eef37eeced5dd00cbd09fafe6b7107a99b3b3e5ed44aa26b7ca561990e09261", null ],
+    [ "_chksum_sz", "classFIX8_1_1FIXReader.html#ac3eef37eeced5dd00cbd09fafe6b7107a45267b778030e109c9531f77b089ad50", null ],
     [ "FIXReader", "classFIX8_1_1FIXReader.html#af751543bce48a6533e8406583196db65", null ],
     [ "~FIXReader", "classFIX8_1_1FIXReader.html#ae3152f1b56da967cc47d052e022ac762", null ],
     [ "callback_processor", "classFIX8_1_1FIXReader.html#a544af89074e413078c72ffed9781295a", null ],

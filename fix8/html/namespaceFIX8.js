@@ -1,6 +1,7 @@
 var namespaceFIX8 =
 [
     [ "TEX", "namespaceFIX8_1_1TEX.html", "namespaceFIX8_1_1TEX" ],
+    [ "Server", "structFIX8_1_1Server.html", "structFIX8_1_1Server" ],
     [ "Configuration", "classFIX8_1_1Configuration.html", "classFIX8_1_1Configuration" ],
     [ "AsyncSocket", "classFIX8_1_1AsyncSocket.html", "classFIX8_1_1AsyncSocket" ],
     [ "FIXReader", "classFIX8_1_1FIXReader.html", "classFIX8_1_1FIXReader" ],
@@ -84,8 +85,6 @@ var namespaceFIX8 =
     [ "Field< NumInGroup, field >", "classFIX8_1_1Field_3_01NumInGroup_00_01field_01_4.html", "classFIX8_1_1Field_3_01NumInGroup_00_01field_01_4" ],
     [ "Field< DayOfMonth, field >", "classFIX8_1_1Field_3_01DayOfMonth_00_01field_01_4.html", "classFIX8_1_1Field_3_01DayOfMonth_00_01field_01_4" ],
     [ "Field< Boolean, field >", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4.html", "classFIX8_1_1Field_3_01Boolean_00_01field_01_4" ],
-    [ "Field< Qty, field >", "classFIX8_1_1Field_3_01Qty_00_01field_01_4.html", "classFIX8_1_1Field_3_01Qty_00_01field_01_4" ],
-    [ "Field< MultipleCharValue, field >", "classFIX8_1_1Field_3_01MultipleCharValue_00_01field_01_4.html", "classFIX8_1_1Field_3_01MultipleCharValue_00_01field_01_4" ],
     [ "Inst", "classFIX8_1_1Inst.html", "classFIX8_1_1Inst" ],
     [ "BaseEntry", "structFIX8_1_1BaseEntry.html", "structFIX8_1_1BaseEntry" ],
     [ "fdoutbuf", "classFIX8_1_1fdoutbuf.html", "classFIX8_1_1fdoutbuf" ],
@@ -120,6 +119,7 @@ var namespaceFIX8 =
     [ "ReliableClientSession", "classFIX8_1_1ReliableClientSession.html", "classFIX8_1_1ReliableClientSession" ],
     [ "ServerSession", "classFIX8_1_1ServerSession.html", "classFIX8_1_1ServerSession" ],
     [ "SessionInstance", "classFIX8_1_1SessionInstance.html", "classFIX8_1_1SessionInstance" ],
+    [ "ReliableClientSessionFO", "classFIX8_1_1ReliableClientSessionFO.html", "classFIX8_1_1ReliableClientSessionFO" ],
     [ "reference_wrapper", "classFIX8_1_1reference__wrapper.html", "classFIX8_1_1reference__wrapper" ],
     [ "_dthreadcore", "classFIX8_1_1__dthreadcore.html", "classFIX8_1_1__dthreadcore" ],
     [ "dthread", "classFIX8_1_1dthread.html", "classFIX8_1_1dthread" ],

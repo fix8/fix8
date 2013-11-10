@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.6</span>
+   &#160;<span id="projectnumber">version  0.10.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -156,35 +156,35 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;numeric&gt;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;bitset&gt;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;strings.h&gt;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;regex.h&gt;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">using namespace </span>FIX8;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<a class="code" href="classFIX8_1_1RegExp.html" title="POSIX regex wrapper class.">RegExp</a> <a class="code" href="classFIX8_1_1Configuration.html#a14f714c10732c0933f0d976f44098598">Configuration::_ipexp</a>(<span class="stringliteral">&quot;^([^:]+):([0-9]+)$&quot;</span>);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#ab7cb14b586b4b9036b7d7d7a47c83965">   66</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1Configuration.html#ab7cb14b586b4b9036b7d7d7a47c83965">Configuration::process</a>()</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="namespaceFIX8.html#a4226474a0829e2de4e8025a1a2007f86">exist</a>(_xmlfile))</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a>(<span class="stringliteral">&quot;server config file not found&quot;</span>, _xmlfile);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   <span class="keywordflow">if</span> (!_root)</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a>(<span class="stringliteral">&quot;could not create root xml entity&quot;</span>);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;   <span class="keywordflow">if</span> (!load_map(<span class="stringliteral">&quot;fix8/session&quot;</span>, _sessions, <span class="keyword">true</span>))</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a>(<span class="stringliteral">&quot;could not locate server session in config file&quot;</span>, _xmlfile);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   load_map(<span class="stringliteral">&quot;fix8/persist&quot;</span>, _persisters);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;   load_map(<span class="stringliteral">&quot;fix8/log&quot;</span>, _loggers);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;strings.h&gt;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;regex.h&gt;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">using namespace </span>FIX8;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<a class="code" href="classFIX8_1_1RegExp.html" title="POSIX regex wrapper class.">RegExp</a> <a class="code" href="classFIX8_1_1Configuration.html#a14f714c10732c0933f0d976f44098598">Configuration::_ipexp</a>(<span class="stringliteral">&quot;^([^:]+):([0-9]+)$&quot;</span>);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#ab7cb14b586b4b9036b7d7d7a47c83965">   65</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classFIX8_1_1Configuration.html#ab7cb14b586b4b9036b7d7d7a47c83965">Configuration::process</a>()</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="namespaceFIX8.html#a4226474a0829e2de4e8025a1a2007f86">exist</a>(_xmlfile))</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a>(<span class="stringliteral">&quot;server config file not found&quot;</span>, _xmlfile);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;   <span class="keywordflow">if</span> (!_root)</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a>(<span class="stringliteral">&quot;could not create root xml entity&quot;</span>);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;   <span class="keywordflow">if</span> (!load_map(<span class="stringliteral">&quot;fix8/session&quot;</span>, _sessions, <span class="keyword">true</span>))</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a>(<span class="stringliteral">&quot;could not locate server session in config file&quot;</span>, _xmlfile);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;   load_map(<span class="stringliteral">&quot;fix8/persist&quot;</span>, _persisters);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   load_map(<span class="stringliteral">&quot;fix8/log&quot;</span>, _loggers);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;   load_map(<span class="stringliteral">&quot;fix8/server_group&quot;</span>, _server_group);</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;   <span class="keywordflow">return</span> _sessions.size();</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
@@ -209,138 +209,164 @@ $(document).ready(function(){initNavTree('configuration_8cpp_source.html','');})
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;}</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#a8cf38307e62dc3ba5e871ba94b69aca3">  102</a></span>&#160;<a class="code" href="classFIX8_1_1Persister.html" title="Base (ABC) Persister class.">Persister</a> *<a class="code" href="classFIX8_1_1Configuration.html#a8cf38307e62dc3ba5e871ba94b69aca3">Configuration::create_persister</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid, <span class="keywordtype">bool</span> flag)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#a71e9d58f97dbd776308901aef832a44d">  102</a></span>&#160;<span class="keywordtype">size_t</span> <a class="code" href="classFIX8_1_1Configuration.html#a71e9d58f97dbd776308901aef832a44d">Configuration::get_addresses</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, vector&lt;Server&gt;&amp; target)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   <span class="keywordtype">string</span> name, type;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   <span class="keywordtype">string</span> name;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;   <span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *which;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   <span class="keywordflow">if</span> (from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;persist&quot;</span>, name) &amp;&amp; (which = find_persister(name)) &amp;&amp; which-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;type&quot;</span>, type))</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   <span class="keywordflow">if</span> (from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;server_group&quot;</span>, name) &amp;&amp; (which = find_server_group(name)))</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;mem&quot;</span>)</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;         <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1MemoryPersister.html" title="Memory based message persister.">MemoryPersister</a>;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <span class="keywordtype">string</span> dir(<span class="stringliteral">&quot;./&quot;</span>), db(<span class="stringliteral">&quot;persist_db&quot;</span>);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      which-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;dir&quot;</span>, dir);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      which-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;db&quot;</span>, db);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <span class="keywordflow">if</span> (sid)</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;         db += (<span class="charliteral">&#39;.&#39;</span> + sid-&gt;<a class="code" href="classFIX8_1_1SessionID.html#ae04a5c1c434de1bc5725b2007ff5f70b">get_senderCompID</a>()() + <span class="charliteral">&#39;.&#39;</span> + sid-&gt;<a class="code" href="classFIX8_1_1SessionID.html#a9cdbc97fa63ccff7bfbbb244fed06887">get_targetCompID</a>()());</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (which-&gt;<a class="code" href="classXmlElement.html#a9bcc420674262afdd97a18c1639349a2">FindAttr</a>(<span class="stringliteral">&quot;use_session_id&quot;</span>, <span class="keyword">false</span>))</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;         db += (<span class="charliteral">&#39;.&#39;</span> + get_sender_comp_id(from)() + <span class="charliteral">&#39;.&#39;</span> + get_target_comp_id(from)());</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#if defined HAVE_BDB</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor"></span>      <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;bdb&quot;</span>)</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;BDBPersister&gt;</a> result(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1BDBPersister.html" title="BerkeleyDB backed message persister.">BDBPersister</a>);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;         <span class="keywordflow">if</span> (result-&gt;<a class="code" href="classFIX8_1_1BDBPersister.html#ab40f068d3bc523d8439e3f738ff62d48">initialise</a>(dir, db, flag))</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <span class="keywordflow">return</span> result.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      }</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor"></span>      <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;file&quot;</span>)</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      {</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;FilePersister&gt;</a> result(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1FilePersister.html">FilePersister</a>(which-&gt;<a class="code" href="classXmlElement.html#a9bcc420674262afdd97a18c1639349a2">FindAttr</a>(<span class="stringliteral">&quot;rotation&quot;</span>, 0)));</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;         <span class="keywordflow">if</span> (result-&gt;<a class="code" href="classFIX8_1_1FilePersister.html#ac4f3690ee9c9481bff0af568b218f3d1">initialise</a>(dir, db, flag))</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            <span class="keywordflow">return</span> result.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      }</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;   }</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <a class="code" href="classXmlElement.html#a946b9b7311e41476a5208f1a46b98bbf">XmlElement::XmlSet</a> slist;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      <span class="keywordflow">if</span> (which-&gt;<a class="code" href="classXmlElement.html#a69d6c53407dfd69e3ed16f0044dea111">find</a>(<span class="stringliteral">&quot;server&quot;</span>, slist))</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;         <span class="keyword">const</span> Poco::Net::SocketAddress empty_addr;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;         <span class="keywordflow">for</span>(XmlElement::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;         {</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordtype">string</span> name;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            Poco::Net::SocketAddress addr(get_address(*itr));</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            <span class="keywordflow">if</span> ((*itr)-&gt;GetAttr(<span class="stringliteral">&quot;name&quot;</span>, name) &amp;&amp; addr != empty_addr &amp;&amp; (*itr)-&gt;FindAttr(<span class="stringliteral">&quot;active&quot;</span>, <span class="keyword">true</span>))</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;               target.push_back(<a class="code" href="structFIX8_1_1Server.html" title="Class to hold server settings for failoverable sessions.">Server</a>(name, (*itr)-&gt;FindAttr(<span class="stringliteral">&quot;max_retries&quot;</span>,</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                  static_cast&lt;int&gt;(default_max_retries)), addr));</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;         }</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      }</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      <span class="keywordflow">return</span> target.size();</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;   }</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;}</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#a8cf38307e62dc3ba5e871ba94b69aca3">  128</a></span>&#160;<a class="code" href="classFIX8_1_1Persister.html" title="Base (ABC) Persister class.">Persister</a> *<a class="code" href="classFIX8_1_1Configuration.html#a8cf38307e62dc3ba5e871ba94b69aca3">Configuration::create_persister</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid, <span class="keywordtype">bool</span> flag)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;   <span class="keywordtype">string</span> name, type;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;   <span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *which;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;   <span class="keywordflow">if</span> (from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;persist&quot;</span>, name) &amp;&amp; (which = find_persister(name)) &amp;&amp; which-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;type&quot;</span>, type))</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;   {</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;mem&quot;</span>)</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;         <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1MemoryPersister.html" title="Memory based message persister.">MemoryPersister</a>;</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00141"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4">  141</a></span>&#160;<a class="code" href="classFIX8_1_1Logger.html" title="dthread delegated async logging class">Logger</a> *<a class="code" href="classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4">Configuration::create_logger</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2">Logtype</a> ltype, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;   <span class="keywordtype">string</span> name;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;   <span class="keywordflow">if</span> (from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(ltype == session_log ? <span class="stringliteral">&quot;session_log&quot;</span> : <span class="stringliteral">&quot;protocol_log&quot;</span>, name))</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;   {</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      <span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *which(find_logger(name));</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;      <span class="keywordflow">if</span> (which)</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;      <span class="keywordtype">string</span> dir(<span class="stringliteral">&quot;./&quot;</span>), db(<span class="stringliteral">&quot;persist_db&quot;</span>);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;      which-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;dir&quot;</span>, dir);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      which-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;db&quot;</span>, db);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      <span class="keywordflow">if</span> (sid)</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;         db += (<span class="charliteral">&#39;.&#39;</span> + sid-&gt;<a class="code" href="classFIX8_1_1SessionID.html#ae04a5c1c434de1bc5725b2007ff5f70b">get_senderCompID</a>()() + <span class="charliteral">&#39;.&#39;</span> + sid-&gt;<a class="code" href="classFIX8_1_1SessionID.html#a9cdbc97fa63ccff7bfbbb244fed06887">get_targetCompID</a>()());</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (which-&gt;<a class="code" href="classXmlElement.html#a9bcc420674262afdd97a18c1639349a2">FindAttr</a>(<span class="stringliteral">&quot;use_session_id&quot;</span>, <span class="keyword">false</span>))</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;         db += (<span class="charliteral">&#39;.&#39;</span> + get_sender_comp_id(from)() + <span class="charliteral">&#39;.&#39;</span> + get_target_comp_id(from)());</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="preprocessor">#if defined HAVE_BDB</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="preprocessor"></span>      <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;bdb&quot;</span>)</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      {</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;         <span class="keywordtype">string</span> type;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;         <span class="keywordflow">if</span> (which-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;type&quot;</span>, type)</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            &amp;&amp; ((type % <span class="stringliteral">&quot;session&quot;</span> &amp;&amp; ltype == session_log) || (type % <span class="stringliteral">&quot;protocol&quot;</span> &amp;&amp; ltype == protocol_log)))</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;         {</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            <span class="keywordtype">string</span> logname(<span class="stringliteral">&quot;logname_not_set.log&quot;</span>);</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            which-&gt;<a class="code" href="classXmlElement.html#abb8234e640a0b260ccba5cdb17169619">FindAttrRef</a>(<span class="stringliteral">&quot;filename&quot;</span>, logname);</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            <a class="code" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">trim</a>(logname);</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            <span class="keywordflow">if</span> (logname[0] == <span class="charliteral">&#39;|&#39;</span>)</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="preprocessor">#ifndef HAVE_POPEN</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="preprocessor"></span>               <span class="keywordflow">throw</span> <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a>(<span class="stringliteral">&quot;popen not supported on your platform&quot;</span>);</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="preprocessor"></span>               <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1PipeLogger.html" title="A pipe logger.">PipeLogger</a>(logname, get_logflags(which));</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;BDBPersister&gt;</a> result(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1BDBPersister.html" title="BerkeleyDB backed message persister.">BDBPersister</a>);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;         <span class="keywordflow">if</span> (result-&gt;<a class="code" href="classFIX8_1_1BDBPersister.html#ab40f068d3bc523d8439e3f738ff62d48">initialise</a>(dir, db, flag))</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            <span class="keywordflow">return</span> result.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;      }</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor"></span>      <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;file&quot;</span>)</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      {</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;         <a class="code" href="classFIX8_1_1scoped__ptr.html" title="C++11 inspired scoped pointer.">scoped_ptr&lt;FilePersister&gt;</a> result(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1FilePersister.html">FilePersister</a>(which-&gt;<a class="code" href="classXmlElement.html#a9bcc420674262afdd97a18c1639349a2">FindAttr</a>(<span class="stringliteral">&quot;rotation&quot;</span>, 0)));</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;         <span class="keywordflow">if</span> (result-&gt;<a class="code" href="classFIX8_1_1FilePersister.html#ac4f3690ee9c9481bff0af568b218f3d1">initialise</a>(dir, db, flag))</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            <span class="keywordflow">return</span> result.<a class="code" href="classFIX8_1_1scoped__ptr.html#a695966987334c7ff3038b7581d8eb25e">release</a>();</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      }</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;   }</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            <a class="code" href="classFIX8_1_1RegMatch.html" title="A class to contain regex matches using RegExp.">RegMatch</a> match;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            <span class="keywordflow">if</span> (_ipexp.SearchString(match, logname, 3) == 3)</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            {</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;               <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> ip, port;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;               _ipexp.SubExpr(match, logname, ip, 0, 1);</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;               _ipexp.SubExpr(match, logname, port, 0, 2);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;               <a class="code" href="classFIX8_1_1BCLogger.html" title="A broadcast logger.">BCLogger</a> *bcl(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1BCLogger.html" title="A broadcast logger.">BCLogger</a>(ip, get_value&lt;unsigned&gt;(port), get_logflags(which)));</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;               <span class="keywordflow">if</span> (*bcl)</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;                  <span class="keywordflow">return</span> bcl;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            }</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            get_logname(which, logname, sid); <span class="comment">// only applies to file loggers</span></div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1FileLogger.html" title="A file logger.">FileLogger</a>(logname, get_logflags(which), get_logfile_rotation(which));</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;         }</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      }</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;   }</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;}</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4">  167</a></span>&#160;<a class="code" href="classFIX8_1_1Logger.html" title="dthread delegated async logging class">Logger</a> *<a class="code" href="classFIX8_1_1Configuration.html#a3b2c1c237254fa4edd1ce48069f5ebc4">Configuration::create_logger</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2">Logtype</a> ltype, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;   <span class="keywordtype">string</span> name;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;   <span class="keywordflow">if</span> (from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(ltype == session_log ? <span class="stringliteral">&quot;session_log&quot;</span> : <span class="stringliteral">&quot;protocol_log&quot;</span>, name))</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;   {</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      <span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *which(find_logger(name));</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      <span class="keywordflow">if</span> (which)</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;      {</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;         <span class="keywordtype">string</span> type;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;         <span class="keywordflow">if</span> (which-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;type&quot;</span>, type)</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            &amp;&amp; ((type % <span class="stringliteral">&quot;session&quot;</span> &amp;&amp; ltype == session_log) || (type % <span class="stringliteral">&quot;protocol&quot;</span> &amp;&amp; ltype == protocol_log)))</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;         {</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            <span class="keywordtype">string</span> logname(<span class="stringliteral">&quot;logname_not_set.log&quot;</span>);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            which-&gt;<a class="code" href="classXmlElement.html#abb8234e640a0b260ccba5cdb17169619">FindAttrRef</a>(<span class="stringliteral">&quot;filename&quot;</span>, logname);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            <a class="code" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">trim</a>(logname);</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#ab68e04de2c9527e5ea8546e90fd4457e">  184</a></span>&#160;<span class="keywordtype">string</span>&amp; <a class="code" href="classFIX8_1_1Configuration.html#ab68e04de2c9527e5ea8546e90fd4457e">Configuration::get_logname</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keywordtype">string</span>&amp; to, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;   <span class="keywordflow">if</span> (sid)</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;      to += (<span class="charliteral">&#39;.&#39;</span> + sid-&gt;<a class="code" href="classFIX8_1_1SessionID.html#ae04a5c1c434de1bc5725b2007ff5f70b">get_senderCompID</a>()() + <span class="charliteral">&#39;.&#39;</span> + sid-&gt;<a class="code" href="classFIX8_1_1SessionID.html#a9cdbc97fa63ccff7bfbbb244fed06887">get_targetCompID</a>()());</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a9bcc420674262afdd97a18c1639349a2">FindAttr</a>(<span class="stringliteral">&quot;use_session_id&quot;</span>, <span class="keyword">false</span>))</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;      to += (<span class="charliteral">&#39;.&#39;</span> + get_sender_comp_id(from)() + <span class="charliteral">&#39;.&#39;</span> + get_target_comp_id(from)());</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;   <span class="keywordflow">return</span> to;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;}</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00195"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#a63edde694857230cc0a1f26d0cf7b861">  195</a></span>&#160;<a class="code" href="classFIX8_1_1ebitset.html">Logger::LogFlags</a> <a class="code" href="classFIX8_1_1Configuration.html#a63edde694857230cc0a1f26d0cf7b861">Configuration::get_logflags</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;   <a class="code" href="classFIX8_1_1ebitset.html">Logger::LogFlags</a> flags;</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;   <span class="keywordtype">string</span> flags_str;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;   <span class="keywordflow">if</span> (from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;flags&quot;</span>, flags_str))</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;   {</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      istringstream istr(flags_str);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">char</span> extr[32]; !istr.get(extr, <span class="keyword">sizeof</span>(extr), <span class="charliteral">&#39;|&#39;</span>).eof() || extr[0]; istr.ignore(1))</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;      {</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;         <span class="keywordtype">string</span> result(extr);</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;         flags.<a class="code" href="classFIX8_1_1ebitset.html#a1ed985421964d43d55b096b82eef592d">set</a>(<a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca27fc663d3efa7113258d010e526f6755">Logger::num_flags</a>, <a class="code" href="classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c" title="string representation of logflags">Logger::_bit_names</a>, <a class="code" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">trim</a>(result));</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;      }</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;   }</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            <span class="keywordflow">if</span> (logname[0] == <span class="charliteral">&#39;|&#39;</span>)</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="preprocessor">#ifndef HAVE_POPEN</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="preprocessor"></span>               <span class="keywordflow">throw</span> <a class="code" href="classFIX8_1_1f8Exception.html" title="Base exception class.">f8Exception</a>(<span class="stringliteral">&quot;popen not supported on your platform&quot;</span>);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor"></span>               <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1PipeLogger.html" title="A pipe logger.">PipeLogger</a>(logname, get_logflags(which));</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            <a class="code" href="classFIX8_1_1RegMatch.html" title="A class to contain regex matches using RegExp.">RegMatch</a> match;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            <span class="keywordflow">if</span> (_ipexp.SearchString(match, logname, 3) == 3)</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            {</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;               <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> ip, port;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;               _ipexp.SubExpr(match, logname, ip, 0, 1);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;               _ipexp.SubExpr(match, logname, port, 0, 2);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;               <a class="code" href="classFIX8_1_1BCLogger.html" title="A broadcast logger.">BCLogger</a> *bcl(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1BCLogger.html" title="A broadcast logger.">BCLogger</a>(ip, get_value&lt;unsigned&gt;(port), get_logflags(which)));</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;               <span class="keywordflow">if</span> (*bcl)</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                  <span class="keywordflow">return</span> bcl;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;            }</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;            get_logname(which, logname, sid); <span class="comment">// only applies to file loggers</span></div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classFIX8_1_1FileLogger.html" title="A file logger.">FileLogger</a>(logname, get_logflags(which), get_logfile_rotation(which));</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;         }</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;      }</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;   }</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;   <span class="keywordflow">return</span> flags;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;}</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00213"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28">  213</a></span>&#160;<span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28">Configuration::get_all_sessions</a>(vector&lt;const XmlElement *&gt;&amp; target, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804" title="Roles: acceptor, initiator or unknown.">Connection::Role</a> role)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;   <span class="keywordflow">for</span> (vector&lt;const XmlElement *&gt;::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;      <span class="keywordflow">if</span> (role == <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">Connection::cn_unknown</a> || get_role(*itr) == role)</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;         target.push_back(*itr);</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;   <span class="keywordflow">return</span> target.size();</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;}</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00222"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#a77a0bd3c0e02ef8ab382550cc8033266">  222</a></span>&#160;<a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83" title="Supported session process models.">ProcessModel</a> <a class="code" href="classFIX8_1_1Configuration.html#a77a0bd3c0e02ef8ab382550cc8033266">Configuration::get_process_model</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;   <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> process_strings[] = { <span class="stringliteral">&quot;threaded&quot;</span>, <span class="stringliteral">&quot;pipelined&quot;</span>, <span class="stringliteral">&quot;coroutine&quot;</span> };</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;   <span class="keywordtype">string</span> pm;</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;   <span class="keywordflow">return</span> from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;process_model&quot;</span>, pm)</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      ? <a class="code" href="namespaceFIX8.html#a8b82747859379a6711d72608db775233">enum_str_get</a>(<a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83ae004040754630fc147bbd4b038088d16">pm_count</a>, process_strings, pm, <a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a084c5fde2b1e72f800d4de6902d5c014">pm_thread</a>) : <a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a2d62ac51b86fdbba00ccdc1c2b7012e4">pm_pipeline</a>; <span class="comment">// default to pipelined</span></div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;}</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#ab68e04de2c9527e5ea8546e90fd4457e">  210</a></span>&#160;<span class="keywordtype">string</span>&amp; <a class="code" href="classFIX8_1_1Configuration.html#ab68e04de2c9527e5ea8546e90fd4457e">Configuration::get_logname</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from, <span class="keywordtype">string</span>&amp; to, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1SessionID.html" title="Quickfix style sessionid.">SessionID</a> *sid)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;   <span class="keywordflow">if</span> (sid)</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;      to += (<span class="charliteral">&#39;.&#39;</span> + sid-&gt;<a class="code" href="classFIX8_1_1SessionID.html#ae04a5c1c434de1bc5725b2007ff5f70b">get_senderCompID</a>()() + <span class="charliteral">&#39;.&#39;</span> + sid-&gt;<a class="code" href="classFIX8_1_1SessionID.html#a9cdbc97fa63ccff7bfbbb244fed06887">get_targetCompID</a>()());</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a9bcc420674262afdd97a18c1639349a2">FindAttr</a>(<span class="stringliteral">&quot;use_session_id&quot;</span>, <span class="keyword">false</span>))</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;      to += (<span class="charliteral">&#39;.&#39;</span> + get_sender_comp_id(from)() + <span class="charliteral">&#39;.&#39;</span> + get_target_comp_id(from)());</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;   <span class="keywordflow">return</span> to;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;}</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#a63edde694857230cc0a1f26d0cf7b861">  221</a></span>&#160;<a class="code" href="classFIX8_1_1ebitset.html">Logger::LogFlags</a> <a class="code" href="classFIX8_1_1Configuration.html#a63edde694857230cc0a1f26d0cf7b861">Configuration::get_logflags</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   <a class="code" href="classFIX8_1_1ebitset.html">Logger::LogFlags</a> flags;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;   <span class="keywordtype">string</span> flags_str;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;   <span class="keywordflow">if</span> (from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;flags&quot;</span>, flags_str))</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;   {</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      istringstream istr(flags_str);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      <span class="keywordflow">for</span>(<span class="keywordtype">char</span> extr[32]; !istr.get(extr, <span class="keyword">sizeof</span>(extr), <span class="charliteral">&#39;|&#39;</span>).eof() || extr[0]; istr.ignore(1))</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      {</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;         <span class="keywordtype">string</span> result(extr);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;         flags.<a class="code" href="classFIX8_1_1ebitset.html#a1ed985421964d43d55b096b82eef592d">set</a>(<a class="code" href="classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca27fc663d3efa7113258d010e526f6755">Logger::num_flags</a>, <a class="code" href="classFIX8_1_1Logger.html#a6554c51c2200392f76245151a0b7376c" title="string representation of logflags">Logger::_bit_names</a>, <a class="code" href="namespaceFIX8.html#ab83fe73ed9b4e13c4f2c6084f6fbbe20">trim</a>(result));</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      }</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;   }</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;   <span class="keywordflow">return</span> flags;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;}</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28">  239</a></span>&#160;<span class="keywordtype">unsigned</span> <a class="code" href="classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28">Configuration::get_all_sessions</a>(vector&lt;const XmlElement *&gt;&amp; target, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804" title="Roles: acceptor, initiator or unknown.">Connection::Role</a> role)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;   <span class="keywordflow">for</span> (vector&lt;const XmlElement *&gt;::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;      <span class="keywordflow">if</span> (role == <a class="code" href="classFIX8_1_1Connection.html#ac7c5a73f9b3727fce73c3240bb57e804a6f907f66d2691987a316c077f41083a6">Connection::cn_unknown</a> || get_role(*itr) == role)</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;         target.push_back(*itr);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;   <span class="keywordflow">return</span> target.size();</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;}</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00248"></a><span class="lineno"><a class="code" href="classFIX8_1_1Configuration.html#a77a0bd3c0e02ef8ab382550cc8033266">  248</a></span>&#160;<a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83" title="Supported session process models.">ProcessModel</a> <a class="code" href="classFIX8_1_1Configuration.html#a77a0bd3c0e02ef8ab382550cc8033266">Configuration::get_process_model</a>(<span class="keyword">const</span> <a class="code" href="classXmlElement.html" title="A simple xml parser with Xpath style lookup.">XmlElement</a> *from)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;   <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> process_strings[] = { <span class="stringliteral">&quot;threaded&quot;</span>, <span class="stringliteral">&quot;pipelined&quot;</span>, <span class="stringliteral">&quot;coroutine&quot;</span> };</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;   <span class="keywordtype">string</span> pm;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;   <span class="keywordflow">return</span> from &amp;&amp; from-&gt;<a class="code" href="classXmlElement.html#a8a1842abc11fcabcf06ce6e6e462ee2a">GetAttr</a>(<span class="stringliteral">&quot;process_model&quot;</span>, pm)</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;      ? <a class="code" href="namespaceFIX8.html#a8b82747859379a6711d72608db775233">enum_str_get</a>(<a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83ae004040754630fc147bbd4b038088d16">pm_count</a>, process_strings, pm, <a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a084c5fde2b1e72f800d4de6902d5c014">pm_thread</a>) : <a class="code" href="namespaceFIX8.html#adf65fd9873c63995c6da40e0a5031f83a2d62ac51b86fdbba00ccdc1c2b7012e4">pm_pipeline</a>; <span class="comment">// default to pipelined</span></div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;}</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:25:58. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:43. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

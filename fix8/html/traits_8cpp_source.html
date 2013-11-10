@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.6</span>
+   &#160;<span id="projectnumber">version  0.10.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -155,36 +155,35 @@ $(document).ready(function(){initNavTree('traits_8cpp_source.html','');});
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;numeric&gt;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;bitset&gt;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;strings.h&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;regex.h&gt;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">using namespace </span>FIX8;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">FieldTrait</a>&amp; what)</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;{</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   <span class="keywordflow">return</span> os &lt;&lt; <span class="stringliteral">&quot;Tag: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#aa024cc9be8a8d656409280d6816e74cb">_fnum</a> &lt;&lt; <span class="stringliteral">&quot; Type: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#a2a832687fe650074fc14671a540b450c">_ftype</a> &lt;&lt; <span class="stringliteral">&quot; Flags: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#aefce017fe6bffd0cd896f4326778d2d8">_field_traits</a>.<a class="code" href="classFIX8_1_1ebitset.html#ac4d5a990adbca9f7cad645f93cbd36e1">get</a>();</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1FieldTraits.html" title="A collection of FieldTraits for a message. Which fields are required, which are present.">FieldTraits</a>&amp; what)</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   copy(what.<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#af76f7d71c7a01ff071449bb54329ce05">begin</a>(), what.<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>(), ostream_iterator&lt;FieldTrait&gt;(os, <span class="stringliteral">&quot;\n&quot;</span>));</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;   <span class="keywordflow">return</span> os;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#ifndef _MSC_VER</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;strings.h&gt;</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;regex.h&gt;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8includes_8hpp.html">f8includes.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">using namespace </span>FIX8;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">FieldTrait</a>&amp; what)</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;{</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   <span class="keywordflow">return</span> os &lt;&lt; <span class="stringliteral">&quot;Tag: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#aa024cc9be8a8d656409280d6816e74cb">_fnum</a> &lt;&lt; <span class="stringliteral">&quot; Type: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#a2a832687fe650074fc14671a540b450c">_ftype</a> &lt;&lt; <span class="stringliteral">&quot; Flags: &quot;</span> &lt;&lt; what.<a class="code" href="structFIX8_1_1FieldTrait.html#aefce017fe6bffd0cd896f4326778d2d8">_field_traits</a>.<a class="code" href="classFIX8_1_1ebitset.html#ac4d5a990adbca9f7cad645f93cbd36e1">get</a>();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;ostream&amp; <a class="code" href="xml_8cpp.html#a2ceff08c9789c94e8f23af9ce4dc3362">FIX8::operator&lt;&lt;</a>(ostream&amp; os, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1FieldTraits.html" title="A collection of FieldTraits for a message. Which fields are required, which are present.">FieldTraits</a>&amp; what)</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;{</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;   copy(what.<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#af76f7d71c7a01ff071449bb54329ce05">begin</a>(), what.<a class="code" href="classFIX8_1_1FieldTraits.html#af4c20474cbeb7688bc65a5527d0210fa">get_presence</a>().<a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a6ea491f605d31ff936c4001f32d0d400">end</a>(), ostream_iterator&lt;FieldTrait&gt;(os, <span class="stringliteral">&quot;\n&quot;</span>));</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   <span class="keywordflow">return</span> os;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:26:06. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:51. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

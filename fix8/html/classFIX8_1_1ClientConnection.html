@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.9.6</span>
+   &#160;<span id="projectnumber">version  0.10.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -156,8 +156,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9a584ddd21bf93a9d721c0be9f87ab59 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a9a584ddd21bf93a9d721c0be9f87ab59">stop</a> ()</td></tr>
 <tr class="memdesc:a9a584ddd21bf93a9d721c0be9f87ab59 inherit pub_methods_classFIX8_1_1Connection"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the reader and writer threads.  <a href="#a9a584ddd21bf93a9d721c0be9f87ab59">More...</a><br/></td></tr>
 <tr class="separator:a9a584ddd21bf93a9d721c0be9f87ab59 inherit pub_methods_classFIX8_1_1Connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2daf511c15cdfdb04bcade284e63292b inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a2daf511c15cdfdb04bcade284e63292b">write</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> *from)</td></tr>
-<tr class="separator:a2daf511c15cdfdb04bcade284e63292b inherit pub_methods_classFIX8_1_1Connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a106f21a277dc451611241127c096c59c inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a106f21a277dc451611241127c096c59c">write</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> *from, bool destroy=true)</td></tr>
+<tr class="separator:a106f21a277dc451611241127c096c59c inherit pub_methods_classFIX8_1_1Connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4df0059db3ffccabd58c1b0ad367ff03 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a4df0059db3ffccabd58c1b0ad367ff03">write</a> (<a class="el" href="classFIX8_1_1Message.html">Message</a> &amp;from)</td></tr>
 <tr class="separator:a4df0059db3ffccabd58c1b0ad367ff03 inherit pub_methods_classFIX8_1_1Connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54605d1259a21986a24bdf3d7f126320 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a54605d1259a21986a24bdf3d7f126320">send</a> (const char *from, size_t sz)</td></tr>
@@ -182,6 +182,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4c4b1dcb9561db6c1eeef6c25e7ac3c7 inherit pub_methods_classFIX8_1_1Connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a405268dd993f89ad97d83653bde6a6fe inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a405268dd993f89ad97d83653bde6a6fe">set_send_buf_sz</a> (const unsigned sz) const </td></tr>
 <tr class="separator:a405268dd993f89ad97d83653bde6a6fe inherit pub_methods_classFIX8_1_1Connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaacffd53265064f696230c8b7cda9223 inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#aaacffd53265064f696230c8b7cda9223">set_tcp_cork_flag</a> (bool way) const </td></tr>
+<tr class="separator:aaacffd53265064f696230c8b7cda9223 inherit pub_methods_classFIX8_1_1Connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10936aa571fd03ceef536387a816d3da inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFIX8_1_1Session.html">Session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a10936aa571fd03ceef536387a816d3da">get_session</a> ()</td></tr>
 <tr class="separator:a10936aa571fd03ceef536387a816d3da inherit pub_methods_classFIX8_1_1Connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a544bc4a1bc8ae150f5cb938982f0170f inherit pub_methods_classFIX8_1_1Connection"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Connection.html#a544bc4a1bc8ae150f5cb938982f0170f">reader_execute</a> ()</td></tr>
@@ -237,7 +239,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Client (initiator) specialisation of <a class="el" href="classFIX8_1_1Connection.html" title="Complete Fix connection (reader and writer).">Connection</a>. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00496">496</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00502">502</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="add53df1eb948b374971aa55dbd6921e6"></a>
 <div class="memitem">
@@ -307,7 +309,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00508">508</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00514">514</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -334,7 +336,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00513">513</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00519">519</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -364,7 +366,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classFIX8_1_1Connection.html#a506c527366cc53efdeeeaf5012573398">FIX8::Connection</a>.</p>
 
-<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00356">356</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8cpp_source.html#l00350">350</a> of file <a class="el" href="connection_8cpp_source.html">connection.cpp</a>.</p>
 
 <p>References <a class="el" href="hypersleep_8hpp_source.html#l00096">FIX8::hypersleep&lt; h_milliseconds &gt;()</a>.</p>
 
@@ -389,7 +391,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00498">498</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
+<p>Definition at line <a class="el" href="connection_8hpp_source.html#l00504">504</a> of file <a class="el" href="connection_8hpp_source.html">connection.hpp</a>.</p>
 
 </div>
 </div>
@@ -400,7 +402,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Oct 13 2013 13:26:07. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:51. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

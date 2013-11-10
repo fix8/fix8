@@ -2,6 +2,7 @@ var files =
 [
     [ "configuration.cpp", "configuration_8cpp.html", null ],
     [ "configuration.hpp", "configuration_8hpp.html", [
+      [ "Server", "structFIX8_1_1Server.html", "structFIX8_1_1Server" ],
       [ "Configuration", "classFIX8_1_1Configuration.html", "classFIX8_1_1Configuration" ]
     ] ],
     [ "connection.cpp", "connection_8cpp.html", null ],
@@ -16,11 +17,11 @@ var files =
     [ "consolemenu.cpp", "consolemenu_8cpp.html", null ],
     [ "consolemenu.hpp", "consolemenu_8hpp.html", "consolemenu_8hpp" ],
     [ "coroutine.hpp", "coroutine_8hpp.html", "coroutine_8hpp" ],
-    [ "dllmain.cpp", "dllmain_8cpp.html", "dllmain_8cpp" ],
+    [ "dllmain.cpp", "dllmain_8cpp.html", null ],
     [ "f8c.cpp", "f8c_8cpp.html", "f8c_8cpp" ],
     [ "f8c.hpp", "f8c_8hpp.html", "f8c_8hpp" ],
     [ "f8config.h", "f8config_8h.html", "f8config_8h" ],
-    [ "f8cstatic.hpp", "f8cstatic_8hpp.html", null ],
+    [ "f8cstatic.hpp", "f8cstatic_8hpp.html", "f8cstatic_8hpp" ],
     [ "f8cutils.cpp", "f8cutils_8cpp.html", "f8cutils_8cpp" ],
     [ "f8exception.hpp", "f8exception_8hpp.html", [
       [ "f8Exception", "classFIX8_1_1f8Exception.html", "classFIX8_1_1f8Exception" ],
@@ -109,6 +110,7 @@ var files =
     [ "Myfix_traits.cpp", "Myfix__traits_8cpp.html", null ],
     [ "Myfix_types.cpp", "Myfix__types_8cpp.html", null ],
     [ "Myfix_types.hpp", "Myfix__types_8hpp.html", "Myfix__types_8hpp" ],
+    [ "Myfix_types_1.hpp", "Myfix__types__1_8hpp.html", "Myfix__types__1_8hpp" ],
     [ "myprint.cpp", "myprint_8cpp.html", "myprint_8cpp" ],
     [ "Perf_classes.cpp", "Perf__classes_8cpp.html", "Perf__classes_8cpp" ],
     [ "Perf_classes.hpp", "Perf__classes_8hpp.html", "Perf__classes_8hpp" ],
@@ -143,7 +145,8 @@ var files =
       [ "ClientSession", "classFIX8_1_1ClientSession.html", "classFIX8_1_1ClientSession" ],
       [ "ReliableClientSession", "classFIX8_1_1ReliableClientSession.html", "classFIX8_1_1ReliableClientSession" ],
       [ "ServerSession", "classFIX8_1_1ServerSession.html", "classFIX8_1_1ServerSession" ],
-      [ "SessionInstance", "classFIX8_1_1SessionInstance.html", "classFIX8_1_1SessionInstance" ]
+      [ "SessionInstance", "classFIX8_1_1SessionInstance.html", "classFIX8_1_1SessionInstance" ],
+      [ "ReliableClientSessionFO", "classFIX8_1_1ReliableClientSessionFO.html", "classFIX8_1_1ReliableClientSessionFO" ]
     ] ],
     [ "thread.hpp", "thread_8hpp.html", "thread_8hpp" ],
     [ "tickval.hpp", "tickval_8hpp.html", "tickval_8hpp" ],
