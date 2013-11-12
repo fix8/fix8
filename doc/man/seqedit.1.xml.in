@@ -1,0 +1,75 @@
+<?xml version="1.0" standalone='no'?>
+
+<manpage name="seqedit" section="1" app="fix8" date="@CONFIGURE_SDATE@" desc="Edit next expected send/receive" built="@CONFIGURE_TIME@$">
+
+<synopsis>
+<cmd>seqedit [-DRSdhiqv] &lt;perist file prefix&gt;</cmd>
+</synopsis>
+
+<description>
+<p>seqedit allows you to modify the next send/receive sequence numbers stored in a file based persistence file. You can also use
+this utility to dump the contents of the persistence file and index.</p>
+</description>
+
+<options>
+
+<option>
+<p><opt>-D,--rawdump</opt></p>
+<optdesc><p>Dump all the raw data records referenced in the index to stdout.</p></optdesc>
+</option>
+
+<option>
+<p><opt>-R,--receive <arg>&lt;seqnum&gt;</arg></opt></p>
+<optdesc><p>Set next expected receive sequence number</p></optdesc>
+</option>
+
+<option>
+<p><opt>-S,--send <arg>&lt;seqnum&gt;</arg></opt></p>
+<optdesc><p>Set next send sequence number</p></optdesc>
+</option>
+
+<option>
+<p><opt>-d,--dump</opt></p>
+<optdesc><p>Dump all the records in both the index and the data file</p></optdesc>
+</option>
+
+<option>
+<p><opt>-q,--quiet</opt></p>
+<optdesc><p>Set the sequence numbers silently</p></optdesc>
+</option>
+
+<option>
+<p><opt>-i,--index</opt></p>
+<optdesc><p>Only dump the index not the data records</p></optdesc>
+</option>
+
+<option>
+<p><opt>-h,--help</opt></p>
+<optdesc><p>Print help screen.</p></optdesc>
+</option>
+
+<option>
+<p><opt>-v,--version</opt></p>
+<optdesc><p>Print application version, exit.</p></optdesc></option>
+
+</options>
+
+<section name = "Examples">
+<p>seqedit client.DLD_TEX.TEX_DLD</p>
+<p>seqedit -R 23417 -S 2341 client.DLD_TEX.TEX_DLD</p>
+<p>seqedit -d client.DLD_TEX.TEX_DLD</p>
+<p>seqedit -D client.DLD_TEX.TEX_DLD</p>
+<p>seqedit -id client.DLD_TEX.TEX_DL</p>
+</section>
+
+<section name = "Author">
+<p>fix8 was written by David L. Dight
+&lt;fix@fix8.org&gt;</p><p>You will find the newest version of
+fix8 at <url href="http://www.fix8.org"/></p>
+</section>
+
+<section name = "Bugs">
+<p>You should report them to author above.</p>
+</section>
+
+</manpage>

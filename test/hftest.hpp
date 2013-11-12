@@ -1,36 +1,38 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_MYFIX_HPP_
 #define _FIX8_MYFIX_HPP_
@@ -81,21 +83,20 @@ public:
 	    \param seqnum Fix sequence number of the message
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
-	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
+	bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);
 
 	void push(FIX8::TEX::NewOrderSingle *nos) { _nos_queue.push(nos); }
 	FIX8::TEX::NewOrderSingle *pop()
 	{
-		if (_nos_queue.size())
-		{
-			FIX8::TEX::NewOrderSingle *nos(_nos_queue.front());
-			_nos_queue.pop();
-			return nos;
-		}
-		return 0;
+		if (_nos_queue.empty())
+			return 0;
+		FIX8::TEX::NewOrderSingle *nos(_nos_queue.front());
+		_nos_queue.pop();
+		return nos;
 	}
 
-	int cached() const { return _nos_queue.size(); }
+	bool cached() const { return !_nos_queue.empty(); }
+	int size() const { return _nos_queue.size(); }
 };
 
 //-----------------------------------------------------------------------------------------
@@ -141,44 +142,14 @@ public:
 	    \param seqnum Fix sequence number of the message
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
-	bool handle_application(const unsigned seqnum, const FIX8::Message *msg);
-};
-
-//---------------------------------------------------------------------------------------------------
-/// Create a streambuf from an open file descriptor.
-class fdinbuf : public std::streambuf
-{
-   enum { _buffer_size = 16 };
-
-protected:
-   char _buffer[_buffer_size];
-   int _fd;
-
-   virtual int_type underflow()
-   {
-      if (gptr() < egptr())
-         return *gptr();
-      int put_back_cnt(gptr() - eback());
-      if (put_back_cnt > 4)
-         put_back_cnt = 4;
-		std::memcpy(_buffer + (4 - put_back_cnt), gptr() - put_back_cnt, put_back_cnt);
-      int num_read(read (_fd, _buffer + 4, _buffer_size - 4));
-      if (num_read <= 0)
-         return EOF;
-      setg(_buffer + (4 - put_back_cnt), _buffer + 4, _buffer + 4 + num_read);
-      return *gptr();
-   }
-
-public:
-   fdinbuf(int infd) : _buffer(), _fd(infd) { setg(_buffer + 4, _buffer + 4, _buffer + 4); }
+	bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);
 };
 
 //-------------------------------------------------------------------------------------------------
 /// Simple menu system that will work with most term types.
 class MyMenu
 {
-	bool _raw_mode;
-	termio _tty_state;
+	FIX8::tty_save_state _tty;
 
 	/// Individual menu item.
 	struct MenuItem
@@ -192,16 +163,16 @@ class MyMenu
 	};
 
 	hf_session_client& _session;
-	int _fd;
 	std::istream _istr;
 	std::ostream& _ostr;
 
 	typedef FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem> Handlers;
-	Handlers _handlers;
+	static const Handlers _handlers;
+	static const Handlers::TypePair _valueTable[];
 
 public:
 	MyMenu(hf_session_client& session, int infd, std::ostream& ostr)
-		: _raw_mode(), _tty_state(), _session(session), _fd(infd), _istr(new fdinbuf(infd)), _ostr(ostr) {}
+		: _tty(infd), _session(session), _istr(new FIX8::fdinbuf(infd)), _ostr(ostr) {}
 	virtual ~MyMenu() {}
 
 	std::istream& get_istr() { return _istr; }
@@ -210,60 +181,46 @@ public:
 
 	bool new_order_single();
 	bool preload_new_order_single();
+	bool batch_preload_new_order_single();
+	bool multi_new_order_single();
 	bool send_all_preloaded();
+	bool send_all_preloaded(coroutine& coro, FIX8::Session *ses);
 	bool help();
 	bool nothing() { return true; }
 	bool do_exit() { return false; }
 	bool do_logout();
 
-	void unset_raw_mode()
-	{
-		if (_raw_mode)
-		{
-			if (ioctl(_fd, TCSETA, &_tty_state) < 0)
-				std::cerr << FIX8::Str_error(errno, "Cannot reset ioctl") << std::endl;
-			else
-				_raw_mode = false;
-		}
-	}
+	FIX8::tty_save_state& get_tty() { return _tty; }
 
-	void set_raw_mode()
-	{
-		if (!_raw_mode)
-		{
-			if (ioctl(_fd, TCGETA, &_tty_state) < 0)
-			{
-				std::cerr << FIX8::Str_error(errno, "Cannot set ioctl") << std::endl;
-				return;
-			}
-			termio tty_state(_tty_state);
-			tty_state.c_lflag = 0;
-			tty_state.c_cc[VTIME] = 0;
-			tty_state.c_cc[VMIN] = 1;
-			if (ioctl(_fd, TCSETA, &tty_state) < 0)
-				std::cerr << FIX8::Str_error(errno, "Cannot reset ioctl") << std::endl;
-			else
-				_raw_mode = true;
-		}
-	}
-
-	friend class FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
+	friend struct FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
 };
 
 //-----------------------------------------------------------------------------------------
 /// A random number generator wrapper.
 struct RandDev
 {
+	/// Initialise the random number generator
 	static void init()
 	{
-		time_t tval(time(0));
-		srandom (static_cast<unsigned>(((tval % getpid()) * tval)));
+#ifdef _MSC_VER
+	   srand (static_cast<unsigned>(time(0) % _getpid()));
+#else
+		srandom (static_cast<unsigned>(time(0) % getpid()));
+#endif
 	}
 
+	/*! Return a random number between 0 and n - 1, or between 0 and RAND_MAX
+	  \tparam T type of random number
+	  \param range upper range to return value within, or 0 for RAND_MAX
+	  \return the random number of the specified type within the psecifed range */
 	template<typename T>
-   static T getrandom(const T range=0)
-   {
+    static T getrandom(const T range=0)
+    {
+#ifdef _MSC_VER
+	    T target(rand());
+#else
 		T target(random());
+#endif
 		return range ? target / (RAND_MAX / range + 1) : target;
 	}
 };

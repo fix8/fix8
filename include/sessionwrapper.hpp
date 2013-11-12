@@ -1,39 +1,41 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_SESSIONWRAPPER_HPP_
-#define _FIX8_SESSIONWRAPPER_HPP_
+# define _FIX8_SESSIONWRAPPER_HPP_
 
 #include <Poco/Net/ServerSocket.h>
 
@@ -46,15 +48,23 @@ struct SessionConfig : public Configuration
 {
 	const F8MetaCntx& _ctx;
 	const XmlElement *_ses;
+	LoginParameters _loginParameters;
+	const std::string& _session_name;
 
 	/// Ctor. Loads configuration, obtains session details, sets up logfile flags.
 	SessionConfig (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
-		Configuration(conf_file, true),
-		_ctx(ctx),
-		_ses(find_session(session_name))
+		Configuration(conf_file, true), _ctx(ctx), _ses(find_session(session_name)), _session_name(session_name)
 	{
 		if (!_ses)
 			throw InvalidConfiguration(session_name);
+
+		const LoginParameters lparam(get_retry_interval(_ses), get_retry_count(_ses),
+			get_default_appl_ver_id(_ses), get_reset_sequence_number_flag(_ses),
+			get_always_seqnum_assign(_ses), get_silent_disconnect(_ses),
+			get_no_chksum_flag(_ses), get_tcp_recvbuf_sz(_ses),
+			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses));
+
+		_loginParameters = lparam;
 	}
 
 	/// Dtor.
@@ -91,15 +101,38 @@ public:
 		_plog(create_logger(_ses, protocol_log)),
 		_sci(get_sender_comp_id(_ses)), _tci(get_target_comp_id(_ses)),
 		_id(_ctx._beginStr, _sci, _tci),
-		_persist(create_persister(_ses)),
+		_persist(create_persister(_ses, 0, this->_loginParameters._reset_sequence_numbers)),
 		_session(new T(_ctx, _id, _persist, _log, _plog)),
 		_sock(init_con_later ? 0 : new Poco::Net::StreamSocket),
 		_addr(get_address(_ses)),
-		_cc(init_con_later ? 0 : new ClientConnection(_sock, _addr, *_session))
+		_cc(init_con_later ? 0
+			: new ClientConnection(_sock, _addr, *_session, this->_loginParameters._hb_int, get_process_model(_ses)))
 	{
-		_session->set_login_parameters(get_retry_interval(_ses), get_retry_count(_ses),
-			get_default_appl_ver_id(_ses), get_reset_sequence_number_flag(_ses));
+		_session->set_login_parameters(this->_loginParameters);
+		_session->set_session_config(this);
 	}
+
+	/// Ctor. Prepares session for connection as an initiator, failover version.
+	ClientSession (const F8MetaCntx& ctx, const std::string& conf_file,
+		const std::string& session_name, const Poco::Net::SocketAddress& addr) :
+		SessionConfig(ctx, conf_file, session_name),
+		_log(create_logger(_ses, session_log)),
+		_plog(create_logger(_ses, protocol_log)),
+		_sci(get_sender_comp_id(_ses)), _tci(get_target_comp_id(_ses)),
+		_id(_ctx._beginStr, _sci, _tci),
+		_persist(create_persister(_ses, 0, this->_loginParameters._reset_sequence_numbers)),
+		_session(new T(_ctx, _id, _persist, _log, _plog)),
+		_sock(),
+		_addr(addr),
+		_cc()
+	{
+		_session->set_login_parameters(this->_loginParameters);
+		_session->set_session_config(this);
+	}
+
+	/*! If reliable, determine if the maximum no. of reties has been reached
+	  \return false for default clientsession */
+	virtual bool has_given_up() const { return false; }
 
 	/// Dtor.
 	virtual ~ClientSession ()
@@ -117,9 +150,10 @@ public:
 	/*! Start the session - initiate the connection, logon and start heartbeating.
 	  \param wait if true wait till session finishes before returning
 	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
-	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
-	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0)
-		{ _session->start(_cc, wait, send_seqnum, recv_seqnum); }
+	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1
+	  \param davi default appl version id (FIXT) */
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
+		{ _session->start(_cc, wait, send_seqnum, recv_seqnum, davi); }
 
 	/// Convenient scoped pointer for your session
 	typedef scoped_ptr<ClientSession<T> > Client_ptr;
@@ -131,14 +165,32 @@ public:
 template<typename T>
 class ReliableClientSession : public ClientSession<T>
 {
-	Thread<ReliableClientSession<T> > _thread;
+	dthread<ReliableClientSession<T> > _thread;
+	unsigned _send_seqnum, _recv_seqnum;
+	f8_atomic<bool> _giving_up;
+	const bool _failover;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
 	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
-		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this))
+		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this)),
+		_send_seqnum(), _recv_seqnum(), _failover()
 	{
+		_giving_up = false;
 	}
+
+	/// Ctor. Prepares session for connection as an initiator, failover version.
+	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file,
+		const std::string& session_name, const Poco::Net::SocketAddress& addr)
+		: ClientSession<T>(ctx, conf_file, session_name, addr), _thread(ref(*this)),
+		_send_seqnum(), _recv_seqnum(), _failover(true)
+	{
+		_giving_up = false;
+	}
+
+	/*! If reliable, determine if the maximum no. of reties has been reached
+	  \return true if maximum no. of reties reached */
+	bool has_given_up() const { return _giving_up; }
 
 	/// Dtor.
 	virtual ~ReliableClientSession () {}
@@ -146,11 +198,14 @@ public:
 	/*! Start the session - initiate the connection, logon and start heartbeating.
 	  \param wait if true wait till session finishes before returning
 	  \param send_seqnum next send seqnum (not used here)
-	  \param recv_seqnum next recv seqnum (not used here) */
-	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0)
+	  \param recv_seqnum next recv seqnum (not used here)
+	  \param davi default appl version id (FIXT) */
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
 	{
+		_send_seqnum = send_seqnum;
+		_recv_seqnum = recv_seqnum;
 		if (!wait)
-			_thread.Start();
+			_thread.start();
 		else
 			(*this)();
 	}
@@ -159,32 +214,96 @@ public:
 	    \return 0 on success */
 	int operator()()
 	{
-		bool reset_sequence_numbers;
-		unsigned attempts(0), login_retry_interval, login_retries;
-		default_appl_ver_id davi;
-		this->_session->get_login_parameters(login_retry_interval, login_retries, davi, reset_sequence_numbers);
+		unsigned attempts(0);
 
-		for (; ++attempts < login_retries; )
+		for (; ++attempts <= this->_loginParameters._login_retries; )
 		{
 			try
 			{
 				//std::cout << "operator()():try" << std::endl;
 
 				this->_sock = new Poco::Net::StreamSocket,
-				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session);
-				this->_session->start(this->_cc, true, 0, 0, davi());
+				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session, this->_loginParameters._hb_int,
+					this->get_process_model(this->_ses));
+				this->_session->set_login_parameters(this->_loginParameters);
+				this->_session->set_session_config(this);
+				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, this->_loginParameters._davi());
+				_send_seqnum = _recv_seqnum = 0; // only set seqnums for the first time round
 			}
-			catch(f8Exception& e)
+			catch (f8Exception& e)
 			{
 				//std::cout << "ReliableClientSession: f8exception" << std::endl;
 				this->_session->log(e.what());
 			}
+			catch (Poco::Net::InvalidAddressException& e)
+			{
+				this->_session->log(e.what());
+				if (_failover)
+					throw;
+			}
+			catch (Poco::Net::InvalidSocketException& e)
+			{
+				this->_session->log(e.what());
+				if (_failover)
+					throw;
+			}
+			catch (Poco::Net::ServiceNotFoundException& e)
+			{
+				this->_session->log(e.what());
+				if (_failover)
+					throw;
+			}
+			catch (Poco::Net::ConnectionRefusedException& e)
+			{
+				this->_session->log(e.what());
+				if (_failover)
+					throw;
+			}
+			catch (Poco::Net::DNSException& e)
+			{
+				this->_session->log(e.what());
+				if (_failover)
+					throw;
+			}
+			catch (Poco::Net::InterfaceNotFoundException& e)
+			{
+				this->_session->log(e.what());
+				if (_failover)
+					throw;
+			}
+			catch (Poco::Net::NetException& e)	// catch all other NetExceptions
+			{
+				this->_session->log(e.what());
+			}
+			catch (std::exception& e)
+			{
+				//cout << "process:: std::exception" << endl;
+				this->_session->log(e.what());
+			}
 
 			//std::cout << "operator()():out of try" << std::endl;
+			try
+			{
+				this->_session->stop();
+			}
+			catch (f8Exception& e)
+			{
+				this->_session->log(e.what());
+			}
+			catch (Poco::Net::NetException& e)
+			{
+				this->_session->log(e.what());
+			}
+			catch (std::exception& e)
+			{
+				this->_session->log(e.what());
+			}
 			delete this->_cc;
 			delete this->_sock;
-			millisleep(login_retry_interval);
+			hypersleep<h_milliseconds>(this->_loginParameters._login_retry_interval);
 		}
+
+		_giving_up = true;
 
 		return 0;
 	}
@@ -208,13 +327,18 @@ public:
 		SessionConfig(ctx, conf_file, session_name),
 		_addr(get_address(_ses)),
 		_server_sock(_addr)
-	{}
+	{
+		if (_loginParameters._recv_buf_sz)
+			Connection::set_recv_buf_sz(_loginParameters._recv_buf_sz, &_server_sock);
+		if (_loginParameters._send_buf_sz)
+			Connection::set_send_buf_sz(_loginParameters._send_buf_sz, &_server_sock);
+	}
 
 	/// Dtor.
 	virtual ~ServerSession () {}
 
 	/*! Check to see if there are any waiting inbound connections.
-	  \param span timespan (us) to wait before returning (will return immediately if connection available)
+	  \param span timespan (us, default 250 ms) to wait before returning (will return immediately if connection available)
 	  \return true if a connection is avaialble */
 	bool poll(const Poco::Timespan& span=Poco::Timespan(250000)) const { return _server_sock.poll(span, Poco::Net::Socket::SELECT_READ); }
 
@@ -232,8 +356,6 @@ public:
 template<typename T>
 class SessionInstance
 {
-	Logger *_log, *_plog;
-	Persister *_persist;
 	Poco::Net::SocketAddress _claddr;
 	Poco::Net::StreamSocket *_sock;
 	T *_session;
@@ -242,22 +364,19 @@ class SessionInstance
 public:
 	/// Ctor. Prepares session instance with inbound connection.
 	SessionInstance (ServerSession<T>& sf) :
-		_log(sf.create_logger(sf._ses, Configuration::session_log)),
-		_plog(sf.create_logger(sf._ses, Configuration::protocol_log)),
-		_persist(sf.create_persister(sf._ses)),
 		_sock(new Poco::Net::StreamSocket(sf.accept(_claddr))),
-		_session(new T(sf._ctx, _persist, _log, _plog)),
-		_sc(_sock, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_tcp_nodelay(sf._ses))
-	{}
+		_session(new T(sf._ctx)),
+		_sc(_sock, _claddr, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_process_model(sf._ses), sf.get_tcp_nodelay(sf._ses))
+	{
+		_session->set_login_parameters(sf._loginParameters);
+		_session->set_session_config(&sf);
+	}
 
 	/// Dtor.
 	virtual ~SessionInstance ()
 	{
-		delete _persist;
 		delete _session;
 		delete _sock;
-		delete _log;
-		delete _plog;
 	}
 
 	/*! Get a pointer to the session
@@ -279,6 +398,89 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+/// Reliable Client wrapper with failover.
+/*! \tparam T your derived session class */
+template<typename T>
+class ReliableClientSessionFO : public SessionConfig
+{
+	dthread<ReliableClientSessionFO<T> > _thread;
+	unsigned _send_seqnum, _recv_seqnum;
+	std::vector<Server> _servers;
+
+public:
+	/// Ctor.
+	ReliableClientSessionFO(const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
+		: SessionConfig(ctx, conf_file, session_name), _thread(ref(*this)), _send_seqnum(), _recv_seqnum()
+	{
+		if (get_addresses(_ses, _servers) == 0)
+			throw InvalidConfiguration(session_name);
+	}
+
+	/// Dtor.
+	virtual ~ReliableClientSessionFO() {}
+
+	/*! Start trying the servers
+	  \param wait if true wait till session finishes before returning
+	  \param send_seqnum next send seqnum (not used here)
+	  \param recv_seqnum next recv seqnum (not used here)
+	  \param davi default appl version id (FIXT) */
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
+	{
+		_send_seqnum = send_seqnum;
+		_recv_seqnum = recv_seqnum;
+		if (!wait)
+			_thread.start();
+		else
+			(*this)();
+	}
+
+	/*! The reliability thread entry point.
+	    \return 0 on success */
+	int operator()()
+	{
+		unsigned attempts(0), current(0);
+		bool proceed(true);
+
+		for (; proceed; ++attempts)
+		{
+			try
+			{
+				++_servers[current]._retries;
+				scoped_ptr<ReliableClientSession<T> > cs(
+					new ReliableClientSession<T>(_ctx, get_xmlfile(), _session_name, _servers[current]._addr));
+				cs->start(false, _send_seqnum, _recv_seqnum);
+				//std::cout << "ReliableClientSessionFO::operator()():try" << std::endl;
+			}
+			catch (f8Exception& e)
+			{
+				//std::cout << "ReliableClientSessionFO: f8exception" << std::endl;
+				this->_session->log(e.what());
+			}
+			catch (Poco::Net::NetException& e)
+			{
+				this->_session->log(e.what());
+			}
+			catch (std::exception& e)
+			{
+				//cout << "process:: std::exception" << endl;
+				this->_session->log(e.what());
+			}
+
+			hypersleep<h_milliseconds>(this->_loginParameters._login_retry_interval);
+
+			do // FIXME possible endless loop condition
+			{
+				++current %= _servers.size();
+			}
+			while (_servers[current]._max_retries && _servers[current]._retries >= _servers[current]._max_retries);
+		}
+
+		return 0;
+	}
+
+	/// Convenient scoped pointer for your session
+	typedef scoped_ptr<ReliableClientSessionFO<T> > ReliableClientSessionFO_ptr;
+};
 
 } // FIX8
 

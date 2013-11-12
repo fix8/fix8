@@ -1,37 +1,38 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
 
-#endif
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
@@ -40,15 +41,19 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <algorithm>
-#include <strings.h>
+
+#ifndef _MSC_VER
+# include <strings.h>
+# include <sys/time.h>
+# include <unistd.h>
+# include <netdb.h>
+# include <syslog.h>
+#endif
+
 #include <string.h>
-#include <sys/time.h>
 #include <time.h>
-#include <unistd.h>
 #include <errno.h>
-#include <netdb.h>
 #include <signal.h>
-#include <syslog.h>
 #include <fcntl.h>
 #include <time.h>
 #include <regex.h>
@@ -65,10 +70,30 @@ using namespace FIX8;
 using namespace std;
 
 //----------------------------------------------------------------------------------------
-int XmlElement::errors_(0), XmlElement::line_(1), XmlElement::maxdepth_(0), XmlElement::seq_(0);
-XmlElement::XmlSet XmlElement::emptyset_;
-XmlElement::XmlAttrs XmlElement::emptyattrs_;
-RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&(amp|lt|gt|apos|quot);");
+const XmlElement::XmlSet XmlElement::emptyset_;
+const XmlElement::XmlAttrs XmlElement::emptyattrs_;
+RegExp XmlElement::rCE_("&#(x[A-Fa-f0-9]+|[0-9]+);"), XmlElement::rCX_("&([a-z]{2,}[1-4]{0,});"),
+	XmlElement::rIn_("href=\"([^\"]+)\""),
+   XmlElement::rEn_("\\$\\{([^}]+)\\}"), XmlElement::rEv_("!\\{([^}]+)\\}");
+
+//----------------------------------------------------------------------------------------
+const Str2Chr::TypePair valueTable[] =
+{
+	Str2Chr::TypePair("amp", '&'),	Str2Chr::TypePair("lt", '<'),		Str2Chr::TypePair("gt", '>'),
+	Str2Chr::TypePair("apos", '\''),	Str2Chr::TypePair("quot", '"'),	Str2Chr::TypePair("nbsp", 160),
+	Str2Chr::TypePair("iexcl", 161),	Str2Chr::TypePair("cent", 162),	Str2Chr::TypePair("pound", 163),
+	Str2Chr::TypePair("curren", 164),Str2Chr::TypePair("yen", 165),	Str2Chr::TypePair("brvbar", 166),
+	Str2Chr::TypePair("sect", 167),	Str2Chr::TypePair("uml", 168),	Str2Chr::TypePair("copy", 169),
+	Str2Chr::TypePair("ordf", 170),	Str2Chr::TypePair("laquo", 171),	Str2Chr::TypePair("not", 172),
+	Str2Chr::TypePair("shy", 173),	Str2Chr::TypePair("reg", 174),	Str2Chr::TypePair("macr", 175),
+	Str2Chr::TypePair("deg", 176),	Str2Chr::TypePair("plusmn", 177),Str2Chr::TypePair("sup2", 178),
+	Str2Chr::TypePair("sup3", 179),	Str2Chr::TypePair("acute", 180),	Str2Chr::TypePair("micro", 181),
+	Str2Chr::TypePair("para", 182),	Str2Chr::TypePair("middot", 183),Str2Chr::TypePair("cedil", 184),
+	Str2Chr::TypePair("sup1", 185),	Str2Chr::TypePair("ordm", 186),	Str2Chr::TypePair("raquo", 187),
+	Str2Chr::TypePair("frac14", 188),Str2Chr::TypePair("frac12", 189),Str2Chr::TypePair("frac34", 190),
+	Str2Chr::TypePair("iquest", 191)
+};
+const Str2Chr XmlElement::stringtochar_(valueTable, sizeof(valueTable)/sizeof(Str2Chr::TypePair), '?');
 
 //-----------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const XmlElement& en)
@@ -112,12 +137,46 @@ ostream& operator<<(ostream& os, const XmlElement& en)
 }
 
 //-----------------------------------------------------------------------------------------
+namespace {
+
+// execute command and pipe output to string; only 1 line is captured.
+bool exec_cmd(const string& cmd, string& result)
+{
+#ifdef _MSC_VER
+   FILE *apipe(_popen(cmd.c_str(), "r"));
+#else
+   FILE *apipe(popen(cmd.c_str(), "r"));
+#endif
+   if (apipe)
+   {
+      const size_t maxcmdresultlen(1024);
+      char buffer[maxcmdresultlen] = {};
+      if (!feof(apipe) && fgets(buffer, maxcmdresultlen, apipe) && buffer[0])
+      {
+         result = buffer;
+         result.resize(result.size() - 1); // remove lf
+      }
+#ifdef _MSC_VER
+	  _pclose(apipe);
+#else
+      pclose(apipe);
+#endif
+   }
+   return !result.empty();
+}
+
+}
+
+//-----------------------------------------------------------------------------------------
 // finite state machine with simple recursive descent parser
 //-----------------------------------------------------------------------------------------
-XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const char *rootAttr)
-	: value_(), decl_(), depth_(depth), sequence_(++seq_), txtline_(txtline),
-	chldcnt_(), subidx_(subidx), children_(), ordchildren_(), attrs_()
+XmlElement::XmlElement(istream& ifs, int subidx, XmlElement *parent, int txtline, int depth, const char *rootAttr)
+	: parent_(parent), root_(parent_ ? parent_->root_ : this), errors_(), line_(1), incline_(1), maxdepth_(),
+	seq_(), value_(), decl_(), depth_(depth), sequence_(++root_->seq_), txtline_(txtline),
+	chldcnt_(), subidx_(subidx), attrs_(), children_(), _was_include(), ordchildren_()
 {
+	istream *ifsptr(&ifs);
+
 	enum
   	{
 		olb, otag, ocom0, ocom1, comment, ccom0, ccom1, ccomment,
@@ -133,17 +192,20 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 		attrs_->insert(XmlAttrs::value_type("docpath", rootAttr));
 	}
 
-	if (maxdepth_ < depth)
-		maxdepth_ = depth_;
+	if (root_->maxdepth_ < depth)
+		root_->maxdepth_ = depth_;
 
-	while (ifs.good() && state != finished)
+	while (ifsptr->good() && state != finished)
 	{
 		char c;
-		ifs >> noskipws >> c;
+		*ifsptr >> noskipws >> c;
 		switch (c)
 		{
-		case '\n':	// lame but the only way to track it
-			line_++;	// drop through
+		case '\n':
+			if (!root_->inclusion_.empty())
+				++root_->incline_;
+			else
+				++root_->line_; // drop through
 		case '\r':
 			continue;
 		default:
@@ -159,7 +221,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 		case otag:
 			if (c == '>')
 				state = value;
-			else if (c == '/' && ifs.peek() == '>')	//empty
+			else if (c == '/' && ifsptr->peek() == '>')	//empty
 			{
 				state = ctag;
 				tmpctag = tmpotag;
@@ -170,6 +232,8 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 				state = odec;
 			else if (c == '!' && tmpotag.empty())
 				state = ocom0;
+			else if (c == '=' || c == '\\' || c == '"' || c == '\'')
+				goto illegal_tag;
 			else if (!isspace(c))
 				tmpotag += c;
 			break;
@@ -202,7 +266,7 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 				tmpdec += c;
 			break;
 		case oattr:
-			if (c == '/' && ifs.peek() == '>')	//empty
+			if (c == '/' && ifsptr->peek() == '>')	//empty
 			{
 				state = ctag;
 				tmpctag = tmpotag;
@@ -235,20 +299,26 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 		case value:
 			if (c == '<')
 			{
-				if (ifs.peek() != '/')
+				if (ifsptr->peek() != '/')
 				{
-					ifs.putback(c);
+					ifsptr->putback(c);
 					if (depth_ + 1 > MaxDepth)
 					{
-						++errors_;
-						cerr << "Error (" << line_ << "): maximum depth exceeded (" << MaxDepth << ')' << endl;
+						++root_->errors_;
+						ostringstream ostr;
+						ostr << "Error (" << root_->line_ << "): maximum depth exceeded (" << MaxDepth << ')';
 						state = olb;
+						throw XMLError(ostr.str());
 					}
 					else
 					{
-						scoped_ptr<XmlElement> child(new XmlElement(ifs, chldcnt_ + 1, line_, depth_ + 1));
-						if (child->GetTag().empty())
-							--seq_;
+						XmlElement *child(new XmlElement(*ifsptr, chldcnt_ + 1, this, root_->line_, depth_ + 1));
+						if (child->GetTag().empty()
+							|| (child->_was_include && (!child->children_ || !child->children_->begin()->second->children_)))
+						{
+							delete child;
+							--root_->seq_;
+						}
 						else
 						{
 							if (!children_)
@@ -256,10 +326,26 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 								children_ = new XmlSubEls;
 								ordchildren_ = new XmlSet;
 							}
-							XmlElement *chld(child.release());
-							++chldcnt_;
-							children_->insert(XmlSubEls::value_type(chld->GetTag(), chld));
-							ordchildren_->insert(chld);
+
+							if (child->_was_include) // move great-grandchildren to children
+							{
+								for (XmlSubEls::const_iterator itr(child->children_->begin()->second->children_->begin());
+									itr != child->children_->begin()->second->children_->end(); ++itr)
+								{
+									--itr->second->depth_;
+									children_->insert(XmlSubEls::value_type(itr->first, itr->second));
+									ordchildren_->insert(itr->second);
+								}
+
+								delete child;
+								root_->inclusion_.clear();
+							}
+							else
+							{
+								++chldcnt_;
+								children_->insert(XmlSubEls::value_type(child->GetTag(), child));
+								ordchildren_->insert(child);
+							}
 						}
 					}
 				}
@@ -279,12 +365,55 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 				state = finished;
 				if (tmpotag != tmpctag)
 				{
-					++errors_;
-					cerr << "Error (" << line_ << "): unmatched tag " << '\''
-						 << tmpotag << '\'' << " against " << '\'' << tmpctag << '\'' << endl;
+illegal_tag:
+					++root_->errors_;
+					ostringstream ostr;
+					ostr << "Error (" << root_->line_ << "): unmatched tag " << '\''
+						 << tmpotag << '\'' << " does not close with " << '\'' << tmpctag << '\'';
+					if (!root_->inclusion_.empty())
+						ostr << " in inclusion " << root_->inclusion_ << " (" << root_->incline_ << ')';
+					throw XMLError(ostr.str());
 				}
 				else
 				{
+					if ((tag_ = tmpotag) == "xi:include")	// handle inclusion
+					{
+						RegMatch match;
+						if (rIn_.SearchString(match, tmpattr, 2) == 2)
+						{
+							string whatv;
+							rIn_.SubExpr(match, tmpattr, whatv, 0, 1);
+							ifstream *ifs1(new ifstream(InplaceXlate(whatv).c_str()));
+							if (!*ifs1)
+							{
+								++root_->errors_;
+								ostringstream ostr;
+								ostr << "Error (" << root_->line_ << "): could not process include " << '\'' << whatv << '\'';
+								throw XMLError(ostr.str());
+							}
+							else
+							{
+								ifsptr = ifs1;	// process xml elements from this stream now
+								state = olb;	// reset
+								root_->inclusion_ = whatv;
+								root_->incline_ = 1;
+								tmpctag.clear();
+								tmpval.clear();
+								tmpattr.clear();
+								tmpdec.clear();
+								_was_include = true;
+								break;
+							}
+						}
+						else
+						{
+							ostringstream ostr;
+							++root_->errors_;
+							ostr << "Error (" << root_->line_ << "): invalid xml include specification " << '\'' << tmpattr << '\'';
+							throw XMLError(ostr.str());
+						}
+					}
+
 					tag_ = tmpotag;
 					if (!tmpval.empty() && tmpval.find_first_not_of(" \t\n\r") != string::npos)
 						value_ = new string(InplaceXlate(tmpval));
@@ -300,13 +429,16 @@ XmlElement::XmlElement(istream& ifs, int subidx, int txtline, int depth, const c
 
 	if (!tmpattr.empty())
 		ParseAttrs(tmpattr);
+
+	if (_was_include)
+		delete ifsptr;
 }
 
 //-----------------------------------------------------------------------------------------
 int XmlElement::ParseAttrs(const string& attlst)
 {
 	istringstream istr(attlst);
-	enum { ews, tag, oq, value } state(ews);
+	enum { ews, tag, es, oq, value } state(ews);
 	string tmptag, tmpval;
 	char comchar(0);
 
@@ -325,10 +457,27 @@ int XmlElement::ParseAttrs(const string& attlst)
 			}
 			break;
 		case tag:
-			if (c == '=')
+			if (isspace(c))
+				state = es;
+			else if (c == '=')
 				state = oq;
+			else if (c == '"' || c == '\'')
+			{
+illegal_char:
+				ostringstream ostr;
+				ostr << "Error (" << root_->line_ << ") attribute \'" << tmptag << "\' illegal character defined";
+				if (!root_->inclusion_.empty())
+					ostr << " in inclusion " << root_->inclusion_ << " (" << root_->incline_ << ')';
+				throw XMLError(ostr.str());
+			}
 			else
 				tmptag += c;
+			break;
+		case es:
+			if (c == '=')
+				state = oq;
+			else if (c == '"' || c == '\'')
+				goto illegal_char;
 			break;
 		case oq:
 			if (c == '"' || c == '\'')
@@ -336,21 +485,28 @@ int XmlElement::ParseAttrs(const string& attlst)
 				comchar = c;
 				state = value;
 			}
+			else if (!isspace(c))
+				goto illegal_char;
 			break;
 		case value:
 			if (c != comchar)
 				tmpval += c;
 			else
 			{
+				if (tmptag.find_first_of("\\\'\"=") != string::npos)
+					goto illegal_char;
 				if (tmptag != "docpath")
 				{
 					if (!attrs_)
 						attrs_ = new XmlAttrs;
 					if (!attrs_->insert(XmlAttrs::value_type(tmptag, InplaceXlate(tmpval))).second)
 					{
-						++errors_;
-						cerr << "Error (" << line_ << ") attribute \'" << tmptag
-							<< "\' already defined; ignoring" << endl;
+						++root_->errors_;
+						ostringstream ostr;
+						ostr << "Error (" << root_->line_ << ") attribute \'" << tmptag << "\' already defined";
+						if (!root_->inclusion_.empty())
+							ostr << " in inclusion " << root_->inclusion_ << " (" << root_->incline_ << ')';
+						throw XMLError(ostr.str());
 					}
 				}
 				tmptag.clear();
@@ -374,16 +530,19 @@ XmlElement::~XmlElement()
 	delete attrs_;
 	delete decl_;
 
-	if (children_)
+	if (children_ && !_was_include)
 		for_each (children_->begin(), children_->end(), free_ptr<Delete2ndPairObject<> >());
 	delete children_;
 	delete ordchildren_;
 }
 
 //-----------------------------------------------------------------------------------------
-XmlElement *XmlElement::find(const string& what, bool ignorecase, const string *atag,
-	const string *aval, const char delim)	// find 1st matching entity
+const XmlElement *XmlElement::find(const string& what, bool ignorecase, const string *atag,
+	const string *aval, const char delim)	const// find 1st matching entity
 {
+	if (what.compare(0, 2, "//") == 0) 	// root based
+		return root_->find(what.substr(2), ignorecase, atag, aval, delim);
+
 	if (ignorecase ? what % tag_ : what == tag_)
 		return atag && aval && !findAttrByValue(*atag, *aval) ? 0 : this;
 
@@ -408,8 +567,11 @@ XmlElement *XmlElement::find(const string& what, bool ignorecase, const string *
 
 //-----------------------------------------------------------------------------------------
 int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
-	const string *atag, const string *aval, const char delim) 	// find all matching entities
+	const string *atag, const string *aval, const char delim) const	// find all matching entities
 {
+	if (what.compare(0, 2, "//") == 0) 	// root based
+		return root_->find(what.substr(2), eset, ignorecase, atag, aval, delim);
+
 	if (ignorecase ? what % tag_ : what == tag_)
 	{
 		if (atag && aval && !findAttrByValue(*atag, *aval))
@@ -439,7 +601,7 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 }
 
 //-----------------------------------------------------------------------------------------
-bool XmlElement::findAttrByValue(const string& what, const string& val)
+bool XmlElement::findAttrByValue(const string& what, const string& val) const
 {
 	if (attrs_)
 	{
@@ -472,28 +634,15 @@ const string& XmlElement::InplaceXlate (string& what)
 	RegMatch match;
 	while (rCX_.SearchString(match, what, 2) == 2)
 	{
-		string whatv, replv;
-		rCX_.SubExpr(match, what, whatv, 1);
-		if (whatv == "amp")
-			replv = "&";
-		else if (whatv == "lt")
-			replv = "<";
-		else if (whatv == "gt")
-			replv = ">";
-		else if (whatv == "apos")
-			replv = "'";
-		else if (whatv == "quot")
-			replv = "\"";
-		else
-			break;	// cannot be reached
-
-		rCX_.Replace(match, what, replv);
+		string whatv;
+		rCX_.SubExpr(match, what, whatv, 0, 1);
+		rCX_.Replace(match, what, stringtochar_.find_value(whatv)); // not found character entity replaces string with '?'
 	}
 
 	while (rCE_.SearchString(match, what, 2) == 2)	// translate Numeric character references &#x12d; or &#12;
 	{
 		string whatv;
-		rCE_.SubExpr(match, what, whatv, 1);
+		rCE_.SubExpr(match, what, whatv, 0, 1);
 		istringstream istr(whatv);
 		int value;
 		if (whatv[0] == 'x')
@@ -510,15 +659,39 @@ const string& XmlElement::InplaceXlate (string& what)
 		rCE_.Replace(match, what, oval);
 	}
 
+   if (rEn_.SearchString(match, what, 2) == 2)  // environment var replacement ${XXX}
+   {
+      string whatv;
+      rEn_.SubExpr(match, what, whatv, 0, 1);
+      const string result(getenv(whatv.c_str()));
+      if (!result.empty())
+         rEn_.Replace(match, what, result);
+   }
+
+   if (rEv_.SearchString(match, what, 2) == 2)  // evaluate shell command and replace with result !{XXX}
+   {
+      string whatv;
+      rEv_.SubExpr(match, what, whatv, 0, 1);
+      string result;
+      if (exec_cmd(whatv, result))
+         rEv_.Replace(match, what, result);
+   }
+
 	return what;
 }
 
 //-----------------------------------------------------------------------------------------
 XmlElement *XmlElement::Factory(const string& fname)
 {
-	Reset();
 	ifstream ifs(fname.c_str());
-	return ifs ? new XmlElement(ifs, 0, 0, 0, fname.c_str()) : 0;
+
+#ifdef _MSC_VER
+	stringstream buffer;
+	buffer << ifs.rdbuf();
+   return ifs ? new XmlElement(buffer, 0, 0, 0, 0, fname.c_str()) : 0;
+#else
+	return ifs ? new XmlElement(ifs, 0, 0, 0, 0, fname.c_str()) : 0;
+#endif
 }
 
 //-----------------------------------------------------------------------------------------

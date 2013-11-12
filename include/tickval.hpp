@@ -1,49 +1,112 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_TICKVAL_HPP_
-#define _FIX8_TICKVAL_HPP_
+# define _FIX8_TICKVAL_HPP_
 
 //-------------------------------------------------------------------------------------------------
+#ifndef _MSC_VER
 #include <sys/time.h>
+#else
+#include <pthread.h>
+#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8
 {
 
+#ifdef _MSC_VER
+
+#define CLOCK_REALTIME 0
+
+inline LARGE_INTEGER getFILETIMEoffset()
+{
+	SYSTEMTIME s = { 1970, 1, 1, 0, 0, 0, 0 };
+	FILETIME f;
+	LARGE_INTEGER t;
+
+	SystemTimeToFileTime(&s, &f);
+	t.QuadPart = f.dwHighDateTime;
+	t.QuadPart <<= 32;
+	t.QuadPart |= f.dwLowDateTime;
+	return t;
+}
+
+inline int clock_gettime(int X, struct timespec *tv)
+{
+    LARGE_INTEGER           t;
+    FILETIME				f;
+    double                  nanoseconds;
+    //static LARGE_INTEGER    offset;
+    static double           frequencyToNanoseconds;
+    static int              initialized = 0;
+    static BOOL             usePerformanceCounter = 0;
+
+    if (!initialized) {
+        LARGE_INTEGER performanceFrequency;
+        initialized = 1;
+        usePerformanceCounter = QueryPerformanceFrequency(&performanceFrequency);
+        if (usePerformanceCounter) {
+            //QueryPerformanceCounter(&offset);
+            frequencyToNanoseconds = (double)performanceFrequency.QuadPart / 1000000000.;
+        } else {
+            //offset = getFILETIMEoffset();
+            frequencyToNanoseconds = 10.;
+        }
+    }
+    if (usePerformanceCounter) QueryPerformanceCounter(&t);
+    else {
+        GetSystemTimeAsFileTime(&f);
+        t.QuadPart = f.dwHighDateTime;
+        t.QuadPart <<= 32;
+        t.QuadPart |= f.dwLowDateTime;
+    }
+
+    //t.QuadPart -= offset.QuadPart;
+    nanoseconds = (double)t.QuadPart / frequencyToNanoseconds;
+    t.QuadPart = nanoseconds;
+    tv->tv_sec = t.QuadPart / 1000000000;
+    tv->tv_nsec = t.QuadPart % 1000000000;
+    return (0);
+}
+
+#endif // _MSC_VER
+
 //---------------------------------------------------------------------------------------------------
-/// High resolution time in nanosecond ticks.
+/// High resolution time in nanosecond ticks. Thread safe.
 class Tickval
 {
 public:
@@ -54,12 +117,18 @@ public:
 	static const ticks billion = thousand * million;
 
 private:
+	// long long not available in 32 bit ff atomic_long_t
+// #if defined __WORDSIZE && (__WORDSIZE == 32) && (MPMC_SYSTEM == MPMC_FF)
+// 	ticks _value;
+// #else
+	//f8_atomic<ticks> _value;
 	ticks _value;
+// #endif
 
 public:
 	/*! Ctor.
 	  \param settonow if true, construct with current time */
-	Tickval(bool settonow=false) : _value() { if (settonow) now(); }
+	Tickval(bool settonow=false) : _value(settonow ? _cvt(get_timespec()) : noticks) {}
 
 	/*! Copy Ctor. */
 	Tickval(const Tickval& from) : _value(from._value) {}
@@ -69,8 +138,18 @@ public:
 	explicit Tickval(const ticks& from) : _value(from) {}
 
 	/*! Ctor.
+	  \param secs seconds
+	  \param nsecs nanoseconds */
+	Tickval(const time_t secs, const long nsecs)
+      : _value(billion * static_cast<ticks>(secs) + static_cast<ticks>(nsecs)) {}
+
+	/*! Ctor.
 	  \param from construct from timespec object */
 	explicit Tickval(const timespec& from) : _value(_cvt(from)) {}
+
+	/*! Ctor.
+	  \param from construct from time_t value */
+	explicit Tickval(const time_t from) : _value(static_cast<ticks>(from) * billion) {}
 
 	/*! Assignment operator. */
 	Tickval& operator=(const Tickval& that)
@@ -91,7 +170,7 @@ public:
 
 	/*! Get the raw tick value (nanosecs).
 	  \return raw ticks */
-	const ticks& get_ticks() const { return _value; }
+	ticks get_ticks() const { return _value; }
 
 	/*! Assign the current time to this object.
 	  \return current object */
@@ -99,15 +178,15 @@ public:
 
 	/*! Get the current number of elapsed seconds
 	  \return value in seconds */
-	unsigned secs() const { return static_cast<unsigned>(_value / billion); }
+	time_t secs() const { return static_cast<time_t>(_value / billion); }
 
 	/*! Get the current number of elapsed milliseconds (excluding secs)
 	  \return value in milliseconds */
-	unsigned msecs() const { return static_cast<unsigned>(_value % thousand); }
+	unsigned msecs() const { return static_cast<unsigned>((_value % billion) / million); }
 
 	/*! Get the current number of elapsed microseconds (excluding secs)
 	  \return value in microseconds */
-	unsigned usecs() const { return static_cast<unsigned>(_value % million); }
+	unsigned usecs() const { return static_cast<unsigned>((_value % billion) / thousand); }
 
 	/*! Get the current number of elapsed nanoseconds (excluding secs)
 	  \return value in nanoseconds */
@@ -116,6 +195,15 @@ public:
 	/*! Get the current tickval as a double.
 	  \return value as a double */
 	double todouble() const { return static_cast<double>(_value) / billion; }
+
+	/*! Generate a timespec object
+	  \return timespec */
+	static timespec get_timespec()
+	{
+		timespec ts;
+		clock_gettime(CLOCK_REALTIME, &ts);
+		return ts;
+	}
 
 	/*! Generate a Tickval object, constructed with the current time.
 	  \return Tickval */
@@ -134,6 +222,34 @@ public:
 		clock_gettime(CLOCK_REALTIME, &ts);
 		return to = ts;
 	}
+
+	/*! Get tickval as struct timespec
+	  \return result */
+	struct timespec as_ts() const
+	{
+		const timespec ts = { secs(), static_cast<long>(nsecs()) };
+		return ts;
+	}
+
+	/*! Get tickval as struct tm
+	  \param result ref to struct tm to fill
+	  \return ptr to result */
+	struct tm *as_tm(struct tm& result) const
+	{
+		const time_t insecs(secs());
+#ifdef _MSC_VER
+		gmtime_s(&result, &insecs);
+		return &result;
+#else
+		return gmtime_r(&insecs, &result);
+#endif
+	}
+
+	/*! Set from secs/nsecs
+	  \param secs seconds
+	  \param nsecs nanoseconds */
+	void set(const time_t secs, const long nsecs)
+      { _value = billion * static_cast<ticks>(secs) + static_cast<ticks>(nsecs); }
 
 	/*! Not operator
 	  \return true if no ticks (0) */
@@ -227,7 +343,7 @@ private:
 	/*! Convert timespec to ticks.
 	  \param from timespec to convert
 	  \return resulting ticks */
-	ticks _cvt(const timespec& from)
+	static ticks _cvt(const timespec& from)
 	{
 		return billion * static_cast<ticks>(from.tv_sec) + static_cast<ticks>(from.tv_nsec);
 	}

@@ -1,0 +1,116 @@
+<?xml version="1.0" standalone='no'?>
+
+<manpage name="f8c" section="1" app="fix8" date="@CONFIGURE_SDATE@" desc="Compile FIX xml schema" built="@CONFIGURE_TIME@$">
+
+<synopsis>
+<cmd>f8c [-NVbcdfhiknoprstvx] &lt;input xml schema&gt;</cmd>
+</synopsis>
+
+<description>
+<p>The fix8 compiler (f8c) takes a quickfix xml schema and an optional FIXT schema and generates a number of c++
+header and source files. You include these files in your FIX application to build your FIX interface.</p>
+</description>
+
+<options>
+
+<option>
+<p><opt>-N,--nounique</opt></p>
+<optdesc><p>do not enforce unique field parsing (default false).</p></optdesc>
+</option>
+
+<option>
+<p><opt>-V,--verbose</opt></p>
+<optdesc><p>be more verbose when processing.</p></optdesc>
+</option>
+
+<option>
+<p><opt>-b,--binary</opt></p>
+<optdesc><p>print binary/ABI details, exit.</p></optdesc>
+</option>
+
+<option>
+<p><opt>-c,--classes <arg>&lt;server|client&gt;</arg></opt></p>
+<optdesc><p>generate user session classes (default no) for client or server.</p></optdesc>
+</option>
+
+<option>
+<p><opt>-h,--help</opt></p>
+<optdesc><p>Print help screen.</p></optdesc>
+</option>
+
+<option>
+<p><opt>-v,--version</opt></p>
+<optdesc><p>Print application version, exit.</p></optdesc></option>
+
+<option>
+<p><opt>-f,--fields</opt></p>
+<optdesc><p>generate code for all defined fields even if they are not used in any message (default no).</p></optdesc>
+</option>
+
+<option>
+<p><opt>-d,--dump</opt></p>
+<optdesc><p>dump 1st pass parsed source xml file, exit.</p></optdesc>
+</option>
+
+<option>
+<p><opt>-i,--ignore</opt></p>
+<optdesc><p>ignore errors, attempt to generate code anyhow (default no).</p></optdesc>
+</option>
+
+<option>
+<p><opt>-k,--keep</opt></p>
+<optdesc><p>retain generated temporaries even if there are errors (.*.tmp)</p></optdesc>
+</option>
+
+<option>
+<p><opt>-n,--namespace <arg>&lt;ns&gt;</arg></opt></p>
+<optdesc><p>namespace to place generated code in (default FIXMmvv e.g. FIX4400).</p></optdesc>
+</option>
+
+<option>
+<p><opt>-o,--odir <arg>&lt;dir&gt;</arg></opt></p>
+<optdesc><p>output target directory (default ./).</p></optdesc>
+</option>
+
+<option>
+<p><opt>-p,--prefix <arg>&lt;prefix&gt;</arg></opt></p>
+<optdesc><p>output filename prefix (default Myfix).</p></optdesc>
+</option>
+
+<option>
+<p><opt>-r,--retain</opt></p>
+<optdesc><p>retain 1st pass code (default delete).</p></optdesc>
+</option>
+
+<option>
+<p><opt>-t,--tabwidth</opt></p>
+<optdesc>
+<p>tabwidth for generated code (default 3 spaces).</p>
+</optdesc>
+</option>
+
+<option>
+<p><opt>-x,--fixt <arg>&lt;file&gt;</arg></opt></p>
+<optdesc>
+<p>For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file.</p></optdesc>
+</option>
+
+</options>
+
+<section name = "Examples">
+<p>f8c -p Texfix -n TEX myfix.xml</p>
+<p>f8c -rp Texfix -n TEX -x ../schema/FIXT11.xml myfix.xml</p>
+<p>f8c -p Texfix -n TEX -c client -x ../schema/FIXT11.xml myfix.xml</p>
+</section>
+
+<section name = "Author">
+<p>fix8 was written by David L. Dight
+&lt;fix@fix8.org&gt;</p><p>You will find the newest version of
+fix8 at <url href="http://www.fix8.org"/></p>
+</section>
+
+<section name = "Bugs">
+<p>You should report them to author above.</p>
+</section>
+
+</manpage>

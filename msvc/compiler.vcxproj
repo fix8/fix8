@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7B5E1760-9591-4E90-861A-9C2611DDFAC9}</ProjectGuid>
+    <RootNamespace>compiler</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="root-debug.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="root-release.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>f8cd</TargetName>
+    <OutDir>$(SolutionDir)..\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>f8c</TargetName>
+    <OutDir>$(SolutionDir)..\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>../compiler;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(TBB)/include;$(Boost);$(Boost)/boost;$(pthreads)/pthreads.2;$(zlib)/include;$(GetOpt)/getopt_mb_uni_vc10_dll</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>runtimed.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(GetOpt)\bin\$(Configuration)\dll\getopt.dll $(OutDir)\getopt.dll</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../compiler;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(TBB)/include;$(Boost);$(Boost)/boost;$(pthreads)/pthreads.2;$(zlib)/include;$(GetOpt)/getopt_mb_uni_vc10_dll</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>runtime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(GetOpt)\bin\$(Configuration)\dll\getopt.dll $(OutDir)\getopt.dll</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\compiler\f8c.cpp" />
+    <ClCompile Include="..\compiler\f8cutils.cpp" />
+    <ClCompile Include="..\compiler\f8precomp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\configuration.hpp" />
+    <ClInclude Include="..\include\connection.hpp" />
+    <ClInclude Include="..\include\consolemenu.hpp" />
+    <ClInclude Include="..\include\coroutine.hpp" />
+    <ClInclude Include="..\include\f8config.h" />
+    <ClInclude Include="..\include\f8exception.hpp" />
+    <ClInclude Include="..\include\f8includes.hpp" />
+    <ClInclude Include="..\include\f8types.hpp" />
+    <ClInclude Include="..\include\f8utils.hpp" />
+    <ClInclude Include="..\include\ff_wrapper.hpp" />
+    <ClInclude Include="..\include\field.hpp" />
+    <ClInclude Include="..\include\gzstream.hpp" />
+    <ClInclude Include="..\include\hypersleep.hpp" />
+    <ClInclude Include="..\include\logger.hpp" />
+    <ClInclude Include="..\include\message.hpp" />
+    <ClInclude Include="..\include\mpmc.hpp" />
+    <ClInclude Include="..\include\persist.hpp" />
+    <ClInclude Include="..\include\session.hpp" />
+    <ClInclude Include="..\include\sessionwrapper.hpp" />
+    <ClInclude Include="..\include\thread.hpp" />
+    <ClInclude Include="..\include\tickval.hpp" />
+    <ClInclude Include="..\include\timer.hpp" />
+    <ClInclude Include="..\include\traits.hpp" />
+    <ClInclude Include="..\include\usage.hpp" />
+    <ClInclude Include="..\include\xml.hpp" />
+    <ClInclude Include="..\include\yield.hpp" />
+    <ClInclude Include="..\compiler\f8c.hpp" />
+    <ClInclude Include="..\compiler\f8cstatic.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,47 +1,52 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
-fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_FIELD_HPP_
-#define _FIX8_FIELD_HPP_
+# define _FIX8_FIELD_HPP_
 
 #include <Poco/Timestamp.h>
 #include <Poco/DateTime.h>
-#include <Poco/DateTimeParser.h>
-#include <Poco/DateTimeFormatter.h>
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
+
+//-------------------------------------------------------------------------------------------------
+// Misc consts
+const size_t MAX_MSGTYPE_FIELD_LEN(32);
+const size_t HEADER_CALC_OFFSET(32);
 
 //-------------------------------------------------------------------------------------------------
 /// Int2Type idiom. Kudos to Andrei Alexandrescu
@@ -61,7 +66,7 @@ struct RealmBase
 	const void *_range;
 	RealmType _dtype;
 	FieldTrait::FieldType _ftype;
-	const size_t _sz;
+	const int _sz;
 	const char * const *_descriptions;
 
 	/*! Check if this value is a member/in range of the domain set.
@@ -74,6 +79,13 @@ struct RealmBase
 		const T *rng(static_cast<const T*>(_range));
 		return _dtype == dt_set ? std::binary_search(rng, rng + _sz, what) : *rng <= what && what <= *(rng + 1);
 	}
+
+	/*! Get the realm value with the specified index
+	  \tparam T domain type
+	  \param idx of value
+	  \return reference to the associated value */
+	template<typename T>
+	const T& get_rlm_val(const int idx) const { return *(static_cast<const T*>(_range) + idx); }
 
 	/*! Get the realm index of this value in the domain set.
 	  \tparam T domain type
@@ -95,7 +107,7 @@ struct RealmBase
 /// The base field class (ABC) for all fields
 class BaseField
 {
-	unsigned short _fnum;
+	const unsigned short _fnum;
 
 protected:
 	const RealmBase *_rlm;
@@ -113,10 +125,15 @@ public:
 	  \return fix tag id (field num) */
 	unsigned short get_tag() const { return _fnum; }
 
-	/*! Print this field to the supplied stream.
+	/*! Print this field to the supplied stream. Used by the Fix8 printer.
 	  \param os stream to print to
 	  \return the stream */
 	virtual std::ostream& print(std::ostream& os) const = 0;
+
+	/*! Print this field to the supplied buffer. Used for encoding.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	virtual size_t print(char *to) const = 0;
 
 	/*! Copy this field.
 	  \return the copy */
@@ -133,13 +150,26 @@ public:
 	T& from() { return *static_cast<T*>(this); }
 
 	/*! Encode this field to the supplied stream.
-	  \param os stream to print to
+	  \param os stream to encode to
 	  \return the number of bytes encoded */
 	size_t encode(std::ostream& os) const
 	{
 		const std::ios::pos_type where(os.tellp());
-		os << _fnum << '=' << *this << default_field_separator;
+		os << _fnum << default_assignment_separator << *this << default_field_separator;
 		return os.tellp() - where;
+	}
+
+	/*! Encode this field to the supplied stream. ULL version.
+	  \param to buffer to encode to
+	  \return the number of bytes encoded */
+	size_t encode(char *to) const
+	{
+		const char *cur_ptr(to);
+		to += itoa(_fnum, to);
+		*to++ = default_assignment_separator;
+		to += print(to);
+		*to++ = default_field_separator;
+		return to - cur_ptr;
 	}
 
 	/*! Get the realm pointer for this field.
@@ -155,47 +185,12 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// ABC field template. Partial specialisations of this class use Int2Type idiom.
+/// Field template. There will ONLY be template specialisations of this class using Int2Type idiom.
 /*! \tparam T field type
     \tparam field field number (fix tag) */
 template<typename T, const unsigned short field>
-struct Field : public BaseField
+class Field : public BaseField
 {
-	/// The FIX fieldID (tag number).
-	static unsigned short get_field_id() { return field; }
-
-	///Ctor.
-	Field () : BaseField(field) {}
-
-	/*! Construct from string ctor.
-	  \param from string to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field(const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
-
-	///Dtor.
-	virtual ~Field() {}
-
-	/*! Get field value.
-	  \return value (T) */
-	virtual const T& get() const = 0;
-
-	/*! Get field value.
-	  \return value (T) */
-	virtual const T& operator()() const = 0;
-
-	/*! Get field value.
-	  \param from value to set
-	  \return origianl value (T) */
-	virtual const T& set(const T& from) = 0;
-
-	/*! Set the value from a string.
-	  \param from value to set
-	  \return original value (T) */
-	virtual const T& set_from_raw(const f8String& from) = 0;
-
-	/*! Copy (clone) this field.
-	  \return copy of field */
-	virtual Field *copy() = 0;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -219,13 +214,19 @@ public:
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const int val) : BaseField(field), _value(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const int val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atoi<int>(from.c_str())) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atoi<int>(from)) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -242,11 +243,11 @@ public:
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
-	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
+	bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 
 	/*! Get the realm index of this value in the domain set.
 	  \return the index in the domain set of this value */
-	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	/*! Get field value.
 	  \return value (int) */
@@ -268,12 +269,106 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << _value; }
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { return itoa(_value, to); }
+};
+
+//-------------------------------------------------------------------------------------------------
+/// Partial specialisation for char * field type.
+/*! \tparam field field number (fix tag) */
+template<const unsigned short field>
+class Field<char *, field> : public BaseField
+{
+protected:
+	const char *_value;
+
+public:
+	/// The FIX fieldID (tag number).
+	static unsigned short get_field_id() { return field; }
+
+	/// Ctor.
+	Field () : BaseField(field) {}
+
+	/// Copy Ctor.
+	/* \param from field to copy */
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
+
+	/// Assignment operator.
+	/*! \param that field to assign from
+	    \return field */
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
+
+	/// Equivalence operator.
+	/*! \param that field to compare to
+	    \return true if equal */
+	bool operator==(const char *that) const { return ::strcmp(_value, that) == 0; }
+
+	/// Inequivalence operator.
+	/*! \param that field to compare to
+	    \return true if unequal */
+	bool operator!=(const char *that) const { return ::strcmp(_value, that); }
+
+	/// Dtor.
+	virtual ~Field() {}
+
+	/*! Check if this value is a member/in range of the domain set.
+	  \return true if in the set or no domain available */
+	bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
+
+	/*! Get the realm index of this value in the domain set.
+	  \return the index in the domain set of this value */
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
+
+	/*! Get field value.
+	  \return value (f8String) */
+	const char *get() const { return _value; }
+
+	/*! Get field value.
+	  \return value (f8String) */
+	const char *operator()() const { return _value; }
+
+	/*! Get field value.
+	  \param from value to set
+	  \return original value (f8String) */
+	const char *set(const char *from) { return _value = from; }
+
+	/*! Set the value from a string.
+	  \param from value to set
+	  \return original value (f8String) */
+	const char *set_from_raw(const char *from) { return _value = from; }
+
+	/*! Copy (clone) this field.
+	  \return copy of field */
+	Field *copy() { return new Field(*this); }
+
+	/*! Print this field to the supplied stream. Used to format for FIX output.
+	  \param os stream to insert to
+	  \return stream */
+	std::ostream& print(std::ostream& os) const { return os << _value; }
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { ::strcpy(to, _value); return ::strlen(_value); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -296,6 +391,11 @@ public:
 	/* \param from field to copy */
 	Field (const Field& from) : BaseField(field), _value(from._value) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from) {}
+
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
@@ -316,11 +416,11 @@ public:
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
-	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
+	bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 
 	/*! Get the realm index of this value in the domain set.
 	  \return the index in the domain set of this value */
-	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	/*! Get field value.
 	  \return value (f8String) */
@@ -342,12 +442,17 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << _value; }
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { return _value.copy(to, _value.size()); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -358,26 +463,39 @@ class Field<double, field> : public BaseField
 {
 protected:
 	double _value;
+	int _precision;
 
 public:
 	/// The FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
-	Field () : BaseField(field), _value() {}
+	Field () : BaseField(field), _value(), _precision(DEFAULT_PRECISION) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
-	Field (const Field& from) : BaseField(field, from._rlm), _value(from._value) {}
+	Field (const Field& from) : BaseField(field, from._rlm), _value(from._value), _precision(from._precision) {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const double& val) : BaseField(field), _value(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const double& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val), _precision(DEFAULT_PRECISION) {}
+
+	/*! Value ctor.
+	  \param val value to set
+	  \param prec precision digits
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const double& val, const int prec, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val), _precision(prec) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from.c_str())) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from.c_str())), _precision(DEFAULT_PRECISION) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(fast_atof(from)), _precision(DEFAULT_PRECISION) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -389,43 +507,52 @@ public:
 		return *this;
 	}
 
+	/*! Set the output precision
+	  \param prec precision digits */
+	void set_precision(const int prec) { _precision = prec; }
+
 	/// Dtor.
 	virtual ~Field() {}
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
-	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
+	bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 
 	/*! Get the realm index of this value in the domain set.
 	  \return the index in the domain set of this value */
-	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	/*! Get field value.
 	  \return value (double) */
-	virtual const double& get() const { return _value; }
+	const double& get() const { return _value; }
 
 	/*! Get field value.
 	  \return value (double) */
-	virtual const double& operator()() const { return _value; }
+	const double& operator()() const { return _value; }
 
 	/*! Get field value.
 	  \param from value to set
 	  \return original value (int) */
-	virtual const double& set(const double& from) { return _value = from; }
+	const double& set(const double& from) { return _value = from; }
 
 	/*! Set the value from a string.
 	  \param from value to set
 	  \return original value (double) */
-	virtual const double& set_from_raw(const f8String& from) { return _value = fast_atof(from.c_str()); }
+	const double& set_from_raw(const f8String& from) { return _value = fast_atof(from.c_str()); }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	virtual std::ostream& print(std::ostream& os) const { return os << _value; }
+	std::ostream& print(std::ostream& os) const { return os << _value; }
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { return modp_dtoa(_value, to, _precision); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -443,18 +570,24 @@ public:
 	/// Ctor.
 	Field () : BaseField(field), _value() {}
 
-	/// Copy Ctor.
-	/* \param from field to copy */
+	/*! Copy Ctor.
+	  \param from field to copy */
 	Field (const Field& from) : BaseField(field, from._rlm), _value(from._value) {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const char& val) : BaseField(field), _value(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(from[0]) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(*from) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -467,15 +600,15 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Check if this value is a member/in range of the domain set.
 	  \return true if in the set or no domain available */
-	virtual bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
+	bool is_valid() const { return _rlm ? _rlm->is_valid(_value) : true; }
 
 	/*! Get the realm index of this value in the domain set.
 	  \return the index in the domain set of this value */
-	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value) : -1; }
 
 	/*! Get field value.
 	  \return value (char) */
@@ -497,37 +630,17 @@ public:
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << _value; }
-};
 
-//-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_MonthYear> MonthYear;
-
-/// Partial specialisation for MonthYear field type.
-/*! \tparam field field number (fix tag) */
-template<const unsigned short field>
-class Field<MonthYear, field> : public Field<f8String, field>
-{
-public:
-	/// Ctor.
-	Field () : Field<f8String, field>(field) {}
-
-	/// Copy Ctor.
-	/* \param from field to copy */
-	Field (const Field& from) : Field<f8String, field>(from) {}
-
-	/*! Construct from string ctor.
-	  \param from string to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
-
-	/// Dtor.
-	virtual ~Field() {}
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { *to = _value; return 1; }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -551,9 +664,183 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
+
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
+
+//-------------------------------------------------------------------------------------------------
+inline void format0(int data, char *to, int width)
+{
+	while(width-- > 0)
+	{
+		to[width] = data % 10 + '0';
+		data /= 10;
+	}
+}
+
+inline size_t parseDate(const char *begin, size_t len, int &to)
+{
+	const char *bsv(begin);
+	while(len-- > 0)
+		to = (to << 3) + (to << 1) + (*begin++ - '0');
+	return begin - bsv;
+}
+
+/// Based on Ghulam M. Babar's "mktime slow? use custom function"
+/// see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
+inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
+{
+   static const int mon_days[] = {0,
+      31,
+      31 + 28,
+      31 + 28 + 31,
+      31 + 28 + 31 + 30,
+      31 + 28 + 31 + 30 + 31,
+      31 + 28 + 31 + 30 + 31 + 30,
+      31 + 28 + 31 + 30 + 31 + 30 + 31,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30,
+      31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30 + 31
+   };
+
+   const int tyears(ltm.tm_year ? ltm.tm_year - 70 : 0); // tm->tm_year is from 1900.
+   const int tdays(ltm.tm_mon ? mon_days[ltm.tm_mon] + (ltm.tm_mday ? ltm.tm_mday - 1 : 0) + tyears * 365 + (tyears + 2) / 4 : 0);
+   return tdays * 86400 + (ltm.tm_hour + utcdiff) * 3600 + ltm.tm_min * 60 + ltm.tm_sec;
+}
+
+enum TimeIndicator { _time_only, _time_with_ms, _short_date_only, _date_only, _sec_only, _with_ms };
+
+/*! Format Tickval into a string.
+	_time_only, the format string will be "HH:MM:SS"
+	_time_with_ms, the format string will be "HH:MM:SS.mmm"
+	_short_date_only, the format string will be "YYYYMM"
+	_date_only, the format string will be "YYYYMMDD"
+	_sec_only, the format string will be "YYYYMMDD-HH:MM:SS"
+	_with_ms, the format string will be "YYYYMMDD-HH:MM:SS.mmm"
+  \param tickval input Tickval object
+  \param to output buffer, should make sure there is enough space reserved
+  \param ind indicating whether need millisecond or not
+  \return length of formatted string */
+inline size_t date_time_format(const Tickval& tickval, char *to, const TimeIndicator ind)
+{
+   tm result;
+	tickval.as_tm(result);
+	const char *start(to);
+
+	if (ind > _time_with_ms)
+	{
+		format0(result.tm_year + 1900, to, 4);
+		to += 4;
+		format0(result.tm_mon + 1, to, 2);
+		to += 2;
+		if (ind == _short_date_only)
+			return to - start;
+		format0(result.tm_mday, to, 2);
+		to += 2;
+		if (ind == _date_only)
+			return to - start;
+		*to++ = '-';
+	}
+
+	format0(result.tm_hour, to, 2);
+	to += 2;
+	*to++ = ':';
+	format0(result.tm_min, to, 2);
+	to += 2;
+	*to++ = ':';
+	format0(result.tm_sec, to, 2);
+	to += 2;
+
+	if (ind == _time_with_ms || ind == _with_ms)
+	{
+		*to++ = '.';
+		format0(tickval.msecs(), to, 3);
+		to += 3;
+	}
+
+	return to - start;
+}
+
+/*! Decode a DateTime string into ticks
+  \param ptr input DateTime string
+  \param len length of string
+  \return ticks decoded */
+inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
+{
+	Tickval::ticks result(Tickval::noticks);
+   int millisecond(0);
+   tm tms = {};
+
+	ptr += parseDate(ptr, 4, tms.tm_year);
+	tms.tm_year -= 1900;
+	ptr += parseDate(ptr, 2, tms.tm_mon);
+	--tms.tm_mon;
+	ptr += parseDate(ptr, 2, tms.tm_mday);
+	ptr += parseDate(++ptr, 2, tms.tm_hour);
+	ptr += parseDate(++ptr, 2, tms.tm_min);
+	ptr += parseDate(++ptr, 2, tms.tm_sec);
+   switch(len)
+   {
+	case 21: //_with_ms: // 19981231-23:59:59.123
+      parseDate(++ptr, 3, millisecond);
+      result = millisecond * Tickval::million; // drop through
+   case 17: //: // 19981231-23:59:59
+      result += time_to_epoch(tms) * Tickval::billion;
+      break;
+   default:
+      break;
+   }
+
+   return result;
+}
+
+/*! Decode a DateTime string into ticks
+  \param ptr input DateTime string
+  \param len length of string
+  \return ticks decoded */
+inline Tickval::ticks time_parse(const char *ptr, size_t len)
+{
+	Tickval::ticks result(Tickval::noticks);
+   int millisecond(0);
+   tm tms = {};
+
+	ptr += parseDate(ptr, 2, tms.tm_hour);
+	ptr += parseDate(++ptr, 2, tms.tm_min);
+	ptr += parseDate(++ptr, 2, tms.tm_sec);
+   switch(len)
+   {
+	case 12: // 23:59:59.123
+      parseDate(++ptr, 3, millisecond);
+      result = millisecond * Tickval::million; // drop through
+   case 8: // 23:59:59
+      result += time_to_epoch(tms) * Tickval::billion;
+      break;
+   default:
+      break;
+   }
+
+   return result;
+}
+
+inline Tickval::ticks date_parse(const char *ptr, size_t len)
+{
+   tm tms = {};
+
+	ptr += parseDate(ptr, 4, tms.tm_year);
+	tms.tm_year -= 1900;
+	ptr += parseDate(ptr, 2, tms.tm_mon);
+	--tms.tm_mon;
+	if (len == 8)
+		parseDate(ptr, 2, tms.tm_mday);
+	return time_to_epoch(tms) * Tickval::billion;
+}
 
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_UTCTimestamp> UTCTimestamp;
@@ -563,36 +850,38 @@ typedef EnumType<FieldTrait::ft_UTCTimestamp> UTCTimestamp;
 template<const unsigned short field>
 class Field<UTCTimestamp, field> : public BaseField
 {
-	static const std::string _fmt_sec, _fmt_ms;
-	enum { _sec_only = 17, _with_ms = 21 };
-	Poco::DateTime _value;
-	int _tzdiff;
+	Tickval _value;
 
 public:
 	/// The FIX fieldID (tag number).
 	static unsigned short get_field_id() { return field; }
 
 	/// Ctor.
-	Field () : BaseField(field), _tzdiff() {}
+	Field () : BaseField(field), _value(true) {}
 
-	/// Copy Ctor.
-	/* \param from field to copy */
-	Field (const Field& from) : BaseField(field), _value(from._value), _tzdiff(from._tzdiff) {}
+	/*! Copy Ctor.
+	  \param from field to copy */
+	Field (const Field& from) : BaseField(field), _value(from._value) {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const Poco::DateTime& val) : BaseField(field), _value(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const Tickval& val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(val) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field)
-	{
-		if (from.size() == _sec_only) // 19981231-23:59:59
-			Poco::DateTimeParser::parse(_fmt_sec, from, _value, _tzdiff);
-		else if (from.size() == _with_ms) // 19981231-23:59:59.123
-			Poco::DateTimeParser::parse(_fmt_ms, from, _value, _tzdiff);
-	}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(date_time_parse(from.data(), from.size())) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(date_time_parse(from, ::strlen(from))) {}
+
+	/*! Construct from tm struct
+	  \param from string to construct field from
+	  \param rlm tm struct with broken out values */
+	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -602,47 +891,44 @@ public:
 		if (this != &that)
 		{
 			_value = that._value;
-			_tzdiff = that._tzdiff;
 		}
 		return *this;
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
-
-	/*! Set field to the supplied value.
-	  \param from value to set
-	  \return the new value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
 
 	/*! Set field to the supplied value.
 	  \param from value to set */
-	void set(const Poco::DateTime& from) { _value = from; }
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
-		{ return os << Poco::DateTimeFormatter::format(_value, _fmt_sec); }
+   {
+      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      print(buf);
+      return os << buf;
+   }
 
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { return date_time_format(_value, to, _with_ms); }
 };
-
-template<const unsigned short field>
-const std::string Field<UTCTimestamp, field>::_fmt_sec("%Y%m%d-%H:%M:%S");
-template<const unsigned short field>
-const std::string Field<UTCTimestamp, field>::_fmt_ms("%Y%m%d-%H:%M:%S.%i");
 
 //-------------------------------------------------------------------------------------------------
 typedef EnumType<FieldTrait::ft_UTCTimeOnly> UTCTimeOnly;
@@ -652,7 +938,7 @@ typedef EnumType<FieldTrait::ft_UTCTimeOnly> UTCTimeOnly;
 template<const unsigned short field>
 class Field<UTCTimeOnly, field> : public BaseField
 {
-	Poco::DateTime _value;
+	Tickval _value;
 
 public:
 	/// The FIX fieldID (tag number).
@@ -668,7 +954,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(time_parse(from.data(), from.size())) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(time_parse(from, ::strlen(from))) {}
+
+	/*! Construct from tm struct
+	  \param from string to construct field from
+	  \param rlm tm struct with broken out values */
+	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -681,29 +977,38 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
 
-	/*! Get field value.
-	  \param from value to set
-	  \return original value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }
+	std::ostream& print(std::ostream& os) const
+   {
+      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      print(buf);
+      return os << buf;
+   }
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { return date_time_format(_value, to, _time_with_ms); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -714,7 +1019,7 @@ typedef EnumType<FieldTrait::ft_UTCDateOnly> UTCDateOnly;
 template<const unsigned short field>
 class Field<UTCDateOnly, field> : public BaseField
 {
-	Poco::DateTime _value;
+	Tickval _value;
 
 public:
 	/// The FIX fieldID (tag number).
@@ -730,7 +1035,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from.data(), from.size())) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
+
+	/*! Construct from tm struct
+	  \param from string to construct field from
+	  \param rlm tm struct with broken out values */
+	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -743,29 +1058,38 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
 
-	/*! Get field value.
-	  \param from value to set
-	  \return original value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }
+	std::ostream& print(std::ostream& os) const
+   {
+      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      print(buf);
+      return os << buf;
+   }
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { return date_time_format(_value, to, _date_only); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -776,7 +1100,89 @@ typedef EnumType<FieldTrait::ft_LocalMktDate> LocalMktDate;
 template<const unsigned short field>
 class Field<LocalMktDate, field> : public BaseField
 {
-	Poco::DateTime _value;
+	size_t _sz;
+	Tickval _value;
+
+public:
+	/// The FIX fieldID (tag number).
+	static unsigned short get_field_id() { return field; }
+
+	/// Ctor.
+	Field () : BaseField(field) {}
+
+	/// Copy Ctor.
+	/* \param from field to copy */
+	Field (const Field& from) : BaseField(field),  _sz(from._sz), _value(from._value) {}
+
+	/*! Construct from string ctor.
+	  \param from string to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _sz(from.size()), _value(date_parse(from.data(), _sz)) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _sz(::strlen(from)), _value(date_parse(from, _sz)) {}
+
+	/*! Construct from tm struct
+	  \param from string to construct field from
+	  \param rlm tm struct with broken out values */
+	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _sz(8), _value(time_to_epoch(from) * Tickval::billion) {}
+
+	/// Assignment operator.
+	/*! \param that field to assign from
+	    \return field */
+	Field& operator=(const Field& that)
+	{
+		if (this != &that)
+			_value = that._value;
+		return *this;
+	}
+
+	/// Dtor.
+	~Field() {}
+
+	/*! Get field value.
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
+
+	/*! Get field value.
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
+
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
+
+	/*! Copy (clone) this field.
+	  \return copy of field */
+	Field *copy() { return new Field(*this); }
+
+	/*! Print this field to the supplied stream. Used to format for FIX output.
+	  \param os stream to insert to
+	  \return stream */
+	std::ostream& print(std::ostream& os) const
+   {
+      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      print(buf);
+      return os << buf;
+   }
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { return date_time_format(_value, to, _sz == 6 ? _short_date_only : _date_only); }
+};
+
+//-------------------------------------------------------------------------------------------------
+typedef EnumType<FieldTrait::ft_MonthYear> MonthYear;
+
+/// Partial specialisation for MonthYear field type.
+/*! \tparam field field number (fix tag) */
+template<const unsigned short field>
+class Field<MonthYear, field> : public BaseField
+{
+	Tickval _value;
 
 public:
 	/// The FIX fieldID (tag number).
@@ -792,7 +1198,17 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from.data(), from.size())) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
+
+	/*! Construct from tm struct
+	  \param from string to construct field from
+	  \param rlm tm struct with broken out values */
+	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -805,29 +1221,38 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
 
-	/*! Get field value.
-	  \param from value to set
-	  \return original value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }
+	std::ostream& print(std::ostream& os) const
+   {
+      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      print(buf);
+      return os << buf;
+   }
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { return date_time_format(_value, to, _date_only); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -838,7 +1263,7 @@ typedef EnumType<FieldTrait::ft_TZTimeOnly> TZTimeOnly;
 template<const unsigned short field>
 class Field<TZTimeOnly, field> : public BaseField
 {
-	Poco::DateTime _value;
+	Tickval _value;
 
 public:
 	/// The FIX fieldID (tag number).
@@ -854,7 +1279,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -867,28 +1297,33 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
-	/*! Get field value.
-	  \param from value to set
-	  \return original value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
+
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }
+	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { return 0; }  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -899,7 +1334,7 @@ typedef EnumType<FieldTrait::ft_TZTimestamp> TZTimestamp;
 template<const unsigned short field>
 class Field<TZTimestamp, field> : public BaseField
 {
-	Poco::DateTime _value;
+	Tickval _value;
 
 public:
 	/// The FIX fieldID (tag number).
@@ -915,7 +1350,12 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -928,29 +1368,33 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& get() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& get() const { return _value; }
 
 	/*! Get field value.
-	  \return value (Poco::DateTime) */
-	const Poco::DateTime& operator()() const { return _value; }
+	  \return value Tickval& */
+	const Tickval& operator()() const { return _value; }
 
-	/*! Get field value.
-	  \param from value to set
-	  \return original value (Poco::DateTime) */
-	const Poco::DateTime& set(const f8String& from) { return _value = from; }
+	/*! Set field to the supplied value.
+	  \param from value to set */
+	void set(const Tickval& from) { _value = from; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
-	std::ostream& print(std::ostream& os) const { return os; }
+	std::ostream& print(std::ostream& os) const { return os; }  	// TODO
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { return 0; }  	// TODO
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -966,8 +1410,9 @@ public:
 	Field () : Field<int, field>() {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const unsigned& val) : Field<int, field>(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const unsigned val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -976,10 +1421,15 @@ public:
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from.c_str(), rlm) {}
+
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -995,8 +1445,9 @@ public:
 	Field () : Field<int, field>() {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const unsigned& val) : Field<int, field>(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1007,8 +1458,13 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1024,8 +1480,9 @@ public:
 	Field () : Field<int, field>() {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const unsigned& val) : Field<int, field>(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1036,8 +1493,13 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1053,8 +1515,9 @@ public:
 	Field () : Field<int, field>() {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const unsigned& val) : Field<int, field>(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1065,8 +1528,13 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1082,8 +1550,9 @@ public:
 	Field () : Field<int, field>() {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const unsigned& val) : Field<int, field>(val) {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const unsigned& val, const RealmBase *rlm=0) : Field<int, field>(val, rlm) {}
 
 	/// Copy Ctor.
 	/* \param from field to copy */
@@ -1094,8 +1563,13 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : Field<int, field>(from, rlm) {}
+
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1116,8 +1590,9 @@ public:
 	Field () : BaseField(field) {}
 
 	/*! Value ctor.
-	  \param val value to set */
-	Field (const char val) : BaseField(field), _value(toupper(val) == 'Y') {}
+	  \param val value to set
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char val, const RealmBase *rlm=0) : BaseField(field, rlm), _value(toupper(val) == 'Y') {}
 
 	/*! Value ctor.
 	  \param val value to set */
@@ -1132,6 +1607,11 @@ public:
 	  \param rlm pointer to the realmbase for this field (if available) */
 	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(toupper(from[0]) == 'Y') {}
 
+	/*! Construct from char * ctor.
+	  \param from char * to construct field from
+	  \param rlm pointer to the realmbase for this field (if available) */
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field, rlm), _value(toupper(*from) == 'Y') {}
+
 	/// Assignment operator.
 	/*! \param that field to assign from
 	    \return field */
@@ -1143,7 +1623,7 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Field() {}
+	~Field() {}
 
 	/*! Get field value.
 	  \return value (bool) */
@@ -1155,7 +1635,7 @@ public:
 
 	/*! Get the realm index of this value in the domain set.
 	  \return the index in the domain set of this value */
-	virtual int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value ? 'Y' : 'N') : -1; }
+	int get_rlm_idx() const { return _rlm ? _rlm->get_rlm_idx(_value ? 'Y' : 'N') : -1; }
 
 	/*! Get field value.
 	  \param from value to set
@@ -1165,96 +1645,103 @@ public:
 	/*! Set the value from a string.
 	  \param from value to set
 	  \return original value (bool) */
-	bool set_from_raw(const f8String& from) { return toupper(from[0]) == 'Y'; }
+	bool set_from_raw(const f8String& from) { return _value = toupper(from[0]) == 'Y'; }
 
 	/*! Copy (clone) this field.
 	  \return copy of field */
-	virtual Field *copy() { return new Field(*this); }
+	Field *copy() { return new Field(*this); }
 
 	/*! Print this field to the supplied stream. Used to format for FIX output.
 	  \param os stream to insert to
 	  \return stream */
 	std::ostream& print(std::ostream& os) const { return os << (_value ? 'Y' : 'N'); }
+
+	/*! Print this field to the supplied buffer.
+	  \param to buffer to print to
+	  \return number bytes encoded */
+	size_t print(char *to) const { *to = _value ? 'Y' : 'N'; return 1; }
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_float> Qty;
-typedef EnumType<FieldTrait::ft_float> Amt;
-typedef EnumType<FieldTrait::ft_float> price;
-typedef EnumType<FieldTrait::ft_float> PriceOffset;
-typedef EnumType<FieldTrait::ft_float> Percentage;
+// C++11 will permit proper type aliasing
+// typedef EnumType<FieldTrait::ft_float> Qty;
+// typedef EnumType<FieldTrait::ft_float> Amt;
+// typedef EnumType<FieldTrait::ft_float> price;
+// typedef EnumType<FieldTrait::ft_float> PriceOffset;
+// typedef EnumType<FieldTrait::ft_float> Percentage;
 
-/// Partial specialisation for Qty field type.
-/*! \tparam field field number (fix tag) */
-template<const unsigned short field>
-class Field<Qty, field> : public Field<double, field>
+typedef double Qty;
+typedef double Amt;
+typedef double price;
+typedef double PriceOffset;
+typedef double Percentage;
+
+//-------------------------------------------------------------------------------------------------
+// C++11 will permit proper type aliasing
+// typedef EnumType<FieldTrait::ft_string> MultipleCharValue;
+// typedef EnumType<FieldTrait::ft_string> MultipleStringValue;
+// typedef EnumType<FieldTrait::ft_string> country;
+// typedef EnumType<FieldTrait::ft_string> currency;
+// typedef EnumType<FieldTrait::ft_string> Exchange;
+// typedef EnumType<FieldTrait::ft_string> Language;
+// typedef EnumType<FieldTrait::ft_string> XMLData;
+
+typedef f8String MultipleCharValue;
+typedef f8String MultipleStringValue;
+typedef f8String country;
+typedef f8String currency;
+typedef f8String Exchange;
+typedef f8String Language;
+typedef f8String XMLData;
+
+//-------------------------------------------------------------------------------------------------
+/// Field metadata structures
+class Inst
 {
+   template<typename T>
+	struct _gen
+	{
+		static BaseField *_make(const char *from, const RealmBase *db, const int)
+			{ return new T(from, db); }
+	};
+
+   template<typename T, typename R>
+	struct _gen_realm
+	{
+		static BaseField *_make_realm(const char *from, const RealmBase *db, const int rv)
+		{
+			return !db || rv < 0 || rv >= db->_sz || db->_dtype != RealmBase::dt_set
+				? new T(from, db) : new T(db->get_rlm_val<R>(rv), db);
+		}
+	};
+
+	static BaseField *dummy(const char *from, const RealmBase *db, const int) { return 0; }
+
 public:
-	/// The FIX fieldID (tag number).
-	static unsigned short get_field_id() { return field; }
+	Inst() : _do(dummy) {}
 
-	/// Ctor.
-	Field () : Field<double, field>() {}
+	BaseField *(&_do)(const char *from, const RealmBase *db, const int);
 
-	/*! Value ctor.
-	  \param val value to set */
-	Field (const double& val) : Field<double, field>(val) {}
+   template<typename T>
+   Inst(Type2Type<T>) : _do(_gen<T>::_make) {}
 
-	/*! Construct from string ctor.
-	  \param from string to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<double, field>(from, rlm) {}
-
-	/// Dtor.
-	virtual ~Field() {}
+   template<typename T, typename R>
+   Inst(Type2Types<T, R>) : _do(_gen_realm<T, R>::_make_realm) {}
 };
 
-//-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_string> MultipleCharValue;
-typedef EnumType<FieldTrait::ft_string> MultipleStringValue;
-typedef EnumType<FieldTrait::ft_string> country;
-typedef EnumType<FieldTrait::ft_string> currency;
-typedef EnumType<FieldTrait::ft_string> Exchange;
-typedef EnumType<FieldTrait::ft_string> Language;
-typedef EnumType<FieldTrait::ft_string> XMLData;
-
-/// Partial specialisation for MultipleCharValue field type.
-/*! \tparam field field number (fix tag) */
-template<const unsigned short field>
-class Field<MultipleCharValue, field> : public Field<f8String, field>
+template<>
+struct Inst::_gen<void *>
 {
-public:
-	/*! Value ctor.
-	  \param val value to set */
-	Field (const f8String& val) : Field<f8String, field>(val) {}
-
-	/*! Construct from string ctor.
-	  \param from string to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
-
-	/// Dtor.
-	virtual ~Field() {}
+	static BaseField *_make(const char *from, const RealmBase *db, const int)
+		{ return 0; }
 };
 
-//-------------------------------------------------------------------------------------------------
-/// Field metadata structure
 struct BaseEntry
 {
-	BaseField *(*_create)(const f8String& str, const RealmBase* rlm);
+   const Inst _create;
 	const RealmBase *_rlm;
 	const char *_name, *_comment;
 };
-
-/*! Construct a BaseEntry object.
-  \param be BaseEntry object (target)
-  \param create pointer to create function
-  \param rlm pointer to the realmbase for this field (if available)
-  \param name Field name
-  \param comment Field comments
-  \return BaseEntry object */
-BaseEntry *BaseEntry_ctor(BaseEntry *be, BaseField *(*create)(const f8String&, const RealmBase*),
-	const RealmBase *rlm, const char *name, const char *comment);
 
 //-------------------------------------------------------------------------------------------------
 // Common (administrative) msgtypes
@@ -1265,6 +1752,13 @@ const f8String Common_MsgType_REJECT("3");
 const f8String Common_MsgType_SEQUENCE_RESET("4");
 const f8String Common_MsgType_LOGOUT("5");
 const f8String Common_MsgType_LOGON("A");
+const char Common_MsgByte_HEARTBEAT('0');
+const char Common_MsgByte_TEST_REQUEST('1');
+const char Common_MsgByte_RESEND_REQUEST('2');
+const char Common_MsgByte_REJECT('3');
+const char Common_MsgByte_SEQUENCE_RESET('4');
+const char Common_MsgByte_LOGOUT('5');
+const char Common_MsgByte_LOGON('A');
 
 //-------------------------------------------------------------------------------------------------
 // Common FIX field numbers
@@ -1321,6 +1815,9 @@ typedef Field<Boolean, Common_ResetSeqNumFlag> reset_seqnum_flag;
 typedef Field<int, Common_HeartBtInt> heartbeat_interval;
 typedef Field<int, Common_EncryptMethod> encrypt_method;
 
+//-------------------------------------------------------------------------------------------------
+
 } // FIX8
 
 #endif // _FIX8_FIELD_HPP_
+/* vim: set ts=3 sw=3 tw=0 noet :*/

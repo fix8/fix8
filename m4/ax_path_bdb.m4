@@ -12,7 +12,7 @@ AC_DEFUN([AX_PATH_BDB], [
 
   # Add --with-bdb option to configure.
   AC_ARG_WITH([bdb],
-    [AC_HELP_STRING([--with-bdb=DIR],
+    [AS_HELP_STRING([--with-bdb=DIR],
                     [Berkeley DB installation directory])])
 
   # Check if --with-bdb was specified.
@@ -382,7 +382,7 @@ int main(int argc,char **argv)
     AX_COMPARE_VERSION([$ax_path_bdb_env_confirm_lib_VERSION],[eq],[$1],[
       ax_path_bdb_env_confirm_lib_ok=yes
     ])
-  ],[],[])
+  ],[],[AC_MSG_FAILURE([test BDB program execution failed])])
 
   dnl # restore environment
   LIBS="$ax_path_bdb_env_confirm_lib_save_LIBS"

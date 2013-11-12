@@ -14,16 +14,11 @@
   <messages>
     <message name="NewOrderSingle" msgtype="D" msgcat="app">
       <field name="RawData" required="N" />
-		<group name="NoOrderQtyData" required="N">
-			<component name="OrderQtyDataEmbed" required="N" />
-		</group>
+		<component name="OrderQtyDataEmbed" required="N" />
       <field name="ResetSeqNumFlag" required="N" />
     </message>
   </messages>
   <components>
-    <component name="OrderQtyDataEmbed">
-		<component name="OrderQtyData" required="N" />
-    </component>
     <component name="OrderQtyData">
       <field name="OrderQty" required="N" />
       <field name="CashOrderQty" required="N" />
@@ -34,15 +29,14 @@
 			<component name='UnderlyingInstrument' required='N' />
 		</group>
     </component>
+    <component name="OrderQtyDataEmbed">
+		<component name="OrderQtyData" required="N" />
+    </component>
 	 <component name='UnderlyingInstrument'>
 		<field name='UnderlyingSymbol' required='N' />
 		<field name='UnderlyingSymbolSfx' required='N' />
 		<field name='UnderlyingSecurityID' required='N' />
 		<field name='UnderlyingSecurityIDSource' required='N' />
-		<group name='NoUnderlyingSecurityAltID' required='N'>
-			<field name='UnderlyingSecurityAltID' required='N' />
-			<field name='UnderlyingSecurityAltIDSource' required='N' />
-		</group>
     </component>
   </components>
   <fields>

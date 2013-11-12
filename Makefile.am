@@ -1,46 +1,50 @@
 #############################################################################################
-# Fix8 is released under the New BSD License.
+# Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
-# Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-# All rights reserved.
+# Fix8 Open Source FIX Engine.
+# Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 #
-# Redistribution and use in source and binary forms, with or without modification, are
-# permitted provided that the following conditions are met:
+# Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+# GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+# version 3 of the License, or (at your option) any later version.
 #
-#   * Redistributions of source code must retain the above copyright notice, this list of
-#	 	conditions and the following disclaimer.
-#   * Redistributions in binary form must reproduce the above copyright notice, this list
-#	 	of conditions and the following disclaimer in the documentation and/or other
-#		materials provided with the distribution.
-#   * Neither the name of the author nor the names of its contributors may be used to
-#	 	endorse or promote products derived from this software without specific prior
-#		written permission.
-#   * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-#	   in their name without written permission from fix8.org
+# Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+# even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-# OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-# MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-# THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-# SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-# OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-# HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-# TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-# EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+# If not, see <http://www.gnu.org/licenses/>.
+#
+# BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+# THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+# COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+# KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+# WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+# THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+# YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+#
+# IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+# HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+# ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+# CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+# NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+# THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+# HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #
 #############################################################################################
+AUTOMAKE_OPTIONS = foreign dist-bzip2 dist-zip
 
-SUBDIRS = runtime compiler test
+SUBDIRS = runtime compiler test util
 
 if USEDOXYGEN
 SUBDIRS += doc
 endif
 
+if USEGTEST
+SUBDIRS += utests
+endif
+
 #############################################################################################
 ACLOCAL_AMFLAGS = -I m4
-
-EXTRA_DIST = doc/fix8.doxygen doc/mainpage.doxygen \
-				 schema/*.xml schema/QUICKFIX-LICENCE include/*.hpp
 
 $(distdir).tar.gz:
 	make dist
@@ -55,4 +59,57 @@ src-release:
 
 check-release:
 	md5sum -c $(distdir).md5sum
+
+pkgincludedir = ${prefix}/include/fix8
+ffincdir = include/ff
+ffincludes = ${ffincdir}/*.hpp ${ffincdir}/*.h ${ffincdir}/d/*.hpp ${ffincdir}/platforms/*.h ${ffincdir}/atomic/*.h \
+								  ${ffincdir}/ocl/*.hpp ${ffincdir}/ocl/*.h
+pkginclude_HEADERS = include/*.hpp include/f8config.h
+
+ffdir = ${prefix}/include/fix8/ff
+sharedir = ${prefix}/share/fix8
+mandir = doc/man
+fix8mandir = ${sharedir}/man/man1
+testdir = ${sharedir}/test
+fix8htmldir = $(sharedir)/html
+schemadir = ${sharedir}/schema
+
+xmltoman=$(mandir)/xmltoman
+PROCESS_MAN_PAGES = $(mandir)/f8c.1 $(mandir)/seqedit.1
+
+INSTALL_DATA_LOCAL_TEST = test/hf_client.xml test/myfix_client.xml test/hf_client_include.xml \
+	test/hf_server.xml test/myfix_server.xml
+
+INSTALL_DATA_HTML_DOC = doc/html/*.js doc/html/*.html doc/html/*.png doc/html/*.css \
+	doc/fix8.doxygen doc/mainpage.doxygen doc/fix8.footer.html
+
+INSTALL_DATA_HTML_SEARCH_DOC = doc/html/search/*.js doc/html/search/*.html doc/html/search/*.png \
+	doc/html/search/*.css
+
+INSTALL_DATA_LOCAL_SCHEMA = schema/*.xml schema/QUICKFIX-LICENCE
+
+install-data-local:
+	@$(mkinstalldirs) $(DESTDIR)$(testdir) $(DESTDIR)$(schemadir)
+	@$(mkinstalldirs) $(DESTDIR)$(ffdir)/d $(DESTDIR)$(ffdir)/platforms $(DESTDIR)$(ffdir)/atomic $(DESTDIR)$(ffdir)/ocl
+	@$(mkinstalldirs) $(DESTDIR)$(fix8mandir)
+	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_TEST) $(DESTDIR)$(testdir)
+	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_SCHEMA) $(DESTDIR)$(schemadir)
+	$(INSTALL_DATA) ${ffincdir}/*.hpp ${ffincdir}/*.h $(DESTDIR)$(ffdir)
+	$(INSTALL_DATA) ${ffincdir}/d/*.hpp $(DESTDIR)$(ffdir)/d
+	$(INSTALL_DATA) ${ffincdir}/ocl/*.hpp ${ffincdir}/ocl/*.h $(DESTDIR)$(ffdir)/ocl
+	$(INSTALL_DATA) ${ffincdir}/platforms/*.h $(DESTDIR)$(ffdir)/platforms
+	$(INSTALL_DATA) ${ffincdir}/atomic/*.h $(DESTDIR)$(ffdir)/atomic
+	@for manfile in $(PROCESS_MAN_PAGES) ; do \
+		$(xmltoman) $$manfile.xml | gzip > $$manfile.gz ; \
+		$(INSTALL_DATA) $$manfile.gz $(DESTDIR)$(fix8mandir); \
+	done
+if USEDOXYGEN
+	@$(mkinstalldirs) $(DESTDIR)$(fix8htmldir) $(DESTDIR)$(fix8htmldir)/search
+	$(INSTALL_DATA) $(INSTALL_DATA_HTML_DOC) $(DESTDIR)$(fix8htmldir)
+	$(INSTALL_DATA) $(INSTALL_DATA_HTML_SEARCH_DOC) $(DESTDIR)$(fix8htmldir)/search
+endif
+
+EXTRA_DIST = $(xmltoman) fix8.spec doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen \
+	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) version.sh ${ffincludes} \
+	bootstrap README.md LICENSE
 

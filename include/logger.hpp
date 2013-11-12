@@ -1,41 +1,44 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _FIX8_LOGGER_HPP_
 #define _FIX8_LOGGER_HPP_
 
-#include <tbb/concurrent_queue.h>
+//-------------------------------------------------------------------------------------------------
+#include <list>
 #include <Poco/Net/IPAddress.h>
 #include <Poco/Net/DatagramSocket.h>
 
@@ -43,8 +46,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-/// File descriptor output streambuf
-class fdoutbuf : public std::streambuf // inspiration from Josuttis N.M.
+/// File descriptor output streambuf, inspiration from Josuttis N.M.
+class fdoutbuf : public std::streambuf
 {
 protected:
    int fd;
@@ -70,35 +73,29 @@ public:
    virtual ~fdoutbuf () {}
 };
 
-extern "C"
-{
-	FILE *cfpopen(char *command, char *type);
-	int cfpclose(FILE *pp);
-}
-
 /// File pointer stream
 class fptrostream : public std::ostream
 {
    FILE *fptr_;
-   bool cf_;
 
 protected:
    fdoutbuf buf_;
 
 public:
 	/*! Ctor.
-	    \param fptr FILE*
-	    \param cf if true, us cfpopen instead of popen */
-   fptrostream(FILE *fptr, bool cf=true) : std::ostream(&buf_), fptr_(fptr), cf_(cf), buf_(fileno(fptr)) {}
+	    \param fptr FILE* */
+   fptrostream(FILE *fptr)
+		: std::ostream(&buf_), fptr_(fptr), buf_(fileno(fptr)) {}
 
 	/// Dtor.
    virtual ~fptrostream ()
-	{
-		if (cf_)
-			cfpclose(fptr_);
-		else
-			pclose(fptr_);
-	}
+   {
+#ifdef _MSC_VER
+	   _pclose(fptr_);
+#else
+	   pclose(fptr_);
+#endif
+   }
 
 	/*! Get the filno (fd)
 	    \return fd */
@@ -106,8 +103,8 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Socket output streambuf
-class bcoutbuf : public std::streambuf // inspiration from Josuttis N.M.
+/// Socket output streambuf, inspiration from Josuttis N.M.
+class bcoutbuf : public std::streambuf
 {
 protected:
 	Poco::Net::DatagramSocket *_sock;
@@ -151,21 +148,36 @@ public:
 //-------------------------------------------------------------------------------------------------
 class Tickval;
 
-/// Thread delegated async logging class
+
+//-------------------------------------------------------------------------------------------------
+#ifdef _MSC_VER
+class Comparator
+{
+public:
+	bool operator()( const pthread_t& lhs, const pthread_t& rhs ) const
+	{
+		return (lhs.p < rhs.p);
+	}
+};
+#endif
+
+/// dthread delegated async logging class
 class Logger
 {
-	Thread<Logger> _thread;
-	std::ostringstream _buf;
+	dthread<Logger> _thread;
+	std::list<std::string> _buffer;
 
 public:
-	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, num_flags };
+	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, buffer, inbound, outbound, num_flags };
 	enum { rotation_default = 5, max_rotation = 64} ;
 	typedef ebitset<Flags> LogFlags;
 
 protected:
-	tbb::mutex _mutex;
+	f8_mutex _mutex;
 	LogFlags _flags;
 	std::ostream *_ofs;
+	size_t _lines;
+	f8_atomic<bool> _stopping;
 
 	struct LogElement
 	{
@@ -177,6 +189,7 @@ protected:
 		LogElement(const pthread_t tid, const std::string& str, const unsigned val=0)
 			: _tid(tid), _str(str), _val(val), _when(true) {}
 		LogElement() : _tid(), _val(), _when(true) {}
+		LogElement(const LogElement& from) : _tid(from._tid), _str(from._str), _val(from._val), _when(from._when) {}
 		LogElement& operator=(const LogElement& that)
 		{
 			if (this != &that)
@@ -190,16 +203,14 @@ protected:
 		}
 	};
 
-	tbb::concurrent_bounded_queue<LogElement> _msg_queue;
+	f8_concurrent_queue<LogElement> _msg_queue;
 	unsigned _sequence, _osequence;
 
-	typedef std::
-#if defined HAS_TR1_UNORDERED_MAP
-		tr1::unordered_map
+#ifdef _MSC_VER
+	typedef std::map<pthread_t, char, Comparator> ThreadCodes;
 #else
-		map
+	typedef std::map<pthread_t, char> ThreadCodes;
 #endif
-		<pthread_t, char> ThreadCodes;
 	ThreadCodes _thread_codes;
 
 	typedef std::map<char, pthread_t> RevThreadCodes;
@@ -208,7 +219,11 @@ protected:
 public:
 	/*! Ctor.
 	    \param flags ebitset flags */
-	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _ofs(), _sequence(), _osequence() { _thread.Start(); }
+	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _ofs(), _lines(), _sequence(), _osequence()
+	{
+		_stopping = false;
+		_thread.start();
+	}
 
 	/// Dtor.
 	virtual ~Logger() { delete _ofs; }
@@ -222,10 +237,16 @@ public:
 	    \param val optional value for the logger to use
 	    \return true on success */
 	bool send(const std::string& what, const unsigned val=0)
-		{ return _msg_queue.try_push (LogElement(pthread_self(), what, val)) == 0; }
+	{
+		const LogElement le(pthread_self(), what, val);
+		return _msg_queue.try_push (le) == 0;
+	}
+
+	/// Kill the logging thread.
+	void kill() { _thread.kill(0); }
 
 	/// Stop the logging thread.
-	void stop() { send(std::string()); _thread.Join(); }
+	void stop() {  _stopping = true; send(std::string()); _thread.join(); }
 
 	/*! Perform logfile rotation. Only relevant for file-type loggers.
 		\param force the rotation (even if the file is set to append)
@@ -239,12 +260,20 @@ public:
 	/// string representation of logflags
 	static const std::string _bit_names[];
 
+	/*! Check if the given log flag is set
+		\param flg flag bit to check
+		\return true if set */
+	bool has_flag(const Flags flg) const { return _flags.has(flg); }
+
 	/*! Get the thread code for this thread or allocate a new code if not found.
 		\param tid the thread id of the thread to get a code for */
 	char get_thread_code(pthread_t tid);
 
 	/// Remove dead threads from the thread code cache.
 	void purge_thread_codes();
+
+	/// Flush the buffer
+	virtual void flush();
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -311,7 +340,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-const size_t max_global_filename_length(128);
+const size_t max_global_filename_length(256);
 
 /// A global singleton logger
 /*! \tparam fn actual pathname of logfile
@@ -321,7 +350,11 @@ class SingleLogger : public Singleton<SingleLogger<fn> >, public FileLogger
 {
 public:
 	/// Ctor.
-	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << thread) {}
+	SingleLogger() : FileLogger(fn, LogFlags() << timestamp << sequence << thread
+#if defined BUFFERED_GLOBAL_LOGGING
+		<< buffer
+#endif
+	) {}
 
 	/*! Set the global logfile name.
 	    \param from name to set to */
@@ -336,6 +369,16 @@ public:
 	static bool log(const std::string& what)
 	{
 		return Singleton<SingleLogger<fn> >::instance()->send(what);
+	}
+
+	static void flush_log()
+	{
+		Singleton<SingleLogger<fn> >::instance()->flush();
+	}
+
+	static void stop()
+	{
+		Singleton<SingleLogger<fn> >::instance()->stop();
 	}
 };
 

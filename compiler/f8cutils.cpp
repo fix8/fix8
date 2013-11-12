@@ -1,36 +1,38 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
@@ -42,7 +44,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <set>
 #include <iterator>
 #include <algorithm>
-#include <bitset>
 
 #include <regex.h>
 #include <errno.h>
@@ -60,11 +61,11 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 extern string shortName, odir, prefix;
-extern bool verbose;
+extern bool verbose, nocheck, nowarn, incpath;
 extern string spacer;
 extern const string GETARGLIST;
 extern const CSMap _csMap;
-extern unsigned glob_errors;
+extern unsigned glob_errors, glob_warnings;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
@@ -73,17 +74,26 @@ int load_fix_version (XmlElement& xf, Ctxt& ctxt);
 int load_fields(XmlElement& xf, FieldSpecMap& fspec);
 void process_special_traits(const unsigned short field, FieldTraits& fts);
 int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits& fts,
-	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, const unsigned component);
+	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, const Components& compon);
 int load_messages(XmlElement& xf, MessageSpecMap& mspec, const FieldToNumMap& ftonSpec, FieldSpecMap& fspec);
 void process_ordering(MessageSpecMap& mspec);
-const string flname(const string& from);
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
-void process_group_ordering(const MessageSpec& ms);
+void process_group_ordering(const CommonGroupMap& gm);
+unsigned lookup_component(const Components& compon, const f8String& name);
+string bintoaschex(const string& from);
+
+//-----------------------------------------------------------------------------------------
+namespace
+{
+	const string ident_set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789");
+};
 
 //-----------------------------------------------------------------------------------------
 ostream *open_ofile(const string& odir, const string& fname, string& target)
 {
+	if (!exist(odir))
+		return 0;
 	ostringstream ofs;
 	string odirect(odir);
 	ofs << CheckAddTrailingSlash(odirect) << fname;
@@ -120,7 +130,7 @@ const string& filepart(const string& source, string& where)
 //-----------------------------------------------------------------------------------------
 int load_fix_version (XmlElement& xf, Ctxt& ctxt)
 {
-	XmlElement *fix(xf.find("fix"));
+	const XmlElement *fix(xf.find("fix"));
 	if (!fix)
 	{
 		cerr << "No fix header element found in " << shortName << endl;
@@ -140,7 +150,7 @@ int load_fix_version (XmlElement& xf, Ctxt& ctxt)
 	fix->GetAttr("type", type);
 
 	// fix version: <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
-	ctxt._version = GetValue<int>(major) * 1000 + GetValue<int>(minor) * 100 + GetValue<int>(revision);
+	ctxt._version = get_value<int>(major) * 1000 + get_value<int>(minor) * 100 + get_value<int>(revision);
 	if (type == "FIX" && ctxt._version < 4000)
 	{
 		cerr << "Unsupported FIX version " << ctxt._version << " from fix header in " << shortName << endl;
@@ -172,6 +182,7 @@ void process_special_traits(const unsigned short field, FieldTraits& fts)
 		fts.set(field, FieldTrait::suppress);	// drop through
 	case Common_MsgType:
 		fts.set(field, FieldTrait::automatic);
+		fts.clear(field, FieldTrait::mandatory);	// don't check for presence
 	default:
 		break;
 	}
@@ -199,7 +210,14 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 		if (cnt)
 			ost_cpp << ", ";
 		ost_cpp << *ditr->first;
-		ost_hpp << typestr << itr->second._name << '_' << ditr->second;
+		string transdesc(ditr->second);
+		// replace any illegal c++ identifier characters
+		InPlaceReplaceInSet(ident_set, transdesc, '_');
+		ost_hpp << typestr << itr->second._name << '_';
+		if (transdesc.empty())
+			ost_hpp << *ditr->first;
+		else
+			ost_hpp << transdesc;
 		if (ditr->first->is_range())
 		{
 			if (cnt == 0)
@@ -226,8 +244,8 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 }
 
 //-----------------------------------------------------------------------------------------
-int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
-	FieldSpecMap& fspec, const unsigned subpos)
+int process_message_fields(const std::string& where, const XmlElement *xt, FieldTraits& fts, const FieldToNumMap& ftonSpec,
+	FieldSpecMap& fspec, const Components& compon)
 {
 	unsigned processed(0);
 	XmlElement::XmlSet flist;
@@ -247,9 +265,16 @@ int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits
 					continue;
 				}
 
+				string compname;
+				unsigned compidx((*fitr)->GetAttr("component", compname) ? lookup_component(compon, compname) : 0);
+
 				// add FieldTrait
-				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, subpos)))
-					cerr << shortName << ':' << recover_line(**fitr) << ": error: Could not add trait object " << fname << endl;
+				if (!fts.add(FieldTrait(fs_itr->first, fs_itr->second._ftype, (*fitr)->GetSubIdx(), required == "Y", false, compidx)))
+				{
+					if (!nowarn)
+						cerr << shortName << ':' << recover_line(**fitr) << ": warning: Could not add trait object '" << fname << "' (duplicate ?)" << endl;
+					++glob_warnings;
+				}
 				else
 				{
 					process_special_traits(fs_itr->first, fts);
@@ -269,9 +294,12 @@ int process_message_fields(const std::string& where, XmlElement *xt, FieldTraits
 }
 
 //-----------------------------------------------------------------------------------------
-const string flname(const string& from)
+string bintoaschex(const string& from)
 {
-	return from.substr(0, from.find_first_of('.'));
+	ostringstream result;
+	for (string::const_iterator itr(from.begin()); itr != from.end(); ++itr)
+		result << uppercase << hex << setw(2) << setfill('0') << static_cast<unsigned short>(*itr);
+	return '_' + result.str() + '_';
 }
 
 //-----------------------------------------------------------------------------------------
@@ -287,15 +315,13 @@ void process_ordering(MessageSpecMap& mspec)
 		unsigned cnt(0);
 		for (FieldTraitOrder::iterator fto(mo.begin()); fto != mo.end(); ++fto)
 			(*fto)->_pos = ++cnt;
-
-		process_group_ordering(mitr->second);
 	}
 }
 
 //-----------------------------------------------------------------------------------------
-void process_group_ordering(const MessageSpec& ms)
+void process_message_group_ordering(const GroupMap& gm)
 {
-	for (GroupMap::const_iterator gitr(ms._groups.begin()); gitr != ms._groups.end(); ++gitr)
+	for (GroupMap::const_iterator gitr(gm.begin()); gitr != gm.end(); ++gitr)
 	{
 		FieldTraitOrder go;
 		for (Presence::const_iterator flitr(gitr->second._fields.get_presence().begin());
@@ -307,8 +333,16 @@ void process_group_ordering(const MessageSpec& ms)
 			(*fto)->_pos = ++gcnt;
 
 		if (!gitr->second._groups.empty())
-			process_group_ordering(gitr->second);
+			process_message_group_ordering(gitr->second._groups);
 	}
+}
+
+//-----------------------------------------------------------------------------------------
+void process_group_ordering(const CommonGroupMap& globmap)
+{
+	for (CommonGroupMap::const_iterator gcitr(globmap.begin()); gcitr != globmap.end(); ++gcitr)
+      for (CommonGroups::const_iterator gitr(gcitr->second.begin()); gitr != gcitr->second.end(); ++gitr)
+			process_message_group_ordering(gitr->second._groups);
 }
 
 //-----------------------------------------------------------------------------------------
@@ -316,7 +350,7 @@ void print_usage()
 {
 	UsageMan um("f8c", GETARGLIST, "<input xml schema>");
 	um.setdesc("f8c -- compile FIX xml schema");
-	um.add('o', "odir <file>", "output target directory (default ./)");
+	um.add('o', "odir <dir>", "output target directory (default ./)");
 	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
 	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
 	um.add('f', "fields", "generate code for all defined fields even if they are not used in any message (default no)");
@@ -324,10 +358,16 @@ void print_usage()
 	um.add('i', "ignore", "ignore errors, attempt to generate code anyhow (default no)");
 	um.add('k', "keep", "retain generated temporaries even if there are errors (.*.tmp)");
 	um.add('v', "version", "print version, exit");
+	um.add('I', "info", "print package info, exit");
 	um.add('s', "second", "2nd pass only, no precompile (default both)");
 	um.add('N', "nounique", "do not enforce unique field parsing (default false)");
+	um.add('R', "norealm", "do not generate realm constructed field instantiators (default false)");
+	um.add('W', "nowarn", "suppress warning messages (default false)");
+	um.add('C', "nocheck", "do not embed version checking in generated code (default false)");
 	um.add('r', "retain", "retain 1st pass code (default delete)");
-	um.add('c', "classes <server|client>", "generate user session classes (default no)");
+	um.add('b', "binary", "print binary/ABI details, exit");
+	um.add('P', "incpath", "prefix system include path with \"fix8\" in generated compilation units (default no)");
+	um.add('c', "classes <server|client>", "generate user session classes (default neither)");
 	um.add('t', "tabwidth", "tabwidth for generated code (default 3 spaces)");
 	um.add('x', "fixt <file>", "For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file");
 	um.add('V', "verbose", "be more verbose when processing");
@@ -343,11 +383,11 @@ void print_usage()
 RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype, bool isRange)
 {
 	if (FieldTrait::is_int(ftype))
-		return new TypedRealm<int>(GetValue<int>(from), isRange);
+		return new TypedRealm<int>(get_value<int>(from), isRange);
 	if (FieldTrait::is_char(ftype))
 		return new CharRealm(from[0], isRange);
 	if (FieldTrait::is_float(ftype))
-		return new TypedRealm<double>(GetValue<double>(from), isRange);
+		return new TypedRealm<double>(get_value<double>(from), isRange);
 	if (FieldTrait::is_string(ftype))
 		return new StringRealm(from, isRange);
 	return 0;
@@ -356,16 +396,24 @@ RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype
 //-------------------------------------------------------------------------------------------------
 string insert_year()
 {
-   struct tm tim;
-	time_t now(time(0));
+#ifdef _MSC_VER
+   struct tm *ptim;
+   time_t now(time(0));
+   ptim = localtime (&now);
+#else
+   struct tm tim, *ptim;
+   time_t now(time(0));
    localtime_r(&now, &tim);
+   ptim = &tim;
+#endif
+
 	ostringstream ostr;
-	ostr << setw(2) << (tim.tm_year - 100);
+	ostr << setw(2) << (ptim->tm_year - 100);
 	return ostr.str();
 }
 
 //-------------------------------------------------------------------------------------------------
-void generate_preamble(ostream& to, bool donotedit)
+void generate_preamble(ostream& to, const string& fname, bool donotedit)
 {
 	to << _csMap.find_ref(cs_divider) << endl;
 	string result;
@@ -376,10 +424,34 @@ void generate_preamble(ostream& to, bool donotedit)
 	}
 	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
 	to << _csMap.find_ref(cs_divider) << endl;
+	to << "#include " << (incpath ? "<fix8/" : "<") << "f8config.h" << '>' << endl;
+	if (!nocheck)
+	{
+		to << "#if defined MAGIC_NUM && MAGIC_NUM > " << MAGIC_NUM << 'L' << endl;
+		to << "#error " << fname << " version " << PACKAGE_VERSION << " is out of date. Please regenerate with f8c." << endl;
+		to << "#endif" << endl;
+	}
+	to << _csMap.find_ref(cs_divider) << endl;
+	to << "// " << fname << endl;
+	to << _csMap.find_ref(cs_divider) << endl;
 }
 
 //-------------------------------------------------------------------------------------------------
-ostream& FIX8::operator<<(ostream& os, const FIX8::MessageSpec& what)
+void generate_includes(ostream& to)
+{
+	static const string incfiles[] =
+	{
+		"f8exception.hpp", "hypersleep.hpp", "mpmc.hpp", "f8utils.hpp", "f8types.hpp",
+		"traits.hpp", "tickval.hpp", "field.hpp", "message.hpp"
+	};
+
+	to << "// f8 includes" << endl;
+	for (const string *ptr(incfiles); ptr < incfiles + sizeof(incfiles)/sizeof(string); ++ptr)
+		to << "#include " << (incpath ? "<fix8/" : "<") << *ptr << '>' << endl;
+}
+
+//-------------------------------------------------------------------------------------------------
+ostream& FIX8::operator<<(ostream& os, const MessageSpec& what)
 {
 	os << "Name:" << what._name;
 	if (!what._description.empty())

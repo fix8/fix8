@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<tng>
+	<log 		name="session_log"
+				type="session"
+				filename="|/bin/cat"
+				rotation="5"
+				flags="timestamp|sequence|compress|thread"/>
+
+	<log 		name="session_log_udp"
+				type="session"
+				filename="127.0.0.1:51000"
+				rotation="5"
+				flags="timestamp|sequence|thread"/>
+
+	<log 		name="protocol_log_udp"
+				type="protocol"
+				filename="127.0.0.1:514"
+				flags="sequence|append|direction|inbound|outbound"/>
+
+	<log 		name="protocol_log_with_attributes"
+				type="protocol"
+				filename="./run/hf_client_protocol.log"
+				rotation="5"
+				flags="sequence|append|direction|compress|inbound|outbound"/>
+
+	<log 		name="protocol_log"
+				type="protocol"
+				filename="./run/hf_client2_protocol.log"
+				rotation="5"
+				flags="append|inbound|outbound"/>
+
+	<log 		name="protocol_log_null"
+				type="protocol"
+				filename="/dev/null"/>
+</tng>

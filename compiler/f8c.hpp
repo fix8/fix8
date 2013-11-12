@@ -1,36 +1,38 @@
 //-------------------------------------------------------------------------------------------------
-#if 0
+/*
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-------------------------------------------------------------------------------------------------
 #ifndef _F8_F8C_HPP_
 #define _F8_F8C_HPP_
@@ -113,9 +115,9 @@ struct CharRealm : public TypedRealm<char>
 typedef std::map<RealmObject *, std::string, RealmObject::less> RealmMap;
 
 //-------------------------------------------------------------------------------------------------
-typedef std::map<unsigned, class FieldSpec> FieldSpecMap;
+typedef std::map<unsigned, struct FieldSpec> FieldSpecMap;
 typedef std::map<std::string, unsigned> FieldToNumMap;
-typedef std::map<unsigned, class MessageSpec> GroupMap;
+typedef std::map<unsigned, struct MessageSpec> GroupMap;
 
 //-------------------------------------------------------------------------------------------------
 typedef StaticTable<std::string, FieldTrait::FieldType> BaseTypeMap;
@@ -154,10 +156,11 @@ struct MessageSpec
 {
 	FieldTraits _fields;
 	GroupMap _groups;
+   uint32_t _group_refcnt, _hash;
 	std::string _name, _description, _comment;
 	bool _is_admin;
 
-	MessageSpec(const std::string& name, bool admin=false) : _name(name), _is_admin(admin) {}
+	MessageSpec(const std::string& name, bool admin=false) : _group_refcnt(), _hash(), _name(name), _is_admin(admin) {}
 	virtual ~MessageSpec() {}
 
 	friend std::ostream& operator<<(std::ostream& os, const MessageSpec& what);
@@ -165,6 +168,13 @@ struct MessageSpec
 
 typedef std::map<const std::string, MessageSpec> MessageSpecMap;
 typedef std::multiset<const FieldTrait *, FieldTrait::PosCompare> FieldTraitOrder;
+
+//-----------------------------------------------------------------------------------------
+typedef std::map<uint32_t, struct MessageSpec> CommonGroups;
+typedef std::map<unsigned, CommonGroups> CommonGroupMap;
+
+//-----------------------------------------------------------------------------------------
+typedef std::map<std::string, const XmlElement *> Components;
 
 //-------------------------------------------------------------------------------------------------
 enum comp_str
@@ -189,6 +199,46 @@ typedef StaticTable<comp_str, std::string> CSMap;
 //-----------------------------------------------------------------------------------------
 inline int recover_line(const XmlElement& xf) { return xf.FindAttr("line", xf.GetLine()); }
 
+//-----------------------------------------------------------------------------------------
+class push_dir
+{
+	char _cwd[MAX_FLD_LENGTH];
+
+	push_dir();
+
+public:
+	push_dir(const std::string& to) : _cwd()
+	{
+#ifdef _MSC_VER
+		if (_getcwd(_cwd, MAX_FLD_LENGTH) == 0)
+#else
+		if (::getcwd(_cwd, MAX_FLD_LENGTH) == 0)
+#endif
+		{
+			std::ostringstream ostr;
+			ostr << "Error getting current directory (" << ::strerror(errno) << ')';
+			throw f8Exception(ostr.str());
+		}
+		if (::chdir(to.c_str()))
+		{
+			std::ostringstream ostr;
+			ostr << "Error setting new directory '" << to << "' (" << ::strerror(errno) << ')';
+			throw f8Exception(ostr.str());
+		}
+	}
+
+	~push_dir()
+	{
+		if (_cwd[0] && ::chdir(_cwd))
+		{
+			std::ostringstream ostr;
+			ostr << "Error restoring previous directory '" << _cwd << "' (" << ::strerror(errno) << ')';
+			throw f8Exception(ostr.str());
+		}
+	}
+};
+
 } // FIX8
 
 #endif // _F8_F8C_HPP_
+/* vim: set ts=3 sw=3 tw=0 noet :*/

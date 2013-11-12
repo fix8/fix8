@@ -1,42 +1,51 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
-fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2007-2012, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-----------------------------------------------------------------------------------------
 #ifndef _F8_UTILS_HPP_
-#define _F8_UTILS_HPP_
+# define _F8_UTILS_HPP_
 
-#include <tbb/atomic.h>
-#include <tbb/mutex.h>
+//-----------------------------------------------------------------------------------------
+#include <Poco/DateTime.h>
+
+#ifndef _MSC_VER
+# include <sys/ioctl.h>
+# include <termios.h>
+#endif
+
+#include <regex.h>
 
 namespace FIX8 {
 
@@ -56,6 +65,13 @@ std::string& InPlaceStrToLower(std::string& src);
   \return reference to modified string */
 std::string& CheckAddTrailingSlash(std::string& source);
 
+/*! Replace any character found in the supplied set in string with supplied character
+  \param iset set of characters
+  \param src source string
+  \param repl character to replace
+  \return reference to modified string */
+std::string& InPlaceReplaceInSet(const std::string& iset, std::string& src, const char repl='_');
+
 /*! Find standard error string for given errno.
   \param err errno value
   \param str if not 0, prepend string to error string
@@ -67,22 +83,43 @@ std::string Str_error(const int err, const char *str=0);
   \param tv tickval to use or 0 for current time
   \param dplaces number of decimal places to report seconds (default 6)
   \return reference to target string */
-const std::string& GetTimeAsStringMS(std::string& result, class Tickval *tv=0, const unsigned dplaces=6);
+const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *tv=0, const unsigned dplaces=6);
 
 /*! Trim leading and trailing whitespace from a string, inplace.
   \param source source string
   \param ws string containing whitespace characters to trim out
   \return trimmed string */
-const std::string& trim(std::string& source, const std::string& ws = " \t");
+const std::string& trim(std::string& source, const std::string& ws=" \t");
 
 //----------------------------------------------------------------------------------------
-/*! Rotate a value by the specified number of bits
+/*! Sidestep the warn_unused_result attribute
+  \tparam T type
+  \param val value to ignore */
+template<typename T>
+inline void ignore_value (T val) { (void) val; }
+
+/*! Sidestep the warn_unused_result attribute, ptr version
+  \tparam T type
+  \param val * value to ignore */
+template<typename T>
+inline void ignore_value (T *val) { (void) val; }
+
+//----------------------------------------------------------------------------------------
+/*! Rotate left value the specified number of times
   \tparam T type
   \param val source value
-  \param bits number of bits to rotate by
+  \param times number of times to rotate left
   \return the rotated value */
 template<typename T>
-inline T rotl(const T val, const int bits) { return val << bits | val >> (sizeof(T) * 8 - bits); }
+inline T rotl(const T val, const int times) { return val << times | val >> (sizeof(T) * 8 - times); }
+
+/*! Rotate right value the specified number of times
+  \tparam T type
+  \param val source value
+  \param times number of times to rotate right
+  \return the rotated value */
+template<typename T>
+inline T rotr(const T val, const int times) { return val >> times | val << (sizeof(T) * 8 - times); }
 
 /*! Generate a rot13 hash. No multiplication, algorithm by Serge Vakulenko. See http://vak.ru/doku.php/proj/hash/sources.
   \param str source string
@@ -100,6 +137,13 @@ inline unsigned ROT13Hash (const std::string& str)
 	return hash;
 }
 
+//-------------------------------------------------------------------------------------------------
+inline unsigned rothash(unsigned result, unsigned value)
+{
+   // hash derived from http://stackoverflow.com/users/905902/wildplasser
+   return result ^= (result >> 2) ^ (result << 5) ^ (result << 13) ^ value ^ 0x80001801;
+}
+
 //----------------------------------------------------------------------------------------
 /*! case insensitive std::string == std::string operator
   \tparam _CharT char type
@@ -111,7 +155,13 @@ inline unsigned ROT13Hash (const std::string& str)
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator% (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 		const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
-			{ return strcasecmp(__lhs.c_str(), __rhs.c_str()) == 0; }
+			{
+#ifdef _MSC_VER
+				return _stricmp(__lhs.c_str(), __rhs.c_str()) == 0;
+#else
+				return strcasecmp(__lhs.c_str(), __rhs.c_str()) == 0;
+#endif
+			}
 
 /*! case insensitive char* == std::string operator
   \tparam _CharT char type
@@ -133,7 +183,13 @@ template<typename _CharT, typename _Traits, typename _Alloc>
   \return true if strings are equivalent */
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator% (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs, const _CharT* __rhs)
-		{ return strcasecmp(__lhs.c_str(), __rhs) == 0; }
+		{
+#ifdef _MSC_VER
+			return _stricmp(__lhs.c_str(), __rhs) == 0;
+#else
+			return strcasecmp(__lhs.c_str(), __rhs) == 0;
+#endif
+		}
 
 /*! case insensitive std::string < std::string operator
   \tparam _CharT char type
@@ -145,7 +201,13 @@ template<typename _CharT, typename _Traits, typename _Alloc>
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 		const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
-			{ return strcasecmp(__lhs.c_str(), __rhs.c_str()) < 0; }
+			{
+#ifdef _MSC_VER
+				return _stricmp(__lhs.c_str(), __rhs.c_str()) < 0;
+#else
+				return strcasecmp(__lhs.c_str(), __rhs.c_str()) < 0;
+#endif
+			}
 
 //----------------------------------------------------------------------------------------
 /// C++11 inspired scoped pointer.
@@ -317,7 +379,7 @@ public:
 	  \param offset to start searching
 	  \param num desired sub-expression
 	  \return the target string */
-	std::string& SubExpr(RegMatch& match, const std::string& source, std::string& target, const int offset=0, const int num=0) const
+	static std::string& SubExpr(RegMatch& match, const std::string& source, std::string& target, const int offset=0, const int num=0)
 	{
 		if (num < match.subCnt_)
 			target = source.substr(offset + match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
@@ -331,7 +393,7 @@ public:
 	  \param source source string
 	  \param num desired sub-expression
 	  \return the source string */
-	std::string& Erase(RegMatch& match, std::string& source, const int num=0) const
+	static std::string& Erase(RegMatch& match, std::string& source, const int num=0)
 	{
 		if (num < match.subCnt_)
 			source.erase(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
@@ -344,10 +406,23 @@ public:
 	  \param with replacement string
 	  \param num desired sub-expression
 	  \return the source string */
-	std::string& Replace(RegMatch& match, std::string& source, const std::string& with, const int num=0) const
+	static std::string& Replace(RegMatch& match, std::string& source, const std::string& with, const int num=0)
 	{
 		if (num < match.subCnt_)
 			source.replace(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so, with);
+		return source;
+	}
+
+	/*! Replace a sub-expression with a character.
+	  \param match reference to a RegMatch object
+	  \param source source string
+	  \param with replacement character
+	  \param num desired sub-expression
+	  \return the source string */
+	static std::string& Replace(RegMatch& match, std::string& source, const char with, const int num=0)
+	{
+		if (num < match.subCnt_)
+			source.replace(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so, 1, with);
 		return source;
 	}
 
@@ -397,7 +472,7 @@ struct StringLessThanNoCase
   \param defval value to return if source string is empty
   \return the extracted value. */
 template<typename T>
-inline T GetValue(const std::string& source, T defval)
+inline T get_value(const std::string& source, T defval)
 {
 	if (source.empty())
 		return defval;
@@ -412,10 +487,10 @@ inline T GetValue(const std::string& source, T defval)
   \param source source string
   \return the extracted value. */
 template<typename T>
-inline T GetValue(const std::string& source)
+inline T get_value(const std::string& source)
 {
 	std::istringstream istr(source);
-	T result;
+	T result((T()));
 	istr >> result;
 	return result;
 }
@@ -425,7 +500,7 @@ inline T GetValue(const std::string& source)
   \param source source string
   \return the extracted value. */
 template<>
-inline bool GetValue(const std::string& source)
+inline bool get_value(const std::string& source)
 {
 	if (source.empty())
 		return false;
@@ -439,31 +514,65 @@ inline bool GetValue(const std::string& source)
 #endif
 }
 
-/*! Insert a typed value into a string.
-  \tparam typename
-  \param a source value
-  \param target string to place result
-  \return the inserted string */
-template<typename T>
-inline const std::string& PutValue(const T& a, std::string& target)
-{
-	std::ostringstream ostr;
-	ostr << a;
-	return target = ostr.str();
-}
-
 //----------------------------------------------------------------------------------------
 /*! Decode a string into an int or unsigned.
   \tparam typename
   \param str source string
+  \param term terminating character, default = 0
   \return the converted value */
 template<typename T>
-T fast_atoi(const char *str)
+T fast_atoi(const char *str, const char term='\0')
 {
 	T retval(0);
-	for (; *str; ++str)
+	for (; *str != term; ++str)
 		retval = (retval << 3) + (retval << 1) + *str - '0';
 	return retval;
+}
+
+//----------------------------------------------------------------------------------------
+/**
+ * C++ version 0.4 char* style "itoa":
+ * Written by Lukas Chmela
+ * see http://www.strudel.org.uk/itoa
+ */
+/// Fast itoa
+/*! \tparam T source type
+    \param value source value
+    \param result target
+    \param base base
+    \return size in bytes encoded */
+template<typename T>
+inline size_t itoa(T value, char *result, const T base=10)
+{
+	// check that the base if valid
+	if (base < 2 || base > 36)
+	{
+		*result = 0;
+		return 0;
+	}
+
+	char *ptr(result), *ptr1(result);
+	T tmp_value;
+
+	do
+	{
+		tmp_value = value;
+		value /= base;
+		*ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
+	}
+	while (value);
+
+	// Apply negative sign
+	if (tmp_value < 0)
+		*ptr++ = '-';
+	*ptr-- = 0;
+	while(ptr1 < ptr)
+	{
+		const char tmp_char(*ptr);
+		*ptr-- = *ptr1;
+		*ptr1++ = tmp_char;
+	}
+	return ::strlen(result);
 }
 
 //----------------------------------------------------------------------------------------
@@ -559,6 +668,14 @@ inline double fast_atof (const char *p)
 	return sign * (frac ? (value / scale) : (value * scale));
 }
 
+
+//----------------------------------------------------------------------------------------
+/// Convert doublt to ascii
+/*! \param value the source value
+    \param str the target string
+    \param prec number of precision digits*/
+extern "C" { size_t modp_dtoa(double value, char* str, int prec); }
+
 //----------------------------------------------------------------------------------------
 /// Bitset for enums.
 /*! \tparam T the enum type
@@ -598,12 +715,12 @@ public:
 	/*! Check if an enum is in the set.
 	    \param sbit enum to check
 	    \return integral_type of bits if found */
-	integral_type has(const T sbit) { return a_ & 1 << sbit; }
+	integral_type has(const T sbit) const { return a_ & 1 << sbit; }
 
 	/*! Check if an enum is in the set.
 	    \param sbit enum to check
 	    \return integral_type of bits if found */
-	integral_type operator&(const T sbit) { return a_ & 1 << sbit; }
+	integral_type operator&(const T sbit) const { return a_ & 1 << sbit; }
 
 	/*! Set a bit on or off.
 	    \param sbit enum to set
@@ -618,13 +735,14 @@ public:
 	    \param els number of elements in set
 	    \param sset the set of strings
 	    \param what the string to find and set
+	    \param on set or clear the found bit
 	    \return true if found and set */
-	bool set(const unsigned els, const std::string *sset, const std::string& what)
+	bool set(const unsigned els, const std::string *sset, const std::string& what, bool on=true)
 	{
 		const std::string *last(sset + els), *result(std::find(sset, last, what));
 		if (result == last)
 			return false;
-		set(static_cast<T>(std::distance(sset, result)));
+		set(static_cast<T>(std::distance(sset, result)), on);
 		return true;
 	}
 
@@ -661,7 +779,7 @@ template<typename T, typename B=unsigned int>
 class ebitset_r
 {
 	typedef B integral_type;
-	tbb::atomic<integral_type> a_;
+	f8_atomic<integral_type> a_;
 
 public:
 	/// Ctor.
@@ -692,12 +810,12 @@ public:
 	/*! Check if an enum is in the set.
 	    \param sbit enum to check
 	    \return integral_type of bits if found */
-	integral_type has(const T sbit) { return a_ & 1 << sbit; }
+	integral_type has(const T sbit) const { return a_ & 1 << sbit; }
 
 	/*! Check if an enum is in the set.
 	    \param sbit enum to check
 	    \return integral_type of bits if found */
-	integral_type operator&(const T sbit) { return a_ & 1 << sbit; }
+	integral_type operator&(const T sbit) const { return a_ & 1 << sbit; }
 
 	/*! Set a bit on or off.
 	    \param sbit enum to set
@@ -708,13 +826,14 @@ public:
 	    \param els number of elements in set
 	    \param sset the set of strings
 	    \param what the string to find and set
+	    \param on set or clear the found bit
 	    \return true if found and set */
-	bool set(const unsigned els, const std::string *sset, const std::string& what)
+	bool set(const unsigned els, const std::string *sset, const std::string& what, bool on=true)
 	{
 		const std::string *last(sset + els), *result(std::find(sset, last, what));
 		if (result == last)
 			return false;
-		set(static_cast<T>(std::distance(sset, result)));
+		set(static_cast<T>(std::distance(sset, result)), on);
 		return true;
 	}
 
@@ -752,12 +871,34 @@ public:
 };
 
 //----------------------------------------------------------------------------------------
+/*! From a set of strings representing the names of an enumeration in order,
+  return the enum of the given string.
+	 \tparam T enum return type
+	 \param els number of elements in set; if 0 return default value
+	 \param sset the set of strings; if null return default value
+	 \param what the string to find
+	 \param def the default value to return if not found
+	 \return enum value or default */
+template<typename T>
+T enum_str_get(const unsigned els, const std::string *sset, const std::string& what, const T def)
+{
+	if (!sset || !els)
+		return def;
+	const std::string *last(sset + els), *result(std::find(sset, last, what));
+	return result == last ? def : static_cast<T>(std::distance(sset, result));
+}
+
+//----------------------------------------------------------------------------------------
 /*! Check for file existance.
     \param fname filename to check
     \return true if file exists */
 inline bool exist(const std::string& fname)
 {
+#ifdef _MSC_VER
+	return _access(fname.c_str(), 0) == 0;
+#else
 	return access(fname.c_str(), F_OK) == 0;
+#endif
 }
 
 //----------------------------------------------------------------------------------------
@@ -770,53 +911,12 @@ inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
 {
    if (!target)
       return 0;
-   unsigned sz(limit && src.size() > limit ? limit : src.size() + 1);
+   const unsigned sz(limit && src.size() > limit ? limit : src.size() + 1);
    src.copy(target, sz - 1);
    target[sz - 1] = 0;
    return target;
 }
 
-//----------------------------------------------------------------------------------------
-/*! A more reliable nanosleep.
-    \param tspec timespec to sleep
-    \return 0 on success */
-inline int rnanosleep (const timespec& tspec)
-{
-#if defined HAVE_CLOCK_NANOSLEEP
-   timespec ts;
-   clock_gettime(CLOCK_REALTIME, &ts);
-   ts.tv_sec += tspec.tv_sec;
-   ts.tv_nsec += tspec.tv_nsec;
-   if (ts.tv_nsec >= 1000000000)
-   {
-      ++ts.tv_sec;
-      ts.tv_nsec -= 1000000000;
-   }
-	return clock_nanosleep(CLOCK_REALTIME, TIMER_ABSTIME, &ts, 0);
-#else
-	return nanosleep(&tspec, 0);
-#endif
-}
-
-//----------------------------------------------------------------------------------------
-/*! Sleep the specified number of milliseconds.
-    \param ms time to sleep in milliseconds
-    \return 0 on success */
-inline int millisleep (const unsigned ms)
-{
-	const timespec tspec = { ms / 1000, 1000 * 1000 * (ms % 1000) };
-	return rnanosleep(tspec);
-}
-
-//----------------------------------------------------------------------------------------
-/*! Sleep the specified number of microseconds.
-    \param us time to sleep in microseconds
-    \return 0 on success */
-inline int microsleep (const unsigned us)
-{
-	const timespec tspec = { us / (1000 * 1000), 1000 * (us % (1000 * 1000)) };
-	return rnanosleep(tspec);
-}
 
 //----------------------------------------------------------------------------------------
 /// Delete ptr.
@@ -879,18 +979,38 @@ struct free_ptr
 template <typename T>
 class Singleton
 {
-	static tbb::atomic<T*> _instance;
-	static tbb::mutex _mutex;
+	static f8_atomic<T*> _instance;
+	static f8_mutex _mutex;
 
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
+
+	static T *_replace(const T* with)
+	{
+#if (MPMC_SYSTEM == MPMC_TBB)
+		return _instance.fetch_and_store(with);
+#else
+		T *was(_instance);
+		_instance = with;
+		return was;
+#endif
+	}
 
 public:
 	/// Ctor.
 	Singleton() {}
 
 	/// Dtor.
-	virtual ~Singleton() { delete _instance.fetch_and_store(0); }
+	virtual ~Singleton()
+	{
+#if (MPMC_SYSTEM == MPMC_TBB)
+		delete _instance.fetch_and_store(0);
+#else
+		T *was(_instance);
+		delete was;
+		_instance = 0;
+#endif
+	}
 
 	/*! Get the instance of the underlying object. If not created, create.
 	    \return the instance */
@@ -899,9 +1019,12 @@ public:
 		if (_instance) // cast operator performs atomic load with acquire
 			return _instance;
 
-		tbb::mutex::scoped_lock guard(_mutex);
+		f8_scoped_lock guard(_mutex);
 		if (_instance == 0)
-			_instance = new T;
+		{
+			T *p(new T); // avoid race condition between mem assignment and construction
+			_instance = p;
+		}
 		return _instance;
 	}
 
@@ -913,11 +1036,105 @@ public:
 	/*! Replace the instance object with a new instance.
 	    \param what the new instance
 	    \return the original instance */
-	static T *reset(T *what) { return _instance.fetch_and_store(what); }
+	static T *reset(T *what) { return _replace(what); }
 
 	/*! Get the instance of the underlying object removing it from the singleton.
 	    \return the instance */
-	static T *release() { return _instance.fetch_and_store(0); }
+	static T *release() { return _replace(0); }
+};
+
+//---------------------------------------------------------------------------------------------------
+/// Create a streambuf from an open file descriptor.
+class fdinbuf : public std::streambuf
+{
+   enum { _back_limit = 4, _buffer_size = 16 };
+
+protected:
+   char _buffer[_buffer_size];
+   int _fd;
+
+   virtual int_type underflow()
+   {
+      if (gptr() < egptr())
+         return *gptr();
+      int put_back_cnt(gptr() - eback());
+      if (put_back_cnt > _back_limit)
+         put_back_cnt = _back_limit;
+		memcpy(_buffer + (_back_limit - put_back_cnt), gptr() - put_back_cnt, put_back_cnt);
+#ifdef _MSC_VER
+      int num_read(_read (_fd, _buffer + _back_limit, _buffer_size - _back_limit));
+#else
+      int num_read(read (_fd, _buffer + _back_limit, _buffer_size - _back_limit));
+#endif
+      if (num_read <= 0)
+         return -1;
+      setg(_buffer + (_back_limit - put_back_cnt), _buffer + _back_limit, _buffer + _back_limit + num_read);
+      return *gptr();
+   }
+
+public:
+   fdinbuf(int infd) : _buffer(), _fd(infd) { setg(_buffer + _back_limit, _buffer + _back_limit, _buffer + _back_limit); }
+};
+
+//---------------------------------------------------------------------------------------------------
+class tty_save_state
+{
+	bool _raw_mode;
+	int _fd;
+#ifndef _MSC_VER
+	termio _tty_state;
+#endif
+
+public:
+	explicit tty_save_state(int fd) : _raw_mode(), _fd(fd) {}
+
+	tty_save_state& operator=(const tty_save_state& from)
+	{
+		if (&from != this)
+		{
+			_raw_mode = from._raw_mode;
+			_fd = from._fd;
+#ifndef _MSC_VER
+			_tty_state = from._tty_state;
+#endif
+		}
+		return *this;
+	}
+
+	void unset_raw_mode()
+	{
+		if (_raw_mode)
+		{
+#ifndef _MSC_VER
+			if (ioctl(_fd, TCSETA, &_tty_state) < 0)
+				std::cerr << Str_error(errno, "Cannot reset ioctl") << std::endl;
+			else
+#endif
+				_raw_mode = false;
+		}
+	}
+
+	void set_raw_mode()
+	{
+		if (!_raw_mode)
+		{
+#ifndef _MSC_VER
+			if (ioctl(_fd, TCGETA, &_tty_state) < 0)
+			{
+				std::cerr << Str_error(errno, "Cannot get ioctl") << std::endl;
+				return;
+			}
+			termio tty_state(_tty_state);
+			tty_state.c_lflag = 0;
+			tty_state.c_cc[VTIME] = 0;
+			tty_state.c_cc[VMIN] = 1;
+			if (ioctl(_fd, TCSETA, &tty_state) < 0)
+				std::cerr << Str_error(errno, "Cannot reset ioctl") << std::endl;
+			else
+#endif
+				_raw_mode = true;
+		}
+	}
 };
 
 //----------------------------------------------------------------------------------------

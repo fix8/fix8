@@ -1,36 +1,38 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 
 //-----------------------------------------------------------------------------------------
 /** \file myfix.cpp
@@ -66,12 +68,10 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   \b Notes \n
 \n
   1. If you have configured with \c --enable-msgrecycle, the example will reuse allocated messages.\n
-  2. If you have configured with \c --enable-customfields, the example will add custom fields\n
-     defined below.\n
-  3. The client has a simple menu. Press ? to see options.\n
-  4. The server will wait for the client to logout before exiting.\n
-  5. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
-  6. The example uses the files \c FIX50SP2.xml and \c FIXT11.xml in ./schema\n
+  2. The client has a simple menu. Press ? to see options.\n
+  3. The server will wait for the client to logout before exiting.\n
+  4. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
+  5. The example uses the files \c FIX50SP2.xml and \c FIXT11.xml in ./schema\n
 \n
 */
 
@@ -94,9 +94,9 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <map>
 #include <list>
 #include <set>
+#include <vector>
 #include <iterator>
 #include <algorithm>
-#include <bitset>
 #include <typeinfo>
 #include <sys/ioctl.h>
 #include <signal.h>
@@ -114,6 +114,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include <usage.hpp>
+#include <consolemenu.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
@@ -126,31 +127,24 @@ using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
-const string GETARGLIST("hl:svqc:R:S:r");
+const string GETARGLIST("hl:svqc:R:S:rdo");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
-template<>
-const MyMenu::Handlers::TypePair MyMenu::Handlers::_valueTable[] =
+const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
 {
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('T', "1000 New Order Singles"), &MyMenu::new_order_single_1000),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('R', "Resend request"), &MyMenu::resend_request),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
 };
-template<>
-const MyMenu::Handlers::NotFoundType MyMenu::Handlers::_noval = &MyMenu::nothing;
-template<>
-const MyMenu::Handlers::TypeMap MyMenu::Handlers::_valuemap(MyMenu::Handlers::_valueTable,
-	MyMenu::Handlers::get_table_end());
-bool quiet(false);
+const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
+	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
 
-//-----------------------------------------------------------------------------------------
-#if defined PERMIT_CUSTOM_FIELDS
-#include "myfix_custom.hpp"
-#endif
+bool quiet(false);
 
 //-----------------------------------------------------------------------------------------
 void sig_handler(int sig)
@@ -170,7 +164,7 @@ void sig_handler(int sig)
 int main(int argc, char **argv)
 {
 	int val;
-	bool server(false), reliable(false);
+	bool server(false), reliable(false), once(false), dump(false);
 	string clcf;
 	unsigned next_send(0), next_receive(0);
 
@@ -181,11 +175,13 @@ int main(int argc, char **argv)
 		{ "version",	0,	0,	'v' },
 		{ "log",			1,	0,	'l' },
 		{ "config",		1,	0,	'c' },
+		{ "once",	   0,	0,	'o' },
 		{ "server",		0,	0,	's' },
 		{ "send",		1,	0,	'S' },
 		{ "receive",	1,	0,	'R' },
 		{ "quiet",		0,	0,	'q' },
 		{ "reliable",	0,	0,	'r' },
+		{ "dump",		0,	0,	'd' },
 		{ 0 },
 	};
 
@@ -197,17 +193,20 @@ int main(int argc, char **argv)
       switch (val)
 		{
 		case 'v':
-			cout << argv[0] << " for "PACKAGE" version "VERSION << endl;
+			cout << argv[0] << " for " PACKAGE " version " VERSION << endl;
+			cout << "Released under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3. See <http://fsf.org/> for details." << endl;
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
 		case 'l': GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
 		case 's': server = true; break;
-		case 'S': next_send = GetValue<unsigned>(optarg); break;
-		case 'R': next_receive = GetValue<unsigned>(optarg); break;
+		case 'o': once = true; break;
+		case 'S': next_send = get_value<unsigned>(optarg); break;
+		case 'R': next_receive = get_value<unsigned>(optarg); break;
 		case 'q': quiet = true; break;
 		case 'r': reliable = true; break;
+		case 'd': dump = true; break;
 		default: break;
 		}
 	}
@@ -218,19 +217,27 @@ int main(int argc, char **argv)
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 
-#if defined PERMIT_CUSTOM_FIELDS
-	TEX::myfix_custom custfields(true); // will cleanup; modifies ctx
-	TEX::ctx.set_ube(&custfields);
-#endif
+	FIX8::tty_save_state save_tty(0);
+	bool restore_tty(false);
 
 	try
 	{
 		const string conf_file(server ? clcf.empty() ? "myfix_server.xml" : clcf : clcf.empty() ? "myfix_client.xml" : clcf);
 
+		if (dump)
+		{
+			XmlElement *root(XmlElement::Factory(conf_file));
+			if (root)
+				cout << *root << endl;
+			else
+				cerr << "Failed to parse " << conf_file << endl;
+			return 0;
+		}
+
 		if (server)
 		{
 			ServerSession<myfix_session_server>::Server_ptr
-				ms(new ServerSession<myfix_session_server>(TEX::ctx, conf_file, "TEX1"));
+				ms(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX1"));
 
 			for (unsigned scnt(0); !term_received; )
 			{
@@ -246,41 +253,55 @@ int main(int argc, char **argv)
 				inst->start(true, next_send, next_receive);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
+            if (once)
+               break;
 			}
-		}
-		else if (reliable)
-		{
-			ReliableClientSession<myfix_session_client>::Client_ptr
-				mc(new ReliableClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
-			if (!quiet)
-				mc->session_ptr()->control() |= Session::print;
-			mc->start(false);
-			MyMenu mymenu(*mc->session_ptr(), 0, cout);
-			char ch;
-			mymenu.set_raw_mode();
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
-				;
-			mymenu.unset_raw_mode();
 		}
 		else
 		{
-			ClientSession<myfix_session_client>::Client_ptr
-				mc(new ClientSession<myfix_session_client>(TEX::ctx, conf_file, "DLD1"));
+			scoped_ptr<ClientSession<myfix_session_client> >
+				mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1")
+							   : new ClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1"));
 			if (!quiet)
-				mc->session_ptr()->control() |= Session::print;
-			mc->start(false, next_send, next_receive);
+				mc->session_ptr()->control() |= Session::printnohb;
+
+			if (!reliable)
+				mc->start(false, next_send, next_receive, mc->session_ptr()->get_login_parameters()._davi());
+			else
+				mc->start(false, next_send, next_receive);
+
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
-			char ch;
-			mymenu.set_raw_mode();
-			while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
+			char ch(0);
+			mymenu.get_tty().set_raw_mode();
+			save_tty = mymenu.get_tty();
+			while(!mymenu.get_istr().get(ch).bad() && !mc->has_given_up() && !term_received && ch != 0x3 && mymenu.process(ch))
 				;
-			mymenu.unset_raw_mode();
+			// don't explicitly call mc->session_ptr()->stop() with reliable sessions
+			// before checking if the session is already shutdown - the framework will generally do this for you
+			if (!mc->session_ptr()->is_shutdown())
+				mc->session_ptr()->stop();
+
+			mymenu.get_tty().unset_raw_mode();
 		}
 	}
 	catch (f8Exception& e)
 	{
 		cerr << "exception: " << e.what() << endl;
+		restore_tty = true;
 	}
+	catch (exception& e)	// also catches Poco::Net::NetException
+	{
+		cerr << "exception: " << e.what() << endl;
+		restore_tty = true;
+	}
+	catch (...)
+	{
+		cerr << "unknown exception" << endl;
+		restore_tty = true;
+	}
+
+	if (restore_tty && !server)
+		save_tty.unset_raw_mode();
 
 	if (term_received)
 		cout << "terminated." << endl;
@@ -288,27 +309,24 @@ int main(int argc, char **argv)
 }
 
 //-----------------------------------------------------------------------------------------
-bool myfix_session_client::handle_application(const unsigned seqnum, const Message *msg)
+bool myfix_session_client::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
 }
 
 //-----------------------------------------------------------------------------------------
-bool myfix_session_server::handle_application(const unsigned seqnum, const Message *msg)
+bool myfix_session_server::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
 }
 
 //-----------------------------------------------------------------------------------------
-bool MyMenu::new_order_single()
+Message *MyMenu::generate_new_order_single()
 {
-	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
-	*nos += new TEX::TransactTime;
-	*nos += new TEX::OrderQty(1 + RandDev::getrandom(9999));
-	*nos += new TEX::Price(RandDev::getrandom(500.));
 	static unsigned oid(0);
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
+<<<<<<< HEAD
 	*nos += new TEX::ClOrdID(oistr.str());
 	*nos += new TEX::Symbol("BHP");
 	*nos += new TEX::OrdType(TEX::OrdType_LIMIT);
@@ -316,78 +334,106 @@ bool MyMenu::new_order_single()
 	*nos += new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
 
 	*nos += new TEX::NoUnderlyings(3);
+=======
+	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
+	*nos << new TEX::TransactTime
+	     << new TEX::OrderQty(1 + RandDev::getrandom(9999))
+	     << new TEX::Price(RandDev::getrandom(500.), 5)	// 5 decimal places if necessary
+	     << new TEX::ClOrdID(oistr.str())
+	     << new TEX::Symbol("BHP")
+	     << new TEX::OrdType(TEX::OrdType_LIMIT)
+	     << new TEX::Side(TEX::Side_BUY)
+	     << new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+
+	*nos << new TEX::NoPartyIDs(unsigned(0));
+	*nos << new TEX::NoUnderlyings(3);
+>>>>>>> upstream/master
 	GroupBase *noul(nos->find_group<TEX::NewOrderSingle::NoUnderlyings>());
 
 	// repeating groups
 	MessageBase *gr1(noul->create_group());
-	*gr1 += new TEX::UnderlyingSymbol("BLAH");
-	*gr1 += new TEX::UnderlyingQty(1 + RandDev::getrandom(999));
-	*noul += gr1;
+	*gr1 << new TEX::UnderlyingSymbol("BLAH")
+	     << new TEX::UnderlyingQty(1 + RandDev::getrandom(999));
+	*noul << gr1;
 
 	MessageBase *gr2(noul->create_group());
-	*gr2 += new TEX::UnderlyingSymbol("FOO");
 	// nested repeating groups
-	*gr2 += new TEX::NoUnderlyingSecurityAltID(2);
-	*noul += gr2;
+	*gr2 << new TEX::UnderlyingSymbol("FOO")
+	     << new TEX::NoUnderlyingSecurityAltID(2);
+	*noul << gr2;
 	GroupBase *nosai(gr2->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingSecurityAltID>());
 	MessageBase *gr3(nosai->create_group());
-	*gr3 += new TEX::UnderlyingSecurityAltID("UnderBlah");
-	*nosai += gr3;
+	*gr3 << new TEX::UnderlyingSecurityAltID("UnderBlah");
+	*nosai << gr3;
 	MessageBase *gr4(nosai->create_group());
-	*gr4 += new TEX::UnderlyingSecurityAltID("OverFoo");
-	*nosai += gr4;
+	*gr4 << new TEX::UnderlyingSecurityAltID("OverFoo");
+	*nosai << gr4;
 
 	MessageBase *gr5(noul->create_group());
-	*gr5 += new TEX::UnderlyingSymbol("BOOM");
+	*gr5 << new TEX::UnderlyingSymbol("BOOM");
 	// nested repeating groups
 	GroupBase *nus(gr5->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>());
 	static const char *secIDs[] = { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
-	*gr5 += new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
+	*gr5 << new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
 	for (size_t ii(0); ii < sizeof(secIDs)/sizeof(char *); ++ii)
 	{
 		MessageBase *gr(nus->create_group());
-		*gr += new TEX::UnderlyingStipType(secIDs[ii]);
-		*nus += gr;
+		*gr << new TEX::UnderlyingStipType(secIDs[ii]);
+		*nus << gr;
 	}
-	*noul += gr5;
+	*noul << gr5;
 
 	// multiply nested repeating groups
-	*nos += new TEX::NoAllocs(1);
+	*nos << new TEX::NoAllocs(1);
 	GroupBase *noall(nos->find_group<TEX::NewOrderSingle::NoAllocs>());
 	MessageBase *gr9(noall->create_group());
-	*gr9 += new TEX::AllocAccount("Account1");
-	*gr9 += new TEX::NoNestedPartyIDs(1);
-	*noall += gr9;
+	*gr9 << new TEX::AllocAccount("Account1")
+	     << new TEX::NoNestedPartyIDs(1);
+	*noall << gr9;
 	GroupBase *nonp(gr9->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs>());
 	MessageBase *gr10(nonp->create_group());
-	*gr10 += new TEX::NestedPartyID("nestedpartyID1");
-	*gr10 += new TEX::NoNestedPartySubIDs(1);
-	*nonp += gr10;
+	*gr10 << new TEX::NestedPartyID("nestedpartyID1")
+	      << new TEX::NoNestedPartySubIDs(1);
+	*nonp << gr10;
 	GroupBase *nonpsid(gr10->find_group<TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs>());
 	MessageBase *gr11(nonpsid->create_group());
+<<<<<<< HEAD
 	*gr11 += new TEX::NestedPartySubID("subnestedpartyID1");
 	*nonpsid += gr11;
+=======
+	*gr11 << new TEX::NestedPartySubID("subnestedpartyID1");
+	*nonpsid << gr11;
+>>>>>>> upstream/master
 
-	_session.send(nos);
+	return nos;
+}
 
+//-----------------------------------------------------------------------------------------
+bool MyMenu::new_order_single()
+{
+	_session.send(generate_new_order_single());
 	return true;
 }
 
 //-----------------------------------------------------------------------------------------
 bool MyMenu::new_order_single_50()
 {
+	vector<Message *> msgs;
 	for (int ii(0); ii < 50; ++ii)
-		new_order_single();
+		msgs.push_back(generate_new_order_single());
 
+	_session.send_batch(msgs);
 	return true;
 }
 
 //-----------------------------------------------------------------------------------------
 bool MyMenu::new_order_single_1000()
 {
+	vector<Message *> msgs;
 	for (int ii(0); ii < 1000; ++ii)
-		new_order_single();
+		msgs.push_back(generate_new_order_single());
 
+	_session.send_batch(msgs);
 	return true;
 }
 
@@ -406,9 +452,27 @@ bool MyMenu::help()
 //-----------------------------------------------------------------------------------------
 bool MyMenu::do_logout()
 {
-	_session.send(new TEX::Logout);
-	sleep(1);
+	if (!_session.is_shutdown())
+		_session.send(new TEX::Logout);
+	hypersleep<h_seconds>(1);
 	return false; // will exit
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::resend_request()
+{
+	if (!_session.is_shutdown())
+	{
+		unsigned bnum(0), bend(0);
+		cout << "Enter BeginSeqNo:" << flush;
+		_tty.unset_raw_mode();
+		cin >> bnum;
+		cout << "Enter EndSeqNo(0=all):" << flush;
+		cin >> bend;
+		_tty.set_raw_mode();
+		_session.send(_session.generate_resend_request(bnum, bend));
+	}
+	return true;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -418,13 +482,15 @@ void print_usage()
 	um.setdesc("f8test -- f8 test client/server");
 	um.add('s', "server", "run in server mode (default client mode)");
 	um.add('h', "help", "help, this screen");
-	um.add('v', "version", "print version then exit");
+	um.add('v', "version", "print version, exit");
 	um.add('l', "log", "global log filename");
+	um.add('o', "once", "for server, allow one client session then exit");
 	um.add('c', "config", "xml config (default: myfix_client.xml or myfix_server.xml)");
 	um.add('q', "quiet", "do not print fix output");
 	um.add('R', "receive", "set next expected receive sequence number");
 	um.add('S', "send", "set next send sequence number");
 	um.add('r', "reliable", "start in reliable mode");
+	um.add('d', "dump", "dump parsed XML config file, exit");
 	um.print(cerr);
 }
 
@@ -511,42 +577,23 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		}
 	}
 
-#if defined MSGRECYCLING
-	scoped_ptr<TEX::ExecutionReport> er(new TEX::ExecutionReport);
-	msg->copy_legal(er.get());
-#else
 	TEX::ExecutionReport *er(new TEX::ExecutionReport);
 	msg->copy_legal(er);
-#endif
 	if (!quiet)
 		cout << endl;
 
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
-	*er += new TEX::OrderID(oistr.str());
-	*er += new TEX::ExecType(TEX::ExecType_NEW);
-	*er += new TEX::OrdStatus(TEX::OrdStatus_NEW);
-	*er += new TEX::LeavesQty(qty());
-	*er += new TEX::CumQty(0);
-	*er += new TEX::AvgPx(0);
-	*er += new TEX::LastCapacity('5');
-	*er += new TEX::ReportToExch('Y');
-#if defined PERMIT_CUSTOM_FIELDS
-	*er += new TEX::Orderbook('X');
-	*er += new TEX::BrokerInitiated(true);
-	*er += new TEX::ExecOption(3);
-	*er += new TEX::ExecID(oistr.str());
-#else
-	*er += new TEX::ExecID(oistr.str());
-#endif
-#if defined MSGRECYCLING
-	er->set_in_use(true);	// indicate this message is in use again
-	delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
-	*er += new TEX::AvgPx(9999); // will replace and delete original
-	_session.send_wait(er.get());
-#else
+	*er << new TEX::OrderID(oistr.str())
+	    << new TEX::ExecType(TEX::ExecType_NEW)
+	    << new TEX::OrdStatus(TEX::OrdStatus_NEW)
+	    << new TEX::LeavesQty(qty())
+	    << new TEX::CumQty(0.)
+	    << new TEX::AvgPx(0.)
+	    << new TEX::LastCapacity('5')
+	    << new TEX::ReportToExch('Y')
+	    << new TEX::ExecID(oistr.str());
 	_session.send(er);
-#endif
 
 	unsigned remaining_qty(qty()), cum_qty(0);
 	while (remaining_qty > 0)
@@ -554,32 +601,21 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 		unsigned trdqty(RandDev::getrandom(remaining_qty));
 		if (!trdqty)
 			trdqty = 1;
-#if defined MSGRECYCLING
-		while(er->get_in_use())
-			microsleep(10);
-		er->set_in_use(true);	// indicate this message is in use again
-		delete er->Header()->remove(Common_MsgSeqNum); // we want to reuse, not resend
-#else
 		er = new TEX::ExecutionReport;
 		msg->copy_legal(er);
-#endif
-		*er += new TEX::OrderID(oistr.str());
 		ostringstream eistr;
 		eistr << "exec" << ++eoid;
-		*er += new TEX::ExecID(eistr.str());
-		*er += new TEX::ExecType(TEX::ExecType_NEW);
-		*er += new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED);
 		remaining_qty -= trdqty;
 		cum_qty += trdqty;
-		*er += new TEX::LeavesQty(remaining_qty);
-		*er += new TEX::CumQty(cum_qty);
-		*er += new TEX::LastQty(trdqty);
-		*er += new TEX::AvgPx(price());
-#if defined MSGRECYCLING
-		_session.send_wait(er.get());
-#else
+		*er << new TEX::OrderID(oistr.str())
+		    << new TEX::ExecID(eistr.str())
+		    << new TEX::ExecType(TEX::ExecType_NEW)
+		    << new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED)
+		    << new TEX::LeavesQty(remaining_qty)
+		    << new TEX::CumQty(cum_qty)
+		    << new TEX::LastQty(trdqty)
+		    << new TEX::AvgPx(price());
 		_session.send(er);
-#endif
 	}
 
 	return true;
@@ -591,6 +627,7 @@ bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
 	TEX::LastCapacity lastCap;
 	if (msg->get(lastCap))
 	{
+		// if we have set a realm range for LastCapacity, when can check it here
 		if (!quiet && !lastCap.is_valid())
 			cout << "TEX::LastCapacity(" << lastCap << ") is not a valid value" << endl;
 	}

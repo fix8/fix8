@@ -1,50 +1,54 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <sstream>
 #include <vector>
 #include <map>
 #include <set>
+#include <list>
 #include <iterator>
 #include <memory>
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
-#include <bitset>
 
+#ifndef _MSC_VER
 #include <strings.h>
+#endif
 #include <cerrno>
 #include <regex.h>
 
@@ -58,7 +62,9 @@ using namespace std;
 extern char glob_log0[max_global_filename_length];
 
 //-------------------------------------------------------------------------------------------------
-bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
+#if defined HAVE_BDB
+
+bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname, bool purge)
 {
    if (_opened)
       return true;
@@ -69,47 +75,56 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
    // Use concurrent db and default shared memory pool
    _dbEnv.open(_dbDir.c_str(), DB_CREATE | DB_INIT_MPOOL | DB_INIT_CDB | DB_THREAD, 0);
 
-   bool notFound(false);
-   try
-   {
-      _db->set_bt_compare(bt_compare_fcn);
-      _db->open(0, _dbFname.c_str(), 0, DB_BTREE, DB_THREAD, 0); // try and open existing if possible
-		unsigned last;
-      if (get_last_seqnum(last))
+	bool notFound(false);
+
+	if (!purge)
+	{
+		try
 		{
-			ostringstream ostr;
-         ostr << _dbFname << ": Last sequence is " << last;
-			GlobalLogger::log(ostr.str());
-		}
-   }
-   catch(DbException& dbe)
-   {
-      switch (dbe.get_errno())
-      {
-      case ENOENT:
-      case EACCES:
-         notFound = true;
-         break;
-      default:
+			_db->set_bt_compare(bt_compare_fcn);
+			_db->open(0, _dbFname.c_str(), 0, DB_BTREE, DB_THREAD, 0); // try and open existing if possible
+			unsigned last;
+			if (get_last_seqnum(last))
 			{
 				ostringstream ostr;
-				ostr << "Error opening existing database: " << dbe.what() << " (" << dbe.get_errno() << ')';
+				ostr << _dbFname << ": Last sequence is " << last;
 				GlobalLogger::log(ostr.str());
 			}
-         return false;
-      }
-   }
+		}
+		catch(DbException& dbe)
+		{
+			switch (dbe.get_errno())
+			{
+			case ENOENT:
+			case EACCES:
+				notFound = true;
+				break;
+			default:
+				{
+					ostringstream ostr;
+					ostr << "Error: opening existing database: " << dbe.what() << " (" << dbe.get_errno() << ')';
+					GlobalLogger::log(ostr.str());
+				}
+				return false;
+			}
+		}
+	}
 
-   if (notFound)  // create a new one
+   if (notFound || purge)  // create a new one
    {
       try
       {
          _db->open(0, _dbFname.c_str(), 0, DB_BTREE, DB_CREATE | DB_THREAD, 0);
+			if (purge)
+			{
+				_db->truncate(0, 0, 0);
+				GlobalLogger::log("Purged perist db");
+			}
       }
       catch(DbException& dbe)
       {
 			ostringstream ostr;
-         ostr << "Error creating new database: " << dbe.what() << " (" << dbe.get_errno() << ')';
+         ostr << "Error: creating new database: " << dbe.what() << " (" << dbe.get_errno() << ')';
 			GlobalLogger::log(ostr.str());
          return false;
       }
@@ -117,7 +132,7 @@ bool BDBPersister::initialise(const f8String& dbDir, const f8String& dbFname)
       _wasCreated = true;
    }
 
-	_thread.Start();
+	_thread.start();
    return _opened = true;
 
 }
@@ -130,6 +145,8 @@ BDBPersister::~BDBPersister()
 		_db->close(0);
 	delete _db;
 	_dbEnv.close(0);
+
+	//cout << "BDBPersister::~BDBPersister()" << endl;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -287,6 +304,9 @@ int BDBPersister::operator()()
 
    for (;;)
    {
+		KeyDataBuffer *msg_ptr(0);
+
+#if (MPMC_SYSTEM == MPMC_TBB)
 		KeyDataBuffer buffer;
 		if (stopping)	// make sure we dequeue any pending msgs before exiting
 		{
@@ -295,26 +315,41 @@ int BDBPersister::operator()()
 		}
 		else
 			_persist_queue.pop (buffer); // will block
+		msg_ptr = &buffer;
 
       if (buffer.empty())  // means exit
 		{
          stopping = true;
 			continue;
 		}
+#else
+		_persist_queue.pop(msg_ptr); // will block
+		if (msg_ptr->empty())  // means exit
+			break;
+#endif
+		//cout << "persisted..." << endl;
 
 		++received;
 
-		KeyDataPair keyPair(buffer);
-		int retval(_db->put(0, &keyPair._key, &keyPair._data, 0));  // will overwrite if found
-		if (retval)
+		if (msg_ptr)
 		{
-			ostringstream ostr;
-			ostr << "Could not add" << '(' << db_strerror(retval) << ')';
-			GlobalLogger::log(ostr.str());
+			KeyDataPair keyPair(*msg_ptr);
+			int retval(_db->put(0, &keyPair._key, &keyPair._data, 0));  // will overwrite if found
+			if (retval)
+			{
+				ostringstream ostr;
+				ostr << "Could not add" << '(' << db_strerror(retval) << ')';
+				GlobalLogger::log(ostr.str());
+			}
+			else
+				++persisted;
 		}
-		else
-			++persisted;
-   }
+#if (MPMC_SYSTEM == MPMC_FF)
+		_persist_queue.release(msg_ptr);
+#endif
+	}
+
+	//cout << "persister()() exited..." << endl;
 
 	ostringstream ostr;
 	ostr << received << " messages received, " << persisted << " messages persisted";
@@ -322,6 +357,8 @@ int BDBPersister::operator()()
 
    return 0;
 }
+
+#endif // HAVE_BDB
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -332,17 +369,19 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 	get_last_seqnum(last_seq);
 	unsigned recs_sent(0), startSeqNum(find_nearest_highest_seqnum (from, last_seq));
 	const unsigned finish(to == 0 ? last_seq : to);
+	Session::RetransmissionContext rctx(from, to, session.get_next_send_seq());
+
 	if (!startSeqNum || from > finish)
 	{
 		GlobalLogger::log("No records found");
+		rctx._no_more_records = true;
+		(session.*callback)(Session::SequencePair(0, ""), rctx);
 		return 0;
 	}
 
 	Store::const_iterator itr(_store.find(startSeqNum));
 	if (itr != _store.end())
 	{
-		Session::RetransmissionContext rctx(from, to, session.get_next_send_seq());
-
 		do
 		{
 			if (!itr->first || itr->first > finish)
@@ -361,7 +400,7 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 	else
 	{
 		ostringstream ostr;
-		ostr << "record not found";
+		ostr << "record not found (" << startSeqNum << ')';
 		GlobalLogger::log(ostr.str());
 	}
 
@@ -425,6 +464,6 @@ unsigned MemoryPersister::find_nearest_highest_seqnum (const unsigned requested,
 //---------------------------------------------------------------------------------------------------
 unsigned MemoryPersister::get_last_seqnum(unsigned& to) const
 {
-	return _store.empty() ? 0 : _store.rbegin()->first;
+	return to = (_store.empty() ? 0 : _store.rbegin()->first);
 }
 

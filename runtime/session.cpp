@@ -1,40 +1,43 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <list>
 #include <vector>
 #include <map>
 #include <set>
@@ -43,9 +46,10 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
-#include <bitset>
 
+#ifndef _MSC_VER
 #include <strings.h>
+#endif
 #include <regex.h>
 
 #include <f8includes.hpp>
@@ -56,37 +60,19 @@ using namespace std;
 
 //-------------------------------------------------------------------------------------------------
 RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
-RegExp Session::_seq("34=([^\x01]+)\x01");
 
 //-------------------------------------------------------------------------------------------------
+#ifndef _MSC_VER
 const Tickval::ticks Tickval::noticks;
 const Tickval::ticks Tickval::thousand;
 const Tickval::ticks Tickval::million;
 const Tickval::ticks Tickval::billion;
-
-//-------------------------------------------------------------------------------------------------
-template<>
-const Session::Handlers::TypePair Session::Handlers::_valueTable[] =
-{
-	Session::Handlers::TypePair(Common_MsgType_HEARTBEAT, &Session::handle_heartbeat),
-	Session::Handlers::TypePair(Common_MsgType_TEST_REQUEST, &Session::handle_test_request),
-	Session::Handlers::TypePair(Common_MsgType_RESEND_REQUEST, &Session::handle_resend_request),
-	Session::Handlers::TypePair(Common_MsgType_REJECT, &Session::handle_reject),
-	Session::Handlers::TypePair(Common_MsgType_SEQUENCE_RESET, &Session::handle_sequence_reset),
-	Session::Handlers::TypePair(Common_MsgType_LOGOUT, &Session::handle_logout),
-	Session::Handlers::TypePair(Common_MsgType_LOGON, &Session::handle_logon),
-};
-template<>
-const Session::Handlers::NotFoundType Session::Handlers::_noval(&Session::handle_application);
-
-template<>
-const Session::Handlers::TypeMap Session::Handlers::_valuemap(Session::Handlers::_valueTable,
-	Session::Handlers::get_table_end());
+#endif
 
 //-------------------------------------------------------------------------------------------------
 void SessionID::make_id()
 {
-	f8ostrstream ostr;
+	ostringstream ostr;
 	ostr << _beginString << ':' << _targetCompID << "->" << _senderCompID;
 	_rid = ostr.str();
 	ostr.str("");
@@ -114,10 +100,8 @@ void SessionID::from_string(const f8String& from)
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
-	_last_sent(), _last_received(),
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
-	_sid(sid), _login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
-	_reset_sequence_numbers(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
+	_sid(sid), _sf(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
@@ -125,10 +109,8 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
-	_last_sent(), _last_received(),
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
-	_login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
-	_reset_sequence_numbers(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
+	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
@@ -139,43 +121,47 @@ void Session::atomic_init(States::SessionStates st)
 {
 	_state = st;
 	_next_send_seq = _next_receive_seq = 1;
-	_last_sent = new Tickval(true);
-	_last_received = new Tickval(true);
 }
 
 //-------------------------------------------------------------------------------------------------
 Session::~Session()
 {
+	log("Session terminating");
 	if (_logger)
-	{
-		log("Session terminating");
 		_logger->stop();
-	}
+	hypersleep<h_seconds>(1); // needed for service threads to exit gracefully
 
-	delete _last_sent;
-	delete _last_received;
+	if (_connection->get_role() == Connection::cn_acceptor)
+		{ f8_scoped_spin_lock guard(_per_spl); delete _persist; _persist = 0; }
 }
 
 //-------------------------------------------------------------------------------------------------
 int Session::start(Connection *connection, bool wait, const unsigned send_seqnum,
 	const unsigned recv_seqnum, const f8String davi)
 {
+	if (Message::set_no_chksum_flag(_loginParameters._no_chksum_flag))
+		GlobalLogger::log("chksum parsing/verification suppressed");
+
 	if (_logger)
 		_logger->purge_thread_codes();
+
 	if (_plogger)
 		_plogger->purge_thread_codes();
+
 	_control.clear(shutdown);
 	log("Starting session");
 	_connection = connection; // takes owership
 	if (!_connection->connect()) // if already connected returns true
-		return -1;;
+		return -1;
+	if (_connection->get_role() == Connection::cn_acceptor)
+		atomic_init(States::st_wait_for_logon); // important for server that this is done before connect
 	_connection->start();
 	log("Session connected");
 
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
 		atomic_init(States::st_not_logged_in);
-		if (_reset_sequence_numbers)
+		if (_loginParameters._reset_sequence_numbers)
 			_next_send_seq = _next_receive_seq = 1;
 		else
 		{
@@ -186,13 +172,11 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 				_next_receive_seq = recv_seqnum;
 		}
 
-		Message *msg(generate_logon(_connection->get_hb_interval(), davi));
-		send(msg);
+		send(generate_logon(_connection->get_hb_interval(), davi));
 		_state = States::st_logon_sent;
 	}
 	else
 	{
-		atomic_init(States::st_wait_for_logon);
 		if (send_seqnum)
 			_req_next_send_seq = send_seqnum;
 		if (recv_seqnum)
@@ -210,12 +194,21 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 //-------------------------------------------------------------------------------------------------
 void Session::stop()
 {
+	if (_control & shutdown)
+		return;
+
 	_control |= shutdown;
-	_timer.schedule(_hb_processor, 0);
-	if (_persist)
-		_persist->stop();
+	if (_connection->get_role() == Connection::cn_initiator)
+		_timer.clear();
+	else
+	{
+		_timer.schedule(_hb_processor, 0);
+		f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+		if (_persist)
+			_persist->stop();
+	}
 	_connection->stop();
-	millisleep(250); // let the thread shutdowns finish
+	hypersleep<h_milliseconds>(250);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -225,7 +218,6 @@ bool Session::enforce(const unsigned seqnum, const Message *msg)
 	{
 		if (_state != States::st_logon_received)
 			compid_check(seqnum, msg);
-		gap_fill_flag gff;
 		if (msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET && sequence_check(seqnum, msg))
 			return false;
 	}
@@ -240,66 +232,108 @@ bool Session::process(const f8String& from)
 
 	try
 	{
-		RegMatch match;
-		if (_seq.SearchString(match, from, 2, 0) != 2)
+		const f8String::size_type fpos(from.find("34="));
+		if (fpos == f8String::npos)
+		{
+			//cerr << "Session::process throwing for " << from << endl;
 			throw InvalidMessage(from);
-		f8String seqstr;
-		_seq.SubExpr(match, from, seqstr, 0, 1);
-		seqnum = fast_atoi<unsigned>(seqstr.c_str());
+		}
 
-		plog(from, 1);
-		scoped_ptr<Message> msg(Message::factory(_ctx, from));
-		if (!msg.get())
+		seqnum = fast_atoi<unsigned>(from.data() + fpos + 3, default_field_separator);
+
+		bool retry_plog(false);
+		if (_plogger && _plogger->has_flag(Logger::inbound))
+		{
+			if (_state != States::st_wait_for_logon)
+				plog(from, 1);
+			else
+				retry_plog = true;
+		}
+
+		const Message *msg(Message::factory(_ctx, from));
+		if (!msg)
 		{
 			GlobalLogger::log("Fatal: factory failed to generate a valid message");
 			return false;
 		}
 
-		if (_control & print)
+		if ((_control & printnohb) && msg->get_msgtype() != Common_MsgType_HEARTBEAT)
 			cout << *msg << endl;
-		bool result((msg->is_admin() ? handle_admin(seqnum, msg.get()) : true)
-			&& (this->*_handlers.find_ref(msg->get_msgtype()))(seqnum, msg.get()));
+		else if (_control & print)
+			cout << *msg << endl;
+
+		bool result, admin_result(msg->is_admin() ? handle_admin(seqnum, msg) : true);
+		if (msg->get_msgtype().size() > 1)
+			goto application_call;
+		else switch(msg->get_msgtype()[0])
+		{
+		default:
+application_call:
+			result = handle_application(seqnum, msg);
+			break;
+		case Common_MsgByte_HEARTBEAT:
+			result = handle_heartbeat(seqnum, msg);
+			break;
+		case Common_MsgByte_TEST_REQUEST:
+			result = handle_test_request(seqnum, msg);
+			break;
+		case Common_MsgByte_RESEND_REQUEST:
+			result = handle_resend_request(seqnum, msg);
+			break;
+		case Common_MsgByte_REJECT:
+			result = handle_reject(seqnum, msg);
+			break;
+		case Common_MsgByte_SEQUENCE_RESET:
+			result = handle_sequence_reset(seqnum, msg);
+			break;
+		case Common_MsgByte_LOGOUT:
+			result = handle_logout(seqnum, msg);
+			break;
+		case Common_MsgByte_LOGON:
+			result = handle_logon(seqnum, msg);
+			break;
+		}
+
 		++_next_receive_seq;
+		if (retry_plog)
+			plog(from, 1);
 		if (_persist)
 		{
+			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 			_persist->put(_next_send_seq, _next_receive_seq);
 			//cout << "Persisted:" << _next_send_seq << " and " << _next_receive_seq << endl;
 		}
-#if defined CODECTIMING
-		ostringstream gerr;
-		gerr << "  dtor(" << msg->get_msgtype() << "):";
-		IntervalTimer itm;
-		delete msg.release();
-		gerr << itm.Calculate();
-		GlobalLogger::log(gerr.str());
-#endif
-		return result;
+		delete msg;
+		return result && admin_result;
 
 	}
 	catch (f8Exception& e)
 	{
-		//cout << "process:: f8exception" << ' ' << seqnum << ' ' << e.what() << endl;
+		//cerr << "process:: f8exception" << ' ' << seqnum << ' ' << e.what() << endl;
 
 		log(e.what());
 		if (!e.force_logoff())
 		{
-			Message *msg(generate_reject(seqnum, e.what()));
-			send(msg);
+			send(generate_reject(seqnum, e.what()));
 		}
 		else
 		{
-			if (_state != States::st_logon_received)
+			if (_state == States::st_logon_received && !_loginParameters._silent_disconnect)
 			{
-				send(generate_logout(), 0, true); // so it won't increment
+				send(generate_logout(e.what()), true, 0, true); // so it won't increment
 				_state = States::st_logoff_sent;
 			}
 			stop();
 		}
 	}
-	catch (exception& e)	// also catches Poco::Net::NetException
+	catch (Poco::Net::NetException& e)
 	{
-		//cout << "process:: std::exception" << endl;
-
+		//cerr << "process:: Poco::Net::NetException" << endl;
+		log(e.what());
+	}
+	catch (exception& e)
+	{
+		//cerr << "process:: std::exception" << endl;
 		log(e.what());
 	}
 
@@ -327,16 +361,15 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 
 	if (seqnum > _next_receive_seq)
 	{
-		//if (_state == States::st_resend_request_sent)
-//			log("Resend request already sent");
+		if (_state == States::st_resend_request_sent)
+			log("Resend request already sent");
 		if (_state == States::st_continuous)
 		{
-			Message *rmsg(generate_resend_request(_next_receive_seq));
+			send(generate_resend_request(_next_receive_seq));
 			_state = States::st_resend_request_sent;
-			send(rmsg);
 		}
-	//	else
-	//		throw InvalidMsgSequence(seqnum, _next_receive_seq);
+		else if (!_sf->get_ignore_logon_sequence_check_flag(_sf->_ses))
+			throw InvalidMsgSequence(seqnum, _next_receive_seq);
 		return false;
 	}
 
@@ -364,6 +397,7 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 {
 	_state = States::st_logon_received;
+	const bool reset_given(msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get());
 
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
@@ -372,10 +406,39 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		msg->get(hbi);
 		_connection->set_hb_interval(hbi());
 		_state = States::st_continuous;
+		ostringstream ostr;
+		ostr << "Client setting heartbeat interval to " << hbi();
+		log(ostr.str());
 	}
 	else // acceptor
 	{
-		if (_ctx.version() >= 4100 && msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get())
+		default_appl_ver_id davi;
+		msg->get(davi);
+
+		sender_comp_id sci;
+		msg->Header()->get(sci);
+		target_comp_id tci;
+		msg->Header()->get(tci);
+		SessionID id(_ctx._beginStr, tci(), sci());
+
+		// important - these objects can't be created until we have a valid SessionID
+		if (!_logger)
+			_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id);
+
+		if (!_plogger)
+			_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id);
+
+		if (!_persist)
+		{
+			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+			_persist = _sf->create_persister(_sf->_ses, &id, reset_given);
+		}
+
+		ostringstream ostr;
+		ostr << "Connection from " << _connection->get_peer_socket_address().toString();
+		log(ostr.str());
+
+		if (reset_given) // ignore version restrictions on this behaviour
 		{
 			log("Resetting sequence numbers");
 			_next_send_seq = _next_receive_seq = 1;
@@ -389,19 +452,11 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 				_next_receive_seq = _req_next_receive_seq;
 		}
 
-		sender_comp_id sci;
-		msg->Header()->get(sci);
-		target_comp_id tci;
-		msg->Header()->get(tci);
-		SessionID id(_ctx._beginStr, tci(), sci());
-		default_appl_ver_id davi;
-		msg->get(davi);
 		if (authenticate(id, msg))
 		{
 			_sid = id;
 			enforce(seqnum, msg);
-			Message *msg(generate_logon(_connection->get_hb_interval(), davi()));
-			send(msg);
+			send(generate_logon(_connection->get_hb_interval(), davi()));
 			_state = States::st_continuous;
 		}
 		else
@@ -442,12 +497,13 @@ bool Session::handle_sequence_reset(const unsigned seqnum, const Message *msg)
 	enforce(seqnum, msg);
 
 	new_seq_num nsn;
-	if (msg->Header()->get(nsn))
+	if (msg->get(nsn))
 	{
-		if (nsn() > static_cast<int>(_next_send_seq))
-			_next_send_seq = nsn();
-		else if (nsn() < static_cast<int>(_next_send_seq))
-			throw MsgSequenceTooLow(nsn(), _next_send_seq);
+		//cerr << "newseqnum = " << nsn() << ", _next_receive_seq = " << _next_receive_seq << " seqnum:" << seqnum << endl;
+		if (nsn() >= static_cast<int>(_next_receive_seq))
+			_next_receive_seq = nsn() - 1;
+		else if (nsn() < static_cast<int>(_next_receive_seq))
+			throw MsgSequenceTooLow(nsn(), _next_receive_seq);
 	}
 
 	if (_state == States::st_resend_request_sent)
@@ -463,8 +519,6 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 
 	if (_state != States::st_resend_request_received)
 	{
-		_state = States::st_resend_request_received;
-
 		begin_seq_num begin;
 		end_seq_num end;
 
@@ -473,7 +527,12 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		else if ((begin() > end() && end()) || begin() == 0)
 			send(generate_reject(seqnum, "Invalid begin or end resend seqnum"));
 		else
+		{
+			//cout << "got resend request:" << begin() << " to " << end() << endl;
+			_state = States::st_resend_request_received;
+			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 			_persist->get(begin(), end(), *this, &Session::retrans_callback);
+		}
 	}
 
 	return true;
@@ -482,8 +541,6 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& rctx)
 {
-	Message *msg(Message::factory(_ctx, with.second));
-
 	//cout << "first:" << with.first << ' ' << rctx << endl;
 
 	if (rctx._no_more_records)
@@ -491,13 +548,13 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 		if (rctx._end)
 		{
 			_next_send_seq = rctx._interrupted_seqnum - 1;
-			send(generate_sequence_reset(rctx._interrupted_seqnum, true), rctx._last + 1);
+			send(generate_sequence_reset(rctx._interrupted_seqnum, true), true, rctx._last + 1);
 			//cout << "#1" << endl;
 		}
 		else if (!rctx._last)
 		{
 			_next_send_seq = rctx._interrupted_seqnum;
-			send(generate_sequence_reset(rctx._interrupted_seqnum, true));
+			send(generate_sequence_reset(rctx._interrupted_seqnum, true), true, rctx._begin);
 			//cout << "#4" << endl;
 		}
 		_state = States::st_continuous;
@@ -508,7 +565,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 	{
 		if (rctx._last + 1 < with.first)
 		{
-			send(generate_sequence_reset(with.first, true), _next_send_seq);
+			send(generate_sequence_reset(with.first, true), true, _next_send_seq);
 			//cout << "#2" << endl;
 		}
 	}
@@ -523,6 +580,7 @@ bool Session::retrans_callback(const SequencePair& with, RetransmissionContext& 
 
 	rctx._last = with.first;
 
+	Message *msg(Message::factory(_ctx, with.second));
 	return send(msg);
 }
 
@@ -533,35 +591,59 @@ bool Session::handle_test_request(const unsigned seqnum, const Message *msg)
 
 	test_request_id testReqID;
 	msg->get(testReqID);
-	Message *trmsg(generate_heartbeat(testReqID()));
-	send(trmsg);
+	send(generate_heartbeat(testReqID()));
 	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
 bool Session::heartbeat_service()
 {
+	if (is_shutdown())
+		return false;
+
+	//cerr << "heartbeat_service" << endl;
+
 	Tickval now(true);
-	if ((now - *_last_sent).secs() >= _connection->get_hb_interval())
+	if ((now - _last_sent).secs() >= static_cast<time_t>(_connection->get_hb_interval()))
 	{
 		const f8String testReqID;
-		Message *msg(generate_heartbeat(testReqID));
-		//if (_connection->get_role() == Connection::cn_initiator)
-			send(msg);
+		send(generate_heartbeat(testReqID));
 	}
 
 	now.now();
-	if ((now - *_last_received).secs() > _connection->get_hb_interval20pc())
+	if ((now - _last_received).secs() > static_cast<time_t>(_connection->get_hb_interval20pc()))
 	{
 		if (_state == States::st_test_request_sent)	// already sent
 		{
-			send(generate_logout(), 0, true); // so it won't increment
+			ostringstream ostr;
+			ostr << "Remote has ignored my test request. Aborting session...";
+			send(generate_logout(_loginParameters._silent_disconnect ? 0 : ostr.str().c_str()), true, 0, true); // so it won't increment
 			_state = States::st_logoff_sent;
-			stop();
+			log(ostr.str());
+			try
+			{
+				stop();
+			}
+			catch (Poco::Net::NetException& e)
+			{
+				log(e.what());
+			}
+			catch (exception& e)
+			{
+				log(e.what());
+			}
 			return true;
 		}
 		else
 		{
+			ostringstream ostr;
+			ostr << "Have not received anything from remote for ";
+			if (_last_received.secs())
+				ostr << (now - _last_received).secs();
+			else
+				ostr << "more than " << _connection->get_hb_interval20pc();
+			ostr << " secs. Sending test request";
+			log(ostr.str());
 			const f8String testReqID("TEST");
 			send(generate_test_request(testReqID));
 			_state = States::st_test_request_sent;
@@ -588,7 +670,7 @@ Message *Session::generate_heartbeat(const f8String& testReqID)
 {
 	Message *msg(create_msg(Common_MsgType_HEARTBEAT));
 	if (!testReqID.empty())
-		*msg += new test_request_id(testReqID);
+		*msg << new test_request_id(testReqID);
 
 	return msg;
 }
@@ -597,9 +679,10 @@ Message *Session::generate_heartbeat(const f8String& testReqID)
 Message *Session::generate_reject(const unsigned seqnum, const char *what)
 {
 	Message *msg(create_msg(Common_MsgType_REJECT));
-	*msg += new ref_seq_num(seqnum);
+	*msg << new ref_seq_num(seqnum);
 	if (what)
-		*msg += new text(what);
+		*msg << new text(what);
+
 	return msg;
 }
 
@@ -607,7 +690,7 @@ Message *Session::generate_reject(const unsigned seqnum, const char *what)
 Message *Session::generate_test_request(const f8String& testReqID)
 {
 	Message *msg(create_msg(Common_MsgType_TEST_REQUEST));
-	*msg += new test_request_id(testReqID);
+	*msg << new test_request_id(testReqID);
 
 	return msg;
 }
@@ -616,20 +699,23 @@ Message *Session::generate_test_request(const f8String& testReqID)
 Message *Session::generate_logon(const unsigned heartbtint, const f8String davi)
 {
 	Message *msg(create_msg(Common_MsgType_LOGON));
-	*msg += new heartbeat_interval(heartbtint);
-	*msg += new encrypt_method(0); // FIXME
+	*msg << new heartbeat_interval(heartbtint)
+		  << new encrypt_method(0); // FIXME
 	if (!davi.empty())
-		*msg += new default_appl_ver_id(davi);
-	if (_reset_sequence_numbers)
-		*msg += new reset_seqnum_flag(true);
+		*msg << new default_appl_ver_id(davi);
+	if (_loginParameters._reset_sequence_numbers)
+		*msg << new reset_seqnum_flag(true);
 
 	return msg;
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *Session::generate_logout()
+Message *Session::generate_logout(const char *msgstr)
 {
 	Message *msg(create_msg(Common_MsgType_LOGOUT));
+	if (msgstr)
+		*msg << new text(msgstr);
+
 	return msg;
 }
 
@@ -637,8 +723,7 @@ Message *Session::generate_logout()
 Message *Session::generate_resend_request(const unsigned begin, const unsigned end)
 {
 	Message *msg(create_msg(Common_MsgType_RESEND_REQUEST));
-	*msg += new begin_seq_num(begin);
-	*msg += new end_seq_num(end);
+	*msg << new begin_seq_num(begin) << new end_seq_num(end);
 
 	return msg;
 }
@@ -647,79 +732,108 @@ Message *Session::generate_resend_request(const unsigned begin, const unsigned e
 Message *Session::generate_sequence_reset(const unsigned newseqnum, const bool gapfillflag)
 {
 	Message *msg(create_msg(Common_MsgType_SEQUENCE_RESET));
-	*msg += new new_seq_num(newseqnum);
+	*msg << new new_seq_num(newseqnum);
 
 	if (gapfillflag)
-		*msg += new gap_fill_flag(true);
+		*msg << new gap_fill_flag(true);
 
 	return msg;
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::send(Message *tosend, const unsigned custom_seqnum, const bool no_increment)
+bool Session::send(Message *tosend, bool destroy, const unsigned custom_seqnum, const bool no_increment)
 {
 	if (custom_seqnum)
 		tosend->set_custom_seqnum(custom_seqnum);
 	if (no_increment)
 		tosend->set_no_increment(no_increment);
+	return _connection->write(tosend, destroy);
+}
+
+bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_increment)
+{
+	if (custom_seqnum)
+		tosend.set_custom_seqnum(custom_seqnum);
+	if (no_increment)
+		tosend.set_no_increment(no_increment);
 	return _connection->write(tosend);
 }
 
-#if defined MSGRECYCLING
-bool Session::send_wait(Message *msg, const unsigned custom_seqnum, const int waitval)
+//-------------------------------------------------------------------------------------------------
+size_t Session::send_batch(const vector<Message *>& msgs, bool destroy)
 {
-	if (send(msg, custom_seqnum))
+	size_t result(0);
+
+	_connection->set_tcp_cork_flag(true);
+	for (vector<Message *>::const_iterator itr(msgs.begin()); itr != msgs.end(); ++itr)
 	{
-		while(msg->get_in_use())
-			microsleep(waitval);
-		return true;
+		if (!_connection->write(*itr, destroy))
+			break;
+		++result;
 	}
-	return false;
+	_connection->set_tcp_cork_flag(false);
+
+	return result;
 }
 
-#endif
-
 //-------------------------------------------------------------------------------------------------
-bool Session::send_process(Message *msg) // called from the connection thread
+bool Session::send_process(Message *msg) // called from the connection (possibly on separate thread)
 {
 	bool is_dup(msg->Header()->have(Common_PossDupFlag));
 
 	if (!msg->Header()->have(Common_SenderCompID))
-		*msg->Header() += new sender_comp_id(_sid.get_senderCompID());
+		*msg->Header() << new sender_comp_id(_sid.get_senderCompID());
 	if (!msg->Header()->have(Common_TargetCompID))
-		*msg->Header() += new target_comp_id(_sid.get_targetCompID());
+		*msg->Header() << new target_comp_id(_sid.get_targetCompID());
 
 	if (msg->Header()->have(Common_MsgSeqNum))
 	{
-		if (!is_dup)
+		if (is_dup)
 		{
-			*msg->Header() += new poss_dup_flag(true);
-			is_dup = true;
+			if (_loginParameters._always_seqnum_assign)
+				delete msg->Header()->remove(Common_PossDupFlag);
+		}
+		else
+		{
+			if (!_loginParameters._always_seqnum_assign)
+			{
+				*msg->Header() << new poss_dup_flag(true);
+				is_dup = true;
+			}
 		}
 
 		sending_time sendtime;
 		msg->Header()->get(sendtime);
-		*msg->Header() += new orig_sending_time(sendtime());
+		*msg->Header() << new orig_sending_time(sendtime());
+
+		if (_loginParameters._always_seqnum_assign)
+			//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
+			*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
 	}
 	else
-		*msg->Header() += new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
-	*msg->Header() += new sending_time;
+	{
+		//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
+		*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
+	}
+	*msg->Header() << new sending_time;
 
 	try
 	{
 		//cout << "Sending:" << *msg;
 		modify_outbound(msg);
-		f8String output;
-		const unsigned enclen(msg->encode(output));
-		if (!_connection->send(output))
+		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		const size_t enclen(msg->encode(&ptr));
+		if (!_connection->send(ptr, enclen))
 		{
 			ostringstream ostr;
-			ostr << "Message write failed: " << enclen;
+			ostr << "Message write failed: " << enclen << " bytes";
 			log(ostr.str());
 			return false;
 		}
-		_last_sent->now();
-		plog(output);
+		_last_sent.now();
+
+		if (_plogger && _plogger->has_flag(Logger::outbound))
+			plog(ptr);
 
 		//cout << "send_process" << endl;
 
@@ -727,13 +841,14 @@ bool Session::send_process(Message *msg) // called from the connection thread
 		{
 			if (_persist)
 			{
+				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
 				if (!msg->is_admin())
-					_persist->put(_next_send_seq, output);
+					_persist->put(_next_send_seq, ptr);
 				_persist->put(_next_send_seq + 1, _next_receive_seq);
 				//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
 			}
 
-			if (!msg->get_custom_seqnum() && !msg->get_no_increment())
+			if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
 			{
 				++_next_send_seq;
 				//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
@@ -749,14 +864,9 @@ bool Session::send_process(Message *msg) // called from the connection thread
 }
 
 //-------------------------------------------------------------------------------------------------
-bool Session::handle_application(const unsigned seqnum, const Message *msg)
-{
-	return false;
-}
-
-//-------------------------------------------------------------------------------------------------
 void Session::recover_seqnums()
 {
+	f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 	if (_persist)
 	{
 		unsigned send_seqnum, receive_seqnum;
@@ -765,9 +875,73 @@ void Session::recover_seqnums()
 			ostringstream ostr;
 			ostr << "Last sent: " << send_seqnum << ", last received: " << receive_seqnum;
 			log(ostr.str());
-			_next_send_seq = send_seqnum ;// + 1;
-			_next_receive_seq = receive_seqnum ;// + 1;
+			_next_send_seq = send_seqnum; // + 1;
+			_next_receive_seq = receive_seqnum; // + 1;
 		}
 	}
 }
 
+//-------------------------------------------------------------------------------------------------
+#if !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
+
+f8String Session::get_thread_policy_string(pthread_t id)
+{
+   int policy;
+	ostringstream ostr;
+   sched_param param = {};
+   if (!pthread_getschedparam(id,  &policy, &param))
+		return policy == SCHED_OTHER ? "SCHED_OTHER" : policy == SCHED_RR ? "SCHED_RR"
+			  : policy == SCHED_FIFO ? "SCHED_FIFO" : "UNKNOWN";
+
+	ostr << "Could not get scheduler parameters: " << Str_error(errno);
+	return ostr.str();
+}
+
+//-------------------------------------------------------------------------------------------------
+void Session::set_scheduler(int priority)
+{
+   pthread_t thread(pthread_self());
+   sched_param param = { priority };
+
+	ostringstream ostr;
+	ostr << "Current scheduler policy: " << get_thread_policy_string(thread);
+	log(ostr.str());
+	ostr.str("");
+
+   if (pthread_setschedparam(thread, SCHED_RR, &param))
+	{
+		ostr << "Could not set new scheduler priority: " << get_thread_policy_string(thread)
+			<< " (" << Str_error(errno) << ") " << priority;
+		log(ostr.str());
+		return;
+   }
+
+	ostr << "New scheduler policy: " << get_thread_policy_string(thread);
+	log(ostr.str());
+}
+
+//-------------------------------------------------------------------------------------------------
+void Session::set_affinity(int core_id)
+{
+   const int num_cores(sysconf(_SC_NPROCESSORS_ONLN));
+	ostringstream ostr;
+   if (core_id >= num_cores)
+	{
+		ostr << "Invalid core id: " << core_id;
+		log(ostr.str());
+      return;
+	}
+
+   cpu_set_t cpuset;
+   CPU_ZERO(&cpuset);
+   CPU_SET(core_id, &cpuset);
+   const int error(pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset));
+
+	if (error)
+		ostr << "Could not set thread affinity for core " << core_id << " (" << Str_error(errno) << ')';
+	else
+		ostr << "Set thread affinity to " << core_id << " core for thread " << pthread_self();
+	log(ostr.str());
+}
+
+#endif

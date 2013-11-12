@@ -1,43 +1,47 @@
 # Process this file with autoconf to produce a configure script.
-AC_COPYRIGHT([fix8 is released under the New BSD License.
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
+AC_COPYRIGHT([Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 All rights reserved.])
 
 AC_PREREQ(2.61)
 AC_INIT([fix8], m4_esyscmd([./version.sh|tr -d '\n']),fix@fix8.org,fix8,http://www.fix8.org)
 AM_INIT_AUTOMAKE
 AH_TOP([//-----------------------------------------------------------------------------------------
-#if 0
-fix8 is released under the New BSD License.
+/*
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
- * Redistributions of source code must retain the above copyright notice, this list of
-	conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice, this list
-	of conditions and the following disclaimer in the documentation and/or other
-	materials provided with the distribution.
- * Neither the name of the author nor the names of its contributors may be used to
-	endorse or promote products derived from this software without specific prior
-	written permission.
- * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-   in their name without written permission from fix8.org
+Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
+Lesser General Public License as  published by the Free Software Foundation, either version
+3 of the License, or (at your option) any later version.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-#endif
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
+
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-----------------------------------------------------------------------------------------])
 
 AC_ENABLE_STATIC(no)
@@ -46,23 +50,24 @@ AC_CONFIG_MACRO_DIR([m4])
 # generate major_version
 VERSION_DASHED=`[echo $VERSION | tr . -]`
 MAJOR_VERSION=`[echo $VERSION | sed 's/^\([0-9]*\.[0-9]*\)\..*/\1/']`
+echo "checking version... $VERSION"
 
 MAJOR_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$1}']`
 AC_DEFINE_UNQUOTED([MAJOR_VERSION_NUM], [$MAJOR_VERSION_NUM], [Major version number])
 MINOR_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$2}']`
 AC_DEFINE_UNQUOTED([MINOR_VERSION_NUM], [$MINOR_VERSION_NUM], [Minor version number])
-PATCH_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$4}']`
+PATCH_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$3}']`
 AC_DEFINE_UNQUOTED([PATCH_VERSION_NUM], [$PATCH_VERSION_NUM], [Patch number])
-AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 29 | MINOR_VERSION_NUM << 23 | PATCH_VERSION_NUM)], [Encoded Version])
+AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)], [Encoded Version])
 AC_DEFINE_UNQUOTED([CONFIGURE_OPTIONS], ["$ac_configure_args"], [configure options])
 
-BRAND_SUMMARY='Fix8 FIX Framework Server'
+BRAND_SUMMARY='Fix8 Open Source FIX Framework'
 BRAND_DESCRIPTION='Modern fast FIX Framework'
-BRAND_COMPANY_SHORTNAME='DD'
-BRAND_COMPANY_LONGNAME='David L. Dight'
+BRAND_COMPANY_SHORTNAME='fix8'
+BRAND_COMPANY_LONGNAME='fix8 by David L. Dight'
 
 # Checks for programs.
-AC_PROG_LIBTOOL
+LT_INIT
 AC_PROG_CXX
 AC_PROG_CC
 AC_C_BIGENDIAN
@@ -82,6 +87,7 @@ AC_TYPE_SIZE_T
 AC_TYPE_OFF_T
 AC_TYPE_UINT16_T
 AC_TYPE_UINT32_T
+AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
 AC_CHECK_TYPES([ptrdiff_t])
 
@@ -95,7 +101,6 @@ AC_FUNC_MEMCMP
 AC_FUNC_MKTIME
 AC_TYPE_SIGNAL
 AC_FUNC_ALLOCA
-AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
 AC_FUNC_FORK
 AC_HEADER_STDC
@@ -109,89 +114,213 @@ AC_FUNC_STRCOLL
 AC_CHECK_TOOL([STRIP],[strip])
 AC_CHECK_TOOL([DOXYGEN],[doxygen])
 
+# check what version of gcc we're using
+
+# test for gcc >= 4.7
+is_late_gcc=no
+case "$CXX" in
+  *g++*)
+		GCC_VERSION=`$CC -dumpversion`
+		gcc_major=`echo $GCC_VERSION | cut -d. -f1`
+		gcc_minor=`echo $GCC_VERSION | cut -d. -f2`
+		if test $gcc_major -ge 4 -a $gcc_minor -ge 7; then
+			is_late_gcc=yes
+		fi ;;
+	*clang*)
+		LIBS="$LIBS -lstdc++ -lm " ;;
+esac
+
+# use -fvar-tracking-assignments-toggle
+AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$is_late_gcc = xyes])
+
 if test -z "$DOXYGEN";
 	then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
 fi
-AM_CONDITIONAL([USEDOXYGEN],
-	[test -n "$DOXYGEN"])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
+oktodox=yes
+AC_ARG_ENABLE([doxygen],
+[AS_HELP_STRING([--enable-doxygen],[enable doxygen generation (default=yes if available)])],
+[case "${enableval}" in
+	yes) ;;
+	no)  oktodox=no;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-doxygen) ;;
+esac])
 
-AC_CHECK_FUNCS([scandir getopt_long sysconf getaddrinfo getnameinfo \
-	daemon popen waitpid setlogmask alarm dup2 ftruncate \
-	getcwd gettimeofday localtime_r pow regcomp socket strcasecmp strchr strdup strerror \
-	strncasecmp strspn strtol strtoul random srandom
+AM_CONDITIONAL([USEDOXYGEN],
+	[test -n "$DOXYGEN" && test $oktodox = yes])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
+
+DOXYGEN_WARNINGS=YES
+AC_ARG_ENABLE([doxygen-warnings],
+[AS_HELP_STRING([--enable-doxygen-warnings],[permit doxygen to generate warnings (default=yes)])],
+[case "${enableval}" in
+	no) DOXYGEN_WARNINGS=NO ;;
+	yes) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-doxygen-warnings) ;;
+esac])
+
+AC_CHECK_FUNCS([getopt_long sysconf popen getcwd gettimeofday localtime_r regcomp socket strcasecmp \
+		strerror strtol strtoul random srandom
 	])
+
+AC_CHECK_DECLS([TCP_CORK], [], [], [[#include <netinet/tcp.h>]])
+
+fillmetadata=yes
+AC_ARG_ENABLE([fillmetadata],
+[AS_HELP_STRING([--enable-fillmetadata],[enable metadata population (default=yes)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(POPULATE_METADATA, 1, [Define to 1 to enable metatdata population in encode/decodes]) ;;
+	no)  fillmetadata=no;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-fillmetadata) ;;
+esac])
+
+AC_ARG_ENABLE([rdtsc],
+[AS_HELP_STRING([--enable-rdtsc],[use rdtsc for interval timer if available])],
+[case "${enableval}" in
+	yes) AC_DEFINE(USE_RDTSC, 1, [Define to 1 to enable rdtsc for interval timer if available]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-rdtsc) ;;
+esac])
 
 AC_CHECK_LIB(rt, clock_gettime, [AC_DEFINE(HAVE_CLOCK_GETTIME, 1, [Define if you have clock_gettime()])])
 AC_CHECK_LIB(rt, clock_nanosleep, [AC_DEFINE(HAVE_CLOCK_NANOSLEEP, 1, [Define if you have clock_nanosleep()])])
 
 AC_CHECK_HEADERS([getopt.h fcntl.h netdb.h regex.h signal.h string.h sys/time.h \
-	arpa/inet.h sys/stat.h sys/types.h select.h sys/event.h netinet/tcp.h \
+	arpa/inet.h sys/stat.h sys/types.h select.h \
 	sys/wait.h netinet/in.h getopt.h limits.h sys/ioctl.h unistd.h \
 	sys/socket.h time.h syslog.h termios.h alloca.h
 	])
 
-PROCSTAT=/proc/stat
-AC_CHECK_FILE("$PROCSTAT",
-	[
-		AC_DEFINE_UNQUOTED(HAVE_PROC_STAT, 1, [Define to 1 if /proc/stat is available])
-	])
-
-PROCPIDSTAT=/proc/"$PPID"/stat
-AC_CHECK_FILE("$PROCPIDSTAT",
-	[
-		AC_DEFINE_UNQUOTED(HAVE_PROC_PID_STAT, 1, [Define to 1 if /proc/[pid]/stat is available])
-	])
-
-PROCPIDSTATM=/proc/"$PPID"/statm
-AC_CHECK_FILE("$PROCPIDSTATM",
-	[
-		AC_DEFINE_UNQUOTED(HAVE_PROC_PID_STATM, 1, [Define to 1 if /proc/[pid]/statm is available])
-	])
-
-DEVURANDOM=/dev/urandom
-AC_CHECK_FILE("$DEVURANDOM",
-	[
-		AC_DEFINE(HAVE_DEV_URANDOM, 1, [Define to 1 if the /dev/urandom device is available])
-	])
-
-AC_DEFINE(RESERVE_PERCENT, 30, [Percentage of message fields to reserve for additional fields])
+AC_DEFINE_UNQUOTED(RESERVE_PERCENT, 30, [Percentage of message fields to reserve for additional fields])
 AC_ARG_WITH(reservepercent,
-  AC_HELP_STRING([--with-reservepercent=VALUE],[Percentage of message fields to reserve for additional fields]),
+  AS_HELP_STRING([--with-reservepercent=VALUE],[Percentage of message fields to reserve for additional fields]),
 [
-	AC_DEFINE(RESERVE_PERCENT, ${withval}, [Percentage of message fields to reserve for additional fields])
+	AC_DEFINE_UNQUOTED(RESERVE_PERCENT, ${withval},[Percentage of message fields to reserve for additional fields])
 ],[])
 
-AC_ARG_WITH(poco,
-  AC_HELP_STRING([--with-poco=DIR],[location of Poco]),
+AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, 8192, [Maximum length of a FIX message in bytes])
+AC_ARG_WITH(maxmsglen,
+  AS_HELP_STRING([--with-maxmsglen=VALUE],[Maximum length of a FIX message (default=8192)]),
 [
-	CPPFLAGS="$CPPFLAGS -I${withval}/include"
-	LDFLAGS="$LDFLAGS -L${withval}/lib"
+	AC_DEFINE_UNQUOTED(MAX_MSG_LENGTH, ${withval}, [Maximum length of a FIX message (default=8192)])
+],[])
+
+AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, 1024, [Maximum length of a FIX field in bytes])
+AC_ARG_WITH(maxfldlen,
+  AS_HELP_STRING([--with-maxfldlen=VALUE],[Maximum length of a FIX field (default=1024)]),
+[
+	AC_DEFINE_UNQUOTED(MAX_FLD_LENGTH, ${withval}, [Maximum length of a FIX field (default=1024)])
+],[])
+
+AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, 2, [Default precision for floating point fields])
+AC_ARG_WITH(precision,
+  AS_HELP_STRING([--with-precision=VALUE],[Default precision for floating point fields (default=2)]),
+[
+	AC_DEFINE_UNQUOTED(DEFAULT_PRECISION, ${withval}, [Default precision for floating point fields (default=2)])
 ],[])
 
 AC_ARG_WITH(tbb,
-  AC_HELP_STRING([--with-tbb=DIR],[location of TBB]),
+  AS_HELP_STRING([--with-tbb=DIR],[location of TBB]),
 [
 	CPPFLAGS="$CPPFLAGS -I${withval}/include"
 	LDFLAGS="$LDFLAGS -L${withval}/lib"
 ],[])
 
-AC_MSG_CHECKING(for TBB)
-	AC_TRY_COMPILE([
-		#include <tbb/atomic.h>
-		#include <tbb/mutex.h>
-		#include <tbb/concurrent_queue.h>
-		],[;],
-		have_tbb=yes, have_tbb=no)
-	if test "$have_tbb" = yes; then
-	    AC_MSG_RESULT(yes)
-	    AC_DEFINE(HAS_TBB, 1, [Define to 1 if TBB available])
-	else
-	    AC_MSG_RESULT(no)
-		 echo
-		 echo "ERROR: TBB development libraries are required. Install and try again."
-		 echo
-		 exit 1
-	fi
+AC_ARG_WITH(gtest,
+  AS_HELP_STRING([--with-gtest=DIR],[location of gtest]),
+[
+	CPPFLAGS="$CPPFLAGS -I${withval}/include"
+	LDFLAGS="$LDFLAGS -L${withval}/lib -L${withval}/lib/.libs"
+],[])
+
+usetcmalloc=yes
+AC_ARG_ENABLE([tcmalloc],
+[AS_HELP_STRING([--enable-tcmalloc],[enable gperftools tcmalloc (default=yes)])],
+[case "${enableval}" in
+	yes) ;;
+	no)  usetcmalloc=no;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-tcmalloc) ;;
+esac])
+
+usetbbmalloc=no
+AC_ARG_ENABLE([tbbmalloc],
+[AS_HELP_STRING([--enable-tbbmalloc],[enable TBB tbbmalloc (default=no)])],
+[case "${enableval}" in
+	yes) usetbbmalloc=yes;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-tbbmalloc) ;;
+esac])
+
+AC_ARG_WITH(gperf,
+  AS_HELP_STRING([--with-gperf=DIR],[location of gperf libraries]),
+[
+	CPPFLAGS="$CPPFLAGS -I${withval}/include"
+	LDFLAGS="$LDFLAGS -L${withval}/lib"
+],[])
+
+AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
+AC_DEFINE(MPMC_FF, 2, [FF MPMC])
+
+mpmc_set=no
+using_ff=no
+AC_ARG_WITH([mpmc],
+[AS_HELP_STRING([--with-mpmc=VAL],[select which mpmc system will be used (tbb|ff, default=ff)])],
+[case "${withval}" in
+	tbb) AC_MSG_CHECKING(for TBB)
+				AC_TRY_COMPILE([
+					#include <tbb/atomic.h>
+					#include <tbb/mutex.h>
+					#include <tbb/concurrent_queue.h>
+					],,
+					have_tbb=yes, have_tbb=no)
+				if test "$have_tbb" = yes; then
+					 AC_MSG_RESULT(yes)
+					 AC_DEFINE(MPMC_SYSTEM, MPMC_TBB, [MPMC system used])
+				else
+					 AC_MSG_RESULT(no)
+					 echo
+					 echo "ERROR: TBB development libraries not found. Install and try again."
+					 echo
+					 exit 1
+				fi
+		 mpmc_set=yes ;;
+	ff) using_ff=yes;;
+	*) echo
+		echo "ERROR: Unknown value ${withval} for MPMC given."
+		echo
+		exit 1
+esac])
+
+if test "$mpmc_set" = no; then
+	using_ff=yes
+	AC_DEFINE(MPMC_SYSTEM, MPMC_FF, [MPMC system used])
+fi
+
+AM_CONDITIONAL(TBBSUPPORT, [test x$have_tbb = xyes])
+
+AC_CHECK_LIB(tcmalloc_minimal, malloc, have_tcmalloc_minimal_lib=yes)
+AC_CHECK_LIB(tcmalloc, malloc, have_tcmalloc_lib=yes)
+
+if test "$have_tbb" = yes && test x$usetbbmalloc = xyes; then
+	LIBS="$LIBS -ltbbmalloc -ltbbmalloc_proxy"
+else if test "$have_tcmalloc_minimal_lib" = yes && test x$usetcmalloc = xyes; then
+	LIBS="$LIBS -ltcmalloc_minimal"
+else if test "$have_tcmalloc_lib" = yes && test x$usetcmalloc = xyes; then
+	LIBS="$LIBS -ltcmalloc"
+fi
+fi
+fi
+
+AC_ARG_WITH(sleep,
+	AS_HELP_STRING([--with-sleep=VAL],[If using fastflow, sleep for VAL ns instead of yield when waiting for input(default=no)]),
+[
+	AC_DEFINE_UNQUOTED(SLEEP_NO_YIELD, ${withval}, [Define to 1 if when using fastflow, sleep for VAL ns instead of yield when waiting for input])
+],[])
+
+AC_ARG_WITH(poco,
+  AS_HELP_STRING([--with-poco=DIR],[location of Poco]),
+[
+	CPPFLAGS="$CPPFLAGS -I${withval}/include"
+	LDFLAGS="$LDFLAGS -L${withval}/lib"
+],[])
 
 AC_MSG_CHECKING(for Poco)
 	AC_TRY_COMPILE([
@@ -202,7 +331,7 @@ AC_MSG_CHECKING(for Poco)
 		#include <Poco/DateTimeParser.h>
 		#include <Poco/DateTimeFormatter.h>
 		#include <Poco/Net/NetException.h>
-		],[;],
+		],,
 		have_poco=yes, have_poco=no)
 	if test "$have_poco" = yes; then
 	    AC_MSG_RESULT(yes)
@@ -210,10 +339,33 @@ AC_MSG_CHECKING(for Poco)
 	else
 	    AC_MSG_RESULT(no)
 		 echo
-		 echo "ERROR: Poco development libraries are required. Install and try again."
+		 echo "ERROR: Poco development libraries are required. Install and try again (see wiki:prerequisites)."
 		 echo
 		 exit 1
 	fi
+
+oktogtest=yes
+AC_ARG_ENABLE([gtest],
+[AS_HELP_STRING([--enable-gtest],[enable gtest unit test case building if available (default=yes if available)])],
+[case "${enableval}" in
+	yes) ;;
+	no)  oktogtest=no;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-gtest) ;;
+esac])
+
+AC_MSG_CHECKING(for gtest)
+    AC_TRY_COMPILE([
+        #include <gtest/gtest.h>
+        ],[;],
+        have_gtest=yes, have_gtest=no)
+    if test "$have_gtest" = yes && test "$oktogtest" = yes; then
+        AC_MSG_RESULT(yes)
+        AC_DEFINE(HAS_GTEST, 1, [Define to 1 if gtest available])
+    else
+        AC_MSG_RESULT(no)
+    fi
+AM_CONDITIONAL(USEGTEST, [test x$have_gtest = xyes && test "$oktogtest" = yes])
+
 
 AC_MSG_CHECKING(for tr1/unordered_map)
 	AC_TRY_COMPILE([
@@ -240,27 +392,29 @@ AM_CONDITIONAL(USECCRYPT, [test x$havecrypt = xyes])
 m4_include(m4/ax_compare_version.m4)
 m4_include(m4/ax_path_bdb.m4)
 
-AX_PATH_BDB([3],[ LIBS="$BDB_LIBS $LIBS"
-LDFLAGS="$BDB_LDFLAGS $LDFLAGS"
-CPPFLAGS="$CPPFLAGS $BDB_CPPFLAGS"
-AC_DEFINE(HAVE_BDB, 1, [Define to 1 if you have berkeley DB])
-	])
+oktof8test=yes
+AC_ARG_ENABLE([f8test],
+[AS_HELP_STRING([--enable-f8test],[permit f8test client/server to be built (default=yes)])],
+[case "${enableval}" in
+	no) oktof8test=no ;;
+	yes) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-f8test) ;;
+esac])
 
-if test "$have_bdb" = "no"; then
-		echo
-		echo "ERROR: Oracle Berkeley DB development libraries are required. Install and try again."
-		echo
-		exit 1
-fi
+AM_CONDITIONAL(F8TEST, [test x$oktof8test = xyes])
 
-# Check for timersub macro in sys/time.h
-AC_CACHE_CHECK([for timersub macro in sys/time.h], ac_cv_timersubmacro,
-		[AC_TRY_COMPILE([#include <sys/time.h>],
-[struct timeval a, b, c; timersub(&a, &b, &c);],
-			  timersubmacro=yes, timersubmacro=no)])
-if test "$timersubmacro" = "yes"; then
-    AC_DEFINE(HAVE_TIMERSUB, 1, [Define to 1 if timersub macro is in sys/time.h])
-fi
+oktobdb=no
+AC_ARG_ENABLE([bdb],
+[AS_HELP_STRING([--enable-bdb],[enable support for Oracle Berkeley DB persistence (default=no)])],
+[case "${enableval}" in
+	yes) oktobdb=yes
+		AX_PATH_BDB([3],[ LIBS="$BDB_LIBS $LIBS" LDFLAGS="$BDB_LDFLAGS $LDFLAGS" CPPFLAGS="$CPPFLAGS $BDB_CPPFLAGS"
+			AC_DEFINE(HAVE_BDB, 1, [Define to 1 if you have berkeley DB])]) ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-bdb) ;;
+esac])
+
+AM_CONDITIONAL(BDBSUPPORT, [test x$oktobdb = xyes])
 
 AC_CHECK_LIB(z, deflate, [
 	AC_CHECK_HEADERS([zlib.h],
@@ -298,15 +452,23 @@ else
 fi
 
 AC_ARG_ENABLE([xmlstrictbool],
-[AC_HELP_STRING([--enable-xmlstrictbool],[enable xml strict bool behaviour (default=no)])],
+[AS_HELP_STRING([--enable-xmlstrictbool],[enable xml strict bool behaviour (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(XMLENTITY_STRICT_BOOL, 1, [Define to 1 if you wish to enforce strict bool ]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-xmlstrictbool) ;;
 esac])
 
+AC_ARG_ENABLE([bufgloblogging],
+[AS_HELP_STRING([--enable-bufgloblogging],[enable buffered global logging behaviour (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(BUFFERED_GLOBAL_LOGGING, 1, [Define to 1 if you wish to enable buffered global logging]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-bufgloblogging) ;;
+esac])
+
 AC_ARG_ENABLE([valgrind],
-[AC_HELP_STRING([--enable-valgrind],[enable internal support for valgrind (default=no)])],
+[AS_HELP_STRING([--enable-valgrind],[enable internal support for valgrind (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(HAVE_VALGRIND, 1, [Define to 1 for valgrind support ])
 		  AC_CHECK_HEADERS([valgrind/valgrind.h]) ;;
@@ -315,7 +477,7 @@ AC_ARG_ENABLE([valgrind],
 esac])
 
 AC_ARG_ENABLE([gprof],
-[AC_HELP_STRING([--enable-gprof],[enable internal support for gprof (default=no)])],
+[AS_HELP_STRING([--enable-gprof],[enable internal support for gprof (default=no)])],
 [case "${enableval}" in
 	yes) AC_CHECK_HEADERS([sys/gmon.h],[ have_gprof_headers=yes ])
 			if test "$have_gprof_headers" = yes; then
@@ -328,40 +490,16 @@ AC_ARG_ENABLE([gprof],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-gprof) ;;
 esac])
 
-AC_ARG_ENABLE([poolalloc],
-[AC_HELP_STRING([--enable-poolalloc],[enable Memory Pool Allocator (default=no)])],
-[case "${enableval}" in
-	yes) AC_DEFINE(POOLALLOC, 1, [Define to 1 for Memory Pool Allocator]) ;;
-	no)  ;;
-	*) AC_MSG_ERROR(bad value ${enableval} for --enable-poolalloc) ;;
-esac])
-
-AC_ARG_ENABLE([msgrecycle],
-[AC_HELP_STRING([--enable-msgrecycle],[enable Message Recycling (default=no)])],
-[case "${enableval}" in
-	yes) AC_DEFINE(MSGRECYCLING, 1, [Define to 1 to enable Message Recycling]) ;;
-	no)  ;;
-	*) AC_MSG_ERROR(bad value ${enableval} for --enable-msgrecycle) ;;
-esac])
-
 AC_ARG_ENABLE([codectiming],
-[AC_HELP_STRING([--enable-codectiming],[enable CODEC timing testing code (default=no)])],
+[AS_HELP_STRING([--enable-codectiming],[enable CODEC timing testing code (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(CODECTIMING, 1, [Define to 1 to enable CODEC timing testing code]) ;;
 	no)  ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-codectiming) ;;
 esac])
 
-AC_ARG_ENABLE([customfields],
-[AC_HELP_STRING([--enable-customfields],[enable User defined fields (default=no)])],
-[case "${enableval}" in
-	yes) AC_DEFINE(PERMIT_CUSTOM_FIELDS, 1, [Define to 1 to enable User Defined Fields]) ;;
-	no)  ;;
-	*) AC_MSG_ERROR(bad value ${enableval} for --enable-customfields) ;;
-esac])
-
 AC_ARG_ENABLE([debug],
-[AC_HELP_STRING([--enable-debug],[enable DEBUG support (default=no)])],
+[AS_HELP_STRING([--enable-debug],[enable DEBUG support (default=no)])],
 [case "${enableval}" in
 	yes) AC_DEFINE(DEBUG, 1, [Define to 1 for debugging extensions]) ;;
 	no)  ;;
@@ -369,7 +507,7 @@ AC_ARG_ENABLE([debug],
 esac])
 
 AC_ARG_ENABLE([ssl],
-[AC_HELP_STRING([--enable-ssl],[enable SSL support (through OpenSSL, default=no)])],
+[AS_HELP_STRING([--enable-ssl],[enable SSL support (through OpenSSL, default=no)])],
 [case "${enableval}" in
 	yes) openssl=yes ;;
 	no)  openssl=no ;;
@@ -430,28 +568,20 @@ fi
 
 AC_DEFINE_UNQUOTED([CONFIGURE_TIME],["`date`"],[Date system was configured])
 CONFIGURE_SDATE=`date +%d/%m/%Y`
+BUILD_NUMBER_DATE=`date +%d%m%y`
+
 AC_DEFINE_UNQUOTED([CONFIGURE_SDATE],["$CONFIGURE_SDATE"],[Short Date system was configured])
 AC_DEFINE_UNQUOTED([CONFIGURE_TIME_NUM],[`date +%s`],[date/time as seconds since start epoch])
 AC_DEFINE_UNQUOTED([HOST_SYSTEM],["$host_cpu-$host_vendor-$host_os"],[Default system])
+AC_DEFINE_UNQUOTED([CPPFLAGS],["$CPPFLAGS"],[compiler spec])
+AC_DEFINE_UNQUOTED([LDFLAGS],["$LDFLAGS"],[Additional library flags])
+AC_DEFINE_UNQUOTED([LIBS],["$LIBS"],[Library spec])
 
 INTSYSCONF=`eval echo $sysconfdir`
 if test $prefix/etc = $INTSYSCONF; then
 	INTSYSCONF=/etc
 fi
 AC_DEFINE_UNQUOTED(SYSCONFDIR, "$INTSYSCONF", [Location of the system config directory])
-
-AC_MSG_CHECKING(architecture and if we need to supply scandir)
-case "$host_os" in
-	solaris* | sunos4*)	sunos=yes
-				AC_DEFINE(ISSUNOS, 1, [Define to 1 if this system is running sunos/solaris])
-				AC_MSG_RESULT(yes) ;;
-	netbsd* | openbsd* | *freebsd*)
-				AC_DEFINE(ISBSD, 1, [Define to 1 if this system is running a BSD variant])
-			 	AC_MSG_RESULT(no) ;;
-	linux*)	AC_DEFINE(ISLINUX, 1, [Define to 1 if this system is running linux])
-			 	AC_MSG_RESULT(no) ;;
-	*) 		AC_MSG_RESULT(no) ;;
-esac
 
 AM_CONDITIONAL(ISSUN, [test x$sunos = xyes])
 
@@ -461,8 +591,9 @@ AC_SUBST(PIDDIR)
 AC_SUBST(INTSYSCONF)
 AC_SUBST(CONFIGURE_TIME)
 AC_SUBST(CONFIGURE_SDATE)
+AC_SUBST(DOXYGEN_WARNINGS)
 AC_SUBST(CONFIGURE_TIME_NUM)
-AC_SUBST(MIMEFILE)
+AC_SUBST(BUILD_NUMBER_DATE)
 AC_SUBST(LIBS)
 AC_SUBST(VERSION_DASHED)
 AC_SUBST(MAJOR_VERSION)
@@ -476,8 +607,11 @@ AC_SUBST(BRAND_SUMMARY)
 AC_SUBST(BRAND_DESCRIPTION)
 AC_SUBST(BRAND_COMPANY_SHORTNAME)
 AC_SUBST(BRAND_COMPANY_LONGNAME)
+AC_SUBST_FILE([CHANGELOG])
+CHANGELOG=$srcdir/ChangeLog
 
-AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile doc/fix8.doxygen])
+AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen \
+						fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
 AC_CONFIG_HEADERS(include/f8config.h)
 AC_OUTPUT
 

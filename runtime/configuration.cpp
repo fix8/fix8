@@ -1,51 +1,55 @@
 //-----------------------------------------------------------------------------------------
-#if 0
+/*
 
-Fix8 is released under the New BSD License.
+Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
-Copyright (c) 2010-12, David L. Dight <fix@fix8.org>
-All rights reserved.
+Fix8 Open Source FIX Engine.
+Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
+GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
+version 3 of the License, or (at your option) any later version.
 
-    * Redistributions of source code must retain the above copyright notice, this list of
-	 	conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list
-	 	of conditions and the following disclaimer in the documentation and/or other
-		materials provided with the distribution.
-    * Neither the name of the author nor the names of its contributors may be used to
-	 	endorse or promote products derived from this software without specific prior
-		written permission.
-    * Products derived from this software may not be called "Fix8", nor can "Fix8" appear
-	   in their name without written permission from fix8.org
+Fix8 is distributed in the hope  that it will be useful, but WITHOUT ANY WARRANTY;  without
+even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-OR  IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO ,  THE  IMPLIED  WARRANTIES  OF
-MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED. IN  NO EVENT  SHALL
-THE  COPYRIGHT  OWNER OR  CONTRIBUTORS BE  LIABLE  FOR  ANY DIRECT,  INDIRECT,  INCIDENTAL,
-SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT
-OF SUBSTITUTE  GOODS OR SERVICES; LOSS OF USE, DATA,  OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED  AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT, STRICT  LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
+If not, see <http://www.gnu.org/licenses/>.
 
-#endif
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
+THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
+COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
+KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
+WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED  BY APPLICABLE LAW  OR AGREED TO IN  WRITING WILL ANY COPYRIGHT
+HOLDER, OR  ANY OTHER PARTY  WHO MAY MODIFY  AND/OR REDISTRIBUTE  THE PROGRAM AS  PERMITTED
+ABOVE,  BE  LIABLE  TO  YOU  FOR  DAMAGES,  INCLUDING  ANY  GENERAL, SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT
+NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+*/
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <map>
+#include <list>
 #include <set>
 #include <iterator>
 #include <memory>
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
-#include <bitset>
 
+#ifndef _MSC_VER
 #include <strings.h>
+#endif
 #include <regex.h>
 
 #include <f8includes.hpp>
@@ -70,6 +74,7 @@ int Configuration::process()
 
 	load_map("fix8/persist", _persisters);
 	load_map("fix8/log", _loggers);
+	load_map("fix8/server_group", _server_group);
 
 	return _sessions.size();
 }
@@ -94,30 +99,64 @@ Poco::Net::SocketAddress Configuration::get_address(const XmlElement *from) cons
 }
 
 //-------------------------------------------------------------------------------------------------
-Persister *Configuration::create_persister(const XmlElement *from) const
+size_t Configuration::get_addresses(const XmlElement *from, vector<Server>& target) const
 {
 	string name;
-	if (from && from->GetAttr("persist", name))
+	const XmlElement *which;
+	if (from && from->GetAttr("server_group", name) && (which = find_server_group(name)))
 	{
-		const XmlElement *which(find_persister(name));
-		if (which)
+		XmlElement::XmlSet slist;
+		if (which->find("server", slist))
 		{
-			string type;
-			if (which->GetAttr("type", type))
+			const Poco::Net::SocketAddress empty_addr;
+			for(XmlElement::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
 			{
-				if (type % "bdb")
-				{
-					string dir, db;
-					if (which->GetAttr("dir", dir) && which->GetAttr("db", db))
-					{
-						scoped_ptr<BDBPersister> result(new BDBPersister);
-						if (result->initialise(dir, db))
-							return result.release();
-					}
-				}
-				else if (type % "mem")
-					return new MemoryPersister;
+				string name;
+				Poco::Net::SocketAddress addr(get_address(*itr));
+				if ((*itr)->GetAttr("name", name) && addr != empty_addr && (*itr)->FindAttr("active", true))
+					target.push_back(Server(name, (*itr)->FindAttr("max_retries",
+						static_cast<int>(default_max_retries)), addr));
 			}
+		}
+		return target.size();
+	}
+
+	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+Persister *Configuration::create_persister(const XmlElement *from, const SessionID *sid, bool flag) const
+{
+	string name, type;
+	const XmlElement *which;
+	if (from && from->GetAttr("persist", name) && (which = find_persister(name)) && which->GetAttr("type", type))
+	{
+		if (type == "mem")
+			return new MemoryPersister;
+
+		string dir("./"), db("persist_db");
+		which->GetAttr("dir", dir);
+		which->GetAttr("db", db);
+
+		if (sid)
+			db += ('.' + sid->get_senderCompID()() + '.' + sid->get_targetCompID()());
+		else if (which->FindAttr("use_session_id", false))
+			db += ('.' + get_sender_comp_id(from)() + '.' + get_target_comp_id(from)());
+
+#if defined HAVE_BDB
+		if (type == "bdb")
+		{
+			scoped_ptr<BDBPersister> result(new BDBPersister);
+			if (result->initialise(dir, db, flag))
+				return result.release();
+		}
+		else
+#endif
+		if (type == "file")
+		{
+			scoped_ptr<FilePersister> result(new FilePersister(which->FindAttr("rotation", 0)));
+			if (result->initialise(dir, db, flag))
+				return result.release();
 		}
 	}
 
@@ -125,7 +164,7 @@ Persister *Configuration::create_persister(const XmlElement *from) const
 }
 
 //-------------------------------------------------------------------------------------------------
-Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype) const
+Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid) const
 {
 	string name;
 	if (from && from->GetAttr(ltype == session_log ? "session_log" : "protocol_log", name))
@@ -138,9 +177,13 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 				&& ((type % "session" && ltype == session_log) || (type % "protocol" && ltype == protocol_log)))
 			{
 				string logname("logname_not_set.log");
-				trim(get_logname(which, logname));
+				which->FindAttrRef("filename", logname);
+				trim(logname);
 
-				if (logname[0] == '|' || logname[0] == '!')
+				if (logname[0] == '|')
+#ifndef HAVE_POPEN
+					throw f8Exception("popen not supported on your platform");
+#endif
 					return new PipeLogger(logname, get_logflags(which));
 
 				RegMatch match;
@@ -149,17 +192,29 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 					f8String ip, port;
 					_ipexp.SubExpr(match, logname, ip, 0, 1);
 					_ipexp.SubExpr(match, logname, port, 0, 2);
-					BCLogger *bcl(new BCLogger(ip, GetValue<unsigned>(port), get_logflags(which)));
+					BCLogger *bcl(new BCLogger(ip, get_value<unsigned>(port), get_logflags(which)));
 					if (*bcl)
 						return bcl;
 				}
 
+				get_logname(which, logname, sid); // only applies to file loggers
 				return new FileLogger(logname, get_logflags(which), get_logfile_rotation(which));
 			}
 		}
 	}
 
 	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+string& Configuration::get_logname(const XmlElement *from, string& to, const SessionID *sid) const
+{
+	if (sid)
+		to += ('.' + sid->get_senderCompID()() + '.' + sid->get_targetCompID()());
+	else if (from && from->FindAttr("use_session_id", false))
+		to += ('.' + get_sender_comp_id(from)() + '.' + get_target_comp_id(from)());
+
+	return to;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -181,11 +236,20 @@ Logger::LogFlags Configuration::get_logflags(const XmlElement *from) const
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned Configuration::get_all_sessions(vector<XmlElement *>& target, const Connection::Role role) const
+unsigned Configuration::get_all_sessions(vector<const XmlElement *>& target, const Connection::Role role) const
 {
-	for (vector<XmlElement *>::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)
+	for (vector<const XmlElement *>::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)
 		if (role == Connection::cn_unknown || get_role(*itr) == role)
 			target.push_back(*itr);
 	return target.size();
+}
+
+//-------------------------------------------------------------------------------------------------
+ProcessModel Configuration::get_process_model(const XmlElement *from) const
+{
+	static const f8String process_strings[] = { "threaded", "pipelined", "coroutine" };
+	string pm;
+	return from && from->GetAttr("process_model", pm)
+		? enum_str_get(pm_count, process_strings, pm, pm_thread) : pm_pipeline; // default to pipelined
 }
 
