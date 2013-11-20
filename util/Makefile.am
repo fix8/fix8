@@ -37,12 +37,15 @@ seqedit_SOURCES = seqedit.cpp
 CLEANFILES =
 AM_CPPFLAGS = -I$(top_srcdir)/include
 
-GEN_LIBS = -lrt -lstdc++
+GEN_LIBS = -lstdc++
 
 ALL_LIBS = $(GEN_LIBS) -L$(top_srcdir)/runtime
 
 seqedit_LDFLAGS = $(ALL_LIBS)
 
+if LINK_RT
+GEN_LIBS += -lrt
+endif
 if USECOMPRESSION
 seqedit_LDFLAGS += -lz
 endif

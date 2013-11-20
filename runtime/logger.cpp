@@ -177,7 +177,7 @@ void Logger::purge_thread_codes()
 
 	for (ThreadCodes::iterator itr(_thread_codes.begin()); itr != _thread_codes.end();)
 	{
-#ifdef _MSC_VER
+#if defined _MSC_VER || defined __APPLE__
 		// If ESRCH then thread is definitely dead.  Otherwise, we're unsure.
 		if (pthread_kill(itr->first, 0) == ESRCH)
 #else

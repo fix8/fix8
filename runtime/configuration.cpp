@@ -106,7 +106,7 @@ size_t Configuration::get_addresses(const XmlElement *from, vector<Server>& targ
 	if (from && from->GetAttr("server_group", name) && (which = find_server_group(name)))
 	{
 		XmlElement::XmlSet slist;
-		if (which->find("server", slist))
+		if (which->find("server_group/server", slist))
 		{
 			const Poco::Net::SocketAddress empty_addr;
 			for(XmlElement::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
@@ -115,10 +115,14 @@ size_t Configuration::get_addresses(const XmlElement *from, vector<Server>& targ
 				Poco::Net::SocketAddress addr(get_address(*itr));
 				if ((*itr)->GetAttr("name", name) && addr != empty_addr && (*itr)->FindAttr("active", true))
 					target.push_back(Server(name, (*itr)->FindAttr("max_retries",
-						static_cast<int>(default_max_retries)), addr));
+						static_cast<int>(defaults::login_retries)), addr,
+						(*itr)->FindAttr("reset_sequence_numbers", false)));
 			}
 		}
 		return target.size();
+	}
+	else
+	{
 	}
 
 	return 0;

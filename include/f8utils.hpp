@@ -1106,7 +1106,11 @@ public:
 		if (_raw_mode)
 		{
 #ifndef _MSC_VER
+#ifdef __APPLE__
+			if (ioctl(_fd, TIOCSETA, &_tty_state) < 0)
+#else
 			if (ioctl(_fd, TCSETA, &_tty_state) < 0)
+#endif
 				std::cerr << Str_error(errno, "Cannot reset ioctl") << std::endl;
 			else
 #endif
@@ -1119,7 +1123,11 @@ public:
 		if (!_raw_mode)
 		{
 #ifndef _MSC_VER
+#ifdef __APPLE__
+			if (ioctl(_fd, TIOCGETA, &_tty_state) < 0)
+#else
 			if (ioctl(_fd, TCGETA, &_tty_state) < 0)
+#endif
 			{
 				std::cerr << Str_error(errno, "Cannot get ioctl") << std::endl;
 				return;
@@ -1128,7 +1136,11 @@ public:
 			tty_state.c_lflag = 0;
 			tty_state.c_cc[VTIME] = 0;
 			tty_state.c_cc[VMIN] = 1;
+#ifdef __APPLE__
+			if (ioctl(_fd, TIOCSETA, &tty_state) < 0)
+#else
 			if (ioctl(_fd, TCSETA, &tty_state) < 0)
+#endif
 				std::cerr << Str_error(errno, "Cannot reset ioctl") << std::endl;
 			else
 #endif

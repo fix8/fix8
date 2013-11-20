@@ -9,12 +9,14 @@
 				target_comp_id="TEX_DLD"
 				session_log="session_log_file"
 				protocol_log="protocol_log_file"
-				login_retry_interval="8000"
+				login_retry_interval="3000"
 				reset_sequence_numbers="false"
+				connect_timeout="3"
 				default_appl_ver_id="8"
 				heartbeat_interval="10"
 				tcp_nodelay="true"
 				always_seqnum_assign="false"
+				/* server_group="FO_Group0" if present means use failover */
 				process_mode="threaded"
 				login_retries="5"
 				persist="file0" />
@@ -75,12 +77,12 @@
 				flags="append|inbound|outbound|direction|sequence"/>
 
 	<server_group name="FO_Group0">
-		<server name="Host_01" ip="192.168.1.121" port="12345" max_retries="100"/>
-		<server name="Host_02" ip="192.168.1.122" port="12345" max_retries="100"/>
-		<server name="Host_03" ip="192.168.1.123" port="12345" max_retries="100" active="false"/>
-		<server name="Host_04" ip="192.168.1.124" port="12345" max_retries="100"/>
-		<server name="Host_05" ip="192.168.1.125" port="12345" max_retries="100"/>
-		<server name="Host_06" ip="192.168.1.126" port="12345" max_retries="100"/>
+		<server name="Host_01" ip="192.168.1.121" port="12345" max_retries="3"/>
+		<server name="Host_02" ip="192.168.1.122" port="12345" max_retries="3"/>
+		<server name="Host_04" ip="192.168.1.124" port="12345" max_retries="3"/>
+		<server name="Host_05" ip="192.168.1.125" port="12345" max_retries="3"/>
+		<server name="Host_06" ip="127.0.0.1" port="11001" max_retries="3"/>
+		<server name="Host_03" ip="192.168.1.123" port="12345" max_retries="3" active="false"/>
 	</server_group>
 
 </fix8>

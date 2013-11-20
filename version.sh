@@ -36,7 +36,7 @@
 # This is the master version file, called by configure
 #
 #############################################################################################
-MAJOR_VERSION_NUM=0
-MINOR_VERSION_NUM=10
-PATCH_VERSION_NUM=0
+MAJOR_VERSION_NUM=1
+MINOR_VERSION_NUM=0
+PATCH_VERSION_NUM=0-RC1
 echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$PATCH_VERSION_NUM

@@ -317,7 +317,12 @@ bool myfix_session_client::handle_application(const unsigned seqnum, const Messa
 //-----------------------------------------------------------------------------------------
 bool myfix_session_server::handle_application(const unsigned seqnum, const Message *&msg)
 {
-	return enforce(seqnum, msg) || msg->process(_router);
+	if (enforce(seqnum, msg))
+		return true;
+	// this is how you take ownership of the message from the framework
+	if (!msg->process(_router)) // false means I have taken ownership of the message
+		detach(msg);
+	return false;
 }
 
 //-----------------------------------------------------------------------------------------

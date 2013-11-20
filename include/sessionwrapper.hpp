@@ -49,7 +49,7 @@ struct SessionConfig : public Configuration
 	const F8MetaCntx& _ctx;
 	const XmlElement *_ses;
 	LoginParameters _loginParameters;
-	const std::string& _session_name;
+	const std::string _session_name;
 
 	/// Ctor. Loads configuration, obtains session details, sets up logfile flags.
 	SessionConfig (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
@@ -59,9 +59,10 @@ struct SessionConfig : public Configuration
 			throw InvalidConfiguration(session_name);
 
 		const LoginParameters lparam(get_retry_interval(_ses), get_retry_count(_ses),
-			get_default_appl_ver_id(_ses), get_reset_sequence_number_flag(_ses),
+			get_default_appl_ver_id(_ses), get_connect_timeout(_ses),
+			get_reset_sequence_number_flag(_ses),
 			get_always_seqnum_assign(_ses), get_silent_disconnect(_ses),
-			get_no_chksum_flag(_ses), get_tcp_recvbuf_sz(_ses),
+			get_no_chksum_flag(_ses), false, get_tcp_recvbuf_sz(_ses),
 			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses));
 
 		_loginParameters = lparam;
@@ -112,24 +113,6 @@ public:
 		_session->set_session_config(this);
 	}
 
-	/// Ctor. Prepares session for connection as an initiator, failover version.
-	ClientSession (const F8MetaCntx& ctx, const std::string& conf_file,
-		const std::string& session_name, const Poco::Net::SocketAddress& addr) :
-		SessionConfig(ctx, conf_file, session_name),
-		_log(create_logger(_ses, session_log)),
-		_plog(create_logger(_ses, protocol_log)),
-		_sci(get_sender_comp_id(_ses)), _tci(get_target_comp_id(_ses)),
-		_id(_ctx._beginStr, _sci, _tci),
-		_persist(create_persister(_ses, 0, this->_loginParameters._reset_sequence_numbers)),
-		_session(new T(_ctx, _id, _persist, _log, _plog)),
-		_sock(),
-		_addr(addr),
-		_cc()
-	{
-		_session->set_login_parameters(this->_loginParameters);
-		_session->set_session_config(this);
-	}
-
 	/*! If reliable, determine if the maximum no. of reties has been reached
 	  \return false for default clientsession */
 	virtual bool has_given_up() const { return false; }
@@ -166,27 +149,23 @@ template<typename T>
 class ReliableClientSession : public ClientSession<T>
 {
 	dthread<ReliableClientSession<T> > _thread;
-	unsigned _send_seqnum, _recv_seqnum;
+	unsigned _send_seqnum, _recv_seqnum, _current, _attempts;
 	f8_atomic<bool> _giving_up;
-	const bool _failover;
+	std::vector<Server> _servers;
+	const size_t _failover_cnt;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
 	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
 		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this)),
-		_send_seqnum(), _recv_seqnum(), _failover()
+		_send_seqnum(), _recv_seqnum(), _current(), _attempts(),
+		_failover_cnt(this->get_addresses(this->_ses, _servers))
 	{
 		_giving_up = false;
+		this->_loginParameters._reliable = true;
 	}
 
-	/// Ctor. Prepares session for connection as an initiator, failover version.
-	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file,
-		const std::string& session_name, const Poco::Net::SocketAddress& addr)
-		: ClientSession<T>(ctx, conf_file, session_name, addr), _thread(ref(*this)),
-		_send_seqnum(), _recv_seqnum(), _failover(true)
-	{
-		_giving_up = false;
-	}
+	enum { no_servers_configured=0xffff };
 
 	/*! If reliable, determine if the maximum no. of reties has been reached
 	  \return true if maximum no. of reties reached */
@@ -210,75 +189,104 @@ public:
 			(*this)();
 	}
 
+	/*! Get the number of attempts made so far
+	    \return number of attempts */
+	size_t get_attemps_cnt() const { return _attempts; }
+
+	/*! Get the number of configured failover servers
+	    \return number of servers */
+	size_t get_server_cnt() const { return _failover_cnt; }
+
+	/*! Get the Server object for a given server index
+	    \param index of server desired, if not given return current
+	    \return ptr to server, 0 if not found */
+	const Server *get_server(unsigned idx=no_servers_configured) const
+	{
+		return idx == no_servers_configured && _failover_cnt ? &_servers[_current]
+			: idx < _failover_cnt ? &_servers[idx] : 0;
+	}
+
 	/*! The reliability thread entry point.
 	    \return 0 on success */
 	int operator()()
 	{
-		unsigned attempts(0);
-
-		for (; ++attempts <= this->_loginParameters._login_retries; )
+		while(true)
 		{
+			++_attempts;
+
+			bool excepted(false);
 			try
 			{
+				if (_failover_cnt)
+				{
+					std::ostringstream ostr;
+					ostr << "Trying " << _servers[_current]._hostname << '(' << (1 + _servers[_current]._retries) << "), "
+						<< _attempts << " attempts so far";
+					this->_session->log(ostr.str());
+					this->_loginParameters._reset_sequence_numbers = _servers[_current]._reset_sequence_numbers; // permit override
+				}
 				//std::cout << "operator()():try" << std::endl;
 
 				this->_sock = new Poco::Net::StreamSocket,
-				this->_cc = new ClientConnection(this->_sock, this->_addr, *this->_session, this->_loginParameters._hb_int,
-					this->get_process_model(this->_ses));
+				this->_cc = new ClientConnection(this->_sock, _failover_cnt ? this->_addr = _servers[_current]._addr : this->_addr,
+					*this->_session, this->_loginParameters._hb_int, this->get_process_model(this->_ses));
 				this->_session->set_login_parameters(this->_loginParameters);
 				this->_session->set_session_config(this);
 				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, this->_loginParameters._davi());
 				_send_seqnum = _recv_seqnum = 0; // only set seqnums for the first time round
 			}
+			catch (Poco::TimeoutException& e)
+			{
+				this->_session->log(e.what());
+				excepted = true;
+			}
 			catch (f8Exception& e)
 			{
-				//std::cout << "ReliableClientSession: f8exception" << std::endl;
+				//	std::cerr << e.what() << std::endl;
 				this->_session->log(e.what());
+				excepted = true;
 			}
 			catch (Poco::Net::InvalidAddressException& e)
 			{
 				this->_session->log(e.what());
-				if (_failover)
-					throw;
+				excepted = true;
 			}
 			catch (Poco::Net::InvalidSocketException& e)
 			{
 				this->_session->log(e.what());
-				if (_failover)
-					throw;
+				excepted = true;
 			}
 			catch (Poco::Net::ServiceNotFoundException& e)
 			{
+				//std::cerr << e.what() << std::endl;
 				this->_session->log(e.what());
-				if (_failover)
-					throw;
+				excepted = true;
 			}
 			catch (Poco::Net::ConnectionRefusedException& e)
 			{
 				this->_session->log(e.what());
-				if (_failover)
-					throw;
+				excepted = true;
 			}
 			catch (Poco::Net::DNSException& e)
 			{
 				this->_session->log(e.what());
-				if (_failover)
-					throw;
+				excepted = true;
 			}
 			catch (Poco::Net::InterfaceNotFoundException& e)
 			{
 				this->_session->log(e.what());
-				if (_failover)
-					throw;
+				excepted = true;
 			}
 			catch (Poco::Net::NetException& e)	// catch all other NetExceptions
 			{
 				this->_session->log(e.what());
+				excepted = true;
 			}
 			catch (std::exception& e)
 			{
-				//cout << "process:: std::exception" << endl;
+				//std::cout << "process:: std::exception" << endl;
 				this->_session->log(e.what());
+				excepted = true;
 			}
 
 			//std::cout << "operator()():out of try" << std::endl;
@@ -298,8 +306,26 @@ public:
 			{
 				this->_session->log(e.what());
 			}
+
 			delete this->_cc;
 			delete this->_sock;
+
+			if (!excepted)
+				break;
+
+			if (_failover_cnt)
+			{
+				++_servers[_current]._retries;
+
+				for (;;) // FIXME possible endless loop condition
+				{
+					if (_servers[_current]._max_retries && _servers[_current]._retries < _servers[_current]._max_retries)
+						break;
+					_servers[_current]._retries = 0;	// reset for next time
+					++_current %= _failover_cnt;
+				}
+			}
+
 			hypersleep<h_milliseconds>(this->_loginParameters._login_retry_interval);
 		}
 
@@ -395,91 +421,6 @@ public:
 
 	/// Convenient scoped pointer for your session instance.
 	typedef scoped_ptr<SessionInstance<T> > Instance_ptr;
-};
-
-//-------------------------------------------------------------------------------------------------
-/// Reliable Client wrapper with failover.
-/*! \tparam T your derived session class */
-template<typename T>
-class ReliableClientSessionFO : public SessionConfig
-{
-	dthread<ReliableClientSessionFO<T> > _thread;
-	unsigned _send_seqnum, _recv_seqnum;
-	std::vector<Server> _servers;
-
-public:
-	/// Ctor.
-	ReliableClientSessionFO(const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
-		: SessionConfig(ctx, conf_file, session_name), _thread(ref(*this)), _send_seqnum(), _recv_seqnum()
-	{
-		if (get_addresses(_ses, _servers) == 0)
-			throw InvalidConfiguration(session_name);
-	}
-
-	/// Dtor.
-	virtual ~ReliableClientSessionFO() {}
-
-	/*! Start trying the servers
-	  \param wait if true wait till session finishes before returning
-	  \param send_seqnum next send seqnum (not used here)
-	  \param recv_seqnum next recv seqnum (not used here)
-	  \param davi default appl version id (FIXT) */
-	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
-	{
-		_send_seqnum = send_seqnum;
-		_recv_seqnum = recv_seqnum;
-		if (!wait)
-			_thread.start();
-		else
-			(*this)();
-	}
-
-	/*! The reliability thread entry point.
-	    \return 0 on success */
-	int operator()()
-	{
-		unsigned attempts(0), current(0);
-		bool proceed(true);
-
-		for (; proceed; ++attempts)
-		{
-			try
-			{
-				++_servers[current]._retries;
-				scoped_ptr<ReliableClientSession<T> > cs(
-					new ReliableClientSession<T>(_ctx, get_xmlfile(), _session_name, _servers[current]._addr));
-				cs->start(false, _send_seqnum, _recv_seqnum);
-				//std::cout << "ReliableClientSessionFO::operator()():try" << std::endl;
-			}
-			catch (f8Exception& e)
-			{
-				//std::cout << "ReliableClientSessionFO: f8exception" << std::endl;
-				this->_session->log(e.what());
-			}
-			catch (Poco::Net::NetException& e)
-			{
-				this->_session->log(e.what());
-			}
-			catch (std::exception& e)
-			{
-				//cout << "process:: std::exception" << endl;
-				this->_session->log(e.what());
-			}
-
-			hypersleep<h_milliseconds>(this->_loginParameters._login_retry_interval);
-
-			do // FIXME possible endless loop condition
-			{
-				++current %= _servers.size();
-			}
-			while (_servers[current]._max_retries && _servers[current]._retries >= _servers[current]._max_retries);
-		}
-
-		return 0;
-	}
-
-	/// Convenient scoped pointer for your session
-	typedef scoped_ptr<ReliableClientSessionFO<T> > ReliableClientSessionFO_ptr;
 };
 
 } // FIX8

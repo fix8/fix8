@@ -119,7 +119,7 @@ class Router
 {
 public:
 	/// Dtor.
-    	virtual ~Router() {}
+   virtual ~Router() {}
 
 	/*! Function operator; overloaded with each generated Fix message type.
 	  \return true on success */

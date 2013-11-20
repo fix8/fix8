@@ -130,7 +130,7 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 /// Session states and semantics.
-struct States
+namespace States
 {
 	enum Tests
 	{
@@ -145,37 +145,45 @@ struct States
 		st_resend_request_sent, st_resend_request_received
 	};
 
-	static bool is_established(const SessionStates& ss)
+	static inline bool is_established(const SessionStates& ss)
 		{ return ss != st_wait_for_logon && ss != st_not_logged_in && ss != st_logon_sent; }
-};
+}
 
 //-------------------------------------------------------------------------------------------------
-class Persister;
-class Logger;
-class Connection;
+namespace defaults
+{
+	enum
+	{
+		retry_interval=5000,
+		login_retries=3,
+		hb_interval=30,
+		connect_timeout=10,
+		log_rotation=5
+	};
+}
 
 //-------------------------------------------------------------------------------------------------
 struct LoginParameters
 {
-	enum { default_retry_interval=5000, default_login_retries=100, default_hb_interval=30 };
+	LoginParameters() : _login_retry_interval(defaults::retry_interval), _login_retries(defaults::login_retries),
+		_connect_timeout(defaults::connect_timeout), _reset_sequence_numbers(), _always_seqnum_assign(),
+		_silent_disconnect(), _no_chksum_flag(), _reliable(),
+		_recv_buf_sz(), _send_buf_sz(), _hb_int(defaults::hb_interval) {}
 
-	LoginParameters() : _login_retry_interval(default_retry_interval), _login_retries(default_login_retries),
-		_reset_sequence_numbers(), _always_seqnum_assign(), _silent_disconnect(), _no_chksum_flag(),
-		_recv_buf_sz(), _send_buf_sz(), _hb_int(default_hb_interval) {}
-
-	LoginParameters(const unsigned login_retry_interval, const unsigned login_retries,
-		const default_appl_ver_id& davi, const bool reset_seqnum=false, const bool always_seqnum_assign=false,
-		const bool silent_disconnect=false, const bool no_chksum_flag=false, unsigned recv_buf_sz=0,
-		unsigned send_buf_sz=0, unsigned hb_int=default_hb_interval)
-		: _login_retry_interval(login_retry_interval), _login_retries(login_retries),
-		_reset_sequence_numbers(reset_seqnum), _always_seqnum_assign(always_seqnum_assign),
-		_silent_disconnect(silent_disconnect), _no_chksum_flag(no_chksum_flag),
-		_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz), _hb_int(default_hb_interval) {}
+	LoginParameters(unsigned login_retry_interval, unsigned login_retries,
+		const default_appl_ver_id& davi, unsigned connect_timeout, bool reset_seqnum=false,
+		bool always_seqnum_assign=false, bool silent_disconnect=false, bool no_chksum_flag=false, bool reliable=false,
+		unsigned recv_buf_sz=0, unsigned send_buf_sz=0, unsigned hb_int=defaults::hb_interval) :
+			_login_retry_interval(login_retry_interval), _login_retries(login_retries), _connect_timeout(connect_timeout),
+			_reset_sequence_numbers(reset_seqnum), _always_seqnum_assign(always_seqnum_assign),
+			_silent_disconnect(silent_disconnect), _no_chksum_flag(no_chksum_flag), _reliable(reliable),
+			_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz), _hb_int(defaults::hb_interval) {}
 
 	LoginParameters(const LoginParameters& from)
 		: _login_retry_interval(from._login_retry_interval), _login_retries(from._login_retries),
-		_reset_sequence_numbers(from._reset_sequence_numbers), _always_seqnum_assign(from._always_seqnum_assign),
-		_silent_disconnect(from._silent_disconnect), _no_chksum_flag(from._no_chksum_flag), _davi(from._davi),
+		_connect_timeout(from._connect_timeout), _reset_sequence_numbers(from._reset_sequence_numbers),
+		_always_seqnum_assign(from._always_seqnum_assign), _silent_disconnect(from._silent_disconnect),
+		_no_chksum_flag(from._no_chksum_flag), _reliable(from._reliable), _davi(from._davi),
 		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz), _hb_int(from._hb_int) {}
 
 	LoginParameters& operator=(const LoginParameters& that)
@@ -184,10 +192,12 @@ struct LoginParameters
 		{
 			_login_retry_interval = that._login_retry_interval;
 			_login_retries = that._login_retries;
+			_connect_timeout = that._connect_timeout;
 			_reset_sequence_numbers = that._reset_sequence_numbers;
 			_always_seqnum_assign = that._always_seqnum_assign;
 			_silent_disconnect = that._silent_disconnect;
 			_no_chksum_flag = that._no_chksum_flag;
+			_reliable = that._reliable;
 			_davi = that._davi;
 			_recv_buf_sz = that._recv_buf_sz;
 			_send_buf_sz = that._send_buf_sz;
@@ -196,11 +206,16 @@ struct LoginParameters
 		return *this;
 	}
 
-	unsigned _login_retry_interval, _login_retries;
-	bool _reset_sequence_numbers, _always_seqnum_assign, _silent_disconnect, _no_chksum_flag;
+	unsigned _login_retry_interval, _login_retries, _connect_timeout;
+	bool _reset_sequence_numbers, _always_seqnum_assign, _silent_disconnect, _no_chksum_flag, _reliable;
 	default_appl_ver_id _davi;
 	unsigned _recv_buf_sz, _send_buf_sz, _hb_int;
 };
+
+//-------------------------------------------------------------------------------------------------
+class Persister;
+class Logger;
+class Connection;
 
 //-------------------------------------------------------------------------------------------------
 /// Fix8 Base Session. User sessions are derived from this class.

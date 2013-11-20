@@ -438,7 +438,7 @@ illegal_tag:
 int XmlElement::ParseAttrs(const string& attlst)
 {
 	istringstream istr(attlst);
-	enum { ews, tag, es, oq, value } state(ews);
+	enum { ews, tag, es, oq, value, oc0, comment, cc0 } state(ews);
 	string tmptag, tmpval;
 	char comchar(0);
 
@@ -449,13 +449,34 @@ int XmlElement::ParseAttrs(const string& attlst)
 
 		switch (state)
 		{
+		case comment:
+			if (c == '*')
+				state = cc0;
+			break;
+		case cc0:
+			if (c == '/')
+				state = ews;
+			else
+				state = comment;
+			break;
 		case ews:
-			if (!isspace(c))
+			if (c == '/')
+				state = oc0;
+			else if (!isspace(c))
 			{
 				tmptag += c;
 				state = tag;
 			}
 			break;
+		case oc0:
+			if (c == '*')
+				state = comment;
+			else
+			{
+				tmptag += '/';
+				tmptag += c;
+				state = tag;
+			}
 		case tag:
 			if (isspace(c))
 				state = es;
