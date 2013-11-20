@@ -180,8 +180,10 @@ AC_ARG_ENABLE([rdtsc],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-rdtsc) ;;
 esac])
 
-AC_CHECK_LIB(rt, clock_gettime, [AC_DEFINE(HAVE_CLOCK_GETTIME, 1, [Define if you have clock_gettime()])])
-AC_CHECK_LIB(rt, clock_nanosleep, [AC_DEFINE(HAVE_CLOCK_NANOSLEEP, 1, [Define if you have clock_nanosleep()])])
+oktolinkrt=yes
+AC_CHECK_LIB(rt, clock_gettime, [AC_DEFINE(HAVE_CLOCK_GETTIME, 1, [Define if you have clock_gettime()])], oktolinkrt=no)
+AC_CHECK_LIB(rt, clock_nanosleep, [AC_DEFINE(HAVE_CLOCK_NANOSLEEP, 1, [Define if you have clock_nanosleep()])], oktolinkrt=no)
+AM_CONDITIONAL(LINK_RT, [test x$oktolinkrt = xyes])
 
 AC_CHECK_HEADERS([getopt.h fcntl.h netdb.h regex.h signal.h string.h sys/time.h \
 	arpa/inet.h sys/stat.h sys/types.h select.h \

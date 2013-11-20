@@ -209,6 +209,50 @@ public:
 
 //----------------------------------------------------------------------------------------
 /// generic pthread_spin_lock wrapper
+
+#ifdef __APPLE__
+// A simple spinlock that spins up to 100K times and then does a sched_yield to back-off.
+// unlock() could just set _lock to false BUT that assumes that the spinlock was locked
+// to begin with, which may not be the case.  Therefore this implementation has the
+// advantage of causing your thread to spin if you try to unlock something that is
+// not locked, which I would think is a logic error that the caller should fix.
+// The choice of 100K was arbitrary.  The right way to set that parameter would be
+// to keep track of how big x gets before thread starvation occurs and use that number.
+// That number is going to be target- and use-case-dependent  though.
+class f8_spin_lock
+{
+	bool _isLocked;
+public:
+	f8_spin_lock() : _isLocked(false) {}
+	~f8_spin_lock() {}
+
+	void lock()
+	{
+		register int x = 0;
+		while(!__sync_bool_compare_and_swap(&_isLocked, false, true))
+		{
+			if(++x >= 100000)
+			{
+				x = 0;
+				sched_yield();
+			}
+		}
+	}
+	bool try_lock() { return _isLocked; }
+	void unlock()
+	{
+		register int x = 0;
+		while(!__sync_bool_compare_and_swap(&_isLocked, true, false))
+		{
+			if(++x >= 100000)
+			{
+				x = 0;
+				sched_yield();
+			}
+		}
+	}
+};
+#else
 class f8_spin_lock
 {
 	pthread_spinlock_t _psl;
@@ -226,6 +270,7 @@ public:
 	bool try_lock() { return pthread_spin_trylock(&_psl) == 0; }
 	void unlock() { pthread_spin_unlock(&_psl); }
 };
+#endif __APPLE__
 
 //----------------------------------------------------------------------------------------
 

@@ -47,9 +47,10 @@ struct Server
 	std::string _hostname;
 	unsigned _max_retries, _retries;
 	Poco::Net::SocketAddress _addr;
+	bool _reset_sequence_numbers;
 
-	Server(const std::string& hostname, unsigned max_retries, const Poco::Net::SocketAddress& addr)
-		: _max_retries(max_retries), _retries(), _addr(addr) {}
+	Server(const std::string& hostname, unsigned max_retries, const Poco::Net::SocketAddress& addr, bool reset_sequence_numbers)
+		: _hostname(hostname), _max_retries(max_retries), _retries(), _addr(addr), _reset_sequence_numbers(reset_sequence_numbers) {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -138,7 +139,6 @@ class Configuration
 
 public:
 	enum Logtype { session_log, protocol_log };
-	enum { default_retry_interval=5000, default_max_retries=10, default_log_rotation=5 };
 
 	/*! Ctor.
 	  \param xmlfile xml config filename.
@@ -192,18 +192,25 @@ public:
 	  \return target string */
 	std::string& get_logname(const XmlElement *from, std::string& to, const SessionID *sid=0) const;
 
+	/*! Extract the connect_timeout interval (sec) from a session entity.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return the connect_timeout wait 10 if not found */
+	unsigned get_connect_timeout(const XmlElement *from, const unsigned def=defaults::connect_timeout) const
+		{ return find_or_default(from, "connect_timeout", def); }
+
 	/*! Extract the login retry wait interval (ms) from a session entity.
 	  \param from xml entity to search
 	  \param def default value if not found
 	  \return the retry wait interval or 5000 if not found */
-	unsigned get_retry_interval(const XmlElement *from, const unsigned def=default_retry_interval) const
+	unsigned get_retry_interval(const XmlElement *from, const unsigned def=defaults::retry_interval) const
 		{ return find_or_default(from, "login_retry_interval", def); }
 
 	/*! Extract the login retry count from a session entity.
 	  \param from xml entity to search
 	  \param def default value if not found
 	  \return the retry count or 10 if not found */
-	unsigned get_retry_count(const XmlElement *from, const unsigned def=default_max_retries) const
+	unsigned get_retry_count(const XmlElement *from, const unsigned def=defaults::login_retries) const
 		{ return find_or_default(from, "login_retries", def); }
 
 	/*! Extract the tcp recv buffer size
@@ -228,13 +235,13 @@ public:
 	  \param from xml entity to search
 	  \param def default value if not found
 	  \return the logfile rotation value or 5 if not found */
-	unsigned get_logfile_rotation(const XmlElement *from, const unsigned def=default_log_rotation) const
+	unsigned get_logfile_rotation(const XmlElement *from, const unsigned def=defaults::log_rotation) const
 		{ return find_or_default(from, "rotation", def); }
 
 	/*! Extract the heartbeat interval from a session entity.
 	  \param from xml entity to search
 	  \return the heartbeat interval version or 0 if not found */
-	unsigned get_heartbeat_interval(const XmlElement *from, const unsigned def=0) const
+	unsigned get_heartbeat_interval(const XmlElement *from, const unsigned def=defaults::hb_interval) const
 		{ return find_or_default(from, "heartbeat_interval", def); }
 
 	/*! Extract the tcp nodelay flag.

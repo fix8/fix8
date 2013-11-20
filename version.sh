@@ -36,6 +36,7 @@
 # This is the master version file, called by configure
 #
 #############################################################################################
+<<<<<<< HEAD
 MAJOR_VERSION_NUM=0
 <<<<<<< HEAD
 MINOR_VERSION_NUM=5
@@ -43,5 +44,10 @@ PATCH_VERSION_NUM=8
 =======
 MINOR_VERSION_NUM=10
 PATCH_VERSION_NUM=0
+>>>>>>> upstream/master
+=======
+MAJOR_VERSION_NUM=1
+MINOR_VERSION_NUM=0
+PATCH_VERSION_NUM=0-RC1
 >>>>>>> upstream/master
 echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$PATCH_VERSION_NUM

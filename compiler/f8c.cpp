@@ -1345,6 +1345,7 @@ void binary_report()
 #if defined __GNUC_MINOR__ && __GNUC_PATCHLEVEL__
 	cout << "Compiled with gcc version " << __GNUG__ << '.' << __GNUC_MINOR__ << '.' <<__GNUC_PATCHLEVEL__ << endl;
 #endif
+#ifndef __APPLE__
 	const size_t confbufsz(256);
 	char confbuf[confbufsz];
 	if (confstr(_CS_GNU_LIBC_VERSION, confbuf, confbufsz))
@@ -1355,6 +1356,7 @@ void binary_report()
 	{
 		cout << "GNU libpthread version is " << confbuf << endl;
 	}
+#endif
 #if defined __GXX_ABI_VERSION
 	cout << "GXX ABI version is " <<  __GXX_ABI_VERSION << endl;
 #endif

@@ -351,18 +351,20 @@ bool ClientConnection::connect()
 {
 	unsigned attempts(0);
 	const LoginParameters& lparam(_session.get_login_parameters());
-	const Poco::Timespan timeout(1000000);
+	const Poco::Timespan timeout(lparam._connect_timeout, 0);
 
-	while (attempts < lparam._login_retries)
+	while (attempts < (lparam._reliable ? 1 : lparam._login_retries))
 	{
 		ostringstream ostr;
 
 		try
 		{
+			if (_addr == Poco::Net::SocketAddress())
+				throw Poco::Net::InvalidAddressException("empty address");
+
 			ostr.str("");
 			ostr << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')';
 			_session.log(ostr.str());
-			const LoginParameters& lparam(_session.get_login_parameters());
 			_sock->connect(_addr, timeout);
 			if (lparam._recv_buf_sz)
 				set_recv_buf_sz(lparam._recv_buf_sz);
@@ -375,6 +377,8 @@ bool ClientConnection::connect()
 		}
 		catch (Poco::Exception& e)
 		{
+			if (lparam._reliable)
+				throw;
 			ostr.str("");
 			ostr << "exception: " << e.displayText();
 			_session.log(ostr.str());
@@ -382,6 +386,8 @@ bool ClientConnection::connect()
 		}
 		catch (exception& e)
 		{
+			if (lparam._reliable)
+				throw;
 			ostr.str("");
 			ostr << "exception: " << e.what();
 			_session.log(ostr.str());

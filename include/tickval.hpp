@@ -47,6 +47,26 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 namespace FIX8
 {
+#ifdef __APPLE__
+#include <mach/clock.h>
+#include <mach/mach.h>
+#endif
+
+// OS X does not have clock_gettime, use clock_get_time
+inline void current_utc_time(struct timespec *ts)
+{
+#ifdef __APPLE__
+	clock_serv_t cclock;
+	mach_timespec_t mts;
+	host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+	clock_get_time(cclock, &mts);
+	mach_port_deallocate(mach_task_self(), cclock);
+	ts->tv_sec = mts.tv_sec;
+	ts->tv_nsec = mts.tv_nsec;
+#else
+	clock_gettime(CLOCK_REALTIME, ts);
+#endif
+}
 
 #ifdef _MSC_VER
 
@@ -67,28 +87,34 @@ inline LARGE_INTEGER getFILETIMEoffset()
 
 inline int clock_gettime(int X, struct timespec *tv)
 {
-    LARGE_INTEGER           t;
-    FILETIME				f;
-    double                  nanoseconds;
+    LARGE_INTEGER t;
+    FILETIME f;
+    double nanoseconds;
     //static LARGE_INTEGER    offset;
-    static double           frequencyToNanoseconds;
-    static int              initialized = 0;
-    static BOOL             usePerformanceCounter = 0;
+    static double frequencyToNanoseconds;
+    static int initialized = 0;
+    static BOOL usePerformanceCounter = 0;
 
-    if (!initialized) {
+    if (!initialized)
+	 {
         LARGE_INTEGER performanceFrequency;
         initialized = 1;
         usePerformanceCounter = QueryPerformanceFrequency(&performanceFrequency);
-        if (usePerformanceCounter) {
+        if (usePerformanceCounter)
+		  {
             //QueryPerformanceCounter(&offset);
             frequencyToNanoseconds = (double)performanceFrequency.QuadPart / 1000000000.;
-        } else {
+        }
+		  else
+		  {
             //offset = getFILETIMEoffset();
             frequencyToNanoseconds = 10.;
         }
     }
-    if (usePerformanceCounter) QueryPerformanceCounter(&t);
-    else {
+    if (usePerformanceCounter)
+		 QueryPerformanceCounter(&t);
+    else
+	 {
         GetSystemTimeAsFileTime(&f);
         t.QuadPart = f.dwHighDateTime;
         t.QuadPart <<= 32;
@@ -100,7 +126,7 @@ inline int clock_gettime(int X, struct timespec *tv)
     t.QuadPart = nanoseconds;
     tv->tv_sec = t.QuadPart / 1000000000;
     tv->tv_nsec = t.QuadPart % 1000000000;
-    return (0);
+    return 0;
 }
 
 #endif // _MSC_VER
@@ -201,7 +227,7 @@ public:
 	static timespec get_timespec()
 	{
 		timespec ts;
-		clock_gettime(CLOCK_REALTIME, &ts);
+		current_utc_time(&ts);
 		return ts;
 	}
 
@@ -210,7 +236,7 @@ public:
 	static Tickval get_tickval()
 	{
 		timespec ts;
-		clock_gettime(CLOCK_REALTIME, &ts);
+		current_utc_time(&ts);
 		return Tickval(ts);
 	}
 
@@ -219,7 +245,7 @@ public:
 	static Tickval& get_tickval(Tickval& to)
 	{
 		timespec ts;
-		clock_gettime(CLOCK_REALTIME, &ts);
+		current_utc_time(&ts);
 		return to = ts;
 	}
 
