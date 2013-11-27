@@ -128,7 +128,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-----------------------------------------------------------------------------------------
 using namespace std;
-using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
 void print_usage();
@@ -212,15 +211,15 @@ int main(int argc, char **argv)
 			return 0;
 		case ':': case '?': return 1;
 		case 'h': print_usage(); return 0;
-		case 'l': GlobalLogger::set_global_filename(optarg); break;
+		case 'l': FIX8::GlobalLogger::set_global_filename(optarg); break;
 		case 'c': clcf = optarg; break;
-		case 'b': batch_size = get_value<unsigned>(optarg); break;
-		case 'p': preload_count = get_value<unsigned>(optarg); break;
-		case 'u': update_count = get_value<unsigned>(optarg); break;
+		case 'b': batch_size = FIX8::get_value<unsigned>(optarg); break;
+		case 'p': preload_count = FIX8::get_value<unsigned>(optarg); break;
+		case 'u': update_count = FIX8::get_value<unsigned>(optarg); break;
 		case 's': server = true; break;
 		case 'o': once = true; break;
-		case 'S': next_send = get_value<unsigned>(optarg); break;
-		case 'R': next_receive = get_value<unsigned>(optarg); break;
+		case 'S': next_send = FIX8::get_value<unsigned>(optarg); break;
+		case 'R': next_receive = FIX8::get_value<unsigned>(optarg); break;
 		case 'q': quiet = false; break;
 		case 'r': reliable = true; break;
 		default: break;
@@ -241,8 +240,8 @@ int main(int argc, char **argv)
 
 		if (server)
 		{
-			ServerSession<hf_session_server>::Server_ptr
-				ms(new ServerSession<hf_session_server>(TEX::ctx(), conf_file, "TEX1"));
+			FIX8::ServerSession<hf_session_server>::Server_ptr
+				ms(new FIX8::ServerSession<hf_session_server>(FIX8::TEX::ctx(), conf_file, "TEX1"));
 
 			XmlElement::XmlSet eset;
 
@@ -250,23 +249,23 @@ int main(int argc, char **argv)
 			{
 				if (!ms->poll())
 					continue;
-				SessionInstance<hf_session_server>::Instance_ptr
-					inst(new SessionInstance<hf_session_server>(*ms));
+				FIX8::SessionInstance<hf_session_server>::Instance_ptr
+					inst(new FIX8::SessionInstance<hf_session_server>(*ms));
 				if (!quiet)
-					inst->session_ptr()->control() |= Session::print;
+					inst->session_ptr()->control() |= FIX8::Session::print;
 				ostringstream sostr;
 				sostr << "client(" << ++scnt << ") connection established.";
-				GlobalLogger::log(sostr.str());
-				const ProcessModel pm(ms->get_process_model(ms->_ses));
-				inst->start(pm == pm_pipeline, next_send, next_receive);
-				cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
-				if (pm != pm_pipeline)
+				FIX8::GlobalLogger::log(sostr.str());
+				const FIX8::ProcessModel pm(ms->get_process_model(ms->_ses));
+				inst->start(pm == FIX8::pm_pipeline, next_send, next_receive);
+				cout << (pm == FIX8::pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+				if (pm != FIX8::pm_pipeline)
 					while (!inst->session_ptr()->is_shutdown())
-						hypersleep<h_milliseconds>(100);
+						FIX8::hypersleep<FIX8::h_milliseconds>(100);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
 #if defined CODECTIMING
-				Message::report_codec_timings("server");
+				FIX8::Message::report_codec_timings("server");
 #endif
             if (once)
                break;
@@ -274,13 +273,13 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			scoped_ptr<ClientSession<hf_session_client> >
-				mc(reliable ? new ReliableClientSession<hf_session_client>(TEX::ctx(), conf_file, "DLD1")
-							   : new ClientSession<hf_session_client>(TEX::ctx(), conf_file, "DLD1"));
+			FIX8::scoped_ptr<FIX8::ClientSession<hf_session_client> >
+				mc(reliable ? new FIX8::ReliableClientSession<hf_session_client>(FIX8::TEX::ctx(), conf_file, "DLD1")
+							   : new FIX8::ClientSession<hf_session_client>(FIX8::TEX::ctx(), conf_file, "DLD1"));
 			if (!quiet)
-				mc->session_ptr()->control() |= Session::print;
+				mc->session_ptr()->control() |= FIX8::Session::print;
 
-			const ProcessModel pm(mc->get_process_model(mc->_ses));
+			const FIX8::ProcessModel pm(mc->get_process_model(mc->_ses));
 			if (!reliable)
 				mc->start(false, next_send, next_receive, mc->session_ptr()->get_login_parameters()._davi());
 			else
@@ -291,7 +290,7 @@ int main(int argc, char **argv)
 				mymenu.preload_new_order_single();
 			char ch;
 			mymenu.get_tty().set_raw_mode();
-			if (pm == pm_coro)
+			if (pm == FIX8::pm_coro)
 			{
 				cout << "Coroutine mode." << endl;
 				fd_set rfds;
@@ -327,13 +326,13 @@ int main(int argc, char **argv)
 			}
 			else
 			{
-				cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+				cout << (pm == FIX8::pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
 				while(!mymenu.get_istr().get(ch).bad() && !term_received && ch != 0x3 && mymenu.process(ch))
 					;
 			}
 			cout << endl;
 #if defined CODECTIMING
-			Message::report_codec_timings("client");
+			FIX8::Message::report_codec_timings("client");
 #endif
 			if (!mc->session_ptr()->is_shutdown())
 				mc->session_ptr()->stop();
@@ -341,7 +340,7 @@ int main(int argc, char **argv)
 			mymenu.get_tty().unset_raw_mode();
 		}
 	}
-	catch (f8Exception& e)
+	catch (FIX8::f8Exception& e)
 	{
 		cerr << "exception: " << e.what() << endl;
 	}
@@ -376,19 +375,19 @@ bool MyMenu::batch_preload_new_order_single()
 			ostringstream oistr;
 			oistr << "ord" << ++oid << '-' << num;
 
-			TEX::NewOrderSingle *ptr(new TEX::NewOrderSingle);
-			TEX::Price *prc(new TEX::Price(1. + RandDev::getrandom(500.)));
+			FIX8::TEX::NewOrderSingle *ptr(new FIX8::TEX::NewOrderSingle);
+			FIX8::TEX::Price *prc(new FIX8::TEX::Price(1. + RandDev::getrandom(500.)));
 			prc->set_precision(3);
 
-			*ptr << new TEX::Symbol("BHP")
-				  << new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
-				  << new TEX::OrdType(TEX::OrdType_LIMIT)
-				  << new TEX::Side(TEX::Side_BUY)
-				  << new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL)
-				  << new TEX::TransactTime
-				  << new TEX::ClOrdID(oistr.str())
+			*ptr << new FIX8::TEX::Symbol("BHP")
+				  << new FIX8::TEX::HandlInst(FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
+				  << new FIX8::TEX::OrdType(FIX8::TEX::OrdType_LIMIT)
+				  << new FIX8::TEX::Side(FIX8::TEX::Side_BUY)
+				  << new FIX8::TEX::TimeInForce(FIX8::TEX::TimeInForce_FILL_OR_KILL)
+				  << new FIX8::TEX::TransactTime
+				  << new FIX8::TEX::ClOrdID(oistr.str())
 				  << prc
-				  << new TEX::OrderQty(1 + RandDev::getrandom(10000));
+				  << new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
 
 			_session.push(ptr);
 		}
@@ -423,16 +422,16 @@ bool MyMenu::new_order_single()
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
 
-	TEX::NewOrderSingle *nos(new TEX::NewOrderSingle);
-	*nos  << new TEX::TransactTime
-			<< new TEX::OrderQty(1 + RandDev::getrandom(10000))
-			<< new TEX::Price(1. + RandDev::getrandom(500.))
-			<< new TEX::ClOrdID(oistr.str())
-			<< new TEX::Symbol("BHP")
-			<< new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
-			<< new TEX::OrdType(TEX::OrdType_LIMIT)
-			<< new TEX::Side(TEX::Side_BUY)
-			<< new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL);
+	FIX8::TEX::NewOrderSingle *nos(new FIX8::TEX::NewOrderSingle);
+	*nos  << new FIX8::TEX::TransactTime
+			<< new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000))
+			<< new FIX8::TEX::Price(1. + RandDev::getrandom(500.))
+			<< new FIX8::TEX::ClOrdID(oistr.str())
+			<< new FIX8::TEX::Symbol("BHP")
+			<< new FIX8::TEX::HandlInst(FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
+			<< new FIX8::TEX::OrdType(FIX8::TEX::OrdType_LIMIT)
+			<< new FIX8::TEX::Side(FIX8::TEX::Side_BUY)
+			<< new FIX8::TEX::TimeInForce(FIX8::TEX::TimeInForce_FILL_OR_KILL);
 
 	_session.send(nos);
 
@@ -447,7 +446,7 @@ bool MyMenu::send_all_preloaded()
 	unsigned snt(0);
 	while (_session.cached())
 	{
-		TEX::NewOrderSingle *ptr(_session.pop());
+		FIX8::TEX::NewOrderSingle *ptr(_session.pop());
 		if (!ptr)
 			break;
 		_session.send(ptr);
@@ -465,7 +464,7 @@ bool MyMenu::send_all_preloaded()
 bool MyMenu::send_all_preloaded(coroutine& coro, FIX8::Session *ses)
 {
 	unsigned snt(0);
-	TEX::NewOrderSingle *ptr;
+	FIX8::TEX::NewOrderSingle *ptr;
 
 	reenter(coro)
 	{
@@ -509,19 +508,19 @@ bool MyMenu::preload_new_order_single()
 		ostringstream oistr;
 		oistr << "ord" << ++oid << '-' << num;
 
-		TEX::NewOrderSingle *ptr(new TEX::NewOrderSingle);
-		TEX::Price *prc(new TEX::Price(1. + RandDev::getrandom(500.)));
+		FIX8::TEX::NewOrderSingle *ptr(new FIX8::TEX::NewOrderSingle);
+		FIX8::TEX::Price *prc(new FIX8::TEX::Price(1. + RandDev::getrandom(500.)));
 		prc->set_precision(3);
 
-		*ptr  << new TEX::Symbol("BHP")
-				<< new TEX::HandlInst(TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
-				<< new TEX::OrdType(TEX::OrdType_LIMIT)
-				<< new TEX::Side(TEX::Side_BUY)
-				<< new TEX::TimeInForce(TEX::TimeInForce_FILL_OR_KILL)
-				<< new TEX::TransactTime
+		*ptr  << new FIX8::TEX::Symbol("BHP")
+				<< new FIX8::TEX::HandlInst(FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
+				<< new FIX8::TEX::OrdType(FIX8::TEX::OrdType_LIMIT)
+				<< new FIX8::TEX::Side(FIX8::TEX::Side_BUY)
+				<< new FIX8::TEX::TimeInForce(FIX8::TEX::TimeInForce_FILL_OR_KILL)
+				<< new FIX8::TEX::TransactTime
 				<< prc
-				<< new TEX::ClOrdID(oistr.str())
-				<< new TEX::OrderQty(1 + RandDev::getrandom(10000));
+				<< new FIX8::TEX::ClOrdID(oistr.str())
+				<< new FIX8::TEX::OrderQty(1 + RandDev::getrandom(10000));
 
 		_session.push(ptr);
 	}
@@ -547,8 +546,8 @@ bool MyMenu::help()
 bool MyMenu::do_logout()
 {
 	if (!_session.is_shutdown())
-		_session.send(new TEX::Logout);
-	hypersleep<h_seconds>(1);
+		_session.send(new FIX8::TEX::Logout);
+	FIX8::hypersleep<FIX8::h_seconds>(2);
 	return false; // will exit
 }
 
@@ -581,43 +580,43 @@ bool hf_session_client::handle_application(const unsigned seqnum, const FIX8::Me
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
+bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg) const
 {
 	static unsigned oid(0), eoid(0);
-	TEX::OrderQty qty;
-	TEX::Price price;
+	FIX8::TEX::OrderQty qty;
+	FIX8::TEX::Price price;
 	msg->get(qty);
 	msg->get(price);
 
-	TEX::ExecutionReport *er(new TEX::ExecutionReport);
+	FIX8::TEX::ExecutionReport *er(new FIX8::TEX::ExecutionReport);
 	msg->copy_legal(er);
 
 	ostringstream oistr;
 	oistr << "ord" << ++oid;
-	*er << new TEX::OrderID(oistr.str())
-		 << new TEX::ExecType(TEX::ExecType_NEW);
+	*er << new FIX8::TEX::OrderID(oistr.str())
+		 << new FIX8::TEX::ExecType(FIX8::TEX::ExecType_NEW);
 	unsigned ordResult(RandDev::getrandom(3));
 	switch (ordResult)
 	{
 	default:
 	case 0:
-		*er << new TEX::OrdStatus(TEX::OrdStatus_NEW);
+		*er << new FIX8::TEX::OrdStatus(FIX8::TEX::OrdStatus_NEW);
 		break;
 	case 1:
-		*er << new TEX::OrdStatus(TEX::OrdStatus_CANCELED);
+		*er << new FIX8::TEX::OrdStatus(FIX8::TEX::OrdStatus_CANCELED);
 		break;
 	case 2:
-		*er << new TEX::OrdStatus(TEX::OrdStatus_REJECTED);
+		*er << new FIX8::TEX::OrdStatus(FIX8::TEX::OrdStatus_REJECTED);
 		break;
 	}
 
-	*er   << new TEX::LeavesQty(qty())
-			<< new TEX::CumQty(0.)
-			<< new TEX::AvgPx(0.)
-			<< new TEX::LastCapacity('5')
-			<< new TEX::ReportToExch('Y')
-			<< new TEX::ExecTransType(TEX::ExecTransType_NEW)
-			<< new TEX::ExecID(oistr.str());
+	*er   << new FIX8::TEX::LeavesQty(qty())
+			<< new FIX8::TEX::CumQty(0.)
+			<< new FIX8::TEX::AvgPx(0.)
+			<< new FIX8::TEX::LastCapacity('5')
+			<< new FIX8::TEX::ReportToExch('Y')
+			<< new FIX8::TEX::ExecTransType(FIX8::TEX::ExecTransType_NEW)
+			<< new FIX8::TEX::ExecID(oistr.str());
 
 	_session.send(er);
 
@@ -629,19 +628,19 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 			unsigned trdqty(1 + RandDev::getrandom(remaining_qty));
 			remaining_qty -= trdqty;
 			cum_qty += trdqty;
-			TEX::ExecutionReport *ner(new TEX::ExecutionReport);
+			FIX8::TEX::ExecutionReport *ner(new FIX8::TEX::ExecutionReport);
 			msg->copy_legal(ner);
 			ostringstream eistr;
 			eistr << "exec" << ++eoid;
 
-			*ner  << new TEX::ExecID(eistr.str())
-					<< new TEX::OrderID(oistr.str())
-					<< new TEX::ExecType(TEX::ExecType_NEW)
-					<< new TEX::OrdStatus(remaining_qty == trdqty ? TEX::OrdStatus_FILLED : TEX::OrdStatus_PARTIALLY_FILLED)
-					<< new TEX::LeavesQty(remaining_qty)
-					<< new TEX::CumQty(cum_qty)
-					<< new TEX::ExecTransType(TEX::ExecTransType_NEW)
-					<< new TEX::AvgPx(price());
+			*ner  << new FIX8::TEX::ExecID(eistr.str())
+					<< new FIX8::TEX::OrderID(oistr.str())
+					<< new FIX8::TEX::ExecType(FIX8::TEX::ExecType_NEW)
+					<< new FIX8::TEX::OrdStatus(remaining_qty == trdqty ? FIX8::TEX::OrdStatus_FILLED : FIX8::TEX::OrdStatus_PARTIALLY_FILLED)
+					<< new FIX8::TEX::LeavesQty(remaining_qty)
+					<< new FIX8::TEX::CumQty(cum_qty)
+					<< new FIX8::TEX::ExecTransType(FIX8::TEX::ExecTransType_NEW)
+					<< new FIX8::TEX::AvgPx(price());
 
 			_session.send(ner);
 		}
@@ -651,7 +650,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_client::operator() (const TEX::ExecutionReport *msg) const
+bool tex_router_client::operator() (const FIX8::TEX::ExecutionReport *msg) const
 {
 	static int exrecv(0);
 	if (++exrecv % update_count == 0)

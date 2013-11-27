@@ -26,13 +26,13 @@ and framework; and a set of complete client/server test applications.
 
 * Fix8 statically supports nested components and groups to any depth. The Fix8 compiler and runtime library takes the pain out of using repeating groups.
 
-* Fix8 applications are fast. On production level hardware, client NewOrderSingle encode latency is now 2.2us, and ExecutionReport decode 4.5us. Without the framework overhead, NewOrderSingle encode latency is 1.4us. This is being continually improved.
+* Fix8 applications are fast. On production level hardware, client NewOrderSingle encode latency is now 2.1us, and ExecutionReport decode 3.2us. Without the framework overhead, NewOrderSingle encode latency is 1.4us. This is being continually improved.
 
 * Fix8 has been designed to be extended, customised or enhanced. If you have special requirements, Fix8 provides a flexible platform to develop your application on.
 
 * Fix8 supports field and value domain validation, mandatory/optional field assertion, field ordering, well-formedness testing, retransmission and standard session semantics.
 
-* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC and ARMv7. It also now runs on *Windows*. Other \*NIX variants may work too.
+* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC and ARMv7. It also now runs on *Windows* and *OSX*. Other \*NIX variants may work too.
 
 ## Directory Layout
 
@@ -144,8 +144,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 0.10.0.tar.gz
-	% cd fix8-0.10.0
+	% tar xvzf 1.0.0-RC2.tar.gz
+	% cd fix8-1.0.0-RC2
 	% ./bootstrap
 	% ./configure
 	% make

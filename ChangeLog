@@ -1,9 +1,12 @@
-* Sun Nov 24 2013 David L. Dight <fix@fix8.org> 1.0.0-RC1
-- Fixed Jira tickets FX-107, FX-129, FX-130, FX-131
+* Tue Nov 27 2013 David L. Dight <fix@fix8.org> 1.0.0-RC2
+- Fixed Jira tickets FX-107, FX-129, FX-130, FX-131, FX-141, FX-142, FX-143, FX-144
 - Provide support for basic client failover capability
 - Make connection timeout configurable
 - Add support for non-standard XML attribute comments
 - Add support for OSX
+- Add repeating group test cases for permissive mode
+- Support a permissive message field mode in decoder
+- Provide override to -fno-var-tracking-assignments
 
 * Sun Nov 10 2013 David L. Dight <fix@fix8.org> 0.10.0
 - Fixed Jira tickets FX-102, FX-103, FX-104, FX-105, FX-107, FX-110, FX-113, FX-114, FX-115, FX-116, FX-119, FX-120,

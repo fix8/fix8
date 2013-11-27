@@ -241,22 +241,22 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 		while (bt != default_field_separator && offs < _max_msg_len);
 		to.assign(msg_buf, offs);
 
-		f8String tag, bgstr, len;
+		char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
 		unsigned result;
-		if ((result = MessageBase::extract_element(to.data(), to.size(), tag, bgstr)))
+		if ((result = MessageBase::extract_element(to.data(), to.size(), tag, val)))
 		{
-			if (tag != "8")
+			if (*tag != '8')
 				throw IllegalMessage(to);
 
-			if (bgstr != _session.get_ctx()._beginStr)	// invalid FIX version
-				throw InvalidVersion(bgstr);
+			if (_session.get_ctx()._beginStr.compare(val))	// invalid FIX version
+				throw InvalidVersion(string(val));
 
-			if ((result = MessageBase::extract_element(to.data() + result, to.size() - result, tag, len)))
+			if ((result = MessageBase::extract_element(to.data() + result, to.size() - result, tag, val)))
 			{
-				if (tag != "9")
+				if (*tag != '9')
 					throw IllegalMessage(to);
 
-				const unsigned mlen(fast_atoi<unsigned>(len.c_str()));
+				const unsigned mlen(fast_atoi<unsigned>(val));
 				if (mlen == 0 || mlen > _max_msg_len - _bg_sz - _chksum_sz) // invalid msglen
 					throw InvalidBodyLength(mlen);
 
