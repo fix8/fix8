@@ -119,7 +119,7 @@ class Router
 {
 public:
 	/// Dtor.
-   virtual ~Router() {}
+    	virtual ~Router() {}
 
 	/*! Function operator; overloaded with each generated Fix message type.
 	  \return true on success */
@@ -648,77 +648,44 @@ public:
 	   \return reference to FieldTraits object */
 	const FieldTraits& get_fp() const { return _fp; }
 
-	/*! Extract a tag/value element from a char buffer. ULL version.
-	    \param from source buffer
-	    \param sz size of string
-	    \param tag tag to extract to
-	    \param val value to extract to
-	    \return number of bytes consumed */
-	static unsigned extract_element(const char *from, const unsigned sz, char *tag, char *val)
+	struct extract_element_result
 	{
-		enum { get_tag, get_value } state(get_tag);
-
-		for (unsigned ii(0); ii < sz; ++ii)
-		{
-			switch (state)
-			{
-			case get_tag:
-				if (!isdigit(from[ii]))
-				{
-					if (from[ii] != default_assignment_separator)
-						return *val = *tag = 0;
-					state = get_value;
-				}
-				else
-					*tag++ = from[ii];
-				break;
-			case get_value:
-				if (from[ii] == default_field_separator)
-				{
-					*val = *tag = 0;
-					return ++ii;
-				}
-				*val++ = from[ii];
-				break;
-			}
-		}
-		return *val = *tag = 0;
-	}
-
-	/*! Extract a tag/value element from a char buffer.
-	    \param from source buffer
-	    \param sz size of string
-	    \param tag tag to extract to
-	    \param val value to extract to
-	    \return number of bytes consumed */
-	static unsigned extract_element(const char *from, const unsigned sz, f8String& tag, f8String& val)
+		const char * tag_begin;  ///< tag begin iterator
+		const char * tag_end;    ///< tag end iterator, tag_begin == tag_end means tag was not parsed
+		const char * value_begin;  ///< value bagin iterator
+		const char * value_end;    ///< value end iterator, val_begin == val_end means value was not parsed
+		inline bool tag_parsed() const { return tag_end != tag_begin; }
+		inline bool value_parsed() const { return value_end != value_begin; }
+		inline bool success() const { return tag_end != tag_begin && value_end != value_begin; }
+    };
+	
+    /*! Extract a tag/value element from a char buffer. ULL version.
+        \param begin source buffer iterator begin
+        \param end source buffer end iterator
+        \param res extract result struct see <extract_element_result>
+        \param tag_end tag end iterator to extract to
+        \param val_begin value begin iterator to extract to
+        \param val_end value end iterator to extract to
+        \return <res> */
+	static inline extract_element_result& extract_element(const char *& begin, const char* end, extract_element_result& res, char * copyto = 0)
 	{
-		enum { get_tag, get_value } state(get_tag);
-		tag.clear();
-		val.clear();
-
-		for (unsigned ii(0); ii < sz; ++ii)
+		res.tag_begin = res.tag_end = res.value_begin = res.value_end = begin;
+		for (; begin < end && *begin >= '0' && *begin <='9'; ++begin, ++res.tag_end) {}
+		if (*begin != default_assignment_separator)
+			return res;
+		++begin;
+		res.value_begin = res.value_end = begin;
+		if (copyto)
 		{
-			switch (state)
-			{
-			case get_tag:
-				if (!isdigit(from[ii]))
-				{
-					if (from[ii] != default_assignment_separator)
-						return 0;
-					state = get_value;
-				}
-				else
-					tag += from[ii];
-				break;
-			case get_value:
-				if (from[ii] == default_field_separator)
-					return ++ii;
-				val += from[ii];
-				break;
-			}
+			for ( ; begin < end && *begin != default_field_separator; ++begin, *copyto = *res.value_end, ++copyto, ++res.value_end) {}
+			*copyto = '\0';
 		}
-		return 0;
+		else
+		{
+			for ( ; begin < end && *begin != default_field_separator; ++begin, ++res.value_end) {}
+		}
+		++begin;
+		return res;
 	}
 
 	/*! Inserter friend.

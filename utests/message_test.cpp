@@ -61,9 +61,9 @@ bool operator==(const Tickval& a, const Tickval& b)
 TEST(message, unknown_field)
 {
 	// tag 1234 is undefined
-    EXPECT_NO_THROW(Message::factory(ctx(),
+	EXPECT_NO_THROW(Message::factory(ctx(),
 		 "8=FIX.4.2\0019=72\00135=A\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\0011234=blah\00198=0\00110=094\001", false, true));
-    EXPECT_THROW(Message::factory(ctx(),
+	EXPECT_THROW(Message::factory(ctx(),
 		 "8=FIX.4.2\0019=72\00135=A\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\0011234=blah\00198=0\00110=094\001", false, false),
 			 FIX8::f8Exception);
 }
@@ -287,21 +287,17 @@ TEST(message, fmt_chksum)
 /*!helper to test MessageBase::extract_element
     \param msg field string
     \param expect_tag expected field tag
-    \param expect_val expected field val*/
-
-void extract_element_test(f8String msg, f8String expect_tag, f8String expect_val)
+    \param expect_val expected field val
+    \param success true for success parsing of tag & value
+*/
+void extract_element_test(const f8String& msg, const f8String& expect_tag, const f8String& expect_val, bool success)
 {
-    char cVal[MAX_FLD_LENGTH];
-    char cTag[MAX_FLD_LENGTH];
-    MessageBase::extract_element(msg.c_str(), msg.length(), cTag, cVal);
-    EXPECT_EQ(expect_val, f8String(cVal));
-    EXPECT_EQ(expect_tag, f8String(cTag));
-
-    f8String sVal;
-    f8String sTag;
-    MessageBase::extract_element(msg.c_str(), msg.length(), sTag, sVal);
-    EXPECT_EQ(expect_val, sVal);
-    EXPECT_EQ(expect_tag, sTag);
+    MessageBase::extract_element_result res;
+    const char * beg = msg.c_str(), * end = msg.c_str() + msg.size();
+    MessageBase::extract_element(beg, end, res);
+    EXPECT_EQ(success, res.success());
+    EXPECT_EQ(expect_val, f8String(res.value_begin, res.value_end));
+    EXPECT_EQ(expect_tag, f8String(res.tag_begin, res.tag_end));
 }
 
 /*!MessageBase::extract_element test
@@ -310,10 +306,10 @@ void extract_element_test(f8String msg, f8String expect_tag, f8String expect_val
 
 TEST(message, extract_element)
 {
-    extract_element_test("8=FIX.4.2", "8", "FIX.4.2");
-    extract_element_test("8=", "8", "");
-    extract_element_test("=FIX.4.2", "", "FIX.4.2");
-    extract_element_test("", "", "");
+    extract_element_test("8=FIX.4.2", "8", "FIX.4.2", true);
+    extract_element_test("8=", "8", "", false);
+    extract_element_test("=FIX.4.2", "", "FIX.4.2", false);
+    extract_element_test("", "", "", false);
 }
 
 /*!logon encoding test
