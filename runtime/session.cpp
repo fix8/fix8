@@ -139,9 +139,6 @@ Session::~Session()
 int Session::start(Connection *connection, bool wait, const unsigned send_seqnum,
 	const unsigned recv_seqnum, const f8String davi)
 {
-	if (Message::set_no_chksum_flag(_loginParameters._no_chksum_flag))
-		GlobalLogger::log("chksum parsing/verification suppressed");
-
 	if (_logger)
 		_logger->purge_thread_codes();
 
@@ -250,7 +247,7 @@ bool Session::process(const f8String& from)
 				retry_plog = true;
 		}
 
-		const Message *msg(Message::factory(_ctx, from));
+		const Message *msg(Message::factory(_ctx, from, _loginParameters._no_chksum_flag, _loginParameters._permissive_mode_flag));
 		if (!msg)
 		{
 			GlobalLogger::log("Fatal: factory failed to generate a valid message");

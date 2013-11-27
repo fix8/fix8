@@ -63,9 +63,6 @@ codec_timings Message::_encode_timings, Message::_decode_timings;
 #endif
 
 //-------------------------------------------------------------------------------------------------
-bool Message::_no_chksum_flag(false);
-
-//-------------------------------------------------------------------------------------------------
 unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtype)
 {
 	const char *dptr(from.data());
@@ -102,19 +99,32 @@ unsigned MessageBase::extract_trailer(const f8String& from, f8String& chksum)
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned ignore)
+unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned ignore, bool permissive_mode)
 {
-	unsigned result;
-	const unsigned fsize(from.size() - ignore);
+	const unsigned fsize(from.size() - ignore), npos(0xffffffff);
+	unsigned pos(_pos.size()), last_valid_pos(npos);
 	const char *dptr(from.data());
 	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
+	size_t last_valid_offset(0);
 
-	for (unsigned pos(_pos.size()); s_offset <= fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
+	for (unsigned result; s_offset <= fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 	{
 		const unsigned short tv(fast_atoi<unsigned short>(tag));
 		Presence::const_iterator itr(_fp.get_presence().find(tv));
 		if (itr == _fp.get_presence().end())
+		{
+			if (permissive_mode)
+			{
+				if (last_valid_pos == npos)
+				{
+					last_valid_pos = pos;
+					last_valid_offset = s_offset;
+				}
+				s_offset += result;
+				continue;
+			}
 			break;
+		}
 		s_offset += result;
 		if (itr->_field_traits.has(FieldTrait::present))
 		{
@@ -144,7 +154,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 		throw MissingMandatoryField(ostr.str());
 	}
 
-	return s_offset;
+	return permissive_mode && last_valid_pos == pos ? last_valid_offset : s_offset;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -178,9 +188,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 			if (pos == 0 && grp->_fp.getPos(tv, itr) != 1)	// first field in group is mandatory
 				throw MissingRepeatingGroupField(tv);
 			const BaseEntry *be(_ctx.find_be(tv));
-			if (!be)
-				throw InvalidField(tv);
-			if (!grp->_fp.has(tv, itr))	// field not found in sub-group - end of repeats?
+			if (!be || !grp->_fp.has(tv, itr))	// unknown field or field not found in sub-group - end of repeats?
 			{
 				ok = false;
 				break;
@@ -213,7 +221,7 @@ unsigned MessageBase::check_positions()
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
+Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_chksum, bool permissive_mode)
 {
 	char mtype[MAX_MSGTYPE_FIELD_LEN] = {}, len[MAX_MSGTYPE_FIELD_LEN] = {};
 	const size_t hlen(extract_header(from, len, mtype));
@@ -232,7 +240,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 #if defined CODECTIMING
 	IntervalTimer itm;
 #endif
-	msg->decode(from, hlen, 7); // skip already decoded mandatory 8, 9, 35 and 10
+	msg->decode(from, hlen, 7, permissive_mode); // skip already decoded mandatory 8, 9, 35 and 10
 #if defined CODECTIMING
 	_decode_timings._cpu_used += itm.Calculate().AsDouble();
 	++_decode_timings._msg_count;
@@ -247,7 +255,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 	const char *pp(from.data() + from.size() - 7);
 	if (*pp != '1' || *(pp + 1) != '0') // 10=XXX^A
 		throw InvalidMessage(from);
-	if (!_no_chksum_flag) // permit chksum calculation to be skipped
+	if (!no_chksum) // permit chksum calculation to be skipped
 	{
 		const f8String chksum(pp + 3, 3);
 		msg->_trailer->get_check_sum()->set(chksum);

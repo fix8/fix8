@@ -320,15 +320,23 @@ System types:
   --host=HOST       cross-compile to build programs to run on HOST [BUILD]
 
 Optional Features:
+  --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --enable-silent-rules   less verbose build output (undo: "make V=1")
+  --disable-silent-rules  verbose build output (undo: "make V=0")
   --enable-static[=PKGS]  build static libraries [default=no]
   --enable-shared[=PKGS]  build shared libraries [default=yes]
   --enable-fast-install[=PKGS]
                           optimize for fast installation [default=yes]
-  --disable-dependency-tracking  speeds up one-time build
-  --enable-dependency-tracking   do not reject slow dependency extractors
+  --enable-dependency-tracking
+                          do not reject slow dependency extractors
+  --disable-dependency-tracking
+                          speeds up one-time build
   --disable-libtool-lock  avoid locking (might break parallel builds)
+  --enable-toggleassignmentvars
+                          enable toggleassignmentvars for gcc (default=yes if
+                          available)
   --enable-doxygen        enable doxygen generation (default=yes if available)
   --enable-doxygen-warnings
                           permit doxygen to generate warnings (default=yes)

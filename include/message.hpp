@@ -297,8 +297,9 @@ public:
 	    \param from source string
 	    \param offset in bytes to decode from
 	    \param ignore bytes to ignore counting back from end of message
+	    \param permissive_mode if true, ignore unknown fields
 	    \return number of bytes consumed */
-	unsigned decode(const f8String& from, unsigned offset, unsigned ignore=0);
+	unsigned decode(const f8String& from, unsigned offset, unsigned ignore=0, bool permissive_mode=false);
 
 	/*! Decode repeating group from string.
 	    \param fnum repeating group fix field num (no...)
@@ -771,7 +772,6 @@ protected:
 	MessageBase *_header, *_trailer;
 	unsigned _custom_seqnum;
 	bool _no_increment;
-	static bool _no_chksum_flag;
 
 public:
 	/*! Ctor.
@@ -801,9 +801,14 @@ public:
 	    \param from source string
 	    \param offset in bytes to decode from
 	    \param ignore bytes to ignore counting back from end of message
+	    \param permissive_mode if true, ignore unknown fields
 	    \return number of bytes consumed */
-	unsigned decode(const f8String& from, unsigned offset=0, unsigned ignore=0)
-		{ return _trailer->decode(from, MessageBase::decode(from, _header->decode(from, offset)), ignore); }
+	unsigned decode(const f8String& from, unsigned offset=0, unsigned ignore=0, bool permissive_mode=false)
+	{
+		const size_t hlen(_header->decode(from, offset, 0, permissive_mode));
+		const size_t blen(MessageBase::decode(from, hlen, 0, permissive_mode));
+		return _trailer->decode(from, blen, ignore, permissive_mode);
+	}
 
 	/*! Encode message to stream.
 	    \param to stream to encode to
@@ -879,22 +884,22 @@ public:
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object
 	    \param from pointer to raw buffer containing Fix message
+	    \param no_chksum if true, do not perform chksum verification
+	    \param permissive_mode if true, ignore unknown fields
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
-	static Message *factory(const F8MetaCntx& ctx, const char *from)
+	static Message *factory(const F8MetaCntx& ctx, const char *from, bool no_chksum=false, bool permissive_mode=false)
 	{
 		const f8String to(from);
-		return factory(ctx, to);
+		return factory(ctx, to, no_chksum, permissive_mode);
 	}
-
-	/*! Set the global _no_chksum_flag
-	    \param flag true or false */
-	static bool set_no_chksum_flag(bool flag) { return _no_chksum_flag = flag; }
 
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object
 	    \param from reference to string raw buffer containing Fix message
+	    \param no_chksum if true, do not perform chksum verification
+	    \param permissive_mode if true, ignore unknown fields
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
-	static Message *factory(const F8MetaCntx& ctx, const f8String& from);
+	static Message *factory(const F8MetaCntx& ctx, const f8String& from, bool no_chksum=false, bool permissive_mode=false);
 
 	/*! Set the custom sequence number. Used to override and suppress automatic seqnum assignment.
 	    \param seqnum the outbound sequence number to use for this message. */

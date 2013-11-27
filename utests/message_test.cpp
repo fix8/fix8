@@ -54,6 +54,50 @@ bool operator==(const Tickval& a, const Tickval& b)
 
 #endif
 
+/*!message unknown field
+    \param message test suit name
+    \param unknown_field test case name*/
+
+TEST(message, unknown_field)
+{
+	// tag 1234 is undefined
+    EXPECT_NO_THROW(Message::factory(ctx(),
+		 "8=FIX.4.2\0019=72\00135=A\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\0011234=blah\00198=0\00110=094\001", false, true));
+    EXPECT_THROW(Message::factory(ctx(),
+		 "8=FIX.4.2\0019=72\00135=A\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\0011234=blah\00198=0\00110=094\001", false, false),
+			 FIX8::f8Exception);
+}
+
+/*!message unknown field repeating group
+    \param message test suit name
+    \param unknown_field repeating group test case name*/
+TEST(message, unknown_field_repeating_group)
+{
+	// tag 1234 is undefined
+    EXPECT_NO_THROW(Message::factory(ctx(),
+		"8=FIX.4.2\0019=173\00135=B\00149=A12345B\00156=COMPARO\00134=78\00150=2DEFGH4\001"
+		"52=20131125-02:19:46.108\0011234=blah\001148=Here is the nws\00133=4\00158=The rain in Spain\001"
+		"58=stays mainly\00158=on the plain\00158=End bulletin\00110=135\001", false, true));
+    EXPECT_THROW(Message::factory(ctx(),
+		"8=FIX.4.2\0019=173\00135=B\00149=A12345B\00156=COMPARO\00134=78\00150=2DEFGH4\001"
+		"52=20131125-02:19:46.108\0011234=blah\001148=Here is the nws\00133=4\00158=The rain in Spain\001"
+		"58=stays mainly\00158=on the plain\00158=End bulletin\00110=135\001", false, false), FIX8::f8Exception);
+}
+
+/*!message suppress chksum checking
+    \param message test suit name
+    \param suppress_chksum_checking test case name*/
+
+TEST(message, suppress_chksum_checking)
+{
+	// chksum is wrong
+    EXPECT_NO_THROW(Message::factory(ctx(),
+		 "8=FIX.4.2\0019=62\00135=A\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\00198=0\00110=094\001", true, false));
+    EXPECT_THROW(Message::factory(ctx(),
+		 "8=FIX.4.2\0019=62\00135=A\00134=1\00149=CLIENT\00156=SERVER\00152=20130304-02:44:30\001108=30\00198=0\00110=094\001", false, false),
+			 FIX8::f8Exception);
+}
+
 /*!message missing mandatory field
     \param message test suit name
     \param missing_field test case name*/
@@ -335,6 +379,50 @@ TEST(message, neworder_encode)
 
     delete nos;
     nos = 0;
+}
+
+/*!news message (with repeating groups) encoding test
+    \param message test suit name
+    \param repeating_group test case name*/
+
+TEST(message, repeating_group)
+{
+    News *nws(new News);
+    *nws->Header() << new msg_seq_num(78)
+                   << new sender_comp_id("A12345B")
+                   << new SenderSubID("2DEFGH4")
+                   << new sending_time("20131125-02:19:46.108")
+                   << new target_comp_id("COMPARO");
+
+    *nws << new Headline("Here is the nws");
+    *nws << new LinesOfText(4);
+    GroupBase *lines(nws->find_group<News::LinesOfText>());
+
+    MessageBase *gr1(lines->create_group());
+    *gr1 << new Text("The rain in Spain");
+    *lines << gr1;
+    MessageBase *gr2(lines->create_group());
+    *gr2 << new Text("stays mainly");
+    *lines << gr2;
+    MessageBase *gr3(lines->create_group());
+    *gr3 << new Text("on the plain");
+    *lines << gr3;
+    MessageBase *gr4(lines->create_group());
+    *gr4 << new Text("End bulletin");
+    *lines << gr4;
+	 *nws << lines;
+
+    f8String output;
+    nws->encode(output);
+
+    f8String expect("8=FIX.4.2\0019=163\00135=B\00149=A12345B\00156=COMPARO\00134=78\00150=2DEFGH4\001"
+		 "52=20131125-02:19:46.108\001148=Here is the nws\00133=4\00158=The rain in Spain\001"
+		 "58=stays mainly\00158=on the plain\00158=End bulletin\00110=231\001");
+
+    EXPECT_EQ(expect, output);
+
+    delete nws;
+    nws = 0;
 }
 
 /*!new order entry (with repeating groups) encoding test

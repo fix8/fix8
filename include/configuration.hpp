@@ -268,6 +268,12 @@ public:
 	bool get_no_chksum_flag(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "no_chksum", def); }
 
+	/*! Extract the get_permissive_mode_flag flag from a session entity.
+	  \param from xml entity to search
+	  \return true if get_permissive_mode_flag flag was passed and was true */
+	bool get_permissive_mode_flag(const XmlElement *from, const bool def=false) const
+		{ return find_or_default(from, "permissive_mode", def); }
+
 	/*! Extract the reset_sequence_number flag from a session entity.
 	  \param from xml entity to search
 	  \return true if reset_sequence_number flag was passed and was true */

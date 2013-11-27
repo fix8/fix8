@@ -130,8 +130,17 @@ case "$CXX" in
 		LIBS="$LIBS -lstdc++ -lm " ;;
 esac
 
+oktotogglevar=yes
+AC_ARG_ENABLE([toggleassignmentvars],
+[AS_HELP_STRING([--enable-toggleassignmentvars],[enable toggleassignmentvars for gcc (default=yes if available)])],
+[case "${enableval}" in
+	yes) ;;
+	no)  oktotogglevar=no;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-toggleassignmentvars) ;;
+esac])
+
 # use -fvar-tracking-assignments-toggle
-AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$is_late_gcc = xyes])
+AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$is_late_gcc = xyes && test x$oktotogglevar = xyes])
 
 if test -z "$DOXYGEN";
 	then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
