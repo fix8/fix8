@@ -62,7 +62,7 @@ struct SessionConfig : public Configuration
 			get_default_appl_ver_id(_ses), get_connect_timeout(_ses),
 			get_reset_sequence_number_flag(_ses),
 			get_always_seqnum_assign(_ses), get_silent_disconnect(_ses),
-			get_no_chksum_flag(_ses), false, get_tcp_recvbuf_sz(_ses),
+			get_no_chksum_flag(_ses), get_permissive_mode_flag(_ses), false, get_tcp_recvbuf_sz(_ses),
 			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses));
 
 		_loginParameters = lparam;

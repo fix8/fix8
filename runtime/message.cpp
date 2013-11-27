@@ -63,9 +63,6 @@ codec_timings Message::_encode_timings, Message::_decode_timings;
 #endif
 
 //-------------------------------------------------------------------------------------------------
-bool Message::_no_chksum_flag(false);
-
-//-------------------------------------------------------------------------------------------------
 unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtype)
 {
 	const char *dptr(from.data()), *eptr(from.data() + from.size());
@@ -103,19 +100,33 @@ unsigned MessageBase::extract_trailer(const f8String& from, f8String& chksum)
 }
 
 //-------------------------------------------------------------------------------------------------
-unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned ignore)
+unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned ignore, bool permissive_mode)
 {
+	const unsigned npos(0xffffffff);
+    unsigned pos(_pos.size()), last_valid_pos(npos);
 	const char *dptr(from.data()+s_offset), *eptr(from.data()+from.size()-ignore);
     extract_element_result< const char * > res;
     char val[MAX_FLD_LENGTH]; ///@note: remove me
 
-    const char * dptr0 = dptr;
+    const char * dptr0 = dptr, *last_valid_dptr = dptr;
 	for (unsigned pos(_pos.size()); dptr < eptr && extract_copy_element(dptr0, eptr, res, val).success(); )
 	{
 		const unsigned short tv(fast_atoi<unsigned short>(res.tag_begin, res.tag_end));
 		Presence::const_iterator itr(_fp.get_presence().find(tv));
 		if (itr == _fp.get_presence().end())
+		{
+			if (permissive_mode)
+			{
+				if (last_valid_pos == npos)
+				{
+					last_valid_pos = pos;
+					last_valid_dptr = dptr;
+				}
+				dptr = dptr0;
+				continue;
+			}
 			break;
+        }
         dptr = dptr0;
 		if (itr->_field_traits.has(FieldTrait::present))
 		{
@@ -145,7 +156,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 		throw MissingMandatoryField(ostr.str());
 	}
 
-	return dptr-from.data();
+	return permissive_mode && last_valid_pos == pos ? (last_valid_dptr-from.data()) : (dptr-from.data());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -206,7 +217,7 @@ unsigned MessageBase::check_positions()
 }
 
 //-------------------------------------------------------------------------------------------------
-Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
+Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_chksum, bool permissive_mode)
 {
 	char mtype[MAX_MSGTYPE_FIELD_LEN] = {}, len[MAX_MSGTYPE_FIELD_LEN] = {};
 	const size_t hlen(extract_header(from, len, mtype));
@@ -225,7 +236,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 #if defined CODECTIMING
 	IntervalTimer itm;
 #endif
-	msg->decode(from, hlen, 7); // skip already decoded mandatory 8, 9, 35 and 10
+	msg->decode(from, hlen, 7, permissive_mode); // skip already decoded mandatory 8, 9, 35 and 10
 #if defined CODECTIMING
 	_decode_timings._cpu_used += itm.Calculate().AsDouble();
 	++_decode_timings._msg_count;
@@ -240,7 +251,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from)
 	const char *pp(from.data() + from.size() - 7);
 	if (*pp != '1' || *(pp + 1) != '0') // 10=XXX^A
 		throw InvalidMessage(from);
-	if (!_no_chksum_flag) // permit chksum calculation to be skipped
+	if (!no_chksum) // permit chksum calculation to be skipped
 	{
 		const f8String chksum(pp + 3, 3);
 		msg->_trailer->get_check_sum()->set(chksum);

@@ -167,23 +167,26 @@ struct LoginParameters
 {
 	LoginParameters() : _login_retry_interval(defaults::retry_interval), _login_retries(defaults::login_retries),
 		_connect_timeout(defaults::connect_timeout), _reset_sequence_numbers(), _always_seqnum_assign(),
-		_silent_disconnect(), _no_chksum_flag(), _reliable(),
+		_silent_disconnect(), _no_chksum_flag(), _permissive_mode_flag(), _reliable(),
 		_recv_buf_sz(), _send_buf_sz(), _hb_int(defaults::hb_interval) {}
 
 	LoginParameters(unsigned login_retry_interval, unsigned login_retries,
 		const default_appl_ver_id& davi, unsigned connect_timeout, bool reset_seqnum=false,
-		bool always_seqnum_assign=false, bool silent_disconnect=false, bool no_chksum_flag=false, bool reliable=false,
+		bool always_seqnum_assign=false, bool silent_disconnect=false, bool no_chksum_flag=false,
+		bool permissive_mode_flag=false, bool reliable=false,
 		unsigned recv_buf_sz=0, unsigned send_buf_sz=0, unsigned hb_int=defaults::hb_interval) :
 			_login_retry_interval(login_retry_interval), _login_retries(login_retries), _connect_timeout(connect_timeout),
 			_reset_sequence_numbers(reset_seqnum), _always_seqnum_assign(always_seqnum_assign),
-			_silent_disconnect(silent_disconnect), _no_chksum_flag(no_chksum_flag), _reliable(reliable),
+			_silent_disconnect(silent_disconnect), _no_chksum_flag(no_chksum_flag),
+			_permissive_mode_flag(permissive_mode_flag), _reliable(reliable),
 			_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz), _hb_int(defaults::hb_interval) {}
 
 	LoginParameters(const LoginParameters& from)
 		: _login_retry_interval(from._login_retry_interval), _login_retries(from._login_retries),
 		_connect_timeout(from._connect_timeout), _reset_sequence_numbers(from._reset_sequence_numbers),
 		_always_seqnum_assign(from._always_seqnum_assign), _silent_disconnect(from._silent_disconnect),
-		_no_chksum_flag(from._no_chksum_flag), _reliable(from._reliable), _davi(from._davi),
+		_no_chksum_flag(from._no_chksum_flag), _permissive_mode_flag(from._permissive_mode_flag),
+		_reliable(from._reliable), _davi(from._davi),
 		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz), _hb_int(from._hb_int) {}
 
 	LoginParameters& operator=(const LoginParameters& that)
@@ -197,6 +200,7 @@ struct LoginParameters
 			_always_seqnum_assign = that._always_seqnum_assign;
 			_silent_disconnect = that._silent_disconnect;
 			_no_chksum_flag = that._no_chksum_flag;
+			_permissive_mode_flag = that._permissive_mode_flag;
 			_reliable = that._reliable;
 			_davi = that._davi;
 			_recv_buf_sz = that._recv_buf_sz;
@@ -207,7 +211,7 @@ struct LoginParameters
 	}
 
 	unsigned _login_retry_interval, _login_retries, _connect_timeout;
-	bool _reset_sequence_numbers, _always_seqnum_assign, _silent_disconnect, _no_chksum_flag, _reliable;
+	bool _reset_sequence_numbers, _always_seqnum_assign, _silent_disconnect, _no_chksum_flag, _permissive_mode_flag, _reliable;
 	default_appl_ver_id _davi;
 	unsigned _recv_buf_sz, _send_buf_sz, _hb_int;
 };
