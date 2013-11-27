@@ -241,22 +241,22 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 		while (bt != default_field_separator && offs < _max_msg_len);
 		to.assign(msg_buf, offs);
 
-		f8String tag, bgstr, len;
-		unsigned result;
-		if ((result = MessageBase::extract_element(to.data(), to.size(), tag, bgstr)))
+        MessageBase::extract_element_result< const char * > res;
+		const char *begin = to.data(), *end = begin + to.size();
+		if (MessageBase::extract_element(begin, end, res).success())
 		{
-			if (tag != "8")
+			if (*res.tag_begin != '8')
 				throw IllegalMessage(to);
 
-			if (bgstr != _session.get_ctx()._beginStr)	// invalid FIX version
-				throw InvalidVersion(bgstr);
+			if (_session.get_ctx()._beginStr.length() == (std::size_t)(res.tag_end - res.tag_begin) && strncmp(_session.get_ctx()._beginStr.c_str(), res.tag_begin, res.tag_end - res.tag_begin)==0)
+				throw InvalidVersion(f8String(res.tag_begin, res.tag_end)); // invalid FIX version
 
-			if ((result = MessageBase::extract_element(to.data() + result, to.size() - result, tag, len)))
+			if (MessageBase::extract_element(begin, end, res).success())
 			{
-				if (tag != "9")
+				if (*res.tag_begin != '9')
 					throw IllegalMessage(to);
 
-				const unsigned mlen(fast_atoi<unsigned>(len.c_str()));
+				const unsigned mlen(fast_atoi<unsigned>(res.value_begin, res.value_end));
 				if (mlen == 0 || mlen > _max_msg_len - _bg_sz - _chksum_sz) // invalid msglen
 					throw InvalidBodyLength(mlen);
 

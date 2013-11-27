@@ -68,54 +68,55 @@ bool Message::_no_chksum_flag(false);
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtype)
 {
-	const char *dptr(from.data());
-	const size_t flen(from.size());
-	char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
-	unsigned s_offset(0), result;
-
-	if ((result = extract_element(dptr, flen, tag, val)))
+	const char *dptr(from.data()), *eptr(from.data() + from.size());
+    extract_element_result< const char * > res;
+	if (extract_element(dptr, eptr, res).success())
 	{
-		if (*tag != '8')
+		if (*res.tag_begin != '8')
 			return 0;
-		s_offset += result;
-		if ((result = extract_element(dptr + s_offset, flen - s_offset, tag, len)))
+		if (extract_copy_element(dptr, eptr, res, len).success())
 		{
-			if (*tag != '9')
+			if (*res.tag_begin != '9')
 				return 0;
-			s_offset += result;
-			if ((result = extract_element(dptr + s_offset, flen - s_offset, tag, mtype)))
+			if (extract_copy_element(dptr, eptr, res, mtype).success())
 			{
-				if (*tag != '3' || *(tag + 1) != '5')
+				if (*res.tag_begin != '3' || *(res.tag_begin + 1) != '5')
 					return 0;
-				s_offset += result;
 			}
 		}
 	}
-	return s_offset;
+	return dptr-from.data();
 }
 
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::extract_trailer(const f8String& from, f8String& chksum)
 {
-	f8String tag;
-	return extract_element(from.data() + from.size() - 7, 6, tag, chksum);
+	extract_element_result< const char * > res;
+    const char * beg = from.data() + from.size() - 7;
+	if (extract_element(beg, beg + from.size(), res).success())
+    {
+        chksum.assign(res.value_begin, res.value_end);
+        return 6;
+    }
+    chksum.clear();
+    return 0;
 }
 
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned ignore)
 {
-	unsigned result;
-	const unsigned fsize(from.size() - ignore);
-	const char *dptr(from.data());
-	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
+	const char *dptr(from.data()+s_offset), *eptr(from.data()+from.size()-ignore);
+    extract_element_result< const char * > res;
+    char val[MAX_FLD_LENGTH]; ///@note: remove me
 
-	for (unsigned pos(_pos.size()); s_offset <= fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
+    const char * dptr0 = dptr;
+	for (unsigned pos(_pos.size()); dptr < eptr && extract_copy_element(dptr0, eptr, res, val).success(); )
 	{
-		const unsigned short tv(fast_atoi<unsigned short>(tag));
+		const unsigned short tv(fast_atoi<unsigned short>(res.tag_begin, res.tag_end));
 		Presence::const_iterator itr(_fp.get_presence().find(tv));
 		if (itr == _fp.get_presence().end())
 			break;
-		s_offset += result;
+        dptr = dptr0;
 		if (itr->_field_traits.has(FieldTrait::present))
 		{
 			if (!itr->_field_traits.has(FieldTrait::automatic))
@@ -131,7 +132,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 			itr->_field_traits.set(FieldTrait::present);
 			// check if repeating group and num elements > 0
 			if (itr->_field_traits.has(FieldTrait::group) && static_cast<Field<int, 0> *>(bf)->get() > 0)
-				s_offset = decode_group(tv, from, s_offset, ignore);
+				dptr = from.data() + decode_group(tv, from, dptr-from.data(), ignore);
 		}
 	}
 
@@ -144,27 +145,26 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 		throw MissingMandatoryField(ostr.str());
 	}
 
-	return s_offset;
+	return dptr-from.data();
 }
 
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& from, unsigned s_offset, unsigned ignore)
 {
-	unsigned result;
 	GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
 		throw InvalidRepeatingGroup(fnum);
-	const unsigned fsize(from.size() - ignore);
-	const char *dptr(from.data());
-	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
+    const char *dptr(from.data()+s_offset), *eptr(from.data()+from.size()-ignore);
+    extract_element_result< const char * > res;
+    char val[MAX_FLD_LENGTH]; ///@note: remove me
 
-	for (bool ok(true); ok && s_offset < fsize; )
+	for (bool ok(true); ok && dptr < eptr; )
 	{
 		scoped_ptr<MessageBase> grp(grpbase->create_group());
-
-		for (unsigned pos(0); s_offset < fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
+        const char * dptr0 = dptr;
+		for (unsigned pos(0); dptr < eptr && extract_copy_element(dptr0, eptr, res, val).success(); )
 		{
-			const unsigned tv(fast_atoi<unsigned>(tag));
+            const unsigned short tv(fast_atoi<unsigned short>(res.tag_begin, res.tag_end));
 			Presence::const_iterator itr(grp->_fp.get_presence().end());
 			if (grp->_fp.get(tv, itr, FieldTrait::present))	// already present; next group?
 				break;
@@ -178,11 +178,11 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 				ok = false;
 				break;
 			}
-			s_offset += result;
+			dptr = dptr0;
 			grp->add_field(tv, itr, ++pos, be->_create._do(val, be->_rlm, -1), false);
 			grp->_fp.set(tv, itr, FieldTrait::present);	// is present
 			if (grp->_fp.is_group(tv, itr)) // nested group
-				s_offset = grp->decode_group(tv, from, s_offset, ignore);
+                dptr = from.data() + grp->decode_group(tv, from, dptr-from.data(), ignore);
 		}
 
 		const unsigned short missing(grp->_fp.find_missing());
@@ -196,7 +196,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 		*grpbase << grp.release();
 	}
 
-	return s_offset;
+	return dptr-from.data();
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -530,6 +530,21 @@ T fast_atoi(const char *str, const char term='\0')
 }
 
 //----------------------------------------------------------------------------------------
+/*! Decode a string into an int or unsigned.
+  \tparam typename
+  \param begin source string begin iterator
+  \param end source string end iterator
+  \return the converted value */
+template<typename T>
+T fast_atoi(const char *begin, const char *end)
+{
+    T retval(0);
+    for (; begin != end; ++begin)
+        retval = (retval << 3) + (retval << 1) + *begin - '0';
+    return retval;
+}
+
+//----------------------------------------------------------------------------------------
 /**
  * C++ version 0.4 char* style "itoa":
  * Written by Lukas Chmela
