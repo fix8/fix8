@@ -107,7 +107,7 @@ class FIXReader : public AsyncSocket<f8String>
 	f8_atomic<bool> _socket_error;
 
 	dthread<FIXReader> _callback_thread;
-    
+
     char _read_buffer[_max_msg_len*2];
     char *_read_buffer_rptr, *_read_buffer_wptr;
 
@@ -128,17 +128,17 @@ class FIXReader : public AsyncSocket<f8String>
         \return number of bytes read */
     int sockRead(char *where, size_t sz)
     {
-        if ((size_t)(_read_buffer_wptr - _read_buffer_rptr) < sz)
+        if (static_cast<size_t>(_read_buffer_wptr - _read_buffer_rptr) < sz)
             realSockRead(sz, _max_msg_len);
         sz = std::min((size_t)(_read_buffer_wptr-_read_buffer_rptr), sz);
         memcpy(where, _read_buffer_rptr, sz);
         _read_buffer_rptr += sz;
-        size_t shift = _max_msg_len;
-        if ((size_t)(_read_buffer_rptr-_read_buffer) >= shift)
+        const size_t shift(_max_msg_len);
+        if (static_cast<size_t>(_read_buffer_rptr - _read_buffer) >= shift)
         {
-            memcpy(_read_buffer, &_read_buffer[shift], sizeof(_read_buffer)-shift);
-            _read_buffer_rptr -= shift;
-            _read_buffer_wptr -= shift;
+				memcpy(_read_buffer, &_read_buffer[shift], sizeof(_read_buffer) - shift);
+				_read_buffer_rptr -= shift;
+				_read_buffer_wptr -= shift;
         }
         return sz;
     }
@@ -150,11 +150,11 @@ class FIXReader : public AsyncSocket<f8String>
 	    \return number of bytes read */
 	int realSockRead(size_t sz, size_t maxsz)
 	{
-        size_t max_sz = _read_buffer + sizeof(_read_buffer) - _read_buffer_wptr;
+		const size_t max_sz(_read_buffer + sizeof(_read_buffer) - _read_buffer_wptr);
 		int maxremaining(std::min(maxsz, max_sz)), remaining(std::min(sz, max_sz));
-        char * ptr = _read_buffer_wptr, * eptr = _read_buffer + sizeof(_read_buffer);
+		char *ptr(_read_buffer_wptr), *eptr(_read_buffer + sizeof(_read_buffer));
 
-        int rdsz = 0;
+		int rdsz(0);
 		while (remaining > 0 && _read_buffer_wptr < eptr)
 		{
 			rdsz = _sock->receiveBytes(_read_buffer_wptr, maxremaining);
@@ -170,9 +170,9 @@ class FIXReader : public AsyncSocket<f8String>
 			}
 			_read_buffer_wptr += rdsz;
 			remaining -= rdsz;
-            maxremaining -= rdsz;
+			maxremaining -= rdsz;
 		}
-		return _read_buffer_wptr-ptr;
+		return _read_buffer_wptr - ptr;
 	}
 
 protected:

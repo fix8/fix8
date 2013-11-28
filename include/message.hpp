@@ -122,8 +122,14 @@ public:
    virtual ~Router() {}
 
 	/*! Function operator; overloaded with each generated Fix message type.
+	  \param msg const ptr to message to route
 	  \return true on success */
 	virtual bool operator()(const Message *msg) const { return false; }
+
+	/*! Function operator; overloaded with each generated Fix message type.
+	  \param msg non-const ptr to message to route
+	  \return true on success */
+	virtual bool operator()(Message *msg) const { return false; }
 };
 
 //-------------------------------------------------------------------------------------------------
