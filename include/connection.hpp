@@ -108,6 +108,9 @@ class FIXReader : public AsyncSocket<f8String>
 
 	dthread<FIXReader> _callback_thread;
 
+    char _read_buffer[_max_msg_len*2];
+    char *_read_buffer_rptr, *_read_buffer_wptr;
+
 	/*! Process messages from inbound queue, calls session process method.
 	    \return number of messages processed */
 	int callback_processor();
@@ -119,18 +122,43 @@ class FIXReader : public AsyncSocket<f8String>
 	    \return true on success */
 	bool read(f8String& to);
 
+    /*! Read bytes from read buffer and then if needed from the socket layer, throws PeerResetConnection.
+        \param where buffer to place bytes in
+        \param sz number of bytes to read
+        \return number of bytes read */
+    int sockRead(char *where, size_t sz)
+    {
+        if (static_cast<size_t>(_read_buffer_wptr - _read_buffer_rptr) < sz)
+            realSockRead(sz, _max_msg_len);
+        sz = std::min((size_t)(_read_buffer_wptr-_read_buffer_rptr), sz);
+        memcpy(where, _read_buffer_rptr, sz);
+        _read_buffer_rptr += sz;
+        const size_t shift(_max_msg_len);
+        if (static_cast<size_t>(_read_buffer_rptr - _read_buffer) >= shift)
+        {
+				memcpy(_read_buffer, &_read_buffer[shift], sizeof(_read_buffer) - shift);
+				_read_buffer_rptr -= shift;
+				_read_buffer_wptr -= shift;
+        }
+        return sz;
+    }
+
 	/*! Read bytes from the socket layer, throws PeerResetConnection.
 	    \param where buffer to place bytes in
 	    \param sz number of bytes to read
+	    \param maxsz max number of bytes to read
 	    \return number of bytes read */
-	int sockRead(char *where, const size_t sz)
+	int realSockRead(size_t sz, size_t maxsz)
 	{
-		unsigned remaining(sz), rddone(0);
+		const size_t max_sz(_read_buffer + sizeof(_read_buffer) - _read_buffer_wptr);
+		int maxremaining(std::min(maxsz, max_sz)), remaining(std::min(sz, max_sz));
+		char *ptr(_read_buffer_wptr), *eptr(_read_buffer + sizeof(_read_buffer));
 
-		while (remaining > 0)
+		int rdsz(0);
+		while (remaining > 0 && _read_buffer_wptr < eptr)
 		{
-			const int rdSz(_sock->receiveBytes(where + rddone, remaining));
-			if (rdSz <= 0)
+			rdsz = _sock->receiveBytes(_read_buffer_wptr, maxremaining);
+			if (rdsz <= 0)
 			{
 				if (errno == EAGAIN
 #if defined EWOULDBLOCK && EAGAIN != EWOULDBLOCK
@@ -140,12 +168,11 @@ class FIXReader : public AsyncSocket<f8String>
 					continue;
 				throw PeerResetConnection("sockRead: connection gone");
 			}
-
-			rddone += rdSz;
-			remaining -= rdSz;
+			_read_buffer_wptr += rdsz;
+			remaining -= rdsz;
+			maxremaining -= rdsz;
 		}
-
-		return rddone;
+		return _read_buffer_wptr - ptr;
 	}
 
 protected:
@@ -160,7 +187,9 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(FIX8::ref(*this), &FIXReader::callback_processor), _bg_sz()
+		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(FIX8::ref(*this), &FIXReader::callback_processor)
+        , _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
+        , _bg_sz()
 	{
 		set_preamble_sz();
 	}
