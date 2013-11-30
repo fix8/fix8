@@ -58,7 +58,7 @@ XML_42_UTEST_SCHEMA = $(top_srcdir)/schema/FIX42UTEST.xml
 $(libutest_la_SOURCES): $(XML_42_UTEST_SCHEMA)
 	$(top_srcdir)/compiler/f8c -sVp utest -n UTEST $(XML_42_UTEST_SCHEMA)
 
-AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lgtest -lgtest_main
+AM_LDFLAGS = -lPocoFoundation -lPocoNet -lPocoUtil -lgtest -lgtest_main -lpthread
 
 if BDBSUPPORT
 AM_LDFLAGS += -ldb_cxx

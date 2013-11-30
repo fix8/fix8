@@ -102,18 +102,22 @@ void SessionID::from_string(const f8String& from)
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _sf(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service),
+	_suspend_hb(false)
 {
 	_timer.start();
+	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service),
+	_suspend_hb(false)
 {
 	_timer.start();
+	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -603,6 +607,8 @@ bool Session::heartbeat_service()
 	Tickval now(true);
 	if ((now - _last_sent).secs() >= static_cast<time_t>(_connection->get_hb_interval()))
 	{
+		while(_suspend_hb)
+			hypersleep<h_milliseconds>(1);
 		const f8String testReqID;
 		send(generate_heartbeat(testReqID));
 	}
@@ -633,6 +639,9 @@ bool Session::heartbeat_service()
 		}
 		else
 		{
+			while(_suspend_hb)
+				hypersleep<h_milliseconds>(1);
+
 			ostringstream ostr;
 			ostr << "Have not received anything from remote for ";
 			if (_last_received.secs())
@@ -759,17 +768,18 @@ bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_
 //-------------------------------------------------------------------------------------------------
 size_t Session::send_batch(const vector<Message *>& msgs, bool destroy)
 {
+	if (msgs.empty())
+		return 0;
+	if (msgs.size() == 1)
+		return _connection->write(msgs.front(), destroy) ? 1 : 0;
 	size_t result(0);
-
-	_connection->set_tcp_cork_flag(true);
-	for (vector<Message *>::const_iterator itr(msgs.begin()); itr != msgs.end(); ++itr)
+	for (vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()), litr(eitr-1); itr != eitr; ++itr)
 	{
+		(*itr)->set_end_of_batch(itr == litr);
 		if (!_connection->write(*itr, destroy))
-			break;
-		++result;
+			++result;
 	}
-	_connection->set_tcp_cork_flag(false);
-
+	///@todo: need assert on result==msgs.size()
 	return result;
 }
 
@@ -777,6 +787,8 @@ size_t Session::send_batch(const vector<Message *>& msgs, bool destroy)
 bool Session::send_process(Message *msg) // called from the connection (possibly on separate thread)
 {
 	bool is_dup(msg->Header()->have(Common_PossDupFlag));
+	///@todo: need assert here that is_dup && !(msg->get_end_of_batch() && !_batchmsgs_buffer.empty())
+	///so last message in batch cannot be dup
 
 	if (!msg->Header()->have(Common_SenderCompID))
 		*msg->Header() << new sender_comp_id(_sid.get_senderCompID());
@@ -819,36 +831,61 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		//cout << "Sending:" << *msg;
 		modify_outbound(msg);
 		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
-		const size_t enclen(msg->encode(&ptr));
-		if (!_connection->send(ptr, enclen))
+		size_t enclen(msg->encode(&ptr));
+		if (msg->get_end_of_batch())
 		{
-			ostringstream ostr;
-			ostr << "Message write failed: " << enclen << " bytes";
-			log(ostr.str());
-			return false;
-		}
-		_last_sent.now();
-
-		if (_plogger && _plogger->has_flag(Logger::outbound))
-			plog(ptr);
-
-		//cout << "send_process" << endl;
-
-		if (!is_dup)
-		{
-			if (_persist)
+			if (!_batchmsgs_buffer.empty())
 			{
-				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
-				if (!msg->is_admin())
-					_persist->put(_next_send_seq, ptr);
-				_persist->put(_next_send_seq + 1, _next_receive_seq);
-				//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
+				_batchmsgs_buffer.append(ptr);
+				ptr = &_batchmsgs_buffer[0];
+				enclen = _batchmsgs_buffer.size();
 			}
-
-			if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+			if (!_connection->send(ptr, enclen))
 			{
-				++_next_send_seq;
-				//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
+				ostringstream ostr;
+				ostr << "Message write failed: " << enclen << " bytes";
+				log(ostr.str());
+				_batchmsgs_buffer.clear();
+				_suspend_hb = false;
+				return false;
+			}
+			_last_sent.now();
+
+			if (_plogger && _plogger->has_flag(Logger::outbound))
+				plog(ptr);
+
+			//cout << "send_process" << endl;
+
+			if (!is_dup)
+			{
+				if (_persist)
+				{
+					f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
+					if (!msg->is_admin())
+						_persist->put(_next_send_seq, ptr);
+					_persist->put(_next_send_seq + 1, _next_receive_seq);
+					//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
+				}
+				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+				{
+					++_next_send_seq;
+					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
+				}
+			}
+			_batchmsgs_buffer.clear();
+			_suspend_hb = false;
+		}
+		else
+		{
+			_suspend_hb = true;
+			_batchmsgs_buffer.append(ptr);
+			if (!is_dup)
+			{
+				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+				{
+					++_next_send_seq;
+					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
+				}
 			}
 		}
 	}
