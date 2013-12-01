@@ -48,6 +48,8 @@ libhftest_la_SOURCES = Perf_types.hpp Perf_types.cpp Perf_traits.cpp \
 					 		 Perf_router.hpp Perf_classes.hpp Perf_classes.cpp
 
 CLEANFILES = $(libmyfix_la_SOURCES) $(libhftest_la_SOURCES)
+libmyfix_la_CXXFLAGS = -I$(top_srcdir)/include
+libhftest_la_CXXFLAGS = -I$(top_srcdir)/include
 AM_CXXFLAGS = -I$(top_srcdir)/include
 
 XML_SCHEMA = $(top_srcdir)/schema/FIX50SP2.xml
@@ -76,7 +78,7 @@ endif
 ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) -L$(top_srcdir)/runtime
 
 if TOGGLETRACKINGASSIGNMENTS
-libmyfix_la_CXXFLAGS = -fno-var-tracking -fno-var-tracking-assignments
+libmyfix_la_CXXFLAGS += -fno-var-tracking -fno-var-tracking-assignments
 endif
 f8test_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
 f8print_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
