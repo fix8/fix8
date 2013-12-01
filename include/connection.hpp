@@ -78,11 +78,11 @@ public:
 
 	/*! Function operator. Called by thread to process message on queue.
 	    \return 0 on success */
-	virtual int operator()() { return 0; }
+	int operator()() { return execute(); }
 
 	/*! Execute the function operator
 	    \return result of operator */
-	virtual int execute() { return (*this)(); }
+	virtual int execute() { return 0; }
 
 	/// Start the processing thread.
 	virtual void start() { _thread.start(); }
@@ -175,12 +175,6 @@ class FIXReader : public AsyncSocket<f8String>
 		return _read_buffer_wptr - ptr;
 	}
 
-protected:
-	/*! Reader thread method. Reads messages and places them on the queue for processing.
-	  Supports pipelined, threaded and coroutine process models.
-	    \return 0 on success */
-	int operator()();
-
 public:
 	/*! Ctor.
 	    \param sock connected socket
@@ -228,6 +222,11 @@ public:
 		}
 	}
 
+    /*! Reader thread method. Reads messages and places them on the queue for processing.
+      Supports pipelined, threaded and coroutine process models.
+        \return 0 on success */
+    virtual int execute();
+
 	/*! Wait till writer thread has finished.
 	    \return 0 on success */
    int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
@@ -253,11 +252,6 @@ public:
 class FIXWriter : public AsyncSocket<Message *>
 {
 	f8_spin_lock _con_spl;
-
-protected:
-	/*! Writer thread method. Reads messages from the queue and sends them over the socket.
-	    \return 0 on success */
-	int operator()();
 
 public:
 	/*! Ctor.
@@ -348,6 +342,10 @@ public:
 
 	/// Send a message to the processing method instructing it to quit.
 	virtual void stop() { _msg_queue.try_push(0); }
+
+    /*! Writer thread method. Reads messages from the queue and sends them over the socket.
+        \return 0 on success */
+    virtual int execute();
 };
 
 //----------------------------------------------------------------------------------------
