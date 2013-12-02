@@ -147,6 +147,13 @@ public:
 
     /*!empty function
           \return always return true*/
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy)
+	{
+		return msgs.size();
+	}
+
+    /*!empty function
+          \return always return true*/
     bool write(Message& from)
     {
         return true;
@@ -229,6 +236,20 @@ public:
         _output.push_back(ptr);
         return true;
     }
+
+    /*!helper to unit test, cache the messages in string format
+          \param from message to be sent
+          \return always return true*/
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy)
+	{
+		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		for(std::vector<Message*>::const_iterator cit=msgs.begin(); cit != msgs.end(); ++cit)
+		{
+			(*cit)->encode(&ptr);
+        _output.push_back(ptr);
+		}
+		return msgs.size();
+	}
 
     /*!helper to unit test, cache the message in string format
           \param from message to be sent
@@ -379,4 +400,3 @@ public:
 }
 
 #endif // _FIX8_CONNECTION_HPP_
-
