@@ -306,7 +306,7 @@ public:
 			if (_session.send_process(msg))
 				++result;
 		}
-		if (destroy)
+		if (destroy && _pmodel != pm_pipeline)
 		{
 			for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()); itr != eitr; ++itr)
 			{
@@ -457,6 +457,11 @@ public:
 	    \param from Message to write
 	    \return true on success */
 	virtual bool write(Message& from) { return _writer.write(from); }
+
+	/*! Write messages to the underlying socket as a single batch.
+	    \param from Message to write
+	    \return true on success */
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy) { return _writer.write_batch(msgs, destroy); }
 
 	/*! Write a string message to the underlying socket.
 	    \param from Message (string) to write

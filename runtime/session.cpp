@@ -761,19 +761,7 @@ bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_
 //-------------------------------------------------------------------------------------------------
 size_t Session::send_batch(const vector<Message *>& msgs, bool destroy)
 {
-	if (msgs.empty())
-		return 0;
-	if (msgs.size() == 1)
-		return _connection->write(msgs.front(), destroy) ? 1 : 0;
-	size_t result(0);
-	for (vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()), litr(eitr-1); itr != eitr; ++itr)
-	{
-		(*itr)->set_end_of_batch(itr == litr);
-		if (!_connection->write(*itr, destroy))
-			++result;
-	}
-	///@todo: need assert on result==msgs.size()
-	return result;
+	return _connection->write_batch(msgs, destroy);
 }
 
 //-------------------------------------------------------------------------------------------------
