@@ -75,7 +75,7 @@ e.g.\n
 #include <fcntl.h>
 
 // f8 headers
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 #include <usage.hpp>
 
 #ifdef HAVE_GETOPT_H

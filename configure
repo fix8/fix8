@@ -22662,7 +22662,7 @@ CHANGELOG=$srcdir/ChangeLog
 
 ac_config_files="$ac_config_files Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml"
 
-ac_config_headers="$ac_config_headers include/f8config.h"
+ac_config_headers="$ac_config_headers include/fix8/f8config.h"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -23831,7 +23831,7 @@ do
     "fix8.spec") CONFIG_FILES="$CONFIG_FILES fix8.spec" ;;
     "doc/man/f8c.1.xml") CONFIG_FILES="$CONFIG_FILES doc/man/f8c.1.xml" ;;
     "doc/man/seqedit.1.xml") CONFIG_FILES="$CONFIG_FILES doc/man/seqedit.1.xml" ;;
-    "include/f8config.h") CONFIG_HEADERS="$CONFIG_HEADERS include/f8config.h" ;;
+    "include/fix8/f8config.h") CONFIG_HEADERS="$CONFIG_HEADERS include/fix8/f8config.h" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
