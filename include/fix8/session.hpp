@@ -254,7 +254,6 @@ protected:
 	Timer<Session> _timer;
 	TimerEvent<Session> _hb_processor;
 	std::string _batchmsgs_buffer;
-	volatile bool _suspend_hb;
 
 	/// Heartbeat generation service thread method.
 	bool heartbeat_service();

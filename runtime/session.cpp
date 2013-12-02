@@ -102,8 +102,7 @@ void SessionID::from_string(const f8String& from)
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _sf(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service),
-	_suspend_hb(false)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
 	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
@@ -113,8 +112,7 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service),
-	_suspend_hb(false)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
 	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
@@ -607,8 +605,6 @@ bool Session::heartbeat_service()
 	Tickval now(true);
 	if ((now - _last_sent).secs() >= static_cast<time_t>(_connection->get_hb_interval()))
 	{
-		while(_suspend_hb)
-			hypersleep<h_milliseconds>(1);
 		const f8String testReqID;
 		send(generate_heartbeat(testReqID));
 	}
@@ -639,9 +635,6 @@ bool Session::heartbeat_service()
 		}
 		else
 		{
-			while(_suspend_hb)
-				hypersleep<h_milliseconds>(1);
-
 			ostringstream ostr;
 			ostr << "Have not received anything from remote for ";
 			if (_last_received.secs())
@@ -846,7 +839,6 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 				ostr << "Message write failed: " << enclen << " bytes";
 				log(ostr.str());
 				_batchmsgs_buffer.clear();
-				_suspend_hb = false;
 				return false;
 			}
 			_last_sent.now();
@@ -873,11 +865,9 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 				}
 			}
 			_batchmsgs_buffer.clear();
-			_suspend_hb = false;
 		}
 		else
 		{
-			_suspend_hb = true;
 			_batchmsgs_buffer.append(ptr);
 			if (!is_dup)
 			{

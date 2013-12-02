@@ -281,6 +281,41 @@ public:
 		return _session.send_process(from);
 	}
 
+	/*! Place Fix messages on outbound message queue as a single batch.
+	    \param msgs messages to send
+	    \param destroy if true delete after send
+	    \return count of messages written */
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy)
+	{
+		if (msgs.empty())
+			return 0;
+		if (msgs.size() == 1)
+			return write(msgs.front(), destroy) ? 1 : 0;
+		size_t result(0);
+		f8_scoped_spin_lock guard(_con_spl);
+		for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()), litr(eitr-1); itr != eitr; ++itr)
+		{
+			Message* msg = *itr;
+			msg->set_end_of_batch(itr == litr);
+			if (_pmodel == pm_pipeline) // pipeline mode ignores destroy flag
+			{
+				_msg_queue.try_push(msg);
+				++result;
+				continue;
+			}
+			if (_session.send_process(msg))
+				++result;
+		}
+		if (destroy)
+		{
+			for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()); itr != eitr; ++itr)
+			{
+				scoped_ptr<Message> smsg(*itr);
+			}
+		}
+		///@todo: need assert on result==msgs.size()
+		return result;
+	}
 	/*! Wait till writer thead has finished.
 	    \return 0 on success */
    int join() { return _pmodel == pm_pipeline ? AsyncSocket<Message *>::join() : -1; }
