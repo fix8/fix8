@@ -254,7 +254,6 @@ protected:
 	Timer<Session> _timer;
 	TimerEvent<Session> _hb_processor;
 	std::string _batchmsgs_buffer;
-	size_t _batchmsgs_buffer_idx;
 
 	/// Heartbeat generation service thread method.
 	bool heartbeat_service();

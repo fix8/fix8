@@ -102,7 +102,7 @@ void SessionID::from_string(const f8String& from)
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _sf(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service), _batchmsgs_buffer_idx(0)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
 	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
@@ -112,7 +112,7 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service), _batchmsgs_buffer_idx(0)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
 	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
@@ -811,19 +811,22 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 	{
 		//cout << "Sending:" << *msg;
 		modify_outbound(msg);
-		if (_batchmsgs_buffer.capacity() - _batchmsgs_buffer_idx < MAX_MSG_LENGTH + HEADER_CALC_OFFSET)
-			_batchmsgs_buffer.reserve(_batchmsgs_buffer.capacity() + 4 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
-		char *ptr(&_batchmsgs_buffer[0] + _batchmsgs_buffer_idx);
+		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
 		size_t enclen(msg->encode(&ptr));
-		_batchmsgs_buffer_idx += enclen;
 		if (msg->get_end_of_batch())
 		{
-			if (!_connection->send(_batchmsgs_buffer.data(), _batchmsgs_buffer_idx))
+			if (!_batchmsgs_buffer.empty())
+			{
+				_batchmsgs_buffer.append(ptr);
+				ptr = &_batchmsgs_buffer[0];
+				enclen = _batchmsgs_buffer.size();
+			}
+			if (!_connection->send(ptr, enclen))
 			{
 				ostringstream ostr;
-				ostr << "Message write failed: " << _batchmsgs_buffer_idx << " bytes";
+				ostr << "Message write failed: " << enclen << " bytes";
 				log(ostr.str());
-				_batchmsgs_buffer_idx = 0;
+				_batchmsgs_buffer.clear();
 				return false;
 			}
 			_last_sent.now();
@@ -849,10 +852,11 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
 				}
 			}
-			_batchmsgs_buffer_idx = 0;
+			_batchmsgs_buffer.clear();
 		}
 		else
 		{
+			_batchmsgs_buffer.append(ptr);
 			if (!is_dup)
 			{
 				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
