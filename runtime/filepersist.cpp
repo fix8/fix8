@@ -62,7 +62,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
