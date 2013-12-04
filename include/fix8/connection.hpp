@@ -222,10 +222,10 @@ public:
 		}
 	}
 
-    /*! Reader thread method. Reads messages and places them on the queue for processing.
-      Supports pipelined, threaded and coroutine process models.
-        \return 0 on success */
-    virtual int execute();
+	/*! Reader thread method. Reads messages and places them on the queue for processing.
+	    Supports pipelined, threaded and coroutine process models.
+		 \return 0 on success */
+   virtual int execute();
 
 	/*! Wait till writer thread has finished.
 	    \return 0 on success */
@@ -359,7 +359,7 @@ public:
 protected:
 	Poco::Net::StreamSocket *_sock;
 	Poco::Net::SocketAddress _addr;
-	bool _connected;
+	f8_atomic<bool> _connected;
 	Session& _session;
 	Role _role;
 	ProcessModel _pmodel;
@@ -377,8 +377,11 @@ public:
 	    \param hb_interval heartbeat interval */
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // client
         const ProcessModel pmodel, const unsigned hb_interval)
-		: _sock(sock), _addr(addr), _connected(), _session(session), _role(cn_initiator), _pmodel(pmodel),
-        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel) {}
+		: _sock(sock), _addr(addr), _session(session), _role(cn_initiator), _pmodel(pmodel),
+        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel)
+	{
+		_connected = false;
+	}
 
 	/*! Ctor. Acceptor.
 	    \param sock connected socket
@@ -388,9 +391,12 @@ public:
 	    \param pmodel process model */
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // server
 		const unsigned hb_interval, const ProcessModel pmodel)
-		: _sock(sock), _addr(addr), _connected(true), _session(session), _role(cn_acceptor), _pmodel(pmodel),
+		: _sock(sock), _addr(addr), _session(session), _role(cn_acceptor), _pmodel(pmodel),
 		_hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
-		  _reader(sock, session, pmodel), _writer(sock, session, pmodel) {}
+		  _reader(sock, session, pmodel), _writer(sock, session, pmodel)
+	{
+		_connected = true;
+	}
 
 	/// Dtor.
 	virtual ~Connection() {}
@@ -412,6 +418,10 @@ public:
 	/*! Get the connection state.
 	    \return true if connected */
 	virtual bool connect() { return _connected; }
+
+	/*! Determine if this session is actually connected
+	  \return true if connected */
+	bool is_connected() const { return _connected; }
 
 	/*! Write a message to the underlying socket.
 	    \param from Message to write
