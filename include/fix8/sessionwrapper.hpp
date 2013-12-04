@@ -38,6 +38,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 # define _FIX8_SESSIONWRAPPER_HPP_
 
 #include <Poco/Net/ServerSocket.h>
+#define HAVE_OPENSSL 1
+#ifdef HAVE_OPENSSL
+#include <Poco/Net/SecureStreamSocket.h>
+#include <Poco/Net/SecureServerSocket.h>
+#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
@@ -50,10 +55,22 @@ struct SessionConfig : public Configuration
 	const XmlElement *_ses;
 	LoginParameters _loginParameters;
 	const std::string _session_name;
+#ifdef HAVE_OPENSSL
+	struct PocoNetSslInit
+	{
+		PocoNetSslInit(bool secured): _secured(secured) { if (_secured) Poco::Net::initializeSSL(); }
+		~PocoNetSslInit() { if (_secured) Poco::Net::uninitializeSSL(); }
+		bool _secured;
+	};
+	PocoNetSslInit _poco_ssl_init;
+#endif
 
 	/// Ctor. Loads configuration, obtains session details, sets up logfile flags.
 	SessionConfig (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
-		Configuration(conf_file, true), _ctx(ctx), _ses(find_session(session_name)), _session_name(session_name)
+		Configuration(conf_file, true), _ctx(ctx), _ses(find_session(session_name)), _session_name(session_name),
+#ifdef HAVE_OPENSSL
+		_poco_ssl_init(!get_certificate_path(_ses).empty())
+#endif
 	{
 		if (!_ses)
 			throw InvalidConfiguration(session_name);
@@ -63,7 +80,8 @@ struct SessionConfig : public Configuration
 			get_reset_sequence_number_flag(_ses),
 			get_always_seqnum_assign(_ses), get_silent_disconnect(_ses),
 			get_no_chksum_flag(_ses), get_permissive_mode_flag(_ses), false, get_tcp_recvbuf_sz(_ses),
-			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses));
+			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses),
+			get_certificate_path(_ses));
 
 		_loginParameters = lparam;
 	}
@@ -104,11 +122,26 @@ public:
 		_id(_ctx._beginStr, _sci, _tci),
 		_persist(create_persister(_ses, 0, this->_loginParameters._reset_sequence_numbers)),
 		_session(new T(_ctx, _id, _persist, _log, _plog)),
-		_sock(init_con_later ? 0 : new Poco::Net::StreamSocket),
+		_sock(0),
 		_addr(get_address(_ses)),
-		_cc(init_con_later ? 0
-			: new ClientConnection(_sock, _addr, *_session, this->_loginParameters._hb_int, get_process_model(_ses)))
+		_cc(0)
 	{
+		if (!init_con_later)
+		{
+#ifdef HAVE_OPENSSL
+			bool secured = _poco_ssl_init._secured;
+			_sock =
+				_poco_ssl_init._secured
+					? new Poco::Net::SecureStreamSocket(
+						new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, this->_loginParameters._pem_path, std::string(), std::string()))
+					: new Poco::Net::StreamSocket;
+#else
+			bool secured = false;
+			_sock = new Poco::Net::StreamSocket;
+#endif
+			_cc = new ClientConnection(_sock, _addr, *_session, this->_loginParameters._hb_int, get_process_model(_ses), true, secured);
+		}
+
 		_session->set_login_parameters(this->_loginParameters);
 		_session->set_session_config(this);
 	}
@@ -226,10 +259,19 @@ public:
 					this->_loginParameters._reset_sequence_numbers = _servers[_current]._reset_sequence_numbers; // permit override
 				}
 				//std::cout << "operator()():try" << std::endl;
-
-				this->_sock = new Poco::Net::StreamSocket,
+#ifdef HAVE_OPENSSL
+				bool secured = this->_poco_ssl_init._secured;
+				this->_sock =
+					this->_poco_ssl_init._secured
+						? new Poco::Net::SecureStreamSocket(
+							new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, this->_loginParameters._pem_path, std::string(), std::string()))
+						: new Poco::Net::StreamSocket;
+#else
+				bool secured = false;
+				this->_sock = new Poco::Net::StreamSocket;
+#endif
 				this->_cc = new ClientConnection(this->_sock, _failover_cnt ? this->_addr = _servers[_current]._addr : this->_addr,
-					*this->_session, this->_loginParameters._hb_int, this->get_process_model(this->_ses));
+					*this->_session, this->_loginParameters._hb_int, this->get_process_model(this->_ses), true, secured);
 				this->_session->set_login_parameters(this->_loginParameters);
 				this->_session->set_session_config(this);
 				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, this->_loginParameters._davi());
@@ -346,33 +388,43 @@ template<typename T>
 class ServerSession : public SessionConfig
 {
 	Poco::Net::SocketAddress _addr;
-	Poco::Net::ServerSocket _server_sock;
+	Poco::Net::ServerSocket * _server_sock;
 
 public:
 	/// Ctor. Prepares session for receiving inbbound connections (acceptor).
 	ServerSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
 		SessionConfig(ctx, conf_file, session_name),
 		_addr(get_address(_ses)),
-		_server_sock(_addr)
+#ifdef HAVE_OPENSSL
+		_server_sock(this->_loginParameters._pem_path.empty()
+						 ? new Poco::Net::ServerSocket(_addr)
+						 : new Poco::Net::SecureServerSocket(
+							 _addr, 64, new Poco::Net::Context(Poco::Net::Context::SERVER_USE, this->_loginParameters._pem_path, std::string(), std::string())))
+#else
+		_server_sock(new Poco::Net::ServerSocket(_addr))
+#endif
 	{
 		if (_loginParameters._recv_buf_sz)
-			Connection::set_recv_buf_sz(_loginParameters._recv_buf_sz, &_server_sock);
+			Connection::set_recv_buf_sz(_loginParameters._recv_buf_sz, _server_sock);
 		if (_loginParameters._send_buf_sz)
-			Connection::set_send_buf_sz(_loginParameters._send_buf_sz, &_server_sock);
+			Connection::set_send_buf_sz(_loginParameters._send_buf_sz, _server_sock);
 	}
 
 	/// Dtor.
-	virtual ~ServerSession () {}
+	virtual ~ServerSession ()
+	{
+		delete _server_sock;
+	}
 
 	/*! Check to see if there are any waiting inbound connections.
 	  \param span timespan (us, default 250 ms) to wait before returning (will return immediately if connection available)
 	  \return true if a connection is avaialble */
-	bool poll(const Poco::Timespan& span=Poco::Timespan(250000)) const { return _server_sock.poll(span, Poco::Net::Socket::SELECT_READ); }
+	bool poll(const Poco::Timespan& span=Poco::Timespan(250000)) const { return _server_sock->poll(span, Poco::Net::Socket::SELECT_READ); }
 
 	/*! Accept an inbound connection and obtain a connected socket
 	  \param claddr location to store address of remote connection
 	  \return the connected socket */
-	Poco::Net::StreamSocket accept(Poco::Net::SocketAddress& claddr) { return _server_sock.acceptConnection(claddr); }
+	Poco::Net::StreamSocket accept(Poco::Net::SocketAddress& claddr) { return _server_sock->acceptConnection(claddr); }
 
 	/// Convenient scoped pointer for your session
 	typedef scoped_ptr<ServerSession<T> > Server_ptr;
@@ -393,7 +445,7 @@ public:
 	SessionInstance (ServerSession<T>& sf) :
 		_sock(new Poco::Net::StreamSocket(sf.accept(_claddr))),
 		_session(new T(sf._ctx)),
-		_sc(_sock, _claddr, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_process_model(sf._ses), sf.get_tcp_nodelay(sf._ses))
+		_sc(_sock, _claddr, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_process_model(sf._ses), sf.get_tcp_nodelay(sf._ses), !sf.get_certificate_path(sf._ses).empty())
 	{
 		_session->set_login_parameters(sf._loginParameters);
 		_session->set_session_config(&sf);

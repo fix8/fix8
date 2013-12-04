@@ -402,6 +402,7 @@ protected:
 
 	FIXReader _reader;
 	FIXWriter _writer;
+	bool _secured;
 
 public:
 	/*! Ctor. Initiator.
@@ -409,11 +410,14 @@ public:
 	    \param addr sock address structure
 	    \param session session
 	    \param pmodel process model
-	    \param hb_interval heartbeat interval */
+	    \param hb_interval heartbeat interval
+		 \param secured true for ssl connection
+	*/
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // client
-        const ProcessModel pmodel, const unsigned hb_interval)
+				  const ProcessModel pmodel, const unsigned hb_interval, bool secured)
 		: _sock(sock), _addr(addr), _session(session), _role(cn_initiator), _pmodel(pmodel),
-        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel)
+        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel),
+		  _secured(secured)
 	{
 		_connected = false;
 	}
@@ -423,12 +427,15 @@ public:
 	    \param addr sock address structure
 	    \param session session
 	    \param hb_interval heartbeat interval
-	    \param pmodel process model */
+	    \param pmodel process model
+		 \param secured true for ssl connection
+	*/
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // server
-		const unsigned hb_interval, const ProcessModel pmodel)
+				  const unsigned hb_interval, const ProcessModel pmodel, bool secured)
 		: _sock(sock), _addr(addr), _session(session), _role(cn_acceptor), _pmodel(pmodel),
-		_hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
-		  _reader(sock, session, pmodel), _writer(sock, session, pmodel)
+		  _hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
+		  _reader(sock, session, pmodel), _writer(sock, session, pmodel),
+		  _secured(secured)
 	{
 		_connected = true;
 	}
@@ -587,10 +594,13 @@ public:
 	    \param session session
 	    \param hb_interval heartbeat interval
 	    \param pmodel process model
-	    \param no_delay set or clear the tcp no delay flag on the socket */
+	    \param no_delay set or clear the tcp no delay flag on the socket
+		 \param secured true for ssl connection
+	*/
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-            Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true)
-        : Connection(sock, addr, session, pmodel, hb_interval), _no_delay(no_delay) {}
+							Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
+							bool secured=false)
+		 : Connection(sock, addr, session, pmodel, hb_interval, secured), _no_delay(no_delay) {}
 
 	/// Dtor.
 	virtual ~ClientConnection() {}
@@ -611,10 +621,13 @@ public:
 	    \param session session
 	    \param hb_interval heartbeat interval
 	    \param pmodel process model
-	    \param no_delay set or clear the tcp no delay flag on the socket */
+	    \param no_delay set or clear the tcp no delay flag on the socket
+		 \param secured true for ssl connection
+	*/
 	ServerConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-			Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true) :
-		Connection(sock, addr, session, hb_interval, pmodel)
+						  Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
+						  bool secured=false	) :
+		Connection(sock, addr, session, hb_interval, pmodel, secured)
 	{
 		_sock->setLinger(false, 0);
 		_sock->setNoDelay(no_delay);

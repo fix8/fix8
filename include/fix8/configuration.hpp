@@ -309,6 +309,12 @@ public:
 	target_comp_id get_target_comp_id(const XmlElement *from) const
 		{ target_comp_id to; return get_string_field(from, "target_comp_id", to); }
 
+	/*! Extract certificate path from a session entity.
+	  \param from xml entity to search
+	  \return certificate path */
+	f8String get_certificate_path(const XmlElement *from, const f8String& def="") const
+		{ return find_or_default(from, "certificate_path", def); }
+
 	/*! Create a new persister object from a session entity.
 	  \param from xml entity to search
 	  \param sid optional session id to build name from
