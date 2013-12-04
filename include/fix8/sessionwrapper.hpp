@@ -308,6 +308,7 @@ public:
 			}
 
 			delete this->_cc;
+			this->_cc = 0;
 			delete this->_sock;
 
 			if (!excepted)

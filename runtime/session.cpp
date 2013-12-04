@@ -597,60 +597,61 @@ bool Session::handle_test_request(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::heartbeat_service()
 {
+	//cout << "heartbeat_service()" << endl;
 	if (is_shutdown())
 		return false;
 
-	//cerr << "heartbeat_service" << endl;
-
-	Tickval now(true);
-	if ((now - _last_sent).secs() >= static_cast<time_t>(_connection->get_hb_interval()))
+	if (_connection && _connection->is_connected())
 	{
-		const f8String testReqID;
-		send(generate_heartbeat(testReqID));
-	}
-
-	now.now();
-	if ((now - _last_received).secs() > static_cast<time_t>(_connection->get_hb_interval20pc()))
-	{
-		if (_state == States::st_test_request_sent)	// already sent
+		Tickval now(true);
+		if ((now - _last_sent).secs() >= static_cast<time_t>(_connection->get_hb_interval()))
 		{
-			ostringstream ostr;
-			ostr << "Remote has ignored my test request. Aborting session...";
-			send(generate_logout(_loginParameters._silent_disconnect ? 0 : ostr.str().c_str()), true, 0, true); // so it won't increment
-			_state = States::st_logoff_sent;
-			log(ostr.str());
-			try
-			{
-				stop();
-			}
-			catch (Poco::Net::NetException& e)
-			{
-				log(e.what());
-			}
-			catch (exception& e)
-			{
-				log(e.what());
-			}
-			return true;
+			const f8String testReqID;
+			send(generate_heartbeat(testReqID));
 		}
-		else
+
+		now.now();
+		if ((now - _last_received).secs() > static_cast<time_t>(_connection->get_hb_interval20pc()))
 		{
-			ostringstream ostr;
-			ostr << "Have not received anything from remote for ";
-			if (_last_received.secs())
-				ostr << (now - _last_received).secs();
+			if (_state == States::st_test_request_sent)	// already sent
+			{
+				ostringstream ostr;
+				ostr << "Remote has ignored my test request. Aborting session...";
+				send(generate_logout(_loginParameters._silent_disconnect ? 0 : ostr.str().c_str()), true, 0, true); // so it won't increment
+				_state = States::st_logoff_sent;
+				log(ostr.str());
+				try
+				{
+					stop();
+				}
+				catch (Poco::Net::NetException& e)
+				{
+					log(e.what());
+				}
+				catch (exception& e)
+				{
+					log(e.what());
+				}
+				return true;
+			}
 			else
-				ostr << "more than " << _connection->get_hb_interval20pc();
-			ostr << " secs. Sending test request";
-			log(ostr.str());
-			const f8String testReqID("TEST");
-			send(generate_test_request(testReqID));
-			_state = States::st_test_request_sent;
+			{
+				ostringstream ostr;
+				ostr << "Have not received anything from remote for ";
+				if (_last_received.secs())
+					ostr << (now - _last_received).secs();
+				else
+					ostr << "more than " << _connection->get_hb_interval20pc();
+				ostr << " secs. Sending test request";
+				log(ostr.str());
+				const f8String testReqID("TEST");
+				send(generate_test_request(testReqID));
+				_state = States::st_test_request_sent;
+			}
 		}
 	}
 
 	_timer.schedule(_hb_processor, 1000);
-
 	return true;
 }
 
@@ -767,9 +768,8 @@ size_t Session::send_batch(const vector<Message *>& msgs, bool destroy)
 //-------------------------------------------------------------------------------------------------
 bool Session::send_process(Message *msg) // called from the connection (possibly on separate thread)
 {
+	//cout << "send_process()" << endl;
 	bool is_dup(msg->Header()->have(Common_PossDupFlag));
-	///@todo: need assert here that is_dup && !(msg->get_end_of_batch() && !_batchmsgs_buffer.empty())
-	///so last message in batch cannot be dup
 
 	if (!msg->Header()->have(Common_SenderCompID))
 		*msg->Header() << new sender_comp_id(_sid.get_senderCompID());
@@ -870,6 +870,12 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 	catch (f8Exception& e)
 	{
 		log(e.what());
+		return false;
+	}
+	catch (Poco::Exception& e)
+	{
+		log(e.displayText());
+		return false;
 	}
 
 	return true;

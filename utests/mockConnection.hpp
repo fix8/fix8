@@ -209,6 +209,10 @@ public:
         \return the role */
     Role get_role() const { return _role; }
 
+	/*! Determine if this session is actually connected
+	  \return true if connected */
+	bool is_connected() const { return _connected; }
+
 	/*! Get the process model
 	  \return the process model */
 	 ProcessModel get_pmodel() const { return _pmodel; }
