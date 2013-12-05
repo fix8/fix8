@@ -778,6 +778,7 @@ protected:
 	MessageBase *_header, *_trailer;
 	unsigned _custom_seqnum;
 	bool _no_increment;
+	bool _end_of_batch;
 
 public:
 	/*! Ctor.
@@ -789,8 +790,10 @@ public:
 		 \param ftha field trait hash array */
 	template<typename InputIterator>
 	Message(const F8MetaCntx& ctx, const f8String& msgType, const InputIterator begin, const size_t cnt,
-		const FieldTrait_Hash_Array *ftha) : MessageBase(ctx, msgType, begin, cnt, ftha),
-		_header(ctx._mk_hdr()), _trailer(ctx._mk_trl()), _custom_seqnum(), _no_increment() {}
+		const FieldTrait_Hash_Array *ftha)
+		: MessageBase(ctx, msgType, begin, cnt, ftha),_header(ctx._mk_hdr()),
+		  _trailer(ctx._mk_trl()), _custom_seqnum(), _no_increment(), _end_of_batch(true)
+	{}
 
 	/// Dtor.
 	virtual ~Message() { delete _header; delete _trailer; }
@@ -938,6 +941,9 @@ public:
 	static void format_codec_timings(const f8String& md, std::ostream& ostr, codec_timings& tobj);
 	static void report_codec_timings(const f8String& tag);
 #endif
+
+	bool get_end_of_batch() const { return _end_of_batch; }
+	void set_end_of_batch(bool is_end_of_batch) { _end_of_batch = is_end_of_batch; }
 };
 
 //-------------------------------------------------------------------------------------------------
