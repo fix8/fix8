@@ -559,4 +559,3 @@ TEST_F(sessionTest, send_test_request)
     EXPECT_TRUE(output.find("35=5") !=  std::string::npos);
     clearOutputs();
 }
-
