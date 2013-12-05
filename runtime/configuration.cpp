@@ -78,6 +78,7 @@ int Configuration::process()
 	load_map("fix8/persist", _persisters);
 	load_map("fix8/log", _loggers);
 	load_map("fix8/server_group", _server_group);
+	load_map("fix8/ssl_context", _ssl_context);
 
 	return _sessions.size();
 }
@@ -261,21 +262,23 @@ ProcessModel Configuration::get_process_model(const XmlElement *from) const
 }
 
 //-------------------------------------------------------------------------------------------------
-const SslContext* Configuration::get_ssl_context(const XmlElement *from, SslContext& target) const
+SslContext Configuration::get_ssl_context(const XmlElement *from) const
 {
+	SslContext target;
 	string name;
 	const XmlElement *which=0;
 	if (from && from->GetAttr("ssl_context", name) && (which = find_ssl_context(name)))
 	{
-		target._private_key_file = which->FindAttr("private_key_file", std::string());
-		target._ceritificte_file = which->FindAttr("ceritificte_file", std::string());
-		target._ca_location = which->FindAttr("ca_location", std::string());
+		static std::string empty, chipher("ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"), relaxed("relaxed");
+		target._private_key_file = which->FindAttrRef("private_key_file", empty);
+		target._ceritificte_file = which->FindAttrRef("ceritificte_file", empty);
+		target._ca_location = which->FindAttrRef("ca_location", empty);
 		target._verification_depth = which->FindAttr("verification_depth", static_cast<int>(defaults::verification_depth));
 		target._load_default_cas = which->FindAttr("load_default_cas", false);
-		target._cipher_list = which->FindAttr("cipher_list", std::string("ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"));
+		target._cipher_list = which->FindAttrRef("cipher_list", chipher);
 		target._verification_mode = SSL_VERIFY_PEER;
 #ifdef HAVE_OPENSSL
-		name = which->FindAttr("verification_mode", std::string("relaxed"));
+		name = which->FindAttrRef("verification_mode", relaxed);
 		if (name == "none")
 			target._verification_mode = Poco::Net::Context::VERIFY_NONE;
 		else if (name == "relaxed")
@@ -285,7 +288,7 @@ const SslContext* Configuration::get_ssl_context(const XmlElement *from, SslCont
 		else if (name == "once")
 			target._verification_mode = Poco::Net::Context::VERIFY_ONCE;
 #endif
-		return &target;
+		target._valid = true;
 	}
-	return 0;
+	return target;
 }

@@ -75,13 +75,14 @@ struct SslContext
 	int _verification_depth;		 ///< 9
 	bool _load_default_cas;			 ///< false
 	std::string _cipher_list;		 ///< "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"
+	bool _valid;
 
 	SslContext(const std::string& private_key_file="", const std::string& certificate_file="", const std::string& ca_location="",
 				  int verification_mode=SSL_VERIFY_PEER, int verification_depth=9, bool loade_default_cas=false,
 				  const std::string& cipher_list="ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH")
 		: _private_key_file(private_key_file), _ceritificte_file(certificate_file), _ca_location(ca_location),
 		  _verification_mode(verification_mode), _verification_depth(verification_depth), _load_default_cas(loade_default_cas),
-		  _cipher_list(cipher_list)
+		  _cipher_list(cipher_list), _valid(false)
 	{
 	}
 };
@@ -349,9 +350,8 @@ public:
 
 	/*! Extract the SSL context from a ssl_context entity.
 	  \param from xml entity to search
-	  \param target target context to store to
-	  \return pointer to target */
-	const SslContext* get_ssl_context(const XmlElement *from, SslContext& target) const;
+	  \return ssl context */
+	SslContext get_ssl_context(const XmlElement *from) const;
 
 	/*! Create a new persister object from a session entity.
 	  \param from xml entity to search

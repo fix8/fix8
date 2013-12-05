@@ -50,16 +50,16 @@ namespace FIX8 {
 #ifdef HAVE_OPENSSL
 struct PocoSslContext
 {
-	PocoSslContext(const SslContext* ctx, bool client)
+	PocoSslContext(const SslContext& ctx, bool client)
 	{
-		if (ctx)
+		if (ctx._valid)
 		{
 			Poco::Net::initializeSSL();
 			_context = new Poco::Net::Context(
 				client ? Poco::Net::Context::CLIENT_USE : Poco::Net::Context::SERVER_USE,
-				ctx->_private_key_file, ctx->_ceritificte_file, ctx->_ca_location,
-				static_cast<Poco::Net::Context::VerificationMode>(ctx->_verification_mode), ctx->_verification_depth,
-				ctx->_load_default_cas, ctx->_cipher_list);
+				ctx._private_key_file, ctx._ceritificte_file, ctx._ca_location,
+				static_cast<Poco::Net::Context::VerificationMode>(ctx._verification_mode), ctx._verification_depth,
+				ctx._load_default_cas, ctx._cipher_list);
 		}
 	}
 	~PocoSslContext()
@@ -68,7 +68,6 @@ struct PocoSslContext
 			Poco::Net::uninitializeSSL();
 	}
 	Poco::Net::Context::Ptr _context;
-	SslContext _ssl_context;
 	bool is_secure() const { return _context.get() != 0; }
 };
 #endif
@@ -141,7 +140,7 @@ public:
 		_addr(get_address(_ses)),
 		_cc(0),
 #ifdef HAVE_OPENSSL
-		_ssl(get_ssl_context(_ses, _ssl._ssl_context), true)
+		_ssl(get_ssl_context(_ses), true)
 #endif
 	{
 		if (!init_con_later)
@@ -415,7 +414,7 @@ public:
 		SessionConfig(ctx, conf_file, session_name),
 		_addr(get_address(_ses)),
 #ifdef HAVE_OPENSSL
-		_ssl(get_ssl_context(_ses, _ssl._ssl_context), false)
+		_ssl(get_ssl_context(_ses), false)
 #endif
 	{
 #ifdef HAVE_OPENSSL

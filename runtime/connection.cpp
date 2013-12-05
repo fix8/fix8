@@ -363,7 +363,7 @@ bool ClientConnection::connect()
 				throw Poco::Net::InvalidAddressException("empty address");
 
 			ostr.str("");
-			ostr << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')';
+			ostr << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')' << ( _secured ? " secured" : " not-secured");
 			_session.log(ostr.str());
 #ifdef HAVE_OPENSSL
 			if (_secured)
