@@ -99,3 +99,4 @@ utests/.libs
 /utests/session_test
 /utests/utest_classes.cpp
 /include/fix8/f8config.h
+/include/fix8/stamp-h1
