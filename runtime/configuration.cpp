@@ -52,6 +52,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 #include <regex.h>
 
+#ifdef HAVE_OPENSSL
+#include <Poco/Net/Context.h>
+#endif
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
@@ -257,3 +260,32 @@ ProcessModel Configuration::get_process_model(const XmlElement *from) const
 		? enum_str_get(pm_count, process_strings, pm, pm_thread) : pm_pipeline; // default to pipelined
 }
 
+//-------------------------------------------------------------------------------------------------
+const SslContext* Configuration::get_ssl_context(const XmlElement *from, SslContext& target) const
+{
+	string name;
+	const XmlElement *which=0;
+	if (from && from->GetAttr("ssl_context", name) && (which = find_ssl_context(name)))
+	{
+		target._private_key_file = which->FindAttr("private_key_file", std::string());
+		target._ceritificte_file = which->FindAttr("ceritificte_file", std::string());
+		target._ca_location = which->FindAttr("ca_location", std::string());
+		target._verification_depth = which->FindAttr("verification_depth", static_cast<int>(defaults::verification_depth));
+		target._load_default_cas = which->FindAttr("load_default_cas", false);
+		target._cipher_list = which->FindAttr("cipher_list", std::string("ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"));
+		target._verification_mode = SSL_VERIFY_PEER;
+#ifdef HAVE_OPENSSL
+		name = which->FindAttr("verification_mode", std::string("relaxed"));
+		if (name == "none")
+			target._verification_mode = Poco::Net::Context::VERIFY_NONE;
+		else if (name == "relaxed")
+			target._verification_mode = Poco::Net::Context::VERIFY_RELAXED;
+		else if (name == "strict")
+			target._verification_mode = Poco::Net::Context::VERIFY_STRICT;
+		else if (name == "once")
+			target._verification_mode = Poco::Net::Context::VERIFY_ONCE;
+#endif
+		return &target;
+	}
+	return 0;
+}

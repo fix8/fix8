@@ -158,7 +158,8 @@ namespace defaults
 		login_retries=3,
 		hb_interval=30,
 		connect_timeout=10,
-		log_rotation=5
+		log_rotation=5,
+		verification_depth=9
 	};
 }
 
