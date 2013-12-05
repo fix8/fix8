@@ -270,7 +270,7 @@ public:
 	bool try_lock() { return pthread_spin_trylock(&_psl) == 0; }
 	void unlock() { pthread_spin_unlock(&_psl); }
 };
-#endif __APPLE__
+#endif //__APPLE__
 
 //----------------------------------------------------------------------------------------
 
