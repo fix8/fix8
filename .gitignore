@@ -98,3 +98,4 @@ utests/.libs
 /utests/message_test
 /utests/session_test
 /utests/utest_classes.cpp
+/include/fix8/f8config.h
