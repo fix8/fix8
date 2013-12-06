@@ -137,9 +137,9 @@ public:
 		_session(new T(_ctx, _id, _persist, _log, _plog)),
 		_sock(0),
 		_addr(get_address(_ses)),
-		_cc(0),
+		_cc(0)
 #ifdef HAVE_OPENSSL
-		_ssl(get_ssl_context(_ses), true)
+		,_ssl(get_ssl_context(_ses), true)
 #endif
 	{
 		if (!init_con_later)
@@ -411,9 +411,9 @@ public:
 	/// Ctor. Prepares session for receiving inbbound connections (acceptor).
 	ServerSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
 		SessionConfig(ctx, conf_file, session_name),
-		_addr(get_address(_ses)),
+		_addr(get_address(_ses))
 #ifdef HAVE_OPENSSL
-		_ssl(get_ssl_context(_ses), false)
+		,_ssl(get_ssl_context(_ses), false)
 #endif
 	{
 #ifdef HAVE_OPENSSL
@@ -422,7 +422,6 @@ public:
 			? new Poco::Net::SecureServerSocket(_addr, 64, _ssl._context)
 			: new Poco::Net::ServerSocket(_addr);
 #else
-		bool secured = false;
 		_server_sock = new Poco::Net::ServerSocket(_addr);
 #endif
 		if (_loginParameters._recv_buf_sz)
@@ -450,8 +449,11 @@ public:
 	/// Convenient scoped pointer for your session
 	typedef scoped_ptr<ServerSession<T> > Server_ptr;
 
+#ifdef HAVE_OPENSSL
 	bool is_secure() const { return _ssl.is_secure(); }
-
+#else
+	bool is_secure() const { return false; }
+#endif
 };
 
 /// Server session instance.
