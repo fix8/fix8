@@ -365,16 +365,7 @@ bool ClientConnection::connect()
 			ostr.str("");
 			ostr << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')' << ( _secured ? " secured" : " not-secured");
 			_session.log(ostr.str());
-#ifdef HAVE_OPENSSL
-			if (_secured)
-			{
-				Poco::Net::SecureStreamSocket* secsock = static_cast< Poco::Net::SecureStreamSocket* >(_sock);
-				secsock->setLazyHandshake(false);
-				secsock->connect(_addr, timeout);
-			}
-#else
 			_sock->connect(_addr, timeout);
-#endif
 			if (lparam._recv_buf_sz)
 				set_recv_buf_sz(lparam._recv_buf_sz);
 			if (lparam._send_buf_sz)
