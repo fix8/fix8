@@ -40,7 +40,7 @@ libfix8_la_SOURCES = xml.cpp f8utils.cpp message.cpp traits.cpp \
                      connection.cpp configuration.cpp \
 							consolemenu.cpp filepersist.cpp modp_numtoa.c
 
-AM_LDFLAGS = -ggdb -rdynamic -shared
+AM_LDFLAGS = -ggdb -rdynamic -shared -lpthread
 
 if USECOMPRESSION
 libfix8_la_SOURCES += gzstream.cpp
@@ -51,4 +51,8 @@ AM_LDFLAGS += -lz
 if USECCRYPT
 AM_LDFLAGS += -lcrypt
 endif
+if USESSL
+AM_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+endif
+
 

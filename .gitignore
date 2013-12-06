@@ -89,4 +89,14 @@ utests/utest_router.hpp
 utests/utest_traits.cpp
 utests/utest_types.cpp
 utests/utest_types.hpp
-
+.install
+utests/.deps
+utests/.libs
+/test/FIX50SP2.xml.p1
+/utests/fileLogger_test
+/utests/filePersister_test
+/utests/message_test
+/utests/session_test
+/utests/utest_classes.cpp
+/include/fix8/f8config.h
+/include/fix8/stamp-h1
