@@ -222,10 +222,10 @@ public:
 		}
 	}
 
-    /*! Reader thread method. Reads messages and places them on the queue for processing.
-      Supports pipelined, threaded and coroutine process models.
-        \return 0 on success */
-    virtual int execute();
+	/*! Reader thread method. Reads messages and places them on the queue for processing.
+	    Supports pipelined, threaded and coroutine process models.
+		 \return 0 on success */
+   virtual int execute();
 
 	/*! Wait till writer thread has finished.
 	    \return 0 on success */
@@ -281,6 +281,41 @@ public:
 		return _session.send_process(from);
 	}
 
+	/*! Place Fix messages on outbound message queue as a single batch.
+	    \param msgs messages to send
+	    \param destroy if true delete after send
+	    \return count of messages written */
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy)
+	{
+		if (msgs.empty())
+			return 0;
+		if (msgs.size() == 1)
+			return write(msgs.front(), destroy) ? 1 : 0;
+		size_t result(0);
+		f8_scoped_spin_lock guard(_con_spl);
+		for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()), litr(eitr-1); itr != eitr; ++itr)
+		{
+			Message* msg = *itr;
+			msg->set_end_of_batch(itr == litr);
+			if (_pmodel == pm_pipeline) // pipeline mode ignores destroy flag
+			{
+				_msg_queue.try_push(msg);
+				++result;
+				continue;
+			}
+			if (_session.send_process(msg))
+				++result;
+		}
+		if (destroy && _pmodel != pm_pipeline)
+		{
+			for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()); itr != eitr; ++itr)
+			{
+				scoped_ptr<Message> smsg(*itr);
+			}
+		}
+		///@todo: need assert on result==msgs.size()
+		return result;
+	}
 	/*! Wait till writer thead has finished.
 	    \return 0 on success */
    int join() { return _pmodel == pm_pipeline ? AsyncSocket<Message *>::join() : -1; }
@@ -359,7 +394,7 @@ public:
 protected:
 	Poco::Net::StreamSocket *_sock;
 	Poco::Net::SocketAddress _addr;
-	bool _connected;
+	f8_atomic<bool> _connected;
 	Session& _session;
 	Role _role;
 	ProcessModel _pmodel;
@@ -377,8 +412,11 @@ public:
 	    \param hb_interval heartbeat interval */
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // client
         const ProcessModel pmodel, const unsigned hb_interval)
-		: _sock(sock), _addr(addr), _connected(), _session(session), _role(cn_initiator), _pmodel(pmodel),
-        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel) {}
+		: _sock(sock), _addr(addr), _session(session), _role(cn_initiator), _pmodel(pmodel),
+        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel)
+	{
+		_connected = false;
+	}
 
 	/*! Ctor. Acceptor.
 	    \param sock connected socket
@@ -388,9 +426,12 @@ public:
 	    \param pmodel process model */
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // server
 		const unsigned hb_interval, const ProcessModel pmodel)
-		: _sock(sock), _addr(addr), _connected(true), _session(session), _role(cn_acceptor), _pmodel(pmodel),
+		: _sock(sock), _addr(addr), _session(session), _role(cn_acceptor), _pmodel(pmodel),
 		_hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
-		  _reader(sock, session, pmodel), _writer(sock, session, pmodel) {}
+		  _reader(sock, session, pmodel), _writer(sock, session, pmodel)
+	{
+		_connected = true;
+	}
 
 	/// Dtor.
 	virtual ~Connection() {}
@@ -413,6 +454,10 @@ public:
 	    \return true if connected */
 	virtual bool connect() { return _connected; }
 
+	/*! Determine if this session is actually connected
+	  \return true if connected */
+	bool is_connected() const { return _connected; }
+
 	/*! Write a message to the underlying socket.
 	    \param from Message to write
 	    \return true on success */
@@ -422,6 +467,11 @@ public:
 	    \param from Message to write
 	    \return true on success */
 	virtual bool write(Message& from) { return _writer.write(from); }
+
+	/*! Write messages to the underlying socket as a single batch.
+	    \param from Message to write
+	    \return true on success */
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy) { return _writer.write_batch(msgs, destroy); }
 
 	/*! Write a string message to the underlying socket.
 	    \param from Message (string) to write

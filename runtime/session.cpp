@@ -105,6 +105,7 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
+	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -114,6 +115,7 @@ Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logg
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
+	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -595,60 +597,61 @@ bool Session::handle_test_request(const unsigned seqnum, const Message *msg)
 //-------------------------------------------------------------------------------------------------
 bool Session::heartbeat_service()
 {
+	//cout << "heartbeat_service()" << endl;
 	if (is_shutdown())
 		return false;
 
-	//cerr << "heartbeat_service" << endl;
-
-	Tickval now(true);
-	if ((now - _last_sent).secs() >= static_cast<time_t>(_connection->get_hb_interval()))
+	if (_connection && _connection->is_connected())
 	{
-		const f8String testReqID;
-		send(generate_heartbeat(testReqID));
-	}
-
-	now.now();
-	if ((now - _last_received).secs() > static_cast<time_t>(_connection->get_hb_interval20pc()))
-	{
-		if (_state == States::st_test_request_sent)	// already sent
+		Tickval now(true);
+		if ((now - _last_sent).secs() >= static_cast<time_t>(_connection->get_hb_interval()))
 		{
-			ostringstream ostr;
-			ostr << "Remote has ignored my test request. Aborting session...";
-			send(generate_logout(_loginParameters._silent_disconnect ? 0 : ostr.str().c_str()), true, 0, true); // so it won't increment
-			_state = States::st_logoff_sent;
-			log(ostr.str());
-			try
-			{
-				stop();
-			}
-			catch (Poco::Net::NetException& e)
-			{
-				log(e.what());
-			}
-			catch (exception& e)
-			{
-				log(e.what());
-			}
-			return true;
+			const f8String testReqID;
+			send(generate_heartbeat(testReqID));
 		}
-		else
+
+		now.now();
+		if ((now - _last_received).secs() > static_cast<time_t>(_connection->get_hb_interval20pc()))
 		{
-			ostringstream ostr;
-			ostr << "Have not received anything from remote for ";
-			if (_last_received.secs())
-				ostr << (now - _last_received).secs();
+			if (_state == States::st_test_request_sent)	// already sent
+			{
+				ostringstream ostr;
+				ostr << "Remote has ignored my test request. Aborting session...";
+				send(generate_logout(_loginParameters._silent_disconnect ? 0 : ostr.str().c_str()), true, 0, true); // so it won't increment
+				_state = States::st_logoff_sent;
+				log(ostr.str());
+				try
+				{
+					stop();
+				}
+				catch (Poco::Net::NetException& e)
+				{
+					log(e.what());
+				}
+				catch (exception& e)
+				{
+					log(e.what());
+				}
+				return true;
+			}
 			else
-				ostr << "more than " << _connection->get_hb_interval20pc();
-			ostr << " secs. Sending test request";
-			log(ostr.str());
-			const f8String testReqID("TEST");
-			send(generate_test_request(testReqID));
-			_state = States::st_test_request_sent;
+			{
+				ostringstream ostr;
+				ostr << "Have not received anything from remote for ";
+				if (_last_received.secs())
+					ostr << (now - _last_received).secs();
+				else
+					ostr << "more than " << _connection->get_hb_interval20pc();
+				ostr << " secs. Sending test request";
+				log(ostr.str());
+				const f8String testReqID("TEST");
+				send(generate_test_request(testReqID));
+				_state = States::st_test_request_sent;
+			}
 		}
 	}
 
 	_timer.schedule(_hb_processor, 1000);
-
 	return true;
 }
 
@@ -759,25 +762,14 @@ bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_
 //-------------------------------------------------------------------------------------------------
 size_t Session::send_batch(const vector<Message *>& msgs, bool destroy)
 {
-	size_t result(0);
-
-	_connection->set_tcp_cork_flag(true);
-	for (vector<Message *>::const_iterator itr(msgs.begin()); itr != msgs.end(); ++itr)
-	{
-		if (!_connection->write(*itr, destroy))
-			break;
-		++result;
-	}
-	_connection->set_tcp_cork_flag(false);
-
-	return result;
+	return _connection->write_batch(msgs, destroy);
 }
 
 //-------------------------------------------------------------------------------------------------
 bool Session::send_process(Message *msg) // called from the connection (possibly on separate thread)
 {
+	//cout << "send_process()" << endl;
 	bool is_dup(msg->Header()->have(Common_PossDupFlag));
-
 	if (!msg->Header()->have(Common_SenderCompID))
 		*msg->Header() << new sender_comp_id(_sid.get_senderCompID());
 	if (!msg->Header()->have(Common_TargetCompID))
@@ -819,42 +811,70 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		//cout << "Sending:" << *msg;
 		modify_outbound(msg);
 		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
-		const size_t enclen(msg->encode(&ptr));
-		if (!_connection->send(ptr, enclen))
+		size_t enclen(msg->encode(&ptr));
+		if (msg->get_end_of_batch())
 		{
-			ostringstream ostr;
-			ostr << "Message write failed: " << enclen << " bytes";
-			log(ostr.str());
-			return false;
-		}
-		_last_sent.now();
-
-		if (_plogger && _plogger->has_flag(Logger::outbound))
-			plog(ptr);
-
-		//cout << "send_process" << endl;
-
-		if (!is_dup)
-		{
-			if (_persist)
+			if (!_batchmsgs_buffer.empty())
 			{
-				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
-				if (!msg->is_admin())
-					_persist->put(_next_send_seq, ptr);
-				_persist->put(_next_send_seq + 1, _next_receive_seq);
-				//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
+				_batchmsgs_buffer.append(ptr);
+				ptr = &_batchmsgs_buffer[0];
+				enclen = _batchmsgs_buffer.size();
 			}
-
-			if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+			if (!_connection->send(ptr, enclen))
 			{
-				++_next_send_seq;
-				//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
+				ostringstream ostr;
+				ostr << "Message write failed: " << enclen << " bytes";
+				log(ostr.str());
+				_batchmsgs_buffer.clear();
+				return false;
+			}
+			_last_sent.now();
+
+			if (_plogger && _plogger->has_flag(Logger::outbound))
+				plog(ptr);
+
+			//cout << "send_process" << endl;
+
+			if (!is_dup)
+			{
+				if (_persist)
+				{
+					f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
+					if (!msg->is_admin())
+						_persist->put(_next_send_seq, ptr);
+					_persist->put(_next_send_seq + 1, _next_receive_seq);
+					//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
+				}
+				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+				{
+					++_next_send_seq;
+					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
+				}
+			}
+			_batchmsgs_buffer.clear();
+		}
+		else
+		{
+			_batchmsgs_buffer.append(ptr);
+			if (!is_dup)
+			{
+				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+				{
+					++_next_send_seq;
+					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
+				}
 			}
 		}
 	}
 	catch (f8Exception& e)
 	{
 		log(e.what());
+		return false;
+	}
+	catch (Poco::Exception& e)
+	{
+		log(e.displayText());
+		return false;
 	}
 
 	return true;

@@ -253,6 +253,7 @@ protected:
 
 	Timer<Session> _timer;
 	TimerEvent<Session> _hb_processor;
+	std::string _batchmsgs_buffer;
 
 	/// Heartbeat generation service thread method.
 	bool heartbeat_service();
@@ -424,7 +425,7 @@ public:
 	    \return true on success */
 	virtual bool send(Message& msg, const unsigned custom_seqnum=0, const bool no_increment=false);
 
-	/*! Send a batch of messages.
+	/*! Send a batch of messages. During this call HB and test requests are suspended.
 	    \param msgs vector of Message ptrs
 	    \param destroy if true, destroy message after send
 	    \return size_t number of messages sent - if destroy was true those sent messages will have been destroyed
