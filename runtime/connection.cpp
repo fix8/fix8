@@ -363,7 +363,7 @@ bool ClientConnection::connect()
 				throw Poco::Net::InvalidAddressException("empty address");
 
 			ostr.str("");
-			ostr << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')';
+			ostr << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')' << ( _secured ? " secured" : " not-secured");
 			_session.log(ostr.str());
 			_sock->connect(_addr, timeout);
 			if (lparam._recv_buf_sz)
@@ -398,4 +398,3 @@ bool ClientConnection::connect()
 	_session.log("Connection failed");
 	return false;
 }
-

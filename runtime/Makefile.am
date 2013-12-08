@@ -51,4 +51,8 @@ AM_LDFLAGS += -lz
 if USECCRYPT
 AM_LDFLAGS += -lcrypt
 endif
+if USESSL
+AM_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+endif
+
 
