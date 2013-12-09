@@ -93,4 +93,11 @@ hftest_LDFLAGS += -lz
 hfprint_LDFLAGS += -lz
 harness_LDFLAGS += -lz
 endif
+if USESSL
+f8test_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+f8print_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+hftest_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+hfprint_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+harness_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+endif
 
