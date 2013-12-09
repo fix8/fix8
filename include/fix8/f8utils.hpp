@@ -43,9 +43,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _MSC_VER
 # include <sys/ioctl.h>
 # include <termios.h>
+#else
+# include <io.h>
 #endif
 
+#if (REGEX_SYSTEM == REGEX_REGEX_H)
 #include <regex.h>
+#elif (REGEX_SYSTEM == REGEX_POCO)
+#include <Poco/RegularExpression.h>
+#endif
 
 namespace FIX8 {
 
@@ -292,6 +298,7 @@ public:
 	T *get() const { return ptr_; }
 };
 
+#if REGEX_SYSTEM==REGEX_REGEX_H
 //----------------------------------------------------------------------------------------
 /// A class to contain regex matches using RegExp.
 class RegMatch
@@ -442,6 +449,122 @@ public:
 	  \return true onsuccess */
 	operator void*() { return errCode_ ? 0 : this; }
 };
+#elif REGEX_SYSTEM==REGEX_POCO
+//----------------------------------------------------------------------------------------
+/// A class to contain regex matches using RegExp.
+class RegMatch
+{
+    Poco::RegularExpression::MatchVec _matchVec;
+
+public:
+    /// Ctor.
+    RegMatch() {}
+
+    /*! Get the number of sub-expressions found.
+    \return number of sub-expression */
+    unsigned SubCnt() const { return (unsigned)_matchVec.size(); }
+
+    /*! Get the size (length) of the specified sub-expression.
+    \param which sub-expression index (0 based)
+    \return size of sub-expression, -1 if not found */
+    size_t SubSize(const int which = 0) const
+    {
+        return which < (int)_matchVec.size() ? _matchVec[which].length : -1;
+    }
+
+    /*! Get the starting offset of the specified sub-expression.
+    \param which sub-expression index (0 based)
+    \return offset of the sub-expression, -1 if not found */
+    unsigned SubPos(const int which = 0) const
+    {
+        return which < (int)_matchVec.size() ? (int)_matchVec[which].offset : -1;
+    }
+
+    friend class RegExp;
+};
+
+//----------------------------------------------------------------------------------------
+/// POSIX regex wrapper class.
+class RegExp
+{
+    Poco::RegularExpression _regexp;
+
+public:
+    /*! Ctor.
+    \param pattern regular expression to compile. errCode and errString set on error.
+    \param flags POSIX regcomp flags */
+    RegExp(const char *pattern, const int flags = 0)
+        : _regexp(pattern, flags, true)
+    {
+    }
+
+    /*! Search a string.
+    \param match reference to a RegMatch object
+    \param source string to search
+    \param subExpr number of sub-expression
+    \param offset to start searching
+    \return number of sub-expressions found (0=none) */
+    int SearchString(RegMatch& match, const std::string& source, const int subExpr, const int offset = 0) const
+    {
+        match._matchVec.clear();
+        return _regexp.match(source, offset, match._matchVec);
+    }
+
+    /*! Extract a sub-expression.
+    \param match reference to a RegMatch object
+    \param source source string
+    \param target location to place sub-experssion
+    \param offset to start searching
+    \param num desired sub-expression
+    \return the target string */
+    static std::string& SubExpr(RegMatch& match, const std::string& source, std::string& target, const int offset = 0, const int num = 0)
+    {
+		 if (num < static_cast<int>(match.SubCnt()))
+            target = source.substr(offset + match.SubPos(num), match.SubSize(num));
+        else
+            target.empty();
+        return target;
+    }
+
+    /*! Erase a sub-expression from a string.
+    \param match reference to a RegMatch object
+    \param source source string
+    \param num desired sub-expression
+    \return the source string */
+    static std::string& Erase(RegMatch& match, std::string& source, const int num = 0)
+    {
+		 if (num < static_cast<int>(match.SubCnt()))
+            source.erase(match.SubPos(num), match.SubSize(num));
+        return source;
+    }
+
+    /*! Replace a sub-expression with a string.
+    \param match reference to a RegMatch object
+    \param source source string
+    \param with replacement string
+    \param num desired sub-expression
+    \return the source string */
+    static std::string& Replace(RegMatch& match, std::string& source, const std::string& with, const int num = 0)
+    {
+		 if (num < static_cast<int>(match.SubCnt()))
+            source.replace(match.SubPos(num), match.SubSize(num), with);
+        return source;
+    }
+
+    /*! Replace a sub-expression with a character.
+    \param match reference to a RegMatch object
+    \param source source string
+    \param with replacement character
+    \param num desired sub-expression
+    \return the source string */
+    static std::string& Replace(RegMatch& match, std::string& source, const char with, const int num = 0)
+    {
+		 if (num < static_cast<int>(match.SubCnt()))
+            source.replace(match.SubPos(num), match.SubSize(num), 1, with);
+        return source;
+    }
+};
+#endif
 
 //----------------------------------------------------------------------------------------
 /// Case-insensitive string comparison, pointer version.
@@ -1161,4 +1284,3 @@ public:
 } // namespace FIX8
 
 #endif // _F8_UTILS_HPP_
-

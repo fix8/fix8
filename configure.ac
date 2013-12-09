@@ -355,6 +355,44 @@ AC_MSG_CHECKING(for Poco)
 		 exit 1
 	fi
 
+AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
+AC_DEFINE(MPMC_FF, 2, [FF MPMC])
+
+regex_set=no
+using_poco_regex=no
+AC_ARG_WITH([regex],
+[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=poco)])],
+[case "${withval}" in
+	regex) AC_MSG_CHECKING(for regex)
+				AC_TRY_COMPILE([
+					#include <regex.h>
+					],,
+					have_regex=yes, have_regex=no)
+				if test "$have_regex" = yes; then
+					 AC_MSG_RESULT(yes)
+					 AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
+				else
+					 AC_MSG_RESULT(no)
+					 echo
+					 echo "ERROR: regex.h header not found. Install and try again."
+					 echo
+					 exit 1
+				fi
+		 regex_set=yes ;;
+	poco) using_poco_regex=yes;;
+	*) echo
+		echo "ERROR: Unknown value ${withval} for REGEX given."
+		echo
+		exit 1
+esac])
+
+AC_DEFINE(REGEX_POCO, 1, [Poco regex system])
+AC_DEFINE(REGEX_REGEX_H, 2, [regex.h regex system])
+if test "$regex_set" = no; then
+	using_poco_regex=yes
+	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO regex system used])
+fi
+
 oktogtest=yes
 AC_ARG_ENABLE([gtest],
 [AS_HELP_STRING([--enable-gtest],[enable gtest unit test case building if available (default=yes if available)])],

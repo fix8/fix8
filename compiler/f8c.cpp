@@ -81,7 +81,6 @@ e.g.\n
 #include <iterator>
 #include <algorithm>
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 #include <cctype>
