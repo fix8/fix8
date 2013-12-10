@@ -46,6 +46,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
+//-------------------------------------------------------------------------------------------------
 #ifdef HAVE_OPENSSL
 struct PocoSslContext
 {
@@ -56,20 +57,23 @@ struct PocoSslContext
 			Poco::Net::initializeSSL();
 			_context = new Poco::Net::Context(
 				client ? Poco::Net::Context::CLIENT_USE : Poco::Net::Context::SERVER_USE,
-				ctx._private_key_file, ctx._ceritificte_file, ctx._ca_location,
+				ctx._private_key_file, ctx._certificate_file, ctx._ca_location,
 				static_cast<Poco::Net::Context::VerificationMode>(ctx._verification_mode), ctx._verification_depth,
 				ctx._load_default_cas, ctx._cipher_list);
 		}
 	}
+
 	~PocoSslContext()
 	{
 		if (_context)
 			Poco::Net::uninitializeSSL();
 	}
+
 	Poco::Net::Context::Ptr _context;
 	bool is_secure() const { return _context.get() != 0; }
 };
 #endif
+
 //-------------------------------------------------------------------------------------------------
 /// Base session wrapper.
 struct SessionConfig : public Configuration
@@ -135,9 +139,9 @@ public:
 		_id(_ctx._beginStr, _sci, _tci),
 		_persist(create_persister(_ses, 0, this->_loginParameters._reset_sequence_numbers)),
 		_session(new T(_ctx, _id, _persist, _log, _plog)),
-		_sock(0),
+		_sock(),
 		_addr(get_address(_ses)),
-		_cc(0)
+		_cc()
 #ifdef HAVE_OPENSSL
 		,_ssl(get_ssl_context(_ses), true)
 #endif
@@ -145,13 +149,13 @@ public:
 		if (!init_con_later)
 		{
 #ifdef HAVE_OPENSSL
-			bool secured = _ssl.is_secure();
+			bool secured(_ssl.is_secure());
 			_sock =
 				secured
 					? new Poco::Net::SecureStreamSocket(_ssl._context)
 					: new Poco::Net::StreamSocket;
 #else
-			bool secured = false;
+			bool secured(false);
 			_sock = new Poco::Net::StreamSocket;
 #endif
 			_cc = new ClientConnection(_sock, _addr, *_session, this->_loginParameters._hb_int, get_process_model(_ses), true, secured);
@@ -275,13 +279,13 @@ public:
 				}
 				//std::cout << "operator()():try" << std::endl;
 #ifdef HAVE_OPENSSL
-				bool secured = this->_ssl.is_secure();
+				bool secured(this->_ssl.is_secure());
 				this->_sock =
 					secured
-					? new Poco::Net::SecureStreamSocket(this->_ssl._context)
-					: new Poco::Net::StreamSocket;
+						? new Poco::Net::SecureStreamSocket(this->_ssl._context)
+						: new Poco::Net::StreamSocket;
 #else
-				bool secured = false;
+				bool secured(false);
 				this->_sock = new Poco::Net::StreamSocket;
 #endif
 				this->_cc = new ClientConnection(this->_sock, _failover_cnt ? this->_addr = _servers[_current]._addr : this->_addr,
@@ -417,8 +421,7 @@ public:
 #endif
 	{
 #ifdef HAVE_OPENSSL
-		bool secured = _ssl.is_secure();
-		_server_sock = secured
+		_server_sock = _ssl.is_secure()
 			? new Poco::Net::SecureServerSocket(_addr, 64, _ssl._context)
 			: new Poco::Net::ServerSocket(_addr);
 #else

@@ -11,13 +11,13 @@
 				tcp_nodelay="false"
 			   tcp_recv_buffer="100663296"
 			   tcp_send_buffer="100663296"
-			   process_model="threaded" 
-			   ssl_context="ssl1"
-/>
-<ssl_context name="ssl1"
-	private_key_file="ssl-svr.pem"
-	verification_mode="none"
-/>
+			   process_model="threaded"
+			   ssl_context="ssl1" />
+
+	<ssl_context name="ssl1"
+				private_key_file="ssl-svr.pem"
+				verification_mode="none" />
+
 	<persist name="bdb0"
 				type="bdb"
 				dir="./run"
