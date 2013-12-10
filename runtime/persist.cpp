@@ -301,7 +301,7 @@ int BDBPersister::operator()()
    unsigned received(0), persisted(0);
 	bool stopping(false);
 
-   for (;;)
+   for (;!_cancellation_token;)
    {
 		KeyDataBuffer *msg_ptr(0);
 
@@ -465,4 +465,3 @@ unsigned MemoryPersister::get_last_seqnum(unsigned& to) const
 {
 	return to = (_store.empty() ? 0 : _store.rbegin()->first);
 }
-

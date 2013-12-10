@@ -242,9 +242,6 @@ public:
 		return _msg_queue.try_push (le) == 0;
 	}
 
-	/// Kill the logging thread.
-	void kill() { _thread.kill(0); }
-
 	/// Stop the logging thread.
 	void stop() {  _stopping = true; send(std::string()); _thread.join(); }
 
@@ -274,6 +271,9 @@ public:
 
 	/// Flush the buffer
 	virtual void flush();
+
+	f8_atomic<bool>& cancellation_token() { return _stopping; }
+
 };
 
 //-------------------------------------------------------------------------------------------------
