@@ -190,7 +190,7 @@ class BDBPersister : public Persister
 		return _persist_queue.try_push(what);
 	}
 
-	f8_atomic<bool> _cancellation_token;
+	dthread_cancellation_token _cancellation_token;
 
 public:
 	/// Ctor.
@@ -256,7 +256,7 @@ public:
 	  \return 0 on success */
 	int operator()();	// write thread
 
-	f8_atomic<bool>& cancellation_token() { return _cancellation_token;	}
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token;	}
 };
 
 #endif // HAVE_BDB

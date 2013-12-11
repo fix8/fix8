@@ -57,7 +57,7 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-int FIXReader::execute(f8_atomic<bool>& cancellation_token)
+int FIXReader::execute(dthread_cancellation_token& cancellation_token)
 {
    unsigned processed(0), dropped(0), invalid(0);
 	int retval(0);
@@ -282,7 +282,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 }
 
 //-------------------------------------------------------------------------------------------------
-int FIXWriter::execute(f8_atomic<bool>& cancellation_token)
+int FIXWriter::execute(dthread_cancellation_token& cancellation_token)
 {
 	int result(0), processed(0), invalid(0);
 

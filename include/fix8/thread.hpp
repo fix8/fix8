@@ -163,6 +163,19 @@ public:
 };
 
 //----------------------------------------------------------------------------------------
+/// Thread cancellation token
+struct dthread_cancellation_token
+{
+	dthread_cancellation_token() { _stop_requested = 0; }
+	bool stop_requested() const { return _stop_requested == 1; }
+	void request_stop() { _stop_requested = 1; }
+	operator bool() const { return stop_requested(); }
+	bool operator!() const  { return !stop_requested(); }
+private:
+	f8_atomic<int> _stop_requested;
+};
+
+//----------------------------------------------------------------------------------------
 /// POSIX pthread wrapper. dthread by pointer to member function.  Ctor provides T instance and specifies ptr to member to call or defaults to operator()
 /*! \tparam T class call thread entry functor */
 template<typename T=void *>
@@ -176,7 +189,7 @@ class dthread : public _dthreadcore
 	public:
 		_helper(T& what, int (T::*method)()) : _what(what), _method(method) {}
 		int operator()() { return (_what.*_method)(); }
-		f8_atomic<bool>& cancellation_token() { return _what.cancellation_token(); }
+		dthread_cancellation_token& cancellation_token() { return _what.cancellation_token(); }
 	}
 	_sub;
 
@@ -206,7 +219,7 @@ public:
 
 	/*! request thread stop.
 	  \return function result */
-	virtual void request_stop() { _sub.cancellation_token() = true; }
+	virtual void request_stop() { _sub.cancellation_token().request_stop(); }
 };
 
 //----------------------------------------------------------------------------------------
@@ -216,14 +229,14 @@ class dthread<> : public _dthreadcore
 {
 	class _helper
 	{
-		int (*_func)(void *, f8_atomic<bool>&);
+		int (*_func)(void *, dthread_cancellation_token&);
 		void *_args;
-		f8_atomic<bool>& _cancellation_token;
+		dthread_cancellation_token& _cancellation_token;
 
 	public:
-		_helper(int (*func)(void *, f8_atomic<bool>&), void *args, f8_atomic<bool>& cancellation_token) : _func(func), _args(args), _cancellation_token(cancellation_token) {}
+		_helper(int (*func)(void *, dthread_cancellation_token&), void *args, dthread_cancellation_token& cancellation_token) : _func(func), _args(args), _cancellation_token(cancellation_token) {}
 		int operator()() { return (_func)(_args, _cancellation_token); }
-		f8_atomic<bool>& cancellation_token() { return _cancellation_token; }
+		dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
 	}
 	_sub;
 
@@ -233,7 +246,7 @@ public:
 	  \param args pointer to function arguments
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	dthread(int (*func)(void *, f8_atomic<bool>&), void *args, f8_atomic<bool>& cancellation_token, const bool detach=false, const size_t stacksize=0)
+	dthread(int (*func)(void *, dthread_cancellation_token&), void *args, dthread_cancellation_token& cancellation_token, const bool detach=false, const size_t stacksize=0)
 		: _dthreadcore(detach, stacksize), _sub(func, args, cancellation_token) {}
 
 	/// Dtor.
@@ -245,7 +258,7 @@ public:
 
 	/*! request thread stop.
 	  \return function result */
-	virtual void request_stop() { _sub.cancellation_token() = true; }
+	virtual void request_stop() { _sub.cancellation_token().request_stop(); }
 };
 
 } // FIX8

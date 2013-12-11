@@ -248,7 +248,7 @@ class ReliableClientSession : public ClientSession<T>
 	f8_atomic<bool> _giving_up;
 	std::vector<Server> _servers;
 	const size_t _failover_cnt;
-	f8_atomic<bool> _cancellation_token;
+	dthread_cancellation_token _cancellation_token;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
@@ -445,7 +445,7 @@ public:
 		return 0;
 	}
 
-	f8_atomic<bool>& cancellation_token() { return _cancellation_token; }
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
 
 
 	/// Convenient scoped pointer for your session

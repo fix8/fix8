@@ -99,7 +99,7 @@ class Timer
    unsigned _granularity;
 
    std::priority_queue<TimerEvent<T> > _event_queue;
-	f8_atomic<bool> _cancellation_token;
+	dthread_cancellation_token _cancellation_token;
 
 public:
 	/*! Ctor.
@@ -138,7 +138,7 @@ public:
 	  \return result at timer thread exit */
    int operator()();
 
-	f8_atomic<bool>& cancellation_token() { return _cancellation_token;}
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token;}
 
 };
 
