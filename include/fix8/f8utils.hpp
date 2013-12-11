@@ -51,6 +51,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <regex.h>
 #elif (REGEX_SYSTEM == REGEX_POCO)
 #include <Poco/RegularExpression.h>
+#include <Poco/Exception.h>
 #endif
 
 namespace FIX8 {
@@ -370,11 +371,11 @@ class RegExp
 
 	regex_t reg_;
 	const std::string pattern_;
+#elif REGEX_SYSTEM == REGEX_POCO
+	Poco::RegularExpression * _regexp;
+#endif
 	std::string errString;
 	int errCode_;
-#elif REGEX_SYSTEM == REGEX_POCO
-	Poco::RegularExpression _regexp;
-#endif
 
 public:
 	/*! Ctor.
@@ -392,7 +393,18 @@ public:
 		}
 	}
 #elif REGEX_SYSTEM == REGEX_POCO
-		: _regexp(pattern, flags, true) {}
+		: _regexp(0)
+	{
+		try
+		{
+			_regexp = new Poco::RegularExpression(pattern, flags, true);
+		}
+		catch(const Poco::RegularExpressionException& ex)
+		{
+			errCode_ = ex.code();
+			errString = ex.message();
+		}
+	}
 #endif
 
 	/// Dtor. Destroys internal compiled expression.
@@ -401,6 +413,8 @@ public:
 #if REGEX_SYSTEM == REGEX_REGEX_H
 		if (errCode_ == 0)
 			regfree(&reg_);
+#elif REGEX_SYSTEM == REGEX_POCO
+		delete _regexp;
 #endif
 	}
 
@@ -420,7 +434,7 @@ public:
 		return match.subCnt_;
 #elif REGEX_SYSTEM == REGEX_POCO
 		match._matchVec.clear();
-		return _regexp.match(source, offset, match._matchVec);
+		return _regexp ? _regexp->match(source, offset, match._matchVec) : 0;
 #endif
 	}
 
@@ -503,6 +517,7 @@ public:
 	/*! Get the regular expression pattern.
 	  \return the pattern string */
 	const std::string& GetPattern() const { return pattern_; }
+#endif
 
 	/*! Get the error string (set when Ctor fails to compile).
 	  \return the error string */
@@ -515,7 +530,6 @@ public:
 	/*! Check if a pattern compiled ok.
 	  \return true onsuccess */
 	operator void*() { return errCode_ ? 0 : this; }
-#endif
 };
 
 //----------------------------------------------------------------------------------------
