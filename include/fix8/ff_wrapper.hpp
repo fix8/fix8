@@ -210,7 +210,7 @@ public:
 //----------------------------------------------------------------------------------------
 /// generic pthread_spin_lock wrapper
 
-#ifdef __APPLE__
+#ifdef //__APPLE__
 // A simple spinlock that spins up to 100K times and then does a sched_yield to back-off.
 // unlock() could just set _lock to false BUT that assumes that the spinlock was locked
 // to begin with, which may not be the case.  Therefore this implementation has the
@@ -270,7 +270,7 @@ public:
 	bool try_lock() { return pthread_spin_trylock(&_psl) == 0; }
 	void unlock() { pthread_spin_unlock(&_psl); }
 };
-#endif __APPLE__
+#endif //__APPLE__
 
 //----------------------------------------------------------------------------------------
 
