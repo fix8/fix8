@@ -144,7 +144,6 @@ const CSMap::TypePair cs_valueTable[] =
 "#include <set>\n"
 "#include <iterator>\n"
 "#include <algorithm>\n"
-"#include <regex.h>\n"
 "#include <cerrno>\n"
 "#include <string.h>\n"
 "#if defined HAS_TR1_UNORDERED_MAP\n"
