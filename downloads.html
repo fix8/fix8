@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>How It Works</title>
+    <title>Fix8 Support</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Modern open source low latency C++ FIX framework featuring complete schema driven customisation, high performance and fast application development. 3.2x faster encdoding than Quickfix. Production client encode latency is 2.1us, decode 3.2us. Free, community supported.">
     <meta name="author" content="David L. Dight">
@@ -27,15 +27,14 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
-	 <link href="css/prettify.css" type="text/css" rel="stylesheet" />
-	 <script type="text/javascript" src="css/prettify.js"></script>
   </head>
 
-  <body onload="prettyPrint()" bgcolor="white">
+  <body>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -53,8 +52,8 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li><a href="index.html">Home</a></li>
-              <li class="active"><a href="#">How It Works</a></li>
-				  <li><a href="downloads.html">Downloads</a></li>
+				  <li><a href="howitworks.html">How It Works</a></li>
+				  <li class="active"><a href="downloads.html">Downloads</a></li>
               <li><a href="faq.html">FAQ</a></li>
               <li><a href="http://blog.fix8.org">News</a></li>
               <li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
@@ -84,72 +83,52 @@
 			</div>
 		</div>
 
-		<!--a href="http://groups.google.com/group/fix8-support"><img src="fix8/googlegroups_logo.gif"/></a-->
 		<br>
 
-		<div class="hero-unit">
-			<div class="container">
-				<div class="row">
-					<div class="span11">
-						<p><h3>Fix8 offers a unique approach to developing your FIX interface. The following diagram and description summarise the steps required to
-						build your application.</h3></p>
-						<br>
-					</div>
+		<div class="hero-divider"></div>
+
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+				<br>
+				<br>
+				</div>
+				<div class="span12">
+					<form class="well form-inline" action="http://groups.google.com/group/fix8-support/boxsubscribe">
+						<h4><span class="label label-success">Stable Release</span><br>
+						<br><h4>This is the stable release stream.</h4><br>
+						<h4><a href="https://github.com/fix8/fix8/archive/0.10.0.tar.gz"><i class="icon-download"></i> TAR version 0.10.0</a></h4>
+						<h4><a href="https://github.com/fix8/fix8/archive/0.10.0.zip"><i class="icon-download"></i> ZIP version 0.10.0</a></h4>
+						<h4><a href="https://bintray.com/dakka/rpm/fix8/0.10.0"><i class="icon-download"></i> RPM/DEB Package version 0.10.0</a></h4><br>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<form class="well form-inline" action="http://groups.google.com/group/fix8-developer/boxsubscribe">
+						<h4><span class="label label-important">Development Stream</span><br>
+						<br><h4>This is the Development stream, updated continually.</h4><br>
+						<h4><a href="https://github.com/fix8/fix8/archive/dev.tar.gz"><i class="icon-download"></i> TAR</a></h4>
+						<h4><a href="https://github.com/fix8/fix8/archive/dev.zip"><i class="icon-download"></i> ZIP</a></h4>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<form class="well form-inline" action="">
+						<h4><span class="label label-inverse">Previous Releases</span><br>
+						<br><h4>Earlier versions of Fix8 can be downloaded here.</h4><br>
+						<h4><a href="https://github.com/fix8/fix8/tags"><i class="icon-download"></i> Earlier Versions</a></h4>
+					</form>
 				</div>
 			</div>
 		</div>
-
-		<div class="container">
-			<div class="span6">
-				<br>
-				<img src="fix8/hiw01.png"/>
-			</div>
-			<div class="span5">
-				<form class="well form-inline" action="">
-				<h4>1. Prepare your XML</h4>Use one of the <a href="https://github.com/fix8/fix8/tree/master/schema">supplied</a> standard XML
-				<a href="http://www.fixtradingcommunity.org/">FIX</a> schemas or create or modify your
-				own custom schema. You have complete control over every message and field that will be spoken by your interface.</h4>
-				</form>
-				<form class="well form-inline" action="">
-				<h4>2. Compile the XML</h4>Run the Fix8 compiler <a href="http://fix8.org/fix8/html/f8c_8cpp.html">f8c</a> over your XML to generate a set of <code>cpp</code> and <code>hpp</code>
-				source files.  You can control the <code>c++</code> namespace, class prefix and so forth to neatly frame the code in your application.</h4>
-				</form>
-				<form class="well form-inline" action="">
-				<h4>3. Use the generated code</h4>Integrate the generated code into your application. The Fix8 compiler can even generate the session and
-				dispatcher class stubs for you to fill in. Fix8 can support multiple FIX variants within one application if required.</h4>
-				</form>
-				<form class="well form-inline" action="">
-				<h4>4. Implement your application</h4>Your business code goes here. Fix8 provides a robust application framework on which you can build your
-				interface. Fix8 provides all the necessary services to establish a session, send and receive messages, create logs and so forth.
-				Fix8 supports client or server modes.</h4>
-				</form>
-				<form class="well form-inline" action="">
-				<h4>5. Compile your application</h4>Compile all the source in your application. Your compiler will optimise the generated code.</h4>
-				</form>
-				<form class="well form-inline" action="">
-				<h4>6. Link against the Fix8 Runtime Library</h4>Your application is then dynamically linked against the Fix8 Runtime library. Want to publish
-				your software? Under the terms of <a href="http://www.gnu.org/licenses/lgpl.html">LGPL</a> license your code remains yours and
-				<i>does not have to be released</i>.</h4>
-				</form>
-				<form class="well form-inline" action="">
-				<h4>7. Your final application</h4>Use the supported XML configuration system to prepare your interface for connection.</h3>
-				</form>
-			</div>
-			<div class="span12">
-				<p><i class="icon-arrow-right"></i> Take a look at the supplied examples in
-				<a href="http://fix8.org/fix8/html/myfix_8cpp_source.html">myfix.cpp</a>,
-				<a href="http://fix8.org/fix8/html/hftest_8cpp_source.html">hftest.cpp</a> and
-				<a href="http://fix8.org/fix8/html/harness_8cpp_source.html">harness.cpp</a> to see how this is done.</p>
-				<br>
-			</div>
-		</div>
-		<br>
 		<br>
 
 		<div class="pager">
 			<li><a href="index.html">Home</a></li>
 			<li><a href="howitworks.html">How It Works</a></li>
-			<li><a href="downloads.html">Downloads</a></li>
+         <li><a href="downloads.html">Downloads</a></li>
 			<li><a href="faq.html">FAQ</a></li>
 			<li><a href="http://blog.fix8.org">News</a></li>
 			<li><a href="https://fix8engine.atlassian.net/wiki">Wiki</a></li>
