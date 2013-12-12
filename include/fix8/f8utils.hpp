@@ -365,12 +365,12 @@ public:
 /// POSIX regex wrapper class.
 class RegExp
 {
+	const std::string pattern_;
 #if REGEX_SYSTEM == REGEX_REGEX_H
 	/// Maximum length of an error message.
 	enum { MaxErrLen_ = 256 };
 
 	regex_t reg_;
-	const std::string pattern_;
 #elif REGEX_SYSTEM == REGEX_POCO
 	Poco::RegularExpression * _regexp;
 #endif
@@ -393,7 +393,7 @@ public:
 		}
 	}
 #elif REGEX_SYSTEM == REGEX_POCO
-		: _regexp(0)
+		: pattern_(pattern), _regexp()
 	{
 		try
 		{
@@ -474,7 +474,6 @@ public:
          source.erase(match.SubPos(num), match.SubSize(num));
 #endif
       return source;
-
 	}
 
 	/*! Replace a sub-expression with a string.
@@ -513,11 +512,9 @@ public:
 		return source;
 	}
 
-#if REGEX_SYSTEM == REGEX_REGEX_H
 	/*! Get the regular expression pattern.
 	  \return the pattern string */
 	const std::string& GetPattern() const { return pattern_; }
-#endif
 
 	/*! Get the error string (set when Ctor fails to compile).
 	  \return the error string */
