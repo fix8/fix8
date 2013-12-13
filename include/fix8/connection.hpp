@@ -60,7 +60,7 @@ protected:
 	f8_concurrent_queue<T> _msg_queue;
 	Session& _session;
 	ProcessModel _pmodel;
-	dthread_cancellation_token _cancellation_token;
+	dthread_cancellation_token  _cancellation_token;
 
 public:
 	/*! Ctor.
