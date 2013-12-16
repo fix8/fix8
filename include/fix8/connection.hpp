@@ -281,6 +281,41 @@ public:
 		return _session.send_process(from);
 	}
 
+	/*! Place Fix messages on outbound message queue as a single batch.
+	    \param msgs messages to send
+	    \param destroy if true delete after send
+	    \return count of messages written */
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy)
+	{
+		if (msgs.empty())
+			return 0;
+		if (msgs.size() == 1)
+			return write(msgs.front(), destroy) ? 1 : 0;
+		size_t result(0);
+		f8_scoped_spin_lock guard(_con_spl);
+		for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()), litr(eitr-1); itr != eitr; ++itr)
+		{
+			Message* msg = *itr;
+			msg->set_end_of_batch(itr == litr);
+			if (_pmodel == pm_pipeline) // pipeline mode ignores destroy flag
+			{
+				_msg_queue.try_push(msg);
+				++result;
+				continue;
+			}
+			if (_session.send_process(msg))
+				++result;
+		}
+		if (destroy && _pmodel != pm_pipeline)
+		{
+			for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()); itr != eitr; ++itr)
+			{
+				scoped_ptr<Message> smsg(*itr);
+			}
+		}
+		///@todo: need assert on result==msgs.size()
+		return result;
+	}
 	/*! Wait till writer thead has finished.
 	    \return 0 on success */
    int join() { return _pmodel == pm_pipeline ? AsyncSocket<Message *>::join() : -1; }
@@ -367,6 +402,7 @@ protected:
 
 	FIXReader _reader;
 	FIXWriter _writer;
+	bool _secured;
 
 public:
 	/*! Ctor. Initiator.
@@ -374,11 +410,14 @@ public:
 	    \param addr sock address structure
 	    \param session session
 	    \param pmodel process model
-	    \param hb_interval heartbeat interval */
+	    \param hb_interval heartbeat interval
+		 \param secured true for ssl connection
+	*/
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // client
-        const ProcessModel pmodel, const unsigned hb_interval)
+				  const ProcessModel pmodel, const unsigned hb_interval, bool secured)
 		: _sock(sock), _addr(addr), _session(session), _role(cn_initiator), _pmodel(pmodel),
-        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel)
+        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel),
+		  _secured(secured)
 	{
 		_connected = false;
 	}
@@ -388,12 +427,15 @@ public:
 	    \param addr sock address structure
 	    \param session session
 	    \param hb_interval heartbeat interval
-	    \param pmodel process model */
+	    \param pmodel process model
+		 \param secured true for ssl connection
+	*/
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // server
-		const unsigned hb_interval, const ProcessModel pmodel)
+				  const unsigned hb_interval, const ProcessModel pmodel, bool secured)
 		: _sock(sock), _addr(addr), _session(session), _role(cn_acceptor), _pmodel(pmodel),
-		_hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
-		  _reader(sock, session, pmodel), _writer(sock, session, pmodel)
+		  _hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
+		  _reader(sock, session, pmodel), _writer(sock, session, pmodel),
+		  _secured(secured)
 	{
 		_connected = true;
 	}
@@ -408,6 +450,10 @@ public:
 	/*! Get the process model
 	  \return the process model */
 	ProcessModel get_pmodel() const { return _pmodel; }
+
+	/*! Check if this connection is secure
+	  \return true if secure */
+	bool is_secure() const { return _secured; }
 
 	/// Start the reader and writer threads.
 	void start();
@@ -432,6 +478,11 @@ public:
 	    \param from Message to write
 	    \return true on success */
 	virtual bool write(Message& from) { return _writer.write(from); }
+
+	/*! Write messages to the underlying socket as a single batch.
+	    \param from Message to write
+	    \return true on success */
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy) { return _writer.write_batch(msgs, destroy); }
 
 	/*! Write a string message to the underlying socket.
 	    \param from Message (string) to write
@@ -547,10 +598,13 @@ public:
 	    \param session session
 	    \param hb_interval heartbeat interval
 	    \param pmodel process model
-	    \param no_delay set or clear the tcp no delay flag on the socket */
+	    \param no_delay set or clear the tcp no delay flag on the socket
+		 \param secured true for ssl connection
+	*/
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-            Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true)
-        : Connection(sock, addr, session, pmodel, hb_interval), _no_delay(no_delay) {}
+							Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
+							bool secured=false)
+		 : Connection(sock, addr, session, pmodel, hb_interval, secured), _no_delay(no_delay) {}
 
 	/// Dtor.
 	virtual ~ClientConnection() {}
@@ -571,10 +625,13 @@ public:
 	    \param session session
 	    \param hb_interval heartbeat interval
 	    \param pmodel process model
-	    \param no_delay set or clear the tcp no delay flag on the socket */
+	    \param no_delay set or clear the tcp no delay flag on the socket
+		 \param secured true for ssl connection
+	*/
 	ServerConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-			Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true) :
-		Connection(sock, addr, session, hb_interval, pmodel)
+						  Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
+						  bool secured=false	) :
+		Connection(sock, addr, session, hb_interval, pmodel, secured)
 	{
 		_sock->setLinger(false, 0);
 		_sock->setNoDelay(no_delay);

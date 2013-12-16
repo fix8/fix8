@@ -158,7 +158,8 @@ namespace defaults
 		login_retries=3,
 		hb_interval=30,
 		connect_timeout=10,
-		log_rotation=5
+		log_rotation=5,
+		verification_depth=9
 	};
 }
 
@@ -174,12 +175,14 @@ struct LoginParameters
 		const default_appl_ver_id& davi, unsigned connect_timeout, bool reset_seqnum=false,
 		bool always_seqnum_assign=false, bool silent_disconnect=false, bool no_chksum_flag=false,
 		bool permissive_mode_flag=false, bool reliable=false,
-		unsigned recv_buf_sz=0, unsigned send_buf_sz=0, unsigned hb_int=defaults::hb_interval) :
+		unsigned recv_buf_sz=0, unsigned send_buf_sz=0, unsigned hb_int=defaults::hb_interval,
+		const f8String& pem_path=f8String()) :
 			_login_retry_interval(login_retry_interval), _login_retries(login_retries), _connect_timeout(connect_timeout),
 			_reset_sequence_numbers(reset_seqnum), _always_seqnum_assign(always_seqnum_assign),
 			_silent_disconnect(silent_disconnect), _no_chksum_flag(no_chksum_flag),
 			_permissive_mode_flag(permissive_mode_flag), _reliable(reliable),
-			_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz), _hb_int(defaults::hb_interval) {}
+			_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz), _hb_int(defaults::hb_interval),
+			_pem_path(pem_path) {}
 
 	LoginParameters(const LoginParameters& from)
 		: _login_retry_interval(from._login_retry_interval), _login_retries(from._login_retries),
@@ -187,7 +190,8 @@ struct LoginParameters
 		_always_seqnum_assign(from._always_seqnum_assign), _silent_disconnect(from._silent_disconnect),
 		_no_chksum_flag(from._no_chksum_flag), _permissive_mode_flag(from._permissive_mode_flag),
 		_reliable(from._reliable), _davi(from._davi),
-		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz), _hb_int(from._hb_int) {}
+		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz), _hb_int(from._hb_int),
+		_pem_path(from._pem_path){}
 
 	LoginParameters& operator=(const LoginParameters& that)
 	{
@@ -206,6 +210,7 @@ struct LoginParameters
 			_recv_buf_sz = that._recv_buf_sz;
 			_send_buf_sz = that._send_buf_sz;
 			_hb_int = that._hb_int;
+			_pem_path = that._pem_path;
 		}
 		return *this;
 	}
@@ -214,6 +219,7 @@ struct LoginParameters
 	bool _reset_sequence_numbers, _always_seqnum_assign, _silent_disconnect, _no_chksum_flag, _permissive_mode_flag, _reliable;
 	default_appl_ver_id _davi;
 	unsigned _recv_buf_sz, _send_buf_sz, _hb_int;
+	f8String _pem_path;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -253,6 +259,7 @@ protected:
 
 	Timer<Session> _timer;
 	TimerEvent<Session> _hb_processor;
+	std::string _batchmsgs_buffer;
 
 	/// Heartbeat generation service thread method.
 	bool heartbeat_service();
@@ -424,7 +431,7 @@ public:
 	    \return true on success */
 	virtual bool send(Message& msg, const unsigned custom_seqnum=0, const bool no_increment=false);
 
-	/*! Send a batch of messages.
+	/*! Send a batch of messages. During this call HB and test requests are suspended.
 	    \param msgs vector of Message ptrs
 	    \param destroy if true, destroy message after send
 	    \return size_t number of messages sent - if destroy was true those sent messages will have been destroyed

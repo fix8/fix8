@@ -50,7 +50,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _MSC_VER
 #include <strings.h>
 #endif
-#include <regex.h>
 
 #include <fix8/f8includes.hpp>
 
@@ -105,6 +104,7 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
+	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -114,6 +114,7 @@ Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logg
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
 {
 	_timer.start();
+	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -760,18 +761,7 @@ bool Session::send(Message& tosend, const unsigned custom_seqnum, const bool no_
 //-------------------------------------------------------------------------------------------------
 size_t Session::send_batch(const vector<Message *>& msgs, bool destroy)
 {
-	size_t result(0);
-
-	_connection->set_tcp_cork_flag(true);
-	for (vector<Message *>::const_iterator itr(msgs.begin()); itr != msgs.end(); ++itr)
-	{
-		if (!_connection->write(*itr, destroy))
-			break;
-		++result;
-	}
-	_connection->set_tcp_cork_flag(false);
-
-	return result;
+	return _connection->write_batch(msgs, destroy);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -820,36 +810,58 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		//cout << "Sending:" << *msg;
 		modify_outbound(msg);
 		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
-		const size_t enclen(msg->encode(&ptr));
-		if (!_connection->send(ptr, enclen))
+		size_t enclen(msg->encode(&ptr));
+		if (msg->get_end_of_batch())
 		{
-			ostringstream ostr;
-			ostr << "Message write failed: " << enclen << " bytes";
-			log(ostr.str());
-			return false;
-		}
-		_last_sent.now();
-
-		if (_plogger && _plogger->has_flag(Logger::outbound))
-			plog(ptr);
-
-		//cout << "send_process" << endl;
-
-		if (!is_dup)
-		{
-			if (_persist)
+			if (!_batchmsgs_buffer.empty())
 			{
-				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
-				if (!msg->is_admin())
-					_persist->put(_next_send_seq, ptr);
-				_persist->put(_next_send_seq + 1, _next_receive_seq);
-				//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
+				_batchmsgs_buffer.append(ptr);
+				ptr = &_batchmsgs_buffer[0];
+				enclen = _batchmsgs_buffer.size();
 			}
-
-			if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+			if (!_connection->send(ptr, enclen))
 			{
-				++_next_send_seq;
-				//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
+				ostringstream ostr;
+				ostr << "Message write failed: " << enclen << " bytes";
+				log(ostr.str());
+				_batchmsgs_buffer.clear();
+				return false;
+			}
+			_last_sent.now();
+
+			if (_plogger && _plogger->has_flag(Logger::outbound))
+				plog(ptr);
+
+			//cout << "send_process" << endl;
+
+			if (!is_dup)
+			{
+				if (_persist)
+				{
+					f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // not needed for coroutine mode
+					if (!msg->is_admin())
+						_persist->put(_next_send_seq, ptr);
+					_persist->put(_next_send_seq + 1, _next_receive_seq);
+					//cout << "Persisted (send):" << (_next_send_seq + 1) << " and " << _next_receive_seq << endl;
+				}
+				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+				{
+					++_next_send_seq;
+					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
+				}
+			}
+			_batchmsgs_buffer.clear();
+		}
+		else
+		{
+			_batchmsgs_buffer.append(ptr);
+			if (!is_dup)
+			{
+				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)
+				{
+					++_next_send_seq;
+					//cout << "Seqnum now:" << _next_send_seq << " and " << _next_receive_seq << endl;
+				}
 			}
 		}
 	}
@@ -948,4 +960,28 @@ void Session::set_affinity(int core_id)
 	log(ostr.str());
 }
 
+//-------------------------------------------------------------------------------------------------
+#ifdef HAVE_OPENSSL
+void Fix8CertificateHandler::onInvalidCertificate(const void*, Poco::Net::VerificationErrorArgs& errorCert)
+{
+   const Poco::Net::X509Certificate& cert(errorCert.certificate());
+	ostringstream ostr;
+   ostr << "WARNING: Certificate verification failed" << endl;
+   ostr << "----------------------------------------" << endl;
+   ostr << "Issuer Name:  " << cert.issuerName() << endl;
+   ostr << "Subject Name: " << cert.subjectName() << endl;
+   ostr << "The certificate yielded the error: " << errorCert.errorMessage() << endl;
+   ostr << "The error occurred in the certificate chain at position " << errorCert.errorDepth() << endl;
+	GlobalLogger::log(ostr.str());
+	errorCert.setIgnoreError(true);
+}
+
+void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& privateKey)
+{
+	GlobalLogger::log("warning: privatekey passphrase requested and ignored!");
+}
+
+#endif // HAVE_OPENSSL
+
+//-------------------------------------------------------------------------------------------------
 #endif

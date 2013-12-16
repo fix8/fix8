@@ -62,7 +62,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #endif
-#include <regex.h>
 #ifndef _MSC_VER
 #include <alloca.h>
 #endif

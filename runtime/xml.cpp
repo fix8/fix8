@@ -56,7 +56,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <signal.h>
 #include <fcntl.h>
 #include <time.h>
-#include <regex.h>
 
 #include <map>
 #include <set>

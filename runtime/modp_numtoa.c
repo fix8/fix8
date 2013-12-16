@@ -40,6 +40,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <math.h>
+#include <f8dll.h>
 
 // other interesting references on num to string convesion
 // http://www.jb.man.ac.uk/~slowe/cpp/itoa.html

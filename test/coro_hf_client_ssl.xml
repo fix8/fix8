@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<fix8>
+	<session name="DLD1"
+		role="initiator"
+		no_chksum="true"
+		fix_version="1100"
+		active="true"
+		ip="127.0.0.1"
+		port="11002"
+		sender_comp_id="DLD_TEX"
+		target_comp_id="TEX_DLD"
+		login_retry_interval="1000"
+		heartbeat_interval="10"
+		reset_sequence_numbers="false"
+		tcp_nodelay="false"
+		login_retries="100"
+		tcp_recv_buffer="100663296"
+		tcp_send_buffer="100663296"
+		process_model="coroutine"
+		persist="mem0"
+		ssl_context="ssl1" />
+
+	<ssl_context name="ssl1"
+		private_key_file="ssl-cli.pem"
+		verification_mode="none" />
+
+	<persist name="bdb0"
+		type="bdb" dir="./run"
+		db="hf_client.db" />
+
+	<persist name="mem0"
+		type="mem" />
+
+	<xi:include href="./hf_client_include.xml"/>
+</fix8>
+

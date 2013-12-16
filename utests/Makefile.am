@@ -69,6 +69,9 @@ endif
 if TBBSUPPORT
 AM_LDFLAGS += -ltbb
 endif
+if USESSL
+AM_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+endif
 
 built = $(top_srcdir)/runtime
 
