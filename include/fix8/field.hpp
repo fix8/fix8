@@ -165,7 +165,7 @@ public:
 	size_t encode(char *to) const
 	{
 		const char *cur_ptr(to);
-		to += itoa(_fnum, to);
+		to += itoa(_fnum, to, 10);
 		*to++ = default_assignment_separator;
 		to += print(to);
 		*to++ = default_field_separator;
@@ -279,7 +279,7 @@ public:
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
 	  \return number bytes encoded */
-	size_t print(char *to) const { return itoa(_value, to); }
+	size_t print(char *to) const { return itoa(_value, to, 10); }
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -783,9 +783,12 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 	ptr += parseDate(ptr, 2, tms.tm_mon);
 	--tms.tm_mon;
 	ptr += parseDate(ptr, 2, tms.tm_mday);
-	ptr += parseDate(++ptr, 2, tms.tm_hour);
-	ptr += parseDate(++ptr, 2, tms.tm_min);
-	ptr += parseDate(++ptr, 2, tms.tm_sec);
+	++ptr;
+	ptr += parseDate(ptr, 2, tms.tm_hour);
+	++ptr;
+	ptr += parseDate(ptr, 2, tms.tm_min);
+	++ptr;
+	ptr += parseDate(ptr, 2, tms.tm_sec);
    switch(len)
    {
 	case 21: //_with_ms: // 19981231-23:59:59.123
@@ -812,8 +815,10 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len)
    tm tms = {};
 
 	ptr += parseDate(ptr, 2, tms.tm_hour);
-	ptr += parseDate(++ptr, 2, tms.tm_min);
-	ptr += parseDate(++ptr, 2, tms.tm_sec);
+	++ptr;
+	ptr += parseDate(ptr, 2, tms.tm_min);
+	++ptr;
+	ptr += parseDate(ptr, 2, tms.tm_sec);
    switch(len)
    {
 	case 12: // 23:59:59.123

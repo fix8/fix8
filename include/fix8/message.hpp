@@ -886,7 +886,7 @@ public:
 	static f8String fmt_chksum(const unsigned val)
 	{
 		char buf[4] = { '0', '0', '0', 0 };
-		itoa(val, buf + (val > 99 ? 0 : val > 9 ? 1 : 2));
+		itoa<unsigned>(val, buf + (val > 99 ? 0 : val > 9 ? 1 : 2), 10);
 		return f8String(buf);
 	}
 

@@ -65,7 +65,7 @@ struct SslContext
 {
 	std::string _private_key_file; ///< privateKeyFile contains the path to the private key file used for encryption.
 											 ///		Can be empty if no private key file is used.
-	std::string _ceritificte_file; ///< certificateFile contains the path to the certificate file (in PEM format).
+	std::string _certificate_file; ///< certificateFile contains the path to the certificate file (in PEM format).
 											 ///		If the private key and the certificate are stored in the same file, this
 											 ///		can be empty if privateKeyFile is given.
 	std::string _ca_location;		 ///< caLocation contains the path to the file or directory containing the
@@ -78,11 +78,11 @@ struct SslContext
 	bool _valid;
 
 	SslContext(const std::string& private_key_file="", const std::string& certificate_file="", const std::string& ca_location="",
-				  int verification_mode=SSL_VERIFY_PEER, int verification_depth=9, bool loade_default_cas=false,
+				  int verification_mode=SSL_VERIFY_PEER, int verification_depth=9, bool load_default_cas=false,
 				  const std::string& cipher_list="ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH")
-		: _private_key_file(private_key_file), _ceritificte_file(certificate_file), _ca_location(ca_location),
-		  _verification_mode(verification_mode), _verification_depth(verification_depth), _load_default_cas(loade_default_cas),
-		  _cipher_list(cipher_list), _valid(false)
+		: _private_key_file(private_key_file), _certificate_file(certificate_file), _ca_location(ca_location),
+		  _verification_mode(verification_mode), _verification_depth(verification_depth), _load_default_cas(load_default_cas),
+		  _cipher_list(cipher_list), _valid()
 	{
 	}
 };
@@ -348,10 +348,12 @@ public:
 	target_comp_id get_target_comp_id(const XmlElement *from) const
 		{ target_comp_id to; return get_string_field(from, "target_comp_id", to); }
 
+#ifdef HAVE_OPENSSL
 	/*! Extract the SSL context from a ssl_context entity.
 	  \param from xml entity to search
 	  \return ssl context */
 	SslContext get_ssl_context(const XmlElement *from) const;
+#endif
 
 	/*! Create a new persister object from a session entity.
 	  \param from xml entity to search

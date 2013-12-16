@@ -451,6 +451,10 @@ public:
 	  \return the process model */
 	ProcessModel get_pmodel() const { return _pmodel; }
 
+	/*! Check if this connection is secure
+	  \return true if secure */
+	bool is_secure() const { return _secured; }
+
 	/// Start the reader and writer threads.
 	void start();
 

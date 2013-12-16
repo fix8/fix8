@@ -50,7 +50,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _MSC_VER
 #include <strings.h>
 #endif
-#include <regex.h>
 
 #ifdef HAVE_OPENSSL
 #include <Poco/Net/Context.h>
@@ -262,22 +261,21 @@ ProcessModel Configuration::get_process_model(const XmlElement *from) const
 }
 
 //-------------------------------------------------------------------------------------------------
+#ifdef HAVE_OPENSSL
 SslContext Configuration::get_ssl_context(const XmlElement *from) const
 {
 	SslContext target;
 	string name;
-	const XmlElement *which=0;
+	const XmlElement *which;
 	if (from && from->GetAttr("ssl_context", name) && (which = find_ssl_context(name)))
 	{
-		static std::string empty, chipher("ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"), relaxed("relaxed");
+		static std::string empty, cipher("ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"), relaxed("relaxed");
 		target._private_key_file = which->FindAttrRef("private_key_file", empty);
-		target._ceritificte_file = which->FindAttrRef("ceritificte_file", empty);
+		target._certificate_file = which->FindAttrRef("ceritificte_file", empty);
 		target._ca_location = which->FindAttrRef("ca_location", empty);
 		target._verification_depth = which->FindAttr("verification_depth", static_cast<int>(defaults::verification_depth));
 		target._load_default_cas = which->FindAttr("load_default_cas", false);
-		target._cipher_list = which->FindAttrRef("cipher_list", chipher);
-		target._verification_mode = SSL_VERIFY_PEER;
-#ifdef HAVE_OPENSSL
+		target._cipher_list = which->FindAttrRef("cipher_list", cipher);
 		name = which->FindAttrRef("verification_mode", relaxed);
 		if (name == "none")
 			target._verification_mode = Poco::Net::Context::VERIFY_NONE;
@@ -287,8 +285,10 @@ SslContext Configuration::get_ssl_context(const XmlElement *from) const
 			target._verification_mode = Poco::Net::Context::VERIFY_STRICT;
 		else if (name == "once")
 			target._verification_mode = Poco::Net::Context::VERIFY_ONCE;
-#endif
+		else
+			target._verification_mode = SSL_VERIFY_PEER;
 		target._valid = true;
 	}
 	return target;
 }
+#endif

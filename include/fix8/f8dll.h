@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 /*
 
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
@@ -16,7 +16,6 @@ even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOS
 You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
 If not, see <http://www.gnu.org/licenses/>.
 
-BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
 COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
 KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
@@ -33,39 +32,18 @@ THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), E
 HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
-//-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
+//-------------------------------------------------------------------------------------------------
+#ifndef _F8DLL_H_INCLUDED_
+#define _F8DLL_H_INCLUDED_
 
-#ifndef _MSC_VER
-#include <strings.h>
+#if defined(_MSC_VER)
+    #if defined(BUILD_F8API)
+	#define F8API __declspec(dllexport)
+    #else
+	#define F8API __declspec(dllimport)
+    #endif
+#else
+    #define F8API
 #endif
 
-#include <fix8/f8includes.hpp>
-
-//-------------------------------------------------------------------------------------------------
-using namespace FIX8;
-using namespace std;
-
-//-------------------------------------------------------------------------------------------------
-ostream& FIX8::operator<<(ostream& os, const FieldTrait& what)
-{
-	return os << "Tag: " << what._fnum << " Type: " << what._ftype << " Flags: " << what._field_traits.get();
-}
-
-//-------------------------------------------------------------------------------------------------
-ostream& FIX8::operator<<(ostream& os, const FieldTraits& what)
-{
-	copy(what.get_presence().begin(), what.get_presence().end(), ostream_iterator<FieldTrait>(os, "\n"));
-	return os;
-}
-
+#endif

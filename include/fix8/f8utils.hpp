@@ -43,9 +43,16 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _MSC_VER
 # include <sys/ioctl.h>
 # include <termios.h>
+#else
+# include <io.h>
 #endif
 
+#if (REGEX_SYSTEM == REGEX_REGEX_H)
 #include <regex.h>
+#elif (REGEX_SYSTEM == REGEX_POCO)
+#include <Poco/RegularExpression.h>
+#include <Poco/Exception.h>
+#endif
 
 namespace FIX8 {
 
@@ -155,13 +162,13 @@ inline unsigned rothash(unsigned result, unsigned value)
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator% (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 		const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
-			{
+{
 #ifdef _MSC_VER
-				return _stricmp(__lhs.c_str(), __rhs.c_str()) == 0;
+	return _stricmp(__lhs.c_str(), __rhs.c_str()) == 0;
 #else
-				return strcasecmp(__lhs.c_str(), __rhs.c_str()) == 0;
+	return strcasecmp(__lhs.c_str(), __rhs.c_str()) == 0;
 #endif
-			}
+}
 
 /*! case insensitive char* == std::string operator
   \tparam _CharT char type
@@ -183,13 +190,13 @@ template<typename _CharT, typename _Traits, typename _Alloc>
   \return true if strings are equivalent */
 template<typename _CharT, typename _Traits, typename _Alloc>
 	inline bool operator% (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs, const _CharT* __rhs)
-		{
+{
 #ifdef _MSC_VER
-			return _stricmp(__lhs.c_str(), __rhs) == 0;
+	return _stricmp(__lhs.c_str(), __rhs) == 0;
 #else
-			return strcasecmp(__lhs.c_str(), __rhs) == 0;
+	return strcasecmp(__lhs.c_str(), __rhs) == 0;
 #endif
-		}
+}
 
 /*! case insensitive std::string < std::string operator
   \tparam _CharT char type
@@ -199,15 +206,15 @@ template<typename _CharT, typename _Traits, typename _Alloc>
   \param __rhs right hand value
   \return true if lhs < rhs */
 template<typename _CharT, typename _Traits, typename _Alloc>
-	inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
-		const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
-			{
+inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
+	const std::basic_string<_CharT, _Traits, _Alloc>& __rhs)
+{
 #ifdef _MSC_VER
-				return _stricmp(__lhs.c_str(), __rhs.c_str()) < 0;
+	return _stricmp(__lhs.c_str(), __rhs.c_str()) < 0;
 #else
-				return strcasecmp(__lhs.c_str(), __rhs.c_str()) < 0;
+	return strcasecmp(__lhs.c_str(), __rhs.c_str()) < 0;
 #endif
-			}
+}
 
 //----------------------------------------------------------------------------------------
 /// C++11 inspired scoped pointer.
@@ -296,34 +303,60 @@ public:
 /// A class to contain regex matches using RegExp.
 class RegMatch
 {
+#if REGEX_SYSTEM == REGEX_REGEX_H
 	/// Maximum number of sub-expressions.
 	enum { SubLimit_ = 32 };
-
 	regmatch_t subexprs_[SubLimit_];
 	int subCnt_;
+#elif REGEX_SYSTEM == REGEX_POCO
+	Poco::RegularExpression::MatchVec _matchVec;
+#endif
 
 public:
 	/// Ctor.
-	RegMatch() : subexprs_(), subCnt_() {}
+	RegMatch()
+#if REGEX_SYSTEM == REGEX_REGEX_H
+		: subexprs_(), subCnt_()
+#endif
+    {}
 
 	/// Ctor.
 	virtual ~RegMatch() {}
 
 	/*! Get the number of sub-expressions found.
 	  \return number of sub-expression */
-	unsigned SubCnt() const { return subCnt_; }
+	unsigned SubCnt() const
+	{
+#if REGEX_SYSTEM == REGEX_REGEX_H
+		return subCnt_;
+#elif REGEX_SYSTEM == REGEX_POCO
+		return static_cast<unsigned>(_matchVec.size());
+#endif
+	}
 
 	/*! Get the size (length) of the specified sub-expression.
 	  \param which sub-expression index (0 based)
 	  \return size of sub-expression, -1 if not found */
 	size_t SubSize(const int which=0) const
-		{ return which < subCnt_ ? subexprs_[which].rm_eo - subexprs_[which].rm_so : -1; }
+	{
+#if REGEX_SYSTEM == REGEX_REGEX_H
+		return which < subCnt_ ? subexprs_[which].rm_eo - subexprs_[which].rm_so : -1;
+#elif REGEX_SYSTEM == REGEX_POCO
+		return which < static_cast<int>(_matchVec.size()) ? _matchVec[which].length : -1;
+#endif
+	}
 
 	/*! Get the starting offset of the specified sub-expression.
 	  \param which sub-expression index (0 based)
 	  \return offset of the sub-expression, -1 if not found */
 	unsigned SubPos(const int which=0) const
-		{ return which < subCnt_ ? subexprs_[which].rm_so : -1; }
+	{
+#if REGEX_SYSTEM == REGEX_REGEX_H
+		return which < subCnt_ ? subexprs_[which].rm_so : -1;
+#elif REGEX_SYSTEM == REGEX_POCO
+		return which < static_cast<int>(_matchVec.size()) ? static_cast<int>(_matchVec[which].offset) : -1;
+#endif
+	}
 
 	friend class RegExp;
 };
@@ -332,11 +365,15 @@ public:
 /// POSIX regex wrapper class.
 class RegExp
 {
+	const std::string pattern_;
+#if REGEX_SYSTEM == REGEX_REGEX_H
 	/// Maximum length of an error message.
 	enum { MaxErrLen_ = 256 };
 
 	regex_t reg_;
-	const std::string pattern_;
+#elif REGEX_SYSTEM == REGEX_POCO
+	Poco::RegularExpression * _regexp;
+#endif
 	std::string errString;
 	int errCode_;
 
@@ -344,7 +381,9 @@ public:
 	/*! Ctor.
 	  \param pattern regular expression to compile. errCode and errString set on error.
 	  \param flags POSIX regcomp flags */
-	RegExp(const char *pattern, const int flags=0) : pattern_(pattern)
+	RegExp(const char *pattern, const int flags=0)
+#if REGEX_SYSTEM == REGEX_REGEX_H
+		: pattern_(pattern)
 	{
 		if ((errCode_ = regcomp(&reg_, pattern_.c_str(), REG_EXTENDED|flags)) != 0)
 		{
@@ -353,9 +392,31 @@ public:
 			errString = rbuf;
 		}
 	}
+#elif REGEX_SYSTEM == REGEX_POCO
+		: pattern_(pattern), _regexp()
+	{
+		try
+		{
+			_regexp = new Poco::RegularExpression(pattern, flags, true);
+		}
+		catch(const Poco::RegularExpressionException& ex)
+		{
+			errCode_ = ex.code();
+			errString = ex.message();
+		}
+	}
+#endif
 
 	/// Dtor. Destroys internal compiled expression.
-	virtual ~RegExp() { if (errCode_ == 0) regfree(&reg_); }
+	virtual ~RegExp()
+	{
+#if REGEX_SYSTEM == REGEX_REGEX_H
+		if (errCode_ == 0)
+			regfree(&reg_);
+#elif REGEX_SYSTEM == REGEX_POCO
+		delete _regexp;
+#endif
+	}
 
 	/*! Search a string.
 	  \param match reference to a RegMatch object
@@ -365,11 +426,16 @@ public:
 	  \return number of sub-expressions found (0=none) */
 	int SearchString(RegMatch& match, const std::string& source, const int subExpr, const int offset=0) const
 	{
+#if REGEX_SYSTEM == REGEX_REGEX_H
 		match.subCnt_ = 0;
 		if (regexec(&reg_, source.c_str() + offset, subExpr <= RegMatch::SubLimit_ ? subExpr : RegMatch::SubLimit_, match.subexprs_, 0) == 0)
 			while (match.subCnt_ < subExpr && match.subexprs_[match.subCnt_].rm_so != -1)
 				++match.subCnt_;
 		return match.subCnt_;
+#elif REGEX_SYSTEM == REGEX_POCO
+		match._matchVec.clear();
+		return _regexp ? _regexp->match(source, offset, match._matchVec) : 0;
+#endif
 	}
 
 	/*! Extract a sub-expression.
@@ -381,11 +447,16 @@ public:
 	  \return the target string */
 	static std::string& SubExpr(RegMatch& match, const std::string& source, std::string& target, const int offset=0, const int num=0)
 	{
+#if REGEX_SYSTEM == REGEX_REGEX_H
 		if (num < match.subCnt_)
 			target = source.substr(offset + match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
-		else
-			target.empty();
-		return target;
+#elif REGEX_SYSTEM == REGEX_POCO
+      if (num < static_cast<int>(match.SubCnt()))
+         target = source.substr(offset + match.SubPos(num), match.SubSize(num));
+#endif
+      else
+         target.empty();
+      return target;
 	}
 
 	/*! Erase a sub-expression from a string.
@@ -395,9 +466,14 @@ public:
 	  \return the source string */
 	static std::string& Erase(RegMatch& match, std::string& source, const int num=0)
 	{
+#if REGEX_SYSTEM == REGEX_REGEX_H
 		if (num < match.subCnt_)
 			source.erase(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so);
-		return source;
+#elif REGEX_SYSTEM == REGEX_POCO
+      if (num < static_cast<int>(match.SubCnt()))
+         source.erase(match.SubPos(num), match.SubSize(num));
+#endif
+      return source;
 	}
 
 	/*! Replace a sub-expression with a string.
@@ -408,8 +484,13 @@ public:
 	  \return the source string */
 	static std::string& Replace(RegMatch& match, std::string& source, const std::string& with, const int num=0)
 	{
+#if REGEX_SYSTEM == REGEX_REGEX_H
 		if (num < match.subCnt_)
 			source.replace(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so, with);
+#elif REGEX_SYSTEM == REGEX_POCO
+      if (num < static_cast<int>(match.SubCnt()))
+         source.replace(match.SubPos(num), match.SubSize(num), with);
+#endif
 		return source;
 	}
 
@@ -421,8 +502,13 @@ public:
 	  \return the source string */
 	static std::string& Replace(RegMatch& match, std::string& source, const char with, const int num=0)
 	{
+#if REGEX_SYSTEM == REGEX_REGEX_H
 		if (num < match.subCnt_)
 			source.replace(match.subexprs_[num].rm_so, match.subexprs_[num].rm_eo - match.subexprs_[num].rm_so, 1, with);
+#elif REGEX_SYSTEM == REGEX_POCO
+      if (num < static_cast<int>(match.SubCnt()))
+         source.replace(match.SubPos(num), match.SubSize(num), 1, with);
+#endif
 		return source;
 	}
 
@@ -542,7 +628,7 @@ T fast_atoi(const char *str, const char term='\0')
     \param base base
     \return size in bytes encoded */
 template<typename T>
-inline size_t itoa(T value, char *result, const T base=10)
+inline size_t itoa(T value, char *result, int base)
 {
 	// check that the base if valid
 	if (base < 2 || base > 36)
@@ -565,6 +651,43 @@ inline size_t itoa(T value, char *result, const T base=10)
 	// Apply negative sign
 	if (tmp_value < 0)
 		*ptr++ = '-';
+	*ptr-- = 0;
+	while(ptr1 < ptr)
+	{
+		const char tmp_char(*ptr);
+		*ptr-- = *ptr1;
+		*ptr1++ = tmp_char;
+	}
+	return ::strlen(result);
+}
+
+/// Fast itoa - unsigned int specialisation
+/*! \tparam T source type
+    \param value source value
+    \param result target
+    \param base base
+    \return size in bytes encoded */
+template<>
+inline size_t itoa<unsigned int>(unsigned int value, char *result, int base)
+{
+	// check that the base if valid
+	if (base < 2 || base > 36)
+	{
+		*result = 0;
+		return 0;
+	}
+
+	char *ptr(result), *ptr1(result);
+	unsigned int tmp_value;
+
+	do
+	{
+		tmp_value = value;
+		value /= base;
+		*ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
+	}
+	while (value);
+
 	*ptr-- = 0;
 	while(ptr1 < ptr)
 	{
@@ -1161,4 +1284,3 @@ public:
 } // namespace FIX8
 
 #endif // _F8_UTILS_HPP_
-

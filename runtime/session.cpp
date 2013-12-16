@@ -50,7 +50,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _MSC_VER
 #include <strings.h>
 #endif
-#include <regex.h>
 
 #include <fix8/f8includes.hpp>
 
@@ -961,4 +960,28 @@ void Session::set_affinity(int core_id)
 	log(ostr.str());
 }
 
+//-------------------------------------------------------------------------------------------------
+#ifdef HAVE_OPENSSL
+void Fix8CertificateHandler::onInvalidCertificate(const void*, Poco::Net::VerificationErrorArgs& errorCert)
+{
+   const Poco::Net::X509Certificate& cert(errorCert.certificate());
+	ostringstream ostr;
+   ostr << "WARNING: Certificate verification failed" << endl;
+   ostr << "----------------------------------------" << endl;
+   ostr << "Issuer Name:  " << cert.issuerName() << endl;
+   ostr << "Subject Name: " << cert.subjectName() << endl;
+   ostr << "The certificate yielded the error: " << errorCert.errorMessage() << endl;
+   ostr << "The error occurred in the certificate chain at position " << errorCert.errorDepth() << endl;
+	GlobalLogger::log(ostr.str());
+	errorCert.setIgnoreError(true);
+}
+
+void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& privateKey)
+{
+	GlobalLogger::log("warning: privatekey passphrase requested and ignored!");
+}
+
+#endif // HAVE_OPENSSL
+
+//-------------------------------------------------------------------------------------------------
 #endif
