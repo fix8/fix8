@@ -266,7 +266,7 @@ SslContext Configuration::get_ssl_context(const XmlElement *from) const
 {
 	SslContext target;
 	string name;
-	const XmlElement *which=0;
+	const XmlElement *which;
 	if (from && from->GetAttr("ssl_context", name) && (which = find_ssl_context(name)))
 	{
 		static std::string empty, cipher("ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"), relaxed("relaxed");
@@ -276,7 +276,6 @@ SslContext Configuration::get_ssl_context(const XmlElement *from) const
 		target._verification_depth = which->FindAttr("verification_depth", static_cast<int>(defaults::verification_depth));
 		target._load_default_cas = which->FindAttr("load_default_cas", false);
 		target._cipher_list = which->FindAttrRef("cipher_list", cipher);
-		target._verification_mode = SSL_VERIFY_PEER;
 		name = which->FindAttrRef("verification_mode", relaxed);
 		if (name == "none")
 			target._verification_mode = Poco::Net::Context::VERIFY_NONE;
@@ -286,6 +285,8 @@ SslContext Configuration::get_ssl_context(const XmlElement *from) const
 			target._verification_mode = Poco::Net::Context::VERIFY_STRICT;
 		else if (name == "once")
 			target._verification_mode = Poco::Net::Context::VERIFY_ONCE;
+		else
+			target._verification_mode = SSL_VERIFY_PEER;
 		target._valid = true;
 	}
 	return target;

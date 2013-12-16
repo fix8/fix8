@@ -41,6 +41,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifdef HAVE_OPENSSL
 #include <Poco/Net/SecureStreamSocket.h>
 #include <Poco/Net/SecureServerSocket.h>
+#include <Poco/SharedPtr.h>
+#include <Poco/Net/PrivateKeyPassphraseHandler.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
+#include <Poco/Net/SSLManager.h>
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -48,18 +52,57 @@ namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
 #ifdef HAVE_OPENSSL
+
+/// A Fix8CertificateHandler is invoked whenever an error occurs verifying the certificate.
+/// The certificate is printed to the global logger with an error message
+class Fix8CertificateHandler: public Poco::Net::InvalidCertificateHandler
+{
+public:
+   /// Creates the Fix8CertificateHandler.
+   Fix8CertificateHandler(bool handleErrorsOnServerSide) : Poco::Net::InvalidCertificateHandler(handleErrorsOnServerSide) {}
+
+   /// Destroys the Fix8CertificateHandler.
+   virtual ~Fix8CertificateHandler() {}
+
+	/// Prints the certificate to stdout and waits for user input on the console
+	/// to decide if a certificate should be accepted/rejected.
+   void onInvalidCertificate(const void* pSender, Poco::Net::VerificationErrorArgs& errorCert);
+};
+
+/// An implementation of PrivateKeyPassphraseHandler that
+/// prints an error and returns no phrase
+/// Passphrases cannot be given when negotiating SSL sessions in Fix8
+class Fix8PassPhraseHandler : public Poco::Net::PrivateKeyPassphraseHandler
+{
+public:
+	/// Creates the Fix8PassPhraseHandler.
+   Fix8PassPhraseHandler(bool server) : Poco::Net::PrivateKeyPassphraseHandler(server) {}
+
+	/// Destroys the Fix8PassPhraseHandler.
+   ~Fix8PassPhraseHandler() {}
+
+   void onPrivateKeyRequested(const void* pSender, std::string& privateKey);
+};
+
+//-------------------------------------------------------------------------------------------------
 struct PocoSslContext
 {
 	PocoSslContext(const SslContext& ctx, bool client)
 	{
 		if (ctx._valid)
 		{
+			Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> phrase_handler(new Fix8PassPhraseHandler(!client));
+			Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> cert_handler(new Fix8CertificateHandler(!client));
 			Poco::Net::initializeSSL();
 			_context = new Poco::Net::Context(
 				client ? Poco::Net::Context::CLIENT_USE : Poco::Net::Context::SERVER_USE,
 				ctx._private_key_file, ctx._certificate_file, ctx._ca_location,
 				static_cast<Poco::Net::Context::VerificationMode>(ctx._verification_mode), ctx._verification_depth,
 				ctx._load_default_cas, ctx._cipher_list);
+			if (client)
+				Poco::Net::SSLManager::instance().initializeClient(phrase_handler, cert_handler, _context);
+			else
+				Poco::Net::SSLManager::instance().initializeServer(phrase_handler, cert_handler, _context);
 		}
 	}
 

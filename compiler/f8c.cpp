@@ -219,6 +219,9 @@ int main(int argc, char **argv)
 #if defined CODECTIMING
          cout << "CODECTIMING: " << CODECTIMING << endl;
 #endif
+#if defined HAVE_OPENSSL
+         cout << "HAVE_OPENSSL: " << HAVE_OPENSSL << endl;
+#endif
 			return 0;
 		case 'V': verbose = true; break;
 		case 'f': gen_fields = true; break;

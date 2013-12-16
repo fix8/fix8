@@ -85,7 +85,6 @@ class FIXReader : public AsyncSocket<f8String>
 {
     int callback_processor();
 
-    size_t _bg_sz;
     bool read(f8String& to);
 
     int sockRead(char *where, size_t sz) { return 0; }
@@ -96,7 +95,7 @@ protected:
 public:
     /// Ctor
     FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-        : AsyncSocket<f8String>(sock, session, pmodel), _bg_sz()
+        : AsyncSocket<f8String>(sock, session, pmodel)
     {
         set_preamble_sz();
     }
@@ -362,13 +361,12 @@ public:
 class ClientConnection : public Connection
 {
     Poco::Net::SocketAddress _addr;
-    const bool _no_delay;
 
 public:
     /// Ctor
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session,
 		 const ProcessModel pmodel=pm_pipeline, const bool no_delay=true)
-        : Connection(sock, session, pmodel), _addr(addr), _no_delay(no_delay) {}
+        : Connection(sock, session, pmodel), _addr(addr) {}
 
     /// Dtor
     virtual ~ClientConnection() {}

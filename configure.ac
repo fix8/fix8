@@ -197,8 +197,52 @@ AM_CONDITIONAL(LINK_RT, [test x$oktolinkrt = xyes])
 AC_CHECK_HEADERS([getopt.h fcntl.h netdb.h regex.h signal.h string.h sys/time.h \
 	arpa/inet.h sys/stat.h sys/types.h select.h \
 	sys/wait.h netinet/in.h getopt.h limits.h sys/ioctl.h unistd.h \
-	sys/socket.h time.h syslog.h termios.h alloca.h
-	])
+	sys/socket.h time.h syslog.h termios.h alloca.h], [], [],
+	[[
+     #ifdef HAVE_GETOPT_H
+     # include <getop.h>
+     #endif
+     #ifdef HAVE_FCNTL_H
+     # include <fcntl.h>
+     #endif
+     #ifdef HAVE_NETDB_H
+     # include <netdb.h>
+     #endif
+     #ifdef HAVE_REGEX_H
+     # include <regex.h>
+     #endif
+     #ifdef HAVE_SIGNAL_H
+     # include <signal.h>
+     #endif
+     #ifdef HAVE_ARPA_INET_H
+     # include <arpa/inet.h>
+     #endif
+     #ifdef HAVE_NETINET_IN_H
+     # include <netinet/in.h>
+     #endif
+     #ifdef HAVE_LIMITS_H
+     # include <limits.h>
+     #endif
+     #ifdef HAVE_SYS_IOCTL_H
+     # include <sys/ioctl.h>
+     #endif
+     #ifdef HAVE_SYS_SOCKET_H
+     # include <sys/socket.h>
+     #endif
+     #ifdef HAVE_TIME_H
+     # include <time.h>
+     #endif
+     #ifdef HAVE_SYSLOG_H
+     # include <syslog.h>
+     #endif
+     #ifdef HAVE_TERMIOS_H
+     # include <termios.h>
+     #endif
+     #ifdef HAVE_ALLOCA_H
+     # include <alloca.h>
+     #endif
+	]])
+
 
 AC_DEFINE_UNQUOTED(RESERVE_PERCENT, 30, [Percentage of message fields to reserve for additional fields])
 AC_ARG_WITH(reservepercent,
