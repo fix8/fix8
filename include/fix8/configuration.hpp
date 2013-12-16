@@ -82,7 +82,7 @@ struct SslContext
 				  const std::string& cipher_list="ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH")
 		: _private_key_file(private_key_file), _certificate_file(certificate_file), _ca_location(ca_location),
 		  _verification_mode(verification_mode), _verification_depth(verification_depth), _load_default_cas(load_default_cas),
-		  _cipher_list(cipher_list), _valid(false)
+		  _cipher_list(cipher_list), _valid()
 	{
 	}
 };

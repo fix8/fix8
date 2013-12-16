@@ -628,7 +628,7 @@ T fast_atoi(const char *str, const char term='\0')
     \param base base
     \return size in bytes encoded */
 template<typename T>
-inline size_t itoa(T value, char *result, const T base=10)
+inline size_t itoa(T value, char *result, int base)
 {
 	// check that the base if valid
 	if (base < 2 || base > 36)
@@ -651,6 +651,43 @@ inline size_t itoa(T value, char *result, const T base=10)
 	// Apply negative sign
 	if (tmp_value < 0)
 		*ptr++ = '-';
+	*ptr-- = 0;
+	while(ptr1 < ptr)
+	{
+		const char tmp_char(*ptr);
+		*ptr-- = *ptr1;
+		*ptr1++ = tmp_char;
+	}
+	return ::strlen(result);
+}
+
+/// Fast itoa - unsigned int specialisation
+/*! \tparam T source type
+    \param value source value
+    \param result target
+    \param base base
+    \return size in bytes encoded */
+template<>
+inline size_t itoa<unsigned int>(unsigned int value, char *result, int base)
+{
+	// check that the base if valid
+	if (base < 2 || base > 36)
+	{
+		*result = 0;
+		return 0;
+	}
+
+	char *ptr(result), *ptr1(result);
+	unsigned int tmp_value;
+
+	do
+	{
+		tmp_value = value;
+		value /= base;
+		*ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
+	}
+	while (value);
+
 	*ptr-- = 0;
 	while(ptr1 < ptr)
 	{

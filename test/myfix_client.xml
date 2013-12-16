@@ -17,7 +17,7 @@
 				tcp_nodelay="true"
 				always_seqnum_assign="false"
 				/* server_group="FO_Group0" if present means use failover */
-				process_mode="threaded"
+				process_model="threaded"
 				login_retries="5"
 				persist="file0" />
 
