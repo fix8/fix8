@@ -1182,6 +1182,7 @@ typedef EnumType<FieldTrait::ft_MonthYear> MonthYear;
 template<const unsigned short field>
 class Field<MonthYear, field> : public BaseField
 {
+	size_t _sz;
 	Tickval _value;
 
 public:
@@ -1193,22 +1194,22 @@ public:
 
 	/// Copy Ctor.
 	/* \param from field to copy */
-	Field (const Field& from) : BaseField(field), _value(from._value) {}
+	Field (const Field& from) : BaseField(field), _sz(from._sz), _value(from._value) {}
 
 	/*! Construct from string ctor.
 	  \param from string to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from.data(), from.size())) {}
+	Field (const f8String& from, const RealmBase *rlm=0) : BaseField(field), _sz(from.size()), _value(date_parse(from.data(), _sz)) {}
 
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _value(date_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _sz(::strlen(from)), _value(date_parse(from, ::strlen(from))) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
 	  \param rlm tm struct with broken out values */
-	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _value(time_to_epoch(from) * Tickval::billion) {}
+	Field (const tm& from, const RealmBase *rlm=0) : BaseField(field), _sz(6), _value(time_to_epoch(from) * Tickval::billion) {}
 
 	/// Assignment operator.
 	/*! \param that field to assign from
@@ -1252,7 +1253,7 @@ public:
 	/*! Print this field to the supplied buffer.
 	  \param to buffer to print to
 	  \return number bytes encoded */
-	size_t print(char *to) const { return date_time_format(_value, to, _date_only); }
+	size_t print(char *to) const { return date_time_format(_value, to, _sz == 6 ? _short_date_only : _date_only); }
 };
 
 //-------------------------------------------------------------------------------------------------
