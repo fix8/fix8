@@ -1204,7 +1204,7 @@ public:
 	/*! Construct from char * ctor.
 	  \param from char * to construct field from
 	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _sz(::strlen(from)), _value(date_parse(from, ::strlen(from))) {}
+	Field (const char *from, const RealmBase *rlm=0) : BaseField(field), _sz(::strlen(from)), _value(date_parse(from, _sz)) {}
 
 	/*! Construct from tm struct
 	  \param from string to construct field from
