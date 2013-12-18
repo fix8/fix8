@@ -36,13 +36,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _FIX8_INCLUDES_HPP_
 # define _FIX8_INCLUDES_HPP_
 
-#ifdef BUILD_F8API
-#define F8API __declspec(dllexport)
-#else
-#define F8API __declspec(dllimport)
-#endif
-
-#include <fix8/f8config.h>
+#include <f8dll.h>
+#include <f8config.h>
 
 #ifdef HAS_TR1_UNORDERED_MAP
 #include <tr1/unordered_map>
@@ -50,6 +45,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #ifdef PROFILING_BUILD
 #include <sys/gmon.h>
+#endif
+
+#if (REGEX_SYSTEM == REGEX_REGEX_H)
+#include <regex.h>
+#elif (REGEX_SYSTEM == REGEX_POCO)
+#include <Poco/RegularExpression.h>
 #endif
 
 #include <errno.h>

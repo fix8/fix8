@@ -12,7 +12,7 @@
 				tcp_nodelay="true"
 				reset_sequence_numbers="false"
 				ignore_logon_sequence_check="true"
-				process_mode="threaded"
+				process_model="threaded"
 				silent_disconnect="false"
 				persist="file0"/>
 

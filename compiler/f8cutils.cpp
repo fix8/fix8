@@ -45,7 +45,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iterator>
 #include <algorithm>
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 #include <cctype>
@@ -465,4 +464,3 @@ ostream& FIX8::operator<<(ostream& os, const MessageSpec& what)
 
 	return os;
 }
-

@@ -45,7 +45,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iterator>
 #include <algorithm>
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 #include <cctype>
@@ -328,4 +327,3 @@ void dump_components(const Components& components, ostream& outf)
 
 	outf << string(depth * 2, ' ') << "</components>" << endl;
 }
-
