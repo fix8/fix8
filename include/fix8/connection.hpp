@@ -342,8 +342,9 @@ public:
 	/*! Send message over socket.
 	    \param data char * buffer to send
 	    \param remaining number of bytes
+	    \param nb - if true, don't block
 	    \return number of bytes sent */
-	int send(const char *data, size_t remaining)
+	int send(const char *data, size_t remaining, bool nb=false)
 	{
 		unsigned wrdone(0);
 
@@ -357,7 +358,11 @@ public:
 					|| errno == EWOULDBLOCK
 #endif
 				)
+				{
+					if (nb)
+						return wrdone;
 					continue;
+				}
 				throw PeerResetConnection("send: connection gone");
 			}
 

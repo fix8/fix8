@@ -341,14 +341,10 @@ application_call:
 //-------------------------------------------------------------------------------------------------
 void Session::compid_check(const unsigned seqnum, const Message *msg)
 {
-	sender_comp_id sci;
-	msg->Header()->get(sci);
-	target_comp_id tci;
-	msg->Header()->get(tci);
-	if (!_sid.same_sender_comp_id(tci))
-		throw BadCompidId(sci());
-	if (!_sid.same_target_comp_id(sci))
-		throw BadCompidId(tci());
+	if (!_sid.same_sender_comp_id(msg->Header()->get<target_comp_id>()->get()))
+		throw BadCompidId(msg->Header()->get<target_comp_id>()->get());
+	if (!_sid.same_target_comp_id(msg->Header()->get<sender_comp_id>()->get()))
+		throw BadCompidId(msg->Header()->get<sender_comp_id>()->get());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -971,7 +967,7 @@ void Fix8CertificateHandler::onInvalidCertificate(const void*, Poco::Net::Verifi
    ostr << "Issuer Name:  " << cert.issuerName() << endl;
    ostr << "Subject Name: " << cert.subjectName() << endl;
    ostr << "The certificate yielded the error: " << errorCert.errorMessage() << endl;
-   ostr << "The error occurred in the certificate chain at position " << errorCert.errorDepth() << endl;
+   ostr << "The error occurred in the certificate chain at position " << errorCert.errorDepth();
 	GlobalLogger::log(ostr.str());
 	errorCert.setIgnoreError(true);
 }
@@ -985,3 +981,4 @@ void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& priv
 
 //-------------------------------------------------------------------------------------------------
 #endif
+/* vim: set ts=3 sw=3 tw=0 noet :*/

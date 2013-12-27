@@ -185,7 +185,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Field template. There will ONLY be template specialisations of this class using Int2Type idiom.
+/// Field template. There will ONLY be partial template specialisations of this class.
 /*! \tparam T field type
     \tparam field field number (fix tag) */
 template<typename T, const unsigned short field>

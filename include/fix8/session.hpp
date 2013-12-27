@@ -105,19 +105,19 @@ public:
 	    \return target_comp_id */
 	const f8String& get_id() const { return _id; }
 
-	/*! Targetcompid equivalence operator.
+	/*! Targetcompid equivalence function..
 	    \return true if both Targetcompids are the same */
 	bool same_sender_comp_id(const target_comp_id& targetCompID) const { return targetCompID() == _senderCompID(); }
 
-	/*! Sendercompid equivalence operator.
+	/*! Sendercompid equivalence function..
 	    \return true if both Sendercompids are the same */
 	bool same_target_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _targetCompID(); }
 
-	/*! Sendercompid equivalence operator.
+	/*! Sendercompid equivalence function..
 	    \return true if both Sendercompids are the same, on the same session side */
 	bool same_side_target_comp_id(const target_comp_id& targetCompID) const { return targetCompID() == _targetCompID(); }
 
-	/*! Targetcompid equivalence operator.
+	/*! Targetcompid equivalence function..
 	    \return true if both Targetcompids are the same, on the same session side */
 	bool same_side_sender_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _senderCompID(); }
 
