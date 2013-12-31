@@ -366,7 +366,8 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 			send(generate_resend_request(_next_receive_seq));
 			_state = States::st_resend_request_sent;
 		}
-		else if (!_sf->get_ignore_logon_sequence_check_flag(_sf->_ses))
+		// If SessionConfig has *not* been set, assume wrong logon sequence is checked.
+		else if (!_sf || !_sf->get_ignore_logon_sequence_check_flag(_sf->_ses))
 			throw InvalidMsgSequence(seqnum, _next_receive_seq);
 		return false;
 	}
