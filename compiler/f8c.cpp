@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -40,8 +40,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 f8c -- compile FIX xml schema\n
 \n
 <tt>
-Usage: f8c [-CINPRVWbcdfhiknoprstvx] \<input xml schema\>\n
+Usage: f8c [-CFINPRVWbcdfhiknoprstvx] \<input xml schema\>\n
    -C,--nocheck            do not embed version checking in generated code (default false)\n
+   -F,--xfields            specify additional fields with associated messages (see documentation for details)\n
    -I,--info               print package info, exit\n
    -N,--nounique           do not enforce unique field parsing (default false)\n
    -P,--incpath            prefix system include path with "fix8" in generated compilation units (default yes)\n
@@ -66,6 +67,7 @@ e.g.\n
    f8c -Vp Texfix -n TEX myfix.xml\n
    f8c -Vrp Texfix -n TEX -x ../schema/FIXT11.xml myfix.xml\n
    f8c -Vp Texfix -n TEX -c client -x ../schema/FIXT11.xml myfix.xml\n
+   f8c -p Texfix -n TEX -c client -x ../schema/FIXT11.xml myfix.xml -F "<field number='9999' name='SampleUserField' type='STRING' messages='NewOrderSingle:Y ExecutionReport:Y OrderCancelRequest:N' />\n
 </tt>
 \n
 */
@@ -101,11 +103,12 @@ using namespace FIX8;
 const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp",
 	"_classes.hpp", "_router.hpp", "_session.hpp" };
 
-string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"), prefix("Myfix"), gen_classes;
+string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"),
+       prefix("Myfix"), gen_classes, extra_fields;
 bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false), incpath(true);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWP");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:");
 extern string spacer, shortName;
 
 //-----------------------------------------------------------------------------------------
@@ -172,6 +175,7 @@ int main(int argc, char **argv)
 		{ "nocheck",		0,	0,	'C' },
 		{ "info",		   0,	0,	'I' },
 		{ "fields",			0,	0,	'f' },
+		{ "xfields",		1,	0,	'F' },
 		{ "keep",			0,	0,	'k' },
 		{ "retain",			0,	0,	'r' },
 		{ "binary",			0,	0,	'b' },
@@ -229,6 +233,7 @@ int main(int argc, char **argv)
 		case 'R': norealm = true; break;
 		case 'C': nocheck = true; break;
 		case 'c': gen_classes = optarg; break;
+		case 'F': extra_fields = optarg; break;
 		case 'h': print_usage(); return 0;
 		case ':': case '?': return 1;
 		case 'o': CheckAddTrailingSlash(odir = optarg); break;
@@ -363,6 +368,61 @@ int main(int argc, char **argv)
 	if (!glob_errors)
 	{
 		cout << "compiling " << shortName << endl;
+
+      // insert any fields passed on the command line into the DOM
+      if (!extra_fields.empty())
+      {
+         XmlElement *flds(const_cast<XmlElement*>(cfr->find("fix/fields"))),
+                    *msgs(const_cast<XmlElement*>(cfr->find("fix/messages")));
+         if (flds && msgs)
+         {
+            const RegExp rMS("([^:]+):(Y|N)");
+            istringstream istr(extra_fields);
+            size_t added(0);
+            while (istr.good())
+            {
+               scoped_ptr<XmlElement> nel(new XmlElement(istr, 0, flds));
+               string what;
+               if (nel->GetTag().empty() || !nel->GetAttr("messages", what) || !flds->Insert(nel.get()))
+                  continue;
+
+               // messages='NewOrderSingle:Y ExecutionReport:Y OrderCancelRequest:N'
+               RegMatch match;
+               while (rMS.SearchString(match, what, 3) == 3)
+               {
+                  string msg_name, mandatory;
+                  rMS.SubExpr(match, what, msg_name, 0, 1);
+                  rMS.SubExpr(match, what, mandatory, 0, 2);
+                  trim(msg_name);
+                  rMS.Erase(match, what);
+                  const string name_tag("name");
+                  XmlElement *tmsg(const_cast<XmlElement*>(msgs->find("messages/message", false, &name_tag, &msg_name)));
+                  if (!tmsg)
+                  {
+                     if (!nowarn)
+                        cerr << "message: " << msg_name << " not found for custom specification" << endl;
+                     ++glob_warnings;
+                     continue;
+                  }
+                  ostringstream ostr;
+                  string field_name;
+                  nel->GetAttr(name_tag, field_name);
+                  ostr << "<field name='" << field_name << "' required='" << mandatory << "' />";
+                  istringstream mistr(ostr.str());
+                  scoped_ptr<XmlElement> mel(new XmlElement(mistr, 0, msgs));
+                  if (!mel->GetTag().empty() && tmsg->Insert(mel.get()))
+                     mel.release();
+               }
+
+               ++added;
+               nel.release();
+
+            }
+            if (verbose)
+               cout << added << " candidate custom fields found" << endl;
+         }
+      }
+
 		result = process(*cfr, ctxt);
 
 		for (unsigned ii(0); ii < Ctxt::count; ++ii)
@@ -410,14 +470,14 @@ int main(int argc, char **argv)
 //-----------------------------------------------------------------------------------------
 int load_fields(XmlElement& xf, FieldSpecMap& fspec)
 {
-	int fieldsLoaded(0);
-
 	XmlElement::XmlSet flist;
 	if (!xf.find("fix/fields/field", flist))
 	{
 		cerr << "error: No fields found in " << shortName << endl;
 		return 0;
 	}
+
+	int fieldsLoaded(0);
 
 	for(XmlElement::XmlSet::const_iterator itr(flist.begin()); itr != flist.end(); ++itr)
 	{

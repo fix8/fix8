@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -1757,9 +1757,13 @@ const unsigned short Common_Text(58);
 const unsigned short Common_EncryptMethod(98);
 const unsigned short Common_HeartBtInt(108);
 const unsigned short Common_TestReqID(112);
+const unsigned short Common_OnBehalfOfCompID(115);
+const unsigned short Common_OnBehalfOfSubID(116);
 const unsigned short Common_OrigSendingTime(122);
 const unsigned short Common_GapFillFlag(123);
 const unsigned short Common_ResetSeqNumFlag(141);
+const unsigned short Common_OnBehalfOfLocationID(144);
+const unsigned short Common_OnBehalfOfSendingTime(370);
 const unsigned short Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
 
 //-------------------------------------------------------------------------------------------------
@@ -1791,6 +1795,11 @@ typedef Field<Boolean, Common_ResetSeqNumFlag> reset_seqnum_flag;
 
 typedef Field<int, Common_HeartBtInt> heartbeat_interval;
 typedef Field<int, Common_EncryptMethod> encrypt_method;
+
+typedef Field<f8String, Common_OnBehalfOfCompID> onbehalfof_comp_id;
+typedef Field<f8String, Common_OnBehalfOfSubID> onbehalfof_sub_id;
+typedef Field<f8String, Common_OnBehalfOfLocationID> onbehalfof_location_id;
+typedef Field<UTCTimestamp, Common_OnBehalfOfSendingTime> onbehalfof_sending_time;
 
 //-------------------------------------------------------------------------------------------------
 
