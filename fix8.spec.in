@@ -8,7 +8,7 @@ License: LGPL
 Group: Development/Libraries
 URL: http://www.fix8.org
 Vendor: David L. Dight
-Source: https://github.com/dakka/fix8/archive/%{name}-%{fullversion}.tar.gz
+Source: https://github.com/fix8/fix8/archive/%{name}-%{fullversion}.tar.gz
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 Requires: poco-net >= 1.4

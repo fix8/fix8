@@ -85,7 +85,6 @@ class FIXReader : public AsyncSocket<f8String>
 {
     int callback_processor();
 
-    size_t _bg_sz;
     bool read(f8String& to);
 
     int sockRead(char *where, size_t sz) { return 0; }
@@ -96,7 +95,7 @@ protected:
 public:
     /// Ctor
     FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-        : AsyncSocket<f8String>(sock, session, pmodel), _bg_sz()
+        : AsyncSocket<f8String>(sock, session, pmodel)
     {
         set_preamble_sz();
     }
@@ -144,6 +143,13 @@ public:
     {
         return true;
     }
+
+    /*!empty function
+          \return always return true*/
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy)
+	{
+		return msgs.size();
+	}
 
     /*!empty function
           \return always return true*/
@@ -202,6 +208,10 @@ public:
         \return the role */
     Role get_role() const { return _role; }
 
+	/*! Determine if this session is actually connected
+	  \return true if connected */
+	bool is_connected() const { return _connected; }
+
 	/*! Get the process model
 	  \return the process model */
 	 ProcessModel get_pmodel() const { return _pmodel; }
@@ -229,6 +239,20 @@ public:
         _output.push_back(ptr);
         return true;
     }
+
+    /*!helper to unit test, cache the messages in string format
+          \param from message to be sent
+          \return always return true*/
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy)
+	{
+		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
+		for(std::vector<Message*>::const_iterator cit=msgs.begin(); cit != msgs.end(); ++cit)
+		{
+			(*cit)->encode(&ptr);
+        _output.push_back(ptr);
+		}
+		return msgs.size();
+	}
 
     /*!helper to unit test, cache the message in string format
           \param from message to be sent
@@ -337,13 +361,12 @@ public:
 class ClientConnection : public Connection
 {
     Poco::Net::SocketAddress _addr;
-    const bool _no_delay;
 
 public:
     /// Ctor
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session,
 		 const ProcessModel pmodel=pm_pipeline, const bool no_delay=true)
-        : Connection(sock, session, pmodel), _addr(addr), _no_delay(no_delay) {}
+        : Connection(sock, session, pmodel), _addr(addr) {}
 
     /// Dtor
     virtual ~ClientConnection() {}

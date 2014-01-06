@@ -50,9 +50,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <strings.h>
 #endif
 #include <cerrno>
-#include <regex.h>
 
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;

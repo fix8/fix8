@@ -78,11 +78,11 @@ public:
 
 	/*! Function operator. Called by thread to process message on queue.
 	    \return 0 on success */
-	virtual int operator()() { return 0; }
+	int operator()() { return execute(); }
 
 	/*! Execute the function operator
 	    \return result of operator */
-	virtual int execute() { return (*this)(); }
+	virtual int execute() { return 0; }
 
 	/// Start the processing thread.
 	virtual void start() { _thread.start(); }
@@ -107,7 +107,7 @@ class FIXReader : public AsyncSocket<f8String>
 	f8_atomic<bool> _socket_error;
 
 	dthread<FIXReader> _callback_thread;
-    
+
     char _read_buffer[_max_msg_len*2];
     char *_read_buffer_rptr, *_read_buffer_wptr;
 
@@ -128,17 +128,17 @@ class FIXReader : public AsyncSocket<f8String>
         \return number of bytes read */
     int sockRead(char *where, size_t sz)
     {
-        if ((size_t)(_read_buffer_wptr - _read_buffer_rptr) < sz)
+        if (static_cast<size_t>(_read_buffer_wptr - _read_buffer_rptr) < sz)
             realSockRead(sz, _max_msg_len);
         sz = std::min((size_t)(_read_buffer_wptr-_read_buffer_rptr), sz);
         memcpy(where, _read_buffer_rptr, sz);
         _read_buffer_rptr += sz;
-        size_t shift = _max_msg_len;
-        if ((size_t)(_read_buffer_rptr-_read_buffer) >= shift)
+        const size_t shift(_max_msg_len);
+        if (static_cast<size_t>(_read_buffer_rptr - _read_buffer) >= shift)
         {
-            memcpy(_read_buffer, &_read_buffer[shift], sizeof(_read_buffer)-shift);
-            _read_buffer_rptr -= shift;
-            _read_buffer_wptr -= shift;
+				memcpy(_read_buffer, &_read_buffer[shift], sizeof(_read_buffer) - shift);
+				_read_buffer_rptr -= shift;
+				_read_buffer_wptr -= shift;
         }
         return sz;
     }
@@ -150,11 +150,11 @@ class FIXReader : public AsyncSocket<f8String>
 	    \return number of bytes read */
 	int realSockRead(size_t sz, size_t maxsz)
 	{
-        size_t max_sz = _read_buffer + sizeof(_read_buffer) - _read_buffer_wptr;
+		const size_t max_sz(_read_buffer + sizeof(_read_buffer) - _read_buffer_wptr);
 		int maxremaining(std::min(maxsz, max_sz)), remaining(std::min(sz, max_sz));
-        char * ptr = _read_buffer_wptr, * eptr = _read_buffer + sizeof(_read_buffer);
+		char *ptr(_read_buffer_wptr), *eptr(_read_buffer + sizeof(_read_buffer));
 
-        int rdsz = 0;
+		int rdsz(0);
 		while (remaining > 0 && _read_buffer_wptr < eptr)
 		{
 			rdsz = _sock->receiveBytes(_read_buffer_wptr, maxremaining);
@@ -170,16 +170,10 @@ class FIXReader : public AsyncSocket<f8String>
 			}
 			_read_buffer_wptr += rdsz;
 			remaining -= rdsz;
-            maxremaining -= rdsz;
+			maxremaining -= rdsz;
 		}
-		return _read_buffer_wptr-ptr;
+		return _read_buffer_wptr - ptr;
 	}
-
-protected:
-	/*! Reader thread method. Reads messages and places them on the queue for processing.
-	  Supports pipelined, threaded and coroutine process models.
-	    \return 0 on success */
-	int operator()();
 
 public:
 	/*! Ctor.
@@ -228,6 +222,11 @@ public:
 		}
 	}
 
+	/*! Reader thread method. Reads messages and places them on the queue for processing.
+	    Supports pipelined, threaded and coroutine process models.
+		 \return 0 on success */
+   virtual int execute();
+
 	/*! Wait till writer thread has finished.
 	    \return 0 on success */
    int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
@@ -253,11 +252,6 @@ public:
 class FIXWriter : public AsyncSocket<Message *>
 {
 	f8_spin_lock _con_spl;
-
-protected:
-	/*! Writer thread method. Reads messages from the queue and sends them over the socket.
-	    \return 0 on success */
-	int operator()();
 
 public:
 	/*! Ctor.
@@ -287,6 +281,41 @@ public:
 		return _session.send_process(from);
 	}
 
+	/*! Place Fix messages on outbound message queue as a single batch.
+	    \param msgs messages to send
+	    \param destroy if true delete after send
+	    \return count of messages written */
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy)
+	{
+		if (msgs.empty())
+			return 0;
+		if (msgs.size() == 1)
+			return write(msgs.front(), destroy) ? 1 : 0;
+		size_t result(0);
+		f8_scoped_spin_lock guard(_con_spl);
+		for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()), litr(eitr-1); itr != eitr; ++itr)
+		{
+			Message* msg = *itr;
+			msg->set_end_of_batch(itr == litr);
+			if (_pmodel == pm_pipeline) // pipeline mode ignores destroy flag
+			{
+				_msg_queue.try_push(msg);
+				++result;
+				continue;
+			}
+			if (_session.send_process(msg))
+				++result;
+		}
+		if (destroy && _pmodel != pm_pipeline)
+		{
+			for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()); itr != eitr; ++itr)
+			{
+				scoped_ptr<Message> smsg(*itr);
+			}
+		}
+		///@todo: need assert on result==msgs.size()
+		return result;
+	}
 	/*! Wait till writer thead has finished.
 	    \return 0 on success */
    int join() { return _pmodel == pm_pipeline ? AsyncSocket<Message *>::join() : -1; }
@@ -348,6 +377,10 @@ public:
 
 	/// Send a message to the processing method instructing it to quit.
 	virtual void stop() { _msg_queue.try_push(0); }
+
+    /*! Writer thread method. Reads messages from the queue and sends them over the socket.
+        \return 0 on success */
+    virtual int execute();
 };
 
 //----------------------------------------------------------------------------------------
@@ -361,7 +394,7 @@ public:
 protected:
 	Poco::Net::StreamSocket *_sock;
 	Poco::Net::SocketAddress _addr;
-	bool _connected;
+	f8_atomic<bool> _connected;
 	Session& _session;
 	Role _role;
 	ProcessModel _pmodel;
@@ -369,6 +402,7 @@ protected:
 
 	FIXReader _reader;
 	FIXWriter _writer;
+	bool _secured;
 
 public:
 	/*! Ctor. Initiator.
@@ -376,23 +410,35 @@ public:
 	    \param addr sock address structure
 	    \param session session
 	    \param pmodel process model
-	    \param hb_interval heartbeat interval */
+	    \param hb_interval heartbeat interval
+		 \param secured true for ssl connection
+	*/
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // client
-        const ProcessModel pmodel, const unsigned hb_interval)
-		: _sock(sock), _addr(addr), _connected(), _session(session), _role(cn_initiator), _pmodel(pmodel),
-        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel) {}
+				  const ProcessModel pmodel, const unsigned hb_interval, bool secured)
+		: _sock(sock), _addr(addr), _session(session), _role(cn_initiator), _pmodel(pmodel),
+        _hb_interval(hb_interval), _reader(sock, session, pmodel), _writer(sock, session, pmodel),
+		  _secured(secured)
+	{
+		_connected = false;
+	}
 
 	/*! Ctor. Acceptor.
 	    \param sock connected socket
 	    \param addr sock address structure
 	    \param session session
 	    \param hb_interval heartbeat interval
-	    \param pmodel process model */
+	    \param pmodel process model
+		 \param secured true for ssl connection
+	*/
 	Connection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr, Session &session, // server
-		const unsigned hb_interval, const ProcessModel pmodel)
-		: _sock(sock), _addr(addr), _connected(true), _session(session), _role(cn_acceptor), _pmodel(pmodel),
-		_hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
-		  _reader(sock, session, pmodel), _writer(sock, session, pmodel) {}
+				  const unsigned hb_interval, const ProcessModel pmodel, bool secured)
+		: _sock(sock), _addr(addr), _session(session), _role(cn_acceptor), _pmodel(pmodel),
+		  _hb_interval(hb_interval), _hb_interval20pc(hb_interval + hb_interval / 5),
+		  _reader(sock, session, pmodel), _writer(sock, session, pmodel),
+		  _secured(secured)
+	{
+		_connected = true;
+	}
 
 	/// Dtor.
 	virtual ~Connection() {}
@@ -405,6 +451,10 @@ public:
 	  \return the process model */
 	ProcessModel get_pmodel() const { return _pmodel; }
 
+	/*! Check if this connection is secure
+	  \return true if secure */
+	bool is_secure() const { return _secured; }
+
 	/// Start the reader and writer threads.
 	void start();
 
@@ -415,6 +465,10 @@ public:
 	    \return true if connected */
 	virtual bool connect() { return _connected; }
 
+	/*! Determine if this session is actually connected
+	  \return true if connected */
+	bool is_connected() const { return _connected; }
+
 	/*! Write a message to the underlying socket.
 	    \param from Message to write
 	    \return true on success */
@@ -424,6 +478,11 @@ public:
 	    \param from Message to write
 	    \return true on success */
 	virtual bool write(Message& from) { return _writer.write(from); }
+
+	/*! Write messages to the underlying socket as a single batch.
+	    \param from Message to write
+	    \return true on success */
+	size_t write_batch(const std::vector<Message *>& msgs, bool destroy) { return _writer.write_batch(msgs, destroy); }
 
 	/*! Write a string message to the underlying socket.
 	    \param from Message (string) to write
@@ -539,10 +598,13 @@ public:
 	    \param session session
 	    \param hb_interval heartbeat interval
 	    \param pmodel process model
-	    \param no_delay set or clear the tcp no delay flag on the socket */
+	    \param no_delay set or clear the tcp no delay flag on the socket
+		 \param secured true for ssl connection
+	*/
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-            Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true)
-        : Connection(sock, addr, session, pmodel, hb_interval), _no_delay(no_delay) {}
+							Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
+							bool secured=false)
+		 : Connection(sock, addr, session, pmodel, hb_interval, secured), _no_delay(no_delay) {}
 
 	/// Dtor.
 	virtual ~ClientConnection() {}
@@ -563,10 +625,13 @@ public:
 	    \param session session
 	    \param hb_interval heartbeat interval
 	    \param pmodel process model
-	    \param no_delay set or clear the tcp no delay flag on the socket */
+	    \param no_delay set or clear the tcp no delay flag on the socket
+		 \param secured true for ssl connection
+	*/
 	ServerConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-			Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true) :
-		Connection(sock, addr, session, hb_interval, pmodel)
+						  Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
+						  bool secured=false	) :
+		Connection(sock, addr, session, hb_interval, pmodel, secured)
 	{
 		_sock->setLinger(false, 0);
 		_sock->setNoDelay(no_delay);

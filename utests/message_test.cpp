@@ -36,7 +36,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-----------------------------------------------------------------------------------------
 // f8 headers
 #include "f8headers.hpp"
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 #include "gtest/gtest.h"
 #include "utest_types.hpp"
 #include "utest_router.hpp"
@@ -369,11 +369,11 @@ TEST(message, neworder_encode)
     nos->encode(output);
 
     f8String expect(
-		 "8=FIX.4.2\0019=244\00135=D\00149=A12345B\00156=COMPARO\00134=78\00150=2DEFGH4\001"
+		 "8=FIX.4.2\0019=246\00135=D\00149=A12345B\00156=COMPARO\00134=78\00150=2DEFGH4\001"
 		 "142=AU,SY\00157=G\00152=20130305-02:19:46.108\00111=4\0011=01234567\00121=1\001"
-		 "449=20130305\001450=02:19:46.123\001743=201303\00155=OC\001"
+		 "449=20130305\001450=02:19:46.123\001743=20130301\00155=OC\001"
 		 "167=OPT\001107=AOZ3 C02000\00154=1\00160=20130305-02:19:46.108\00138=50.00\00140=2\001"
-		 "44=400.50\00159=0\00158=NIGEL\00110=021\001");
+		 "44=400.50\00159=0\00158=NIGEL\00110=120\001");
 
     EXPECT_EQ(expect, output);
 

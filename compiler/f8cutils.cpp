@@ -45,13 +45,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iterator>
 #include <algorithm>
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 #include <cctype>
 
 // f8 headers
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 #include <usage.hpp>
 #include <f8c.hpp>
 
@@ -366,7 +365,7 @@ void print_usage()
 	um.add('C', "nocheck", "do not embed version checking in generated code (default false)");
 	um.add('r', "retain", "retain 1st pass code (default delete)");
 	um.add('b', "binary", "print binary/ABI details, exit");
-	um.add('P', "incpath", "prefix system include path with \"fix8\" in generated compilation units (default no)");
+	um.add('P', "incpath", "prefix system include path with \"fix8\" in generated compilation units (default yes)");
 	um.add('c', "classes <server|client>", "generate user session classes (default neither)");
 	um.add('t', "tabwidth", "tabwidth for generated code (default 3 spaces)");
 	um.add('x', "fixt <file>", "For FIXT hosted transports or for FIX5.0 and above, the input FIXT schema file");
@@ -465,4 +464,3 @@ ostream& FIX8::operator<<(ostream& os, const MessageSpec& what)
 
 	return os;
 }
-

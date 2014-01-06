@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<fix8>
+	<session name="TEX1"
+				role = "acceptor"
+				fix_version="1100"
+			   no_chksum="true"
+				active="true"
+				heartbeat_interval="10"
+				ip="127.0.0.1" port="11002"
+				sender_comp_id="TEX_DLD"
+				tcp_nodelay="false"
+			   tcp_recv_buffer="100663296"
+			   tcp_send_buffer="100663296"
+			   process_model="threaded"
+			   ssl_context="ssl1" />
+
+	<ssl_context name="ssl1"
+				private_key_file="ssl-svr.pem"
+				verification_mode="none" />
+
+	<persist name="bdb0"
+				type="bdb"
+				dir="./run"
+				db="hf_server.db"/>
+
+	<persist name="mem0"
+				type="mem"/>
+
+	<log 		name="session_log"
+				type="session"
+				filename="|/bin/cat"
+				rotation="5"
+				flags="timestamp|sequence|compress|thread"/>
+
+	<log 		name="protocol_log"
+				type="protocol"
+				filename="./run/hf_server_protocol.log"
+				rotation="5"
+				flags="sequence|append|direction|inbound|outbound"/>
+
+	<log 		name="protocol_log_pipe"
+				type="protocol"
+				filename="|/bin/cat"
+				flags="sequence|append|direction|inbound|outbound"/>
+
+	<log 		name="protocol_log_null"
+				type="protocol"
+				filename="/dev/null"/>
+</fix8>

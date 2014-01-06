@@ -50,7 +50,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <strings.h>
 #endif
 #include <cerrno>
-#include <regex.h>
 #include <stdint.h>
 #ifdef _MSC_VER
 #include <io.h>
@@ -62,7 +61,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;

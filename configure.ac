@@ -197,8 +197,52 @@ AM_CONDITIONAL(LINK_RT, [test x$oktolinkrt = xyes])
 AC_CHECK_HEADERS([getopt.h fcntl.h netdb.h regex.h signal.h string.h sys/time.h \
 	arpa/inet.h sys/stat.h sys/types.h select.h \
 	sys/wait.h netinet/in.h getopt.h limits.h sys/ioctl.h unistd.h \
-	sys/socket.h time.h syslog.h termios.h alloca.h
-	])
+	sys/socket.h time.h syslog.h termios.h alloca.h], [], [],
+	[[
+     #ifdef HAVE_GETOPT_H
+     # include <getop.h>
+     #endif
+     #ifdef HAVE_FCNTL_H
+     # include <fcntl.h>
+     #endif
+     #ifdef HAVE_NETDB_H
+     # include <netdb.h>
+     #endif
+     #ifdef HAVE_REGEX_H
+     # include <regex.h>
+     #endif
+     #ifdef HAVE_SIGNAL_H
+     # include <signal.h>
+     #endif
+     #ifdef HAVE_ARPA_INET_H
+     # include <arpa/inet.h>
+     #endif
+     #ifdef HAVE_NETINET_IN_H
+     # include <netinet/in.h>
+     #endif
+     #ifdef HAVE_LIMITS_H
+     # include <limits.h>
+     #endif
+     #ifdef HAVE_SYS_IOCTL_H
+     # include <sys/ioctl.h>
+     #endif
+     #ifdef HAVE_SYS_SOCKET_H
+     # include <sys/socket.h>
+     #endif
+     #ifdef HAVE_TIME_H
+     # include <time.h>
+     #endif
+     #ifdef HAVE_SYSLOG_H
+     # include <syslog.h>
+     #endif
+     #ifdef HAVE_TERMIOS_H
+     # include <termios.h>
+     #endif
+     #ifdef HAVE_ALLOCA_H
+     # include <alloca.h>
+     #endif
+	]])
+
 
 AC_DEFINE_UNQUOTED(RESERVE_PERCENT, 30, [Percentage of message fields to reserve for additional fields])
 AC_ARG_WITH(reservepercent,
@@ -354,6 +398,44 @@ AC_MSG_CHECKING(for Poco)
 		 echo
 		 exit 1
 	fi
+
+AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
+AC_DEFINE(MPMC_FF, 2, [FF MPMC])
+
+regex_set=no
+using_poco_regex=no
+AC_ARG_WITH([regex],
+[AS_HELP_STRING([--with-regex=VAL],[select which regex system will be used (regex|poco, default=poco)])],
+[case "${withval}" in
+	regex) AC_MSG_CHECKING(for regex)
+				AC_TRY_COMPILE([
+					#include <regex.h>
+					],,
+					have_regex=yes, have_regex=no)
+				if test "$have_regex" = yes; then
+					 AC_MSG_RESULT(yes)
+					 AC_DEFINE(REGEX_SYSTEM, REGEX_REGEX_H, [regex.h system used])
+				else
+					 AC_MSG_RESULT(no)
+					 echo
+					 echo "ERROR: regex.h header not found. Install and try again."
+					 echo
+					 exit 1
+				fi
+		 regex_set=yes ;;
+	poco) using_poco_regex=yes;;
+	*) echo
+		echo "ERROR: Unknown value ${withval} for REGEX given."
+		echo
+		exit 1
+esac])
+
+AC_DEFINE(REGEX_POCO, 1, [Poco regex system])
+AC_DEFINE(REGEX_REGEX_H, 2, [regex.h regex system])
+if test "$regex_set" = no; then
+	using_poco_regex=yes
+	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO regex system used])
+fi
 
 oktogtest=yes
 AC_ARG_ENABLE([gtest],
@@ -623,7 +705,7 @@ CHANGELOG=$srcdir/ChangeLog
 
 AC_CONFIG_FILES([Makefile runtime/Makefile compiler/Makefile test/Makefile utests/Makefile util/Makefile doc/fix8.doxygen \
 						fix8.spec doc/man/f8c.1.xml doc/man/seqedit.1.xml])
-AC_CONFIG_HEADERS(include/f8config.h)
+AC_CONFIG_HEADERS(include/fix8/f8config.h)
 AC_OUTPUT
 
 AC_SUBST(CONFIG_SHELL)

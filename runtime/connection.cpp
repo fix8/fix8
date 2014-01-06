@@ -49,16 +49,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _MSC_VER
 #include <strings.h>
 #endif
-#include <regex.h>
 
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-int FIXReader::operator()()
+int FIXReader::execute()
 {
    unsigned processed(0), dropped(0), invalid(0);
 	int retval(0);
@@ -283,7 +282,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 }
 
 //-------------------------------------------------------------------------------------------------
-int FIXWriter::operator()()
+int FIXWriter::execute()
 {
 	int result(0), processed(0), invalid(0);
 
@@ -363,7 +362,7 @@ bool ClientConnection::connect()
 				throw Poco::Net::InvalidAddressException("empty address");
 
 			ostr.str("");
-			ostr << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')';
+			ostr << "Trying to connect to: " << _addr.toString() << " (" << ++attempts << ')' << ( _secured ? " secured" : " not-secured");
 			_session.log(ostr.str());
 			_sock->connect(_addr, timeout);
 			if (lparam._recv_buf_sz)
@@ -398,4 +397,3 @@ bool ClientConnection::connect()
 	_session.log("Connection failed");
 	return false;
 }
-

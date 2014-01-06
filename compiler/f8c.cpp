@@ -44,7 +44,7 @@ Usage: f8c [-CINPRVWbcdfhiknoprstvx] \<input xml schema\>\n
    -C,--nocheck            do not embed version checking in generated code (default false)\n
    -I,--info               print package info, exit\n
    -N,--nounique           do not enforce unique field parsing (default false)\n
-   -P,--incpath            prefix system include path with "fix8" in generated compilation units (default no)\n
+   -P,--incpath            prefix system include path with "fix8" in generated compilation units (default yes)\n
    -R,--norealm            do not generate realm constructed field instantiators (default false)\n
    -W,--nowarn             suppress warning messages (default false)\n
    -V,--verbose            be more verbose when processing\n
@@ -81,13 +81,12 @@ e.g.\n
 #include <iterator>
 #include <algorithm>
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 #include <cctype>
 
 // f8 headers
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 #include <f8c.hpp>
 
 #ifdef HAVE_GETOPT_H
@@ -103,7 +102,7 @@ const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "
 	"_classes.hpp", "_router.hpp", "_session.hpp" };
 
 string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"), prefix("Myfix"), gen_classes;
-bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false), incpath(false);
+bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false), incpath(true);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3);
 extern unsigned glob_errors;
 extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWP");
@@ -220,6 +219,9 @@ int main(int argc, char **argv)
 #if defined CODECTIMING
          cout << "CODECTIMING: " << CODECTIMING << endl;
 #endif
+#if defined HAVE_OPENSSL
+         cout << "HAVE_OPENSSL: " << HAVE_OPENSSL << endl;
+#endif
 			return 0;
 		case 'V': verbose = true; break;
 		case 'f': gen_fields = true; break;
@@ -232,7 +234,7 @@ int main(int argc, char **argv)
 		case 'o': CheckAddTrailingSlash(odir = optarg); break;
 		case 'd': dump = true; break;
 		case 'i': error_ignore = true; break;
-		case 'P': incpath = true; break;
+		case 'P': incpath = false; break;
 		case 'k': keep_failed = true; break;
 		case 'r': retain_precomp = true; break;
 		case 's': second_only = true; break;

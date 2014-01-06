@@ -56,14 +56,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <signal.h>
 #include <fcntl.h>
 #include <time.h>
-#include <regex.h>
 
 #include <map>
 #include <set>
 #include <list>
 #include <vector>
 
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 
 //----------------------------------------------------------------------------------------
 using namespace FIX8;

@@ -36,12 +36,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _FIX8_INCLUDES_HPP_
 # define _FIX8_INCLUDES_HPP_
 
-#ifdef BUILD_F8API
-#define F8API __declspec(dllexport)
-#else
-#define F8API __declspec(dllimport)
-#endif
-
+#include <f8dll.h>
 #include <f8config.h>
 
 #ifdef HAS_TR1_UNORDERED_MAP
@@ -52,27 +47,33 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <sys/gmon.h>
 #endif
 
+#if (REGEX_SYSTEM == REGEX_REGEX_H)
+#include <regex.h>
+#elif (REGEX_SYSTEM == REGEX_POCO)
+#include <Poco/RegularExpression.h>
+#endif
+
 #include <errno.h>
-#include <f8exception.hpp>
-#include <hypersleep.hpp>
-#include <mpmc.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
-#include <xml.hpp>
-#include <thread.hpp>
-#include <gzstream.hpp>
-#include <tickval.hpp>
-#include <logger.hpp>
-#include <traits.hpp>
-#include <timer.hpp>
-#include <field.hpp>
-#include <message.hpp>
-#include <session.hpp>
-#include <coroutine.hpp>
-#include <yield.hpp>
-#include <connection.hpp>
-#include <configuration.hpp>
-#include <persist.hpp>
-#include <sessionwrapper.hpp>
+#include <fix8/f8exception.hpp>
+#include <fix8/hypersleep.hpp>
+#include <fix8/mpmc.hpp>
+#include <fix8/f8types.hpp>
+#include <fix8/f8utils.hpp>
+#include <fix8/xml.hpp>
+#include <fix8/thread.hpp>
+#include <fix8/gzstream.hpp>
+#include <fix8/tickval.hpp>
+#include <fix8/logger.hpp>
+#include <fix8/traits.hpp>
+#include <fix8/timer.hpp>
+#include <fix8/field.hpp>
+#include <fix8/message.hpp>
+#include <fix8/session.hpp>
+#include <fix8/coroutine.hpp>
+#include <fix8/yield.hpp>
+#include <fix8/connection.hpp>
+#include <fix8/configuration.hpp>
+#include <fix8/persist.hpp>
+#include <fix8/sessionwrapper.hpp>
 
 #endif // _FIX8_INCLUDES_HPP_

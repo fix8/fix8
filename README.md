@@ -22,7 +22,7 @@ and framework; and a set of complete client/server test applications.
 
 * Fix8 contains a built-in unit test framework that's being continually revised and extended. Fix8 also has a metadata driven test harness that can be scripted to support captured or canned data playback.
 
-* Fix8 is a complete C++ FIX framework, including client/server session and connection classes; support for the standard FIX field types; FIX printer, async logger, async message persister and XML configuration classes.
+* Fix8 is a complete C++ FIX framework, with client/server session and connection classes (including SSL); support for the standard FIX field types; FIX printer, async logger, async message persister and XML configuration classes.
 
 * Fix8 statically supports nested components and groups to any depth. The Fix8 compiler and runtime library takes the pain out of using repeating groups.
 
@@ -144,8 +144,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 1.0.0-RC2.tar.gz
-	% cd fix8-1.0.0-RC2
+	% tar xvzf 1.0.0-RC3.tar.gz
+	% cd fix8-1.0.0-RC3
 	% ./bootstrap
 	% ./configure
 	% make

@@ -30,7 +30,7 @@ Features
 * Fix8 contains a built-in unit test framework that's being continually revised and extended.
   Fix8 also has a metadata driven test harness that can be scripted to support captured or canned data playback.
 
-* Fix8 is a complete C++ FIX framework, including client/server session and connection classes;
+* Fix8 is a complete C++ FIX framework, with client/server session and connection classes (including SSL);
   support for the standard FIX field types; FIX printer, async logger, async message persister
   and XML configuration classes.
 
@@ -47,7 +47,8 @@ Features
 * Fix8 supports field and value domain validation, mandatory/optional field assertion, field ordering,
   well-formedness testing, retransmission and standard session semantics.
 
-* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC and ARM. It also now runs on Windows. Other *NIX variants may work too.
+* Fix8 runs under industry standard Linux on IA32, x86-64, Itanium, PowerPC and ARM. It also now runs on Windows and OSX.
+  Other *NIX variants may work too.
 
 Directory Layout
 ================
@@ -141,8 +142,8 @@ Building on Linux/UNIX/OSX
 The build system is based on automake/autoconf/libtool.
 You **must** have libtool (http://www.gnu.org/software/libtool/) installed to build.
 
-    % tar xvzf 0.10.0.tar.gz
-    % cd fix8-0.10.0
+    % tar xvzf 1.0.0-RC3.tar.gz
+    % cd fix8-1.0.0-RC3
     % ./bootstrap
     % ./configure
     % make

@@ -113,7 +113,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <string.h>
 
 // f8 headers
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>
@@ -259,6 +259,8 @@ int main(int argc, char **argv)
 				const FIX8::ProcessModel pm(ms->get_process_model(ms->_ses));
 				inst->start(pm == FIX8::pm_pipeline, next_send, next_receive);
 				cout << (pm == FIX8::pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+				if (inst->session_ptr()->get_connection()->is_secure())
+					cout << "Session is secure (SSL)" << endl;
 				if (pm != FIX8::pm_pipeline)
 					while (!inst->session_ptr()->is_shutdown())
 						FIX8::hypersleep<FIX8::h_milliseconds>(100);
@@ -286,6 +288,8 @@ int main(int argc, char **argv)
 				mc->start(false, next_send, next_receive);
 
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
+			if (mc->session_ptr()->get_connection()->is_secure())
+				cout << "Session is secure (SSL)" << endl;
 			if (preload_count)
 				mymenu.preload_new_order_single();
 			char ch;

@@ -49,9 +49,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _MSC_VER
 #include <strings.h>
 #endif
-#include <regex.h>
 
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 #include <consolemenu.hpp>
 
 //-------------------------------------------------------------------------------------------------

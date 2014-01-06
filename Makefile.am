@@ -61,10 +61,10 @@ check-release:
 	md5sum -c $(distdir).md5sum
 
 pkgincludedir = ${prefix}/include/fix8
-ffincdir = include/ff
+ffincdir = include/fix8/ff
 ffincludes = ${ffincdir}/*.hpp ${ffincdir}/*.h ${ffincdir}/d/*.hpp ${ffincdir}/platforms/*.h ${ffincdir}/atomic/*.h \
 								  ${ffincdir}/ocl/*.hpp ${ffincdir}/ocl/*.h
-pkginclude_HEADERS = include/*.hpp include/f8config.h
+pkginclude_HEADERS = include/fix8/*.hpp include/fix8/f8config.h include/fix8/f8dll.h
 
 ffdir = ${prefix}/include/fix8/ff
 sharedir = ${prefix}/share/fix8

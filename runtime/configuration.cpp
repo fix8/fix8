@@ -50,9 +50,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _MSC_VER
 #include <strings.h>
 #endif
-#include <regex.h>
 
-#include <f8includes.hpp>
+#ifdef HAVE_OPENSSL
+#include <Poco/Net/Context.h>
+#endif
+#include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;
@@ -75,6 +77,7 @@ int Configuration::process()
 	load_map("fix8/persist", _persisters);
 	load_map("fix8/log", _loggers);
 	load_map("fix8/server_group", _server_group);
+	load_map("fix8/ssl_context", _ssl_context);
 
 	return _sessions.size();
 }
@@ -257,3 +260,35 @@ ProcessModel Configuration::get_process_model(const XmlElement *from) const
 		? enum_str_get(pm_count, process_strings, pm, pm_thread) : pm_pipeline; // default to pipelined
 }
 
+//-------------------------------------------------------------------------------------------------
+#ifdef HAVE_OPENSSL
+SslContext Configuration::get_ssl_context(const XmlElement *from) const
+{
+	SslContext target;
+	string name;
+	const XmlElement *which;
+	if (from && from->GetAttr("ssl_context", name) && (which = find_ssl_context(name)))
+	{
+		static std::string empty, cipher("ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"), relaxed("relaxed");
+		target._private_key_file = which->FindAttrRef("private_key_file", empty);
+		target._certificate_file = which->FindAttrRef("ceritificte_file", empty);
+		target._ca_location = which->FindAttrRef("ca_location", empty);
+		target._verification_depth = which->FindAttr("verification_depth", static_cast<int>(defaults::verification_depth));
+		target._load_default_cas = which->FindAttr("load_default_cas", false);
+		target._cipher_list = which->FindAttrRef("cipher_list", cipher);
+		name = which->FindAttrRef("verification_mode", relaxed);
+		if (name == "none")
+			target._verification_mode = Poco::Net::Context::VERIFY_NONE;
+		else if (name == "relaxed")
+			target._verification_mode = Poco::Net::Context::VERIFY_RELAXED;
+		else if (name == "strict")
+			target._verification_mode = Poco::Net::Context::VERIFY_STRICT;
+		else if (name == "once")
+			target._verification_mode = Poco::Net::Context::VERIFY_ONCE;
+		else
+			target._verification_mode = SSL_VERIFY_PEER;
+		target._valid = true;
+	}
+	return target;
+}
+#endif

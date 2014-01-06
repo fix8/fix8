@@ -36,7 +36,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-----------------------------------------------------------------------------------------
 // f8 headers
 #include <f8headers.hpp>
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 #include <persist.hpp>
 #include <f8utils.hpp>
 #include <limits>
@@ -243,7 +243,7 @@ public:
     check_session(const F8MetaCntx& ctx):
         Session(ctx)
     {
-        _connection = new Connection(0, _addr, *this, pm_thread, 10);
+		 _connection = new Connection(0, _addr, *this, pm_thread, 10, false);
     };
 
     /// Dtor
@@ -284,7 +284,7 @@ TEST(filePersister, resend_get)
 
 	 Poco::Net::SocketAddress _addr;
     check_session session(UTEST::ctx());
-    Connection connection(0, _addr, session, pm_thread, 10);
+    Connection connection(0, _addr, session, pm_thread, 10, false);
 
     fixture.filePer->get(1, 5, session, &Session::retrans_callback);
 

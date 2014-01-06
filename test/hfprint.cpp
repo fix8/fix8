@@ -78,7 +78,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <string.h>
 
 // f8 headers
-#include <f8includes.hpp>
+#include <fix8/f8includes.hpp>
 
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>

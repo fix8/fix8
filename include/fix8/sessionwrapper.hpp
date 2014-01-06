@@ -38,9 +38,84 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 # define _FIX8_SESSIONWRAPPER_HPP_
 
 #include <Poco/Net/ServerSocket.h>
+#ifdef HAVE_OPENSSL
+#include <Poco/Net/SecureStreamSocket.h>
+#include <Poco/Net/SecureServerSocket.h>
+#include <Poco/SharedPtr.h>
+#include <Poco/Net/PrivateKeyPassphraseHandler.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
+#include <Poco/Net/SSLManager.h>
+#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
+
+//-------------------------------------------------------------------------------------------------
+#ifdef HAVE_OPENSSL
+
+/// A Fix8CertificateHandler is invoked whenever an error occurs verifying the certificate.
+/// The certificate is printed to the global logger with an error message
+class Fix8CertificateHandler: public Poco::Net::InvalidCertificateHandler
+{
+public:
+   /// Creates the Fix8CertificateHandler.
+   Fix8CertificateHandler(bool handleErrorsOnServerSide) : Poco::Net::InvalidCertificateHandler(handleErrorsOnServerSide) {}
+
+   /// Destroys the Fix8CertificateHandler.
+   virtual ~Fix8CertificateHandler() {}
+
+	/// Prints the certificate to stdout and waits for user input on the console
+	/// to decide if a certificate should be accepted/rejected.
+   void onInvalidCertificate(const void* pSender, Poco::Net::VerificationErrorArgs& errorCert);
+};
+
+/// An implementation of PrivateKeyPassphraseHandler that
+/// prints an error and returns no phrase
+/// Passphrases cannot be given when negotiating SSL sessions in Fix8
+class Fix8PassPhraseHandler : public Poco::Net::PrivateKeyPassphraseHandler
+{
+public:
+	/// Creates the Fix8PassPhraseHandler.
+   Fix8PassPhraseHandler(bool server) : Poco::Net::PrivateKeyPassphraseHandler(server) {}
+
+	/// Destroys the Fix8PassPhraseHandler.
+   ~Fix8PassPhraseHandler() {}
+
+   void onPrivateKeyRequested(const void* pSender, std::string& privateKey);
+};
+
+//-------------------------------------------------------------------------------------------------
+struct PocoSslContext
+{
+	PocoSslContext(const SslContext& ctx, bool client)
+	{
+		if (ctx._valid)
+		{
+			Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> phrase_handler(new Fix8PassPhraseHandler(!client));
+			Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> cert_handler(new Fix8CertificateHandler(!client));
+			Poco::Net::initializeSSL();
+			_context = new Poco::Net::Context(
+				client ? Poco::Net::Context::CLIENT_USE : Poco::Net::Context::SERVER_USE,
+				ctx._private_key_file, ctx._certificate_file, ctx._ca_location,
+				static_cast<Poco::Net::Context::VerificationMode>(ctx._verification_mode), ctx._verification_depth,
+				ctx._load_default_cas, ctx._cipher_list);
+			if (client)
+				Poco::Net::SSLManager::instance().initializeClient(phrase_handler, cert_handler, _context);
+			else
+				Poco::Net::SSLManager::instance().initializeServer(phrase_handler, cert_handler, _context);
+		}
+	}
+
+	~PocoSslContext()
+	{
+		if (_context)
+			Poco::Net::uninitializeSSL();
+	}
+
+	Poco::Net::Context::Ptr _context;
+	bool is_secure() const { return _context.get() != 0; }
+};
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /// Base session wrapper.
@@ -92,6 +167,9 @@ protected:
 	Poco::Net::StreamSocket *_sock;
 	Poco::Net::SocketAddress _addr;
 	ClientConnection *_cc;
+#ifdef HAVE_OPENSSL
+	PocoSslContext _ssl;
+#endif
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
@@ -104,11 +182,28 @@ public:
 		_id(_ctx._beginStr, _sci, _tci),
 		_persist(create_persister(_ses, 0, this->_loginParameters._reset_sequence_numbers)),
 		_session(new T(_ctx, _id, _persist, _log, _plog)),
-		_sock(init_con_later ? 0 : new Poco::Net::StreamSocket),
+		_sock(),
 		_addr(get_address(_ses)),
-		_cc(init_con_later ? 0
-			: new ClientConnection(_sock, _addr, *_session, this->_loginParameters._hb_int, get_process_model(_ses)))
+		_cc()
+#ifdef HAVE_OPENSSL
+		,_ssl(get_ssl_context(_ses), true)
+#endif
 	{
+		if (!init_con_later)
+		{
+#ifdef HAVE_OPENSSL
+			bool secured(_ssl.is_secure());
+			_sock =
+				secured
+					? new Poco::Net::SecureStreamSocket(_ssl._context)
+					: new Poco::Net::StreamSocket;
+#else
+			bool secured(false);
+			_sock = new Poco::Net::StreamSocket;
+#endif
+			_cc = new ClientConnection(_sock, _addr, *_session, this->_loginParameters._hb_int, get_process_model(_ses), true, secured);
+		}
+
 		_session->set_login_parameters(this->_loginParameters);
 		_session->set_session_config(this);
 	}
@@ -226,10 +321,18 @@ public:
 					this->_loginParameters._reset_sequence_numbers = _servers[_current]._reset_sequence_numbers; // permit override
 				}
 				//std::cout << "operator()():try" << std::endl;
-
-				this->_sock = new Poco::Net::StreamSocket,
+#ifdef HAVE_OPENSSL
+				bool secured(this->_ssl.is_secure());
+				this->_sock =
+					secured
+						? new Poco::Net::SecureStreamSocket(this->_ssl._context)
+						: new Poco::Net::StreamSocket;
+#else
+				bool secured(false);
+				this->_sock = new Poco::Net::StreamSocket;
+#endif
 				this->_cc = new ClientConnection(this->_sock, _failover_cnt ? this->_addr = _servers[_current]._addr : this->_addr,
-					*this->_session, this->_loginParameters._hb_int, this->get_process_model(this->_ses));
+					*this->_session, this->_loginParameters._hb_int, this->get_process_model(this->_ses), true, secured);
 				this->_session->set_login_parameters(this->_loginParameters);
 				this->_session->set_session_config(this);
 				this->_session->start(this->_cc, true, _send_seqnum, _recv_seqnum, this->_loginParameters._davi());
@@ -308,6 +411,7 @@ public:
 			}
 
 			delete this->_cc;
+			this->_cc = 0;
 			delete this->_sock;
 
 			if (!excepted)
@@ -345,36 +449,57 @@ template<typename T>
 class ServerSession : public SessionConfig
 {
 	Poco::Net::SocketAddress _addr;
-	Poco::Net::ServerSocket _server_sock;
+	Poco::Net::ServerSocket * _server_sock;
+#ifdef HAVE_OPENSSL
+	PocoSslContext _ssl;
+#endif
 
 public:
 	/// Ctor. Prepares session for receiving inbbound connections (acceptor).
 	ServerSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name) :
 		SessionConfig(ctx, conf_file, session_name),
-		_addr(get_address(_ses)),
-		_server_sock(_addr)
+		_addr(get_address(_ses))
+#ifdef HAVE_OPENSSL
+		,_ssl(get_ssl_context(_ses), false)
+#endif
 	{
+#ifdef HAVE_OPENSSL
+		_server_sock = _ssl.is_secure()
+			? new Poco::Net::SecureServerSocket(_addr, 64, _ssl._context)
+			: new Poco::Net::ServerSocket(_addr);
+#else
+		_server_sock = new Poco::Net::ServerSocket(_addr);
+#endif
 		if (_loginParameters._recv_buf_sz)
-			Connection::set_recv_buf_sz(_loginParameters._recv_buf_sz, &_server_sock);
+			Connection::set_recv_buf_sz(_loginParameters._recv_buf_sz, _server_sock);
 		if (_loginParameters._send_buf_sz)
-			Connection::set_send_buf_sz(_loginParameters._send_buf_sz, &_server_sock);
+			Connection::set_send_buf_sz(_loginParameters._send_buf_sz, _server_sock);
 	}
 
 	/// Dtor.
-	virtual ~ServerSession () {}
+	virtual ~ServerSession ()
+	{
+		delete _server_sock;
+	}
 
 	/*! Check to see if there are any waiting inbound connections.
 	  \param span timespan (us, default 250 ms) to wait before returning (will return immediately if connection available)
 	  \return true if a connection is avaialble */
-	bool poll(const Poco::Timespan& span=Poco::Timespan(250000)) const { return _server_sock.poll(span, Poco::Net::Socket::SELECT_READ); }
+	bool poll(const Poco::Timespan& span=Poco::Timespan(250000)) const { return _server_sock->poll(span, Poco::Net::Socket::SELECT_READ); }
 
 	/*! Accept an inbound connection and obtain a connected socket
 	  \param claddr location to store address of remote connection
 	  \return the connected socket */
-	Poco::Net::StreamSocket accept(Poco::Net::SocketAddress& claddr) { return _server_sock.acceptConnection(claddr); }
+	Poco::Net::StreamSocket accept(Poco::Net::SocketAddress& claddr) { return _server_sock->acceptConnection(claddr); }
 
 	/// Convenient scoped pointer for your session
 	typedef scoped_ptr<ServerSession<T> > Server_ptr;
+
+#ifdef HAVE_OPENSSL
+	bool is_secure() const { return _ssl.is_secure(); }
+#else
+	bool is_secure() const { return false; }
+#endif
 };
 
 /// Server session instance.
@@ -392,7 +517,11 @@ public:
 	SessionInstance (ServerSession<T>& sf) :
 		_sock(new Poco::Net::StreamSocket(sf.accept(_claddr))),
 		_session(new T(sf._ctx)),
-		_sc(_sock, _claddr, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_process_model(sf._ses), sf.get_tcp_nodelay(sf._ses))
+#ifdef HAVE_OPENSSL
+		_sc(_sock, _claddr, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_process_model(sf._ses), sf.get_tcp_nodelay(sf._ses), sf.is_secure())
+#else
+		_sc(_sock, _claddr, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_process_model(sf._ses), sf.get_tcp_nodelay(sf._ses), false)
+#endif
 	{
 		_session->set_login_parameters(sf._loginParameters);
 		_session->set_session_config(&sf);

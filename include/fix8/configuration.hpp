@@ -37,6 +37,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _FIX8_CONFIGURATION_HPP_
 # define _FIX8_CONFIGURATION_HPP_
 
+#ifdef HAVE_OPENSSL
+#include <openssl/ssl.h>
+#else
+#define SSL_VERIFY_PEER 0
+#endif
+
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
@@ -54,6 +60,34 @@ struct Server
 };
 
 //-------------------------------------------------------------------------------------------------
+/// Class to hold SSL context for failoverable sessions
+struct SslContext
+{
+	std::string _private_key_file; ///< privateKeyFile contains the path to the private key file used for encryption.
+											 ///		Can be empty if no private key file is used.
+	std::string _certificate_file; ///< certificateFile contains the path to the certificate file (in PEM format).
+											 ///		If the private key and the certificate are stored in the same file, this
+											 ///		can be empty if privateKeyFile is given.
+	std::string _ca_location;		 ///< caLocation contains the path to the file or directory containing the
+											 ///		CA/root certificates. Can be empty if the OpenSSL builtin CA certificates
+											  ///		 are used (see loadDefaultCAs).
+	int _verification_mode;			 ///< none, relaxed, strict, once
+	int _verification_depth;		 ///< 9
+	bool _load_default_cas;			 ///< false
+	std::string _cipher_list;		 ///< "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"
+	bool _valid;
+
+	SslContext(const std::string& private_key_file="", const std::string& certificate_file="", const std::string& ca_location="",
+				  int verification_mode=SSL_VERIFY_PEER, int verification_depth=9, bool load_default_cas=false,
+				  const std::string& cipher_list="ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH")
+		: _private_key_file(private_key_file), _certificate_file(certificate_file), _ca_location(ca_location),
+		  _verification_mode(verification_mode), _verification_depth(verification_depth), _load_default_cas(load_default_cas),
+		  _cipher_list(cipher_list), _valid()
+	{
+	}
+};
+
+//-------------------------------------------------------------------------------------------------
 /// Class to encapsulate a Fix8 configuration.
 class Configuration
 {
@@ -62,7 +96,7 @@ class Configuration
 	const std::string _xmlfile;
 	const XmlElement *_root;
 	typedef std::map<const std::string, const XmlElement *> ConfigMap;
-	ConfigMap _sessions, _persisters, _loggers, _server_group;
+	ConfigMap _sessions, _persisters, _loggers, _server_group, _ssl_context;
 	std::vector<const XmlElement *> _allsessions;
 
 	/*! Find an xml entity by tag in the supplied map.
@@ -86,6 +120,11 @@ class Configuration
 	  \param tag the tag to find
 	  \return the found entity or 0 if not found */
 	const XmlElement *find_server_group(const std::string& tag) const { return find_element(tag, _server_group); }
+
+	/*! Find a _ssl_context by tag.
+	  \param tag the tag to find
+	  \return the found entity or 0 if not found */
+	const XmlElement *find_ssl_context(const std::string& tag) const { return find_element(tag, _ssl_context); }
 
 	/*! Find a fix8 field typed value by tag from an xml entity.
 	  \tparam location type
@@ -308,6 +347,13 @@ public:
 	  \return target target_comp_id */
 	target_comp_id get_target_comp_id(const XmlElement *from) const
 		{ target_comp_id to; return get_string_field(from, "target_comp_id", to); }
+
+#ifdef HAVE_OPENSSL
+	/*! Extract the SSL context from a ssl_context entity.
+	  \param from xml entity to search
+	  \return ssl context */
+	SslContext get_ssl_context(const XmlElement *from) const;
+#endif
 
 	/*! Create a new persister object from a session entity.
 	  \param from xml entity to search
