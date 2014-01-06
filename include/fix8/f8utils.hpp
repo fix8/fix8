@@ -39,6 +39,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 //-----------------------------------------------------------------------------------------
 #include <Poco/DateTime.h>
+#include <Poco/Net/SocketAddress.h>
 
 #ifndef _MSC_VER
 # include <sys/ioctl.h>
@@ -1279,6 +1280,16 @@ public:
 		}
 	}
 };
+
+#if POCO_VERSION <= 0x01040100
+inline bool operator==(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b) {
+    return a.host() == b.host() && a.port() == b.port();
+}
+
+inline bool operator!=(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b) {
+    return !(a == b);
+}
+#endif
 
 //----------------------------------------------------------------------------------------
 } // namespace FIX8
