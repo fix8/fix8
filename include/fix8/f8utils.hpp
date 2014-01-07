@@ -1281,7 +1281,7 @@ public:
 	}
 };
 
-#if POCO_VERSION <= 0x01040100
+#if defined POCO_VERSION && POCO_VERSION <= 0x01040100
 inline bool operator==(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b) {
     return a.host() == b.host() && a.port() == b.port();
 }
