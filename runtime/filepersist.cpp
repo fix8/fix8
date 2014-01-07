@@ -149,7 +149,7 @@ bool FilePersister::initialise(const f8String& dbDir, const f8String& dbFname, b
 		IPrec iprec;
 		while (true)
 		{
-			ssize_t blrd(read(_iod, static_cast<void *>(&iprec), sizeof(IPrec)));
+			const ssize_t blrd(read(_iod, static_cast<void *>(&iprec), sizeof(IPrec)));
 			if (blrd < 0)
 			{
 				ostringstream eostr;

@@ -1264,10 +1264,12 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			<< spacer << "// bool authenticate(SessionID& id, const FIX8::Message *msg);" << endl << endl;
 
 		oss_hpp << spacer << "// Override these methods to intercept admin and application methods." << endl
-				<< spacer << "// bool handle_admin(const unsigned seqnum, const FIX8::Message *msg);" << endl
-				<< spacer << "bool handle_application(const unsigned seqnum, const FIX8::Message *&msg)" << endl
-				<< spacer << '{' << endl << spacer << spacer << "return enforce(seqnum, msg) || msg->process(_router);"
-				<< endl << spacer << '}' << endl;
+				<< spacer << "// bool handle_admin(const unsigned seqnum, const FIX8::Message *msg);" << endl << endl
+				<< spacer << "bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);" << endl
+				<< spacer << "/* In your compilation unit, this should be implemented with something like the following:" << endl
+				<< spacer << "bool " << ctxt._clname << "_session_" << gen_classes << "::handle_application(const unsigned seqnum, const FIX8::Message *&msg)" << endl
+				<< spacer << '{' << endl << spacer << spacer << "return enforce(seqnum, msg) || msg->process(_router);" << endl
+				<< spacer << '}' << endl << spacer << "*/" << endl;
 
 		oss_hpp << "};" << endl;
 

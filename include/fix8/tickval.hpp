@@ -45,32 +45,16 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 
 //-------------------------------------------------------------------------------------------------
-namespace FIX8
-{
+namespace FIX8 {
+
+//-------------------------------------------------------------------------------------------------
 #ifdef __APPLE__
 #include <mach/clock.h>
 #include <mach/mach.h>
 #endif
 
-// OS X does not have clock_gettime, use clock_get_time
-inline void current_utc_time(struct timespec *ts)
-{
-#ifdef __APPLE__
-	clock_serv_t cclock;
-	mach_timespec_t mts;
-	host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
-	clock_get_time(cclock, &mts);
-	mach_port_deallocate(mach_task_self(), cclock);
-	ts->tv_sec = mts.tv_sec;
-	ts->tv_nsec = mts.tv_nsec;
-#else
-	clock_gettime(CLOCK_REALTIME, ts);
-#endif
-}
-
+//-------------------------------------------------------------------------------------------------
 #ifdef _MSC_VER
-
-#define CLOCK_REALTIME 0
 
 inline LARGE_INTEGER getFILETIMEoffset()
 {
@@ -85,6 +69,7 @@ inline LARGE_INTEGER getFILETIMEoffset()
 	return t;
 }
 
+// Windows does not have clock_gettime, so we must supply it
 inline int clock_gettime(int X, struct timespec *tv)
 {
     LARGE_INTEGER t;
@@ -129,7 +114,26 @@ inline int clock_gettime(int X, struct timespec *tv)
     return 0;
 }
 
+#define CLOCK_REALTIME 0
+
 #endif // _MSC_VER
+
+//-------------------------------------------------------------------------------------------------
+// OS X does not have clock_gettime, use clock_get_time
+inline void current_utc_time(struct timespec *ts)
+{
+#ifdef __APPLE__
+	clock_serv_t cclock;
+	mach_timespec_t mts;
+	host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+	clock_get_time(cclock, &mts);
+	mach_port_deallocate(mach_task_self(), cclock);
+	ts->tv_sec = mts.tv_sec;
+	ts->tv_nsec = mts.tv_nsec;
+#else
+	clock_gettime(CLOCK_REALTIME, ts);
+#endif
+}
 
 //---------------------------------------------------------------------------------------------------
 /// High resolution time in nanosecond ticks. Thread safe.

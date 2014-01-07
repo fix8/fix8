@@ -327,3 +327,4 @@ void dump_components(const Components& components, ostream& outf)
 
 	outf << string(depth * 2, ' ') << "</components>" << endl;
 }
+
