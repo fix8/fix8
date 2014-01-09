@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#ifndef _F8_UTILS_HPP_
-# define _F8_UTILS_HPP_
+#ifndef FIX8_UTILS_HPP_2784082BA6FB4859B8EA198F3904F063
+#define FIX8_UTILS_HPP_2784082BA6FB4859B8EA198F3904F063
 
 //-----------------------------------------------------------------------------------------
 #include <Poco/DateTime.h>

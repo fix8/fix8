@@ -10,8 +10,8 @@
  *
  */
  
-#ifndef __uSWSR_PTR_BUFFER_HPP_
-#define __uSWSR_PTR_BUFFER_HPP_
+#ifndef FF_uSWSR_PTR_BUFFER_HPP_8A4BD8C4320946CDAF18DE772244C50F
+#define FF_uSWSR_PTR_BUFFER_HPP_8A4BD8C4320946CDAF18DE772244C50F
 
 /* ***************************************************************************
  *

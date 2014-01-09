@@ -1,7 +1,7 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-#ifndef __SWSR_PTR_BUFFER_HPP_
-#define __SWSR_PTR_BUFFER_HPP_
+#ifndef FF_SWSR_PTR_BUFFER_HPP_FAEFCD9E0AA04CDA8479EF92E3E9808F
+#define FF_SWSR_PTR_BUFFER_HPP_FAEFCD9E0AA04CDA8479EF92E3E9808F
 
 /*!
  *  \link

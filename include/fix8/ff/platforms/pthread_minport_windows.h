@@ -1,5 +1,5 @@
-#ifndef _FF_MINPORT_WIN_H_
-#define _FF_MINPORT_WIN_H_
+#ifndef FF_MINPORT_WIN_H_C10001C3F02348A39F38F16ED6C56CCC
+#define FF_MINPORT_WIN_H_C10001C3F02348A39F38F16ED6C56CCC
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License version 3 as 

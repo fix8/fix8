@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_FIELD_HPP_
-# define _FIX8_FIELD_HPP_
+#ifndef FIX8_FIELD_HPP_0BDAA441DD91465882783E51EE4B153E
+#define FIX8_FIELD_HPP_0BDAA441DD91465882783E51EE4B153E
 
 #include <Poco/Timestamp.h>
 #include <Poco/DateTime.h>

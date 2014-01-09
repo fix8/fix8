@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_TRAITS_HPP_
-# define _FIX8_TRAITS_HPP_
+#ifndef FIX8_TRAITS_HPP_B44F9E37220544ECB6A2036D85A1EDB5
+#define FIX8_TRAITS_HPP_B44F9E37220544ECB6A2036D85A1EDB5
 
 #include <set>
 

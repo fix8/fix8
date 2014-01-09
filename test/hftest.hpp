@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_MYFIX_HPP_
-#define _FIX8_MYFIX_HPP_
+#ifndef FIX8_HFTEST_HPP_BD5C806590E04108BA7E6F67A2976FC3
+#define FIX8_HFTEST_HPP_BD5C806590E04108BA7E6F67A2976FC3
 
 //-----------------------------------------------------------------------------------------
 class hf_session_client;

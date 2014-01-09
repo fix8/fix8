@@ -3,8 +3,8 @@
  *   /<source-dir>/include/asm-x86/atomic_64.h
  *
  */
-#ifndef __ARCH_X86_64_ATOMIC__
-#define __ARCH_X86_64_ATOMIC__
+#ifndef FF_ARCH_X86_64_ATOMIC_H_3A7EFB7EEE0A41258865BF2004E7E14C
+#define FF_ARCH_X86_64_ATOMIC_H_3A7EFB7EEE0A41258865BF2004E7E14C
 
 
 /* atomic_t should be 32 bit signed type */

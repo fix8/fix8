@@ -1,5 +1,5 @@
-#ifndef __LIBLFDS_H_
-#define __LIBLFDS_H_
+#ifndef FF_LIBLFDS_H_9799B9EC0F504E679542BA56B8017280
+#define FF_LIBLFDS_H_9799B9EC0F504E679542BA56B8017280
 
 /* 
  * This file is taken from liblfds.6 a portable, license-free, 

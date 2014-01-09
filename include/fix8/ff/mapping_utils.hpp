@@ -13,8 +13,8 @@
  *
  */
  
-#ifndef __MAPPING_UTILS_HPP_
-#define __MAPPING_UTILS_HPP_
+#ifndef FF_MAPPING_UTILS_HPP_9387AC6ABAE64F5E8577194FC28BCDFC
+#define FF_MAPPING_UTILS_HPP_9387AC6ABAE64F5E8577194FC28BCDFC
 
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify it

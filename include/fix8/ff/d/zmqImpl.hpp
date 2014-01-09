@@ -9,8 +9,8 @@
  *  FastFlow using ØMQ.
  */
  
-#ifndef _FF_zmqIMPL_HPP_
-#define _FF_zmqIMPL_HPP_
+#ifndef FF_zmqIMPL_HPP_0C6A0067AEC44668AB0B216D4E8A97E7
+#define FF_zmqIMPL_HPP_0C6A0067AEC44668AB0B216D4E8A97E7
 
 /* ***************************************************************************
  *

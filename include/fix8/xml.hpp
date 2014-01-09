@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#ifndef _XML_ELEMENT_HPP_
-# define _XML_ELEMENT_HPP_
+#ifndef FIX8_XML_ELEMENT_HPP_C5A9CA5F06244177985FD768188AC4FB
+#define FIX8_XML_ELEMENT_HPP_C5A9CA5F06244177985FD768188AC4FB
 
 //-----------------------------------------------------------------------------------------
 #include <set>

@@ -13,8 +13,8 @@
  *
  */
  
-#ifndef _FF_DNODE_HPP_
-#define _FF_DNODE_HPP_
+#ifndef FF_DNODE_HPP_7D22617626CD43CF91B288384C097DB8
+#define FF_DNODE_HPP_7D22617626CD43CF91B288384C097DB8
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it

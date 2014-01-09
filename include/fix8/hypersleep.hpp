@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#ifndef _F8_HYPERSLEEP_
-# define _F8_HYPERSLEEP_
+#ifndef FIX8_HYPERSLEEP_HPP_D8261D7F7888440A976BA50ACDD2B986
+#define FIX8_HYPERSLEEP_HPP_D8261D7F7888440A976BA50ACDD2B986
 
 namespace FIX8 {
 

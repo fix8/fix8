@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_PERSIST_HPP_
-# define _FIX8_PERSIST_HPP_
+#ifndef FIX8_PERSIST_HPP_919DCD3284A04DB6AE004FBFB9F0BE75
+#define FIX8_PERSIST_HPP_919DCD3284A04DB6AE004FBFB9F0BE75
 
 #if defined HAVE_BDB
 # include <db_cxx.h>

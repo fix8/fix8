@@ -34,8 +34,8 @@
  ****************************************************************************
  Mehdi Goli: m.goli@rgu.ac.uk*/
 
-#ifndef _FF_OCLENVIRONMENT_HPP
-#define _FF_OCLENVIRONMENT_HPP
+#ifndef FF_OCLENVIRONMENT_HPP_A548C3E68F544379BB1054E7475193EC
+#define FF_OCLENVIRONMENT_HPP_A548C3E68F544379BB1054E7475193EC
 
 #include <vector>
 #include <pthread.h>

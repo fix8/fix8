@@ -7,8 +7,8 @@
  *  \brief This file describes the partitioner used in the map skeleton.
  */
  
-#ifndef _FF_PART_HPP_
-#define _FF_PART_HPP_
+#ifndef FF_PART_HPP_EFB3D310517B4E7CB7F47D1B6B133149
+#define FF_PART_HPP_EFB3D310517B4E7CB7F47D1B6B133149
 
 /* ***************************************************************************
  *

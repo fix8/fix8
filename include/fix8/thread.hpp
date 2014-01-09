@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#ifndef _FIX8_THREAD_HPP_
-# define _FIX8_THREAD_HPP_
+#ifndef FIX8_THREAD_HPP_C729FC7A4E1A45239691403CA869C0C0
+#define FIX8_THREAD_HPP_C729FC7A4E1A45239691403CA869C0C0
 
 //----------------------------------------------------------------------------------------
 #include<pthread.h>

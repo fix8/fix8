@@ -33,8 +33,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_INCLUDES_HPP_
-# define _FIX8_INCLUDES_HPP_
+#ifndef FIX8_INCLUDES_HPP_A8AE13B3F36B4F2C8777631079FE706A
+#define FIX8_INCLUDES_HPP_A8AE13B3F36B4F2C8777631079FE706A
 
 #include <f8dll.h>
 #include <f8config.h>

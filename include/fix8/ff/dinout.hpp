@@ -5,8 +5,8 @@
  *  of the base class \p ff_node, with features oriented to distributed systems.
  */
  
-#ifndef _FF_DNODE_HPP_
-#define _FF_DNODE_HPP_
+#ifndef FF_DINOUT_HPP_38651DC3F2ED43AABF20D533E06856BB
+#define FF_DINOUT_HPP_38651DC3F2ED43AABF20D533E06856BB
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License version 3 as 

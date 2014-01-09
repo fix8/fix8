@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_SESSIONWRAPPER_HPP_
-# define _FIX8_SESSIONWRAPPER_HPP_
+#ifndef FIX8_SESSIONWRAPPER_HPP_55370D681D3C4244A90BFC13FA5BFD16
+#define FIX8_SESSIONWRAPPER_HPP_55370D681D3C4244A90BFC13FA5BFD16
 
 #include <Poco/Net/ServerSocket.h>
 #ifdef HAVE_OPENSSL

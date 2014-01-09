@@ -9,8 +9,8 @@
  *  which is used to distribute tasks among workers.
  */
  
-#ifndef _FF_LB_HPP_
-#define _FF_LB_HPP_
+#ifndef FF_LB_HPP_FC939F59966F442A903A6587BCFBC299
+#define FF_LB_HPP_FC939F59966F442A903A6587BCFBC299
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License version 3 as 

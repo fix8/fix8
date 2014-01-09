@@ -8,8 +8,8 @@
  *  \brief This file contains the thread mapper definition used in FastFlow
  */
   
-#ifndef __THREAD_MAPPER_HPP_
-#define __THREAD_MAPPER_HPP_
+#ifndef FF_THREAD_MAPPER_HPP_EB2A8B91B87049B9A4E9227BCD03DDFD
+#define FF_THREAD_MAPPER_HPP_EB2A8B91B87049B9A4E9227BCD03DDFD
 
 /* ***************************************************************************
  *

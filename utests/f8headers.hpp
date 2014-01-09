@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_F8HEADERS_HPP_
-#define _FIX8_F8HEADERS_HPP_
+#ifndef FIX8_F8HEADERS_HPP_5C8D27EC19B44BBFA73061E2FD14D6B5
+#define FIX8_F8HEADERS_HPP_5C8D27EC19B44BBFA73061E2FD14D6B5
 
 #include <iostream>
 #include <memory>

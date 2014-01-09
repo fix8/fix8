@@ -1,7 +1,7 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-#ifndef _FF_OCL_UTILITIES_HPP_
-#define _FF_OCL_UTILITIES_HPP_
+#ifndef FF_OCL_UTILITIES_HPP_CBB8C8AF10D446C780B9470E3406CD4F
+#define FF_OCL_UTILITIES_HPP_CBB8C8AF10D446C780B9470E3406CD4F
 
 /*!
  * \link

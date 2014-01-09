@@ -8,8 +8,8 @@
  *  \brief This file contains the spin lock(s) used in FastFlow
  */
  
-#ifndef _FF_SPINLOCK_HPP_
-#define _FF_SPINLOCK_HPP_
+#ifndef FF_SPINLOCK_HPP_D5B124EE3D954B3F97D2AB6538C2DD81
+#define FF_SPINLOCK_HPP_D5B124EE3D954B3F97D2AB6538C2DD81
 /* ***************************************************************************
  *  
  *  This program is free software; you can redistribute it and/or modify it

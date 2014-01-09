@@ -1,7 +1,7 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-#ifndef _FF_SQUEUE_HPP_
-#define _FF_SQUEUE_HPP_
+#ifndef FF_SQUEUE_HPP_D9C049628E734B7790B6F0CC4C4BF0AB
+#define FF_SQUEUE_HPP_D9C049628E734B7790B6F0CC4C4BF0AB
 
 /*!
  * \link

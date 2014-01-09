@@ -8,8 +8,8 @@
  *  \brief This file describes the map skeleton.
  */
  
-#ifndef _FF_MAP_HPP_
-#define _FF_MAP_HPP_
+#ifndef FF_MAP_HPP_DE809C0AFFB146D5840398B36E697C42
+#define FF_MAP_HPP_DE809C0AFFB146D5840398B36E697C42
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it
