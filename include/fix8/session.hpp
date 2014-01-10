@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -105,19 +105,19 @@ public:
 	    \return target_comp_id */
 	const f8String& get_id() const { return _id; }
 
-	/*! Targetcompid equivalence operator.
+	/*! Targetcompid equivalence function..
 	    \return true if both Targetcompids are the same */
 	bool same_sender_comp_id(const target_comp_id& targetCompID) const { return targetCompID() == _senderCompID(); }
 
-	/*! Sendercompid equivalence operator.
+	/*! Sendercompid equivalence function..
 	    \return true if both Sendercompids are the same */
 	bool same_target_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _targetCompID(); }
 
-	/*! Sendercompid equivalence operator.
+	/*! Sendercompid equivalence function..
 	    \return true if both Sendercompids are the same, on the same session side */
 	bool same_side_target_comp_id(const target_comp_id& targetCompID) const { return targetCompID() == _targetCompID(); }
 
-	/*! Targetcompid equivalence operator.
+	/*! Targetcompid equivalence function..
 	    \return true if both Targetcompids are the same, on the same session side */
 	bool same_side_sender_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _senderCompID(); }
 

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -342,8 +342,9 @@ public:
 	/*! Send message over socket.
 	    \param data char * buffer to send
 	    \param remaining number of bytes
+	    \param nb - if true, don't block
 	    \return number of bytes sent */
-	int send(const char *data, size_t remaining)
+	int send(const char *data, size_t remaining, bool nb=false)
 	{
 		unsigned wrdone(0);
 
@@ -357,7 +358,11 @@ public:
 					|| errno == EWOULDBLOCK
 #endif
 				)
+				{
+					if (nb)
+						return wrdone;
 					continue;
+				}
 				throw PeerResetConnection("send: connection gone");
 			}
 

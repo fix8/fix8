@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -353,6 +353,7 @@ void print_usage()
 	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
 	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
 	um.add('f', "fields", "generate code for all defined fields even if they are not used in any message (default no)");
+	um.add('F', "xfields", "specify additional fields with associated messages (see documentation for details)");
 	um.add('h', "help", "help, this screen");
 	um.add('i', "ignore", "ignore errors, attempt to generate code anyhow (default no)");
 	um.add('k', "keep", "retain generated temporaries even if there are errors (.*.tmp)");
@@ -375,6 +376,7 @@ void print_usage()
 	um.add("@f8c -p Texfix -n TEX myfix.xml");
 	um.add("@f8c -rp Texfix -n TEX -x ../schema/FIXT11.xml myfix.xml");
 	um.add("@f8c -p Texfix -n TEX -c client -x ../schema/FIXT11.xml myfix.xml");
+	um.add("@f8c -p Texfix -n TEX -c client -x ../schema/FIXT11.xml myfix.xml -F \"<field number='9999' name='SampleUserField' type='STRING' messages='NewOrderSingle:Y ExecutionReport:Y OrderCancelRequest:N' />");
 	um.print(cerr);
 }
 
@@ -395,13 +397,12 @@ RealmObject *RealmObject::create(const string& from, FieldTrait::FieldType ftype
 //-------------------------------------------------------------------------------------------------
 string insert_year()
 {
-#ifdef _MSC_VER
    struct tm *ptim;
    time_t now(time(0));
+#ifdef _MSC_VER
    ptim = localtime (&now);
 #else
-   struct tm tim, *ptim;
-   time_t now(time(0));
+   struct tm tim;
    localtime_r(&now, &tim);
    ptim = &tim;
 #endif
