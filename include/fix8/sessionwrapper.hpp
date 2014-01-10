@@ -354,11 +354,13 @@ public:
 				this->_session->log(e.what());
 				excepted = true;
 			}
+#if POCO_VERSION >= 0x01040000
 			catch (Poco::Net::InvalidSocketException& e)
 			{
 				this->_session->log(e.what());
 				excepted = true;
 			}
+#endif
 			catch (Poco::Net::ServiceNotFoundException& e)
 			{
 				//std::cerr << e.what() << std::endl;
