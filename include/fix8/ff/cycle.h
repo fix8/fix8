@@ -78,8 +78,8 @@
 
 /***************************************************************************/
 
-#ifndef __CYCLE_H
-#define __CYCLE_H
+#ifndef FF_CYCLE_H_48A822175A844F4983531A550B38FD4D
+#define FF_CYCLE_H_48A822175A844F4983531A550B38FD4D
 
 // Mauro Mulatero: ARM
 #if defined(__linux__) && defined(__arm__)

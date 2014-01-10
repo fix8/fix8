@@ -33,8 +33,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _F8DLL_H_INCLUDED_
-#define _F8DLL_H_INCLUDED_
+#ifndef FIX8_DLL_H_E192486A08E141819F6A938BF79A6D80
+#define FIX8_DLL_H_E192486A08E141819F6A938BF79A6D80
 
 #if defined(_MSC_VER)
     #if defined(BUILD_F8API)

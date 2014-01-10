@@ -8,8 +8,8 @@
  *  \brief This file contains general settings for the FastFlow framework.
  */
 
-#ifndef _FF_CONFIG_HPP_
-#define _FF_CONFIG_HPP_
+#ifndef FF_CONFIG_HPP_866AF9B731114530A963F06A4E4B5F67
+#define FF_CONFIG_HPP_866AF9B731114530A963F06A4E4B5F67
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it

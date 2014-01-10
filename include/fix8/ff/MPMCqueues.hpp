@@ -8,8 +8,8 @@
  *  \brief This file contains several MPMC queue implementations.
  */
  
-#ifndef __FF_MPMCQUEUE_HPP_ 
-#define __FF_MPMCQUEUE_HPP_ 
+#ifndef FF_MPMCQUEUE_HPP_B7F83B5423824450BC20CB050D760E1A
+#define FF_MPMCQUEUE_HPP_B7F83B5423824450BC20CB050D760E1A
 
 /* 
  * This file contains Multi-Producer/Multi-Consumer queue implementations.

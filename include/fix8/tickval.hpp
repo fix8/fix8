@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_TICKVAL_HPP_
-# define _FIX8_TICKVAL_HPP_
+#ifndef FIX8_TICKVAL_HPP_38F9F8969BE4497E9BB893CDAC4E5052
+#define FIX8_TICKVAL_HPP_38F9F8969BE4497E9BB893CDAC4E5052
 
 //-------------------------------------------------------------------------------------------------
 #ifndef _MSC_VER

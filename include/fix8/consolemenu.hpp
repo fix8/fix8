@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_CONSOLEMENU_HPP_
-# define _FIX8_CONSOLEMENU_HPP_
+#ifndef FIX8_CONSOLEMENU_HPP_E16E7E4FB21D4F3FB3659FA467047980
+#define FIX8_CONSOLEMENU_HPP_E16E7E4FB21D4F3FB3659FA467047980
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {

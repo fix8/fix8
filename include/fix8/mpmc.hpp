@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_MPMC_HPP_
-# define _FIX8_MPMC_HPP_
+#ifndef FIX8_MPMC_HPP_2342F1EC1BDB4999B5A954BE2638E186
+#define FIX8_MPMC_HPP_2342F1EC1BDB4999B5A954BE2638E186
 
 //-------------------------------------------------------------------------------------------------
 // provide generic names to Multi Producer Multi Consumer queues, mutexes and atomic from

@@ -7,8 +7,8 @@
  *
  *  \brief TODO
  */
-#ifndef __FF_STATICLINKEDLIST_HPP_ 
-#define __FF_STATICLINKEDLIST_HPP_ 
+#ifndef FF_STATICLINKEDLIST_HPP_36A56CBC19F14A99ABC74CD12484F507
+#define FF_STATICLINKEDLIST_HPP_36A56CBC19F14A99ABC74CD12484F507
 
 /* ***************************************************************************
  *

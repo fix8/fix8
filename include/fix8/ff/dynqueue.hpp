@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef __FF_DYNQUEUE_HPP_ 
-#define __FF_DYNQUEUE_HPP_ 
+#ifndef FF_DYNQUEUE_HPP_70102AEC709F4C99B7F8B1BA57366587
+#define FF_DYNQUEUE_HPP_70102AEC709F4C99B7F8B1BA57366587
 
 /* ***************************************************************************
  *

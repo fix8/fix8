@@ -9,8 +9,8 @@
  *  workers.
  */
 
-#ifndef _FF_GT_HPP_
-#define _FF_GT_HPP_
+#ifndef FF_GT_HPP_7A3DC76BD0F24320AAE8B2B9ADADD427
+#define FF_GT_HPP_7A3DC76BD0F24320AAE8B2B9ADADD427
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify

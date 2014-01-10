@@ -8,8 +8,8 @@
  * \brief TODO
  */
 
-#ifndef _FF_UTILS_HPP_
-#define _FF_UTILS_HPP_
+#ifndef FF_UTILS_HPP_3523BD4899074C738FB148D611929E45
+#define FF_UTILS_HPP_3523BD4899074C738FB148D611929E45
 
 /* ***************************************************************************
  *

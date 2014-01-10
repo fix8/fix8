@@ -10,8 +10,8 @@
  *
  */
  
-#ifndef _FF_COMMINTERFACE_HPP_
-#define _FF_COMMINTERFACE_HPP_
+#ifndef FF_COMMINTERFACE_HPP_BBEF355A56944E27A2F84BC3548E58F0
+#define FF_COMMINTERFACE_HPP_BBEF355A56944E27A2F84BC3548E58F0
 
 /* ***************************************************************************
  *

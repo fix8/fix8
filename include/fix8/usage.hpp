@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#ifndef _USAGE_HPP_
-# define _USAGE_HPP_
+#ifndef FIX8_USAGE_HPP_61DD9085FE614557AC2FF906C3D59C2C
+#define FIX8_USAGE_HPP_61DD9085FE614557AC2FF906C3D59C2C
 
 //-----------------------------------------------------------------------------------------
 /// Convenient program help/usage wrapper. Generates a standardised usage message.

@@ -8,8 +8,8 @@
  *  \brief This file describes the parallel_for/parallel_reduce skeletons.
  */
  
-#ifndef _FF_PARFOR_HPP_
-#define _FF_PARFOR_HPP_
+#ifndef FF_PARFOR_HPP_32BA631F077B4831951A17E91CADC48C
+#define FF_PARFOR_HPP_32BA631F077B4831951A17E91CADC48C
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it

@@ -9,8 +9,8 @@
  * No lock is needed around pop and push methods.
  *
  */
-#ifndef __FF_DYNLINKEDLIST_HPP_ 
-#define __FF_DYNLINKEDLIST_HPP_ 
+#ifndef FF_DYNLINKEDLIST_HPP_863DC02BD0A0452482FA38C6A192C0D8
+#define FF_DYNLINKEDLIST_HPP_863DC02BD0A0452482FA38C6A192C0D8
 
 /* ***************************************************************************
  *

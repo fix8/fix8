@@ -8,8 +8,8 @@
 // file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
 //
 
-#ifndef COROUTINE_HPP
-#define COROUTINE_HPP
+#ifndef COROUTINE_HPP_4E69322337F643E5A770046DEBBC6D02
+#define COROUTINE_HPP_4E69322337F643E5A770046DEBBC6D02
 
 class coroutine
 {

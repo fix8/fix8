@@ -30,8 +30,8 @@
   *
   */
 
-#ifndef _FF_ZMQTRANSPORT_HPP_ 
-#define _FF_ZMQTRANSPORT_HPP_
+#ifndef FF_ZMQTRANSPORT_HPP_4C82D4C7752E4539A5ECC4CA779E1375
+#define FF_ZMQTRANSPORT_HPP_4C82D4C7752E4539A5ECC4CA779E1375
 
 /* 
  * The manual of 0MQ can be found at : http://zguide.zeromq.org/

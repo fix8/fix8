@@ -11,8 +11,8 @@
  *
  */
 
-#ifndef _FF_NODE_HPP_
-#define _FF_NODE_HPP_
+#ifndef FF_NODE_HPP_9511FEAF1A7C43BD8440A7BC7B7223C5
+#define FF_NODE_HPP_9511FEAF1A7C43BD8440A7BC7B7223C5
 
 /* ***************************************************************************
  *

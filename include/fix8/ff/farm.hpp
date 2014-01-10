@@ -9,8 +9,8 @@
  *  \brief This file describes the farm skeleton.
  */
  
-#ifndef _FF_FARM_HPP_
-#define _FF_FARM_HPP_
+#ifndef FF_FARM_HPP_FCB41AF5837B40C795A517998980D18C
+#define FF_FARM_HPP_FCB41AF5837B40C795A517998980D18C
 /* ***************************************************************************
  *  
  *  This program is free software; you can redistribute it and/or modify it

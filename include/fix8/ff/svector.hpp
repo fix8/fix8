@@ -10,8 +10,8 @@
  *
  */
 
-#ifndef _FF_SVECTOR_HPP_
-#define _FF_SVECTOR_HPP_
+#ifndef FF_SVECTOR_HPP_9655344ABFAE46CC81861B591570B6FC
+#define FF_SVECTOR_HPP_9655344ABFAE46CC81861B591570B6FC
 
 /* ***************************************************************************
  *

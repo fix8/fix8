@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _FF_PIPELINE_HPP_
-#define _FF_PIPELINE_HPP_
+#ifndef FF_PIPELINE_HPP_10A480EA50FA488B80B57DB8450CEF95
+#define FF_PIPELINE_HPP_10A480EA50FA488B80B57DB8450CEF95
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License version 3 as 

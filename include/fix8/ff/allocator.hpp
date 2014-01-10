@@ -8,8 +8,8 @@
  *  \brief Implementations of the FastFlow's lock-free allocator.
  */
  
-#ifndef _FF_ALLOCATOR_HPP_
-#define _FF_ALLOCATOR_HPP_
+#ifndef FF_ALLOCATOR_HPP_B0D772C53D4642C385CD75CB45D9283B
+#define FF_ALLOCATOR_HPP_B0D772C53D4642C385CD75CB45D9283B
 
 /* ***************************************************************************
  *

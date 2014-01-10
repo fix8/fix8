@@ -3,8 +3,8 @@
  *   /<source-dir>/include/asm-powerpc/atomic.h
  *
  */
-#ifndef _ASM_POWERPC_ATOMIC_H_
-#define _ASM_POWERPC_ATOMIC_H_
+#ifndef FF_ASM_POWERPC_ATOMIC_H_807E8026C9234BA6A41BE02E24E9EE3B
+#define FF_ASM_POWERPC_ATOMIC_H_807E8026C9234BA6A41BE02E24E9EE3B
 
 
 /* some defines taken from: */

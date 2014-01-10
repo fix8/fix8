@@ -4,8 +4,8 @@
  *
  */
 
-#ifndef _ASM_GENERIC_ATOMIC_H
-#define _ASM_GENERIC_ATOMIC_H
+#ifndef FF_ASM_GENERIC_ATOMIC_H_107770D547E94A03B5556B58A993869D
+#define FF_ASM_GENERIC_ATOMIC_H_107770D547E94A03B5556B58A993869D
 /*
  * Copyright (C) 2005 Silicon Graphics, Inc.
  *  Christoph Lameter <clameter@sgi.com>

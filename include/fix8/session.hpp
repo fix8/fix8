@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_SESSION_HPP_
-# define _FIX8_SESSION_HPP_
+#ifndef FIX8_SESSION_HPP_BE4CDDC73E7E488AB1EFF3CC32617C41
+#define FIX8_SESSION_HPP_BE4CDDC73E7E488AB1EFF3CC32617C41
 
 #include <Poco/Net/StreamSocket.h>
 

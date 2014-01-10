@@ -39,8 +39,8 @@
  ****************************************************************************
   Mehdi Goli: m.goli@rgu.ac.uk*/
 
-#ifndef _FF_OCLNODE_HPP_
-#define _FF_OCLNODE_HPP_
+#ifndef FF_OCLNODE_HPP_D3C83458ADE84129A3554FC6F486FD03
+#define FF_OCLNODE_HPP_D3C83458ADE84129A3554FC6F486FD03
 
 #include <ff/ocl/clEnvironment.hpp>
 #include <ff/node.hpp>

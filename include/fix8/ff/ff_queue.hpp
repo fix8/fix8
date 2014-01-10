@@ -1,7 +1,7 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-#ifndef __FF_QUEUE__HPP_
-#define __FF_QUEUE__HPP_
+#ifndef FF_QUEUE_HPP_A490687F1EFE4B17AE812B9BAF70EA4F
+#define FF_QUEUE_HPP_A490687F1EFE4B17AE812B9BAF70EA4F
 
 /*!
  *

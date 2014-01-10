@@ -3,8 +3,8 @@
  *   /<source-dir>/include/asm-arm/atomic.h
  *
  */
-#ifndef __ASM_ARM_ATOMIC_H
-#define __ASM_ARM_ATOMIC_H
+#ifndef FF_ASM_ARM_ATOMIC_H_77AADF24D02A41288F5053F3423A402E
+#define FF_ASM_ARM_ATOMIC_H_77AADF24D02A41288F5053F3423A402E
 
 typedef struct { volatile int counter; } atomic_t;
 

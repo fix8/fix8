@@ -1,6 +1,6 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
-#ifndef _FF_PLATFORM_HPP_
-#define _FF_PLATFORM_HPP_
+#ifndef FF_PLATFORM_HPP_E5220822292543629919C2AAA1F9E8ED
+#define FF_PLATFORM_HPP_E5220822292543629919C2AAA1F9E8ED
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License version 3 as 
