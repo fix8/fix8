@@ -1,5 +1,8 @@
-* Wed Dec 04 2013 David L. Dight <fix@fix8.org> 1.0.0-RC3
-- Fixed Jira tickets FX-107, FX-129, FX-130, FX-131, FX-141, FX-142, FX-143, FX-144, FX-147, FX-149, FX-150
+* Sun Jan 19 2014 David L. Dight <fix@fix8.org> 1.0.0
+- Our first official GA release
+- Fixed Jira tickets FX-107, FX-129, FX-130, FX-131, FX-134, FX-139, FX-140, FX-141,
+							FX-142, FX-143, FX-144, FX-146, FX-147, FX-149, FX-150, FX-151, FX-157, FX-158,
+							FX-159, FX-161, FX-162, FX-163, FX-164, FX-165, FX-166, FX-167, FX-168, FX-169
 - Provide support for basic client failover capability
 - Make connection timeout configurable
 - Add support for non-standard XML attribute comments
@@ -10,6 +13,24 @@
 - Fixed Session::send_process() dumps core in reliable mode if client drops connection before login
 - Added When working in coro mode there has to be a flag that session is ready to operate
 - Added When working in coro mode reader.execute() calls to base class operator()
+- Merged fix8:dev with fix8:master
+- Added MonthYear and LocalMktDate Date Formats
+- Fixed f8test doesn't work as expected
+- Fixed clang 3.2-3.4 compilation warnings
+- Fixed Sending of FIX message takes too long
+- Added Batch message sending
+- Fixed MessageBase::extract_element(..., f8String& tag, f8String& val) is ineffective
+- Fixed FIXReader calls sockRead too many times
+- Added Make includes relative to project root
+- Added SSL support
+- Fixed XmlElement::find with attribute and value not finding correctly
+- Fixed Segfault with non-set SessionConfig on heartbeat
+- Added Support custom field addition on f8c command line
+- Fixed Fields of type 'data' are not parsed according to FIX specification
+- Fixed time_to_epoch tm_mon ternary operator does not allow January dates to be converted to an epoch timestamp
+- Fixed Makefile.am does not reference f8dll.h
+- Fixed Build error on OS X -rdynamic
+- Fixed error: 'uint32_t' does not name a type
 
 * Sun Nov 10 2013 David L. Dight <fix@fix8.org> 0.10.0
 - Fixed Jira tickets FX-102, FX-103, FX-104, FX-105, FX-107, FX-110, FX-113, FX-114, FX-115, FX-116, FX-119, FX-120,

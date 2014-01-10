@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -185,7 +185,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Field template. There will ONLY be template specialisations of this class using Int2Type idiom.
+/// Field template. There will ONLY be partial template specialisations of this class.
 /*! \tparam T field type
     \tparam field field number (fix tag) */
 template<typename T, const unsigned short field>
@@ -641,36 +641,6 @@ public:
 	  \param to buffer to print to
 	  \return number bytes encoded */
 	size_t print(char *to) const { *to = _value; return 1; }
-};
-
-//-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_data> data;
-
-/// Partial specialisation for data field type.
-/*! \tparam field field number (fix tag) */
-template<const unsigned short field>
-class Field<data, field> : public Field<f8String, field>
-{
-public:
-	/// Ctor.
-	Field () : Field<f8String, field>(field) {}
-
-	/// Copy Ctor.
-	/* \param from field to copy */
-	Field (const Field& from) : Field<f8String, field>(from) {}
-
-	/*! Construct from string ctor.
-	  \param from string to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
-
-	/*! Construct from char * ctor.
-	  \param from char * to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
-
-	/// Dtor.
-	~Field() {}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -1690,6 +1660,7 @@ typedef double Percentage;
 // typedef EnumType<FieldTrait::ft_string> Exchange;
 // typedef EnumType<FieldTrait::ft_string> Language;
 // typedef EnumType<FieldTrait::ft_string> XMLData;
+// typedef EnumType<FieldTrait::ft_data> data;
 
 typedef f8String MultipleCharValue;
 typedef f8String MultipleStringValue;
@@ -1698,6 +1669,7 @@ typedef f8String currency;
 typedef f8String Exchange;
 typedef f8String Language;
 typedef f8String XMLData;
+typedef f8String data;
 
 //-------------------------------------------------------------------------------------------------
 /// Field metadata structures
@@ -1768,27 +1740,31 @@ const char Common_MsgByte_LOGON('A');
 //-------------------------------------------------------------------------------------------------
 // Common FIX field numbers
 
-const unsigned Common_BeginSeqNo(7);
-const unsigned Common_BeginString(8);
-const unsigned Common_BodyLength(9);
-const unsigned Common_CheckSum(10);
-const unsigned Common_EndSeqNo(16);
-const unsigned Common_MsgSeqNum(34);
-const unsigned Common_MsgType(35);
-const unsigned Common_NewSeqNo(36);
-const unsigned Common_PossDupFlag(43);
-const unsigned Common_RefSeqNum(45);
-const unsigned Common_SenderCompID(49);
-const unsigned Common_SendingTime(52);
-const unsigned Common_TargetCompID(56);
-const unsigned Common_Text(58);
-const unsigned Common_EncryptMethod(98);
-const unsigned Common_HeartBtInt(108);
-const unsigned Common_TestReqID(112);
-const unsigned Common_OrigSendingTime(122);
-const unsigned Common_GapFillFlag(123);
-const unsigned Common_ResetSeqNumFlag(141);
-const unsigned Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
+const unsigned short Common_BeginSeqNo(7);
+const unsigned short Common_BeginString(8);
+const unsigned short Common_BodyLength(9);
+const unsigned short Common_CheckSum(10);
+const unsigned short Common_EndSeqNo(16);
+const unsigned short Common_MsgSeqNum(34);
+const unsigned short Common_MsgType(35);
+const unsigned short Common_NewSeqNo(36);
+const unsigned short Common_PossDupFlag(43);
+const unsigned short Common_RefSeqNum(45);
+const unsigned short Common_SenderCompID(49);
+const unsigned short Common_SendingTime(52);
+const unsigned short Common_TargetCompID(56);
+const unsigned short Common_Text(58);
+const unsigned short Common_EncryptMethod(98);
+const unsigned short Common_HeartBtInt(108);
+const unsigned short Common_TestReqID(112);
+const unsigned short Common_OnBehalfOfCompID(115);
+const unsigned short Common_OnBehalfOfSubID(116);
+const unsigned short Common_OrigSendingTime(122);
+const unsigned short Common_GapFillFlag(123);
+const unsigned short Common_ResetSeqNumFlag(141);
+const unsigned short Common_OnBehalfOfLocationID(144);
+const unsigned short Common_OnBehalfOfSendingTime(370);
+const unsigned short Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
 
 //-------------------------------------------------------------------------------------------------
 // Common FIX fields
@@ -1819,6 +1795,11 @@ typedef Field<Boolean, Common_ResetSeqNumFlag> reset_seqnum_flag;
 
 typedef Field<int, Common_HeartBtInt> heartbeat_interval;
 typedef Field<int, Common_EncryptMethod> encrypt_method;
+
+typedef Field<f8String, Common_OnBehalfOfCompID> onbehalfof_comp_id;
+typedef Field<f8String, Common_OnBehalfOfSubID> onbehalfof_sub_id;
+typedef Field<f8String, Common_OnBehalfOfLocationID> onbehalfof_location_id;
+typedef Field<UTCTimestamp, Common_OnBehalfOfSendingTime> onbehalfof_sending_time;
 
 //-------------------------------------------------------------------------------------------------
 
