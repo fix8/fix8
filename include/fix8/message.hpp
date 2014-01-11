@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_MESSAGE_HPP_
-# define _FIX8_MESSAGE_HPP_
+#ifndef FIX8_MESSAGE_HPP_
+#define FIX8_MESSAGE_HPP_
 
 #if defined HAS_TR1_UNORDERED_MAP
 # include <tr1/unordered_map>
