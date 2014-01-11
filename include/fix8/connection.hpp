@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_CONNECTION_HPP_
-# define _FIX8_CONNECTION_HPP_
+#ifndef FIX8_CONNECTION_HPP_
+#define FIX8_CONNECTION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
 #include <Poco/Timespan.h>
