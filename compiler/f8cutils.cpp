@@ -298,7 +298,7 @@ string bintoaschex(const string& from)
 	ostringstream result;
 	for (string::const_iterator itr(from.begin()); itr != from.end(); ++itr)
 		result << uppercase << hex << setw(2) << setfill('0') << static_cast<unsigned short>(*itr);
-	return '_' + result.str() + '_';
+	return "FIX8_" + result.str() + '_';
 }
 
 //-----------------------------------------------------------------------------------------
