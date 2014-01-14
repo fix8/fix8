@@ -89,7 +89,7 @@ INSTALL_DATA_HTML_SEARCH_DOC = doc/html/search/*.js doc/html/search/*.html doc/h
 INSTALL_DATA_LOCAL_SCHEMA = schema/*.xml schema/QUICKFIX-LICENCE
 
 install-data-local:
-	@$(mkinstalldirs) $(DESTDIR)$(testdir) $(DESTDIR)$(schemadir)
+	@$(mkinstalldirs) $(DESTDIR)$(testdir) $(DESTDIR)$(testdir)/run $(DESTDIR)$(schemadir)
 	@$(mkinstalldirs) $(DESTDIR)$(ffdir)/d $(DESTDIR)$(ffdir)/platforms $(DESTDIR)$(ffdir)/atomic $(DESTDIR)$(ffdir)/ocl
 	@$(mkinstalldirs) $(DESTDIR)$(fix8mandir)
 	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_TEST) $(DESTDIR)$(testdir)
