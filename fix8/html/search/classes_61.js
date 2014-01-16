@@ -1,7 +1,10 @@
 var searchData=
 [
   ['adjustedpositionreport',['AdjustedPositionReport',['../classFIX8_1_1TEX_1_1AdjustedPositionReport.html',1,'FIX8::TEX']]],
+  ['advertisement',['Advertisement',['../classFIX8_1_1UTEST_1_1Advertisement.html',1,'FIX8::UTEST']]],
   ['advertisement',['Advertisement',['../classFIX8_1_1TEX_1_1Advertisement.html',1,'FIX8::TEX']]],
+  ['allocation',['Allocation',['../classFIX8_1_1UTEST_1_1Allocation.html',1,'FIX8::UTEST']]],
+  ['allocationack',['AllocationACK',['../classFIX8_1_1UTEST_1_1AllocationACK.html',1,'FIX8::UTEST']]],
   ['allocationinstruction',['AllocationInstruction',['../classFIX8_1_1TEX_1_1AllocationInstruction.html',1,'FIX8::TEX']]],
   ['allocationinstructionack',['AllocationInstructionAck',['../classFIX8_1_1TEX_1_1AllocationInstructionAck.html',1,'FIX8::TEX']]],
   ['allocationinstructionalert',['AllocationInstructionAlert',['../classFIX8_1_1TEX_1_1AllocationInstructionAlert.html',1,'FIX8::TEX']]],
@@ -13,5 +16,7 @@ var searchData=
   ['assignmentreport',['AssignmentReport',['../classFIX8_1_1TEX_1_1AssignmentReport.html',1,'FIX8::TEX']]],
   ['asyncsocket',['AsyncSocket',['../classFIX8_1_1AsyncSocket.html',1,'FIX8']]],
   ['asyncsocket_3c_20f8string_20_3e',['AsyncSocket&lt; f8String &gt;',['../classFIX8_1_1AsyncSocket.html',1,'FIX8']]],
-  ['asyncsocket_3c_20message_20_2a_20_3e',['AsyncSocket&lt; Message * &gt;',['../classFIX8_1_1AsyncSocket.html',1,'FIX8']]]
+  ['asyncsocket_3c_20message_20_2a_20_3e',['AsyncSocket&lt; Message * &gt;',['../classFIX8_1_1AsyncSocket.html',1,'FIX8']]],
+  ['atomic64_5ft',['atomic64_t',['../structatomic64__t.html',1,'']]],
+  ['atomic_5ft',['atomic_t',['../structatomic__t.html',1,'']]]
 ];

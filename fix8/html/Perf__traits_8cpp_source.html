@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.10.0</span>
+   &#160;<span id="projectnumber">version  1.0.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -109,14 +110,14 @@ $(document).ready(function(){initNavTree('Perf__traits_8cpp_source.html','');});
 </div><!--header-->
 <div class="contents">
 <a href="Perf__traits_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// *** f8c generated file: DO NOT EDIT! Created: 2013-11-10 21:56:01 ***</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// *** f8c generated file: DO NOT EDIT! Created: 2014-01-14 14:01:58 ***</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">Fix8 Open Source FIX Engine.</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">Copyright (C) 2010-13 David L. Dight &lt;fix@fix8.org&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">Copyright (C) 2010-14 David L. Dight &lt;fix@fix8.org&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either</span></div>
@@ -157,9 +158,9 @@ $(document).ready(function(){initNavTree('Perf__traits_8cpp_source.html','');});
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8config_8h.html">f8config.h</a>&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#if defined MAGIC_NUM &amp;&amp; MAGIC_NUM &gt; 40960L</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#error Perf_traits.cpp version 0.10.0 is out of date. Please regenerate with f8c.</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8config_8h.html">fix8/f8config.h</a>&gt;</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#if defined MAGIC_NUM &amp;&amp; MAGIC_NUM &gt; 16777216L</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#error Perf_traits.cpp version 1.0.0 is out of date. Please regenerate with f8c.</span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor"></span><span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">// Perf_traits.cpp</span></div>
@@ -174,173 +175,172 @@ $(document).ready(function(){initNavTree('Perf__traits_8cpp_source.html','');});
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#include &lt;iterator&gt;</span></div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#include &lt;regex.h&gt;</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#include &lt;cerrno&gt;</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#if defined HAS_TR1_UNORDERED_MAP</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;tr1/unordered_map&gt;</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor"></span><span class="comment">// f8 includes</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8exception_8hpp.html">f8exception.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="hypersleep_8hpp.html">hypersleep.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="mpmc_8hpp.html">mpmc.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8utils_8hpp.html">f8utils.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8types_8hpp.html">f8types.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="traits_8hpp.html">traits.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="tickval_8hpp.html">tickval.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="field_8hpp.html">field.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="message_8hpp.html">message.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__types_8hpp.html">Perf_types.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__router_8hpp.html">Perf_router.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__classes_8hpp.html">Perf_classes.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">namespace </span>TEX {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">// Common group traits</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">namespace </span>{</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;} <span class="comment">// namespace</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">// Message traits</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1Heartbeat.html#aa52dbbae9a625883c995085a1958ada3">Heartbeat::_traits</a>[] =</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;{</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;   FieldTrait( 112,15,  1,  0,0x04)</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;};</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1Heartbeat.html#a0effa8ea42e058624ff11a618c6704b1">Heartbeat::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1Heartbeat.html#aa52dbbae9a625883c995085a1958ada3">Heartbeat::_traits</a>, 1);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1Heartbeat.html#a0eb07c24badc22b1859186dc3d471722">Heartbeat::_msgtype</a>(<span class="stringliteral">&quot;0&quot;</span>);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1TestRequest.html#a60f88e4ba5a240a95cb5e1a2d28d2be6">TestRequest::_traits</a>[] =</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;{</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   FieldTrait( 112,15,  1,  0,0x05)</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;};</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1TestRequest.html#a5ee028a12919cc96e36bce418075c278">TestRequest::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1TestRequest.html#a60f88e4ba5a240a95cb5e1a2d28d2be6">TestRequest::_traits</a>, 1);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1TestRequest.html#a6bf6ec06d614e4ecfaf4dc82eaaf3e05">TestRequest::_msgtype</a>(<span class="stringliteral">&quot;1&quot;</span>);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1ResendRequest.html#a6565b189cca7ff496cc6f61d1525d49e">ResendRequest::_traits</a>[] =</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;{</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   FieldTrait(   7, 1,  1,  0,0x05), FieldTrait(  16, 1,  2,  0,0x05)</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;};</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1ResendRequest.html#a126a35aa3934998de7a8a5babe90c46c">ResendRequest::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1ResendRequest.html#a6565b189cca7ff496cc6f61d1525d49e">ResendRequest::_traits</a>, 2);</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1ResendRequest.html#a81957c20f466d34d45d1557b3d0db592">ResendRequest::_msgtype</a>(<span class="stringliteral">&quot;2&quot;</span>);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1Reject.html#aaca0dc230528a3bc18a346b183a8eaf6">Reject::_traits</a>[] =</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;{</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;   FieldTrait(  45, 1,  1,  0,0x05), FieldTrait(  58,15,  5,  0,0x04), FieldTrait( 354, 2,  6,  0,0x04),</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;   FieldTrait( 355,28,  7,  0,0x04), FieldTrait( 371, 1,  2,  0,0x04), FieldTrait( 372,15,  3,  0,0x04),</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;   FieldTrait( 373, 1,  4,  0,0x04)</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;};</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1Reject.html#a97c0581053d3d315a5a6950d7e739a74">Reject::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1Reject.html#aaca0dc230528a3bc18a346b183a8eaf6">Reject::_traits</a>, 7);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1Reject.html#a3bc34f89744711876e0cb5a7e7e6a3fd">Reject::_msgtype</a>(<span class="stringliteral">&quot;3&quot;</span>);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1SequenceReset.html#a68be8f68124a15be2b5e243feb639119">SequenceReset::_traits</a>[] =</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;{</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;   FieldTrait(  36, 1,  2,  0,0x05), FieldTrait( 123, 8,  1,  0,0x04)</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;};</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1SequenceReset.html#af6320e4b9f5b07ab3c846d2b9120c5db">SequenceReset::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1SequenceReset.html#a68be8f68124a15be2b5e243feb639119">SequenceReset::_traits</a>, 2);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1SequenceReset.html#afb8ef3b865a327301bb407ac790617f4">SequenceReset::_msgtype</a>(<span class="stringliteral">&quot;4&quot;</span>);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1Logout.html#a629c1b4f371d6037a5374d27eedcd3c4">Logout::_traits</a>[] =</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;{</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;   FieldTrait(  58,15,  1,  0,0x04), FieldTrait( 354, 2,  2,  0,0x04), FieldTrait( 355,28,  3,  0,0x04)</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;};</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1Logout.html#abb266c169fee00b777948f2fe129fc98">Logout::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1Logout.html#a629c1b4f371d6037a5374d27eedcd3c4">Logout::_traits</a>, 3);</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1Logout.html#add29fa570dc52cd6d61244e9ab9ebe21">Logout::_msgtype</a>(<span class="stringliteral">&quot;5&quot;</span>);</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html#a4528fec2a8ae3967d92b79dba9e6ece1">ExecutionReport::_traits</a>[] =</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;{</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;   FieldTrait(   1,15, 15,  0,0x04), FieldTrait(   6,11, 50,  0,0x05), FieldTrait(  11,15,  3,  0,0x04),</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;   FieldTrait(  14,10, 49,  0,0x05), FieldTrait(  15,19, 36,  0,0x04), FieldTrait(  17,15,  8,  0,0x05),</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;   FieldTrait(  18,17, 42,  0,0x04), FieldTrait(  19,15, 10,  0,0x04), FieldTrait(  20, 7,  9,  0,0x05),</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;   FieldTrait(  21, 7, 58,  0,0x04), FieldTrait(  22,15, 20,  0,0x04), FieldTrait(  29, 7, 47,  0,0x04),</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;   FieldTrait(  30,20, 45,  0,0x04), FieldTrait(  31,11, 44,  0,0x04), FieldTrait(  32,10, 43,  0,0x04),</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;   FieldTrait(  37,15,  1,  0,0x05), FieldTrait(  38,10, 31,  0,0x04), FieldTrait(  39, 7, 12,  0,0x05),</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;   FieldTrait(  40, 7, 33,  0,0x04), FieldTrait(  41,15,  4,  0,0x04), FieldTrait(  44,11, 34,  0,0x04),</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;   FieldTrait(  48,15, 19,  0,0x04), FieldTrait(  54, 7, 30,  0,0x05), FieldTrait(  55,15, 18,  0,0x05),</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;   FieldTrait(  58,15, 63,  0,0x04), FieldTrait(  59, 7, 38,  0,0x04), FieldTrait(  60,22, 55,  0,0x04),</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;   FieldTrait(  63, 7, 16,  0,0x04), FieldTrait(  64,25, 17,  0,0x04), FieldTrait(  66,15,  7,  0,0x04),</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;   FieldTrait(  75,25, 54,  0,0x04), FieldTrait(  76,15,  6,  0,0x04), FieldTrait(  77, 7, 61,  0,0x04),</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;   FieldTrait(  99,11, 35,  0,0x04), FieldTrait( 103, 1, 13,  0,0x04), FieldTrait( 106,15, 28,  0,0x04),</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;   FieldTrait( 107,15, 29,  0,0x04), FieldTrait( 109,15,  5,  0,0x04), FieldTrait( 110,10, 59,  0,0x04),</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;   FieldTrait( 111,10, 60,  0,0x04), FieldTrait( 113, 8, 64,  0,0x04), FieldTrait( 119,13, 56,  0,0x04),</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;   FieldTrait( 120,19, 57,  0,0x04), FieldTrait( 126,22, 41,  0,0x04), FieldTrait( 150, 7, 11,  0,0x05),</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;   FieldTrait( 151,10, 48,  0,0x05), FieldTrait( 152,10, 32,  0,0x04), FieldTrait( 167,15, 21,  0,0x04),</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;   FieldTrait( 168,22, 39,  0,0x04), FieldTrait( 198,15,  2,  0,0x04), FieldTrait( 200,21, 22,  0,0x04),</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;   FieldTrait( 201, 1, 24,  0,0x04), FieldTrait( 202,11, 25,  0,0x04), FieldTrait( 205, 6, 23,  0,0x04),</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;   FieldTrait( 206, 7, 26,  0,0x04), FieldTrait( 207,20, 27,  0,0x04), FieldTrait( 210,10, 62,  0,0x04),</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;   FieldTrait( 336,15, 46,  0,0x04), FieldTrait( 376,15, 37,  0,0x04), FieldTrait( 378, 1, 14,  0,0x04),</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;   FieldTrait( 424,10, 51,  0,0x04), FieldTrait( 425,10, 52,  0,0x04), FieldTrait( 426,11, 53,  0,0x04),</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;   FieldTrait( 432,25, 40,  0,0x04)</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;};</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html#ad237c2a40f48cb4880597e9a21fa8cbd">ExecutionReport::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html#a4528fec2a8ae3967d92b79dba9e6ece1">ExecutionReport::_traits</a>, 64);</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html#a43eea21a3046a38fc196d23c488b802a">ExecutionReport::_msgtype</a>(<span class="stringliteral">&quot;8&quot;</span>);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1Logon.html#aa9ceaa8921339373c55a796b78b76ba1">Logon::_traits</a>[] =</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;{</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;   FieldTrait(  95, 2,  3,  0,0x04), FieldTrait(  96,28,  4,  0,0x04), FieldTrait(  98, 1,  1,  0,0x05),</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;   FieldTrait( 108, 1,  2,  0,0x05), FieldTrait( 141, 8,  5,  0,0x04), FieldTrait( 383, 1,  6,  0,0x04),</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;   FieldTrait( 384, 1,  7,  0,0x0c)</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;};</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1Logon.html#ac9df6e962700f438dca136a1fe79611d">Logon::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1Logon.html#aa9ceaa8921339373c55a796b78b76ba1">Logon::_traits</a>, 7);</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1Logon.html#a25660be5f34b2372c226d191bcbb5003">Logon::_msgtype</a>(<span class="stringliteral">&quot;A&quot;</span>);</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#a0f0cecdf9c442cd4eec183d3ed96398e">Logon::NoMsgTypes::_traits</a>[] =</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;{</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;   FieldTrait( 372,15,  1,  0,0x04), FieldTrait( 385, 7,  2,  0,0x04)</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;};</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;   <a class="code" href="classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#a18c9844822698d4b74efb4ff1500bc48">Logon::NoMsgTypes::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#a0f0cecdf9c442cd4eec183d3ed96398e">Logon::NoMsgTypes::_traits</a>, 2);</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#af2e60570e65e001cf31dd7d1255b95d3">Logon::NoMsgTypes::_msgtype</a>(<span class="stringliteral">&quot;NoMsgTypes&quot;</span>);</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> <a class="code" href="classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#ac11da0cacc3ebdd2a498b24dc23829c7">Logon::NoMsgTypes::_fnum</a>;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle.html#ad782a0aaee14b043533a54ee7ec2f7b0">NewOrderSingle::_traits</a>[] =</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;{</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;   FieldTrait(   1,15,  4,  0,0x04), FieldTrait(  11,15,  1,  0,0x05), FieldTrait(  12,13, 44,  0,0x04),</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;   FieldTrait(  15,19, 38,  0,0x04), FieldTrait(  18,17,  8,  0,0x04), FieldTrait(  21, 7,  7,  0,0x05),</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;   FieldTrait(  22,15, 16,  0,0x04), FieldTrait(  38,10, 33,  0,0x04), FieldTrait(  40, 7, 35,  0,0x05),</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;   FieldTrait(  44,11, 36,  0,0x04), FieldTrait(  48,15, 15,  0,0x04), FieldTrait(  54, 7, 30,  0,0x05),</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;   FieldTrait(  55,15, 13,  0,0x05), FieldTrait(  58,15, 46,  0,0x04), FieldTrait(  59, 7, 40,  0,0x04),</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;   FieldTrait(  60,22, 32,  0,0x05), FieldTrait(  63, 7,  5,  0,0x04), FieldTrait(  64,25,  6,  0,0x04),</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;   FieldTrait(  65,15, 14,  0,0x04), FieldTrait(  76,15,  3,  0,0x04), FieldTrait(  81, 7, 12,  0,0x04),</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;   FieldTrait(  99,11, 37,  0,0x04), FieldTrait( 100,20, 11,  0,0x04), FieldTrait( 106,15, 25,  0,0x04),</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;   FieldTrait( 107,15, 28,  0,0x04), FieldTrait( 109,15,  2,  0,0x04), FieldTrait( 110,10,  9,  0,0x04),</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;   FieldTrait( 111,10, 10,  0,0x04), FieldTrait( 114, 8, 31,  0,0x04), FieldTrait( 117,15, 39,  0,0x04),</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;   FieldTrait( 120,19, 45,  0,0x04), FieldTrait( 126,22, 43,  0,0x04), FieldTrait( 140,11, 29,  0,0x04),</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;   FieldTrait( 152,10, 34,  0,0x04), FieldTrait( 167,15, 17,  0,0x04), FieldTrait( 168,22, 41,  0,0x04),</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;   FieldTrait( 200,21, 18,  0,0x04), FieldTrait( 201, 1, 20,  0,0x04), FieldTrait( 202,11, 21,  0,0x04),</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;   FieldTrait( 204, 1, 47,  0,0x04), FieldTrait( 205, 6, 19,  0,0x04), FieldTrait( 206, 7, 22,  0,0x04),</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;   FieldTrait( 207,20, 24,  0,0x04), FieldTrait( 231, 9, 23,  0,0x04), FieldTrait( 348, 2, 26,  0,0x04),</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;   FieldTrait( 349,28, 27,  0,0x04), FieldTrait( 432,25, 42,  0,0x04)</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;};</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle.html#ad45c6f946465ac749940984e7a543dd4">NewOrderSingle::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle.html#ad782a0aaee14b043533a54ee7ec2f7b0">NewOrderSingle::_traits</a>, 47);</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle.html#aa8e0d9be970367f706e5c419803c88b3">NewOrderSingle::_msgtype</a>(<span class="stringliteral">&quot;D&quot;</span>);</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1header.html#ab986b5120326dcdd31991a4c81f424ed">header::_traits</a>[] =</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;{</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;   FieldTrait(   8,15,  1,  0,0x64), FieldTrait(   9, 1,  2,  0,0x64), FieldTrait(  34, 1, 10,  0,0x05),</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;   FieldTrait(  35,15,  3,  0,0x44), FieldTrait(  43, 8, 11,  0,0x04), FieldTrait(  49,15,  4,  0,0x05),</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;   FieldTrait(  52,22, 13,  0,0x05), FieldTrait(  56,15,  5,  0,0x05), FieldTrait(  90, 2,  8,  0,0x04),</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;   FieldTrait(  91,28,  9,  0,0x04), FieldTrait(  97, 8, 12,  0,0x04), FieldTrait( 115,15,  6,  0,0x04),</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;   FieldTrait( 122,22, 14,  0,0x04), FieldTrait( 128,15,  7,  0,0x04)</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;};</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1header.html#a2d5956ccb55361171d0148fda3d55fc8">header::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1header.html#ab986b5120326dcdd31991a4c81f424ed">header::_traits</a>, 14);</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1header.html#aacc3de8d4bf185ad94476040d0e3eb29">header::_msgtype</a>(<span class="stringliteral">&quot;header&quot;</span>);</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1trailer.html#a0f89e82bce99ea30ebdd480d49733731">trailer::_traits</a>[] =</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;{</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;   FieldTrait(  10,15,  3,  0,0x64), FieldTrait(  89,28,  2,  0,0x04), FieldTrait(  93, 2,  1,  0,0x04)</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;};</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1trailer.html#ab37aefa84e7e724e78bf3fcac558ab73">trailer::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1trailer.html#a0f89e82bce99ea30ebdd480d49733731">trailer::_traits</a>, 3);</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1trailer.html#a0e75ee1b0d388fc2cc1cf2dd2a75b826">trailer::_msgtype</a>(<span class="stringliteral">&quot;trailer&quot;</span>);</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;} <span class="comment">// namespace TEX</span></div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;} <span class="comment">// namespace FIX8</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#include &lt;cerrno&gt;</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#if defined HAS_TR1_UNORDERED_MAP</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;tr1/unordered_map&gt;</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span><span class="comment">// f8 includes</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8exception_8hpp.html">fix8/f8exception.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="hypersleep_8hpp.html">fix8/hypersleep.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="mpmc_8hpp.html">fix8/mpmc.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8utils_8hpp.html">fix8/f8utils.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8types_8hpp.html">fix8/f8types.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="traits_8hpp.html">fix8/traits.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="tickval_8hpp.html">fix8/tickval.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="field_8hpp.html">fix8/field.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="message_8hpp.html">fix8/message.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__types_8hpp.html">Perf_types.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__router_8hpp.html">Perf_router.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Perf__classes_8hpp.html">Perf_classes.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">namespace </span>TEX {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">// Common group traits</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">namespace </span>{</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;} <span class="comment">// namespace</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">// Message traits</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1Heartbeat.html#aa52dbbae9a625883c995085a1958ada3">Heartbeat::_traits</a>[] =</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;{</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;   FieldTrait( 112,15,  1,  0,0x04)</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;};</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1Heartbeat.html#a0effa8ea42e058624ff11a618c6704b1">Heartbeat::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1Heartbeat.html#aa52dbbae9a625883c995085a1958ada3">Heartbeat::_traits</a>, 1);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1Heartbeat.html#a0eb07c24badc22b1859186dc3d471722">Heartbeat::_msgtype</a>(<span class="stringliteral">&quot;0&quot;</span>);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1TestRequest.html#a60f88e4ba5a240a95cb5e1a2d28d2be6">TestRequest::_traits</a>[] =</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;{</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   FieldTrait( 112,15,  1,  0,0x05)</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;};</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1TestRequest.html#a5ee028a12919cc96e36bce418075c278">TestRequest::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1TestRequest.html#a60f88e4ba5a240a95cb5e1a2d28d2be6">TestRequest::_traits</a>, 1);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1TestRequest.html#a6bf6ec06d614e4ecfaf4dc82eaaf3e05">TestRequest::_msgtype</a>(<span class="stringliteral">&quot;1&quot;</span>);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1ResendRequest.html#a6565b189cca7ff496cc6f61d1525d49e">ResendRequest::_traits</a>[] =</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;{</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   FieldTrait(   7, 1,  1,  0,0x05), FieldTrait(  16, 1,  2,  0,0x05)</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;};</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1ResendRequest.html#a126a35aa3934998de7a8a5babe90c46c">ResendRequest::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1ResendRequest.html#a6565b189cca7ff496cc6f61d1525d49e">ResendRequest::_traits</a>, 2);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1ResendRequest.html#a81957c20f466d34d45d1557b3d0db592">ResendRequest::_msgtype</a>(<span class="stringliteral">&quot;2&quot;</span>);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1Reject.html#aaca0dc230528a3bc18a346b183a8eaf6">Reject::_traits</a>[] =</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;{</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;   FieldTrait(  45, 1,  1,  0,0x05), FieldTrait(  58,15,  5,  0,0x04), FieldTrait( 354, 2,  6,  0,0x04),</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;   FieldTrait( 355,28,  7,  0,0x04), FieldTrait( 371, 1,  2,  0,0x04), FieldTrait( 372,15,  3,  0,0x04),</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;   FieldTrait( 373, 1,  4,  0,0x04)</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;};</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1Reject.html#a97c0581053d3d315a5a6950d7e739a74">Reject::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1Reject.html#aaca0dc230528a3bc18a346b183a8eaf6">Reject::_traits</a>, 7);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1Reject.html#a3bc34f89744711876e0cb5a7e7e6a3fd">Reject::_msgtype</a>(<span class="stringliteral">&quot;3&quot;</span>);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1SequenceReset.html#a68be8f68124a15be2b5e243feb639119">SequenceReset::_traits</a>[] =</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;{</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;   FieldTrait(  36, 1,  2,  0,0x05), FieldTrait( 123, 8,  1,  0,0x04)</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;};</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1SequenceReset.html#af6320e4b9f5b07ab3c846d2b9120c5db">SequenceReset::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1SequenceReset.html#a68be8f68124a15be2b5e243feb639119">SequenceReset::_traits</a>, 2);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1SequenceReset.html#afb8ef3b865a327301bb407ac790617f4">SequenceReset::_msgtype</a>(<span class="stringliteral">&quot;4&quot;</span>);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1Logout.html#a629c1b4f371d6037a5374d27eedcd3c4">Logout::_traits</a>[] =</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;{</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;   FieldTrait(  58,15,  1,  0,0x04), FieldTrait( 354, 2,  2,  0,0x04), FieldTrait( 355,28,  3,  0,0x04)</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;};</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1Logout.html#abb266c169fee00b777948f2fe129fc98">Logout::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1Logout.html#a629c1b4f371d6037a5374d27eedcd3c4">Logout::_traits</a>, 3);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1Logout.html#add29fa570dc52cd6d61244e9ab9ebe21">Logout::_msgtype</a>(<span class="stringliteral">&quot;5&quot;</span>);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html#a4528fec2a8ae3967d92b79dba9e6ece1">ExecutionReport::_traits</a>[] =</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;{</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;   FieldTrait(   1,15, 15,  0,0x04), FieldTrait(   6,11, 50,  0,0x05), FieldTrait(  11,15,  3,  0,0x04),</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;   FieldTrait(  14,10, 49,  0,0x05), FieldTrait(  15,19, 36,  0,0x04), FieldTrait(  17,15,  8,  0,0x05),</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;   FieldTrait(  18,17, 42,  0,0x04), FieldTrait(  19,15, 10,  0,0x04), FieldTrait(  20, 7,  9,  0,0x05),</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;   FieldTrait(  21, 7, 58,  0,0x04), FieldTrait(  22,15, 20,  0,0x04), FieldTrait(  29, 7, 47,  0,0x04),</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;   FieldTrait(  30,20, 45,  0,0x04), FieldTrait(  31,11, 44,  0,0x04), FieldTrait(  32,10, 43,  0,0x04),</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;   FieldTrait(  37,15,  1,  0,0x05), FieldTrait(  38,10, 31,  0,0x04), FieldTrait(  39, 7, 12,  0,0x05),</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;   FieldTrait(  40, 7, 33,  0,0x04), FieldTrait(  41,15,  4,  0,0x04), FieldTrait(  44,11, 34,  0,0x04),</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;   FieldTrait(  48,15, 19,  0,0x04), FieldTrait(  54, 7, 30,  0,0x05), FieldTrait(  55,15, 18,  0,0x05),</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;   FieldTrait(  58,15, 63,  0,0x04), FieldTrait(  59, 7, 38,  0,0x04), FieldTrait(  60,22, 55,  0,0x04),</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;   FieldTrait(  63, 7, 16,  0,0x04), FieldTrait(  64,25, 17,  0,0x04), FieldTrait(  66,15,  7,  0,0x04),</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;   FieldTrait(  75,25, 54,  0,0x04), FieldTrait(  76,15,  6,  0,0x04), FieldTrait(  77, 7, 61,  0,0x04),</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;   FieldTrait(  99,11, 35,  0,0x04), FieldTrait( 103, 1, 13,  0,0x04), FieldTrait( 106,15, 28,  0,0x04),</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;   FieldTrait( 107,15, 29,  0,0x04), FieldTrait( 109,15,  5,  0,0x04), FieldTrait( 110,10, 59,  0,0x04),</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;   FieldTrait( 111,10, 60,  0,0x04), FieldTrait( 113, 8, 64,  0,0x04), FieldTrait( 119,13, 56,  0,0x04),</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;   FieldTrait( 120,19, 57,  0,0x04), FieldTrait( 126,22, 41,  0,0x04), FieldTrait( 150, 7, 11,  0,0x05),</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;   FieldTrait( 151,10, 48,  0,0x05), FieldTrait( 152,10, 32,  0,0x04), FieldTrait( 167,15, 21,  0,0x04),</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;   FieldTrait( 168,22, 39,  0,0x04), FieldTrait( 198,15,  2,  0,0x04), FieldTrait( 200,21, 22,  0,0x04),</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;   FieldTrait( 201, 1, 24,  0,0x04), FieldTrait( 202,11, 25,  0,0x04), FieldTrait( 205, 6, 23,  0,0x04),</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;   FieldTrait( 206, 7, 26,  0,0x04), FieldTrait( 207,20, 27,  0,0x04), FieldTrait( 210,10, 62,  0,0x04),</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;   FieldTrait( 336,15, 46,  0,0x04), FieldTrait( 376,15, 37,  0,0x04), FieldTrait( 378, 1, 14,  0,0x04),</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;   FieldTrait( 424,10, 51,  0,0x04), FieldTrait( 425,10, 52,  0,0x04), FieldTrait( 426,11, 53,  0,0x04),</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;   FieldTrait( 432,25, 40,  0,0x04)</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;};</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html#ad237c2a40f48cb4880597e9a21fa8cbd">ExecutionReport::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html#a4528fec2a8ae3967d92b79dba9e6ece1">ExecutionReport::_traits</a>, 64);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1ExecutionReport.html#a43eea21a3046a38fc196d23c488b802a">ExecutionReport::_msgtype</a>(<span class="stringliteral">&quot;8&quot;</span>);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1Logon.html#aa9ceaa8921339373c55a796b78b76ba1">Logon::_traits</a>[] =</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;{</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;   FieldTrait(  95, 2,  3,  0,0x04), FieldTrait(  96,28,  4,  0,0x04), FieldTrait(  98, 1,  1,  0,0x05),</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;   FieldTrait( 108, 1,  2,  0,0x05), FieldTrait( 141, 8,  5,  0,0x04), FieldTrait( 383, 1,  6,  0,0x04),</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;   FieldTrait( 384, 1,  7,  0,0x0c)</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;};</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1Logon.html#ac9df6e962700f438dca136a1fe79611d">Logon::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1Logon.html#aa9ceaa8921339373c55a796b78b76ba1">Logon::_traits</a>, 7);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1Logon.html#a25660be5f34b2372c226d191bcbb5003">Logon::_msgtype</a>(<span class="stringliteral">&quot;A&quot;</span>);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#a0f0cecdf9c442cd4eec183d3ed96398e">Logon::NoMsgTypes::_traits</a>[] =</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;{</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;   FieldTrait( 372,15,  1,  0,0x04), FieldTrait( 385, 7,  2,  0,0x04)</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;};</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array </div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;   <a class="code" href="classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#a18c9844822698d4b74efb4ff1500bc48">Logon::NoMsgTypes::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#a0f0cecdf9c442cd4eec183d3ed96398e">Logon::NoMsgTypes::_traits</a>, 2);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#af2e60570e65e001cf31dd7d1255b95d3">Logon::NoMsgTypes::_msgtype</a>(<span class="stringliteral">&quot;NoMsgTypes&quot;</span>);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> <a class="code" href="classFIX8_1_1TEX_1_1Logon_1_1NoMsgTypes.html#ac11da0cacc3ebdd2a498b24dc23829c7">Logon::NoMsgTypes::_fnum</a>;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle.html#ad782a0aaee14b043533a54ee7ec2f7b0">NewOrderSingle::_traits</a>[] =</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;{</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;   FieldTrait(   1,15,  4,  0,0x04), FieldTrait(  11,15,  1,  0,0x05), FieldTrait(  12,13, 44,  0,0x04),</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;   FieldTrait(  15,19, 38,  0,0x04), FieldTrait(  18,17,  8,  0,0x04), FieldTrait(  21, 7,  7,  0,0x05),</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;   FieldTrait(  22,15, 16,  0,0x04), FieldTrait(  38,10, 33,  0,0x04), FieldTrait(  40, 7, 35,  0,0x05),</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;   FieldTrait(  44,11, 36,  0,0x04), FieldTrait(  48,15, 15,  0,0x04), FieldTrait(  54, 7, 30,  0,0x05),</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;   FieldTrait(  55,15, 13,  0,0x05), FieldTrait(  58,15, 46,  0,0x04), FieldTrait(  59, 7, 40,  0,0x04),</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;   FieldTrait(  60,22, 32,  0,0x05), FieldTrait(  63, 7,  5,  0,0x04), FieldTrait(  64,25,  6,  0,0x04),</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;   FieldTrait(  65,15, 14,  0,0x04), FieldTrait(  76,15,  3,  0,0x04), FieldTrait(  81, 7, 12,  0,0x04),</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;   FieldTrait(  99,11, 37,  0,0x04), FieldTrait( 100,20, 11,  0,0x04), FieldTrait( 106,15, 25,  0,0x04),</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;   FieldTrait( 107,15, 28,  0,0x04), FieldTrait( 109,15,  2,  0,0x04), FieldTrait( 110,10,  9,  0,0x04),</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;   FieldTrait( 111,10, 10,  0,0x04), FieldTrait( 114, 8, 31,  0,0x04), FieldTrait( 117,15, 39,  0,0x04),</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;   FieldTrait( 120,19, 45,  0,0x04), FieldTrait( 126,22, 43,  0,0x04), FieldTrait( 140,11, 29,  0,0x04),</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;   FieldTrait( 152,10, 34,  0,0x04), FieldTrait( 167,15, 17,  0,0x04), FieldTrait( 168,22, 41,  0,0x04),</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;   FieldTrait( 200,21, 18,  0,0x04), FieldTrait( 201, 1, 20,  0,0x04), FieldTrait( 202,11, 21,  0,0x04),</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;   FieldTrait( 204, 1, 47,  0,0x04), FieldTrait( 205, 6, 19,  0,0x04), FieldTrait( 206, 7, 22,  0,0x04),</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;   FieldTrait( 207,20, 24,  0,0x04), FieldTrait( 231, 9, 23,  0,0x04), FieldTrait( 348, 2, 26,  0,0x04),</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;   FieldTrait( 349,28, 27,  0,0x04), FieldTrait( 432,25, 42,  0,0x04)</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;};</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle.html#ad45c6f946465ac749940984e7a543dd4">NewOrderSingle::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle.html#ad782a0aaee14b043533a54ee7ec2f7b0">NewOrderSingle::_traits</a>, 47);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1NewOrderSingle.html#aa8e0d9be970367f706e5c419803c88b3">NewOrderSingle::_msgtype</a>(<span class="stringliteral">&quot;D&quot;</span>);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1header.html#ab986b5120326dcdd31991a4c81f424ed">header::_traits</a>[] =</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;{</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;   FieldTrait(   8,15,  1,  0,0x64), FieldTrait(   9, 1,  2,  0,0x64), FieldTrait(  34, 1, 10,  0,0x05),</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;   FieldTrait(  35,15,  3,  0,0x44), FieldTrait(  43, 8, 11,  0,0x04), FieldTrait(  49,15,  4,  0,0x05),</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;   FieldTrait(  52,22, 13,  0,0x05), FieldTrait(  56,15,  5,  0,0x05), FieldTrait(  90, 2,  8,  0,0x04),</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;   FieldTrait(  91,28,  9,  0,0x04), FieldTrait(  97, 8, 12,  0,0x04), FieldTrait( 115,15,  6,  0,0x04),</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;   FieldTrait( 122,22, 14,  0,0x04), FieldTrait( 128,15,  7,  0,0x04)</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;};</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1header.html#a2d5956ccb55361171d0148fda3d55fc8">header::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1header.html#ab986b5120326dcdd31991a4c81f424ed">header::_traits</a>, 14);</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1header.html#aacc3de8d4bf185ad94476040d0e3eb29">header::_msgtype</a>(<span class="stringliteral">&quot;header&quot;</span>);</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="keyword">const</span> FieldTrait <a class="code" href="classFIX8_1_1TEX_1_1trailer.html#a0f89e82bce99ea30ebdd480d49733731">trailer::_traits</a>[] =</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;{</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;   FieldTrait(  10,15,  3,  0,0x64), FieldTrait(  89,28,  2,  0,0x04), FieldTrait(  93, 2,  1,  0,0x04)</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;};</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="keyword">const</span> FieldTrait_Hash_Array <a class="code" href="classFIX8_1_1TEX_1_1trailer.html#ab37aefa84e7e724e78bf3fcac558ab73">trailer::_ftha</a>(<a class="code" href="classFIX8_1_1TEX_1_1trailer.html#a0f89e82bce99ea30ebdd480d49733731">trailer::_traits</a>, 3);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="keyword">const</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a8bc158a9e3800daa75fc14b70982519e">MsgType</a> <a class="code" href="classFIX8_1_1TEX_1_1trailer.html#a0e75ee1b0d388fc2cc1cf2dd2a75b826">trailer::_msgtype</a>(<span class="stringliteral">&quot;trailer&quot;</span>);</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;} <span class="comment">// namespace TEX</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;} <span class="comment">// namespace FIX8</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:51. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Jan 16 2014 16:13:40. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

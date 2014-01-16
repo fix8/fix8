@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.10.0</span>
+   &#160;<span id="projectnumber">version  1.0.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -112,11 +113,11 @@ $(document).ready(function(){initNavTree('message__test_8cpp.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="f8headers_8hpp_source.html">f8headers.hpp</a>&quot;</code><br/>
-<code>#include &lt;<a class="el" href="f8includes_8hpp_source.html">f8includes.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="f8includes_8hpp_source.html">fix8/f8includes.hpp</a>&gt;</code><br/>
 <code>#include &quot;gtest/gtest.h&quot;</code><br/>
-<code>#include &quot;utest_types.hpp&quot;</code><br/>
-<code>#include &quot;utest_router.hpp&quot;</code><br/>
-<code>#include &quot;utest_classes.hpp&quot;</code><br/>
+<code>#include &quot;<a class="el" href="utest__types_8hpp_source.html">utest_types.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="utest__router_8hpp_source.html">utest_router.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="utest__classes_8hpp_source.html">utest_classes.hpp</a>&quot;</code><br/>
 </div>
 <p><a href="message__test_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -127,12 +128,22 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:aaa7ded1478f4c21533142e1a5832538e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#aaa7ded1478f4c21533142e1a5832538e">TEST</a> (message, unknown_field)</td></tr>
+<tr class="separator:aaa7ded1478f4c21533142e1a5832538e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76f62439db81a5a7f48b98b6197f00d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#a76f62439db81a5a7f48b98b6197f00d6">TEST</a> (message, unknown_field_repeating_group)</td></tr>
+<tr class="separator:a76f62439db81a5a7f48b98b6197f00d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48d57275a60100010f0d3274981550de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#a48d57275a60100010f0d3274981550de">TEST</a> (message, suppress_chksum_checking)</td></tr>
+<tr class="separator:a48d57275a60100010f0d3274981550de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc99e43ce314c1ba664f7bac7c91c08d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#afc99e43ce314c1ba664f7bac7c91c08d">TEST</a> (message, missing_field)</td></tr>
 <tr class="separator:afc99e43ce314c1ba664f7bac7c91c08d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a799d410aeedfc5df275bee068447b375"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#a799d410aeedfc5df275bee068447b375">TEST</a> (message, logon_decode)</td></tr>
 <tr class="separator:a799d410aeedfc5df275bee068447b375"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b7a5c24423c763424403eec2227e05e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#a1b7a5c24423c763424403eec2227e05e">TEST</a> (message, neworder_decode)</td></tr>
 <tr class="separator:a1b7a5c24423c763424403eec2227e05e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea862016253dfc667e7d4f0c276a35c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#aea862016253dfc667e7d4f0c276a35c4">TEST</a> (message, neworder_custom_decode)</td></tr>
+<tr class="separator:aea862016253dfc667e7d4f0c276a35c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff12ac9a685cca6dea77b61385784ee9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#aff12ac9a685cca6dea77b61385784ee9">TEST</a> (message, neworder_custom_encode)</td></tr>
+<tr class="separator:aff12ac9a685cca6dea77b61385784ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa805b3466e4a6c4c86822b53003264c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#aa805b3466e4a6c4c86822b53003264c4">TEST</a> (message, neworder_group_decode)</td></tr>
 <tr class="separator:aa805b3466e4a6c4c86822b53003264c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aece62e2c9b416ba95c4c66d5ef152c92"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#aece62e2c9b416ba95c4c66d5ef152c92">TEST</a> (message, calc_chksum)</td></tr>
@@ -147,6 +158,8 @@ Functions</h2></td></tr>
 <tr class="separator:ad6890c256528aa2072791f99d8769faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9db31b70a3563faf62facb40b32c6a7c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#a9db31b70a3563faf62facb40b32c6a7c">TEST</a> (message, neworder_encode)</td></tr>
 <tr class="separator:a9db31b70a3563faf62facb40b32c6a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f7a7967881bf6b316cc277ce5b653b5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#a2f7a7967881bf6b316cc277ce5b653b5">TEST</a> (message, repeating_group)</td></tr>
+<tr class="separator:a2f7a7967881bf6b316cc277ce5b653b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e0a5d085d357e79d3d36523f64be488"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="message__test_8cpp.html#a4e0a5d085d357e79d3d36523f64be488">TEST</a> (message, nestedGroup_encode)</td></tr>
 <tr class="separator:a4e0a5d085d357e79d3d36523f64be488"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -192,9 +205,9 @@ Functions</h2></td></tr>
 <div class="line">    test_fun(expect, value()); \</div>
 <div class="line">}</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00085">85</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00129">129</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="message__test_8cpp_source.html#l00095">TEST()</a>.</p>
+<p>Referenced by <a class="el" href="message__test_8cpp_source.html#l00139">TEST()</a>.</p>
 
 </div>
 </div>
@@ -238,11 +251,125 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00248">248</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00345">345</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00656">FIX8::MessageBase::extract_element()</a>, and <a class="el" href="f8config_8h_source.html#l00371">MAX_FLD_LENGTH</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00663">FIX8::MessageBase::extract_element()</a>, and <a class="el" href="f8config_8h_source.html#l00371">MAX_FLD_LENGTH</a>.</p>
 
-<p>Referenced by <a class="el" href="message__test_8cpp_source.html#l00267">TEST()</a>.</p>
+<p>Referenced by <a class="el" href="message__test_8cpp_source.html#l00364">TEST()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaa7ded1478f4c21533142e1a5832538e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">message&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unknown_field&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>message unknown field </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>test suit name </td></tr>
+    <tr><td class="paramname">unknown_field</td><td>test case name </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00061">61</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+
+<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00425">FIX8::TEX::ctx()</a>, and <a class="el" href="message_8hpp_source.html#l00899">FIX8::Message::factory()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a76f62439db81a5a7f48b98b6197f00d6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">message&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unknown_field_repeating_group&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>message unknown field repeating group </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>test suit name </td></tr>
+    <tr><td class="paramname">unknown_field</td><td>repeating group test case name </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00074">74</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+
+<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00425">FIX8::TEX::ctx()</a>, and <a class="el" href="message_8hpp_source.html#l00899">FIX8::Message::factory()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a48d57275a60100010f0d3274981550de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">message&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">suppress_chksum_checking&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>message suppress chksum checking </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>test suit name </td></tr>
+    <tr><td class="paramname">suppress_chksum_checking</td><td>test case name </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00091">91</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+
+<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00425">FIX8::TEX::ctx()</a>, and <a class="el" href="message_8hpp_source.html#l00899">FIX8::Message::factory()</a>.</p>
 
 </div>
 </div>
@@ -278,9 +405,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00061">61</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00105">105</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
 
-<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00426">FIX8::TEX::ctx()</a>, and <a class="el" href="message_8hpp_source.html#l00883">FIX8::Message::factory()</a>.</p>
+<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00425">FIX8::TEX::ctx()</a>, and <a class="el" href="message_8hpp_source.html#l00899">FIX8::Message::factory()</a>.</p>
 
 </div>
 </div>
@@ -316,9 +443,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00071">71</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00115">115</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
 
-<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00426">FIX8::TEX::ctx()</a>, <a class="el" href="message_8hpp_source.html#l00883">FIX8::Message::factory()</a>, <a class="el" href="message_8hpp_source.html#l00357">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="message_8hpp_source.html#l00794">FIX8::Message::Header()</a>, <a class="el" href="message_8hpp_source.html#l00829">FIX8::Message::is_admin()</a>, and <a class="el" href="message_8hpp_source.html#l00798">FIX8::Message::Trailer()</a>.</p>
+<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00425">FIX8::TEX::ctx()</a>, <a class="el" href="message_8hpp_source.html#l00899">FIX8::Message::factory()</a>, <a class="el" href="message_8hpp_source.html#l00364">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>, <a class="el" href="message_8hpp_source.html#l00843">FIX8::Message::is_admin()</a>, and <a class="el" href="message_8hpp_source.html#l00807">FIX8::Message::Trailer()</a>.</p>
 
 </div>
 </div>
@@ -354,9 +481,85 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00095">95</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00139">139</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
 
-<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00426">FIX8::TEX::ctx()</a>, <a class="el" href="message_8hpp_source.html#l00883">FIX8::Message::factory()</a>, <a class="el" href="message__test_8cpp_source.html#l00085">FIELD_TEST</a>, <a class="el" href="message_8hpp_source.html#l00357">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="message_8hpp_source.html#l00503">FIX8::MessageBase::has()</a>, <a class="el" href="message_8hpp_source.html#l00794">FIX8::Message::Header()</a>, <a class="el" href="message_8hpp_source.html#l00829">FIX8::Message::is_admin()</a>, and <a class="el" href="message_8hpp_source.html#l00798">FIX8::Message::Trailer()</a>.</p>
+<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00425">FIX8::TEX::ctx()</a>, <a class="el" href="message_8hpp_source.html#l00899">FIX8::Message::factory()</a>, <a class="el" href="message__test_8cpp_source.html#l00129">FIELD_TEST</a>, <a class="el" href="message_8hpp_source.html#l00364">FIX8::MessageBase::get_msgtype()</a>, <a class="el" href="message_8hpp_source.html#l00510">FIX8::MessageBase::has()</a>, <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>, <a class="el" href="message_8hpp_source.html#l00843">FIX8::Message::is_admin()</a>, and <a class="el" href="message_8hpp_source.html#l00807">FIX8::Message::Trailer()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aea862016253dfc667e7d4f0c276a35c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">message&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">neworder_custom_decode&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>new order entry (with custom field) decoding test </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>test suit name </td></tr>
+    <tr><td class="paramname">neworder_custom_decode</td><td>test case name </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00228">228</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+
+<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00425">FIX8::TEX::ctx()</a>, <a class="el" href="message_8hpp_source.html#l00899">FIX8::Message::factory()</a>, and <a class="el" href="message_8hpp_source.html#l00510">FIX8::MessageBase::has()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aff12ac9a685cca6dea77b61385784ee9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">message&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">neworder_custom_encode&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>new order entry (with custom field) encoding test </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>test suit name </td></tr>
+    <tr><td class="paramname">neworder_custom_encode</td><td>test case name </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00243">243</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+
+<p>References <a class="el" href="message_8cpp_source.html#l00420">FIX8::Message::encode()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#af9448129051868f6b92640dab21cb029">FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION()</a>, <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a123e3e5a5b7cbd7a82a6ab2ad319b8b9">FIX8::TEX::TimeInForce_DAY()</a>.</p>
 
 </div>
 </div>
@@ -392,9 +595,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00184">184</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00281">281</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
 
-<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00426">FIX8::TEX::ctx()</a>, <a class="el" href="message_8hpp_source.html#l00883">FIX8::Message::factory()</a>, <a class="el" href="message__test_8cpp_source.html#l00085">FIELD_TEST</a>, <a class="el" href="message_8hpp_source.html#l00583">FIX8::MessageBase::find_group()</a>, <a class="el" href="message_8hpp_source.html#l00102">FIX8::GroupBase::get_element()</a>, and <a class="el" href="message_8hpp_source.html#l00092">FIX8::GroupBase::size()</a>.</p>
+<p>References <a class="el" href="Myfix__classes_8cpp_source.html#l00425">FIX8::TEX::ctx()</a>, <a class="el" href="message_8hpp_source.html#l00899">FIX8::Message::factory()</a>, <a class="el" href="message__test_8cpp_source.html#l00129">FIELD_TEST</a>, <a class="el" href="message_8hpp_source.html#l00590">FIX8::MessageBase::find_group()</a>, <a class="el" href="message_8hpp_source.html#l00102">FIX8::GroupBase::get_element()</a>, and <a class="el" href="message_8hpp_source.html#l00092">FIX8::GroupBase::size()</a>.</p>
 
 </div>
 </div>
@@ -430,9 +633,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00210">210</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00307">307</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00847">FIX8::Message::calc_chksum()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00861">FIX8::Message::calc_chksum()</a>.</p>
 
 </div>
 </div>
@@ -468,9 +671,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00235">235</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00332">332</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
 
-<p>References <a class="el" href="message_8hpp_source.html#l00872">FIX8::Message::fmt_chksum()</a>.</p>
+<p>References <a class="el" href="message_8hpp_source.html#l00886">FIX8::Message::fmt_chksum()</a>.</p>
 
 </div>
 </div>
@@ -506,9 +709,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00267">267</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00364">364</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
 
-<p>References <a class="el" href="message__test_8cpp_source.html#l00248">extract_element_test()</a>.</p>
+<p>References <a class="el" href="message__test_8cpp_source.html#l00345">extract_element_test()</a>.</p>
 
 </div>
 </div>
@@ -544,7 +747,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00279">279</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00376">376</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+
+<p>References <a class="el" href="message_8cpp_source.html#l00420">FIX8::Message::encode()</a>.</p>
 
 </div>
 </div>
@@ -580,9 +785,47 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00296">296</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00393">393</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
 
-<p>References <a class="el" href="namespaceFIX8_1_1TEX.html#af9448129051868f6b92640dab21cb029">FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a2bb3e04e51f4a224638c95ac628b21c4">FIX8::TEX::SecurityType_OPTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a123e3e5a5b7cbd7a82a6ab2ad319b8b9">FIX8::TEX::TimeInForce_DAY()</a>.</p>
+<p>References <a class="el" href="message_8cpp_source.html#l00420">FIX8::Message::encode()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#af9448129051868f6b92640dab21cb029">FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION()</a>, <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a2bb3e04e51f4a224638c95ac628b21c4">FIX8::TEX::SecurityType_OPTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a123e3e5a5b7cbd7a82a6ab2ad319b8b9">FIX8::TEX::TimeInForce_DAY()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2f7a7967881bf6b316cc277ce5b653b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">message&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">repeating_group&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>news message (with repeating groups) encoding test </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>test suit name </td></tr>
+    <tr><td class="paramname">repeating_group</td><td>test case name </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00441">441</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+
+<p>References <a class="el" href="classFIX8_1_1GroupBase.html#a2d214f4c4fc87184e42a494c929c6ee6">FIX8::GroupBase::create_group()</a>, <a class="el" href="message_8cpp_source.html#l00420">FIX8::Message::encode()</a>, <a class="el" href="message_8hpp_source.html#l00590">FIX8::MessageBase::find_group()</a>, and <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>.</p>
 
 </div>
 </div>
@@ -618,16 +861,16 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00344">344</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__test_8cpp_source.html#l00485">485</a> of file <a class="el" href="message__test_8cpp_source.html">message_test.cpp</a>.</p>
 
-<p>References <a class="el" href="classFIX8_1_1GroupBase.html#a2d214f4c4fc87184e42a494c929c6ee6">FIX8::GroupBase::create_group()</a>.</p>
+<p>References <a class="el" href="classFIX8_1_1GroupBase.html#a2d214f4c4fc87184e42a494c929c6ee6">FIX8::GroupBase::create_group()</a>, <a class="el" href="message_8cpp_source.html#l00420">FIX8::Message::encode()</a>, <a class="el" href="message_8hpp_source.html#l00590">FIX8::MessageBase::find_group()</a>, and <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:51. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Jan 16 2014 16:13:41. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

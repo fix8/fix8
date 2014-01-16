@@ -1,8 +1,30 @@
 var searchData=
 [
+  ['m_5fenvironment',['m_Environment',['../classEnvironment.html#adfbd348a163d4f1ab5831fcda1400c43',1,'Environment']]],
+  ['mainalloc',['mainalloc',['../classff_1_1SlabCache.html#aceaa50c4deafa58ef17c2b3673c1842c',1,'ff::SlabCache']]],
+  ['mapf',['mapF',['../classff_1_1ff__map_1_1mapW.html#a5edc92509bf97a3a9569872b257455cd',1,'ff::ff_map::mapW']]],
+  ['mapp',['mapP',['../classff_1_1ff__map.html#a8cd634e7fe59f5c4a4cf10515c063d19',1,'ff::ff_map']]],
+  ['mask',['mask',['../classff_1_1threadMapper.html#a9d9f9498c722f47378b26b53ab18162b',1,'ff::threadMapper::mask()'],['../classff_1_1MPMC__Ptr__Queue.html#a3eeffe57cc81edbc9dab2c159bc30cec',1,'ff::MPMC_Ptr_Queue::mask()'],['../classff_1_1uMPMC__Ptr__Queue.html#a3f6a8d99a210eac4e2ea185d222b47e2',1,'ff::uMPMC_Ptr_Queue::mask()'],['../classff_1_1multiSWSR.html#a2504410ad275c1756bebc8be213c273b',1,'ff::multiSWSR::mask()']]],
+  ['master_5fworker',['master_worker',['../classff_1_1ff__loadbalancer.html#ae9ddfc3511c9ed8dae3c50cd4f0f2364',1,'ff::ff_loadbalancer']]],
+  ['max_5fbucket_5fcount_5f',['max_bucket_count_',['../classff__queue.html#a1cc141c53a524a0e2f547d5a4e2f23f9',1,'ff_queue']]],
+  ['max_5fnworkers',['max_nworkers',['../classff_1_1ff__farm.html#abf91d42f778da0ad9b0b12a042fdd972',1,'ff::ff_farm::max_nworkers()'],['../classff_1_1ff__gatherer.html#a8178f197d9faf68401f325b68de40144',1,'ff::ff_gatherer::max_nworkers()'],['../classff_1_1ff__loadbalancer.html#a24f20d18ab0139040f132c24fb4f6336',1,'ff::ff_loadbalancer::max_nworkers()']]],
+  ['max_5fsize',['max_size',['../classff_1_1ff__allocator.html#aae500fc7d575aacfbb48326ef982b44f',1,'ff::ff_allocator']]],
   ['maxdepth_5f',['maxdepth_',['../classXmlElement.html#aa5d9b1996c7f59f47e6007f748a6850e',1,'XmlElement']]],
+  ['maxnthreads',['maxNThreads',['../classff_1_1spinBarrier.html#a1ad6f636bd24169352e0c670495e37d6',1,'ff::spinBarrier']]],
+  ['maxnum',['maxNum',['../structCLDevice.html#a0e19937962708d03c64339dad4c633a9',1,'CLDevice']]],
+  ['memory_5fallocated',['memory_allocated',['../classff_1_1SegmentAllocator.html#acfd3a5522d42f6808a1b14618bfe2343',1,'ff::SegmentAllocator']]],
   ['million',['million',['../classFIX8_1_1Tickval.html#ac7b662d53b282e7a1efce137a1c82152',1,'FIX8::Tickval']]],
+  ['min_5fcache',['min_cache',['../classff_1_1dynlinkedlist.html#aff390a23993a7ea25ef344fc95ce48f0',1,'ff::dynlinkedlist::min_cache()'],['../classff_1_1staticlinkedlist.html#a491d8c86aeb94c9d35635f0af68c8b54',1,'ff::staticlinkedlist::min_cache()']]],
+  ['min_5fcache_5fsize',['min_cache_size',['../classff_1_1dynlinkedlist.html#a28a179a9e80b4f3f89cdfabb8bfdbfa6',1,'ff::dynlinkedlist::min_cache_size()'],['../classff_1_1staticlinkedlist.html#a5dccc8b2f330b1df67f05c146e89d6af',1,'ff::staticlinkedlist::min_cache_size()']]],
   ['mode',['mode',['../classgzstreambuf.html#adddc98d7ed861e936f47fdd9d4a137f7',1,'gzstreambuf']]],
   ['modified_5f',['modified_',['../classcoroutine__ref.html#a0c384c607ae77483fb8798c1825a0242',1,'coroutine_ref']]],
-  ['msgpairs',['msgpairs',['../namespaceFIX8_1_1TEX.html#af00342f39c31c4509674f24ab6b1252c',1,'FIX8::TEX']]]
+  ['msgpairs',['msgpairs',['../namespaceFIX8_1_1TEX.html#af00342f39c31c4509674f24ab6b1252c',1,'FIX8::TEX::msgpairs()'],['../namespaceFIX8_1_1UTEST.html#aa89a06aba1cfd132077a2da440b6a74c',1,'FIX8::UTEST::msgpairs()']]],
+  ['multi_5finput',['multi_input',['../classff_1_1ff__loadbalancer.html#adb6de607fa4b5a198d8a45b6d395723a',1,'ff::ff_loadbalancer']]],
+  ['multi_5finput_5fsize',['multi_input_size',['../classff_1_1ff__loadbalancer.html#a213e709b1d54c79ebd5187d0adca4a7e',1,'ff::ff_loadbalancer']]],
+  ['multi_5finput_5fstart',['multi_input_start',['../classff_1_1ff__loadbalancer.html#ad6f33f8a00fe813a140c9c029d4cf284',1,'ff::ff_loadbalancer']]],
+  ['mutex',['mutex',['../classff_1_1ff__thread.html#a1184c61dc6af8d5ab8996eaa8cb9f9ab',1,'ff::ff_thread']]],
+  ['mutex_5fset_5fpolicy',['mutex_set_policy',['../classEnvironment.html#a9b6187db85e43e1c16c5a7d4e5f11739',1,'Environment']]],
+  ['myid',['myid',['../classff_1_1ff__node.html#a370c50d4a15c00fa77dff2bc5ec1d705',1,'ff::ff_node']]],
+  ['myinbuffer',['myinbuffer',['../classff_1_1ff__node.html#ab7fea5bccd5835d6eb3cebbfeb4ac39d',1,'ff::ff_node']]],
+  ['myoutbuffer',['myoutbuffer',['../classff_1_1ff__node.html#acae613bdeb037cdec0363a8619f859ad',1,'ff::ff_node']]]
 ];

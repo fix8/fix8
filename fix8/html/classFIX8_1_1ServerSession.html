@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.10.0</span>
+   &#160;<span id="projectnumber">version  1.0.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -150,6 +151,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ace06d0ed4788bb6c3fa720346fa0d6e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a662275b3dc7be48c0b16d91fc9cc4807"><td class="memItemLeft" align="right" valign="top">Poco::Net::StreamSocket&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ServerSession.html#a662275b3dc7be48c0b16d91fc9cc4807">accept</a> (Poco::Net::SocketAddress &amp;claddr)</td></tr>
 <tr class="separator:a662275b3dc7be48c0b16d91fc9cc4807"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c98710d6c0f826799beaee02ea37c80"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ServerSession.html#a4c98710d6c0f826799beaee02ea37c80">is_secure</a> () const </td></tr>
+<tr class="separator:a4c98710d6c0f826799beaee02ea37c80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_structFIX8_1_1SessionConfig"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structFIX8_1_1SessionConfig')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structFIX8_1_1SessionConfig.html">FIX8::SessionConfig</a></td></tr>
 <tr class="memitem:ab4100a72a77dccc623d13cd28d1bd69f inherit pub_methods_structFIX8_1_1SessionConfig"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1SessionConfig.html#ab4100a72a77dccc623d13cd28d1bd69f">SessionConfig</a> (const <a class="el" href="structFIX8_1_1F8MetaCntx.html">F8MetaCntx</a> &amp;ctx, const std::string &amp;conf_file, const std::string &amp;session_name)</td></tr>
 <tr class="memdesc:ab4100a72a77dccc623d13cd28d1bd69f inherit pub_methods_structFIX8_1_1SessionConfig"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ctor. Loads configuration, obtains session details, sets up logfile flags.  <a href="#ab4100a72a77dccc623d13cd28d1bd69f">More...</a><br/></td></tr>
@@ -181,20 +184,22 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a63edde694857230cc0a1f26d0cf7b861 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab68e04de2c9527e5ea8546e90fd4457e inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ab68e04de2c9527e5ea8546e90fd4457e">get_logname</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, std::string &amp;to, const <a class="el" href="classFIX8_1_1SessionID.html">SessionID</a> *sid=0) const </td></tr>
 <tr class="separator:ab68e04de2c9527e5ea8546e90fd4457e inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e58a09f6ad990a93c7cd95579604915 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a3e58a09f6ad990a93c7cd95579604915">get_retry_interval</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="classFIX8_1_1Configuration.html#abb17f52f8276ecbf1e124abcd6718274a60914e9dced8cfd0d6dfb02e149c20bb">default_retry_interval</a>) const </td></tr>
-<tr class="separator:a3e58a09f6ad990a93c7cd95579604915 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae140dd302ac2942b4c666cae3520bbaf inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ae140dd302ac2942b4c666cae3520bbaf">get_retry_count</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="classFIX8_1_1Configuration.html#abb17f52f8276ecbf1e124abcd6718274abcacb2ee1e2749536df3b3e5c99d4b73">default_max_retries</a>) const </td></tr>
-<tr class="separator:ae140dd302ac2942b4c666cae3520bbaf inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade3e5ce1c164e5e09c712ff0fcff9c6c inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ade3e5ce1c164e5e09c712ff0fcff9c6c">get_connect_timeout</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a74072aa37607d0a36d559ee466a9518cab864df22ce5f157831c3aee711be5e5c">defaults::connect_timeout</a>) const </td></tr>
+<tr class="separator:ade3e5ce1c164e5e09c712ff0fcff9c6c inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a302f52b3c9eb7467b20f68aabc96a18a inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a302f52b3c9eb7467b20f68aabc96a18a">get_retry_interval</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a74072aa37607d0a36d559ee466a9518ca082f393bb721ce305cff63393277a69f">defaults::retry_interval</a>) const </td></tr>
+<tr class="separator:a302f52b3c9eb7467b20f68aabc96a18a inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f1ba86927c72374485d81ca922a481e inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a3f1ba86927c72374485d81ca922a481e">get_retry_count</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a74072aa37607d0a36d559ee466a9518caf78f674b2d9c9588437cb5e5fc0080c0">defaults::login_retries</a>) const </td></tr>
+<tr class="separator:a3f1ba86927c72374485d81ca922a481e inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe0f4903660dfd8d5756388e108281f9 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#afe0f4903660dfd8d5756388e108281f9">get_tcp_recvbuf_sz</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
 <tr class="separator:afe0f4903660dfd8d5756388e108281f9 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18f8868cfaf4a1c586d271f14dfbe36b inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a18f8868cfaf4a1c586d271f14dfbe36b">get_tcp_sendbuf_sz</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
 <tr class="separator:a18f8868cfaf4a1c586d271f14dfbe36b inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9547bc68851430b6ac9d3f7830552eb2 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a9547bc68851430b6ac9d3f7830552eb2">get_version</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
 <tr class="separator:a9547bc68851430b6ac9d3f7830552eb2 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2de9435a472e359317ec5eb86f681081 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a2de9435a472e359317ec5eb86f681081">get_logfile_rotation</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="classFIX8_1_1Configuration.html#abb17f52f8276ecbf1e124abcd6718274a8425ca78dcf06f5164a81c7ce8c23951">default_log_rotation</a>) const </td></tr>
-<tr class="separator:a2de9435a472e359317ec5eb86f681081 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4430deb15a7f3aa3b37c816fe5b68bad inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a4430deb15a7f3aa3b37c816fe5b68bad">get_heartbeat_interval</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=0) const </td></tr>
-<tr class="separator:a4430deb15a7f3aa3b37c816fe5b68bad inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a857a2b80970326445afd5f635bcbd05b inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a857a2b80970326445afd5f635bcbd05b">get_logfile_rotation</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a74072aa37607d0a36d559ee466a9518cafe4cec891e5ae67b5b1e37dbe7cb9a32">defaults::log_rotation</a>) const </td></tr>
+<tr class="separator:a857a2b80970326445afd5f635bcbd05b inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75a08e90151a33b1a8d878be58d19e67 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a75a08e90151a33b1a8d878be58d19e67">get_heartbeat_interval</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const unsigned def=<a class="el" href="namespaceFIX8_1_1defaults.html#a74072aa37607d0a36d559ee466a9518caf1d4c6432ba99d5c6420ba4bbe5b166d">defaults::hb_interval</a>) const </td></tr>
+<tr class="separator:a75a08e90151a33b1a8d878be58d19e67 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5ee5d1e8023463e8edfbe50fdb9ae81 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ad5ee5d1e8023463e8edfbe50fdb9ae81">get_tcp_nodelay</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const bool def=true) const </td></tr>
 <tr class="separator:ad5ee5d1e8023463e8edfbe50fdb9ae81 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1a771efc8a366e2858256566294575c inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#ac1a771efc8a366e2858256566294575c">get_silent_disconnect</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const bool def=false) const </td></tr>
@@ -203,6 +208,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8cca5793f97635421b524d5e7383cf8e inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5e9c2da81b748d4f26087cecea7d69d inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#aa5e9c2da81b748d4f26087cecea7d69d">get_no_chksum_flag</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const bool def=false) const </td></tr>
 <tr class="separator:aa5e9c2da81b748d4f26087cecea7d69d inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89ac2cf42d4902d1ac05160f5df27bc1 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#a89ac2cf42d4902d1ac05160f5df27bc1">get_permissive_mode_flag</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const bool def=false) const </td></tr>
+<tr class="separator:a89ac2cf42d4902d1ac05160f5df27bc1 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa417e9f8f59b7a6ded994ae07db25e50 inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#aa417e9f8f59b7a6ded994ae07db25e50">get_reset_sequence_number_flag</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const bool def=false) const </td></tr>
 <tr class="separator:aa417e9f8f59b7a6ded994ae07db25e50 inherit pub_methods_classFIX8_1_1Configuration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc728f6e622d335b9ee55f753ba1f4aa inherit pub_methods_classFIX8_1_1Configuration"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1Configuration.html#abc728f6e622d335b9ee55f753ba1f4aa">get_always_seqnum_assign</a> (const <a class="el" href="classXmlElement.html">XmlElement</a> *from, const bool def=false) const </td></tr>
@@ -230,8 +237,8 @@ Public Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:aa67b9e62eca1e673c5c2fc76d84c86e4"><td class="memItemLeft" align="right" valign="top">Poco::Net::SocketAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ServerSession.html#aa67b9e62eca1e673c5c2fc76d84c86e4">_addr</a></td></tr>
 <tr class="separator:aa67b9e62eca1e673c5c2fc76d84c86e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4e1f06e5cf7c5511bef405fb35fe5e7"><td class="memItemLeft" align="right" valign="top">Poco::Net::ServerSocket&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ServerSession.html#ac4e1f06e5cf7c5511bef405fb35fe5e7">_server_sock</a></td></tr>
-<tr class="separator:ac4e1f06e5cf7c5511bef405fb35fe5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf2eea3f9f3c72e70a0ff97bda1fe072"><td class="memItemLeft" align="right" valign="top">Poco::Net::ServerSocket *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFIX8_1_1ServerSession.html#abf2eea3f9f3c72e70a0ff97bda1fe072">_server_sock</a></td></tr>
+<tr class="separator:abf2eea3f9f3c72e70a0ff97bda1fe072"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -242,8 +249,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a17c36086df286d2bf5b598c5c1694903 inherit pub_attribs_structFIX8_1_1SessionConfig"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfd10e9bcc48a413d5302ba4b9be9839 inherit pub_attribs_structFIX8_1_1SessionConfig"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structFIX8_1_1LoginParameters.html">LoginParameters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839">_loginParameters</a></td></tr>
 <tr class="separator:abfd10e9bcc48a413d5302ba4b9be9839 inherit pub_attribs_structFIX8_1_1SessionConfig"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab597069e9e94656c2f65a619f73925a5 inherit pub_attribs_structFIX8_1_1SessionConfig"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1SessionConfig.html#ab597069e9e94656c2f65a619f73925a5">_session_name</a></td></tr>
-<tr class="separator:ab597069e9e94656c2f65a619f73925a5 inherit pub_attribs_structFIX8_1_1SessionConfig"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61e368460852c06c863eeeeee18802ec inherit pub_attribs_structFIX8_1_1SessionConfig"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1SessionConfig.html#a61e368460852c06c863eeeeee18802ec">_session_name</a></td></tr>
+<tr class="separator:a61e368460852c06c863eeeeee18802ec inherit pub_attribs_structFIX8_1_1SessionConfig"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br/>
@@ -257,7 +264,7 @@ class FIX8::ServerSession&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00319">319</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00451">451</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="a84fcb5bc7e03647abe0631070766c02e"></a>
 <div class="memitem">
@@ -273,7 +280,7 @@ template&lt;typename T&gt; </div>
 
 <p>Convenient scoped pointer for your session. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00351">351</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00498">498</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -320,9 +327,9 @@ template&lt;typename T&gt; </div>
 
 <p>Ctor. Prepares session for receiving inbbound connections (acceptor). </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00326">326</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00461">461</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00051">FIX8::SessionConfig::_loginParameters</a>, <a class="el" href="session_8hpp_source.html#l00202">FIX8::LoginParameters::_recv_buf_sz</a>, <a class="el" href="session_8hpp_source.html#l00202">FIX8::LoginParameters::_send_buf_sz</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00322">FIX8::ServerSession&lt; T &gt;::_server_sock</a>, <a class="el" href="connection_8hpp_source.html#l00442">FIX8::Connection::set_recv_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00454">FIX8::Connection::set_send_buf_sz()</a>.</p>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00453">FIX8::ServerSession&lt; T &gt;::_addr</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00126">FIX8::SessionConfig::_loginParameters</a>, <a class="el" href="session_8hpp_source.html#l00221">FIX8::LoginParameters::_recv_buf_sz</a>, <a class="el" href="session_8hpp_source.html#l00221">FIX8::LoginParameters::_send_buf_sz</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00454">FIX8::ServerSession&lt; T &gt;::_server_sock</a>, <a class="el" href="connection_8hpp_source.html#l00535">FIX8::Connection::set_recv_buf_sz()</a>, and <a class="el" href="connection_8hpp_source.html#l00547">FIX8::Connection::set_send_buf_sz()</a>.</p>
 
 </div>
 </div>
@@ -351,7 +358,9 @@ template&lt;typename T&gt; </div>
 
 <p>Dtor. </p>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00338">338</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00482">482</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00454">FIX8::ServerSession&lt; T &gt;::_server_sock</a>.</p>
 
 </div>
 </div>
@@ -388,9 +397,36 @@ template&lt;typename T&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the connected socket </dd></dl>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00348">348</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00495">495</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00322">FIX8::ServerSession&lt; T &gt;::_server_sock</a>.</p>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00454">FIX8::ServerSession&lt; T &gt;::_server_sock</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4c98710d6c0f826799beaee02ea37c80"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classFIX8_1_1ServerSession.html">FIX8::ServerSession</a>&lt; T &gt;::is_secure </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00503">503</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
 </div>
 </div>
@@ -426,9 +462,9 @@ template&lt;typename T&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if a connection is avaialble </dd></dl>
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00343">343</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00490">490</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00322">FIX8::ServerSession&lt; T &gt;::_server_sock</a>.</p>
+<p>References <a class="el" href="sessionwrapper_8hpp_source.html#l00454">FIX8::ServerSession&lt; T &gt;::_server_sock</a>.</p>
 
 </div>
 </div>
@@ -453,11 +489,13 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00321">321</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00453">453</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00461">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac4e1f06e5cf7c5511bef405fb35fe5e7"></a>
+<a class="anchor" id="abf2eea3f9f3c72e70a0ff97bda1fe072"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -467,7 +505,7 @@ template&lt;typename T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Poco::Net::ServerSocket <a class="el" href="classFIX8_1_1ServerSession.html">FIX8::ServerSession</a>&lt; T &gt;::_server_sock</td>
+          <td class="memname">Poco::Net::ServerSocket* <a class="el" href="classFIX8_1_1ServerSession.html">FIX8::ServerSession</a>&lt; T &gt;::_server_sock</td>
         </tr>
       </table>
   </td>
@@ -477,9 +515,9 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00322">322</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
+<p>Definition at line <a class="el" href="sessionwrapper_8hpp_source.html#l00454">454</a> of file <a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00348">FIX8::ServerSession&lt; T &gt;::accept()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00343">FIX8::ServerSession&lt; T &gt;::poll()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00326">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00495">FIX8::ServerSession&lt; T &gt;::accept()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00490">FIX8::ServerSession&lt; T &gt;::poll()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00461">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00482">FIX8::ServerSession&lt; T &gt;::~ServerSession()</a>.</p>
 
 </div>
 </div>
@@ -489,7 +527,7 @@ template&lt;typename T&gt; </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:55. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Jan 16 2014 16:13:46. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

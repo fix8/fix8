@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.10.0</span>
+   &#160;<span id="projectnumber">version  1.0.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -112,30 +113,30 @@ $(document).ready(function(){initNavTree('session__test_8cpp.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="f8headers_8hpp_source.html">f8headers.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="f8config_8h_source.html">f8config.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="f8config_8h_source.html">fix8/f8config.h</a>&gt;</code><br/>
 <code>#include &lt;errno.h&gt;</code><br/>
-<code>#include &lt;<a class="el" href="f8exception_8hpp_source.html">f8exception.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="hypersleep_8hpp_source.html">hypersleep.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="mpmc_8hpp_source.html">mpmc.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="f8types_8hpp_source.html">f8types.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="f8utils_8hpp_source.html">f8utils.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="xml_8hpp_source.html">xml.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="thread_8hpp_source.html">thread.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="gzstream_8hpp_source.html">gzstream.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="tickval_8hpp_source.html">tickval.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="logger_8hpp_source.html">logger.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="traits_8hpp_source.html">traits.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="timer_8hpp_source.html">timer.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="field_8hpp_source.html">field.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="message_8hpp_source.html">message.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="f8exception_8hpp_source.html">fix8/f8exception.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="hypersleep_8hpp_source.html">fix8/hypersleep.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="mpmc_8hpp_source.html">fix8/mpmc.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="f8types_8hpp_source.html">fix8/f8types.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="f8utils_8hpp_source.html">fix8/f8utils.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="xml_8hpp_source.html">fix8/xml.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="thread_8hpp_source.html">fix8/thread.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="gzstream_8hpp_source.html">fix8/gzstream.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="tickval_8hpp_source.html">fix8/tickval.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="logger_8hpp_source.html">fix8/logger.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="traits_8hpp_source.html">fix8/traits.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="timer_8hpp_source.html">fix8/timer.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="field_8hpp_source.html">fix8/field.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="message_8hpp_source.html">fix8/message.hpp</a>&gt;</code><br/>
 <code>#include &lt;mockConnection.hpp&gt;</code><br/>
-<code>#include &lt;<a class="el" href="session_8hpp_source.html">session.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="configuration_8hpp_source.html">configuration.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="persist_8hpp_source.html">persist.hpp</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="sessionwrapper_8hpp_source.html">sessionwrapper.hpp</a>&gt;</code><br/>
-<code>#include &quot;utest_types.hpp&quot;</code><br/>
-<code>#include &quot;utest_router.hpp&quot;</code><br/>
-<code>#include &quot;utest_classes.hpp&quot;</code><br/>
+<code>#include &lt;<a class="el" href="session_8hpp_source.html">fix8/session.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="configuration_8hpp_source.html">fix8/configuration.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="persist_8hpp_source.html">fix8/persist.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="sessionwrapper_8hpp_source.html">fix8/sessionwrapper.hpp</a>&gt;</code><br/>
+<code>#include &quot;<a class="el" href="utest__types_8hpp_source.html">utest_types.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="utest__router_8hpp_source.html">utest_router.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="utest__classes_8hpp_source.html">utest_classes.hpp</a>&quot;</code><br/>
 <code>#include &quot;gtest/gtest.h&quot;</code><br/>
 <code>#include &quot;<a class="el" href="session_8cpp_source.html">../runtime/session.cpp</a>&quot;</code><br/>
 </div>
@@ -160,9 +161,9 @@ Classes</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a0e963e60fc396d0db7a1beeb09d6b195"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session__test_8cpp.html#a0e963e60fc396d0db7a1beeb09d6b195">TEST</a> (sessionId, sessionId)</td></tr>
 <tr class="separator:a0e963e60fc396d0db7a1beeb09d6b195"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2febc7aec0ff24d03f038e364a3abe36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session__test_8cpp.html#a2febc7aec0ff24d03f038e364a3abe36">fillSendHeader</a> (<a class="el" href="classFIX8_1_1MessageBase.html">MessageBase</a> *header, unsigned seq)</td></tr>
+<tr class="memitem:a2febc7aec0ff24d03f038e364a3abe36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session__test_8cpp.html#a2febc7aec0ff24d03f038e364a3abe36">fillSendHeader</a> (<a class="el" href="classFIX8_1_1MessageBase.html">MessageBase</a> *<a class="el" href="classFIX8_1_1UTEST_1_1header.html">header</a>, unsigned seq)</td></tr>
 <tr class="separator:a2febc7aec0ff24d03f038e364a3abe36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26a5ca64e0a15ac472858d2a582ad196"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a> (<a class="el" href="classFIX8_1_1MessageBase.html">MessageBase</a> *header)</td></tr>
+<tr class="memitem:a26a5ca64e0a15ac472858d2a582ad196"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a> (<a class="el" href="classFIX8_1_1MessageBase.html">MessageBase</a> *<a class="el" href="classFIX8_1_1UTEST_1_1header.html">header</a>)</td></tr>
 <tr class="separator:a26a5ca64e0a15ac472858d2a582ad196"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fe48736a9427f9f008e53a77d27e929"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session__test_8cpp.html#a1fe48736a9427f9f008e53a77d27e929">getSingleMsg</a> ()</td></tr>
 <tr class="memdesc:a1fe48736a9427f9f008e53a77d27e929"><td class="mdescLeft">&#160;</td><td class="mdescRight">helper to get the last output message  <a href="#a1fe48736a9427f9f008e53a77d27e929">More...</a><br/></td></tr>
@@ -234,7 +235,7 @@ Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="session__test_8cpp_source.html#l00313">313</a> of file <a class="el" href="session__test_8cpp_source.html">session_test.cpp</a>.</p>
 
-<p>References <a class="el" href="session__test_8cpp_source.html#l00257">fillSendHeader()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#af9448129051868f6b92640dab21cb029">FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a2bb3e04e51f4a224638c95ac628b21c4">FIX8::TEX::SecurityType_OPTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a123e3e5a5b7cbd7a82a6ab2ad319b8b9">FIX8::TEX::TimeInForce_DAY()</a>.</p>
+<p>References <a class="el" href="message_8cpp_source.html#l00420">FIX8::Message::encode()</a>, <a class="el" href="session__test_8cpp_source.html#l00257">fillSendHeader()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#af9448129051868f6b92640dab21cb029">FIX8::TEX::HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION()</a>, <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a458467bdab6f3b08b3ef1279ceea8a9c">FIX8::TEX::OrdType_LIMIT()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#a2bb3e04e51f4a224638c95ac628b21c4">FIX8::TEX::SecurityType_OPTION()</a>, <a class="el" href="namespaceFIX8_1_1TEX.html#accbf1d4841f42e9baa8c6575c38f525d">FIX8::TEX::Side_BUY()</a>, and <a class="el" href="namespaceFIX8_1_1TEX.html#a123e3e5a5b7cbd7a82a6ab2ad319b8b9">FIX8::TEX::TimeInForce_DAY()</a>.</p>
 
 <p>Referenced by <a class="el" href="session__test_8cpp_source.html#l00371">TEST_F()</a>.</p>
 
@@ -463,7 +464,7 @@ Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="session__test_8cpp_source.html#l00371">371</a> of file <a class="el" href="session__test_8cpp_source.html">session_test.cpp</a>.</p>
 
-<p>References <a class="el" href="session__test_8cpp_source.html#l00304">clearOutputs()</a>, <a class="el" href="session__test_8cpp_source.html#l00313">composeOrder()</a>, <a class="el" href="session__test_8cpp_source.html#l00271">fillRecvHeader()</a>, <a class="el" href="session__test_8cpp_source.html#l00257">fillSendHeader()</a>, <a class="el" href="session__test_8cpp_source.html#l00296">getMsgs()</a>, <a class="el" href="session__test_8cpp_source.html#l00283">getSingleMsg()</a>, and <a class="el" href="session_8hpp_source.html#l00142">FIX8::States::st_continuous</a>.</p>
+<p>References <a class="el" href="session__test_8cpp_source.html#l00304">clearOutputs()</a>, <a class="el" href="session__test_8cpp_source.html#l00313">composeOrder()</a>, <a class="el" href="message_8cpp_source.html#l00420">FIX8::Message::encode()</a>, <a class="el" href="session__test_8cpp_source.html#l00271">fillRecvHeader()</a>, <a class="el" href="session__test_8cpp_source.html#l00257">fillSendHeader()</a>, <a class="el" href="session__test_8cpp_source.html#l00296">getMsgs()</a>, <a class="el" href="session__test_8cpp_source.html#l00283">getSingleMsg()</a>, <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>, <a class="el" href="utest__classes_8hpp_source.html#l00114">FIX8::UTEST::ResendRequest::process()</a>, and <a class="el" href="session_8hpp_source.html#l00142">FIX8::States::st_continuous</a>.</p>
 
 </div>
 </div>
@@ -501,7 +502,7 @@ Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="session__test_8cpp_source.html#l00479">479</a> of file <a class="el" href="session__test_8cpp_source.html">session_test.cpp</a>.</p>
 
-<p>References <a class="el" href="session__test_8cpp_source.html#l00271">fillRecvHeader()</a>.</p>
+<p>References <a class="el" href="message_8cpp_source.html#l00420">FIX8::Message::encode()</a>, <a class="el" href="session__test_8cpp_source.html#l00271">fillRecvHeader()</a>, and <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>.</p>
 
 </div>
 </div>
@@ -539,7 +540,7 @@ Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="session__test_8cpp_source.html#l00499">499</a> of file <a class="el" href="session__test_8cpp_source.html">session_test.cpp</a>.</p>
 
-<p>References <a class="el" href="session__test_8cpp_source.html#l00304">clearOutputs()</a>, <a class="el" href="session__test_8cpp_source.html#l00271">fillRecvHeader()</a>, and <a class="el" href="session__test_8cpp_source.html#l00283">getSingleMsg()</a>.</p>
+<p>References <a class="el" href="session__test_8cpp_source.html#l00304">clearOutputs()</a>, <a class="el" href="message_8cpp_source.html#l00420">FIX8::Message::encode()</a>, <a class="el" href="session__test_8cpp_source.html#l00271">fillRecvHeader()</a>, <a class="el" href="session__test_8cpp_source.html#l00283">getSingleMsg()</a>, and <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>.</p>
 
 </div>
 </div>
@@ -577,14 +578,14 @@ Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="session__test_8cpp_source.html#l00523">523</a> of file <a class="el" href="session__test_8cpp_source.html">session_test.cpp</a>.</p>
 
-<p>References <a class="el" href="session__test_8cpp_source.html#l00304">clearOutputs()</a>, <a class="el" href="session__test_8cpp_source.html#l00271">fillRecvHeader()</a>, <a class="el" href="session__test_8cpp_source.html#l00296">getMsgs()</a>, <a class="el" href="session_8hpp_source.html#l00142">FIX8::States::st_continuous</a>, <a class="el" href="session_8hpp_source.html#l00143">FIX8::States::st_logoff_sent</a>, and <a class="el" href="session_8hpp_source.html#l00144">FIX8::States::st_test_request_sent</a>.</p>
+<p>References <a class="el" href="session__test_8cpp_source.html#l00304">clearOutputs()</a>, <a class="el" href="message_8cpp_source.html#l00420">FIX8::Message::encode()</a>, <a class="el" href="session__test_8cpp_source.html#l00271">fillRecvHeader()</a>, <a class="el" href="session__test_8cpp_source.html#l00296">getMsgs()</a>, <a class="el" href="message_8hpp_source.html#l00803">FIX8::Message::Header()</a>, <a class="el" href="session_8hpp_source.html#l00142">FIX8::States::st_continuous</a>, <a class="el" href="session_8hpp_source.html#l00143">FIX8::States::st_logoff_sent</a>, and <a class="el" href="session_8hpp_source.html#l00144">FIX8::States::st_test_request_sent</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:51. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Jan 16 2014 16:13:41. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

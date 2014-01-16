@@ -1,9 +1,6 @@
 var classFIX8_1_1Configuration =
 [
     [ "ConfigMap", "classFIX8_1_1Configuration.html#ad328d6f51eb7affedb75353b99f6c968", null ],
-    [ "default_retry_interval", "classFIX8_1_1Configuration.html#abb17f52f8276ecbf1e124abcd6718274a60914e9dced8cfd0d6dfb02e149c20bb", null ],
-    [ "default_max_retries", "classFIX8_1_1Configuration.html#abb17f52f8276ecbf1e124abcd6718274abcacb2ee1e2749536df3b3e5c99d4b73", null ],
-    [ "default_log_rotation", "classFIX8_1_1Configuration.html#abb17f52f8276ecbf1e124abcd6718274a8425ca78dcf06f5164a81c7ce8c23951", null ],
     [ "Logtype", "classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2", [
       [ "session_log", "classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2a8f06c450c3b6d8ec13d86847ee790e2c", null ],
       [ "protocol_log", "classFIX8_1_1Configuration.html#a13b891f605d2fb64855d80c058cb80c2a0596d4c2007a735c0f84ad824f3eb283", null ]
@@ -18,21 +15,24 @@ var classFIX8_1_1Configuration =
     [ "find_persister", "classFIX8_1_1Configuration.html#a49e12b5f0089c74316463f53ab7cf9b9", null ],
     [ "find_server_group", "classFIX8_1_1Configuration.html#a627da462603ef46a4c3b192163b0a2b1", null ],
     [ "find_session", "classFIX8_1_1Configuration.html#ac3e825f73abbf5158e68bd65e67b9107", null ],
+    [ "find_ssl_context", "classFIX8_1_1Configuration.html#aaab7bf8f0540c1472a44cdffd2540742", null ],
     [ "get_address", "classFIX8_1_1Configuration.html#ace764895c637f1ceb7d466505a6687df", null ],
     [ "get_addresses", "classFIX8_1_1Configuration.html#a71e9d58f97dbd776308901aef832a44d", null ],
     [ "get_all_sessions", "classFIX8_1_1Configuration.html#ad78d4276318213ebf19c1ce4ed6d6d28", null ],
     [ "get_always_seqnum_assign", "classFIX8_1_1Configuration.html#abc728f6e622d335b9ee55f753ba1f4aa", null ],
+    [ "get_connect_timeout", "classFIX8_1_1Configuration.html#ade3e5ce1c164e5e09c712ff0fcff9c6c", null ],
     [ "get_default_appl_ver_id", "classFIX8_1_1Configuration.html#aae45bd1594aa91931eff6a0fa4ed9288", null ],
-    [ "get_heartbeat_interval", "classFIX8_1_1Configuration.html#a4430deb15a7f3aa3b37c816fe5b68bad", null ],
+    [ "get_heartbeat_interval", "classFIX8_1_1Configuration.html#a75a08e90151a33b1a8d878be58d19e67", null ],
     [ "get_ignore_logon_sequence_check_flag", "classFIX8_1_1Configuration.html#a8cca5793f97635421b524d5e7383cf8e", null ],
-    [ "get_logfile_rotation", "classFIX8_1_1Configuration.html#a2de9435a472e359317ec5eb86f681081", null ],
+    [ "get_logfile_rotation", "classFIX8_1_1Configuration.html#a857a2b80970326445afd5f635bcbd05b", null ],
     [ "get_logflags", "classFIX8_1_1Configuration.html#a63edde694857230cc0a1f26d0cf7b861", null ],
     [ "get_logname", "classFIX8_1_1Configuration.html#ab68e04de2c9527e5ea8546e90fd4457e", null ],
     [ "get_no_chksum_flag", "classFIX8_1_1Configuration.html#aa5e9c2da81b748d4f26087cecea7d69d", null ],
+    [ "get_permissive_mode_flag", "classFIX8_1_1Configuration.html#a89ac2cf42d4902d1ac05160f5df27bc1", null ],
     [ "get_process_model", "classFIX8_1_1Configuration.html#a77a0bd3c0e02ef8ab382550cc8033266", null ],
     [ "get_reset_sequence_number_flag", "classFIX8_1_1Configuration.html#aa417e9f8f59b7a6ded994ae07db25e50", null ],
-    [ "get_retry_count", "classFIX8_1_1Configuration.html#ae140dd302ac2942b4c666cae3520bbaf", null ],
-    [ "get_retry_interval", "classFIX8_1_1Configuration.html#a3e58a09f6ad990a93c7cd95579604915", null ],
+    [ "get_retry_count", "classFIX8_1_1Configuration.html#a3f1ba86927c72374485d81ca922a481e", null ],
+    [ "get_retry_interval", "classFIX8_1_1Configuration.html#a302f52b3c9eb7467b20f68aabc96a18a", null ],
     [ "get_role", "classFIX8_1_1Configuration.html#a36a52fd4fa27e1ce343590ce56f69d19", null ],
     [ "get_root", "classFIX8_1_1Configuration.html#a4c3e0bc7474555a2fb33f15c27a5d6fc", null ],
     [ "get_sender_comp_id", "classFIX8_1_1Configuration.html#a00d8d606b3ec33836fa64397fcca2b1c", null ],
@@ -54,5 +54,6 @@ var classFIX8_1_1Configuration =
     [ "_root", "classFIX8_1_1Configuration.html#a963ddebb913b24a2f8cf36fc14ab7d8e", null ],
     [ "_server_group", "classFIX8_1_1Configuration.html#abe8f53c8fcc38da485b3b1dc9fdeddb9", null ],
     [ "_sessions", "classFIX8_1_1Configuration.html#ae884b567fca772e7654694117e16cce8", null ],
+    [ "_ssl_context", "classFIX8_1_1Configuration.html#a0764986890c99aa0e845364910614bad", null ],
     [ "_xmlfile", "classFIX8_1_1Configuration.html#a87d38e7194445aa6747dfd2d6d7e58e1", null ]
 ];

@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.10.0</span>
+   &#160;<span id="projectnumber">version  1.0.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -114,7 +115,7 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">Fix8 Open Source FIX Engine.</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-13 David L. Dight &lt;fix@fix8.org&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-14 David L. Dight &lt;fix@fix8.org&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either</span></div>
@@ -144,8 +145,8 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef _F8_HYPERSLEEP_</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># define _F8_HYPERSLEEP_</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef FIX8_HYPERSLEEP_HPP_</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define FIX8_HYPERSLEEP_HPP_</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
@@ -187,7 +188,7 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;   ts.tv_nsec += (amt % (billion));</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;   <span class="keywordflow">return</span> execute_clock_nanosleep(ts);</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#elif defined _MSC_VER</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor"></span>   Sleep(amt);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor"></span>   Sleep(amt); <span class="comment">// milliseconds</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;   <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor"></span>   <span class="keyword">const</span> timespec tspec = { amt, amt % billion };</div>
@@ -206,7 +207,7 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;   ts.tv_nsec += (million * (amt % thousand));</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   <span class="keywordflow">return</span> execute_clock_nanosleep(ts);</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#elif defined _MSC_VER</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor"></span>   Sleep(amt);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor"></span>   Sleep(amt); <span class="comment">// milliseconds</span></div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor"></span>   <span class="keyword">const</span> timespec tspec = { amt / thousand, million * (amt % thousand) };</div>
@@ -225,7 +226,7 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;   ts.tv_nsec += (thousand * (amt % million));</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;   <span class="keywordflow">return</span> execute_clock_nanosleep(ts);</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#elif defined _MSC_VER</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor"></span>   Sleep(amt);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor"></span>   Sleep(amt); <span class="comment">// milliseconds</span></div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;   <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor"></span>   <span class="keyword">const</span> timespec tspec = { amt / million, thousand * (amt % million) };</div>
@@ -244,7 +245,7 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;   ts.tv_nsec += amt;</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;   <span class="keywordflow">return</span> execute_clock_nanosleep(ts);</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="preprocessor">#elif defined _MSC_VER</span></div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="preprocessor"></span>   Sleep(amt);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="preprocessor"></span>   Sleep(amt); <span class="comment">// milliseconds</span></div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;   <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="preprocessor"></span>   <span class="keyword">const</span> timespec tspec = { amt / billion, amt };</div>
@@ -269,30 +270,25 @@ $(document).ready(function(){initNavTree('hypersleep_8hpp_source.html','');});
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;   clock_gettime(CLOCK_MONOTONIC, &amp;ts);</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;   ts.tv_sec += (amt / hv[units][Div]);    <span class="comment">// calculate time to sleep in secs</span></div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;   ts.tv_nsec += (hv[units][Mul] * (amt % hv[units][Div]));   <span class="comment">// calculate time to sleep in nsecs</span></div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;   <span class="keywordflow">if</span> (ts.tv_nsec &gt;= billion)</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;   {</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      ++ts.tv_sec;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;      ts.tv_nsec -= billion;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;   }</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;   <span class="keywordflow">return</span> execute_clock_nanosleep(ts);</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="preprocessor">#elif defined _MSC_VER</span></div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="preprocessor"></span>   Sleep(amt);</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;   <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor"></span>   <span class="keyword">const</span> timespec tspec = { amt / hv[units][Div], hv[units][Mul] * (amt % hv[units][Div]) };</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;   <span class="keywordflow">return</span> nanosleep(&amp;tspec, 0);</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor"></span>}</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;} <span class="comment">// namespace FIX8</span></div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="preprocessor">#endif // _F8_HYPERSLEEP_</span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;   <span class="keywordflow">return</span> execute_clock_nanosleep(ts);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="preprocessor">#elif defined _MSC_VER</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="preprocessor"></span>   Sleep(amt); <span class="comment">// milliseconds</span></div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;   <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="preprocessor"></span>   <span class="keyword">const</span> timespec tspec = { amt / hv[units][Div], hv[units][Mul] * (amt % hv[units][Div]) };</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;   <span class="keywordflow">return</span> nanosleep(&amp;tspec, 0);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="preprocessor"></span>}</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;} <span class="comment">// namespace FIX8</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor">#endif // _F8_HYPERSLEEP_</span></div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:43. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Jan 16 2014 16:13:32. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

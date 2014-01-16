@@ -1,6 +1,7 @@
 var tickval_8hpp =
 [
     [ "Tickval", "classFIX8_1_1Tickval.html", "classFIX8_1_1Tickval" ],
+    [ "current_utc_time", "tickval_8hpp.html#a940c6354b64d07bee0a6cba1f6ad26a6", null ],
     [ "operator!=", "tickval_8hpp.html#afe3bfd8684c56a31141f06bda9efb6aa", null ],
     [ "operator+", "tickval_8hpp.html#a6090d3ff607aaf437c98ba3480fa26c2", null ],
     [ "operator+=", "tickval_8hpp.html#ab31c7fe8fe617df8ddc8c48e1c9707f0", null ],

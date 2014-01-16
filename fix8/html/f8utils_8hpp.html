@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.10.0</span>
+   &#160;<span id="projectnumber">version  1.0.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -113,6 +114,7 @@ $(document).ready(function(){initNavTree('f8utils_8hpp.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;Poco/DateTime.h&gt;</code><br/>
+<code>#include &lt;Poco/Net/SocketAddress.h&gt;</code><br/>
 <code>#include &lt;sys/ioctl.h&gt;</code><br/>
 <code>#include &lt;termios.h&gt;</code><br/>
 <code>#include &lt;regex.h&gt;</code><br/>
@@ -231,10 +233,14 @@ Functions</h2></td></tr>
 <tr class="memitem:a8293aacd018aa6e9bfcb81c0786b6ec9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a8293aacd018aa6e9bfcb81c0786b6ec9"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a8293aacd018aa6e9bfcb81c0786b6ec9">FIX8::fast_atoi</a> (const char *str, const char term='\0')</td></tr>
 <tr class="separator:a8293aacd018aa6e9bfcb81c0786b6ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b2f8288f1e04dd65ed3c084e8d929a8"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a3b2f8288f1e04dd65ed3c084e8d929a8"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a3b2f8288f1e04dd65ed3c084e8d929a8">FIX8::itoa</a> (T value, char *result, const T base=10)</td></tr>
-<tr class="memdesc:a3b2f8288f1e04dd65ed3c084e8d929a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast itoa.  <a href="#a3b2f8288f1e04dd65ed3c084e8d929a8">More...</a><br/></td></tr>
-<tr class="separator:a3b2f8288f1e04dd65ed3c084e8d929a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af243b701aa1b22486f8f6b4a7c6e4208"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:af243b701aa1b22486f8f6b4a7c6e4208"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#af243b701aa1b22486f8f6b4a7c6e4208">FIX8::itoa</a> (T value, char *result, int base)</td></tr>
+<tr class="memdesc:af243b701aa1b22486f8f6b4a7c6e4208"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast itoa.  <a href="#af243b701aa1b22486f8f6b4a7c6e4208">More...</a><br/></td></tr>
+<tr class="separator:af243b701aa1b22486f8f6b4a7c6e4208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d4bd902b522cb73b09c17813abe9f0f"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:a2d4bd902b522cb73b09c17813abe9f0f"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a2d4bd902b522cb73b09c17813abe9f0f">FIX8::itoa&lt; unsigned int &gt;</a> (unsigned int value, char *result, int base)</td></tr>
+<tr class="memdesc:a2d4bd902b522cb73b09c17813abe9f0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast itoa - unsigned int specialisation.  <a href="#a2d4bd902b522cb73b09c17813abe9f0f">More...</a><br/></td></tr>
+<tr class="separator:a2d4bd902b522cb73b09c17813abe9f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c7dd7af00a6358afbfa053cfdf4dbb4"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#a3c7dd7af00a6358afbfa053cfdf4dbb4">FIX8::fast_atof</a> (const char *p)</td></tr>
 <tr class="separator:a3c7dd7af00a6358afbfa053cfdf4dbb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa61ff0a5f826f3c9369d7b27baf295e7"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFIX8.html#aa61ff0a5f826f3c9369d7b27baf295e7">FIX8::modp_dtoa</a> (double value, char *str, int prec)</td></tr>
@@ -251,7 +257,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:51. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Jan 16 2014 16:13:41. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

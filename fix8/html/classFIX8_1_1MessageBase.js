@@ -17,7 +17,7 @@ var classFIX8_1_1MessageBase =
     [ "check_set_rlm", "classFIX8_1_1MessageBase.html#a34755c745e483c0f5beb12c79edb624f", null ],
     [ "clear", "classFIX8_1_1MessageBase.html#a3451302a3803372f11f118078a54d789", null ],
     [ "copy_legal", "classFIX8_1_1MessageBase.html#a1ce4da0089afb03b17ec13f480fafa65", null ],
-    [ "decode", "classFIX8_1_1MessageBase.html#add31a67de75a31926f34ad82f9564cdd", null ],
+    [ "decode", "classFIX8_1_1MessageBase.html#ace7b1ee5d0b85712809a924b69dd7c4d", null ],
     [ "decode_group", "classFIX8_1_1MessageBase.html#a2bc1d25a3ed42195165b31747e0e71d6", null ],
     [ "encode", "classFIX8_1_1MessageBase.html#a6dddad44c0281083018292422724f44f", null ],
     [ "encode", "classFIX8_1_1MessageBase.html#aac521801b9e2f11fb36ffc71feb980da", null ],

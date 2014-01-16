@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['data_5ftype',['data_type',['../structff_1_1squeue_1_1data__type.html',1,'ff::squeue']]],
   ['delete1stpairobject',['Delete1stPairObject',['../structFIX8_1_1Delete1stPairObject.html',1,'FIX8']]],
   ['delete2ndpairobject',['Delete2ndPairObject',['../structFIX8_1_1Delete2ndPairObject.html',1,'FIX8']]],
   ['deletearrayobject',['DeleteArrayObject',['../structFIX8_1_1DeleteArrayObject.html',1,'FIX8']]],
@@ -7,6 +8,9 @@ var searchData=
   ['derivativesecuritylist',['DerivativeSecurityList',['../classFIX8_1_1TEX_1_1DerivativeSecurityList.html',1,'FIX8::TEX']]],
   ['derivativesecuritylistrequest',['DerivativeSecurityListRequest',['../classFIX8_1_1TEX_1_1DerivativeSecurityListRequest.html',1,'FIX8::TEX']]],
   ['derivativesecuritylistupdatereport',['DerivativeSecurityListUpdateReport',['../classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport.html',1,'FIX8::TEX']]],
+  ['descriptor1_5fn',['descriptor1_N',['../structff_1_1descriptor1__N.html',1,'ff']]],
+  ['descriptorn_5f1',['descriptorN_1',['../structff_1_1descriptorN__1.html',1,'ff']]],
+  ['dontknowtrade',['DontKnowTrade',['../classFIX8_1_1UTEST_1_1DontKnowTrade.html',1,'FIX8::UTEST']]],
   ['dontknowtrade',['DontKnowTrade',['../classFIX8_1_1TEX_1_1DontKnowTrade.html',1,'FIX8::TEX']]],
   ['dthread',['dthread',['../classFIX8_1_1dthread.html',1,'FIX8']]],
   ['dthread_3c_20fix8_3a_3aasyncsocket_20_3e',['dthread&lt; FIX8::AsyncSocket &gt;',['../classFIX8_1_1dthread.html',1,'FIX8']]],
@@ -14,9 +18,10 @@ var searchData=
   ['dthread_3c_20fix8_3a_3afixreader_20_3e',['dthread&lt; FIX8::FIXReader &gt;',['../classFIX8_1_1dthread.html',1,'FIX8']]],
   ['dthread_3c_20fix8_3a_3alogger_20_3e',['dthread&lt; FIX8::Logger &gt;',['../classFIX8_1_1dthread.html',1,'FIX8']]],
   ['dthread_3c_20fix8_3a_3areliableclientsession_3c_20t_20_3e_20_3e',['dthread&lt; FIX8::ReliableClientSession&lt; T &gt; &gt;',['../classFIX8_1_1dthread.html',1,'FIX8']]],
-  ['dthread_3c_20fix8_3a_3areliableclientsessionfo_3c_20t_20_3e_20_3e',['dthread&lt; FIX8::ReliableClientSessionFO&lt; T &gt; &gt;',['../classFIX8_1_1dthread.html',1,'FIX8']]],
   ['dthread_3c_20fix8_3a_3atimer_20_3e',['dthread&lt; FIX8::Timer &gt;',['../classFIX8_1_1dthread.html',1,'FIX8']]],
   ['dthread_3c_3e',['dthread&lt;&gt;',['../classFIX8_1_1dthread_3_4.html',1,'FIX8']]],
   ['dthreadexception',['dthreadException',['../structFIX8_1_1dthreadException.html',1,'FIX8']]],
-  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html',1,'FIX8']]]
+  ['duplicatefield',['DuplicateField',['../structFIX8_1_1DuplicateField.html',1,'FIX8']]],
+  ['dynlinkedlist',['dynlinkedlist',['../classff_1_1dynlinkedlist.html',1,'ff']]],
+  ['dynqueue',['dynqueue',['../classff_1_1dynqueue.html',1,'ff']]]
 ];

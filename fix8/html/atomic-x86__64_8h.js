@@ -1,0 +1,28 @@
+var atomic_x86__64_8h =
+[
+    [ "atomic_t", "structatomic__t.html", "structatomic__t" ],
+    [ "atomic64_t", "structatomic64__t.html", "structatomic64__t" ],
+    [ "__xg", "atomic-x86__64_8h.html#ab97f2ff5eedc790934e3ccf737d906e1", null ],
+    [ "atomic64_cmpxchg", "atomic-x86__64_8h.html#a71ac1051d207f672802839a6e9d5a957", null ],
+    [ "atomic64_dec_return", "atomic-x86__64_8h.html#a319fac676fa6fa08198c65c102f5e842", null ],
+    [ "atomic64_inc_return", "atomic-x86__64_8h.html#a47576f38f8881307c0595197acf2bb9c", null ],
+    [ "ATOMIC64_INIT", "atomic-x86__64_8h.html#ae80e55de13c57f6a8a52ea81f763b82b", null ],
+    [ "atomic64_read", "atomic-x86__64_8h.html#acc75719daf93525406c8f6f19d42247c", null ],
+    [ "atomic64_set", "atomic-x86__64_8h.html#abaaf9d2c4702526087da4e15cb76062e", null ],
+    [ "ATOMIC_INIT", "atomic-x86__64_8h.html#aadfbba86627ee7eeb07e04f712550f73", null ],
+    [ "atomic_read", "atomic-x86__64_8h.html#a1414350b98d3d1dc33887f9da5878542", null ],
+    [ "atomic_set", "atomic-x86__64_8h.html#af7cad706a5bba06487b2011794061922", null ],
+    [ "likely", "atomic-x86__64_8h.html#a217a0bd562b98ae8c2ffce44935351e1", null ],
+    [ "LOCK_PREFIX", "atomic-x86__64_8h.html#ad2d1e7e207fd2e97e9965d65ef5ed273", null ],
+    [ "unlikely", "atomic-x86__64_8h.html#ac6c45889010c1bd68631771b64f18101", null ],
+    [ "atomic64_add", "atomic-x86__64_8h.html#a617d698ac3a9dbb486eb787452590b37", null ],
+    [ "atomic64_add_return", "atomic-x86__64_8h.html#ad5b667028db4ee4ae589339db7c202a0", null ],
+    [ "atomic64_add_unless", "atomic-x86__64_8h.html#aaa26efa2ed7523cf5fd7b75263d09195", null ],
+    [ "atomic64_dec", "atomic-x86__64_8h.html#a928c2047e7c355b7e18b507478196263", null ],
+    [ "atomic64_inc", "atomic-x86__64_8h.html#a3cf4bd3b9acf16061ff7f9f138001d2e", null ],
+    [ "atomic64_sub", "atomic-x86__64_8h.html#a5b602cf8271aa052513eff201cd0e215", null ],
+    [ "atomic64_sub_return", "atomic-x86__64_8h.html#a68787d4994f00886e10e7eda4c589460", null ],
+    [ "atomic_dec", "atomic-x86__64_8h.html#a0423d42645a2cd4390c64f537499c786", null ],
+    [ "atomic_inc", "atomic-x86__64_8h.html#a8fc6b0729a9de37de8f4ec8792fc84fe", null ],
+    [ "cmpxchg8", "atomic-x86__64_8h.html#a5bbb8ce4a319222af7b5ced81bb064a4", null ]
+];

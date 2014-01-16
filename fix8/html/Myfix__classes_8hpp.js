@@ -1712,7 +1712,7 @@ var Myfix__classes_8hpp =
     [ "NoDerivativeEvents", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeEvents.html", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeEvents" ],
     [ "NoDerivativeInstrumentParties", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties.html", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties" ],
     [ "NoDerivativeInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html", "classFIX8_1_1TEX_1_1DerivativeSecurityListRequest_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs" ],
-    [ "_4D796669785F636C61737365732E687070_", "Myfix__classes_8hpp.html#ab78ed9eaff60a5133e1f37cef726b257", null ],
+    [ "FIX8_4D796669785F636C61737365732E687070_", "Myfix__classes_8hpp.html#a156b262b21de1b0af669a3eebb1919ae", null ],
     [ "Myfix_BaseMsgEntry", "Myfix__classes_8hpp.html#a6fd3b83148ef6a740fbf08ec8ba81941", null ],
     [ "ctx", "Myfix__classes_8hpp.html#ace47ea6a057b911b89cfe227ae5744c0", null ]
 ];

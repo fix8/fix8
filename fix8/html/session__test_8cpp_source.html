@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.10.0</span>
+   &#160;<span id="projectnumber">version  1.0.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -114,7 +115,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">Fix8 Open Source FIX Engine.</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-13 David L. Dight &lt;fix@fix8.org&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-14 David L. Dight &lt;fix@fix8.org&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either</span></div>
@@ -146,7 +147,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//-----------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">// f8 headers</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8headers_8hpp.html">f8headers.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8config_8h.html">f8config.h</a>&gt;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8config_8h.html">fix8/f8config.h</a>&gt;</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#ifdef HAS_TR1_UNORDERED_MAP</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;tr1/unordered_map&gt;</span></div>
@@ -157,29 +158,29 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;errno.h&gt;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8exception_8hpp.html">f8exception.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="hypersleep_8hpp.html">hypersleep.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="mpmc_8hpp.html">mpmc.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8types_8hpp.html">f8types.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8utils_8hpp.html">f8utils.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="xml_8hpp.html">xml.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="thread_8hpp.html">thread.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="gzstream_8hpp.html">gzstream.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="tickval_8hpp.html">tickval.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="logger_8hpp.html">logger.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="traits_8hpp.html">traits.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="timer_8hpp.html">timer.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="field_8hpp.html">field.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="message_8hpp.html">message.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8exception_8hpp.html">fix8/f8exception.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="hypersleep_8hpp.html">fix8/hypersleep.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="mpmc_8hpp.html">fix8/mpmc.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8types_8hpp.html">fix8/f8types.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="f8utils_8hpp.html">fix8/f8utils.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="xml_8hpp.html">fix8/xml.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="thread_8hpp.html">fix8/thread.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="gzstream_8hpp.html">fix8/gzstream.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="tickval_8hpp.html">fix8/tickval.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="logger_8hpp.html">fix8/logger.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="traits_8hpp.html">fix8/traits.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="timer_8hpp.html">fix8/timer.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="field_8hpp.html">fix8/field.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="message_8hpp.html">fix8/message.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#include &lt;mockConnection.hpp&gt;</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="session_8hpp.html">session.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="configuration_8hpp.html">configuration.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="persist_8hpp.html">persist.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="sessionwrapper_8hpp.html">sessionwrapper.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="session_8hpp.html">fix8/session.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="configuration_8hpp.html">fix8/configuration.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="persist_8hpp.html">fix8/persist.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="sessionwrapper_8hpp.html">fix8/sessionwrapper.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#include &quot;utest_types.hpp&quot;</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#include &quot;utest_router.hpp&quot;</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#include &quot;utest_classes.hpp&quot;</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="utest__types_8hpp.html">utest_types.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="utest__router_8hpp.html">utest_router.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="utest__classes_8hpp.html">utest_classes.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#include &quot;gtest/gtest.h&quot;</span></div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">//***************************************************************</span></div>
@@ -218,7 +219,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
 <div class="line"><a name="l00114"></a><span class="lineno"><a class="code" href="classtest__session.html">  114</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtest__session.html" title="a test session">test_session</a> : <span class="keyword">public</span> <a class="code" href="classFIX8_1_1Session.html" title="Fix8 Base Session. User sessions are derived from this class.">FIX8::Session</a></div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;{</div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="code" href="classtest__session.html#aa6af3c96cf95d95c7fb3843589136b2f">  116</a></span>&#160;    utest_Router  <a class="code" href="classtest__session.html#aa6af3c96cf95d95c7fb3843589136b2f">_router</a>;</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="code" href="classtest__session.html#aa6af3c96cf95d95c7fb3843589136b2f">  116</a></span>&#160;    <a class="code" href="classFIX8_1_1UTEST_1_1utest__Router.html">utest_Router</a>  <a class="code" href="classtest__session.html#aa6af3c96cf95d95c7fb3843589136b2f">_router</a>;</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
@@ -237,7 +238,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keywordflow">return</span> enforce(seqnum, msg) || msg-&gt;<a class="code" href="classFIX8_1_1Message.html#aa0401c5177edcff1252808d9842c5c1a">process</a>(_router);</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno"><a class="code" href="classtest__session.html#aa3f609f4941f82f75aab384c0fce7c5b">  139</a></span>&#160;    <a class="code" href="structFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8">States::SessionStates</a> <a class="code" href="classtest__session.html#aa3f609f4941f82f75aab384c0fce7c5b" title="used to get session state">getState</a>() {<span class="keywordflow">return</span> _state;}</div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="code" href="classtest__session.html#aa3f609f4941f82f75aab384c0fce7c5b">  139</a></span>&#160;    <a class="code" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8">States::SessionStates</a> <a class="code" href="classtest__session.html#aa3f609f4941f82f75aab384c0fce7c5b" title="used to get session state">getState</a>() {<span class="keywordflow">return</span> _state;}</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
 <div class="line"><a name="l00142"></a><span class="lineno"><a class="code" href="classtest__session.html#a8abba4629e55a6bd37e0290348821517">  142</a></span>&#160;    <span class="keywordtype">unsigned</span> <a class="code" href="classtest__session.html#a8abba4629e55a6bd37e0290348821517" title="used to get next receive seq">get_next_receive_seq</a>() {<span class="keywordflow">return</span> _next_receive_seq;}</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
@@ -340,26 +341,26 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="keywordtype">unsigned</span> <a class="code" href="classsessionTest.html#aea12258504af361c8d60ee1b11a8bba6" title="global incoming sequence number">sessionTest::recv_seq</a>;</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
-<div class="line"><a name="l00257"></a><span class="lineno"><a class="code" href="session__test_8cpp.html#a2febc7aec0ff24d03f038e364a3abe36">  257</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="session__test_8cpp.html#a2febc7aec0ff24d03f038e364a3abe36">fillSendHeader</a>(<a class="code" href="classFIX8_1_1MessageBase.html" title="Base class for all fix messages.">MessageBase</a> * header, <span class="keywordtype">unsigned</span> seq)</div>
+<div class="line"><a name="l00257"></a><span class="lineno"><a class="code" href="session__test_8cpp.html#a2febc7aec0ff24d03f038e364a3abe36">  257</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="session__test_8cpp.html#a2febc7aec0ff24d03f038e364a3abe36">fillSendHeader</a>(<a class="code" href="classFIX8_1_1MessageBase.html" title="Base class for all fix messages.">MessageBase</a> * <a class="code" href="classFIX8_1_1UTEST_1_1header.html" title="header (header), application, 27 fields, 0 groups.">header</a>, <span class="keywordtype">unsigned</span> seq)</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;{</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    *header &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8.html#ad416b42d381b07f4d20fb8bdb5762af3">msg_seq_num</a>(seq)</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8.html#a3814ce0293e9d5fd61fb398aaa383369">sender_comp_id</a>(<span class="stringliteral">&quot;A12345B&quot;</span>)</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a97ba93d9bff12d252be3d9e64724ab67">SenderSubID</a>(<span class="stringliteral">&quot;2DEFGH4&quot;</span>)</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#aa8478502120dd2cd32bb4187d540fb2c">SenderSubID</a>(<span class="stringliteral">&quot;2DEFGH4&quot;</span>)</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8.html#ad947c7044870bbe6c14fa00bc7c3a1af">sending_time</a>()</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8.html#a24883f3659515b6e800735c3123cf68e">target_comp_id</a>(<span class="stringliteral">&quot;COMPARO&quot;</span>)</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a9ffb761c42b11730365db627230ce54c">TargetSubID</a>(<span class="stringliteral">&quot;G&quot;</span>)</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a959d0fc48b2917a5e457908073671985">SenderLocationID</a>(<span class="stringliteral">&quot;AU,SY&quot;</span>);</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#aa4cd1242845da267b06e2c3b71b8bba3">TargetSubID</a>(<span class="stringliteral">&quot;G&quot;</span>)</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#abcc1e8e57360f6f19b905de41c5bf0ca">SenderLocationID</a>(<span class="stringliteral">&quot;AU,SY&quot;</span>);</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;}</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;</div>
-<div class="line"><a name="l00271"></a><span class="lineno"><a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">  271</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(<a class="code" href="classFIX8_1_1MessageBase.html" title="Base class for all fix messages.">MessageBase</a> * header)</div>
+<div class="line"><a name="l00271"></a><span class="lineno"><a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">  271</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(<a class="code" href="classFIX8_1_1MessageBase.html" title="Base class for all fix messages.">MessageBase</a> * <a class="code" href="classFIX8_1_1UTEST_1_1header.html" title="header (header), application, 27 fields, 0 groups.">header</a>)</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;{</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    *header &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8.html#ad416b42d381b07f4d20fb8bdb5762af3">msg_seq_num</a>(<a class="code" href="classsessionTest.html#aea12258504af361c8d60ee1b11a8bba6" title="global incoming sequence number">sessionTest::recv_seq</a>++)</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8.html#a3814ce0293e9d5fd61fb398aaa383369">sender_comp_id</a>(<span class="stringliteral">&quot;COMPARO&quot;</span>)</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a97ba93d9bff12d252be3d9e64724ab67">SenderSubID</a>(<span class="stringliteral">&quot;G&quot;</span>)</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#aa8478502120dd2cd32bb4187d540fb2c">SenderSubID</a>(<span class="stringliteral">&quot;G&quot;</span>)</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8.html#ad947c7044870bbe6c14fa00bc7c3a1af">sending_time</a>()</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8.html#a24883f3659515b6e800735c3123cf68e">target_comp_id</a>(<span class="stringliteral">&quot;A12345B&quot;</span>)</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a9ffb761c42b11730365db627230ce54c">TargetSubID</a>(<span class="stringliteral">&quot;2DEFGH4&quot;</span>)</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a959d0fc48b2917a5e457908073671985">SenderLocationID</a>(<span class="stringliteral">&quot;AU,SY&quot;</span>);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#aa4cd1242845da267b06e2c3b71b8bba3">TargetSubID</a>(<span class="stringliteral">&quot;2DEFGH4&quot;</span>)</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;            &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#abcc1e8e57360f6f19b905de41c5bf0ca">SenderLocationID</a>(<span class="stringliteral">&quot;AU,SY&quot;</span>);</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;}</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
 <div class="line"><a name="l00283"></a><span class="lineno"><a class="code" href="session__test_8cpp.html#a1fe48736a9427f9f008e53a77d27e929">  283</a></span>&#160;<a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> <a class="code" href="session__test_8cpp.html#a1fe48736a9427f9f008e53a77d27e929" title="helper to get the last output message">getSingleMsg</a>()</div>
@@ -389,8 +390,8 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00313"></a><span class="lineno"><a class="code" href="session__test_8cpp.html#a10bea4351a2d9fc65ec232fd67cb3b53">  313</a></span>&#160;<a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> <a class="code" href="session__test_8cpp.html#a10bea4351a2d9fc65ec232fd67cb3b53">composeOrder</a>(<span class="keywordtype">unsigned</span> seq)</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;{</div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> tmp;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    NewOrderSingle *nos(<span class="keyword">new</span> NewOrderSingle);</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <a class="code" href="session__test_8cpp.html#a2febc7aec0ff24d03f038e364a3abe36">fillSendHeader</a>(nos-&gt;Header(),seq);</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <a class="code" href="classFIX8_1_1UTEST_1_1NewOrderSingle.html" title="NewOrderSingle (D), application, 76 fields, 2 groups.">NewOrderSingle</a> *nos(<span class="keyword">new</span> <a class="code" href="classFIX8_1_1UTEST_1_1NewOrderSingle.html" title="NewOrderSingle (D), application, 76 fields, 2 groups.">NewOrderSingle</a>);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <a class="code" href="session__test_8cpp.html#a2febc7aec0ff24d03f038e364a3abe36">fillSendHeader</a>(nos-&gt;<a class="code" href="classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272">Header</a>(),seq);</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    *nos &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ada912f0baa682231fb875c4c5dff26e9">TransactTime</a>(<span class="stringliteral">&quot;20130305-02:19:46.108&quot;</span>)</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;         &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#af5da03d0b42152d1d45c3486bd2846b1">Account</a>(<span class="stringliteral">&quot;01234567&quot;</span>)</div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;         &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#acc10cf61f813defdc62fcabaac9f339d">OrderQty</a>(50)</div>
@@ -405,7 +406,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;         &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a988d31029a86e1a8147c0be41979729f">SecurityDesc</a>(<span class="stringliteral">&quot;AOZ3 C02000&quot;</span>)</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;         &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ad8660f9a37ebc3a05938895b8fd2f3f5">SecurityType</a>(<a class="code" href="namespaceFIX8_1_1TEX.html#a2bb3e04e51f4a224638c95ac628b21c4">SecurityType_OPTION</a>);</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    nos-&gt;encode(tmp);</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    nos-&gt;<a class="code" href="classFIX8_1_1Message.html#a0d691201ea7a398831a54272e032f845">encode</a>(tmp);</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <span class="keyword">delete</span> nos;</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordflow">return</span> tmp;</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;}</div>
@@ -416,10 +417,10 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> output = <a class="code" href="session__test_8cpp.html#a1fe48736a9427f9f008e53a77d27e929" title="helper to get the last output message">getSingleMsg</a>();</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    EXPECT_FALSE(output.empty());</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    EXPECT_TRUE(output.find(<span class="stringliteral">&quot;35=A&quot;</span>) !=  std::string::npos);</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    EXPECT_EQ(<a class="code" href="structFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8ab0c0b5e0904bbbaf07262d3b3de1dc6b">States::st_logon_sent</a>, initiator_test-&gt;ss-&gt;getState());</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    EXPECT_EQ(<a class="code" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8ab0c0b5e0904bbbaf07262d3b3de1dc6b">States::st_logon_sent</a>, initiator_test-&gt;ss-&gt;getState());</div>
 <div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;</div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="comment">//receive logon confirm</span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    Logon * logon = <span class="keyword">new</span> Logon;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <a class="code" href="classFIX8_1_1UTEST_1_1Logon.html" title="Logon (A), admin, 7 fields, 1 group.">Logon</a> * logon = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1UTEST_1_1Logon.html" title="Logon (A), admin, 7 fields, 1 group.">Logon</a>;</div>
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(logon-&gt;Header());</div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;</div>
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    *logon &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a50df91a23fdecf218448f5ca6756cf01">HeartBtInt</a>(5) &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a5bb490b96d04e7b4200b5585fe5468d9">EncryptMethod</a>(0);</div>
@@ -428,7 +429,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    initiator_test-&gt;ss-&gt;update_received();</div>
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    initiator_test-&gt;ss-&gt;process(logon_str);</div>
 <div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    EXPECT_EQ(<a class="code" href="structFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    EXPECT_EQ(<a class="code" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    EXPECT_EQ(<span class="keywordtype">unsigned</span>(5), initiator_test-&gt;initiator-&gt;get_hb_interval());</div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;</div>
 <div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="keyword">delete</span> logon;</div>
@@ -439,46 +440,46 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00371"></a><span class="lineno"><a class="code" href="session__test_8cpp.html#adcc88331a7631f051596c1a264a11997">  371</a></span>&#160;<a class="code" href="session__test_8cpp.html#af133a96786ed6b6788d3c812eef8dcbf">TEST_F</a>(<a class="code" href="classsessionTest.html" title="gtest test suit event">sessionTest</a>, handle_resend_request)</div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;{</div>
 <div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="comment">//no message available</span></div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    ResendRequest * resend = <span class="keyword">new</span> ResendRequest;</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(resend-&gt;Header());</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <a class="code" href="classFIX8_1_1UTEST_1_1ResendRequest.html" title="ResendRequest (2), admin, 2 fields, 0 groups.">ResendRequest</a> * resend = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1UTEST_1_1ResendRequest.html" title="ResendRequest (2), admin, 2 fields, 0 groups.">ResendRequest</a>;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(resend-&gt;<a class="code" href="classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272">Header</a>());</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    *resend &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ab3957cf7c43f9b827b670aeb31b65ca0">BeginSeqNo</a>(1) &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a55799cef5ca482b7f3e4c68b85332e48">EndSeqNo</a>(4);</div>
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> resend_str;</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    resend-&gt;encode(resend_str);</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    resend-&gt;<a class="code" href="classFIX8_1_1Message.html#a0d691201ea7a398831a54272e032f845">encode</a>(resend_str);</div>
 <div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    <span class="keyword">delete</span> resend;</div>
 <div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;</div>
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    initiator_test-&gt;ss-&gt;set_persister(0);</div>
 <div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    initiator_test-&gt;ss-&gt;update_received();</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    initiator_test-&gt;ss-&gt;process(resend_str);</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    initiator_test-&gt;ss-&gt;<a class="code" href="classFIX8_1_1UTEST_1_1ResendRequest.html#a7a574cfd59efb9a1d8ace4f32950b1c4">process</a>(resend_str);</div>
 <div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;</div>
 <div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> output = <a class="code" href="session__test_8cpp.html#a1fe48736a9427f9f008e53a77d27e929" title="helper to get the last output message">getSingleMsg</a>();</div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    EXPECT_EQ(<a class="code" href="structFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    EXPECT_EQ(<a class="code" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
 <div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    EXPECT_TRUE(output.find(<span class="stringliteral">&quot;35=4&quot;</span>) !=  std::string::npos);</div>
 <div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
 <div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <span class="comment">//ill resend request</span></div>
 <div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    initiator_test-&gt;ss-&gt;set_persister(initiator_test-&gt;per);</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    resend = <span class="keyword">new</span> ResendRequest;</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(resend-&gt;Header());</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    resend = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1UTEST_1_1ResendRequest.html" title="ResendRequest (2), admin, 2 fields, 0 groups.">ResendRequest</a>;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(resend-&gt;<a class="code" href="classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272">Header</a>());</div>
 <div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    *resend &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ab3957cf7c43f9b827b670aeb31b65ca0">BeginSeqNo</a>(100) &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a55799cef5ca482b7f3e4c68b85332e48">EndSeqNo</a>(4);</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    resend-&gt;encode(resend_str);</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    resend-&gt;<a class="code" href="classFIX8_1_1Message.html#a0d691201ea7a398831a54272e032f845">encode</a>(resend_str);</div>
 <div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    <span class="keyword">delete</span> resend;</div>
 <div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;</div>
 <div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    initiator_test-&gt;ss-&gt;update_received();</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    initiator_test-&gt;ss-&gt;process(resend_str);</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    initiator_test-&gt;ss-&gt;<a class="code" href="classFIX8_1_1UTEST_1_1ResendRequest.html#a7a574cfd59efb9a1d8ace4f32950b1c4">process</a>(resend_str);</div>
 <div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;</div>
 <div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    output = <a class="code" href="session__test_8cpp.html#a1fe48736a9427f9f008e53a77d27e929" title="helper to get the last output message">getSingleMsg</a>();</div>
 <div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    EXPECT_EQ(<a class="code" href="structFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    EXPECT_EQ(<a class="code" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
 <div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    EXPECT_TRUE(output.find(<span class="stringliteral">&quot;35=3&quot;</span>) !=  std::string::npos);</div>
 <div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;</div>
 <div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    <span class="comment">//have records</span></div>
 <div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    <span class="keywordtype">unsigned</span> next_send = initiator_test-&gt;ss-&gt;get_next_send_seq();</div>
 <div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    Reject * rej = <span class="keyword">new</span> Reject;</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    <a class="code" href="session__test_8cpp.html#a2febc7aec0ff24d03f038e364a3abe36">fillSendHeader</a>(rej-&gt;Header(), next_send);</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <a class="code" href="classFIX8_1_1UTEST_1_1Reject.html" title="Reject (3), admin, 7 fields, 0 groups.">Reject</a> * rej = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1UTEST_1_1Reject.html" title="Reject (3), admin, 7 fields, 0 groups.">Reject</a>;</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    <a class="code" href="session__test_8cpp.html#a2febc7aec0ff24d03f038e364a3abe36">fillSendHeader</a>(rej-&gt;<a class="code" href="classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272">Header</a>(), next_send);</div>
 <div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    *rej &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#adcc9bf42a86962d9d2402073a324ff8a">RefSeqNum</a>(100);</div>
 <div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> first;</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    rej-&gt;encode(first);</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    rej-&gt;<a class="code" href="classFIX8_1_1Message.html#a0d691201ea7a398831a54272e032f845">encode</a>(first);</div>
 <div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="keyword">delete</span> rej;</div>
 <div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    initiator_test-&gt;per-&gt;put(next_send, first);</div>
 <div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    initiator_test-&gt;per-&gt;put(++next_send, recv_seq);</div>
@@ -495,18 +496,18 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    initiator_test-&gt;per-&gt;put(next_send, four);</div>
 <div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    initiator_test-&gt;per-&gt;put(++next_send, recv_seq);</div>
 <div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    resend = <span class="keyword">new</span> ResendRequest;</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(resend-&gt;Header());</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    resend = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1UTEST_1_1ResendRequest.html" title="ResendRequest (2), admin, 2 fields, 0 groups.">ResendRequest</a>;</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(resend-&gt;<a class="code" href="classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272">Header</a>());</div>
 <div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    *resend &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ab3957cf7c43f9b827b670aeb31b65ca0">BeginSeqNo</a>(1) &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a55799cef5ca482b7f3e4c68b85332e48">EndSeqNo</a>(4);</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    resend-&gt;encode(resend_str);</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    resend-&gt;<a class="code" href="classFIX8_1_1Message.html#a0d691201ea7a398831a54272e032f845">encode</a>(resend_str);</div>
 <div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    <span class="keyword">delete</span> resend;</div>
 <div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;</div>
 <div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    initiator_test-&gt;ss-&gt;update_received();</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    initiator_test-&gt;ss-&gt;process(resend_str);</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    initiator_test-&gt;ss-&gt;<a class="code" href="classFIX8_1_1UTEST_1_1ResendRequest.html#a7a574cfd59efb9a1d8ace4f32950b1c4">process</a>(resend_str);</div>
 <div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;</div>
 <div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;    std::vector&lt;f8String&gt; outputs = <a class="code" href="session__test_8cpp.html#ae2044e4233ee2c261fa47f2631fee7ca" title="helper to get all output messages">getMsgs</a>();</div>
 <div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    EXPECT_EQ(<a class="code" href="structFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    EXPECT_EQ(<a class="code" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
 <div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;    EXPECT_EQ(first, outputs[0]);</div>
 <div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    EXPECT_EQ(second, outputs[1]);</div>
 <div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;    EXPECT_EQ(third, outputs[2]);</div>
@@ -518,18 +519,18 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    initiator_test-&gt;per-&gt;put(next_send, six);</div>
 <div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    initiator_test-&gt;per-&gt;put(++next_send, recv_seq);</div>
 <div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    resend = <span class="keyword">new</span> ResendRequest;</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(resend-&gt;Header());</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    resend = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1UTEST_1_1ResendRequest.html" title="ResendRequest (2), admin, 2 fields, 0 groups.">ResendRequest</a>;</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(resend-&gt;<a class="code" href="classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272">Header</a>());</div>
 <div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    *resend &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#ab3957cf7c43f9b827b670aeb31b65ca0">BeginSeqNo</a>(1) &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a55799cef5ca482b7f3e4c68b85332e48">EndSeqNo</a>(6);</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    resend-&gt;encode(resend_str);</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    resend-&gt;<a class="code" href="classFIX8_1_1Message.html#a0d691201ea7a398831a54272e032f845">encode</a>(resend_str);</div>
 <div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    <span class="keyword">delete</span> resend;</div>
 <div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;</div>
 <div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;    initiator_test-&gt;ss-&gt;update_received();</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    initiator_test-&gt;ss-&gt;process(resend_str);</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    initiator_test-&gt;ss-&gt;<a class="code" href="classFIX8_1_1UTEST_1_1ResendRequest.html#a7a574cfd59efb9a1d8ace4f32950b1c4">process</a>(resend_str);</div>
 <div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;</div>
 <div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;    outputs = <a class="code" href="session__test_8cpp.html#ae2044e4233ee2c261fa47f2631fee7ca" title="helper to get all output messages">getMsgs</a>();</div>
 <div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    EXPECT_EQ(<a class="code" href="structFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    EXPECT_EQ(<a class="code" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
 <div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    EXPECT_EQ(first, outputs[0]);</div>
 <div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    EXPECT_EQ(second, outputs[1]);</div>
 <div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    EXPECT_EQ(third, outputs[2]);</div>
@@ -542,13 +543,13 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;</div>
 <div class="line"><a name="l00479"></a><span class="lineno"><a class="code" href="session__test_8cpp.html#afc5334db5b64bb8de74f1754e38bd014">  479</a></span>&#160;<a class="code" href="session__test_8cpp.html#af133a96786ed6b6788d3c812eef8dcbf">TEST_F</a>(<a class="code" href="classsessionTest.html" title="gtest test suit event">sessionTest</a>, handle_seq_reset)</div>
 <div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;{</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;    SequenceReset * reset = <span class="keyword">new</span> SequenceReset;</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(reset-&gt;Header());</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;    <a class="code" href="classFIX8_1_1UTEST_1_1SequenceReset.html" title="SequenceReset (4), admin, 2 fields, 0 groups.">SequenceReset</a> * reset = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1UTEST_1_1SequenceReset.html" title="SequenceReset (4), admin, 2 fields, 0 groups.">SequenceReset</a>;</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(reset-&gt;<a class="code" href="classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272">Header</a>());</div>
 <div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;</div>
 <div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;    *reset &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a75b5040dfdbc38781173e42f74c4871f">GapFillFlag</a>(<span class="keyword">true</span>)</div>
 <div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;           &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a2cf0f1818a2713cf3df80237ce392771">NewSeqNo</a>(100);</div>
 <div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> tmp;</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    reset-&gt;encode(tmp);</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    reset-&gt;<a class="code" href="classFIX8_1_1Message.html#a0d691201ea7a398831a54272e032f845">encode</a>(tmp);</div>
 <div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    initiator_test-&gt;ss-&gt;update_received();</div>
 <div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;    initiator_test-&gt;ss-&gt;process(tmp);</div>
 <div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;</div>
@@ -558,13 +559,13 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;</div>
 <div class="line"><a name="l00499"></a><span class="lineno"><a class="code" href="session__test_8cpp.html#aaa8b39595a589e7e773da5632b473cf1">  499</a></span>&#160;<a class="code" href="session__test_8cpp.html#af133a96786ed6b6788d3c812eef8dcbf">TEST_F</a>(<a class="code" href="classsessionTest.html" title="gtest test suit event">sessionTest</a>, handle_test_request)</div>
 <div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;{</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    TestRequest * testreq = <span class="keyword">new</span> TestRequest;</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(testreq-&gt;Header());</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    <a class="code" href="classFIX8_1_1UTEST_1_1TestRequest.html" title="TestRequest (1), admin, 1 field, 0 groups.">TestRequest</a> * testreq = <span class="keyword">new</span> <a class="code" href="classFIX8_1_1UTEST_1_1TestRequest.html" title="TestRequest (1), admin, 1 field, 0 groups.">TestRequest</a>;</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(testreq-&gt;<a class="code" href="classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272">Header</a>());</div>
 <div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;</div>
 <div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    *testreq &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a58a4c8acd3c5a3aaf72fb59c51da5b76">TestReqID</a>(<span class="stringliteral">&quot;hello&quot;</span>);</div>
 <div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;</div>
 <div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;    <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> tmp;</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;    testreq-&gt;encode(tmp);</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;    testreq-&gt;<a class="code" href="classFIX8_1_1Message.html#a0d691201ea7a398831a54272e032f845">encode</a>(tmp);</div>
 <div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;    initiator_test-&gt;ss-&gt;update_received();</div>
 <div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;    initiator_test-&gt;ss-&gt;process(tmp);</div>
 <div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;</div>
@@ -588,7 +589,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;    <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> output = outputs.back();</div>
 <div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;    EXPECT_FALSE(output.empty());</div>
 <div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;    EXPECT_TRUE(output.find(<span class="stringliteral">&quot;35=1&quot;</span>) !=  std::string::npos);</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;    EXPECT_EQ(<a class="code" href="structFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8a82a6dbc42444e11e47ee5a8a27635f60">States::st_test_request_sent</a>, initiator_test-&gt;ss-&gt;getState());</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;    EXPECT_EQ(<a class="code" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8a82a6dbc42444e11e47ee5a8a27635f60">States::st_test_request_sent</a>, initiator_test-&gt;ss-&gt;getState());</div>
 <div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;</div>
 <div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;    <a class="code" href="classFIX8_1_1RegExp.html" title="POSIX regex wrapper class.">RegExp</a> testID(<span class="stringliteral">&quot;112=(\\w+)&quot;</span>);</div>
 <div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;    <a class="code" href="classFIX8_1_1RegMatch.html" title="A class to contain regex matches using RegExp.">RegMatch</a> match;</div>
@@ -596,13 +597,13 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;    testID.SearchString(match, output, 2);</div>
 <div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;    testID.SubExpr(match, output, reqId, 0, 1);</div>
 <div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;    UTEST::Heartbeat hb;</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(hb.Header());</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;    <a class="code" href="classFIX8_1_1UTEST_1_1Heartbeat.html" title="Heartbeat (0), admin, 1 field, 0 groups.">UTEST::Heartbeat</a> hb;</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;    <a class="code" href="session__test_8cpp.html#a26a5ca64e0a15ac472858d2a582ad196">fillRecvHeader</a>(hb.<a class="code" href="classFIX8_1_1Message.html#ad81fbafc964c2a7a8e12c7becbb94272">Header</a>());</div>
 <div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;    hb &lt;&lt; <span class="keyword">new</span> <a class="code" href="namespaceFIX8_1_1TEX.html#a58a4c8acd3c5a3aaf72fb59c51da5b76">TestReqID</a>(reqId);</div>
 <div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;    <a class="code" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> heartbeat;</div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;    hb.encode(heartbeat);</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;    hb.<a class="code" href="classFIX8_1_1Message.html#a0d691201ea7a398831a54272e032f845">encode</a>(heartbeat);</div>
 <div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;    initiator_test-&gt;ss-&gt;process(heartbeat);</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;    EXPECT_EQ(<a class="code" href="structFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;    EXPECT_EQ(<a class="code" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8acc7d78a0eec3e2d88a2febfc2081b00a">States::st_continuous</a>, initiator_test-&gt;ss-&gt;getState());</div>
 <div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;</div>
 <div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;    <span class="comment">//fail to response testRequest</span></div>
 <div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;    initiator_test-&gt;ss-&gt;kickHBService();</div>
@@ -611,7 +612,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 <div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;    outputs = <a class="code" href="session__test_8cpp.html#ae2044e4233ee2c261fa47f2631fee7ca" title="helper to get all output messages">getMsgs</a>();</div>
 <div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;    output = outputs.back();</div>
 <div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;    EXPECT_EQ(<a class="code" href="structFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8a385060f5590bc613b4df74d8b3bced56">States::st_logoff_sent</a>, initiator_test-&gt;ss-&gt;getState());</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;    EXPECT_EQ(<a class="code" href="namespaceFIX8_1_1States.html#a95240585037fdfcc9ac6ee61133cd4e8a385060f5590bc613b4df74d8b3bced56">States::st_logoff_sent</a>, initiator_test-&gt;ss-&gt;getState());</div>
 <div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;    EXPECT_TRUE(output.find(<span class="stringliteral">&quot;35=5&quot;</span>) !=  std::string::npos);</div>
 <div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;    <a class="code" href="session__test_8cpp.html#a7879d899a87fdafa852d4dd75558b035" title="helper to clear cached output messages">clearOutputs</a>();</div>
 <div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;}</div>
@@ -619,7 +620,7 @@ $(document).ready(function(){initNavTree('session__test_8cpp_source.html','');})
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:51. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Jan 16 2014 16:13:40. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

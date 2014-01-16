@@ -14,5 +14,6 @@ var classFIX8_1_1Field_3_01MonthYear_00_01field_01_4 =
     [ "print", "classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html#a3e17cf638874af337cdf45d2c8d26657", null ],
     [ "print", "classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html#a0f2d8e25be30a81bccd7a16cae49d9c2", null ],
     [ "set", "classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html#a206064b761808d5cbe364b3e36f91969", null ],
+    [ "_sz", "classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html#a0220abae404499ee578b18ddbf8e0f69", null ],
     [ "_value", "classFIX8_1_1Field_3_01MonthYear_00_01field_01_4.html#ae58ba6de015d0ad4c639342630e40b27", null ]
 ];

@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.10.0</span>
+   &#160;<span id="projectnumber">version  1.0.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -107,7 +108,6 @@ $(document).ready(function(){initNavTree('structFIX8_1_1LoginParameters.html',''
 
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structFIX8_1_1LoginParameters-members.html">List of all members</a>  </div>
@@ -118,20 +118,12 @@ $(document).ready(function(){initNavTree('structFIX8_1_1LoginParameters.html',''
 
 <p><code>#include &lt;<a class="el" href="session_8hpp_source.html">session.hpp</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a629c11367c650bae041be46cbb53869e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="structFIX8_1_1LoginParameters.html#a629c11367c650bae041be46cbb53869eab4b33a240b0f31bf72f6377671ba7f19">default_retry_interval</a> =5000, 
-<a class="el" href="structFIX8_1_1LoginParameters.html#a629c11367c650bae041be46cbb53869ea1a8fcc55bc5771a6eaab9ad9f12a6f34">default_login_retries</a> =100, 
-<a class="el" href="structFIX8_1_1LoginParameters.html#a629c11367c650bae041be46cbb53869eabf0ee2dfe63e8572274654f454a1fa20">default_hb_interval</a> =30
- }</td></tr>
-<tr class="separator:a629c11367c650bae041be46cbb53869e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a73da2512c53dbc0ecdd22f19be05b9b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#a73da2512c53dbc0ecdd22f19be05b9b7">LoginParameters</a> ()</td></tr>
 <tr class="separator:a73da2512c53dbc0ecdd22f19be05b9b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af718d46dc3fc17642554c87d08cb6c34"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#af718d46dc3fc17642554c87d08cb6c34">LoginParameters</a> (const unsigned login_retry_interval, const unsigned login_retries, const <a class="el" href="namespaceFIX8.html#a69fe800cc26bea9e90d65c92e5509b95">default_appl_ver_id</a> &amp;davi, const bool reset_seqnum=false, const bool always_seqnum_assign=false, const bool silent_disconnect=false, const bool no_chksum_flag=false, unsigned recv_buf_sz=0, unsigned send_buf_sz=0, unsigned hb_int=<a class="el" href="structFIX8_1_1LoginParameters.html#a629c11367c650bae041be46cbb53869eabf0ee2dfe63e8572274654f454a1fa20">default_hb_interval</a>)</td></tr>
-<tr class="separator:af718d46dc3fc17642554c87d08cb6c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c18b91052718d9c90ddfde3f16e451a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#a6c18b91052718d9c90ddfde3f16e451a">LoginParameters</a> (unsigned login_retry_interval, unsigned login_retries, const <a class="el" href="namespaceFIX8.html#a69fe800cc26bea9e90d65c92e5509b95">default_appl_ver_id</a> &amp;davi, unsigned connect_timeout, bool reset_seqnum=false, bool always_seqnum_assign=false, bool silent_disconnect=false, bool no_chksum_flag=false, bool permissive_mode_flag=false, bool reliable=false, unsigned recv_buf_sz=0, unsigned send_buf_sz=0, unsigned hb_int=<a class="el" href="namespaceFIX8_1_1defaults.html#a74072aa37607d0a36d559ee466a9518caf1d4c6432ba99d5c6420ba4bbe5b166d">defaults::hb_interval</a>, const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;pem_path=<a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>())</td></tr>
+<tr class="separator:a6c18b91052718d9c90ddfde3f16e451a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2aa7085b17417ed3696ebd826dea313a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#a2aa7085b17417ed3696ebd826dea313a">LoginParameters</a> (const <a class="el" href="structFIX8_1_1LoginParameters.html">LoginParameters</a> &amp;from)</td></tr>
 <tr class="separator:a2aa7085b17417ed3696ebd826dea313a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac81740865000459b9496438df2688835"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structFIX8_1_1LoginParameters.html">LoginParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#ac81740865000459b9496438df2688835">operator=</a> (const <a class="el" href="structFIX8_1_1LoginParameters.html">LoginParameters</a> &amp;that)</td></tr>
@@ -143,6 +135,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ab113e18f1416194169393b6f3224847b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a655e9cca70befcef8ac0846995ea26a2"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#a655e9cca70befcef8ac0846995ea26a2">_login_retries</a></td></tr>
 <tr class="separator:a655e9cca70befcef8ac0846995ea26a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a722081772ee138901bcfdb83b8f014ea"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#a722081772ee138901bcfdb83b8f014ea">_connect_timeout</a></td></tr>
+<tr class="separator:a722081772ee138901bcfdb83b8f014ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7163d383c158b6058a8da9a6556277f1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#a7163d383c158b6058a8da9a6556277f1">_reset_sequence_numbers</a></td></tr>
 <tr class="separator:a7163d383c158b6058a8da9a6556277f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeea540fe15f77a8cb0aa77d2c3885c53"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#aeea540fe15f77a8cb0aa77d2c3885c53">_always_seqnum_assign</a></td></tr>
@@ -151,6 +145,10 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a5ec1da688c6ee4217065821d226e17f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93093d839b87f7d7f783c289380b42ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#a93093d839b87f7d7f783c289380b42ee">_no_chksum_flag</a></td></tr>
 <tr class="separator:a93093d839b87f7d7f783c289380b42ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a249e69d1bd272d0640412286b89a565d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#a249e69d1bd272d0640412286b89a565d">_permissive_mode_flag</a></td></tr>
+<tr class="separator:a249e69d1bd272d0640412286b89a565d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab49e6e7ce9e48e8b63b15a7b8e1fe3c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#ab49e6e7ce9e48e8b63b15a7b8e1fe3c9">_reliable</a></td></tr>
+<tr class="separator:ab49e6e7ce9e48e8b63b15a7b8e1fe3c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac74822d5d4e6c79d1fe20d659cfc645d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#a69fe800cc26bea9e90d65c92e5509b95">default_appl_ver_id</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#ac74822d5d4e6c79d1fe20d659cfc645d">_davi</a></td></tr>
 <tr class="separator:ac74822d5d4e6c79d1fe20d659cfc645d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a935bcfc37e4f552f76428b17b186a369"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#a935bcfc37e4f552f76428b17b186a369">_recv_buf_sz</a></td></tr>
@@ -159,34 +157,13 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ac8e376ad449734a168d3de9662ef2046"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a3eb76e55a5922d31cd373e769fd41c"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#a2a3eb76e55a5922d31cd373e769fd41c">_hb_int</a></td></tr>
 <tr class="separator:a2a3eb76e55a5922d31cd373e769fd41c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c25bc6c9d34e5e348317aac1b5eca33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFIX8_1_1LoginParameters.html#a8c25bc6c9d34e5e348317aac1b5eca33">_pem_path</a></td></tr>
+<tr class="separator:a8c25bc6c9d34e5e348317aac1b5eca33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00158">158</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a class="anchor" id="a629c11367c650bae041be46cbb53869e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a629c11367c650bae041be46cbb53869eab4b33a240b0f31bf72f6377671ba7f19"></a>default_retry_interval</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a629c11367c650bae041be46cbb53869ea1a8fcc55bc5771a6eaab9ad9f12a6f34"></a>default_login_retries</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a629c11367c650bae041be46cbb53869eabf0ee2dfe63e8572274654f454a1fa20"></a>default_hb_interval</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-</table>
-
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00160">160</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00167">167</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a73da2512c53dbc0ecdd22f19be05b9b7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -208,11 +185,11 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00162">162</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00169">169</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af718d46dc3fc17642554c87d08cb6c34"></a>
+<a class="anchor" id="a6c18b91052718d9c90ddfde3f16e451a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -222,13 +199,13 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">FIX8::LoginParameters::LoginParameters </td>
           <td>(</td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>login_retry_interval</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const unsigned&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
           <td class="paramname"><em>login_retries</em>, </td>
         </tr>
         <tr>
@@ -240,26 +217,44 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const bool&#160;</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>connect_timeout</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>reset_seqnum</em> = <code>false</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const bool&#160;</td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>always_seqnum_assign</em> = <code>false</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const bool&#160;</td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>silent_disconnect</em> = <code>false</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const bool&#160;</td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>no_chksum_flag</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>permissive_mode_flag</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reliable</em> = <code>false</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -277,7 +272,13 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">unsigned&#160;</td>
-          <td class="paramname"><em>hb_int</em> = <code><a class="el" href="structFIX8_1_1LoginParameters.html#a629c11367c650bae041be46cbb53869eabf0ee2dfe63e8572274654f454a1fa20">default_hb_interval</a></code>&#160;</td>
+          <td class="paramname"><em>hb_int</em> = <code><a class="el" href="namespaceFIX8_1_1defaults.html#a74072aa37607d0a36d559ee466a9518caf1d4c6432ba99d5c6420ba4bbe5b166d">defaults::hb_interval</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> &amp;&#160;</td>
+          <td class="paramname"><em>pem_path</em> = <code><a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a>()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -292,7 +293,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00166">166</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00174">174</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
 </div>
 </div>
@@ -318,7 +319,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00175">175</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00187">187</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
 </div>
 </div>
@@ -345,9 +346,9 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00181">181</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00196">196</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>References <a class="el" href="session_8hpp_source.html#l00200">_always_seqnum_assign</a>, <a class="el" href="session_8hpp_source.html#l00201">_davi</a>, <a class="el" href="session_8hpp_source.html#l00202">_hb_int</a>, <a class="el" href="session_8hpp_source.html#l00199">_login_retries</a>, <a class="el" href="session_8hpp_source.html#l00199">_login_retry_interval</a>, <a class="el" href="session_8hpp_source.html#l00200">_no_chksum_flag</a>, <a class="el" href="session_8hpp_source.html#l00202">_recv_buf_sz</a>, <a class="el" href="session_8hpp_source.html#l00200">_reset_sequence_numbers</a>, <a class="el" href="session_8hpp_source.html#l00202">_send_buf_sz</a>, and <a class="el" href="session_8hpp_source.html#l00200">_silent_disconnect</a>.</p>
+<p>References <a class="el" href="session_8hpp_source.html#l00219">_always_seqnum_assign</a>, <a class="el" href="session_8hpp_source.html#l00218">_connect_timeout</a>, <a class="el" href="session_8hpp_source.html#l00220">_davi</a>, <a class="el" href="session_8hpp_source.html#l00221">_hb_int</a>, <a class="el" href="session_8hpp_source.html#l00218">_login_retries</a>, <a class="el" href="session_8hpp_source.html#l00218">_login_retry_interval</a>, <a class="el" href="session_8hpp_source.html#l00219">_no_chksum_flag</a>, <a class="el" href="session_8hpp_source.html#l00222">_pem_path</a>, <a class="el" href="session_8hpp_source.html#l00219">_permissive_mode_flag</a>, <a class="el" href="session_8hpp_source.html#l00221">_recv_buf_sz</a>, <a class="el" href="session_8hpp_source.html#l00219">_reliable</a>, <a class="el" href="session_8hpp_source.html#l00219">_reset_sequence_numbers</a>, <a class="el" href="session_8hpp_source.html#l00221">_send_buf_sz</a>, and <a class="el" href="session_8hpp_source.html#l00219">_silent_disconnect</a>.</p>
 
 </div>
 </div>
@@ -362,9 +363,25 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00200">200</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00219">219</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00181">operator=()</a>, and <a class="el" href="session_8cpp_source.html#l00780">FIX8::Session::send_process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>, and <a class="el" href="session_8cpp_source.html#l00765">FIX8::Session::send_process()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a722081772ee138901bcfdb83b8f014ea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned FIX8::LoginParameters::_connect_timeout</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00218">218</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>.</p>
 
 </div>
 </div>
@@ -378,9 +395,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00201">201</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00220">220</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00215">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, and <a class="el" href="session_8hpp_source.html#l00181">operator=()</a>.</p>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00306">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, and <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>.</p>
 
 </div>
 </div>
@@ -394,9 +411,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00202">202</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00221">221</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00215">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, and <a class="el" href="session_8hpp_source.html#l00181">operator=()</a>.</p>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00176">FIX8::ClientSession&lt; T &gt;::ClientSession()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00306">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, and <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>.</p>
 
 </div>
 </div>
@@ -410,9 +427,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00199">199</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00218">218</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00215">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, and <a class="el" href="session_8hpp_source.html#l00181">operator=()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>.</p>
 
 </div>
 </div>
@@ -426,9 +443,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00199">199</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00218">218</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00215">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00439">FIX8::ReliableClientSessionFO&lt; T &gt;::operator()()</a>, and <a class="el" href="session_8hpp_source.html#l00181">operator=()</a>.</p>
+<p>Referenced by <a class="el" href="sessionwrapper_8hpp_source.html#l00306">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, and <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>.</p>
 
 </div>
 </div>
@@ -442,9 +459,41 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00200">200</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00219">219</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00181">operator=()</a>, and <a class="el" href="session_8cpp_source.html#l00139">FIX8::Session::start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>, and <a class="el" href="session_8cpp_source.html#l00227">FIX8::Session::process()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8c25bc6c9d34e5e348317aac1b5eca33"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceFIX8.html#a653abc4baa49d96ad764ffc8f3dce148">f8String</a> FIX8::LoginParameters::_pem_path</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00222">222</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a249e69d1bd272d0640412286b89a565d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FIX8::LoginParameters::_permissive_mode_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00219">219</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>, and <a class="el" href="session_8cpp_source.html#l00227">FIX8::Session::process()</a>.</p>
 
 </div>
 </div>
@@ -458,9 +507,25 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00202">202</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00221">221</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00181">operator=()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00326">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00461">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab49e6e7ce9e48e8b63b15a7b8e1fe3c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FIX8::LoginParameters::_reliable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00219">219</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00254">FIX8::ReliableClientSession&lt; T &gt;::ReliableClientSession()</a>.</p>
 
 </div>
 </div>
@@ -474,9 +539,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00200">200</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00219">219</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00699">FIX8::Session::generate_logon()</a>, <a class="el" href="session_8hpp_source.html#l00181">operator=()</a>, and <a class="el" href="session_8cpp_source.html#l00139">FIX8::Session::start()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00695">FIX8::Session::generate_logon()</a>, <a class="el" href="sessionwrapper_8hpp_source.html#l00306">FIX8::ReliableClientSession&lt; T &gt;::operator()()</a>, <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>, and <a class="el" href="session_8cpp_source.html#l00140">FIX8::Session::start()</a>.</p>
 
 </div>
 </div>
@@ -490,9 +555,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00202">202</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00221">221</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8hpp_source.html#l00181">operator=()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00326">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
+<p>Referenced by <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>, and <a class="el" href="sessionwrapper_8hpp_source.html#l00461">FIX8::ServerSession&lt; T &gt;::ServerSession()</a>.</p>
 
 </div>
 </div>
@@ -506,9 +571,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="session_8hpp_source.html#l00200">200</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
+<p>Definition at line <a class="el" href="session_8hpp_source.html#l00219">219</a> of file <a class="el" href="session_8hpp_source.html">session.hpp</a>.</p>
 
-<p>Referenced by <a class="el" href="session_8cpp_source.html#l00599">FIX8::Session::heartbeat_service()</a>, <a class="el" href="session_8hpp_source.html#l00181">operator=()</a>, and <a class="el" href="session_8cpp_source.html#l00229">FIX8::Session::process()</a>.</p>
+<p>Referenced by <a class="el" href="session_8cpp_source.html#l00594">FIX8::Session::heartbeat_service()</a>, <a class="el" href="session_8hpp_source.html#l00196">operator=()</a>, and <a class="el" href="session_8cpp_source.html#l00227">FIX8::Session::process()</a>.</p>
 
 </div>
 </div>
@@ -518,7 +583,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:55. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Jan 16 2014 16:13:46. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

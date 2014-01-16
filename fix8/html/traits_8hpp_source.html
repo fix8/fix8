@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.10.0</span>
+   &#160;<span id="projectnumber">version  1.0.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -114,7 +115,7 @@ $(document).ready(function(){initNavTree('traits_8hpp_source.html','');});
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">Fix8 Open Source FIX Engine.</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-13 David L. Dight &lt;fix@fix8.org&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-14 David L. Dight &lt;fix@fix8.org&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either</span></div>
@@ -144,8 +145,8 @@ $(document).ready(function(){initNavTree('traits_8hpp_source.html','');});
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef _FIX8_TRAITS_HPP_</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># define _FIX8_TRAITS_HPP_</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef FIX8_TRAITS_HPP_</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define FIX8_TRAITS_HPP_</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
@@ -364,8 +365,8 @@ $(document).ready(function(){initNavTree('traits_8hpp_source.html','');});
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;</div>
 <div class="line"><a name="l00355"></a><span class="lineno"><a class="code" href="classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a3d2315ed424645a5715bc2da93b02e5a">  355</a></span>&#160;   <span class="keywordtype">void</span> <a class="code" href="classFIX8_1_1presorted__set.html#a187bc407c739c4bfcdf25d10372ae658">insert</a>(<a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">const_iterator</a> what_begin, <a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">const_iterator</a> what_end)</div>
 <div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;   {</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;      <span class="keywordflow">for</span> (<a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">const_iterator</a> ptr(what_begin); ptr &lt; what_end; ++ptr)</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1presorted__set.html#a187bc407c739c4bfcdf25d10372ae658">insert</a>(ptr).second)</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;      <span class="keywordflow">for</span> (<a class="code" href="structFIX8_1_1FieldTrait.html" title="FIX field traits - hold specific traits for each field.">const_iterator</a> <a class="code" href="MPMCqueues_8hpp.html#a7459053063c7e93f801434f6411b9dd2">ptr</a>(what_begin); <a class="code" href="MPMCqueues_8hpp.html#a7459053063c7e93f801434f6411b9dd2">ptr</a> &lt; what_end; ++<a class="code" href="MPMCqueues_8hpp.html#a7459053063c7e93f801434f6411b9dd2">ptr</a>)</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;         <span class="keywordflow">if</span> (!<a class="code" href="classFIX8_1_1presorted__set.html#a187bc407c739c4bfcdf25d10372ae658">insert</a>(<a class="code" href="MPMCqueues_8hpp.html#a7459053063c7e93f801434f6411b9dd2">ptr</a>).second)</div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;            <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;   }</div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;</div>
@@ -537,7 +538,7 @@ $(document).ready(function(){initNavTree('traits_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:51. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Jan 16 2014 16:13:40. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

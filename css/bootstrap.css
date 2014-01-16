@@ -4006,6 +4006,12 @@ a.thumbnail:hover {
   /* color: #f58220 */
   color: white
 }
+.hero-unit j2 {
+  font-size: 24px;
+  line-height: 36px;
+  /* color: #f58220 */
+  color: #f58220
+}
 .hero-unit h2 {
   color: inherit
 }

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['ubuf',['Ubuf',['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#a23b8bebb7e81c350c7d654a8dd760ce4',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf()'],['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#af1170eb0e7576216cb676c694244e8bb',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf(const unsigned val)'],['../unionFIX8_1_1BDBPersister_1_1KeyDataBuffer_1_1Ubuf.html#a17247a02467e079909414ebe9cc3c926',1,'FIX8::BDBPersister::KeyDataBuffer::Ubuf::Ubuf(const Ubuf &amp;from)']]],
+  ['umpmc_5fptr_5fqueue',['uMPMC_Ptr_Queue',['../classff_1_1uMPMC__Ptr__Queue.html#ade9323234a15b1c0a8f2ad212ed6c240',1,'ff::uMPMC_Ptr_Queue']]],
   ['underflow',['underflow',['../classFIX8_1_1fdinbuf.html#ab8c0e928fbc8b1152dbf356dc1d5bdef',1,'FIX8::fdinbuf::underflow()'],['../classgzstreambuf.html#a84ab99df5fd4df27425573757973e3f4',1,'gzstreambuf::underflow()']]],
   ['underlyingcashtype_5fdiff',['UnderlyingCashType_DIFF',['../namespaceFIX8_1_1TEX.html#a9a9fd6fe63cf65dfb4d3257e910298ad',1,'FIX8::TEX']]],
   ['underlyingcashtype_5ffixed',['UnderlyingCashType_FIXED',['../namespaceFIX8_1_1TEX.html#abeda0f4850caf46a6891938c98dc676d',1,'FIX8::TEX']]],
@@ -33,17 +34,18 @@ var searchData=
   ['unitofmeasure_5fus_5fdollars',['UnitOfMeasure_US_DOLLARS',['../namespaceFIX8_1_1TEX.html#af782ae02c46a2db71c5f652d00f5db64',1,'FIX8::TEX']]],
   ['unlink_5fdirectory',['unlink_directory',['../classlog__fixture.html#a714176c4dcba7578bd7fb48c6f1e4b3e',1,'log_fixture::unlink_directory()'],['../classpersist__fixture.html#a2af9e1393d9f282f078e75e9c72b418c',1,'persist_fixture::unlink_directory()']]],
   ['unlock',['unlock',['../classFIX8_1_1f8__mutex.html#a225309cc94ff574fdb0e9ce03ac1233d',1,'FIX8::f8_mutex::unlock()'],['../classFIX8_1_1f8__spin__lock.html#ae1c999847592862338458dc1358d6ea2',1,'FIX8::f8_spin_lock::unlock()']]],
+  ['unmarshalling',['unmarshalling',['../classff_1_1ff__dinout.html#ab3f8f8fdb69d365d2647f4b8840d4df3',1,'ff::ff_dinout::unmarshalling()'],['../classff_1_1ff__dnode.html#a7d5c3ad333f1237df767d2eb235a6a3c',1,'ff::ff_dnode::unmarshalling()']]],
   ['unset_5fraw_5fmode',['unset_raw_mode',['../classFIX8_1_1tty__save__state.html#aaecaabf5b98750e1a62a093bea443899',1,'FIX8::tty_save_state']]],
-  ['unsolicitedindicator_5fno',['UnsolicitedIndicator_NO',['../namespaceFIX8_1_1TEX.html#a590c848f03de148e9236457269db1ff2',1,'FIX8::TEX']]],
-  ['unsolicitedindicator_5frealm_5fels',['UnsolicitedIndicator_realm_els',['../namespaceFIX8_1_1TEX.html#a3bdab5d5c9fd1db4917dd135d70114d8',1,'FIX8::TEX']]],
-  ['unsolicitedindicator_5fyes',['UnsolicitedIndicator_YES',['../namespaceFIX8_1_1TEX.html#a4e842eb8e4f7f4bc1b0f349a2482d05d',1,'FIX8::TEX']]],
+  ['unsolicitedindicator_5fno',['UnsolicitedIndicator_NO',['../namespaceFIX8_1_1TEX.html#a590c848f03de148e9236457269db1ff2',1,'FIX8::TEX::UnsolicitedIndicator_NO()'],['../namespaceFIX8_1_1UTEST.html#a359482c1aab16fd905ebbf54881f6149',1,'FIX8::UTEST::UnsolicitedIndicator_NO()']]],
+  ['unsolicitedindicator_5frealm_5fels',['UnsolicitedIndicator_realm_els',['../namespaceFIX8_1_1TEX.html#a3bdab5d5c9fd1db4917dd135d70114d8',1,'FIX8::TEX::UnsolicitedIndicator_realm_els()'],['../namespaceFIX8_1_1UTEST.html#a6a438bdcba4b60de1b46bed0430deb12',1,'FIX8::UTEST::UnsolicitedIndicator_realm_els()']]],
+  ['unsolicitedindicator_5fyes',['UnsolicitedIndicator_YES',['../namespaceFIX8_1_1TEX.html#a4e842eb8e4f7f4bc1b0f349a2482d05d',1,'FIX8::TEX::UnsolicitedIndicator_YES()'],['../namespaceFIX8_1_1UTEST.html#a846810c537f972e7ce5ee861e21c451b',1,'FIX8::UTEST::UnsolicitedIndicator_YES()']]],
   ['update_5fcount',['update_count',['../hftest_8cpp.html#a2f55ce207b64d7019dc74b39cdecd058',1,'hftest.cpp']]],
   ['update_5freceived',['update_received',['../classFIX8_1_1Session.html#a6d286478114fb22af35f6d7f0c74887a',1,'FIX8::Session']]],
   ['update_5fsent',['update_sent',['../classFIX8_1_1Session.html#a1ef5695453bbec5e7b873181d6fe0591',1,'FIX8::Session']]],
-  ['urgency_5fbackground',['Urgency_BACKGROUND',['../namespaceFIX8_1_1TEX.html#a87dc2df2848d608a4a589f4c98b3e88c',1,'FIX8::TEX']]],
-  ['urgency_5fflash',['Urgency_FLASH',['../namespaceFIX8_1_1TEX.html#a7e709ecfc37e1ba298b33f0f564ddbf0',1,'FIX8::TEX']]],
-  ['urgency_5fnormal',['Urgency_NORMAL',['../namespaceFIX8_1_1TEX.html#a2083b1ecf295006aa9305bb35f8ccd13',1,'FIX8::TEX']]],
-  ['urgency_5frealm_5fels',['Urgency_realm_els',['../namespaceFIX8_1_1TEX.html#a90248c8e151b07b2810821a6215beab5',1,'FIX8::TEX']]],
+  ['urgency_5fbackground',['Urgency_BACKGROUND',['../namespaceFIX8_1_1TEX.html#a87dc2df2848d608a4a589f4c98b3e88c',1,'FIX8::TEX::Urgency_BACKGROUND()'],['../namespaceFIX8_1_1UTEST.html#ab81d9806efa160f818cfb72d80884cbe',1,'FIX8::UTEST::Urgency_BACKGROUND()']]],
+  ['urgency_5fflash',['Urgency_FLASH',['../namespaceFIX8_1_1TEX.html#a7e709ecfc37e1ba298b33f0f564ddbf0',1,'FIX8::TEX::Urgency_FLASH()'],['../namespaceFIX8_1_1UTEST.html#a32bd6c325550895f1b5e825164680dfa',1,'FIX8::UTEST::Urgency_FLASH()']]],
+  ['urgency_5fnormal',['Urgency_NORMAL',['../namespaceFIX8_1_1TEX.html#a2083b1ecf295006aa9305bb35f8ccd13',1,'FIX8::TEX::Urgency_NORMAL()'],['../namespaceFIX8_1_1UTEST.html#aad989aa09b5c6cdaa9b617d62227258f',1,'FIX8::UTEST::Urgency_NORMAL()']]],
+  ['urgency_5frealm_5fels',['Urgency_realm_els',['../namespaceFIX8_1_1TEX.html#a90248c8e151b07b2810821a6215beab5',1,'FIX8::TEX::Urgency_realm_els()'],['../namespaceFIX8_1_1UTEST.html#a2655cebdccb0ac79bb82108dc02570fb',1,'FIX8::UTEST::Urgency_realm_els()']]],
   ['usageman',['UsageMan',['../classUsageMan.html#a4f7c623a7a61ace8859b46b7695e5379',1,'UsageMan']]],
   ['usecs',['usecs',['../classFIX8_1_1Tickval.html#a3ae26a7795ddbd4c927f99a613c63984',1,'FIX8::Tickval']]],
   ['usernotification',['UserNotification',['../classFIX8_1_1TEX_1_1UserNotification.html#a1588d5c5b4d04a4ae629a25aaa2b7fd0',1,'FIX8::TEX::UserNotification']]],
@@ -62,5 +64,7 @@ var searchData=
   ['userstatus_5fpassword_5fincorrect',['UserStatus_PASSWORD_INCORRECT',['../namespaceFIX8_1_1TEX.html#a5bf5f9fa67e5599be73f88370f9c8e6e',1,'FIX8::TEX']]],
   ['userstatus_5frealm_5fels',['UserStatus_realm_els',['../namespaceFIX8_1_1TEX.html#a6a338f05ce870ec70872968b98d62003',1,'FIX8::TEX']]],
   ['userstatus_5fsession_5fshutdown_5fwarning',['UserStatus_SESSION_SHUTDOWN_WARNING',['../namespaceFIX8_1_1TEX.html#a56f824a84f20e642816bbc6ea7b868f5',1,'FIX8::TEX']]],
-  ['userstatus_5fuser_5fnot_5frecognised',['UserStatus_USER_NOT_RECOGNISED',['../namespaceFIX8_1_1TEX.html#a4c0639a9784c01987f8019a3c1333010',1,'FIX8::TEX']]]
+  ['userstatus_5fuser_5fnot_5frecognised',['UserStatus_USER_NOT_RECOGNISED',['../namespaceFIX8_1_1TEX.html#a4c0639a9784c01987f8019a3c1333010',1,'FIX8::TEX']]],
+  ['uswsr_5fptr_5fbuffer',['uSWSR_Ptr_Buffer',['../classff_1_1uSWSR__Ptr__Buffer.html#a5837ca2565c4508bc2ee2aa82d6fefef',1,'ff::uSWSR_Ptr_Buffer']]],
+  ['utest_5frouter',['utest_Router',['../classFIX8_1_1UTEST_1_1utest__Router.html#a7e5c33c413cce62c7558b95c8513982e',1,'FIX8::UTEST::utest_Router']]]
 ];

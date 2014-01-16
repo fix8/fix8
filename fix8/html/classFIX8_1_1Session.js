@@ -64,6 +64,7 @@ var classFIX8_1_1Session =
     [ "stop", "classFIX8_1_1Session.html#ae4c637cd36d88ddac5a1db2565f82ef1", null ],
     [ "update_received", "classFIX8_1_1Session.html#a6d286478114fb22af35f6d7f0c74887a", null ],
     [ "update_sent", "classFIX8_1_1Session.html#a1ef5695453bbec5e7b873181d6fe0591", null ],
+    [ "_batchmsgs_buffer", "classFIX8_1_1Session.html#ad053f8b02234d8a2c6def3bfae9e811a", null ],
     [ "_connection", "classFIX8_1_1Session.html#a86ae39a6c7897426bd45d8577aca8692", null ],
     [ "_control", "classFIX8_1_1Session.html#ae96b4953282a1bbb4e5f715fe02b0514", null ],
     [ "_ctx", "classFIX8_1_1Session.html#af9ff171d40c5f8747c2045bf7afb3041", null ],

@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="fix8_Logo_RGB_small.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">fix8
-   &#160;<span id="projectnumber">version  0.10.0</span>
+   &#160;<span id="projectnumber">version  1.0.0</span>
    </div>
    <div id="projectbrief">Open Source C++ FIX Framework</div>
   </td>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -114,7 +115,7 @@ $(document).ready(function(){initNavTree('f8c_8hpp_source.html','');});
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">Fix8 Open Source FIX Engine.</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-13 David L. Dight &lt;fix@fix8.org&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">Copyright (C) 2010-14 David L. Dight &lt;fix@fix8.org&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either</span></div>
@@ -144,8 +145,8 @@ $(document).ready(function(){initNavTree('f8c_8hpp_source.html','');});
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef _F8_F8C_HPP_</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _F8_F8C_HPP_</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef FIX8_F8C_HPP_</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define FIX8_F8C_HPP_</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">//-------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">namespace </span>FIX8 {</div>
@@ -186,8 +187,8 @@ $(document).ready(function(){initNavTree('f8c_8hpp_source.html','');});
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
 <div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="structFIX8_1_1RealmObject_1_1less.html">   79</a></span>&#160;   <span class="keyword">struct </span><a class="code" href="structFIX8_1_1RealmObject_1_1less.html">less</a></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;   {</div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="code" href="structFIX8_1_1RealmObject_1_1less.html#aa495f94a4e4a91460f2a81a68caa1d01">   81</a></span>&#160;      <span class="keywordtype">bool</span> <a class="code" href="structFIX8_1_1RealmObject_1_1less.html#aa495f94a4e4a91460f2a81a68caa1d01">operator()</a>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1RealmObject.html" title="f8c range or set domain realm.">RealmObject</a> *p1, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1RealmObject.html" title="f8c range or set domain realm.">RealmObject</a> *p2)</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;         { <span class="keywordflow">return</span> <span class="keyword">const_cast&lt;</span><a class="code" href="classFIX8_1_1RealmObject.html" title="f8c range or set domain realm.">RealmObject</a>*<span class="keyword">&gt;</span>(p1)-&gt;<a class="code" href="classFIX8_1_1RealmObject.html#a82a2c979e60119dbd68d601ccc7d26e3">comp</a>(p1, p2); }</div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="code" href="structFIX8_1_1RealmObject_1_1less.html#ac8b1cd761e3c029e150ae675a658e797">   81</a></span>&#160;      <span class="keywordtype">bool</span> <a class="code" href="structFIX8_1_1RealmObject_1_1less.html#ac8b1cd761e3c029e150ae675a658e797">operator()</a>(<span class="keyword">const</span> <a class="code" href="classFIX8_1_1RealmObject.html" title="f8c range or set domain realm.">RealmObject</a> *p1, <span class="keyword">const</span> <a class="code" href="classFIX8_1_1RealmObject.html" title="f8c range or set domain realm.">RealmObject</a> *p2)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keyword">         </span>{ <span class="keywordflow">return</span> <span class="keyword">const_cast&lt;</span><a class="code" href="classFIX8_1_1RealmObject.html" title="f8c range or set domain realm.">RealmObject</a>*<span class="keyword">&gt;</span>(p1)-&gt;<a class="code" href="classFIX8_1_1RealmObject.html#a82a2c979e60119dbd68d601ccc7d26e3">comp</a>(p1, p2); }</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;   };</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;};</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
@@ -259,7 +260,7 @@ $(document).ready(function(){initNavTree('f8c_8hpp_source.html','');});
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;{</div>
 <div class="line"><a name="l00157"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440">  157</a></span>&#160;   <a class="code" href="classFIX8_1_1FieldTraits.html" title="A collection of FieldTraits for a message. Which fields are required, which are present.">FieldTraits</a> <a class="code" href="structFIX8_1_1MessageSpec.html#acbc7f582670dc2128877bc1a5ee40440">_fields</a>;</div>
 <div class="line"><a name="l00158"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">  158</a></span>&#160;   <a class="code" href="namespaceFIX8.html#ab2f736655c16c802e88bb5772312605d">GroupMap</a> <a class="code" href="structFIX8_1_1MessageSpec.html#acaafd703a52edda09afc553238cd9145">_groups</a>;</div>
-<div class="line"><a name="l00159"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html#a5001a90e4f5937cfeb16feb690179327">  159</a></span>&#160;   uint32_t <a class="code" href="structFIX8_1_1MessageSpec.html#a7064587282c02f7f18834900d2914df5">_group_refcnt</a>, <a class="code" href="structFIX8_1_1MessageSpec.html#a5001a90e4f5937cfeb16feb690179327">_hash</a>;</div>
+<div class="line"><a name="l00159"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html#a5001a90e4f5937cfeb16feb690179327">  159</a></span>&#160;   <a class="code" href="stdint_8h.html#a6eb1e68cc391dd753bc8ce896dbb8315">uint32_t</a> <a class="code" href="structFIX8_1_1MessageSpec.html#a7064587282c02f7f18834900d2914df5">_group_refcnt</a>, <a class="code" href="structFIX8_1_1MessageSpec.html#a5001a90e4f5937cfeb16feb690179327">_hash</a>;</div>
 <div class="line"><a name="l00160"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html#a4497083907089972aec0d549f7f2b871">  160</a></span>&#160;   std::string <a class="code" href="structFIX8_1_1MessageSpec.html#a4497083907089972aec0d549f7f2b871">_name</a>, <a class="code" href="structFIX8_1_1MessageSpec.html#a4a980632b2640fbe8e2d802eac27ebba">_description</a>, <a class="code" href="structFIX8_1_1MessageSpec.html#ae0f73d0b1ff8a36ad1109184e1c9eac6">_comment</a>;</div>
 <div class="line"><a name="l00161"></a><span class="lineno"><a class="code" href="structFIX8_1_1MessageSpec.html#a2eb3aa22c9fe4f1db425021cf68123d1">  161</a></span>&#160;   <span class="keywordtype">bool</span> <a class="code" href="structFIX8_1_1MessageSpec.html#a2eb3aa22c9fe4f1db425021cf68123d1">_is_admin</a>;</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
@@ -348,7 +349,7 @@ $(document).ready(function(){initNavTree('f8c_8hpp_source.html','');});
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 
-    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Sun Nov 10 2013 21:56:43. Copyright &copy; 2010-13, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
+    <li class="footer"><a href=http://www.fix8.org><b>fix8</b></a> documentation generated on Thu Jan 16 2014 16:13:32. Copyright &copy; 2010-14, <a href=mailto:fix@fix8.org><b>The Fix8 Team.</b></a> All rights reserved.</li>
    </ul>
  </div>
 </body>

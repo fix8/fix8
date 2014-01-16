@@ -1,10 +1,19 @@
 var searchData=
 [
+  ['d_5ftype',['d_type',['../structCLDevice.html#a6371fba2b9cd46d6335060893ebe5d3d',1,'CLDevice']]],
+  ['data',['data',['../structff_1_1dynlinkedlist_1_1Node.html#a08a19acdcae2aca3ee37786d0fe6d939',1,'ff::dynlinkedlist::Node::data()'],['../structff_1_1dynqueue_1_1Node.html#afd2e42cd2b20bffa55459e553bdd7bbe',1,'ff::dynqueue::Node::data()'],['../structff__queue_1_1bucket__t.html#a9c3286928a390c5dcdb522ec17e8c383',1,'ff_queue::bucket_t::data()'],['../structff_1_1MPMC__Ptr__Queue_1_1element__t.html#ae4242e77741ad81c55d7bc8318f5980d',1,'ff::MPMC_Ptr_Queue::element_t::data()'],['../structff_1_1MSqueue_1_1Node.html#ae6a14d7c18b4a02d0a0080880f8454a6',1,'ff::MSqueue::Node::data()'],['../classff_1_1forall__Scheduler.html#aa83b51383f03a01f572567eca7d74a2f',1,'ff::forall_Scheduler::data()'],['../classff_1_1squeue.html#a45fb40ee76a135571abb9360c60cef0e',1,'ff::squeue::data()'],['../structff_1_1staticlinkedlist_1_1Node.html#ad3543cb26e2222f9749bb8ddd41b294f',1,'ff::staticlinkedlist::Node::data()'],['../MPMCqueues_8hpp.html#a735984d41155bc1032e09bece8f8d66d',1,'data():&#160;MPMCqueues.hpp']]],
   ['databuf_5f',['dataBuf_',['../structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html#aa3171ffe459e5c760a03aa1bc9cd1d0c',1,'FIX8::BDBPersister::KeyDataBuffer']]],
   ['databuflen_5f',['dataBufLen_',['../structFIX8_1_1BDBPersister_1_1KeyDataBuffer.html#a2ac3a5f0857b35341c8d82112eea7c7a',1,'FIX8::BDBPersister::KeyDataBuffer']]],
+  ['datacap',['datacap',['../classff_1_1squeue.html#aed99654925fb8a62447e5d16d88369bb',1,'ff::squeue']]],
+  ['dead',['dead',['../classff_1_1ofarm__gt.html#a2f774aa70ccfed3a380a3a1463349eee',1,'ff::ofarm_gt']]],
   ['decl_5f',['decl_',['../classXmlElement.html#a1eae339d9df1eb9f30fc20f1347316bc',1,'XmlElement']]],
+  ['delayedallocator',['delayedAllocator',['../classff_1_1MSqueue.html#a896347c463ea69c186c36276f077a1d1',1,'ff::MSqueue']]],
+  ['delayedreclaim',['delayedReclaim',['../classff_1_1SlabCache.html#a826bdca9f0fded7aedfcddfe6ef2eb21',1,'ff::SlabCache::delayedReclaim()'],['../classff_1_1ff__allocator.html#ab4acffca209f242ece598bff4499ba9e',1,'ff::ff_allocator::delayedReclaim()'],['../classff_1_1FFAllocator.html#a95cfdf153883ae42a8f318c60f0abb9f',1,'ff::FFAllocator::delayedReclaim()']]],
   ['delta_5f',['delta_',['../classFIX8_1_1IntervalTimer.html#a3f725a9fac0a0c58f08da3567141657f',1,'FIX8::IntervalTimer']]],
   ['depth_5f',['depth_',['../classXmlElement.html#a0a2381bd30c98c1a2880611dcb3234b3',1,'XmlElement']]],
+  ['dequeue',['dequeue',['../classff_1_1multiSWSR.html#ab83ab582c2d6e4890981958ac17e9c3c',1,'ff::multiSWSR::dequeue()'],['../classff_1_1scalableMPMCqueue.html#af5bd31372e2780e2e48898b5a78c988e',1,'ff::scalableMPMCqueue::dequeue()']]],
+  ['desc',['desc',['../classff_1_1zmq1__1.html#a0f36e240444c0280a7a8f2e54b921a87',1,'ff::zmq1_1::desc()'],['../classff_1_1zmqBcast.html#a9f9d64d90f22de7098c38be7bd60fc0d',1,'ff::zmqBcast::desc()'],['../classff_1_1zmqAllGather.html#a910d6981a13c42f344a3aac0fff3e8bc',1,'ff::zmqAllGather::desc()'],['../classff_1_1zmqFromAny.html#a982801acd93e43f2636b8bea924f546b',1,'ff::zmqFromAny::desc()'],['../classff_1_1zmqScatter.html#a87d401e4e246dfb7c98bfa27bda8d863',1,'ff::zmqScatter::desc()'],['../classff_1_1zmqOnDemand.html#a7b944cad92d5875703f34d2366945c81',1,'ff::zmqOnDemand::desc()'],['../classff_1_1zmq1__N.html#a1af755b0e97676f186101808e73b2ee8',1,'ff::zmq1_N::desc()']]],
   ['description_5f',['description_',['../classUsageMan.html#a46432651448ab48dface52dfbbd92977',1,'UsageMan']]],
+  ['deviceid',['deviceId',['../structCLDevice.html#a1a3030d71c910575e32f26907ea01e1d',1,'CLDevice']]],
   ['directory',['directory',['../classlog__fixture.html#a9c867d340aaf7d43faaf50f5ca53d461',1,'log_fixture::directory()'],['../classpersist__fixture.html#adf10648b108d3f0b7bb77e47e62f29fb',1,'persist_fixture::directory()']]]
 ];

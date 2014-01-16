@@ -6,5 +6,5 @@ var structFIX8_1_1SessionConfig =
     [ "_ctx", "structFIX8_1_1SessionConfig.html#a55de9525ba96315a53fcf111ae2ecb1c", null ],
     [ "_loginParameters", "structFIX8_1_1SessionConfig.html#abfd10e9bcc48a413d5302ba4b9be9839", null ],
     [ "_ses", "structFIX8_1_1SessionConfig.html#a17c36086df286d2bf5b598c5c1694903", null ],
-    [ "_session_name", "structFIX8_1_1SessionConfig.html#ab597069e9e94656c2f65a619f73925a5", null ]
+    [ "_session_name", "structFIX8_1_1SessionConfig.html#a61e368460852c06c863eeeeee18802ec", null ]
 ];

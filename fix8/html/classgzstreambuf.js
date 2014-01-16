@@ -1,6 +1,6 @@
 var classgzstreambuf =
 [
-    [ "bufferSize", "classgzstreambuf.html#ab73ac3e850f10f1f031bb941f8b869eda22a60b7100e079118be6a3a1020a5397", null ],
+    [ "bufferSize", "classgzstreambuf.html#ad3180b943a8b157bf5a7b60047b19ffda22a60b7100e079118be6a3a1020a5397", null ],
     [ "gzstreambuf", "classgzstreambuf.html#afa212e5c8f1ec6a63caec17e77d6b432", null ],
     [ "~gzstreambuf", "classgzstreambuf.html#a4237e08ca77c39ec52912658ef8d7be0", null ],
     [ "close", "classgzstreambuf.html#ac47e68029383ac04ded54dedae5c930d", null ],
