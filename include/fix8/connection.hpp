@@ -181,9 +181,8 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(FIX8::ref(*this), &FIXReader::callback_processor)
-        , _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
-        , _bg_sz()
+		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(FIX8::ref(*this), &FIXReader::callback_processor),
+		_read_buffer(), _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer), _bg_sz()
 	{
 		set_preamble_sz();
 	}
