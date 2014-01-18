@@ -122,14 +122,14 @@ AC_CHECK_TOOL([DOXYGEN],[doxygen])
 
 # check what version of gcc we're using
 
-# test for gcc >= 4.7
+# test for gcc >= 4.2
 is_late_gcc=no
 case "$CXX" in
   *g++*)
 		GCC_VERSION=`$CC -dumpversion`
 		gcc_major=`echo $GCC_VERSION | cut -d. -f1`
 		gcc_minor=`echo $GCC_VERSION | cut -d. -f2`
-		if test $gcc_major -ge 4 -a $gcc_minor -ge 7; then
+		if test $gcc_major -ge 4 -a $gcc_minor -ge 2; then
 			is_late_gcc=yes
 		fi ;;
 	*clang*)
