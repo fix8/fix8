@@ -793,12 +793,12 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 
 		if (_loginParameters._always_seqnum_assign)
 			//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
-			*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
+			*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : static_cast<unsigned int>(_next_send_seq));
 	}
 	else
 	{
 		//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
-		*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
+		*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : static_cast<unsigned int>(_next_send_seq));
 	}
 	*msg->Header() << new sending_time;
 

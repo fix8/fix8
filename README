@@ -142,8 +142,8 @@ Building on Linux/UNIX/OSX
 The build system is based on automake/autoconf/libtool.
 You **must** have libtool (http://www.gnu.org/software/libtool/) installed to build.
 
-    % tar xvzf 1.0.0-RC3.tar.gz
-    % cd fix8-1.0.0-RC3
+    % tar xvzf 1.0.0.tar.gz
+    % cd fix8-1.0.0
     % ./bootstrap
     % ./configure
     % make
@@ -168,6 +168,16 @@ Please refer to the following pages for help:
 - [API Documentation](http://fix8.org/fix8/html)
 - [Jira Issues page](https://fix8engine.atlassian.net/)
 - [Fix8 News](http://blog.fix8.org/)
+
+Reporting problems
+==================
+
+Please review the topics on the [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support) and
+the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer). If you cannot find any help there ask the forum for advice.
+
+If you believe you have found a problem that needs fixing, please go to the [Jira Issues page](https://fix8engine.atlassian.net/),
+register and create an issue. Provide as much detail as possible.  If you have already implemented a fix, and wish to make a pull
+request on Github please create an issue in Jira first. This will help us track the problem and ensure that the solution is properly tested.
 
 License
 =======

@@ -39,8 +39,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 mockConnection.hpp and mockConnection.cpp are used to supply a mock connection object for unit tests
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_CONNECTION_HPP_
-#define _FIX8_CONNECTION_HPP_
+#ifndef FIX8_CONNECTION_HPP_
+#define FIX8_CONNECTION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
 #include <Poco/Timespan.h>

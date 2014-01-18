@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_CONFIGURATION_HPP_
-# define _FIX8_CONFIGURATION_HPP_
+#ifndef FIX8_CONFIGURATION_HPP_
+#define FIX8_CONFIGURATION_HPP_
 
 #ifdef HAVE_OPENSSL
 #include <openssl/ssl.h>

@@ -36,7 +36,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-----------------------------------------------------------------------------------------
 // f8 headers
 #include <f8headers.hpp>
-#include <f8config.h>
+#include <fix8/f8config.h>
 
 #ifdef HAS_TR1_UNORDERED_MAP
 #include <tr1/unordered_map>
@@ -47,25 +47,25 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 
 #include <errno.h>
-#include <f8exception.hpp>
-#include <hypersleep.hpp>
-#include <mpmc.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
-#include <xml.hpp>
-#include <thread.hpp>
-#include <gzstream.hpp>
-#include <tickval.hpp>
-#include <logger.hpp>
-#include <traits.hpp>
-#include <timer.hpp>
-#include <field.hpp>
-#include <message.hpp>
+#include <fix8/f8exception.hpp>
+#include <fix8/hypersleep.hpp>
+#include <fix8/mpmc.hpp>
+#include <fix8/f8types.hpp>
+#include <fix8/f8utils.hpp>
+#include <fix8/xml.hpp>
+#include <fix8/thread.hpp>
+#include <fix8/gzstream.hpp>
+#include <fix8/tickval.hpp>
+#include <fix8/logger.hpp>
+#include <fix8/traits.hpp>
+#include <fix8/timer.hpp>
+#include <fix8/field.hpp>
+#include <fix8/message.hpp>
 #include <mockConnection.hpp>
-#include <session.hpp>
-#include <configuration.hpp>
-#include <persist.hpp>
-#include <sessionwrapper.hpp>
+#include <fix8/session.hpp>
+#include <fix8/configuration.hpp>
+#include <fix8/persist.hpp>
+#include <fix8/sessionwrapper.hpp>
 
 #include "utest_types.hpp"
 #include "utest_router.hpp"

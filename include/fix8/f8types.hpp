@@ -33,8 +33,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _F8_TYPES_HPP_
-# define _F8_TYPES_HPP_
+#ifndef FIX8_TYPES_HPP_
+#define FIX8_TYPES_HPP_
 
 //-------------------------------------------------------------------------------------------------
 #include <map>
