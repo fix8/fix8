@@ -128,7 +128,7 @@ class FIXReader : public AsyncSocket<f8String>
         \return number of bytes read */
 	int sockRead(char *where, size_t sz)
 	{
-		size_t available_in_buffer = static_cast<size_t>(_read_buffer_wptr - _read_buffer_rptr);
+		const size_t available_in_buffer(static_cast<size_t>(_read_buffer_wptr - _read_buffer_rptr));
 		if (available_in_buffer < sz)
 			realSockRead(sz - available_in_buffer, _max_msg_len);
 		sz = std::min((size_t)(_read_buffer_wptr-_read_buffer_rptr), sz);
