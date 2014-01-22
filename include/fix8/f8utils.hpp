@@ -794,7 +794,7 @@ inline double fast_atof (const char *p)
 
 
 //----------------------------------------------------------------------------------------
-/// Convert doublt to ascii
+/// Convert double to ascii
 /*! \param value the source value
     \param str the target string
     \param prec number of precision digits*/
