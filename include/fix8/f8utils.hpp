@@ -38,6 +38,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_UTILS_HPP_
 
 //-----------------------------------------------------------------------------------------
+#include <iostream>
+#include <string>
+
 #include <Poco/DateTime.h>
 #include <Poco/Net/SocketAddress.h>
 
