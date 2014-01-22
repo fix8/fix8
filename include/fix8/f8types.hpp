@@ -61,25 +61,25 @@ const unsigned char default_assignment_separator('=');
 /*! \tparam Key the key
     \tparam Val the value */
 template<typename Key, typename Val>
-struct _Pair
+struct _pair
 {
 	Key _key;
 	Val _value;
 
 	/// Sort functor
-	static bool Less(const _Pair& p1, const _Pair& p2) { return p1._key < p2._key; }
+	static bool Less(const _pair& p1, const _pair& p2) { return p1._key < p2._key; }
 };
 
 /// Partial specialisation of Pair abstraction for use with GeneratedTable
 /*! \tparam Val the value */
 template<typename Val>
-struct _Pair<const char *, Val>
+struct _pair<const char *, Val>
 {
 	const char *_key;
 	Val _value;
 
 	/// Sort functor
-	static bool Less(const _Pair& p1, const _Pair& p2) { return ::strcmp(p1._key, p2._key) < 0; }
+	static bool Less(const _pair& p1, const _pair& p2) { return ::strcmp(p1._key, p2._key) < 0; }
 };
 
 /// Fast map for statically generated data types. Assumes table is sorted. Complexity is O(logN).
@@ -89,7 +89,7 @@ template<typename Key, typename Val>
 class GeneratedTable
 {
 public:
-	typedef _Pair<Key, Val> Pair;
+	typedef _pair<Key, Val> Pair;
 
 #ifndef _MSC_VER
 private:
