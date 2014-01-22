@@ -58,6 +58,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Poco/Exception.h>
 #endif
 
+//----------------------------------------------------------------------------------------
+/// Convert double to ascii
+/*! \param value the source value
+    \param str the target string
+    \param prec number of precision digits*/
+extern size_t modp_dtoa(double value, char* str, int prec);
+
 namespace FIX8 {
 
 //----------------------------------------------------------------------------------------
@@ -795,13 +802,6 @@ inline double fast_atof (const char *p)
 	return sign * (frac ? (value / scale) : (value * scale));
 }
 
-
-//----------------------------------------------------------------------------------------
-/// Convert double to ascii
-/*! \param value the source value
-    \param str the target string
-    \param prec number of precision digits*/
-extern "C" { size_t modp_dtoa(double value, char* str, int prec); }
 
 //----------------------------------------------------------------------------------------
 /// Bitset for enums.
