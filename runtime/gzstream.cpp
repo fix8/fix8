@@ -29,7 +29,7 @@
 // DD: 05/03/2012 - changes to improve portability; ios:out append enabled;
 //
 
-#include <gzstream.hpp>
+#include <fix8/gzstream.hpp>
 #include <iostream>
 #include <string.h>  // for memcpy
 
