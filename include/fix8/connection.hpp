@@ -114,6 +114,7 @@ class FIXReader : public AsyncSocket<f8String>
 	f8_atomic<bool> _socket_error;
 
 	dthread<FIXReader> _callback_thread;
+	dthread_cancellation_token _callback_cancellation_token;
 
 #if EXPERIMENTAL_BUFFERED_SOCKET_READ
     char _read_buffer[_max_msg_len*2];
@@ -295,6 +296,8 @@ public:
 		static const Poco::Timespan ts;
 		return _sock->poll(ts, Poco::Net::Socket::SELECT_READ);
 	}
+
+	dthread_cancellation_token& callback_cancellation_token() { return _callback_cancellation_token; }
 };
 
 //----------------------------------------------------------------------------------------

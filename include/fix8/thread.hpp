@@ -185,11 +185,13 @@ class dthread : public _dthreadcore
 	{
 		T& _what;
 		int (T::*_method)();
+		dthread_cancellation_token& (T::*_cancellation_token_method)();
 
 	public:
-		_helper(T& what, int (T::*method)()) : _what(what), _method(method) {}
+		_helper(T& what, int (T::*method)(), dthread_cancellation_token& (T::*cancellation_token_method)())
+			: _what(what), _method(method), _cancellation_token_method(cancellation_token_method) {}
 		int operator()() { return (_what.*_method)(); }
-		dthread_cancellation_token& cancellation_token() { return _what.cancellation_token(); }
+		dthread_cancellation_token& cancellation_token() { return (_what.*_cancellation_token_method)(); }
 	}
 	_sub;
 
@@ -199,16 +201,16 @@ public:
 	  \param method pointer to entry point method
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	dthread(T what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
-		: _dthreadcore(detach, stacksize), _sub(what, method) {}
+	dthread(T what, int (T::*method)()=&T::operator(), dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
+		: _dthreadcore(detach, stacksize), _sub(what, method, cancellation_token_method) {}
 
 	/*! Ctor. Reference to object, functor version.
 	  \param what reference wrapper of class with entry point
 	  \param method reference to entry point method
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	dthread(reference_wrapper<T> what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
-		: _dthreadcore(detach, stacksize), _sub(what, method) {}
+	dthread(reference_wrapper<T> what, int (T::*method)()=&T::operator(), dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
+		: _dthreadcore(detach, stacksize), _sub(what, method, cancellation_token_method) {}
 
 	/// Dtor.
 	virtual ~dthread() {}
