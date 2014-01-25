@@ -852,6 +852,7 @@ enable_gprof
 enable_codectiming
 enable_debug
 enable_ssl
+enable_experimental_buffered_socket_read
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1519,6 +1520,9 @@ Optional Features:
   --enable-codectiming    enable CODEC timing testing code (default=no)
   --enable-debug          enable DEBUG support (default=no)
   --enable-ssl            enable SSL support (through OpenSSL, default=no)
+  --enable-experimental-buffered-socket-read
+                          enable experimental buffered socket read
+                          (default=no)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -23132,6 +23136,18 @@ fi
 else
   USESSL_TRUE='#'
   USESSL_FALSE=
+fi
+
+
+# Check whether --enable-experimental-buffered-socket-read was given.
+if test "${enable_experimental_buffered_socket_read+set}" = set; then :
+  enableval=$enable_experimental_buffered_socket_read; case "${enableval}" in
+	yes)
+$as_echo "#define EXPERIMENTAL_BUFFERED_SOCKET_READ 1" >>confdefs.h
+ ;;
+	no)  ;;
+	*) as_fn_error $? "bad value ${enableval} for --experimental-buffered-socket-read" "$LINENO" 5 ;;
+esac
 fi
 
 
