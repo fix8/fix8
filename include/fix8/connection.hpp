@@ -108,8 +108,10 @@ class FIXReader : public AsyncSocket<f8String>
 
 	dthread<FIXReader> _callback_thread;
 
+#if EXPERIMENTAL_BUFFERED_SOCKET_READ
     char _read_buffer[_max_msg_len*2];
     char *_read_buffer_rptr, *_read_buffer_wptr;
+#endif
 
 	/*! Process messages from inbound queue, calls session process method.
 	    \return number of messages processed */
@@ -122,7 +124,8 @@ class FIXReader : public AsyncSocket<f8String>
 	    \return true on success */
 	bool read(f8String& to);
 
-    /*! Read bytes from read buffer and then if needed from the socket layer, throws PeerResetConnection.
+#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+	/*! Read bytes from read buffer and then if needed from the socket layer, throws PeerResetConnection.
         \param where buffer to place bytes in
         \param sz number of bytes to read
         \return number of bytes read */
@@ -175,6 +178,33 @@ class FIXReader : public AsyncSocket<f8String>
 		}
 		return _read_buffer_wptr - ptr;
 	}
+#else
+	/*! Read bytes from the socket layer, throws PeerResetConnection.
+		 \param where buffer to place bytes in
+		 \param sz number of bytes to read
+		 \return number of bytes read */
+	int sockRead(char *where, const size_t sz)
+	{
+		unsigned remaining(sz), rddone(0);
+		while (remaining > 0)
+		{
+			const int rdSz(_sock->receiveBytes(where + rddone, remaining));
+			if (rdSz <= 0)
+			{
+				if (errno == EAGAIN
+#if defined EWOULDBLOCK && EAGAIN != EWOULDBLOCK
+					|| errno == EWOULDBLOCK
+#endif
+				)
+					continue;
+				throw PeerResetConnection("sockRead: connection gone");
+			}
+			rddone += rdSz;
+			remaining -= rdSz;
+		}
+		return rddone;
+	}
+#endif
 
 public:
 	/*! Ctor.
@@ -182,8 +212,11 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(FIX8::ref(*this), &FIXReader::callback_processor),
-		_read_buffer(), _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer), _bg_sz()
+		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(FIX8::ref(*this), &FIXReader::callback_processor)
+#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+		, _read_buffer(), _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
+#endif
+		, _bg_sz()
 	{
 		set_preamble_sz();
 	}

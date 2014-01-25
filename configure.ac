@@ -655,6 +655,14 @@ if test "$openssl" = yes; then
 fi
 AM_CONDITIONAL(USESSL, [test x$have_openssl = xyes])
 
+AC_ARG_ENABLE([experimental-buffered-socket-read],
+[AS_HELP_STRING([--enable-experimental-buffered-socket-read],[enable experimental buffered socket read (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(EXPERIMENTAL_BUFFERED_SOCKET_READ, 1, [Define to 1 to enable experimental socket read]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --experimental-buffered-socket-read) ;;
+esac])
+
 AC_MSG_CHECKING(checking for /var/run/)
 if test -d /var/run; then
 	AC_DEFINE(HAVE_VAR_RUN, 1, [Define to 1 if you have /var/run])
