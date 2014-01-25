@@ -573,3 +573,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define as `fork' if `vfork' does not work. */
 /* #undef vfork */
+
+/* Define to enable experimental buffered socket read */
+#undef EXPERIMENTAL_BUFFERED_SOCKET_READ
