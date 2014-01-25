@@ -68,6 +68,17 @@ std::string& InPlaceStrToUpper(std::string& src);
   \return reference to modified string */
 std::string& InPlaceStrToLower(std::string& src);
 
+/*! String to lower case.
+  \param src source string
+  \return to new lowercase string */
+std::string StrToLower(const std::string& src);
+
+/*! Decode a weekday name into numeric dow (0=SUN), case insensitive
+  only check at most the first 2 unique characters (will ignore any characters after that)
+  \param src source dow string
+  \return idx dow or -1 if not found */
+int decode_dow (const std::string& from);
+
 /*! Check if string has trailing slash, if not add.
   \param source source string
   \return reference to modified string */

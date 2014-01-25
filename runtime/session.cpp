@@ -63,9 +63,16 @@ RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 //-------------------------------------------------------------------------------------------------
 #ifndef _MSC_VER
 const Tickval::ticks Tickval::noticks;
+const Tickval::sticks Tickval::nosticks;
+const Tickval::ticks Tickval::errorticks;
 const Tickval::ticks Tickval::thousand;
 const Tickval::ticks Tickval::million;
 const Tickval::ticks Tickval::billion;
+const Tickval::ticks Tickval::second;
+const Tickval::ticks Tickval::minute;
+const Tickval::ticks Tickval::hour;
+const Tickval::ticks Tickval::day;
+const Tickval::ticks Tickval::week;
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -101,20 +108,22 @@ void SessionID::from_string(const f8String& from)
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _sf(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service, true),
+	_session_scheduler(&Session::activation_service, true), _schedule()
 {
 	_timer.start();
-	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
+	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service, true),
+	_session_scheduler(&Session::activation_service, true), _schedule()
 {
 	_timer.start();
-	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
+	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -122,6 +131,7 @@ void Session::atomic_init(States::SessionStates st)
 {
 	_state = st;
 	_next_send_seq = _next_receive_seq = 1;
+	_active = true;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -134,6 +144,7 @@ Session::~Session()
 
 	if (_connection->get_role() == Connection::cn_acceptor)
 		{ f8_scoped_spin_lock guard(_per_spl); delete _persist; _persist = 0; }
+	delete _schedule;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -179,6 +190,12 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 			_req_next_send_seq = send_seqnum;
 		if (recv_seqnum)
 			_req_next_receive_seq = recv_seqnum;
+	}
+
+	if (_sf && (_schedule = _sf->create_schedule(_sf->_ses)))
+	{
+		cout << *_schedule << endl;
+		_timer.schedule(_session_scheduler, 1000);	// check every second
 	}
 
 	if (wait)	// wait for
@@ -417,17 +434,22 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		SessionID id(_ctx._beginStr, tci(), sci());
 
 		// important - these objects can't be created until we have a valid SessionID
-		if (!_logger)
-			_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id);
-
-		if (!_plogger)
-			_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id);
-
-		if (!_persist)
+		if (_sf)
 		{
-			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
-			_persist = _sf->create_persister(_sf->_ses, &id, reset_given);
+			if (!_logger)
+				_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id);
+
+			if (!_plogger)
+				_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id);
+
+			if (!_persist)
+			{
+				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+				_persist = _sf->create_persister(_sf->_ses, &id, reset_given);
+			}
 		}
+		else
+			GlobalLogger::log("Error: SessionConfig object missing in session");
 
 		ostringstream ostr;
 		ostr << "Connection from " << _connection->get_peer_socket_address().toString();
@@ -590,6 +612,57 @@ bool Session::handle_test_request(const unsigned seqnum, const Message *msg)
 	return true;
 }
 
+
+//-------------------------------------------------------------------------------------------------
+bool Session::activation_service()
+{
+	//cout << "activation_service()" << endl;
+	if (is_shutdown())
+		return false;
+
+	if (_connection && _connection->is_connected())
+	{
+		Tickval now(true);
+		now.adjust(_schedule->_toffset);
+		const Tickval today(now.get_ticks() - (now.get_ticks() % Tickval::day));
+
+		if (_schedule->_start_day < 0) // no start/end days specified, assume today
+		{
+today_label:
+			const bool inrange(now.in_range(today + _schedule->_start, today + _schedule->_end));
+
+			if (inrange && !_active)
+				_active = true;
+			else if (!inrange && _active)
+				_active = false;
+			else
+				return true;
+		}
+		else
+		{
+			struct tm result;
+			now.as_tm(result);
+			if ((_schedule->_start_day > _schedule->_end_day && (result.tm_wday >= _schedule->_start_day || result.tm_wday <= _schedule->_end_day))
+			 || (_schedule->_start_day < _schedule->_end_day && result.tm_wday >= _schedule->_start_day && result.tm_wday <= _schedule->_end_day))
+			{
+				if (!_active && now >= today + _schedule->_start)
+					_active = true;
+				else if (_active && now > today + _schedule->_end)
+					_active = false;
+				else
+					return true;
+			}
+			else
+				goto today_label;
+		}
+		ostringstream ostr;
+		ostr << "Session transitioned to " << (_active ? "active" : "inactive");
+		log(ostr.str());
+	}
+
+	return true;
+}
+
 //-------------------------------------------------------------------------------------------------
 bool Session::heartbeat_service()
 {
@@ -647,7 +720,7 @@ bool Session::heartbeat_service()
 		}
 	}
 
-	_timer.schedule(_hb_processor, 1000);
+	//_timer.schedule(_hb_processor, 1000);
 	return true;
 }
 
@@ -982,4 +1055,3 @@ void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& priv
 
 //-------------------------------------------------------------------------------------------------
 #endif
-/* vim: set ts=3 sw=3 tw=0 noet :*/

@@ -60,20 +60,24 @@ template<typename T>
 class TimerEvent
 {
    bool (T::*_callback)();
-	mutable Tickval _t;
+	Tickval _t;
+	unsigned _intervalMS;
+	bool _repeat;
 
 public:
 	/*! Ctor.
 		The callback method returns a bool. If false, exit timer
-	  \param callback pointer to callback method */
-	explicit TimerEvent(bool (T::*callback)()) : _callback(callback), _t() {}
+	  \param callback pointer to callback method
+	  \param repeat if true, repeat indefinately */
+	explicit TimerEvent(bool (T::*callback)(), bool repeat=false)
+		: _callback(callback), _t(), _intervalMS(), _repeat(repeat) {}
 
 	/// Dtor.
 	~TimerEvent() {}
 
 	/*! Set the event trigger time.
 	 \param t Tickval to assign */
-	void set(const Tickval& t) const { _t = t; }
+	void set(const Tickval& t) { _t = t; }
 
 	/*! Less than operator.
 	  \param right check if this TimeEvent is less than rhs
@@ -109,7 +113,7 @@ public:
 	  \param what TimeEvent to schedule
 	  \param timeToWaitMS interval to wait in ms
 	  \return true on success */
-   bool schedule(const TimerEvent<T>& what, const unsigned timeToWaitMS);
+   bool schedule(TimerEvent<T> what, unsigned timeToWaitMS);
 
 	/*! Empty the scheduler of any pending timer events.
 	  \return number of timer events that were waiting on the queue */
@@ -144,21 +148,28 @@ int Timer<T>::operator()()
 
          if (_event_queue.size())
          {
-            const TimerEvent<T>& op(_event_queue.top());
-            if (!op._t) // empty timeval means exit
-            {
-               _event_queue.pop(); // remove from queue
-               break;
-            }
+            TimerEvent<T> op(_event_queue.top());
+				if (!op._t) // empty timeval means exit
+				{
+					_event_queue.pop(); // remove from queue
+					break;
+				}
 
-            if (op._t <= Tickval::get_tickval())  // has elapsed
-            {
-					const TimerEvent<T> rop(_event_queue.top()); // take a copy
-               _event_queue.pop(); // remove from queue
+				const Tickval now(Tickval::get_tickval());
+				if (op._t <= now)  // has elapsed
+				{
+					TimerEvent<T> rop(_event_queue.top()); // take a copy
+					_event_queue.pop(); // remove from queue
 					guard.release();
 					++elapsed;
-               if (!(_monitor.*rop._callback)())
+					if (!(_monitor.*rop._callback)())
 						break;
+					if (op._repeat)
+					{
+						op._t = now.get_ticks() + op._intervalMS * Tickval::million;
+						guard.acquire(_spin_lock);
+						_event_queue.push(op); // push back on queue
+					}
             }
             else
                shouldsleep = true;
@@ -195,7 +206,7 @@ size_t Timer<T>::clear()
 
 //-------------------------------------------------------------------------------------------------
 template<typename T>
-bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWait)
+bool Timer<T>::schedule(TimerEvent<T> what, unsigned timeToWait)
 {
 	Tickval tofire;
 
@@ -204,6 +215,7 @@ bool Timer<T>::schedule(const TimerEvent<T>& what, const unsigned timeToWait)
       // Calculate time to fire
 		Tickval::get_tickval(tofire);
 		tofire += timeToWait * Tickval::million;
+		what._intervalMS = timeToWait;
    }
 
 	what.set(tofire);

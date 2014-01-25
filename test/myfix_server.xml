@@ -14,7 +14,17 @@
 				ignore_logon_sequence_check="true"
 				process_model="threaded"
 				silent_disconnect="false"
+				schedule="test_schedule0"
 				persist="file0"/>
+
+	<schedule name="test_schedule0"
+				start_time="14:10:33"
+				end_time="14:13:33"
+				start_day="Thursday"
+				end_day="Tuesday"
+				reject_code="7"
+				reject_text="Test system is not accepting any business messages at the moment"
+				utc_offset_mins="!{ now=`date +%z`; echo $(( ($now / 100) * 60 + ($now % 100) )) }" />
 
 	<persist name="bdb0"
 				type="bdb"

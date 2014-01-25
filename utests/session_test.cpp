@@ -113,7 +113,7 @@ TEST(sessionId, sessionId)
 /// a test session
 class test_session : public FIX8::Session
 {
-    utest_Router  _router;
+    utest_Router _router;
 
 public:
 

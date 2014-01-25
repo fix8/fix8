@@ -158,6 +158,13 @@ string& InPlaceStrToLower(string& src)
 	return src;
 }
 
+//-----------------------------------------------------------------------------------------
+string StrToLower(const string& src)
+{
+	string result(src);
+	return InPlaceStrToLower(result);
+}
+
 //----------------------------------------------------------------------------------------
 string Str_error(const int err, const char *str)
 {
@@ -183,6 +190,36 @@ const string& trim(string& source, const string& ws)
     const size_t bgstr(source.find_first_not_of(ws));
     return bgstr == string::npos
 		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
+}
+
+//----------------------------------------------------------------------------------------
+namespace
+{
+	typedef pair<char, int> Day;
+	typedef multimap<char, int> Daymap;
+	static const string day_names[] = { "su", "mo", "tu", "we", "th", "fr", "sa" };
+	static const Day days[] = { Day('s',0), Day('m',1), Day('t',2), Day('w',3), Day('t',4), Day('f',5), Day('s', 6) };
+	static const Daymap daymap(days, days + sizeof(days)/sizeof(Day));
+};
+
+int decode_dow (const string& from)
+{
+	if (from.empty())
+		return -1;
+	const string source(StrToLower(from));
+	pair<Daymap::const_iterator, Daymap::const_iterator> result(daymap.equal_range(source[0]));
+	switch(distance(result.first, result.second))
+	{
+	case 1:
+		return result.first->second;
+	default:
+		if (source.size() == 1) // drop through
+	case 0:
+			return -1;
+		break;
+	}
+	return day_names[result.first->second][1] == source[1]
+		 || day_names[(++result.first)->second][1] == source[1] ? result.first->second : -1;
 }
 
 } // namespace FIX8

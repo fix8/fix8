@@ -128,6 +128,10 @@ public:
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
 	bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);
+
+	/*! example scheduler callback function
+	  	\return true if ok */
+	bool sample_scheduler_callback();
 };
 
 //-------------------------------------------------------------------------------------------------

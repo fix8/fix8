@@ -250,6 +250,11 @@ int main(int argc, char **argv)
 				ostringstream sostr;
 				sostr << "client(" << ++scnt << ") connection established.";
 				GlobalLogger::log(sostr.str());
+
+				// an example of how to use the scheduler
+				TimerEvent<FIX8::Session> sample_callback(static_cast<bool (FIX8::Session::*)()>(&myfix_session_server::sample_scheduler_callback), true);
+				inst->session_ptr()->get_timer().schedule(sample_callback, 5000); // call sample_scheduler_callback every 5 secs forever
+
 				inst->start(true, next_send, next_receive);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
@@ -323,6 +328,13 @@ bool myfix_session_server::handle_application(const unsigned seqnum, const Messa
 	if (!msg->process(_router)) // false means I have taken ownership of the message
 		detach(msg);
 	return false;
+}
+
+//-----------------------------------------------------------------------------------------
+bool myfix_session_server::sample_scheduler_callback()
+{
+	cout << "myfix_session_server::sample_scheduler_callback Hello!" << endl;
+	return true;
 }
 
 //-----------------------------------------------------------------------------------------

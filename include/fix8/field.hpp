@@ -644,6 +644,10 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+/*! Format ASCII decimal value
+  \param data source value
+  \param to target location for string
+  \return number bytes decoded */
 inline void format0(int data, char *to, int width)
 {
 	while(width-- > 0)
@@ -653,7 +657,12 @@ inline void format0(int data, char *to, int width)
 	}
 }
 
-inline size_t parseDate(const char *begin, size_t len, int &to)
+/*! Decode ASCII decimal value
+  \param begin decode from
+  \param len number of bytes in string
+  \param to target location for value
+  \return number bytes decoded */
+inline size_t parse_decimal(const char *begin, size_t len, int &to)
 {
 	const char *bsv(begin);
 	while(len-- > 0)
@@ -748,21 +757,21 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
    int millisecond(0);
    tm tms = {};
 
-	ptr += parseDate(ptr, 4, tms.tm_year);
+	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
-	ptr += parseDate(ptr, 2, tms.tm_mon);
+	ptr += parse_decimal(ptr, 2, tms.tm_mon);
 	--tms.tm_mon;
-	ptr += parseDate(ptr, 2, tms.tm_mday);
+	ptr += parse_decimal(ptr, 2, tms.tm_mday);
 	++ptr;
-	ptr += parseDate(ptr, 2, tms.tm_hour);
+	ptr += parse_decimal(ptr, 2, tms.tm_hour);
 	++ptr;
-	ptr += parseDate(ptr, 2, tms.tm_min);
+	ptr += parse_decimal(ptr, 2, tms.tm_min);
 	++ptr;
-	ptr += parseDate(ptr, 2, tms.tm_sec);
+	ptr += parse_decimal(ptr, 2, tms.tm_sec);
    switch(len)
    {
 	case 21: //_with_ms: // 19981231-23:59:59.123
-      parseDate(++ptr, 3, millisecond);
+      parse_decimal(++ptr, 3, millisecond);
       result = millisecond * Tickval::million; // drop through
    case 17: //: // 19981231-23:59:59
       result += time_to_epoch(tms) * Tickval::billion;
@@ -777,25 +786,29 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 /*! Decode a DateTime string into ticks
   \param ptr input DateTime string
   \param len length of string
+  \param timeonly if true, only calculate ticks for today
   \return ticks decoded */
-inline Tickval::ticks time_parse(const char *ptr, size_t len)
+inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=false)
 {
 	Tickval::ticks result(Tickval::noticks);
    int millisecond(0);
    tm tms = {};
 
-	ptr += parseDate(ptr, 2, tms.tm_hour);
+	ptr += parse_decimal(ptr, 2, tms.tm_hour);
 	++ptr;
-	ptr += parseDate(ptr, 2, tms.tm_min);
+	ptr += parse_decimal(ptr, 2, tms.tm_min);
 	++ptr;
-	ptr += parseDate(ptr, 2, tms.tm_sec);
+	ptr += parse_decimal(ptr, 2, tms.tm_sec);
    switch(len)
    {
 	case 12: // 23:59:59.123
-      parseDate(++ptr, 3, millisecond);
+      parse_decimal(++ptr, 3, millisecond);
       result = millisecond * Tickval::million; // drop through
    case 8: // 23:59:59
-      result += time_to_epoch(tms) * Tickval::billion;
+		if (!timeonly)
+			result += time_to_epoch(tms) * Tickval::billion;
+		else
+			result += (tms.tm_hour * 3600ULL + tms.tm_min * 60ULL + tms.tm_sec) * Tickval::billion;
       break;
    default:
       break;
@@ -808,12 +821,12 @@ inline Tickval::ticks date_parse(const char *ptr, size_t len)
 {
    tm tms = {};
 
-	ptr += parseDate(ptr, 4, tms.tm_year);
+	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
-	ptr += parseDate(ptr, 2, tms.tm_mon);
+	ptr += parse_decimal(ptr, 2, tms.tm_mon);
 	--tms.tm_mon;
 	if (len == 8)
-		parseDate(ptr, 2, tms.tm_mday);
+		parse_decimal(ptr, 2, tms.tm_mday);
 	return time_to_epoch(tms) * Tickval::billion;
 }
 

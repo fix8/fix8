@@ -40,6 +40,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-------------------------------------------------------------------------------------------------
 #ifndef _MSC_VER
 #include <sys/time.h>
+#include <limits.h>
 #else
 #include <pthread.h>
 #endif
@@ -140,32 +141,34 @@ inline void current_utc_time(struct timespec *ts)
 class Tickval
 {
 public:
-	typedef unsigned long long ticks;
+	typedef unsigned long long ticks; // unsigned ticks
+	typedef long long sticks; // signed ticks
 	static const ticks noticks = 0ULL;
+	static const sticks nosticks = 0LL;
+	static const ticks errorticks = ULLONG_MAX;
 	static const ticks thousand = 1000ULL;
 	static const ticks million = thousand * thousand;
 	static const ticks billion = thousand * million;
+	static const ticks second = billion;
+	static const ticks minute = 60 * second;
+	static const ticks hour = 60 * minute;
+	static const ticks day = 24 * hour;
+	static const ticks week = 7 * day;
 
 private:
-	// long long not available in 32 bit ff atomic_long_t
-// #if defined __WORDSIZE && (__WORDSIZE == 32) && (MPMC_SYSTEM == MPMC_FF)
-// 	ticks _value;
-// #else
-	//f8_atomic<ticks> _value;
 	ticks _value;
-// #endif
 
 public:
 	/*! Ctor.
 	  \param settonow if true, construct with current time */
-	Tickval(bool settonow=false) : _value(settonow ? _cvt(get_timespec()) : noticks) {}
+	explicit Tickval(bool settonow=false) : _value(settonow ? _cvt(get_timespec()) : noticks) {}
 
 	/*! Copy Ctor. */
 	Tickval(const Tickval& from) : _value(from._value) {}
 
 	/*! Ctor.
 	  \param from construct from raw ticks value (nanoseconds) */
-	explicit Tickval(const ticks& from) : _value(from) {}
+	Tickval(const ticks from) : _value(from) {}
 
 	/*! Ctor.
 	  \param secs seconds
@@ -186,6 +189,15 @@ public:
 	{
 		if (this != &that)
 			_value = that._value;
+		return *this;
+	}
+
+	/*! Assignment operator from ticks
+	  \param that ticks to assign from
+	  \return *this */
+	Tickval& operator=(const ticks that)
+	{
+		_value = that;
 		return *this;
 	}
 
@@ -225,6 +237,31 @@ public:
 	/*! Get the current tickval as a double.
 	  \return value as a double */
 	double todouble() const { return static_cast<double>(_value) / billion; }
+
+	/*! See if this Tickval holds an error value
+	  \return true if an error value */
+	bool is_errorval() const { return _value == errorticks; }
+
+	/*! See if this Tickval is within the range given
+	  \param a lower boundary
+	  \param b upper boundary; if an error value, ignore upper range
+	  \return true if in range */
+	bool in_range(const Tickval& a, const Tickval& b) const
+	{
+		return !b.is_errorval() ? a <= *this && *this <= b : a <= *this;
+	}
+
+	/*! Adjust Tickval by given signed value (sticks)
+	  \param by amount to adjust; if +ve add, if -ve sub
+	  \return adjusted Tickval */
+	Tickval& adjust(sticks by)
+	{
+		if (by > 0LL)
+			*this += by;
+		else if (by < 0LL)
+			*this -= -by;
+		return *this;
+	}
 
 	/*! Generate a timespec object
 	  \return timespec */
@@ -291,6 +328,8 @@ public:
 
 	/*! Cast to unsigned long long.
 	  \return ticks as unsigned long long */
+	operator Tickval::ticks () { return _value; }
+
 	operator unsigned long long() { return _value; }
 
 	/*! Cast to double.
@@ -446,4 +485,3 @@ inline bool operator<=(const Tickval& a, const Tickval& b)
 } // FIX8
 
 #endif // _FIX8_TICKVAL_HPP_
-

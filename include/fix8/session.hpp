@@ -223,6 +223,36 @@ struct LoginParameters
 };
 
 //-------------------------------------------------------------------------------------------------
+struct Session_Schedule
+{
+	Tickval _start, _end;
+	unsigned _duration;
+	int _utc_offset, _reject_reason, _start_day, _end_day;
+	f8String _reject_text;
+	Tickval::sticks _toffset;
+
+	Session_Schedule(Tickval start, Tickval end, unsigned duration=0, int utc_offset=0, int reject_reason=0,
+		const f8String& reject_text="Business messages are not accepted now.", int start_day=-1, int end_day=-1) :
+		_start(start), _end(end), _duration(duration), _utc_offset(utc_offset),
+		_reject_reason(reject_reason), _start_day(start_day), _end_day(end_day), _reject_text(reject_text),
+		_toffset(static_cast<Tickval::sticks>(_utc_offset) * Tickval::minute)
+	{}
+
+	/*! Inserter friend.
+	    \param os stream to send to
+	    \param what Session_Schedule reference
+	    \return stream */
+	friend std::ostream& operator<<(std::ostream& os, const Session_Schedule& what)
+	{
+		return os << "start:" << what._start.get_ticks() << " end:" << what._end.get_ticks()
+					 << " duration:" << what._duration
+					 << " utc_offset:" << what._utc_offset << " reject_reason:"
+					 << what._reject_reason << " reject_text:" << what._reject_text
+					 << " start day:" << what._start_day << " end day:" << what._end_day;
+	}
+};
+
+//-------------------------------------------------------------------------------------------------
 class Persister;
 class Logger;
 class Connection;
@@ -244,6 +274,7 @@ protected:
 	Control _control;
 	f8_atomic<unsigned> _next_send_seq, _next_receive_seq;
 	f8_atomic<States::SessionStates> _state;
+	f8_atomic<bool> _active;
 	Tickval _last_sent, _last_received;
 	const F8MetaCntx& _ctx;
 	Connection *_connection;
@@ -258,11 +289,15 @@ protected:
 	Logger *_logger, *_plogger;
 
 	Timer<Session> _timer;
-	TimerEvent<Session> _hb_processor;
+	TimerEvent<Session> _hb_processor, _session_scheduler;
 	std::string _batchmsgs_buffer;
+	Session_Schedule *_schedule;
 
 	/// Heartbeat generation service thread method.
 	bool heartbeat_service();
+
+	/// Session start/stop service thread method.
+	bool activation_service();
 
 	/*! Logon callback.
 	    \param seqnum message sequence number
@@ -449,6 +484,10 @@ public:
 	/*! Get the connection object.
 	    \return the connection object */
 	Connection *get_connection() { return _connection; }
+
+	/*! Get the timer object.
+	    \return the timer object */
+	Timer<Session>& get_timer() { return _timer; }
 
 	/*! Get the metadata context object.
 	    \return the context object */
