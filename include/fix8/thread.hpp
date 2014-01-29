@@ -129,7 +129,6 @@ public:
 	  \return result of join */
 	int join()
 	{
-		request_stop();
 		return pthread_join(_tid, reinterpret_cast<void **>(&_exitval)) ? -1 : _exitval;
 	}
 
