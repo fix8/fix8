@@ -59,7 +59,7 @@ XML_FIXT_SCHEMA = $(top_srcdir)/schema/FIXT11.xml
 .NOTPARALLEL: $(XML_SCHEMA) $(XML_HF_SCHEMA)
 
 $(libhftest_la_SOURCES): $(XML_HF_SCHEMA)
-	$(top_srcdir)/compiler/f8c -sVp Perf -R -n TEX $(XML_HF_SCHEMA)
+	$(top_srcdir)/compiler/f8c -sVUp Perf -R -n TEX $(XML_HF_SCHEMA)
 
 $(libmyfix_la_SOURCES): $(XML_SCHEMA)
 	$(top_srcdir)/compiler/f8c -rVn TEX $(XML_SCHEMA) -x $(XML_FIXT_SCHEMA)

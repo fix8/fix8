@@ -14,8 +14,6 @@
 				ignore_logon_sequence_check="true"
 				process_model="threaded"
 				silent_disconnect="false"
-				schedule="test_schedule0"
-				login="test_login0"
 				persist="file0"/>
 
 	<schedule name="test_schedule0"
