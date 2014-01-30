@@ -84,7 +84,7 @@ using namespace std;
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigned dplaces)
+const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigned dplaces, bool use_gm)
 {
    const Tickval *startTime;
    Tickval gotTime;
@@ -99,11 +99,11 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
 #ifdef _MSC_VER
    struct tm *ptim;
    time_t tval(startTime->secs());
-   ptim = localtime (&tval);
+	ptim = use_gm ? gmtime(&tval) : localtime (&tval);
 #else
    struct tm tim, *ptim;
    time_t tval(startTime->secs());
-   localtime_r(&tval, &tim);
+   use_gm ? gmtime_r(&tval, &tim) : localtime_r(&tval, &tim);
    ptim = &tim;
 #endif
 
@@ -207,6 +207,8 @@ int decode_dow (const string& from)
 	if (from.empty())
 		return -1;
 	const string source(StrToLower(from));
+	if (isdigit(source[0]) && source.size() == 1 && source[0] >= '0' && source[0] <= '6')	// accept numeric dow
+		return source[0] - '0';
 	pair<Daymap::const_iterator, Daymap::const_iterator> result(daymap.equal_range(source[0]));
 	switch(distance(result.first, result.second))
 	{

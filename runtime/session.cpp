@@ -192,9 +192,14 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 			_req_next_receive_seq = recv_seqnum;
 	}
 
-	if (_sf && (_schedule = _sf->create_schedule(_sf->_ses)))
+	if (_sf && (_schedule = _sf->create_session_schedule(_sf->_ses)))
 	{
-		cout << *_schedule << endl;
+		if (_connection->get_role() == Connection::cn_initiator)
+		{
+			ostringstream ostr;
+			ostr << *_schedule;
+			log(ostr.str());
+		}
 		_timer.schedule(_session_scheduler, 1000);	// check every second
 	}
 
@@ -284,7 +289,8 @@ bool Session::process(const f8String& from)
 		{
 		default:
 application_call:
-			result = handle_application(seqnum, msg);
+			if (activation_check(seqnum, msg))
+				result = handle_application(seqnum, msg);
 			break;
 		case Common_MsgByte_HEARTBEAT:
 			result = handle_heartbeat(seqnum, msg);
@@ -447,6 +453,13 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
 				_persist = _sf->create_persister(_sf->_ses, &id, reset_given);
 			}
+
+			if (_schedule)
+			{
+				ostringstream ostr;
+				ostr << *_schedule;
+				log(ostr.str());
+			}
 		}
 		else
 			GlobalLogger::log("Error: SessionConfig object missing in session");
@@ -480,6 +493,16 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		{
 			ostringstream ostr;
 			ostr << id << " failed authentication";
+			log(ostr.str());
+			stop();
+			_state = States::st_session_terminated;
+			return false;
+		}
+
+		if (_loginParameters._login_schedule.is_valid() && !_loginParameters._login_schedule.test())
+		{
+			ostringstream ostr;
+			ostr << id << " Session unavailable. Login not accepted.";
 			log(ostr.str());
 			stop();
 			_state = States::st_session_terminated;
@@ -614,7 +637,7 @@ bool Session::handle_test_request(const unsigned seqnum, const Message *msg)
 
 
 //-------------------------------------------------------------------------------------------------
-bool Session::activation_service()
+bool Session::activation_service()	// called on the timer threead
 {
 	//cout << "activation_service()" << endl;
 	if (is_shutdown())
@@ -622,42 +645,14 @@ bool Session::activation_service()
 
 	if (_connection && _connection->is_connected())
 	{
-		Tickval now(true);
-		now.adjust(_schedule->_toffset);
-		const Tickval today(now.get_ticks() - (now.get_ticks() % Tickval::day));
-
-		if (_schedule->_start_day < 0) // no start/end days specified, assume today
+		const bool curr(_active);
+		_active = _schedule->_sch.test(curr);
+		if (curr != _active)
 		{
-today_label:
-			const bool inrange(now.in_range(today + _schedule->_start, today + _schedule->_end));
-
-			if (inrange && !_active)
-				_active = true;
-			else if (!inrange && _active)
-				_active = false;
-			else
-				return true;
+			ostringstream ostr;
+			ostr << "Session activation transitioned to " << (_active ? "active" : "inactive");
+			log(ostr.str());
 		}
-		else
-		{
-			struct tm result;
-			now.as_tm(result);
-			if ((_schedule->_start_day > _schedule->_end_day && (result.tm_wday >= _schedule->_start_day || result.tm_wday <= _schedule->_end_day))
-			 || (_schedule->_start_day < _schedule->_end_day && result.tm_wday >= _schedule->_start_day && result.tm_wday <= _schedule->_end_day))
-			{
-				if (!_active && now >= today + _schedule->_start)
-					_active = true;
-				else if (_active && now > today + _schedule->_end)
-					_active = false;
-				else
-					return true;
-			}
-			else
-				goto today_label;
-		}
-		ostringstream ostr;
-		ostr << "Session transitioned to " << (_active ? "active" : "inactive");
-		log(ostr.str());
 	}
 
 	return true;
@@ -749,6 +744,29 @@ Message *Session::generate_reject(const unsigned seqnum, const char *what)
 {
 	Message *msg(create_msg(Common_MsgType_REJECT));
 	*msg << new ref_seq_num(seqnum);
+	if (what)
+		*msg << new text(what);
+
+	return msg;
+}
+
+//-------------------------------------------------------------------------------------------------
+Message *Session::generate_business_reject(const unsigned seqnum, const Message *imsg, const int reason, const char *what)
+{
+	Message *msg;
+	try
+	{
+		msg = create_msg(Common_MsgType_BUSINESS_REJECT);
+	}
+	catch (InvalidMetadata<f8String>& e)
+	{
+		// since this is an application message, it may not be supported in supplied schema
+		return 0;
+	}
+
+	*msg << new ref_seq_num(seqnum);
+	*msg << new ref_msg_type(imsg->get_msgtype());
+	*msg << new business_reject_reason(reason);
 	if (what)
 		*msg << new text(what);
 

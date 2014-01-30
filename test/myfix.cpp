@@ -253,7 +253,7 @@ int main(int argc, char **argv)
 
 				// an example of how to use the scheduler
 				TimerEvent<FIX8::Session> sample_callback(static_cast<bool (FIX8::Session::*)()>(&myfix_session_server::sample_scheduler_callback), true);
-				inst->session_ptr()->get_timer().schedule(sample_callback, 5000); // call sample_scheduler_callback every 5 secs forever
+				inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
 
 				inst->start(true, next_send, next_receive);
 				cout << "Session(" << scnt << ") finished." << endl;

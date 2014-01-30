@@ -15,15 +15,23 @@
 				process_model="threaded"
 				silent_disconnect="false"
 				schedule="test_schedule0"
+				login="test_login0"
 				persist="file0"/>
 
 	<schedule name="test_schedule0"
-				start_time="14:10:33"
-				end_time="14:13:33"
-				start_day="Thursday"
-				end_day="Tuesday"
+				start_time="22:00:00"
+				end_time="22:01:00"
+				start_day="0"
+				end_day="1"
 				reject_code="7"
 				reject_text="Test system is not accepting any business messages at the moment"
+				utc_offset_mins="!{ now=`date +%z`; echo $(( ($now / 100) * 60 + ($now % 100) )) }" />
+
+	<login   name="test_login0"
+				start_time="16:56:00"
+				end_time="16:57:00"
+				start_day="0"
+				end_day="6"
 				utc_offset_mins="!{ now=`date +%z`; echo $(( ($now / 100) * 60 + ($now % 100) )) }" />
 
 	<persist name="bdb0"

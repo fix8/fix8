@@ -156,7 +156,7 @@ public:
 	static const ticks week = 7 * day;
 
 private:
-	ticks _value;
+	ticks _value; // We're ok till 03:14:08 UTC on 19 January 2038
 
 public:
 	/*! Ctor.
@@ -340,73 +340,117 @@ public:
 	  \param newtime Tickval to subtract from
 	  \param oldtime Tickval to subtract
 	  \return Result as Tickval */
-	friend Tickval operator-(const Tickval& newtime, const Tickval& oldtime);
+	friend Tickval operator-(const Tickval& newtime, const Tickval& oldtime)
+		{ return Tickval(newtime._value - oldtime._value); }
 
 	/*! Binary negate operator.
 	  \param newtime Tickval to subtract from
 	  \param oldtime Tickval to subtract
 	  \return resulting oldtime */
-	friend Tickval& operator-=(Tickval& oldtime, const Tickval& newtime);
+	friend Tickval& operator-=(Tickval& oldtime, const Tickval& newtime)
+	{
+		oldtime._value -= newtime._value;
+		return oldtime;
+	}
 
 	/*! Binary addition operator.
 	  \param newtime Tickval to add to
 	  \param oldtime Tickval to add
 	  \return Result as Tickval */
-	friend Tickval operator+(const Tickval& newtime, const Tickval& oldtime);
+	friend Tickval operator+(const Tickval& newtime, const Tickval& oldtime)
+		{ return Tickval(newtime._value + oldtime._value); }
 
 	/*! Binary addition operator.
 	  \param newtime Tickval to add to
 	  \param oldtime Tickval to add
 	  \return resulting oldtime */
-	friend Tickval& operator+=(Tickval& oldtime, const Tickval& newtime);
+	friend Tickval& operator+=(Tickval& oldtime, const Tickval& newtime)
+	{
+		oldtime._value += newtime._value;
+		return oldtime;
+	}
 
 	/*! Equivalence operator.
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if equal */
-	friend bool operator==(const Tickval& a, const Tickval& b);
+	friend bool operator==(const Tickval& a, const Tickval& b)
+		{ return a._value == b._value; }
 
 	/*! Inequivalence operator.
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if not equal */
-	friend bool operator!=(const Tickval& a, const Tickval& b);
+	friend bool operator!=(const Tickval& a, const Tickval& b)
+		{ return a._value != b._value; }
 
 	/*! Greater than operator.
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if a is greater than b */
-	friend bool operator>(const Tickval& a, const Tickval& b);
+	friend bool operator>(const Tickval& a, const Tickval& b)
+		{ return a._value > b._value; }
 
 	/*! Less than operator.
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if a is less than b */
-	friend bool operator<(const Tickval& a, const Tickval& b);
+	friend bool operator<(const Tickval& a, const Tickval& b)
+		{ return a._value < b._value; }
 
 	/*! Greater than or equal to operator.
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if a is greater than or equal to b */
-	friend bool operator>=(const Tickval& a, const Tickval& b);
+	friend bool operator>=(const Tickval& a, const Tickval& b)
+		{ return a._value >= b._value; }
 
 	/*! Less than or equal to operator.
 	  \param a lhs Tickval
 	  \param b rhs Tickval
 	  \return true if a is less than or equal to b */
-	friend bool operator<=(const Tickval& a, const Tickval& b);
+	friend bool operator<=(const Tickval& a, const Tickval& b)
+		{ return a._value <= b._value; }
 
 	/*! Binary addition operator.
 	  \param oldtime Tickval to add to
 	  \param ns ticks to add
 	  \return oldtime as Tickval */
-	friend Tickval& operator+=(Tickval& oldtime, const ticks& ns);
+	friend Tickval& operator+=(Tickval& oldtime, const ticks& ns)
+	{
+		oldtime._value += ns;
+		return oldtime;
+	}
 
 	/*! Binary negate operator.
 	  \param oldtime Tickval to subtract from
 	  \param ns Tickval to subtract
 	  \return oldtime as Tickval */
-	friend Tickval& operator-=(Tickval& oldtime, const ticks& ns);
+	friend Tickval& operator-=(Tickval& oldtime, const ticks& ns)
+	{
+		oldtime._value -= ns;
+		return oldtime;
+	}
+
+	/*! ostream inserter friend; Tickval printer, localtime
+	  \param os stream to insert into
+	  \param what Tickval to insert
+	  \return ostream object */
+	friend std::ostream& operator<<(std::ostream& os, const Tickval& what)
+	{
+		std::string result;
+		return os << GetTimeAsStringMS(result, &what, 9);
+	}
+
+	/*! ostream inserter friend; Tickval printer, gmtime
+	  \param os stream to insert into
+	  \param what Tickval to insert
+	  \return ostream object */
+	friend std::ostream& operator>>(std::ostream& os, const Tickval& what)
+	{
+		std::string result;
+		return os << GetTimeAsStringMS(result, &what, 9, true);
+	}
 
 private:
 	/*! Convert timespec to ticks.
@@ -417,70 +461,6 @@ private:
 		return billion * static_cast<ticks>(from.tv_sec) + static_cast<ticks>(from.tv_nsec);
 	}
 };
-
-inline Tickval operator-(const Tickval& newtime, const Tickval& oldtime)
-{
-	return Tickval(newtime._value - oldtime._value);
-}
-
-inline Tickval& operator-=(Tickval& oldtime, const Tickval& newtime)
-{
-	oldtime._value -= newtime._value;
-	return oldtime;
-}
-
-inline Tickval operator+(const Tickval& newtime, const Tickval& oldtime)
-{
-	return Tickval(newtime._value + oldtime._value);
-}
-
-inline Tickval& operator+=(Tickval& oldtime, const Tickval::ticks& ns)
-{
-	oldtime._value += ns;
-	return oldtime;
-}
-
-inline Tickval& operator-=(Tickval& oldtime, const Tickval::ticks& ns)
-{
-	oldtime._value -= ns;
-	return oldtime;
-}
-
-inline Tickval& operator+=(Tickval& oldtime, const Tickval& newtime)
-{
-	oldtime._value += newtime._value;
-	return oldtime;
-}
-
-inline bool operator==(const Tickval& a, const Tickval& b)
-{
-	return a._value == b._value;
-}
-
-inline bool operator!=(const Tickval& a, const Tickval& b)
-{
-	return a._value != b._value;
-}
-
-inline bool operator>(const Tickval& a, const Tickval& b)
-{
-	return a._value > b._value;
-}
-
-inline bool operator<(const Tickval& a, const Tickval& b)
-{
-	return a._value < b._value;
-}
-
-inline bool operator>=(const Tickval& a, const Tickval& b)
-{
-	return a._value >= b._value;
-}
-
-inline bool operator<=(const Tickval& a, const Tickval& b)
-{
-	return a._value <= b._value;
-}
 
 } // FIX8
 

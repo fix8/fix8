@@ -1742,6 +1742,7 @@ const f8String Common_MsgType_REJECT("3");
 const f8String Common_MsgType_SEQUENCE_RESET("4");
 const f8String Common_MsgType_LOGOUT("5");
 const f8String Common_MsgType_LOGON("A");
+const f8String Common_MsgType_BUSINESS_REJECT("j");
 const char Common_MsgByte_HEARTBEAT('0');
 const char Common_MsgByte_TEST_REQUEST('1');
 const char Common_MsgByte_RESEND_REQUEST('2');
@@ -1749,6 +1750,7 @@ const char Common_MsgByte_REJECT('3');
 const char Common_MsgByte_SEQUENCE_RESET('4');
 const char Common_MsgByte_LOGOUT('5');
 const char Common_MsgByte_LOGON('A');
+const char Common_MsgByte_BUSINESS_REJECT('j');
 
 //-------------------------------------------------------------------------------------------------
 // Common FIX field numbers
@@ -1777,6 +1779,8 @@ const unsigned short Common_GapFillFlag(123);
 const unsigned short Common_ResetSeqNumFlag(141);
 const unsigned short Common_OnBehalfOfLocationID(144);
 const unsigned short Common_OnBehalfOfSendingTime(370);
+const unsigned short Common_RefMsgType(372);
+const unsigned short Common_BusinessRejectReason(380);
 const unsigned short Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
 
 //-------------------------------------------------------------------------------------------------
@@ -1798,6 +1802,7 @@ typedef Field<f8String, Common_BeginString> begin_string;
 typedef Field<f8String, Common_TestReqID> test_request_id;
 typedef Field<f8String, Common_Text> text;
 typedef Field<f8String, Common_DefaultApplVerID> default_appl_ver_id;
+typedef Field<f8String, Common_RefMsgType> ref_msg_type;
 
 typedef Field<UTCTimestamp, Common_SendingTime> sending_time;
 typedef Field<UTCTimestamp, Common_OrigSendingTime> orig_sending_time;
@@ -1808,6 +1813,7 @@ typedef Field<Boolean, Common_ResetSeqNumFlag> reset_seqnum_flag;
 
 typedef Field<int, Common_HeartBtInt> heartbeat_interval;
 typedef Field<int, Common_EncryptMethod> encrypt_method;
+typedef Field<int, Common_BusinessRejectReason> business_reject_reason;
 
 typedef Field<f8String, Common_OnBehalfOfCompID> onbehalfof_comp_id;
 typedef Field<f8String, Common_OnBehalfOfSubID> onbehalfof_sub_id;

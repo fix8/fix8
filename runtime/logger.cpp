@@ -134,10 +134,7 @@ int Logger::operator()()
 				ostr << (msg_ptr->_val ? " in" : "out") << ' ' ;
 
 			if (_flags & timestamp)
-			{
-				string ts;
-				ostr << GetTimeAsStringMS(ts, &msg_ptr->_when, 9) << ' ';
-			}
+				ostr << msg_ptr->_when << ' ';
 
 			if (_flags & buffer)
 			{

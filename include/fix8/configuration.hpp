@@ -96,7 +96,7 @@ class Configuration
 	const std::string _xmlfile;
 	const XmlElement *_root;
 	typedef std::map<const std::string, const XmlElement *> ConfigMap;
-	ConfigMap _sessions, _persisters, _loggers, _server_group, _ssl_context, _schedules;
+	ConfigMap _sessions, _persisters, _loggers, _server_group, _ssl_context, _schedules, _logins;
 	std::vector<const XmlElement *> _allsessions;
 
 	/*! Find an xml entity by tag in the supplied map.
@@ -130,6 +130,11 @@ class Configuration
 	  \param tag the tag to find
 	  \return the found entity or 0 if not found */
 	const XmlElement *find_schedule(const std::string& tag) const { return find_element(tag, _schedules); }
+
+	/*! Find a session login schedule by tag.
+	  \param tag the tag to find
+	  \return the found entity or 0 if not found */
+	const XmlElement *find_login_schedule(const std::string& tag) const { return find_element(tag, _logins); }
 
 	/*! Find a fix8 field typed value by tag from an xml entity.
 	  \tparam location type
@@ -385,10 +390,20 @@ public:
 	  \return new logger or 0 if unable to create */
 	Logger *create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid=0) const;
 
+	/*! Create schedule object from a session entity.
+	  \param from xml entity to search
+	  \return Schedule */
+	Schedule create_schedule(const XmlElement *from) const;
+
+	/*! Create login schedule object from a session entity.
+	  \param from xml entity to search
+	  \return login Schedule */
+	Schedule create_login_schedule(const XmlElement *from) const;
+
 	/*! Create a new session schedule object from a session entity.
 	  \param from xml entity to search
 	  \return new Session_Schedule or 0 if unable to create */
-	Session_Schedule *create_schedule(const XmlElement *from) const;
+	Session_Schedule *create_session_schedule(const XmlElement *from) const;
 
 	/*! Get all active sessions that have been read; filter by role if desired.
 	  \param target vector to place results

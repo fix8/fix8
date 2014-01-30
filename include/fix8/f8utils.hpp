@@ -74,7 +74,8 @@ std::string& InPlaceStrToLower(std::string& src);
 std::string StrToLower(const std::string& src);
 
 /*! Decode a weekday name into numeric dow (0=SUN), case insensitive
-  only check at most the first 2 unique characters (will ignore any characters after that)
+  only check at most the first 2 unique characters (will ignore any characters after that);
+  alternatively, accept numeric dow 0-6;
   \param src source dow string
   \return idx dow or -1 if not found */
 int decode_dow (const std::string& from);
@@ -101,8 +102,9 @@ std::string Str_error(const int err, const char *str=0);
   \param result target string
   \param tv tickval to use or 0 for current time
   \param dplaces number of decimal places to report seconds (default 6)
+  \param use_gm if true, use gmtime, if false localtime
   \return reference to target string */
-const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *tv=0, const unsigned dplaces=6);
+const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *tv=0, const unsigned dplaces=6, bool use_gm=false);
 
 /*! Trim leading and trailing whitespace from a string, inplace.
   \param source source string

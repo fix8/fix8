@@ -121,25 +121,15 @@ public:
 	/// Dtor.
    virtual ~Router() {}
 
-	/*! Function operator (const Message const version); overloaded with each generated Fix message type.
+	/*! Function operator (const version); overloaded with each generated Fix message type.
 	  \param msg const ptr to message to route
 	  \return true on success */
 	virtual bool operator()(const Message *msg) const { return false; }
 
-	/*! Function operator; (const version); overloaded with each generated Fix message type.
-	  \param msg non-const ptr to message to route
-	  \return true on success */
-	//virtual bool operator()(Message *msg) const { return false; }
-
-	/*! Function operator (const Message version); overloaded with each generated Fix message type.
+	/*! Function operator; overloaded with each generated Fix message type.
 	  \param msg const ptr to message to route
 	  \return true on success */
 	virtual bool operator()(const Message *msg) { return false; }
-
-	/*! Function operator; overloaded with each generated Fix message type.
-	  \param msg non-const ptr to message to route
-	  \return true on success */
-	//virtual bool operator()(Message *msg) { return false; }
 };
 
 //-------------------------------------------------------------------------------------------------

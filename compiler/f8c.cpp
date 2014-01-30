@@ -40,13 +40,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 f8c -- compile FIX xml schema\n
 \n
 <tt>
-Usage: f8c [-CFINPRVWbcdfhiknoprstvx] \<input xml schema\>\n
+Usage: f8c [-CFINPRUVWbcdfhiknoprstvx] \<input xml schema\>\n
    -C,--nocheck            do not embed version checking in generated code (default false)\n
    -F,--xfields            specify additional fields with associated messages (see documentation for details)\n
    -I,--info               print package info, exit\n
    -N,--nounique           do not enforce unique field parsing (default false)\n
    -P,--incpath            prefix system include path with "fix8" in generated compilation units (default yes)\n
    -R,--norealm            do not generate realm constructed field instantiators (default false)\n
+   -U,--noconst            Generate non-const Router method declarations (default false, const)")\n
    -W,--nowarn             suppress warning messages (default false)\n
    -V,--verbose            be more verbose when processing\n
    -c,--classes \<server|client\> generate user session classes (default no)\n
@@ -105,10 +106,11 @@ const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "
 
 string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"),
        prefix("Myfix"), gen_classes, extra_fields;
-bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false), incpath(true);
+bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false),
+     incpath(true), nconst_router(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:U");
 extern string spacer, shortName;
 
 //-----------------------------------------------------------------------------------------
@@ -173,6 +175,7 @@ int main(int argc, char **argv)
 		{ "dump",			0,	0,	'd' },
 		{ "ignore",			0,	0,	'i' },
 		{ "nocheck",		0,	0,	'C' },
+		{ "noconst",		0,	0,	'U' },
 		{ "info",		   0,	0,	'I' },
 		{ "fields",			0,	0,	'f' },
 		{ "xfields",		1,	0,	'F' },
@@ -232,6 +235,7 @@ int main(int argc, char **argv)
 		case 'N': nounique = true; break;
 		case 'R': norealm = true; break;
 		case 'C': nocheck = true; break;
+		case 'U': nconst_router = true; break;
 		case 'c': gen_classes = optarg; break;
 		case 'F': extra_fields = optarg; break;
 		case 'h': print_usage(); return 0;
@@ -1095,8 +1099,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		osc_hpp << spacer << "~" << mitr->second._name << "() {}" << endl;
 		if (!isHeader && !isTrailer)
 		{
-			osc_hpp << spacer << "bool process(Router& rt) const { return (static_cast<"
-				<< ctxt._clname << "_Router&>(rt))(this); }" << endl;
+			osc_hpp << spacer << "bool process(Router& rt) const { return (static_cast<" << ctxt._clname << "_Router&>(rt))(this); }" << endl;
 			if (mitr->second._is_admin)
 				osc_hpp << spacer << "bool is_admin() const { return true; }" << endl;
 		}
@@ -1172,13 +1175,18 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		<< '{' << endl << "public:" << endl;
 	osu_hpp << spacer << ctxt._clname << "_Router() {}" << endl;
 	osu_hpp << spacer << "virtual ~" << ctxt._clname << "_Router() {}" << endl << endl;
-        osu_hpp << spacer << "virtual bool operator() (const class Message *msg) const { return false; }" << endl;
+   osu_hpp << spacer << "virtual bool operator() (const class Message *msg) ";
+   if (!nconst_router)
+      osu_hpp << "const ";
+   osu_hpp << "{ return false; }" << endl;
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 	{
 		if (mitr->second._name == "trailer" || mitr->second._name == "header")
 			continue;
-		osu_hpp << spacer << "virtual bool operator() (const class " << mitr->second._name
-			<< " *msg) const { return " << (mitr->second._is_admin ? "true" : "false") << "; }" << endl;
+		osu_hpp << spacer << "virtual bool operator() (const class " << mitr->second._name << " *msg) ";
+      if (!nconst_router)
+         osu_hpp << "const ";
+      osu_hpp << "{ return " << (mitr->second._is_admin ? "true" : "false") << "; }" << endl;
 	}
 	osu_hpp << "};" << endl;
 
