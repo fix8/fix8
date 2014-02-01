@@ -338,6 +338,13 @@ bool myfix_session_server::handle_application(const unsigned seqnum, const Messa
 }
 
 //-----------------------------------------------------------------------------------------
+bool myfix_session_server::sample_scheduler_callback()
+{
+	cout << "myfix_session_server::sample_scheduler_callback Hello!" << endl;
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
 Message *MyMenu::generate_new_order_single()
 {
 	static unsigned oid(0);
