@@ -41,8 +41,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _MSC_VER
 #include <sys/time.h>
 #include <limits.h>
-#else
-#include <pthread.h>
+#endif
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#include<pthread.h>
+#elif (THREAD_SYSTEM == THREAD_POCO)
 #endif
 
 //-------------------------------------------------------------------------------------------------

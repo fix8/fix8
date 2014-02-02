@@ -189,6 +189,7 @@ public:
 
 //----------------------------------------------------------------------------------------
 /// generic pthread_mutex wrapper
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 class f8_mutex
 {
 	pthread_mutex_t _pmutex;
@@ -206,7 +207,13 @@ public:
 	bool try_lock() { return pthread_mutex_trylock(&_pmutex) == 0; }
 	void unlock() { pthread_mutex_unlock(&_pmutex); }
 };
+#elif (THREAD_SYSTEM == THREAD_POCO)
+class f8_mutex
+{
 
+	//TODO: implement me
+};
+#endif
 //----------------------------------------------------------------------------------------
 /// generic pthread_spin_lock wrapper
 
@@ -253,6 +260,7 @@ public:
 	}
 };
 #else
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 class f8_spin_lock
 {
 	pthread_spinlock_t _psl;
@@ -270,6 +278,12 @@ public:
 	bool try_lock() { return pthread_spin_trylock(&_psl) == 0; }
 	void unlock() { pthread_spin_unlock(&_psl); }
 };
+#elif (THREAD_SYSTEM == THREAD_POCO)
+class f8_spin_lock
+{
+	//TODO: implement me
+};
+#endif
 #endif //__APPLE__
 
 //----------------------------------------------------------------------------------------

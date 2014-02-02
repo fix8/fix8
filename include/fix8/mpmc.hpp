@@ -64,7 +64,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 # include <sched.h>
 
 // std wrappers for ff
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 # include <pthread.h>
+#elif (THREAD_SYSTEM == THREAD_POCO)
+#else
+# error Define what thread system to use
+#endif
 # include <ff_wrapper.hpp>
 
 # define f8_atomic FIX8::ff_atomic

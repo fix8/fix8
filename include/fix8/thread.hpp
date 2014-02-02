@@ -38,8 +38,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_THREAD_HPP_
 
 //----------------------------------------------------------------------------------------
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 #include<pthread.h>
 #include<signal.h>
+#elif (THREAD_SYSTEM == THREAD_POCO)
+#include <Poco/Thread.h>
+#include <Poco/ThreadTarget.h>
+#else
+#error Define what thread system to use
+#endif
 
 //----------------------------------------------------------------------------------------
 namespace FIX8
@@ -85,37 +92,75 @@ inline reference_wrapper<const T> cref(T& _t) { return reference_wrapper<const T
 /// pthread wrapper abstract base
 class _dthreadcore
 {
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+public:
+	typedef pthread_t thread_id_t;
+private:
 	pthread_attr_t _attr;
 	pthread_t _tid;
+#elif (THREAD_SYSTEM == THREAD_POCO)
+public:
+	typedef Poco::Thread::TID thread_id_t;
+private:
+	Poco::Thread _thread;
+#endif
 	int _exitval;
 
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 	template<typename T>
 	static void *_run(void *what)
 		{ return reinterpret_cast<void *>((*static_cast<T *>(what))()); }
-
+#elif (THREAD_SYSTEM == THREAD_POCO)
+	template<typename T>
+	static void _run(void *what)
+		{ (*static_cast<T *>(what))(); }
+#endif
 	_dthreadcore& operator=(const _dthreadcore&);
 
 protected:
 
 	template<typename T>
-	int _start(void *sub) { return pthread_create(&_tid, &_attr, _run<T>, sub); }
+	int _start(void *sub)
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return pthread_create(&_tid, &_attr, _run<T>, sub);
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		_thread.start(_run<T>, sub);
+		return 0;
+#endif
+	}
 
 public:
 	/*! Ctor.
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	_dthreadcore(const bool detach, const size_t stacksize) : _attr(), _tid(), _exitval()
+	_dthreadcore(const bool detach, const size_t stacksize)
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		: _attr(), _tid(), _exitval()
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		: _thread(), _exitval()
+#endif
 	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 		if (pthread_attr_init(&_attr))
 			throw dthreadException("pthread_attr_init failure");
 		if (stacksize && pthread_attr_setstacksize(&_attr, stacksize))
 			throw dthreadException("pthread_attr_setstacksize failure");
 		if (detach && pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_DETACHED))
 			throw dthreadException("pthread_attr_setdetachstate failure");
+#elif (THREAD_SYSTEM == THREAD_POCO)
+#endif
 	}
 
 	/// Dtor.
-	virtual ~_dthreadcore() { pthread_attr_destroy(&_attr); }
+	virtual ~_dthreadcore()
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		pthread_attr_destroy(&_attr);
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		_thread.join(1);
+#endif
+	}
 
 	/*! start thread.
 	  \return function result */
@@ -129,7 +174,11 @@ public:
 	  \return result of join */
 	int join()
 	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_join(_tid, reinterpret_cast<void **>(&_exitval)) ? -1 : _exitval;
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		_thread.join(); return _exitval;
+#endif
 	}
 
 	/*! Yield CPU.
@@ -138,27 +187,63 @@ public:
 #ifdef __APPLE__
 	int yield() const { return sched_yield(); }
 #else
-	int yield() const { return pthread_yield(); }
+	int yield() const
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return pthread_yield();
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		Poco::Thread::yield();
+		return 0;
+#endif
+	}
 #endif
 #endif
 
 	/*! Get the thread's thread ID.
 	  \return the thread id */
-	pthread_t getdthreadid() const { return _tid; }
+	thread_id_t getdthreadid() const
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return _tid;
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		return _thread.currentTid();
+#endif
+	}
 
 	/*! Get the thread's thread ID. Static version.
 	  \return the thread id */
-	static pthread_t getid() { return pthread_self(); }
+	static thread_id_t getid()
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return pthread_self();
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		return Poco::Thread::currentTid();
+#endif
+	}
 
 	/*! dthread equivalence operator.
 	  \param that the other thread id
 	  \return true if the threads are equal */
-	bool operator==(const _dthreadcore& that) const { return pthread_equal(_tid, that._tid); }
+	bool operator==(const _dthreadcore& that) const
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return pthread_equal(_tid, that._tid);
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		return getdthreadid() == that.getdthreadid();
+#endif
+	}
 
 	/*! dthread inequivalence operator.
 	  \param that the other thread id
 	  \return true if the threads are unequal */
-	bool operator!=(const _dthreadcore& that) const { return !pthread_equal(_tid, that._tid); }
+	bool operator!=(const _dthreadcore& that) const
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return !pthread_equal(_tid, that._tid);
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		return getdthreadid() != that.getdthreadid();
+#endif
+	}
 };
 
 //----------------------------------------------------------------------------------------

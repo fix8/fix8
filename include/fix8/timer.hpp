@@ -126,7 +126,7 @@ public:
 
 	/*! Kill timer thread.
 	  \param sig signal to kill with */
-   void kill(const int sig=SIGKILL) { _thread.kill(sig); }
+	void kill(const int sig) { _thread.kill(sig); }
 
 	/// Join timer thread. Wait till exits.
    void join() { _thread.join(); }
