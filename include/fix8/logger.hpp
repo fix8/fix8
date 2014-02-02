@@ -177,7 +177,7 @@ protected:
 	LogFlags _flags;
 	std::ostream *_ofs;
 	size_t _lines;
-	f8_atomic<bool> _stopping;
+	dthread_cancellation_token _stopping;
 
 	struct LogElement
 	{
@@ -221,7 +221,6 @@ public:
 	    \param flags ebitset flags */
 	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _ofs(), _lines(), _sequence(), _osequence()
 	{
-		_stopping = false;
 		_thread.start();
 	}
 
@@ -242,11 +241,8 @@ public:
 		return _msg_queue.try_push (le) == 0;
 	}
 
-	/// Kill the logging thread.
-	void kill() { _thread.kill(0); }
-
 	/// Stop the logging thread.
-	void stop() {  _stopping = true; send(std::string()); _thread.join(); }
+	void stop() {  _stopping.request_stop(); send(std::string()); _thread.join(); }
 
 	/*! Perform logfile rotation. Only relevant for file-type loggers.
 		\param force the rotation (even if the file is set to append)
@@ -274,6 +270,9 @@ public:
 
 	/// Flush the buffer
 	virtual void flush();
+
+	dthread_cancellation_token& cancellation_token() { return _stopping; }
+
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -255,7 +255,14 @@ int main(int argc, char **argv)
 				TimerEvent<FIX8::Session> sample_callback(static_cast<bool (FIX8::Session::*)()>(&myfix_session_server::sample_scheduler_callback), true);
 				inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
 
-				inst->start(true, next_send, next_receive);
+				const ProcessModel pm(ms->get_process_model(ms->_ses));
+				inst->start(pm == pm_pipeline, next_send, next_receive);
+				cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+				if (inst->session_ptr()->get_connection()->is_secure())
+					cout << "Session is secure (SSL)" << endl;
+				if (pm != pm_pipeline)
+					while (!inst->session_ptr()->is_shutdown())
+						FIX8::hypersleep<h_milliseconds>(100);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
             if (once)

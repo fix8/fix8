@@ -57,7 +57,7 @@ using namespace FIX8;
 using namespace std;
 
 //-------------------------------------------------------------------------------------------------
-int FIXReader::execute()
+int FIXReader::execute(dthread_cancellation_token& cancellation_token)
 {
    unsigned processed(0), dropped(0), invalid(0);
 	int retval(0);
@@ -110,7 +110,7 @@ int FIXReader::execute()
 	}
 	else
 	{
-		while (!_session.is_shutdown())
+		while (!cancellation_token && !_session.is_shutdown())
 		{
 			try
 			{
@@ -177,7 +177,7 @@ int FIXReader::callback_processor()
 {
 	int processed(0), ignored(0);
 
-   for (; !_session.is_shutdown();)
+   for (; !_cancellation_token && !_session.is_shutdown();)
    {
 		f8String *msg_ptr(0);
 #if (MPMC_SYSTEM == MPMC_TBB)
@@ -282,11 +282,11 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 }
 
 //-------------------------------------------------------------------------------------------------
-int FIXWriter::execute()
+int FIXWriter::execute(dthread_cancellation_token& cancellation_token)
 {
 	int result(0), processed(0), invalid(0);
 
-   while (!_session.is_shutdown())
+   while (!_cancellation_token && !_session.is_shutdown())
    {
 		try
 		{

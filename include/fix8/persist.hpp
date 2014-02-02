@@ -190,6 +190,8 @@ class BDBPersister : public Persister
 		return _persist_queue.try_push(what);
 	}
 
+	dthread_cancellation_token _cancellation_token;
+
 public:
 	/// Ctor.
 	BDBPersister() : _thread(ref(*this)), _dbEnv(0), _db(new Db(&_dbEnv, 0)), _wasCreated() {}
@@ -253,6 +255,8 @@ public:
 	/*! Persister thread entry point.
 	  \return 0 on success */
 	int operator()();	// write thread
+
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token;	}
 };
 
 #endif // HAVE_BDB

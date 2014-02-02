@@ -248,6 +248,7 @@ class ReliableClientSession : public ClientSession<T>
 	f8_atomic<bool> _giving_up;
 	std::vector<Server> _servers;
 	const size_t _failover_cnt;
+	dthread_cancellation_token _cancellation_token;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
@@ -267,7 +268,11 @@ public:
 	bool has_given_up() const { return _giving_up; }
 
 	/// Dtor.
-	virtual ~ReliableClientSession () {}
+	virtual ~ReliableClientSession ()
+	{
+		_thread.request_stop();
+		_thread.join();
+	}
 
 	/*! Start the session - initiate the connection, logon and start heartbeating.
 	  \param wait if true wait till session finishes before returning
@@ -305,7 +310,7 @@ public:
 	    \return 0 on success */
 	int operator()()
 	{
-		while(true)
+		while(!_cancellation_token)
 		{
 			++_attempts;
 
@@ -439,6 +444,9 @@ public:
 
 		return 0;
 	}
+
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
+
 
 	/// Convenient scoped pointer for your session
 	typedef scoped_ptr<ReliableClientSession<T> > ReliableClient_ptr;
