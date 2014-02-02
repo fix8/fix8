@@ -482,10 +482,12 @@ protected:
 		return bme->_create._do();
 	}
 
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 #if !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
-	static f8String get_thread_policy_string(pthread_t id);
+	static f8String get_thread_policy_string(_dthreadcore::thread_id_t id);
 	void set_scheduler(int priority);
 	void set_affinity(int core_id);
+#endif
 #endif
 
 public:

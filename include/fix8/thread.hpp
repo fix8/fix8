@@ -44,8 +44,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #elif (THREAD_SYSTEM == THREAD_POCO)
 #include <Poco/Thread.h>
 #include <Poco/ThreadTarget.h>
-#else
-#error Define what thread system to use
 #endif
 
 //----------------------------------------------------------------------------------------
@@ -158,7 +156,6 @@ public:
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		pthread_attr_destroy(&_attr);
 #elif (THREAD_SYSTEM == THREAD_POCO)
-		_thread.join(1);
 #endif
 	}
 
@@ -177,7 +174,17 @@ public:
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_join(_tid, reinterpret_cast<void **>(&_exitval)) ? -1 : _exitval;
 #elif (THREAD_SYSTEM == THREAD_POCO)
-		_thread.join(); return _exitval;
+		try
+		{
+			if (_thread.isRunning())
+				_thread.join();
+		}
+		catch(const Poco::SystemException& ex)
+		{
+			// this is due to poco throws exceptions in case of thread was stopped already or not running
+			return -1;
+		}
+		return _exitval;
 #endif
 	}
 

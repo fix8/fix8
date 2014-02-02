@@ -286,7 +286,7 @@ int FIXWriter::execute(dthread_cancellation_token& cancellation_token)
 {
 	int result(0), processed(0), invalid(0);
 
-   while (!_cancellation_token && !_session.is_shutdown())
+	while (!cancellation_token && !_session.is_shutdown())
    {
 		try
 		{

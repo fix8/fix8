@@ -42,10 +42,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <sys/time.h>
 #include <limits.h>
 #endif
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
-#include<pthread.h>
-#elif (THREAD_SYSTEM == THREAD_POCO)
-#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {

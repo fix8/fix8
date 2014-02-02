@@ -243,16 +243,17 @@ public:
     check_session(const F8MetaCntx& ctx):
         Session(ctx)
     {
-		 _connection = new Connection(0, _addr, *this, pm_thread, 10, false);
-    };
+		 Session& session = *this;
+		 _connection = new Connection(0, _addr, session, pm_thread, 10, false);
+	 }
 
     /// Dtor
     ~check_session()
     {
         _timer.clear();
         _timer.schedule(_hb_processor, 0);
-        _timer.join();
-    };
+		  _timer.join();
+	 }
 
     /*! retrans_callback overload
             add resent messages to a local map for future check*/

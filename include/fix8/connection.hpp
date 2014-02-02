@@ -52,8 +52,6 @@ class Session;
 template <typename T>
 class AsyncSocket
 {
-	dthread<AsyncSocket> _thread;
-
 protected:
 	coroutine _coro;
 	Poco::Net::StreamSocket *_sock;
@@ -62,13 +60,18 @@ protected:
 	ProcessModel _pmodel;
 	dthread_cancellation_token  _cancellation_token;
 
+private:
+	dthread<AsyncSocket> _thread;
+
 public:
 	/*! Ctor.
 	    \param sock connected socket
 	    \param session session
 	    \param pmodel process model */
 	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: _thread(FIX8::ref(*this)), _sock(sock), _session(session), _pmodel(pmodel) {}
+		: _sock(sock), _session(session), _pmodel(pmodel), _thread(FIX8::ref(*this))
+	{
+	}
 
 	/// Dtor.
 	virtual ~AsyncSocket()

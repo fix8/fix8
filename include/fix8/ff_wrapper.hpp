@@ -210,8 +210,13 @@ public:
 #elif (THREAD_SYSTEM == THREAD_POCO)
 class f8_mutex
 {
+	Poco::Mutex _mutex;
 
-	//TODO: implement me
+public:
+	f8_mutex(): _mutex() {}
+	void lock() { _mutex.lock(); }
+	bool try_lock() { return _mutex.tryLock(); }
+	void unlock() { _mutex.unlock(); }
 };
 #endif
 //----------------------------------------------------------------------------------------
@@ -281,7 +286,17 @@ public:
 #elif (THREAD_SYSTEM == THREAD_POCO)
 class f8_spin_lock
 {
-	//TODO: implement me
+	ff::lock_t _lk;
+
+public:
+	f8_spin_lock()
+	{
+		ff::init_unlocked(_lk);
+	}
+
+	void lock() { ff::spin_lock(_lk); }
+	bool try_lock() { throw f8Exception("try_lock is not implemented in ff"); }
+	void unlock() { ff::spin_unlock(_lk); }
 };
 #endif
 #endif //__APPLE__
