@@ -1117,7 +1117,7 @@ template <typename T>
 class Singleton
 {
 	static f8_atomic<T*> _instance;
-	static f8_mutex _mutex;
+    //static f8_spin_lock _mutex;
 
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
@@ -1155,15 +1155,11 @@ public:
 	{
 		if (_instance) // cast operator performs atomic load with acquire
 			return _instance;
-
-		f8_scoped_lock guard(_mutex);
-		if (_instance == 0)
-		{
-			T *p(new T); // avoid race condition between mem assignment and construction
-			_instance = p;
-		}
-		return _instance;
+        return create_instance();
 	}
+
+    /*! Creates a single instance of the underlying object */
+    static T *create_instance();
 
 
 	/*! Get the instance of the underlying object. If not created, create.
