@@ -82,7 +82,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/session.hpp>
 #include <fix8/coroutine.hpp>
 #include <fix8/yield.hpp>
+#if F8MOCK_CONNECTION
+#include "mockConnection.hpp"
+#else
 #include <fix8/connection.hpp>
+#endif
 #include <fix8/configuration.hpp>
 #include <fix8/persist.hpp>
 #include <fix8/sessionwrapper.hpp>

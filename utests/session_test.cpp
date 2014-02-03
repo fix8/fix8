@@ -35,21 +35,16 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 */
 //-----------------------------------------------------------------------------------------
 // f8 headers
-#include <f8headers.hpp>
+#include "f8headers.hpp"
 #include <fix8/f8config.h>
-
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
 
 #ifdef PROFILING_BUILD
 #include <sys/gmon.h>
 #endif
 
 #include <errno.h>
+#define F8MOCK_CONNECTION 1
 #include <fix8/f8includes.hpp>
-#include <mockConnection.hpp>
-
 #include "utest_types.hpp"
 #include "utest_router.hpp"
 #include "utest_classes.hpp"
