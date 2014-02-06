@@ -102,7 +102,6 @@ public:
 private:
 	Poco::Thread _thread;
 #endif
-	int _exitval;
 
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 	template<typename T>
@@ -116,6 +115,7 @@ private:
 	_dthreadcore& operator=(const _dthreadcore&);
 
 protected:
+	int _exitval;
 
 	template<typename T>
 	int _start(void *sub)
@@ -177,12 +177,22 @@ public:
 		try
 		{
 			if (_thread.isRunning())
-				_thread.join();
+			{
+				if (timeoutInMs == 0)
+					_thread.join();
+				else
+					_thread.join(timeoutInMs);
+			}
 		}
 		catch(const Poco::SystemException& ex)
 		{
 			// this is due to poco throws exceptions in case of thread was stopped already or not running
 			return -1;
+		}
+		catch(const Poco::TimeoutException& ex)
+		{
+			// this is due to poco throws exceptions in case of waiting for thread exit timed out
+			return -2;
 		}
 		return _exitval;
 #endif
@@ -257,14 +267,17 @@ public:
 /// Thread cancellation token
 struct dthread_cancellation_token
 {
-	dthread_cancellation_token() { _stop_requested = false; }
-	bool stop_requested() const { return _stop_requested; }
-	void request_stop() { _stop_requested = true; }
+	dthread_cancellation_token() { _stop_requested = 0; _thread_state = Unknown; }
+	bool stop_requested() const { return _stop_requested == 1; }
+	void request_stop() { _thread_state = Stopping; _stop_requested = 1; }
 	operator bool() const { return stop_requested(); }
-	bool operator!() const { return !stop_requested(); }
-
+	bool operator!() const  { return !stop_requested(); }
+	enum ThreadState { Unknown = 0, Running, Stopping, Stopped };
+	int thread_state() const { return _thread_state; }
+	void thread_state(ThreadState state) { _thread_state = state; }
 private:
-	f8_atomic<bool> _stop_requested;
+	f8_atomic<int> _stop_requested;
+	f8_atomic<int> _thread_state;
 };
 
 //----------------------------------------------------------------------------------------
@@ -282,7 +295,21 @@ class dthread : public _dthreadcore
 	public:
 		_helper(T& what, int (T::*method)(), dthread_cancellation_token& (T::*cancellation_token_method)())
 			: _what(what), _method(method), _cancellation_token_method(cancellation_token_method) {}
-		int operator()() { return (_what.*_method)(); }
+		int operator()()
+		{
+			try
+			{
+				cancellation_token().thread_state(dthread_cancellation_token::Running);
+				int ret = (_what.*_method)();
+				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
+				return ret;
+			}
+			catch(const std::exception&)
+			{
+				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
+				throw;
+			}
+		}
 		dthread_cancellation_token& cancellation_token() { return (_what.*_cancellation_token_method)(); }
 	}
 	_sub;
@@ -313,7 +340,19 @@ public:
 
 	/*! request thread stop.
 	  \return function result */
-	virtual void request_stop() { _sub.cancellation_token().request_stop(); }
+	void request_stop() { _sub.cancellation_token().request_stop(); }
+
+#if (THREAD_SYSTEM == THREAD_POCO)
+	/*! Join the thread.
+	  \return result of join */
+	int join(int timeoutInMs = 0)
+	{
+		int ts = _sub.cancellation_token().thread_state();
+		if (ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped)
+			return _exitval;
+		return _dthreadcore::join(timeoutInMs);
+	}
+#endif
 };
 
 //----------------------------------------------------------------------------------------
@@ -329,7 +368,21 @@ class dthread<> : public _dthreadcore
 
 	public:
 		_helper(int (*func)(void *, dthread_cancellation_token&), void *args, dthread_cancellation_token& cancellation_token) : _func(func), _args(args), _cancellation_token(cancellation_token) {}
-		int operator()() { return (_func)(_args, _cancellation_token); }
+		int operator()()
+		{
+			try
+			{
+				cancellation_token().thread_state(dthread_cancellation_token::Running);
+				int ret = (_func)(_args, _cancellation_token);
+				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
+				return ret;
+			}
+			catch(const std::exception&)
+			{
+				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
+				throw;
+			}
+		}
 		dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
 	}
 	_sub;
@@ -353,6 +406,18 @@ public:
 	/*! request thread stop.
 	  \return function result */
 	virtual void request_stop() { _sub.cancellation_token().request_stop(); }
+
+#if (THREAD_SYSTEM == THREAD_POCO)
+	/*! Join the thread.
+	  \return result of join */
+	int join(int timeoutInMs = 0)
+	{
+		int ts = _sub.cancellation_token().thread_state();
+		if (ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped)
+			return _exitval;
+		return _dthreadcore::join(timeoutInMs);
+	}
+#endif
 };
 
 } // FIX8

@@ -76,8 +76,6 @@ public:
 	/// Dtor.
 	virtual ~AsyncSocket()
 	{
-		_thread.request_stop();
-		_thread.join();
 	}
 
 	/*! Get the number of messages queued on this socket.
@@ -95,6 +93,9 @@ public:
 	/// Start the processing thread.
 	virtual void start() { _thread.start(); }
 
+	/// Start the processing thread.
+	virtual void request_stop() { _thread.request_stop(); }
+
 	/// Stop the processing thread and quit.
 	virtual void quit() { _thread.request_stop(); _thread.join(); }
 
@@ -103,7 +104,7 @@ public:
 	Poco::Net::StreamSocket *socket() { return _sock; }
 
 	/*! Wait till processing thead has finished.
-	    \return 0 on success */
+		 \return 0 on success */
 	int join() { return _thread.join(); }
 
 	dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
@@ -235,11 +236,7 @@ public:
 	/// Dtor.
 	virtual ~FIXReader()
 	{
-		if (_pmodel == pm_pipeline )
-		{
-			_callback_thread.request_stop();
-			_callback_thread.join();
-		}
+		quit();
 	}
 
 	/// Start the processing threads.
@@ -263,7 +260,8 @@ public:
 			_callback_thread.request_stop();
 			_callback_thread.join();
 		}
-		AsyncSocket<f8String>::quit();
+		if (_pmodel != pm_coro)
+			AsyncSocket<f8String>::quit();
 	}
 
 	/// Send a message to the processing method instructing it to quit.
@@ -273,7 +271,10 @@ public:
 		{
 			const f8String from;
 			_msg_queue.try_push(from);
+			_callback_thread.request_stop();
 		}
+		if (_pmodel != pm_coro)
+			AsyncSocket<f8String>::request_stop();
 	}
 
 	/*! Reader thread method. Reads messages and places them on the queue for processing.
@@ -282,8 +283,8 @@ public:
    virtual int execute(dthread_cancellation_token& cancellation_token);
 
 	/*! Wait till writer thread has finished.
-	    \return 0 on success */
-   int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
+		 \return 0 on success */
+	int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
 
 	/// Calculate the length of the Fix message preamble, e.g. "8=FIX.4.4^A9=".
 	void set_preamble_sz();
@@ -318,7 +319,10 @@ public:
 		: AsyncSocket<Message *>(sock, session, pmodel) {}
 
 	/// Dtor.
-	virtual ~FIXWriter() {}
+	virtual ~FIXWriter()
+	{
+		quit();
+	}
 
 	/*! Place Fix message on outbound message queue.
 	    \param from message to send
@@ -373,8 +377,8 @@ public:
 		return result;
 	}
 	/*! Wait till writer thead has finished.
-	    \return 0 on success */
-   int join() { return _pmodel == pm_pipeline ? AsyncSocket<Message *>::join() : -1; }
+		 \return 0 on success */
+	int join() { return _pmodel == pm_pipeline ? AsyncSocket<Message *>::join() : -1; }
 
 	/*! Send Fix message directly
 	    \param from message to send
@@ -437,11 +441,24 @@ public:
 	}
 
 	/// Send a message to the processing method instructing it to quit.
-	virtual void stop() { _msg_queue.try_push(0); }
+	virtual void stop()
+	{
+		_msg_queue.try_push(0);
+		if (_pmodel == pm_pipeline)
+			AsyncSocket::request_stop();
+	}
 
     /*! Writer thread method. Reads messages from the queue and sends them over the socket.
         \return 0 on success */
     virtual int execute(dthread_cancellation_token& cancellation_token);
+
+	/// Stop the processing threads and quit.
+	virtual void quit()
+	{
+		if (_pmodel == pm_pipeline)
+			AsyncSocket<Message *>::quit();
+	}
+
 };
 
 //----------------------------------------------------------------------------------------

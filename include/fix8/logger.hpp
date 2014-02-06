@@ -225,7 +225,11 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Logger() { delete _ofs; }
+	virtual ~Logger()
+	{
+		stop();
+		delete _ofs;
+	}
 
 	/*! Get the underlying stream object.
 	    \return the stream */
