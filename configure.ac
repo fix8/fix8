@@ -118,12 +118,6 @@ AC_FUNC_CLOSEDIR_VOID
 AC_FUNC_REALLOC
 AC_FUNC_STRCOLL
 
-AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
-            CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
-            CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
-            CC="$PTHREAD_CC"],
-           [AC_MSG_ERROR([Pthread API support is required.])])
-
 AC_CHECK_TOOL([STRIP],[strip])
 AC_CHECK_TOOL([DOXYGEN],[doxygen])
 
@@ -448,6 +442,36 @@ AC_DEFINE(REGEX_REGEX_H, 2, [regex.h regex system])
 if test "$regex_set" = no; then
 	using_poco_regex=yes
 	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO regex system used])
+fi
+
+thread_set=no
+using_poco_thread=no
+AC_ARG_WITH([thread],
+[AS_HELP_STRING([--with-thread=VAL],[select which thread system will be used (pthread|poco, default=pthread)])],
+[case "${withval}" in
+	pthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
+				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
+				CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+				CC="$PTHREAD_CC"],
+				[AC_MSG_ERROR([Pthread API support is required.])])
+				thread_set=yes
+				AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread system used])
+				;;
+	poco) using_poco_thread=yes
+			thread_set=yes
+			AC_DEFINE(THREAD_SYSTEM, THREAD_POCO, [poco thread system used])
+			;;
+	*) echo
+		echo "ERROR: Unknown value ${withval} for REGEX given."
+		echo
+		exit 1
+esac])
+
+AC_DEFINE(THREAD_POCO, 1, [Poco thread system])
+AC_DEFINE(THREAD_PTHREAD, 2, [pthread thread system])
+if test "$thread_set" = no; then
+	using_poco_thread=no
+	AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread regex system used])
 fi
 
 oktogtest=yes

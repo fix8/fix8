@@ -124,10 +124,6 @@ public:
 	  \return number of timer events that were waiting on the queue */
    size_t clear();
 
-	/*! Kill timer thread.
-	  \param sig signal to kill with */
-   void kill(const int sig=SIGKILL) { _thread.kill(sig); }
-
 	/// Join timer thread. Wait till exits.
    void join() { _thread.join(); }
 
