@@ -326,7 +326,6 @@ application_call:
 		}
 		delete msg;
 		return result && admin_result;
-
 	}
 	catch (f8Exception& e)
 	{

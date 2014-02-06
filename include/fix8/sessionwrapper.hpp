@@ -276,8 +276,8 @@ public:
 
 	/*! Start the session - initiate the connection, logon and start heartbeating.
 	  \param wait if true wait till session finishes before returning
-	  \param send_seqnum next send seqnum (not used here)
-	  \param recv_seqnum next recv seqnum (not used here)
+	  \param send_seqnum next send seqnum
+	  \param recv_seqnum next recv seqnum
 	  \param davi default appl version id (FIXT) */
 	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
 	{

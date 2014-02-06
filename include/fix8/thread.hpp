@@ -165,13 +165,14 @@ public:
 /// Thread cancellation token
 struct dthread_cancellation_token
 {
-	dthread_cancellation_token() { _stop_requested = 0; }
-	bool stop_requested() const { return _stop_requested == 1; }
-	void request_stop() { _stop_requested = 1; }
+	dthread_cancellation_token() { _stop_requested = false; }
+	bool stop_requested() const { return _stop_requested; }
+	void request_stop() { _stop_requested = true; }
 	operator bool() const { return stop_requested(); }
-	bool operator!() const  { return !stop_requested(); }
+	bool operator!() const { return !stop_requested(); }
+
 private:
-	f8_atomic<int> _stop_requested;
+	f8_atomic<bool> _stop_requested;
 };
 
 //----------------------------------------------------------------------------------------

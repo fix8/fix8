@@ -9,6 +9,8 @@
 				protocol_log="protocol_log"
 				ip="127.0.0.1" port="11001"
 				sender_comp_id="TEX_DLD"
+				tcp_recv_buffer="100663296"
+				tcp_send_buffer="100663296"
 				tcp_nodelay="true"
 				reset_sequence_numbers="false"
 				ignore_logon_sequence_check="true"

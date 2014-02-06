@@ -330,8 +330,6 @@ public:
 	  \return ticks as unsigned long long */
 	operator Tickval::ticks () { return _value; }
 
-	operator unsigned long long() { return _value; }
-
 	/*! Cast to double.
 	  \return ticks as double */
 	operator double() { return todouble(); }

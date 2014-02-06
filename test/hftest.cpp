@@ -584,7 +584,7 @@ bool hf_session_client::handle_application(const unsigned seqnum, const FIX8::Me
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg) const
+bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg)
 {
 	static unsigned oid(0), eoid(0);
 	FIX8::TEX::OrderQty qty;
@@ -654,7 +654,7 @@ bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg) const
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_client::operator() (const FIX8::TEX::ExecutionReport *msg) const
+bool tex_router_client::operator() (const FIX8::TEX::ExecutionReport *msg)
 {
 	static int exrecv(0);
 	if (++exrecv % update_count == 0)
