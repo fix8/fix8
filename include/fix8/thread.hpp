@@ -169,7 +169,7 @@ public:
 
 	/*! Join the thread.
 	  \return result of join */
-	int join()
+	virtual int join(int timeoutInMs = 0)
 	{
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_join(_tid, reinterpret_cast<void **>(&_exitval)) ? -1 : _exitval;
