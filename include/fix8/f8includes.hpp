@@ -60,6 +60,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Poco/ThreadTarget.h>
 #include <Poco/Mutex.h>
 #include <fix8/ff/spin-lock.hpp>
+#elif (THREAD_SYSTEM == THREAD_TBB)
+#include <tbb/tbb_thread.h>
 #else
 # error Define what thread system to use
 #endif

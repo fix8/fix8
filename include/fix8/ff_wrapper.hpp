@@ -218,6 +218,10 @@ public:
 	bool try_lock() { return _mutex.tryLock(); }
 	void unlock() { _mutex.unlock(); }
 };
+#elif (THREAD_SYSTEM == THREAD_TBB)
+	#if (MPMC_SYSTEM != MPMC_TBB)
+		#error TBB shall be used for locks/queues in case of TBB_THREAD
+	#endif
 #endif
 //----------------------------------------------------------------------------------------
 /// generic pthread_spin_lock wrapper
@@ -298,6 +302,10 @@ public:
 	bool try_lock() { throw f8Exception("try_lock is not implemented in ff"); }
 	void unlock() { ff::spin_unlock(_lk); }
 };
+#elif (THREAD_SYSTEM == THREAD_TBB)
+	#if (MPMC_SYSTEM != MPMC_TBB)
+		#error TBB shall be used for locks/queues in case of TBB_THREAD
+	#endif
 #endif
 #endif //__APPLE__
 

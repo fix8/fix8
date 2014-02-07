@@ -201,7 +201,7 @@ void Logger::purge_thread_codes()
 		else
 			++itr;
 #endif
-#elif (THREAD_SYSTEM == THREAD_POCO)
+#elif (THREAD_SYSTEM == THREAD_POCO || THREAD_SYSTEM == THREAD_TBB)
 		++itr;
 #endif
 	}

@@ -446,8 +446,9 @@ fi
 
 thread_set=no
 using_poco_thread=no
+using_tbb_thread=no
 AC_ARG_WITH([thread],
-[AS_HELP_STRING([--with-thread=VAL],[select which thread system will be used (pthread|poco, default=pthread)])],
+[AS_HELP_STRING([--with-thread=VAL],[select which thread system will be used (pthread|poco|tbb, default=pthread)])],
 [case "${withval}" in
 	pthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
 				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
@@ -457,6 +458,11 @@ AC_ARG_WITH([thread],
 				thread_set=yes
 				AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread system used])
 				;;
+	tbb) using_tbb_thread=yes
+			thread_set=yes
+			AC_DEFINE(THREAD_SYSTEM, THREAD_TBB, [tbb thread system used])
+			AC_DEFINE(MPMC_SYSTEM, MPMC_TBB, [MPMC system used])
+			;;
 	poco) using_poco_thread=yes
 			thread_set=yes
 			AC_DEFINE(THREAD_SYSTEM, THREAD_POCO, [poco thread system used])
@@ -469,8 +475,10 @@ esac])
 
 AC_DEFINE(THREAD_POCO, 1, [Poco thread system])
 AC_DEFINE(THREAD_PTHREAD, 2, [pthread thread system])
+AC_DEFINE(THREAD_TBB, 3, [tbb thread thread system])
 if test "$thread_set" = no; then
 	using_poco_thread=no
+	using_tbb_thread=no
 	AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread regex system used])
 fi
 
