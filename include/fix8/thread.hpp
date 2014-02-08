@@ -38,8 +38,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_THREAD_HPP_
 
 //----------------------------------------------------------------------------------------
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 #include<pthread.h>
 #include<signal.h>
+#elif (THREAD_SYSTEM == THREAD_POCO)
+#include <Poco/Thread.h>
+#include <Poco/ThreadTarget.h>
+#elif (THREAD_SYSTEM == THREAD_TBB)
+#include <tbb/tbb_thread.h>
+#endif
 
 //----------------------------------------------------------------------------------------
 namespace FIX8
@@ -85,37 +92,86 @@ inline reference_wrapper<const T> cref(T& _t) { return reference_wrapper<const T
 /// pthread wrapper abstract base
 class _dthreadcore
 {
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+public:
+	typedef pthread_t thread_id_t;
+private:
 	pthread_attr_t _attr;
 	pthread_t _tid;
-	int _exitval;
+#elif (THREAD_SYSTEM == THREAD_POCO)
+public:
+	typedef Poco::Thread::TID thread_id_t;
+private:
+	Poco::Thread _thread;
+#elif (THREAD_SYSTEM == THREAD_TBB)
+public:
+	typedef tbb::tbb_thread::id thread_id_t;
+private:
+	scoped_ptr< tbb::tbb_thread > _thread;
+#endif
 
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 	template<typename T>
 	static void *_run(void *what)
 		{ return reinterpret_cast<void *>((*static_cast<T *>(what))()); }
-
+#elif (THREAD_SYSTEM == THREAD_POCO || THREAD_SYSTEM == THREAD_TBB)
+	template<typename T>
+	static void _run(void *what)
+		{ (*static_cast<T *>(what))(); }
+#endif
 	_dthreadcore& operator=(const _dthreadcore&);
 
 protected:
+	int _exitval;
 
 	template<typename T>
-	int _start(void *sub) { return pthread_create(&_tid, &_attr, _run<T>, sub); }
+	int _start(void *sub)
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return pthread_create(&_tid, &_attr, _run<T>, sub);
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		_thread.start(_run<T>, sub);
+		return 0;
+#elif (THREAD_SYSTEM == THREAD_TBB)
+		_thread.Reset(new tbb::tbb_thread(_run<T>, sub));
+		return 0;
+#endif
+	}
 
 public:
 	/*! Ctor.
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	_dthreadcore(const bool detach, const size_t stacksize) : _attr(), _tid(), _exitval()
+	_dthreadcore(const bool detach, const size_t stacksize)
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		: _attr(), _tid(), _exitval()
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		: _thread(), _exitval()
+#elif (THREAD_SYSTEM == THREAD_TBB)
+		: _exitval()
+#endif
 	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 		if (pthread_attr_init(&_attr))
 			throw dthreadException("pthread_attr_init failure");
 		if (stacksize && pthread_attr_setstacksize(&_attr, stacksize))
 			throw dthreadException("pthread_attr_setstacksize failure");
 		if (detach && pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_DETACHED))
 			throw dthreadException("pthread_attr_setdetachstate failure");
+#elif (THREAD_SYSTEM == THREAD_POCO)
+#elif (THREAD_SYSTEM == THREAD_TBB)
+#endif
 	}
 
 	/// Dtor.
-	virtual ~_dthreadcore() { pthread_attr_destroy(&_attr); }
+	virtual ~_dthreadcore()
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		pthread_attr_destroy(&_attr);
+#elif (THREAD_SYSTEM == THREAD_POCO)
+#elif (THREAD_SYSTEM == THREAD_TBB)
+#endif
+	}
 
 	/*! start thread.
 	  \return function result */
@@ -127,9 +183,37 @@ public:
 
 	/*! Join the thread.
 	  \return result of join */
-	int join()
+	virtual int join(int timeoutInMs = 0)
 	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 		return pthread_join(_tid, reinterpret_cast<void **>(&_exitval)) ? -1 : _exitval;
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		try
+		{
+			if (_thread.isRunning())
+			{
+				if (timeoutInMs == 0)
+					_thread.join();
+				else
+					_thread.join(timeoutInMs);
+			}
+		}
+		catch(const Poco::SystemException& ex)
+		{
+			// this is due to poco throws exceptions in case of thread was stopped already or not running
+			return -1;
+		}
+		catch(const Poco::TimeoutException& ex)
+		{
+			// this is due to poco throws exceptions in case of waiting for thread exit timed out
+			return -2;
+		}
+		return _exitval;
+#elif (THREAD_SYSTEM == THREAD_TBB)
+		if ( _thread.get() )
+			_thread->join();
+		return _exitval;
+#endif
 	}
 
 	/*! Yield CPU.
@@ -138,41 +222,91 @@ public:
 #ifdef __APPLE__
 	int yield() const { return sched_yield(); }
 #else
-	int yield() const { return pthread_yield(); }
+	int yield() const
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return pthread_yield();
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		Poco::Thread::yield();
+		return 0;
+#elif (THREAD_SYSTEM == THREAD_TBB)
+		tbb::this_tbb_thread::yield();
+		return 0;
+#endif
+	}
 #endif
 #endif
 
 	/*! Get the thread's thread ID.
 	  \return the thread id */
-	pthread_t getdthreadid() const { return _tid; }
+	thread_id_t getdthreadid() const
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return _tid;
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		return _thread.currentTid();
+#elif (THREAD_SYSTEM == THREAD_TBB)
+		return _thread.get() ? _thread->get_id() : tbb::tbb_thread::id();
+#endif
+	}
 
 	/*! Get the thread's thread ID. Static version.
 	  \return the thread id */
-	static pthread_t getid() { return pthread_self(); }
+	static thread_id_t getid()
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return pthread_self();
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		return Poco::Thread::currentTid();
+#elif (THREAD_SYSTEM == THREAD_TBB)
+		return tbb::this_tbb_thread::get_id();
+#endif
+	}
 
 	/*! dthread equivalence operator.
 	  \param that the other thread id
 	  \return true if the threads are equal */
-	bool operator==(const _dthreadcore& that) const { return pthread_equal(_tid, that._tid); }
+	bool operator==(const _dthreadcore& that) const
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return pthread_equal(_tid, that._tid);
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		return getdthreadid() == that.getdthreadid();
+#elif (THREAD_SYSTEM == THREAD_TBB)
+		return getdthreadid() == that.getdthreadid();
+#endif
+	}
 
 	/*! dthread inequivalence operator.
 	  \param that the other thread id
 	  \return true if the threads are unequal */
-	bool operator!=(const _dthreadcore& that) const { return !pthread_equal(_tid, that._tid); }
+	bool operator!=(const _dthreadcore& that) const
+	{
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+		return !pthread_equal(_tid, that._tid);
+#elif (THREAD_SYSTEM == THREAD_POCO)
+		return getdthreadid() != that.getdthreadid();
+#elif (THREAD_SYSTEM == THREAD_TBB)
+		return getdthreadid() != that.getdthreadid();
+#endif
+	}
 };
 
 //----------------------------------------------------------------------------------------
 /// Thread cancellation token
 struct dthread_cancellation_token
 {
-	dthread_cancellation_token() { _stop_requested = false; }
-	bool stop_requested() const { return _stop_requested; }
-	void request_stop() { _stop_requested = true; }
+	dthread_cancellation_token() { _stop_requested = 0; _thread_state = Unknown; }
+	bool stop_requested() const { return _stop_requested == 1; }
+	void request_stop() { _thread_state = Stopping; _stop_requested = 1; }
 	operator bool() const { return stop_requested(); }
-	bool operator!() const { return !stop_requested(); }
-
+	bool operator!() const  { return !stop_requested(); }
+	enum ThreadState { Unknown = 0, Running, Stopping, Stopped };
+	int thread_state() const { return _thread_state; }
+	void thread_state(ThreadState state) { _thread_state = state; }
 private:
-	f8_atomic<bool> _stop_requested;
+	f8_atomic<int> _stop_requested;
+	f8_atomic<int> _thread_state;
 };
 
 //----------------------------------------------------------------------------------------
@@ -190,7 +324,21 @@ class dthread : public _dthreadcore
 	public:
 		_helper(T& what, int (T::*method)(), dthread_cancellation_token& (T::*cancellation_token_method)())
 			: _what(what), _method(method), _cancellation_token_method(cancellation_token_method) {}
-		int operator()() { return (_what.*_method)(); }
+		int operator()()
+		{
+			try
+			{
+				cancellation_token().thread_state(dthread_cancellation_token::Running);
+				int ret = (_what.*_method)();
+				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
+				return ret;
+			}
+			catch(const std::exception&)
+			{
+				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
+				throw;
+			}
+		}
 		dthread_cancellation_token& cancellation_token() { return (_what.*_cancellation_token_method)(); }
 	}
 	_sub;
@@ -221,7 +369,19 @@ public:
 
 	/*! request thread stop.
 	  \return function result */
-	virtual void request_stop() { _sub.cancellation_token().request_stop(); }
+	void request_stop() { _sub.cancellation_token().request_stop(); }
+
+#if (THREAD_SYSTEM == THREAD_POCO)
+	/*! Join the thread.
+	  \return result of join */
+	int join(int timeoutInMs = 0)
+	{
+		int ts = _sub.cancellation_token().thread_state();
+		if (ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped)
+			return _exitval;
+		return _dthreadcore::join(timeoutInMs);
+	}
+#endif
 };
 
 //----------------------------------------------------------------------------------------
@@ -237,7 +397,21 @@ class dthread<> : public _dthreadcore
 
 	public:
 		_helper(int (*func)(void *, dthread_cancellation_token&), void *args, dthread_cancellation_token& cancellation_token) : _func(func), _args(args), _cancellation_token(cancellation_token) {}
-		int operator()() { return (_func)(_args, _cancellation_token); }
+		int operator()()
+		{
+			try
+			{
+				cancellation_token().thread_state(dthread_cancellation_token::Running);
+				int ret = (_func)(_args, _cancellation_token);
+				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
+				return ret;
+			}
+			catch(const std::exception&)
+			{
+				cancellation_token().thread_state(dthread_cancellation_token::Stopped);
+				throw;
+			}
+		}
 		dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
 	}
 	_sub;
@@ -261,6 +435,18 @@ public:
 	/*! request thread stop.
 	  \return function result */
 	virtual void request_stop() { _sub.cancellation_token().request_stop(); }
+
+#if (THREAD_SYSTEM == THREAD_POCO)
+	/*! Join the thread.
+	  \return result of join */
+	int join(int timeoutInMs = 0)
+	{
+		int ts = _sub.cancellation_token().thread_state();
+		if (ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped)
+			return _exitval;
+		return _dthreadcore::join(timeoutInMs);
+	}
+#endif
 };
 
 } // FIX8
