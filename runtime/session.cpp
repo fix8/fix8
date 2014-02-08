@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -63,9 +63,16 @@ RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 //-------------------------------------------------------------------------------------------------
 #ifndef _MSC_VER
 const Tickval::ticks Tickval::noticks;
+const Tickval::sticks Tickval::nosticks;
+const Tickval::ticks Tickval::errorticks;
 const Tickval::ticks Tickval::thousand;
 const Tickval::ticks Tickval::million;
 const Tickval::ticks Tickval::billion;
+const Tickval::ticks Tickval::second;
+const Tickval::ticks Tickval::minute;
+const Tickval::ticks Tickval::hour;
+const Tickval::ticks Tickval::day;
+const Tickval::ticks Tickval::week;
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -101,20 +108,22 @@ void SessionID::from_string(const f8String& from)
 Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sid(sid), _sf(), _persist(persist), _logger(logger), _plogger(plogger),	// initiator
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service, true),
+	_session_scheduler(&Session::activation_service, true), _schedule()
 {
 	_timer.start();
-	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
+	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
 Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
 	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
-	_timer(*this, 10), _hb_processor(&Session::heartbeat_service)
+	_timer(*this, 10), _hb_processor(&Session::heartbeat_service, true),
+	_session_scheduler(&Session::activation_service, true), _schedule()
 {
 	_timer.start();
-	_batchmsgs_buffer.reserve(10*(MAX_MSG_LENGTH+HEADER_CALC_OFFSET));
+	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -122,6 +131,7 @@ void Session::atomic_init(States::SessionStates st)
 {
 	_state = st;
 	_next_send_seq = _next_receive_seq = 1;
+	_active = true;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -134,6 +144,7 @@ Session::~Session()
 
 	if (_connection->get_role() == Connection::cn_acceptor)
 		{ f8_scoped_spin_lock guard(_per_spl); delete _persist; _persist = 0; }
+	delete _schedule;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -179,6 +190,17 @@ int Session::start(Connection *connection, bool wait, const unsigned send_seqnum
 			_req_next_send_seq = send_seqnum;
 		if (recv_seqnum)
 			_req_next_receive_seq = recv_seqnum;
+	}
+
+	if (_sf && (_schedule = _sf->create_session_schedule(_sf->_ses)))
+	{
+		if (_connection->get_role() == Connection::cn_initiator)
+		{
+			ostringstream ostr;
+			ostr << *_schedule;
+			log(ostr.str());
+		}
+		_timer.schedule(_session_scheduler, 1000);	// check every second
 	}
 
 	if (wait)	// wait for
@@ -267,7 +289,8 @@ bool Session::process(const f8String& from)
 		{
 		default:
 application_call:
-			result = handle_application(seqnum, msg);
+			if (activation_check(seqnum, msg))
+				result = handle_application(seqnum, msg);
 			break;
 		case Common_MsgByte_HEARTBEAT:
 			result = handle_heartbeat(seqnum, msg);
@@ -303,7 +326,6 @@ application_call:
 		}
 		delete msg;
 		return result && admin_result;
-
 	}
 	catch (f8Exception& e)
 	{
@@ -341,14 +363,10 @@ application_call:
 //-------------------------------------------------------------------------------------------------
 void Session::compid_check(const unsigned seqnum, const Message *msg)
 {
-	sender_comp_id sci;
-	msg->Header()->get(sci);
-	target_comp_id tci;
-	msg->Header()->get(tci);
-	if (!_sid.same_sender_comp_id(tci))
-		throw BadCompidId(sci());
-	if (!_sid.same_target_comp_id(sci))
-		throw BadCompidId(tci());
+	if (!_sid.same_sender_comp_id(msg->Header()->get<target_comp_id>()->get()))
+		throw BadCompidId(msg->Header()->get<target_comp_id>()->get());
+	if (!_sid.same_target_comp_id(msg->Header()->get<sender_comp_id>()->get()))
+		throw BadCompidId(msg->Header()->get<sender_comp_id>()->get());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -366,7 +384,8 @@ bool Session::sequence_check(const unsigned seqnum, const Message *msg)
 			send(generate_resend_request(_next_receive_seq));
 			_state = States::st_resend_request_sent;
 		}
-		else if (!_sf->get_ignore_logon_sequence_check_flag(_sf->_ses))
+		// If SessionConfig has *not* been set, assume wrong logon sequence is checked.
+		else if (!_sf || !_sf->get_ignore_logon_sequence_check_flag(_sf->_ses))
 			throw InvalidMsgSequence(seqnum, _next_receive_seq);
 		return false;
 	}
@@ -420,17 +439,29 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		SessionID id(_ctx._beginStr, tci(), sci());
 
 		// important - these objects can't be created until we have a valid SessionID
-		if (!_logger)
-			_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id);
-
-		if (!_plogger)
-			_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id);
-
-		if (!_persist)
+		if (_sf)
 		{
-			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
-			_persist = _sf->create_persister(_sf->_ses, &id, reset_given);
+			if (!_logger)
+				_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id);
+
+			if (!_plogger)
+				_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id);
+
+			if (!_persist)
+			{
+				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+				_persist = _sf->create_persister(_sf->_ses, &id, reset_given);
+			}
+
+			if (_schedule)
+			{
+				ostringstream ostr;
+				ostr << *_schedule;
+				log(ostr.str());
+			}
 		}
+		else
+			GlobalLogger::log("Error: SessionConfig object missing in session");
 
 		ostringstream ostr;
 		ostr << "Connection from " << _connection->get_peer_socket_address().toString();
@@ -461,6 +492,16 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		{
 			ostringstream ostr;
 			ostr << id << " failed authentication";
+			log(ostr.str());
+			stop();
+			_state = States::st_session_terminated;
+			return false;
+		}
+
+		if (_loginParameters._login_schedule.is_valid() && !_loginParameters._login_schedule.test())
+		{
+			ostringstream ostr;
+			ostr << id << " Session unavailable. Login not accepted.";
 			log(ostr.str());
 			stop();
 			_state = States::st_session_terminated;
@@ -593,6 +634,29 @@ bool Session::handle_test_request(const unsigned seqnum, const Message *msg)
 	return true;
 }
 
+
+//-------------------------------------------------------------------------------------------------
+bool Session::activation_service()	// called on the timer threead
+{
+	//cout << "activation_service()" << endl;
+	if (is_shutdown())
+		return false;
+
+	if (_connection && _connection->is_connected())
+	{
+		const bool curr(_active);
+		_active = _schedule->_sch.test(curr);
+		if (curr != _active)
+		{
+			ostringstream ostr;
+			ostr << "Session activation transitioned to " << (_active ? "active" : "inactive");
+			log(ostr.str());
+		}
+	}
+
+	return true;
+}
+
 //-------------------------------------------------------------------------------------------------
 bool Session::heartbeat_service()
 {
@@ -650,7 +714,7 @@ bool Session::heartbeat_service()
 		}
 	}
 
-	_timer.schedule(_hb_processor, 1000);
+	//_timer.schedule(_hb_processor, 1000);
 	return true;
 }
 
@@ -679,6 +743,29 @@ Message *Session::generate_reject(const unsigned seqnum, const char *what)
 {
 	Message *msg(create_msg(Common_MsgType_REJECT));
 	*msg << new ref_seq_num(seqnum);
+	if (what)
+		*msg << new text(what);
+
+	return msg;
+}
+
+//-------------------------------------------------------------------------------------------------
+Message *Session::generate_business_reject(const unsigned seqnum, const Message *imsg, const int reason, const char *what)
+{
+	Message *msg;
+	try
+	{
+		msg = create_msg(Common_MsgType_BUSINESS_REJECT);
+	}
+	catch (InvalidMetadata<f8String>& e)
+	{
+		// since this is an application message, it may not be supported in supplied schema
+		return 0;
+	}
+
+	*msg << new ref_seq_num(seqnum);
+	*msg << new ref_msg_type(imsg->get_msgtype());
+	*msg << new business_reject_reason(reason);
 	if (what)
 		*msg << new text(what);
 
@@ -796,12 +883,12 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 
 		if (_loginParameters._always_seqnum_assign)
 			//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
-			*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
+			*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : static_cast<unsigned int>(_next_send_seq));
 	}
 	else
 	{
 		//cerr << "send_process: _next_send_seq = " << _next_send_seq << endl;
-		*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : _next_send_seq);
+		*msg->Header() << new msg_seq_num(msg->get_custom_seqnum() ? msg->get_custom_seqnum() : static_cast<unsigned int>(_next_send_seq));
 	}
 	*msg->Header() << new sending_time;
 
@@ -971,7 +1058,7 @@ void Fix8CertificateHandler::onInvalidCertificate(const void*, Poco::Net::Verifi
    ostr << "Issuer Name:  " << cert.issuerName() << endl;
    ostr << "Subject Name: " << cert.subjectName() << endl;
    ostr << "The certificate yielded the error: " << errorCert.errorMessage() << endl;
-   ostr << "The error occurred in the certificate chain at position " << errorCert.errorDepth() << endl;
+   ostr << "The error occurred in the certificate chain at position " << errorCert.errorDepth();
 	GlobalLogger::log(ostr.str());
 	errorCert.setIgnoreError(true);
 }

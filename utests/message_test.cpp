@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -220,6 +220,59 @@ TEST(message, neworder_decode)
     neworder = 0;
 }
 
+
+/*!new order entry (with custom field) decoding test
+    \param message test suit name
+    \param neworder_custom_decode test case name*/
+
+TEST(message, neworder_custom_decode)
+{
+    Message * neworder = Message::factory(ctx(),
+		 "8=FIX.4.2\0019=194\00135=D\00149=CLIENT\00156=SERVER\00134=78\00150=S\001142=US,IL\00157=G\001"
+		 "52=20130304-05:06:14\00111=4\0011=54129\00121=1\00155=OC\001167=OPT\001107=TEST SYMBOL\00154=1\001"
+		 "60=20130304-05:06:14\00138=50.00\00140=2\00144=400.50\00159=0\00158=TEST\0019999=HELLO\00110=231\001");
+
+    EXPECT_TRUE(neworder->has<UTEST::SampleUserField>());
+    delete neworder;
+    neworder = 0;
+}
+
+/*!new order entry (with custom field) encoding test
+    \param message test suit name
+    \param neworder_custom_encode test case name*/
+TEST(message, neworder_custom_encode)
+{
+    NewOrderSingle *nos(new NewOrderSingle);
+    *nos->Header() << new msg_seq_num(78)
+                   << new sender_comp_id("A12345B")
+                   << new sending_time("20130305-02:19:46.108")
+                   << new target_comp_id("COMPARO");
+
+    *nos << new TransactTime("20130305-02:19:46.108")
+         << new Account("01234567")
+         << new OrderQty(50)
+         << new Price(400.5)
+         << new ClOrdID("4")
+         << new HandlInst(HandlInst_AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION)
+         << new OrdType(OrdType_LIMIT)
+         << new Side(Side_BUY)
+         << new Symbol("OC")
+         << new TimeInForce(TimeInForce_DAY)
+			<< new UTEST::SampleUserField("HELLO");
+
+    f8String output;
+    nos->encode(output);
+
+    f8String expect(
+		"8=FIX.4.2\0019=155\00135=D\00149=A12345B\00156=COMPARO\00134=78\001"
+		"52=20130305-02:19:46.108\0019999=HELLO\00111=4\0011=01234567\00121=1\001"
+		"55=OC\00154=1\00160=20130305-02:19:46.108\00138=50.00\00140=2\00144=400.50\00159=0\00110=041\001");
+
+    EXPECT_EQ(expect, output);
+
+    delete nos;
+    nos = 0;
+}
 
 /*!new order entry (with repeating groups) decoding test
     \param message test suit name

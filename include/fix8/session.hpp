@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_SESSION_HPP_
-# define _FIX8_SESSION_HPP_
+#ifndef FIX8_SESSION_HPP_
+#define FIX8_SESSION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
 
@@ -105,19 +105,19 @@ public:
 	    \return target_comp_id */
 	const f8String& get_id() const { return _id; }
 
-	/*! Targetcompid equivalence operator.
+	/*! Targetcompid equivalence function..
 	    \return true if both Targetcompids are the same */
 	bool same_sender_comp_id(const target_comp_id& targetCompID) const { return targetCompID() == _senderCompID(); }
 
-	/*! Sendercompid equivalence operator.
+	/*! Sendercompid equivalence function..
 	    \return true if both Sendercompids are the same */
 	bool same_target_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _targetCompID(); }
 
-	/*! Sendercompid equivalence operator.
+	/*! Sendercompid equivalence function..
 	    \return true if both Sendercompids are the same, on the same session side */
 	bool same_side_target_comp_id(const target_comp_id& targetCompID) const { return targetCompID() == _targetCompID(); }
 
-	/*! Targetcompid equivalence operator.
+	/*! Targetcompid equivalence function..
 	    \return true if both Targetcompids are the same, on the same session side */
 	bool same_side_sender_comp_id(const sender_comp_id& senderCompID) const { return senderCompID() == _senderCompID(); }
 
@@ -164,6 +164,107 @@ namespace defaults
 }
 
 //-------------------------------------------------------------------------------------------------
+struct Schedule
+{
+	Tickval _start, _end, _duration;
+	int _utc_offset, _start_day, _end_day;
+	Tickval::sticks _toffset;
+
+	Schedule() : _start(Tickval::errorticks), _end(Tickval::errorticks), _utc_offset(),
+		_start_day(-1), _end_day(-1) {}
+
+	Schedule(Tickval start, Tickval end, Tickval duration=Tickval::noticks, int utc_offset=0, int start_day=-1, int end_day=-1) :
+		_start(start), _end(end), _duration(duration),
+		_utc_offset(utc_offset), _start_day(start_day), _end_day(end_day),
+		_toffset(static_cast<Tickval::sticks>(_utc_offset) * Tickval::minute)
+	{
+	}
+
+	Schedule(const Schedule& from) :
+		_start(from._start), _end(from._end), _duration(from._duration),
+		_utc_offset(from._utc_offset), _start_day(from._start_day), _end_day(from._end_day),
+		_toffset(from._toffset)
+	{
+	}
+
+	Schedule& operator=(const Schedule& that)
+	{
+		if (this != &that)
+		{
+			_start = that._start;
+			_end = that._end;
+			_duration = that._duration;
+			_utc_offset = that._utc_offset;
+			_start_day = that._start_day;
+			_end_day = that._end_day;
+			_toffset = that._toffset;
+		}
+
+		return *this;
+	}
+
+	/*! Determine if this schdule is valid
+	    \return true if this schedule is valid */
+	bool is_valid() const { return !_start.is_errorval(); }
+
+	/*! Take the current local time and test if it is within the range of this schedule
+	    \param prev current bool state that we will toggle
+	    \return new toggle state */
+	bool test(bool prev=false)
+	{
+		Tickval now(true);
+		const Tickval today(now.get_ticks() - (now.get_ticks() % Tickval::day));
+		now.adjust(_toffset); // adjust for local utc offset
+		bool active(prev);
+
+		if (_start_day < 0) // start/end day not specified; daily only
+		{
+			//cout >> now << ' ' >> (today + _start) << ' ' >> (today + _end) << endl;
+
+			if (now.in_range(today + _start, today + _end))
+			{
+				if (!prev)
+					active = true;
+			}
+			else if (prev)
+				active = false;
+		}
+		else
+		{
+			struct tm result;
+			now.as_tm(result);
+
+			//cout >> now << ' ' >> (today + _start) << ' ' >> (today + _end) << ' ' << result.tm_wday << endl;
+
+			if (!prev)
+			{
+				if ( ((_start_day > _end_day && (result.tm_wday >= _start_day || result.tm_wday <= _end_day))
+					|| (_start_day < _end_day && result.tm_wday >= _start_day && result.tm_wday <= _end_day))
+					&& now.in_range(today + _start, today + _end))
+						active = true;
+			}
+			else if ( ((_start_day > _end_day && (result.tm_wday < _start_day && result.tm_wday > _end_day))
+					  || (_start_day < _end_day && result.tm_wday >= _end_day))
+						 && now > today + _end)
+					active = false;
+		}
+
+		return active;
+	}
+
+	/*! Inserter friend.
+	    \param os stream to send to
+	    \param what Session_Schedule reference
+	    \return stream */
+	friend std::ostream& operator<<(std::ostream& os, const Schedule& what)
+	{
+		os << "start:" >> what._start << " end:" >> what._end << " duration:" << what._duration
+			<< " utc_offset:" << what._utc_offset << " start day:" << what._start_day << " end day:" << what._end_day;
+		return os;
+	}
+};
+
+//-------------------------------------------------------------------------------------------------
 struct LoginParameters
 {
 	LoginParameters() : _login_retry_interval(defaults::retry_interval), _login_retries(defaults::login_retries),
@@ -176,13 +277,13 @@ struct LoginParameters
 		bool always_seqnum_assign=false, bool silent_disconnect=false, bool no_chksum_flag=false,
 		bool permissive_mode_flag=false, bool reliable=false,
 		unsigned recv_buf_sz=0, unsigned send_buf_sz=0, unsigned hb_int=defaults::hb_interval,
-		const f8String& pem_path=f8String()) :
+		const Schedule& sch=Schedule(), const f8String& pem_path=f8String()) :
 			_login_retry_interval(login_retry_interval), _login_retries(login_retries), _connect_timeout(connect_timeout),
 			_reset_sequence_numbers(reset_seqnum), _always_seqnum_assign(always_seqnum_assign),
 			_silent_disconnect(silent_disconnect), _no_chksum_flag(no_chksum_flag),
 			_permissive_mode_flag(permissive_mode_flag), _reliable(reliable),
 			_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz), _hb_int(defaults::hb_interval),
-			_pem_path(pem_path) {}
+			_login_schedule(sch), _pem_path(pem_path) {}
 
 	LoginParameters(const LoginParameters& from)
 		: _login_retry_interval(from._login_retry_interval), _login_retries(from._login_retries),
@@ -191,7 +292,8 @@ struct LoginParameters
 		_no_chksum_flag(from._no_chksum_flag), _permissive_mode_flag(from._permissive_mode_flag),
 		_reliable(from._reliable), _davi(from._davi),
 		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz), _hb_int(from._hb_int),
-		_pem_path(from._pem_path){}
+		_login_schedule(from._login_schedule), _pem_path(from._pem_path)
+	{}
 
 	LoginParameters& operator=(const LoginParameters& that)
 	{
@@ -210,6 +312,7 @@ struct LoginParameters
 			_recv_buf_sz = that._recv_buf_sz;
 			_send_buf_sz = that._send_buf_sz;
 			_hb_int = that._hb_int;
+			_login_schedule = that._login_schedule;
 			_pem_path = that._pem_path;
 		}
 		return *this;
@@ -219,7 +322,31 @@ struct LoginParameters
 	bool _reset_sequence_numbers, _always_seqnum_assign, _silent_disconnect, _no_chksum_flag, _permissive_mode_flag, _reliable;
 	default_appl_ver_id _davi;
 	unsigned _recv_buf_sz, _send_buf_sz, _hb_int;
+	Schedule _login_schedule;
 	f8String _pem_path;
+};
+
+//-------------------------------------------------------------------------------------------------
+struct Session_Schedule
+{
+	Schedule _sch;
+	int _reject_reason;
+	const std::string _reject_text;
+
+	Session_Schedule(Schedule& sch, int reject_reason=0, const std::string& reject_text="Business messages are not accepted now.") :
+		_sch(sch), _reject_reason(reject_reason), _reject_text(reject_text)
+	{
+	}
+
+	/*! Inserter friend.
+	    \param os stream to send to
+	    \param what Session_Schedule reference
+	    \return stream */
+	friend std::ostream& operator<<(std::ostream& os, const Session_Schedule& what)
+	{
+		os << what._sch << " reject_reason:" << what._reject_reason << " reject_text:" << what._reject_text;
+		return os;
+	}
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -244,6 +371,7 @@ protected:
 	Control _control;
 	f8_atomic<unsigned> _next_send_seq, _next_receive_seq;
 	f8_atomic<States::SessionStates> _state;
+	f8_atomic<bool> _active;
 	Tickval _last_sent, _last_received;
 	const F8MetaCntx& _ctx;
 	Connection *_connection;
@@ -258,11 +386,15 @@ protected:
 	Logger *_logger, *_plogger;
 
 	Timer<Session> _timer;
-	TimerEvent<Session> _hb_processor;
+	TimerEvent<Session> _hb_processor, _session_scheduler;
 	std::string _batchmsgs_buffer;
+	Session_Schedule *_schedule;
 
 	/// Heartbeat generation service thread method.
 	bool heartbeat_service();
+
+	/// Session start/stop service thread method.
+	bool activation_service();
 
 	/*! Logon callback.
 	    \param seqnum message sequence number
@@ -450,6 +582,10 @@ public:
 	    \return the connection object */
 	Connection *get_connection() { return _connection; }
 
+	/*! Get the timer object.
+	    \return the timer object */
+	Timer<Session>& get_timer() { return _timer; }
+
 	/*! Get the metadata context object.
 	    \return the context object */
 	const F8MetaCntx& get_ctx() const { return _ctx; }
@@ -496,6 +632,12 @@ public:
 	    \param msg Message
 	    \return true on success */
 	bool sequence_check(const unsigned seqnum, const Message *msg);
+
+	/*! Check that the session is active for this application message
+	    \param seqnum message sequence number
+	    \param msg Message
+	    \return true if active */
+	virtual bool activation_check(const unsigned seqnum, const Message *msg) { return _active; }
 
 	/*! Enforce session semantics. Checks compids, sequence numbers.
 	    \param seqnum message sequence number
@@ -570,6 +712,14 @@ public:
 	    \param what rejection text
 	    \return new Message */
 	virtual Message *generate_reject(const unsigned seqnum, const char *what);
+
+	/*! Generate a business_reject message.
+	    \param seqnum message sequence number
+	    \param msg source message
+	    \param reason rejection reason code
+	    \param what rejection text
+	    \return new Message */
+	virtual Message *generate_business_reject(const unsigned seqnum, const Message *msg, const int reason, const char *what);
 
 	/*! Detach message passed to handle_application. Will set source to 0;
 	    Not thread safe however this method should never be called across threads. It should

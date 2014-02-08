@@ -9,12 +9,30 @@
 				protocol_log="protocol_log"
 				ip="127.0.0.1" port="11001"
 				sender_comp_id="TEX_DLD"
+				tcp_recv_buffer="100663296"
+				tcp_send_buffer="100663296"
 				tcp_nodelay="true"
 				reset_sequence_numbers="false"
 				ignore_logon_sequence_check="true"
 				process_model="threaded"
 				silent_disconnect="false"
 				persist="file0"/>
+
+	<schedule name="test_schedule0"
+				start_time="22:00:00"
+				end_time="22:01:00"
+				start_day="0"
+				end_day="1"
+				reject_code="7"
+				reject_text="Test system is not accepting any business messages at the moment"
+				utc_offset_mins="!{ now=`date +%z`; echo $(( ($now / 100) * 60 + ($now % 100) )) }" />
+
+	<login   name="test_login0"
+				start_time="16:56:00"
+				end_time="16:57:00"
+				start_day="0"
+				end_day="6"
+				utc_offset_mins="!{ now=`date +%z`; echo $(( ($now / 100) * 60 + ($now % 100) )) }" />
 
 	<persist name="bdb0"
 				type="bdb"

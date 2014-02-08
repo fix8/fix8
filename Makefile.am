@@ -2,7 +2,7 @@
 # Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
 # Fix8 Open Source FIX Engine.
-# Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+# Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 #
 # Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 # GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -64,7 +64,7 @@ pkgincludedir = ${prefix}/include/fix8
 ffincdir = include/fix8/ff
 ffincludes = ${ffincdir}/*.hpp ${ffincdir}/*.h ${ffincdir}/d/*.hpp ${ffincdir}/platforms/*.h ${ffincdir}/atomic/*.h \
 								  ${ffincdir}/ocl/*.hpp ${ffincdir}/ocl/*.h
-pkginclude_HEADERS = include/fix8/*.hpp include/fix8/f8config.h
+pkginclude_HEADERS = include/fix8/*.hpp include/fix8/f8config.h include/fix8/f8dll.h
 
 ffdir = ${prefix}/include/fix8/ff
 sharedir = ${prefix}/share/fix8
@@ -89,7 +89,7 @@ INSTALL_DATA_HTML_SEARCH_DOC = doc/html/search/*.js doc/html/search/*.html doc/h
 INSTALL_DATA_LOCAL_SCHEMA = schema/*.xml schema/QUICKFIX-LICENCE
 
 install-data-local:
-	@$(mkinstalldirs) $(DESTDIR)$(testdir) $(DESTDIR)$(schemadir)
+	@$(mkinstalldirs) $(DESTDIR)$(testdir) $(DESTDIR)$(testdir)/run $(DESTDIR)$(schemadir)
 	@$(mkinstalldirs) $(DESTDIR)$(ffdir)/d $(DESTDIR)$(ffdir)/platforms $(DESTDIR)$(ffdir)/atomic $(DESTDIR)$(ffdir)/ocl
 	@$(mkinstalldirs) $(DESTDIR)$(fix8mandir)
 	$(INSTALL_DATA) $(INSTALL_DATA_LOCAL_TEST) $(DESTDIR)$(testdir)

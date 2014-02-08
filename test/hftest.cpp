@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -584,7 +584,7 @@ bool hf_session_client::handle_application(const unsigned seqnum, const FIX8::Me
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg) const
+bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg)
 {
 	static unsigned oid(0), eoid(0);
 	FIX8::TEX::OrderQty qty;
@@ -654,7 +654,7 @@ bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg) const
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_client::operator() (const FIX8::TEX::ExecutionReport *msg) const
+bool tex_router_client::operator() (const FIX8::TEX::ExecutionReport *msg)
 {
 	static int exrecv(0);
 	if (++exrecv % update_count == 0)

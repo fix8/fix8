@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_COPYRIGHT([Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 All rights reserved.])
 
 AC_PREREQ(2.61)
@@ -13,7 +13,7 @@ AH_TOP([//----------------------------------------------------------------------
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can redistribute it and/or modify  it under the terms of the GNU
 Lesser General Public License as  published by the Free Software Foundation, either version
@@ -60,6 +60,13 @@ PATCH_VERSION_NUM=`[echo $VERSION | sed 's/[^0-9]/ /g' | awk '{printf "%d",$3}']
 AC_DEFINE_UNQUOTED([PATCH_VERSION_NUM], [$PATCH_VERSION_NUM], [Patch number])
 AC_DEFINE_UNQUOTED([MAGIC_NUM], [(MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)], [Encoded Version])
 AC_DEFINE_UNQUOTED([CONFIGURE_OPTIONS], ["$ac_configure_args"], [configure options])
+
+UNAME_S=`uname -s 2>/dev/null || echo unknown`
+UNAME_M=`uname -m 2>/dev/null || echo unknown`
+UNAME_O=`uname -o 2>/dev/null || echo unknown`
+UNAME_R=`uname -r 2>/dev/null || echo unknown`
+UNAME_P=`uname -p 2>/dev/null || echo unknown`
+UNAME_V=`uname -v 2>/dev/null || echo unknown`
 
 BRAND_SUMMARY='Fix8 Open Source FIX Framework'
 BRAND_DESCRIPTION='Modern fast FIX Framework'
@@ -111,19 +118,25 @@ AC_FUNC_CLOSEDIR_VOID
 AC_FUNC_REALLOC
 AC_FUNC_STRCOLL
 
+AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
+            CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
+            CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+            CC="$PTHREAD_CC"],
+           [AC_MSG_ERROR([Pthread API support is required.])])
+
 AC_CHECK_TOOL([STRIP],[strip])
 AC_CHECK_TOOL([DOXYGEN],[doxygen])
 
 # check what version of gcc we're using
 
-# test for gcc >= 4.7
+# test for gcc >= 4.2
 is_late_gcc=no
 case "$CXX" in
   *g++*)
 		GCC_VERSION=`$CC -dumpversion`
 		gcc_major=`echo $GCC_VERSION | cut -d. -f1`
 		gcc_minor=`echo $GCC_VERSION | cut -d. -f2`
-		if test $gcc_major -ge 4 -a $gcc_minor -ge 7; then
+		if test $gcc_major -ge 4 -a $gcc_minor -ge 2; then
 			is_late_gcc=yes
 		fi ;;
 	*clang*)
@@ -648,6 +661,14 @@ if test "$openssl" = yes; then
 		fi
 fi
 AM_CONDITIONAL(USESSL, [test x$have_openssl = xyes])
+
+AC_ARG_ENABLE([experimental-buffered-socket-read],
+[AS_HELP_STRING([--enable-experimental-buffered-socket-read],[enable experimental buffered socket read (default=no)])],
+[case "${enableval}" in
+	yes) AC_DEFINE(EXPERIMENTAL_BUFFERED_SOCKET_READ, 1, [Define to 1 to enable experimental socket read]) ;;
+	no)  ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --experimental-buffered-socket-read) ;;
+esac])
 
 AC_MSG_CHECKING(checking for /var/run/)
 if test -d /var/run; then

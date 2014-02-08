@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#ifndef _FIX8_THREAD_HPP_
-# define _FIX8_THREAD_HPP_
+#ifndef FIX8_THREAD_HPP_
+#define FIX8_THREAD_HPP_
 
 //----------------------------------------------------------------------------------------
 #include<pthread.h>
@@ -121,18 +121,16 @@ public:
 	  \return function result */
 	virtual int start() = 0;	// ABC
 
+	/*! request thread stop.
+	  \return function result */
+	virtual void request_stop() = 0;
+
 	/*! Join the thread.
 	  \return result of join */
 	int join()
-		{ return pthread_join(_tid, reinterpret_cast<void **>(&_exitval)) ? -1 : _exitval; }
-
-	/*! Cause the thread to exit.
-	  \param exitvalue value to return to calling process */
-	void exit(int exitvalue) const { pthread_exit(reinterpret_cast<void *>(exitvalue)); }
-
-	/*! Recover the thread's exit value.
-	  \return exit value from to calling process */
-	int getexitval() const { return _exitval; }
+	{
+		return pthread_join(_tid, reinterpret_cast<void **>(&_exitval)) ? -1 : _exitval;
+	}
 
 	/*! Yield CPU.
 		\return result of yield */
@@ -143,17 +141,6 @@ public:
 	int yield() const { return pthread_yield(); }
 #endif
 #endif
-
-	/*! Kill the thread.
-	  \param signum signal number to send */
-	void kill(int signum) const { pthread_kill(_tid, signum); }
-
-	/*! Kill the thread. Static version.
-	  \param ctxt thread context to kill
-	  \param signal signal number to send
-	  \return true on success */
-	static bool kill(_dthreadcore& ctxt, const int signal=SIGTERM)
-		{ return pthread_kill(ctxt._tid, signal) == 0; }
 
 	/*! Get the thread's thread ID.
 	  \return the thread id */
@@ -172,22 +159,20 @@ public:
 	  \param that the other thread id
 	  \return true if the threads are unequal */
 	bool operator!=(const _dthreadcore& that) const { return !pthread_equal(_tid, that._tid); }
+};
 
-#ifndef _MSC_VER
-	/*! Set the thread signal mask.
-	  \param how block, unblock or mask
-	  \param newmask new mask
-	  \param oldmask old mask
-	  \return true on success */
-	static bool setsignalmask(const int how, const sigset_t *newmask, sigset_t *oldmask)
-		{ return pthread_sigmask(how, newmask, oldmask)  == 0; }
+//----------------------------------------------------------------------------------------
+/// Thread cancellation token
+struct dthread_cancellation_token
+{
+	dthread_cancellation_token() { _stop_requested = false; }
+	bool stop_requested() const { return _stop_requested; }
+	void request_stop() { _stop_requested = true; }
+	operator bool() const { return stop_requested(); }
+	bool operator!() const { return !stop_requested(); }
 
-	/*! Wait for a specified signal.
-	  \param set signal set
-	  \param sig new mask
-	  \return true on success */
-	static bool signalwait(const sigset_t *set, int *sig) { return sigwait(set, sig) == 0; }
-#endif
+private:
+	f8_atomic<bool> _stop_requested;
 };
 
 //----------------------------------------------------------------------------------------
@@ -200,10 +185,13 @@ class dthread : public _dthreadcore
 	{
 		T& _what;
 		int (T::*_method)();
+		dthread_cancellation_token& (T::*_cancellation_token_method)();
 
 	public:
-		_helper(T& what, int (T::*method)()) : _what(what), _method(method) {}
+		_helper(T& what, int (T::*method)(), dthread_cancellation_token& (T::*cancellation_token_method)())
+			: _what(what), _method(method), _cancellation_token_method(cancellation_token_method) {}
 		int operator()() { return (_what.*_method)(); }
+		dthread_cancellation_token& cancellation_token() { return (_what.*_cancellation_token_method)(); }
 	}
 	_sub;
 
@@ -213,16 +201,16 @@ public:
 	  \param method pointer to entry point method
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	dthread(T what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
-		: _dthreadcore(detach, stacksize), _sub(what, method) {}
+	dthread(T what, int (T::*method)()=&T::operator(), dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
+		: _dthreadcore(detach, stacksize), _sub(what, method, cancellation_token_method) {}
 
 	/*! Ctor. Reference to object, functor version.
 	  \param what reference wrapper of class with entry point
 	  \param method reference to entry point method
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	dthread(reference_wrapper<T> what, int (T::*method)()=&T::operator(), const bool detach=false, const size_t stacksize=0)
-		: _dthreadcore(detach, stacksize), _sub(what, method) {}
+	dthread(reference_wrapper<T> what, int (T::*method)()=&T::operator(), dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
+		: _dthreadcore(detach, stacksize), _sub(what, method, cancellation_token_method) {}
 
 	/// Dtor.
 	virtual ~dthread() {}
@@ -230,6 +218,10 @@ public:
 	/*! start thread.
 	  \return function result */
 	int start() { return _start<_helper>(static_cast<void *>(&_sub)); }
+
+	/*! request thread stop.
+	  \return function result */
+	virtual void request_stop() { _sub.cancellation_token().request_stop(); }
 };
 
 //----------------------------------------------------------------------------------------
@@ -239,12 +231,14 @@ class dthread<> : public _dthreadcore
 {
 	class _helper
 	{
-		int (*_func)(void *);
+		int (*_func)(void *, dthread_cancellation_token&);
 		void *_args;
+		dthread_cancellation_token& _cancellation_token;
 
 	public:
-		_helper(int (*func)(void *), void *args) : _func(func), _args(args) {}
-		int operator()() { return (_func)(_args); }
+		_helper(int (*func)(void *, dthread_cancellation_token&), void *args, dthread_cancellation_token& cancellation_token) : _func(func), _args(args), _cancellation_token(cancellation_token) {}
+		int operator()() { return (_func)(_args, _cancellation_token); }
+		dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
 	}
 	_sub;
 
@@ -254,8 +248,8 @@ public:
 	  \param args pointer to function arguments
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	dthread(int (*func)(void *), void *args, const bool detach=false, const size_t stacksize=0)
-		: _dthreadcore(detach, stacksize), _sub(func, args) {}
+	dthread(int (*func)(void *, dthread_cancellation_token&), void *args, dthread_cancellation_token& cancellation_token, const bool detach=false, const size_t stacksize=0)
+		: _dthreadcore(detach, stacksize), _sub(func, args, cancellation_token) {}
 
 	/// Dtor.
 	virtual ~dthread() {}
@@ -263,6 +257,10 @@ public:
 	/*! start thread.
 	  \return function result */
 	int start() { return _start<_helper>(static_cast<void *>(&_sub)); }
+
+	/*! request thread stop.
+	  \return function result */
+	virtual void request_stop() { _sub.cancellation_token().request_stop(); }
 };
 
 } // FIX8

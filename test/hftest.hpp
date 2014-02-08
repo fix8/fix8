@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_MYFIX_HPP_
-#define _FIX8_MYFIX_HPP_
+#ifndef FIX8_HFTEST_HPP_
+#define FIX8_HFTEST_HPP_
 
 //-----------------------------------------------------------------------------------------
 class hf_session_client;
@@ -55,7 +55,7 @@ public:
 	/*! Execution report handler. Here is where you provide your own methods for the messages you wish to
 		 handle. Only those messages that are of interest to you need to be implemented.
 	    \param msg Execution report message session */
-	virtual bool operator() (const FIX8::TEX::ExecutionReport *msg) const;
+	virtual bool operator() (const FIX8::TEX::ExecutionReport *msg);
 };
 
 /// Example client session. Derives from FIX8::Session.
@@ -117,7 +117,7 @@ public:
 	/*! NewOrderSingle message handler. Here is where you provide your own methods for the messages you wish to
 		 handle. Only those messages that are of interest to you need to be implemented.
 	    \param msg NewOrderSingle message */
-	virtual bool operator() (const FIX8::TEX::NewOrderSingle *msg) const;
+	virtual bool operator() (const FIX8::TEX::NewOrderSingle *msg);
 };
 
 /// Example server session. Derives from FIX8::Session.

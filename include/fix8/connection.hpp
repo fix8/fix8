@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_CONNECTION_HPP_
-# define _FIX8_CONNECTION_HPP_
+#ifndef FIX8_CONNECTION_HPP_
+#define FIX8_CONNECTION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
 #include <Poco/Timespan.h>
@@ -60,6 +60,7 @@ protected:
 	f8_concurrent_queue<T> _msg_queue;
 	Session& _session;
 	ProcessModel _pmodel;
+	dthread_cancellation_token  _cancellation_token;
 
 public:
 	/*! Ctor.
@@ -70,7 +71,11 @@ public:
 		: _thread(FIX8::ref(*this)), _sock(sock), _session(session), _pmodel(pmodel) {}
 
 	/// Dtor.
-	virtual ~AsyncSocket() {}
+	virtual ~AsyncSocket()
+	{
+		_thread.request_stop();
+		_thread.join();
+	}
 
 	/*! Get the number of messages queued on this socket.
 	    \return number of queued messages */
@@ -78,17 +83,17 @@ public:
 
 	/*! Function operator. Called by thread to process message on queue.
 	    \return 0 on success */
-	int operator()() { return execute(); }
+	int operator()() { return execute(_cancellation_token); }
 
 	/*! Execute the function operator
 	    \return result of operator */
-	virtual int execute() { return 0; }
+	virtual int execute(dthread_cancellation_token& cancellation_token) { return 0; }
 
 	/// Start the processing thread.
 	virtual void start() { _thread.start(); }
 
 	/// Stop the processing thread and quit.
-	virtual void quit() { _thread.kill(1); }
+	virtual void quit() { _thread.request_stop(); _thread.join(); }
 
 	/*! Get the underlying socket object.
 	    \return the socket */
@@ -97,6 +102,8 @@ public:
 	/*! Wait till processing thead has finished.
 	    \return 0 on success */
 	int join() { return _thread.join(); }
+
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -107,9 +114,12 @@ class FIXReader : public AsyncSocket<f8String>
 	f8_atomic<bool> _socket_error;
 
 	dthread<FIXReader> _callback_thread;
+	dthread_cancellation_token _callback_cancellation_token;
 
+#if EXPERIMENTAL_BUFFERED_SOCKET_READ
     char _read_buffer[_max_msg_len*2];
     char *_read_buffer_rptr, *_read_buffer_wptr;
+#endif
 
 	/*! Process messages from inbound queue, calls session process method.
 	    \return number of messages processed */
@@ -122,26 +132,28 @@ class FIXReader : public AsyncSocket<f8String>
 	    \return true on success */
 	bool read(f8String& to);
 
-    /*! Read bytes from read buffer and then if needed from the socket layer, throws PeerResetConnection.
+#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+	/*! Read bytes from read buffer and then if needed from the socket layer, throws PeerResetConnection.
         \param where buffer to place bytes in
         \param sz number of bytes to read
         \return number of bytes read */
-    int sockRead(char *where, size_t sz)
-    {
-        if (static_cast<size_t>(_read_buffer_wptr - _read_buffer_rptr) < sz)
-            realSockRead(sz, _max_msg_len);
-        sz = std::min((size_t)(_read_buffer_wptr-_read_buffer_rptr), sz);
-        memcpy(where, _read_buffer_rptr, sz);
-        _read_buffer_rptr += sz;
-        const size_t shift(_max_msg_len);
-        if (static_cast<size_t>(_read_buffer_rptr - _read_buffer) >= shift)
-        {
-				memcpy(_read_buffer, &_read_buffer[shift], sizeof(_read_buffer) - shift);
-				_read_buffer_rptr -= shift;
-				_read_buffer_wptr -= shift;
-        }
-        return sz;
-    }
+	int sockRead(char *where, size_t sz)
+	{
+		const size_t available_in_buffer(static_cast<size_t>(_read_buffer_wptr - _read_buffer_rptr));
+		if (available_in_buffer < sz)
+			realSockRead(sz - available_in_buffer, _max_msg_len);
+		sz = std::min((size_t)(_read_buffer_wptr-_read_buffer_rptr), sz);
+		memcpy(where, _read_buffer_rptr, sz);
+		_read_buffer_rptr += sz;
+		const size_t shift(_max_msg_len);
+		if (static_cast<size_t>(_read_buffer_rptr - _read_buffer) >= shift)
+		{
+			memcpy(_read_buffer, &_read_buffer[shift], sizeof(_read_buffer) - shift);
+			_read_buffer_rptr -= shift;
+			_read_buffer_wptr -= shift;
+		}
+		return sz;
+	}
 
 	/*! Read bytes from the socket layer, throws PeerResetConnection.
 	    \param where buffer to place bytes in
@@ -174,6 +186,33 @@ class FIXReader : public AsyncSocket<f8String>
 		}
 		return _read_buffer_wptr - ptr;
 	}
+#else
+	/*! Read bytes from the socket layer, throws PeerResetConnection.
+		 \param where buffer to place bytes in
+		 \param sz number of bytes to read
+		 \return number of bytes read */
+	int sockRead(char *where, const size_t sz)
+	{
+		unsigned remaining(sz), rddone(0);
+		while (remaining > 0)
+		{
+			const int rdSz(_sock->receiveBytes(where + rddone, remaining));
+			if (rdSz <= 0)
+			{
+				if (errno == EAGAIN
+#if defined EWOULDBLOCK && EAGAIN != EWOULDBLOCK
+					|| errno == EWOULDBLOCK
+#endif
+				)
+					continue;
+				throw PeerResetConnection("sockRead: connection gone");
+			}
+			rddone += rdSz;
+			remaining -= rdSz;
+		}
+		return rddone;
+	}
+#endif
 
 public:
 	/*! Ctor.
@@ -182,14 +221,23 @@ public:
 	    \param pmodel process model */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
 		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(FIX8::ref(*this), &FIXReader::callback_processor)
-        , _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
-        , _bg_sz()
+#if EXPERIMENTAL_BUFFERED_SOCKET_READ
+		, _read_buffer(), _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
+#endif
+		, _bg_sz()
 	{
 		set_preamble_sz();
 	}
 
 	/// Dtor.
-	virtual ~FIXReader() {}
+	virtual ~FIXReader()
+	{
+		if (_pmodel == pm_pipeline )
+		{
+			_callback_thread.request_stop();
+			_callback_thread.join();
+		}
+	}
 
 	/// Start the processing threads.
 	virtual void start()
@@ -208,7 +256,10 @@ public:
 	virtual void quit()
 	{
 		if (_pmodel == pm_pipeline)
-			_callback_thread.kill(1);
+		{
+			_callback_thread.request_stop();
+			_callback_thread.join();
+		}
 		AsyncSocket<f8String>::quit();
 	}
 
@@ -225,7 +276,7 @@ public:
 	/*! Reader thread method. Reads messages and places them on the queue for processing.
 	    Supports pipelined, threaded and coroutine process models.
 		 \return 0 on success */
-   virtual int execute();
+   virtual int execute(dthread_cancellation_token& cancellation_token);
 
 	/*! Wait till writer thread has finished.
 	    \return 0 on success */
@@ -245,6 +296,8 @@ public:
 		static const Poco::Timespan ts;
 		return _sock->poll(ts, Poco::Net::Socket::SELECT_READ);
 	}
+
+	dthread_cancellation_token& callback_cancellation_token() { return _callback_cancellation_token; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -342,8 +395,9 @@ public:
 	/*! Send message over socket.
 	    \param data char * buffer to send
 	    \param remaining number of bytes
+	    \param nb - if true, don't block
 	    \return number of bytes sent */
-	int send(const char *data, size_t remaining)
+	int send(const char *data, size_t remaining, bool nb=false)
 	{
 		unsigned wrdone(0);
 
@@ -357,7 +411,11 @@ public:
 					|| errno == EWOULDBLOCK
 #endif
 				)
+				{
+					if (nb)
+						return wrdone;
 					continue;
+				}
 				throw PeerResetConnection("send: connection gone");
 			}
 
@@ -380,7 +438,7 @@ public:
 
     /*! Writer thread method. Reads messages from the queue and sends them over the socket.
         \return 0 on success */
-    virtual int execute();
+    virtual int execute(dthread_cancellation_token& cancellation_token);
 };
 
 //----------------------------------------------------------------------------------------
@@ -570,7 +628,7 @@ public:
 
 	/*! Call the FIXreader method
 	    \return result of call */
-	int reader_execute() { return _reader.execute(); }
+	int reader_execute() { return _reader.execute(_reader.cancellation_token()); }
 
 	/*! Check if the reader will block
 	    \return true if won't block */
@@ -578,7 +636,7 @@ public:
 
 	/*! Call the FIXreader method
 	    \return result of call */
-	int writer_execute() { return _writer.execute(); }
+	int writer_execute() { return _writer.execute(_writer.cancellation_token()); }
 
 	/*! Check if the writer will block
 	    \return true if won't block */

@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_CONFIGURATION_HPP_
-# define _FIX8_CONFIGURATION_HPP_
+#ifndef FIX8_CONFIGURATION_HPP_
+#define FIX8_CONFIGURATION_HPP_
 
 #ifdef HAVE_OPENSSL
 #include <openssl/ssl.h>
@@ -96,7 +96,7 @@ class Configuration
 	const std::string _xmlfile;
 	const XmlElement *_root;
 	typedef std::map<const std::string, const XmlElement *> ConfigMap;
-	ConfigMap _sessions, _persisters, _loggers, _server_group, _ssl_context;
+	ConfigMap _sessions, _persisters, _loggers, _server_group, _ssl_context, _schedules, _logins;
 	std::vector<const XmlElement *> _allsessions;
 
 	/*! Find an xml entity by tag in the supplied map.
@@ -126,10 +126,20 @@ class Configuration
 	  \return the found entity or 0 if not found */
 	const XmlElement *find_ssl_context(const std::string& tag) const { return find_element(tag, _ssl_context); }
 
+	/*! Find a session schedule by tag.
+	  \param tag the tag to find
+	  \return the found entity or 0 if not found */
+	const XmlElement *find_schedule(const std::string& tag) const { return find_element(tag, _schedules); }
+
+	/*! Find a session login schedule by tag.
+	  \param tag the tag to find
+	  \return the found entity or 0 if not found */
+	const XmlElement *find_login_schedule(const std::string& tag) const { return find_element(tag, _logins); }
+
 	/*! Find a fix8 field typed value by tag from an xml entity.
 	  \tparam location type
-	  \param tag the tag to find
 	  \param from the xml entity to search
+	  \param tag the tag to find
 	  \param to location to store target
 	  \return the target */
 	template<typename T>
@@ -139,6 +149,17 @@ class Configuration
 		if (from && from->GetAttr(tag, val))
 			to.set(val);
 		return to;
+	}
+
+	/*! Find a session time field by tag from an xml entity.
+	  \param from the xml entity to search
+	  \param tag the tag to find
+	  \return Tickval::ticks time or errorticks if not found */
+	Tickval::ticks get_time_field(const XmlElement *from, const std::string& tag, bool timeonly=false) const
+	{
+		std::string time_str;
+		return from && from->GetAttr(tag, time_str) && time_str.size() == 8 ? time_parse(time_str.c_str(), 8, timeonly)
+																								  : Tickval::errorticks;
 	}
 
 	/*! Find an attribute in the given XmlElement
@@ -368,6 +389,21 @@ public:
 	  \param sid optional session id to build name from
 	  \return new logger or 0 if unable to create */
 	Logger *create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid=0) const;
+
+	/*! Create schedule object from a session entity.
+	  \param from xml entity to search
+	  \return Schedule */
+	Schedule create_schedule(const XmlElement *from) const;
+
+	/*! Create login schedule object from a session entity.
+	  \param from xml entity to search
+	  \return login Schedule */
+	Schedule create_login_schedule(const XmlElement *from) const;
+
+	/*! Create a new session schedule object from a session entity.
+	  \param from xml entity to search
+	  \return new Session_Schedule or 0 if unable to create */
+	Session_Schedule *create_session_schedule(const XmlElement *from) const;
 
 	/*! Get all active sessions that have been read; filter by role if desired.
 	  \param target vector to place results

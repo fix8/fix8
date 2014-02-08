@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_FIELD_HPP_
-# define _FIX8_FIELD_HPP_
+#ifndef FIX8_FIELD_HPP_
+#define FIX8_FIELD_HPP_
 
 #include <Poco/Timestamp.h>
 #include <Poco/DateTime.h>
@@ -185,7 +185,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-/// Field template. There will ONLY be template specialisations of this class using Int2Type idiom.
+/// Field template. There will ONLY be partial template specialisations of this class.
 /*! \tparam T field type
     \tparam field field number (fix tag) */
 template<typename T, const unsigned short field>
@@ -644,36 +644,10 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef EnumType<FieldTrait::ft_data> data;
-
-/// Partial specialisation for data field type.
-/*! \tparam field field number (fix tag) */
-template<const unsigned short field>
-class Field<data, field> : public Field<f8String, field>
-{
-public:
-	/// Ctor.
-	Field () : Field<f8String, field>(field) {}
-
-	/// Copy Ctor.
-	/* \param from field to copy */
-	Field (const Field& from) : Field<f8String, field>(from) {}
-
-	/*! Construct from string ctor.
-	  \param from string to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const f8String& from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
-
-	/*! Construct from char * ctor.
-	  \param from char * to construct field from
-	  \param rlm pointer to the realmbase for this field (if available) */
-	Field (const char *from, const RealmBase *rlm=0) : Field<f8String, field>(from, rlm) {}
-
-	/// Dtor.
-	~Field() {}
-};
-
-//-------------------------------------------------------------------------------------------------
+/*! Format ASCII decimal value
+  \param data source value
+  \param to target location for string
+  \return number bytes decoded */
 inline void format0(int data, char *to, int width)
 {
 	while(width-- > 0)
@@ -683,7 +657,12 @@ inline void format0(int data, char *to, int width)
 	}
 }
 
-inline size_t parseDate(const char *begin, size_t len, int &to)
+/*! Decode ASCII decimal value
+  \param begin decode from
+  \param len number of bytes in string
+  \param to target location for value
+  \return number bytes decoded */
+inline size_t parse_decimal(const char *begin, size_t len, int &to)
 {
 	const char *bsv(begin);
 	while(len-- > 0)
@@ -711,7 +690,7 @@ inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
    };
 
    const int tyears(ltm.tm_year ? ltm.tm_year - 70 : 0); // tm->tm_year is from 1900.
-   const int tdays(ltm.tm_mon ? mon_days[ltm.tm_mon] + (ltm.tm_mday ? ltm.tm_mday - 1 : 0) + tyears * 365 + (tyears + 2) / 4 : 0);
+   const int tdays(mon_days[ltm.tm_mon] + (ltm.tm_mday ? ltm.tm_mday - 1 : 0) + tyears * 365 + (tyears + 2) / 4);
    return tdays * 86400 + (ltm.tm_hour + utcdiff) * 3600 + ltm.tm_min * 60 + ltm.tm_sec;
 }
 
@@ -778,21 +757,21 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
    int millisecond(0);
    tm tms = {};
 
-	ptr += parseDate(ptr, 4, tms.tm_year);
+	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
-	ptr += parseDate(ptr, 2, tms.tm_mon);
+	ptr += parse_decimal(ptr, 2, tms.tm_mon);
 	--tms.tm_mon;
-	ptr += parseDate(ptr, 2, tms.tm_mday);
+	ptr += parse_decimal(ptr, 2, tms.tm_mday);
 	++ptr;
-	ptr += parseDate(ptr, 2, tms.tm_hour);
+	ptr += parse_decimal(ptr, 2, tms.tm_hour);
 	++ptr;
-	ptr += parseDate(ptr, 2, tms.tm_min);
+	ptr += parse_decimal(ptr, 2, tms.tm_min);
 	++ptr;
-	ptr += parseDate(ptr, 2, tms.tm_sec);
+	ptr += parse_decimal(ptr, 2, tms.tm_sec);
    switch(len)
    {
 	case 21: //_with_ms: // 19981231-23:59:59.123
-      parseDate(++ptr, 3, millisecond);
+      parse_decimal(++ptr, 3, millisecond);
       result = millisecond * Tickval::million; // drop through
    case 17: //: // 19981231-23:59:59
       result += time_to_epoch(tms) * Tickval::billion;
@@ -807,25 +786,29 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 /*! Decode a DateTime string into ticks
   \param ptr input DateTime string
   \param len length of string
+  \param timeonly if true, only calculate ticks for today
   \return ticks decoded */
-inline Tickval::ticks time_parse(const char *ptr, size_t len)
+inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=false)
 {
 	Tickval::ticks result(Tickval::noticks);
    int millisecond(0);
    tm tms = {};
 
-	ptr += parseDate(ptr, 2, tms.tm_hour);
+	ptr += parse_decimal(ptr, 2, tms.tm_hour);
 	++ptr;
-	ptr += parseDate(ptr, 2, tms.tm_min);
+	ptr += parse_decimal(ptr, 2, tms.tm_min);
 	++ptr;
-	ptr += parseDate(ptr, 2, tms.tm_sec);
+	ptr += parse_decimal(ptr, 2, tms.tm_sec);
    switch(len)
    {
 	case 12: // 23:59:59.123
-      parseDate(++ptr, 3, millisecond);
+      parse_decimal(++ptr, 3, millisecond);
       result = millisecond * Tickval::million; // drop through
    case 8: // 23:59:59
-      result += time_to_epoch(tms) * Tickval::billion;
+		if (!timeonly)
+			result += time_to_epoch(tms) * Tickval::billion;
+		else
+			result += (tms.tm_hour * 3600ULL + tms.tm_min * 60ULL + tms.tm_sec) * Tickval::billion;
       break;
    default:
       break;
@@ -838,12 +821,12 @@ inline Tickval::ticks date_parse(const char *ptr, size_t len)
 {
    tm tms = {};
 
-	ptr += parseDate(ptr, 4, tms.tm_year);
+	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
-	ptr += parseDate(ptr, 2, tms.tm_mon);
+	ptr += parse_decimal(ptr, 2, tms.tm_mon);
 	--tms.tm_mon;
 	if (len == 8)
-		parseDate(ptr, 2, tms.tm_mday);
+		parse_decimal(ptr, 2, tms.tm_mday);
 	return time_to_epoch(tms) * Tickval::billion;
 }
 
@@ -1690,6 +1673,7 @@ typedef double Percentage;
 // typedef EnumType<FieldTrait::ft_string> Exchange;
 // typedef EnumType<FieldTrait::ft_string> Language;
 // typedef EnumType<FieldTrait::ft_string> XMLData;
+// typedef EnumType<FieldTrait::ft_data> data;
 
 typedef f8String MultipleCharValue;
 typedef f8String MultipleStringValue;
@@ -1698,6 +1682,7 @@ typedef f8String currency;
 typedef f8String Exchange;
 typedef f8String Language;
 typedef f8String XMLData;
+typedef f8String data;
 
 //-------------------------------------------------------------------------------------------------
 /// Field metadata structures
@@ -1757,6 +1742,7 @@ const f8String Common_MsgType_REJECT("3");
 const f8String Common_MsgType_SEQUENCE_RESET("4");
 const f8String Common_MsgType_LOGOUT("5");
 const f8String Common_MsgType_LOGON("A");
+const f8String Common_MsgType_BUSINESS_REJECT("j");
 const char Common_MsgByte_HEARTBEAT('0');
 const char Common_MsgByte_TEST_REQUEST('1');
 const char Common_MsgByte_RESEND_REQUEST('2');
@@ -1764,31 +1750,38 @@ const char Common_MsgByte_REJECT('3');
 const char Common_MsgByte_SEQUENCE_RESET('4');
 const char Common_MsgByte_LOGOUT('5');
 const char Common_MsgByte_LOGON('A');
+const char Common_MsgByte_BUSINESS_REJECT('j');
 
 //-------------------------------------------------------------------------------------------------
 // Common FIX field numbers
 
-const unsigned Common_BeginSeqNo(7);
-const unsigned Common_BeginString(8);
-const unsigned Common_BodyLength(9);
-const unsigned Common_CheckSum(10);
-const unsigned Common_EndSeqNo(16);
-const unsigned Common_MsgSeqNum(34);
-const unsigned Common_MsgType(35);
-const unsigned Common_NewSeqNo(36);
-const unsigned Common_PossDupFlag(43);
-const unsigned Common_RefSeqNum(45);
-const unsigned Common_SenderCompID(49);
-const unsigned Common_SendingTime(52);
-const unsigned Common_TargetCompID(56);
-const unsigned Common_Text(58);
-const unsigned Common_EncryptMethod(98);
-const unsigned Common_HeartBtInt(108);
-const unsigned Common_TestReqID(112);
-const unsigned Common_OrigSendingTime(122);
-const unsigned Common_GapFillFlag(123);
-const unsigned Common_ResetSeqNumFlag(141);
-const unsigned Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
+const unsigned short Common_BeginSeqNo(7);
+const unsigned short Common_BeginString(8);
+const unsigned short Common_BodyLength(9);
+const unsigned short Common_CheckSum(10);
+const unsigned short Common_EndSeqNo(16);
+const unsigned short Common_MsgSeqNum(34);
+const unsigned short Common_MsgType(35);
+const unsigned short Common_NewSeqNo(36);
+const unsigned short Common_PossDupFlag(43);
+const unsigned short Common_RefSeqNum(45);
+const unsigned short Common_SenderCompID(49);
+const unsigned short Common_SendingTime(52);
+const unsigned short Common_TargetCompID(56);
+const unsigned short Common_Text(58);
+const unsigned short Common_EncryptMethod(98);
+const unsigned short Common_HeartBtInt(108);
+const unsigned short Common_TestReqID(112);
+const unsigned short Common_OnBehalfOfCompID(115);
+const unsigned short Common_OnBehalfOfSubID(116);
+const unsigned short Common_OrigSendingTime(122);
+const unsigned short Common_GapFillFlag(123);
+const unsigned short Common_ResetSeqNumFlag(141);
+const unsigned short Common_OnBehalfOfLocationID(144);
+const unsigned short Common_OnBehalfOfSendingTime(370);
+const unsigned short Common_RefMsgType(372);
+const unsigned short Common_BusinessRejectReason(380);
+const unsigned short Common_DefaultApplVerID(1137);	// >= 5.0 || FIXT1.1
 
 //-------------------------------------------------------------------------------------------------
 // Common FIX fields
@@ -1809,6 +1802,7 @@ typedef Field<f8String, Common_BeginString> begin_string;
 typedef Field<f8String, Common_TestReqID> test_request_id;
 typedef Field<f8String, Common_Text> text;
 typedef Field<f8String, Common_DefaultApplVerID> default_appl_ver_id;
+typedef Field<f8String, Common_RefMsgType> ref_msg_type;
 
 typedef Field<UTCTimestamp, Common_SendingTime> sending_time;
 typedef Field<UTCTimestamp, Common_OrigSendingTime> orig_sending_time;
@@ -1819,6 +1813,12 @@ typedef Field<Boolean, Common_ResetSeqNumFlag> reset_seqnum_flag;
 
 typedef Field<int, Common_HeartBtInt> heartbeat_interval;
 typedef Field<int, Common_EncryptMethod> encrypt_method;
+typedef Field<int, Common_BusinessRejectReason> business_reject_reason;
+
+typedef Field<f8String, Common_OnBehalfOfCompID> onbehalfof_comp_id;
+typedef Field<f8String, Common_OnBehalfOfSubID> onbehalfof_sub_id;
+typedef Field<f8String, Common_OnBehalfOfLocationID> onbehalfof_location_id;
+typedef Field<UTCTimestamp, Common_OnBehalfOfSendingTime> onbehalfof_sending_time;
 
 //-------------------------------------------------------------------------------------------------
 

@@ -3,7 +3,7 @@
 # Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 #
 # Fix8 Open Source FIX Engine.
-# Copyright (C) 2010,2011,2012,2013 David L. Dight <fix@fix8.org>
+# Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 #
 # Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 # GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -50,6 +50,7 @@ MAJOR_VERSION_NUM=1
 MINOR_VERSION_NUM=0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 PATCH_VERSION_NUM=0-RC1
 >>>>>>> upstream/master
 =======
@@ -58,4 +59,7 @@ PATCH_VERSION_NUM=0-RC2
 =======
 PATCH_VERSION_NUM=0-RC3
 >>>>>>> d899c06cdf4081ec94a10919689ad92891902f94
+=======
+PATCH_VERSION_NUM=0
+>>>>>>> 758a7d31620702d90f4d0aac827af33ba63b063e
 echo $MAJOR_VERSION_NUM.$MINOR_VERSION_NUM.$PATCH_VERSION_NUM

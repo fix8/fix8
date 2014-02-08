@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -250,7 +250,19 @@ int main(int argc, char **argv)
 				ostringstream sostr;
 				sostr << "client(" << ++scnt << ") connection established.";
 				GlobalLogger::log(sostr.str());
-				inst->start(true, next_send, next_receive);
+
+				// an example of how to use the scheduler
+				TimerEvent<FIX8::Session> sample_callback(static_cast<bool (FIX8::Session::*)()>(&myfix_session_server::sample_scheduler_callback), true);
+				inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
+
+				const ProcessModel pm(ms->get_process_model(ms->_ses));
+				inst->start(pm == pm_pipeline, next_send, next_receive);
+				cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+				if (inst->session_ptr()->get_connection()->is_secure())
+					cout << "Session is secure (SSL)" << endl;
+				if (pm != pm_pipeline)
+					while (!inst->session_ptr()->is_shutdown())
+						FIX8::hypersleep<h_milliseconds>(100);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
             if (once)
@@ -323,6 +335,13 @@ bool myfix_session_server::handle_application(const unsigned seqnum, const Messa
 	if (!msg->process(_router)) // false means I have taken ownership of the message
 		detach(msg);
 	return false;
+}
+
+//-----------------------------------------------------------------------------------------
+bool myfix_session_server::sample_scheduler_callback()
+{
+	cout << "myfix_session_server::sample_scheduler_callback Hello!" << endl;
+	return true;
 }
 
 //-----------------------------------------------------------------------------------------

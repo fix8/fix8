@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_PERSIST_HPP_
-# define _FIX8_PERSIST_HPP_
+#ifndef FIX8_PERSIST_HPP_
+#define FIX8_PERSIST_HPP_
 
 #if defined HAVE_BDB
 # include <db_cxx.h>
@@ -190,6 +190,8 @@ class BDBPersister : public Persister
 		return _persist_queue.try_push(what);
 	}
 
+	dthread_cancellation_token _cancellation_token;
+
 public:
 	/// Ctor.
 	BDBPersister() : _thread(ref(*this)), _dbEnv(0), _db(new Db(&_dbEnv, 0)), _wasCreated() {}
@@ -253,6 +255,8 @@ public:
 	/*! Persister thread entry point.
 	  \return 0 on success */
 	int operator()();	// write thread
+
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token;	}
 };
 
 #endif // HAVE_BDB

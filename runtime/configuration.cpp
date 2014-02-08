@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -78,6 +78,8 @@ int Configuration::process()
 	load_map("fix8/log", _loggers);
 	load_map("fix8/server_group", _server_group);
 	load_map("fix8/ssl_context", _ssl_context);
+	load_map("fix8/schedule", _schedules);
+	load_map("fix8/login", _logins);
 
 	return _sessions.size();
 }
@@ -124,11 +126,63 @@ size_t Configuration::get_addresses(const XmlElement *from, vector<Server>& targ
 		}
 		return target.size();
 	}
-	else
+
+	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+Schedule Configuration::create_schedule(const XmlElement *which) const
+{
+	Tickval start(get_time_field(which, "start_time", true));
+	if (!start.is_errorval())
 	{
+		const int utc_offset(which->FindAttr("utc_offset_mins", 0)); // utc_offset is in minutes
+		const unsigned duration(which->FindAttr("duration", 0));
+		Tickval end(get_time_field(which, "end_time", true));
+
+		if (end.is_errorval())
+		{
+			if (duration) // duration is in minutes
+				end = start.get_ticks() + duration * Tickval::minute;
+		}
+		else
+		{
+			if (end <= start)
+				throw f8Exception("Schedule end time cannot be equal to or before session start time");
+		}
+		string daytmp;
+		const int start_day(which->GetAttr("start_day", daytmp) ? decode_dow(daytmp) : -1);
+		const int end_day(which->GetAttr("end_day", daytmp) ? decode_dow(daytmp) : start_day < 0 ? -1 : start_day);
+		return Schedule (start, end, duration, utc_offset, start_day, end_day);
+	}
+
+	return Schedule();
+}
+
+//-------------------------------------------------------------------------------------------------
+Session_Schedule *Configuration::create_session_schedule(const XmlElement *from) const
+{
+	string name;
+	const XmlElement *which;
+	if (from && from->GetAttr("schedule", name) && (which = find_schedule(name)))
+	{
+		Schedule sch(create_schedule(which));
+		f8String reject_text("Business messages are not accepted now.");
+		which->GetAttr("reject_text", reject_text); // can't use FindAttr since istream is delimeter sensitive
+		const int reject_code(which->FindAttr("reject_code", 0));
+		return new Session_Schedule(sch, reject_code, reject_text);
 	}
 
 	return 0;
+}
+
+//-------------------------------------------------------------------------------------------------
+Schedule Configuration::create_login_schedule(const XmlElement *from) const
+{
+	string name;
+	const XmlElement *which;
+	return from && from->GetAttr("login", name) && (which = find_login_schedule(name))
+		? Schedule(create_schedule(which)) : Schedule();
 }
 
 //-------------------------------------------------------------------------------------------------

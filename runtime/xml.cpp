@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -434,6 +434,25 @@ illegal_tag:
 }
 
 //-----------------------------------------------------------------------------------------
+bool XmlElement::Insert(XmlElement *what)
+{
+	if (!what)
+		return false;
+
+	if (!children_)
+	{
+		children_ = new XmlSubEls;
+		ordchildren_ = new XmlSet;
+	}
+
+	++chldcnt_;
+	children_->insert(XmlSubEls::value_type(what->GetTag(), what));
+	ordchildren_->insert(what);
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
 int XmlElement::ParseAttrs(const string& attlst)
 {
 	istringstream istr(attlst);
@@ -558,7 +577,7 @@ XmlElement::~XmlElement()
 
 //-----------------------------------------------------------------------------------------
 const XmlElement *XmlElement::find(const string& what, bool ignorecase, const string *atag,
-	const string *aval, const char delim)	const// find 1st matching entity
+	const string *aval, const char delim)	const // find 1st matching entity
 {
 	if (what.compare(0, 2, "//") == 0) 	// root based
 		return root_->find(what.substr(2), ignorecase, atag, aval, delim);
@@ -575,10 +594,14 @@ const XmlElement *XmlElement::find(const string& what, bool ignorecase, const st
 		{
 			lwhat.erase(0, fpos + 1);
 			fpos = lwhat.find_first_of(delim);
-			string nwhat(fpos == string::npos ? lwhat : lwhat.substr(0, fpos));
-			XmlSubEls::iterator itr(children_->find(nwhat));
-			if (itr != children_->end())
-				return itr->second->find(lwhat, ignorecase, atag, aval);
+			const string nwhat(fpos == string::npos ? lwhat : lwhat.substr(0, fpos));
+			pair<XmlSubEls::iterator, XmlSubEls::iterator> result(children_->equal_range(nwhat));
+			while (result.first != result.second)
+			{
+				const XmlElement *ptr((*result.first++).second->find(lwhat, ignorecase, atag, aval, delim));
+				if (ptr)
+					return ptr;
+			}
 		}
 	}
 
@@ -609,10 +632,10 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 		{
 			lwhat.erase(0, fpos + 1);
 			fpos = lwhat.find_first_of(delim);
-			string nwhat(fpos == string::npos ? lwhat : lwhat.substr(0, fpos));
+			const string nwhat(fpos == string::npos ? lwhat : lwhat.substr(0, fpos));
 			pair<XmlSubEls::iterator, XmlSubEls::iterator> result(children_->equal_range(nwhat));
 			while (result.first != result.second)
-				(*result.first++).second->find(lwhat, eset, ignorecase, atag, aval);
+				(*result.first++).second->find(lwhat, eset, ignorecase, atag, aval, delim);
 			return eset.size();
 		}
 	}

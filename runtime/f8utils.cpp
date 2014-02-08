@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -84,7 +84,7 @@ using namespace std;
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigned dplaces)
+const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigned dplaces, bool use_gm)
 {
    const Tickval *startTime;
    Tickval gotTime;
@@ -99,11 +99,11 @@ const string& GetTimeAsStringMS(string& result, const Tickval *tv, const unsigne
 #ifdef _MSC_VER
    struct tm *ptim;
    time_t tval(startTime->secs());
-   ptim = localtime (&tval);
+	ptim = use_gm ? gmtime(&tval) : localtime (&tval);
 #else
    struct tm tim, *ptim;
    time_t tval(startTime->secs());
-   localtime_r(&tval, &tim);
+   use_gm ? gmtime_r(&tval, &tim) : localtime_r(&tval, &tim);
    ptim = &tim;
 #endif
 
@@ -158,6 +158,13 @@ string& InPlaceStrToLower(string& src)
 	return src;
 }
 
+//-----------------------------------------------------------------------------------------
+string StrToLower(const string& src)
+{
+	string result(src);
+	return InPlaceStrToLower(result);
+}
+
 //----------------------------------------------------------------------------------------
 string Str_error(const int err, const char *str)
 {
@@ -183,6 +190,38 @@ const string& trim(string& source, const string& ws)
     const size_t bgstr(source.find_first_not_of(ws));
     return bgstr == string::npos
 		 ? source : source = source.substr(bgstr, source.find_last_not_of(ws) - bgstr + 1);
+}
+
+//----------------------------------------------------------------------------------------
+namespace
+{
+	typedef pair<char, int> Day;
+	typedef multimap<char, int> Daymap;
+	static const string day_names[] = { "su", "mo", "tu", "we", "th", "fr", "sa" };
+	static const Day days[] = { Day('s',0), Day('m',1), Day('t',2), Day('w',3), Day('t',4), Day('f',5), Day('s', 6) };
+	static const Daymap daymap(days, days + sizeof(days)/sizeof(Day));
+};
+
+int decode_dow (const string& from)
+{
+	if (from.empty())
+		return -1;
+	const string source(StrToLower(from));
+	if (isdigit(source[0]) && source.size() == 1 && source[0] >= '0' && source[0] <= '6')	// accept numeric dow
+		return source[0] - '0';
+	pair<Daymap::const_iterator, Daymap::const_iterator> result(daymap.equal_range(source[0]));
+	switch(distance(result.first, result.second))
+	{
+	case 1:
+		return result.first->second;
+	default:
+		if (source.size() == 1) // drop through
+	case 0:
+			return -1;
+		break;
+	}
+	return day_names[result.first->second][1] == source[1]
+		 || day_names[(++result.first)->second][1] == source[1] ? result.first->second : -1;
 }
 
 } // namespace FIX8

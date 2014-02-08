@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -52,7 +52,7 @@ mockConnection.hpp and mockConnection.cpp are used to supply a mock connection o
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
-#include <f8config.h>
+#include <fix8/f8config.h>
 
 #ifdef HAS_TR1_UNORDERED_MAP
 #include <tr1/unordered_map>
@@ -68,23 +68,23 @@ mockConnection.hpp and mockConnection.cpp are used to supply a mock connection o
 
 #include <regex.h>
 #include <errno.h>
-#include <f8exception.hpp>
-#include <hypersleep.hpp>
-#include <mpmc.hpp>
-#include <f8types.hpp>
-#include <f8utils.hpp>
-#include <xml.hpp>
-#include <thread.hpp>
-#include <gzstream.hpp>
-#include <tickval.hpp>
-#include <logger.hpp>
-#include <traits.hpp>
-#include <timer.hpp>
-#include <field.hpp>
-#include <message.hpp>
+#include <fix8/f8exception.hpp>
+#include <fix8/hypersleep.hpp>
+#include <fix8/mpmc.hpp>
+#include <fix8/f8types.hpp>
+#include <fix8/f8utils.hpp>
+#include <fix8/xml.hpp>
+#include <fix8/thread.hpp>
+#include <fix8/gzstream.hpp>
+#include <fix8/tickval.hpp>
+#include <fix8/logger.hpp>
+#include <fix8/traits.hpp>
+#include <fix8/timer.hpp>
+#include <fix8/field.hpp>
+#include <fix8/message.hpp>
 #include <mockConnection.hpp>
-#include <session.hpp>
-#include <persist.hpp>
+#include <fix8/session.hpp>
+#include <fix8/persist.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;

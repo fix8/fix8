@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,11 +34,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#ifndef _F8_UTILS_HPP_
-# define _F8_UTILS_HPP_
+#ifndef FIX8_UTILS_HPP_
+#define FIX8_UTILS_HPP_
 
 //-----------------------------------------------------------------------------------------
 #include <Poco/DateTime.h>
+#include <Poco/Net/SocketAddress.h>
 
 #ifndef _MSC_VER
 # include <sys/ioctl.h>
@@ -67,6 +68,18 @@ std::string& InPlaceStrToUpper(std::string& src);
   \return reference to modified string */
 std::string& InPlaceStrToLower(std::string& src);
 
+/*! String to lower case.
+  \param src source string
+  \return to new lowercase string */
+std::string StrToLower(const std::string& src);
+
+/*! Decode a weekday name into numeric dow (0=SUN), case insensitive
+  only check at most the first 2 unique characters (will ignore any characters after that);
+  alternatively, accept numeric dow 0-6;
+  \param src source dow string
+  \return idx dow or -1 if not found */
+int decode_dow (const std::string& from);
+
 /*! Check if string has trailing slash, if not add.
   \param source source string
   \return reference to modified string */
@@ -89,8 +102,9 @@ std::string Str_error(const int err, const char *str=0);
   \param result target string
   \param tv tickval to use or 0 for current time
   \param dplaces number of decimal places to report seconds (default 6)
+  \param use_gm if true, use gmtime, if false localtime
   \return reference to target string */
-const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *tv=0, const unsigned dplaces=6);
+const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *tv=0, const unsigned dplaces=6, bool use_gm=false);
 
 /*! Trim leading and trailing whitespace from a string, inplace.
   \param source source string
@@ -1279,6 +1293,16 @@ public:
 		}
 	}
 };
+
+#if defined POCO_VERSION && POCO_VERSION <= 0x01040100
+inline bool operator==(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b) {
+    return a.host() == b.host() && a.port() == b.port();
+}
+
+inline bool operator!=(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b) {
+    return !(a == b);
+}
+#endif
 
 //----------------------------------------------------------------------------------------
 } // namespace FIX8

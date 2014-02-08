@@ -4,7 +4,7 @@
 Fix8 is released under the GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
 Fix8 Open Source FIX Engine.
-Copyright (C) 2010-13 David L. Dight <fix@fix8.org>
+Copyright (C) 2010-14 David L. Dight <fix@fix8.org>
 
 Fix8 is free software: you can  redistribute it and / or modify  it under the  terms of the
 GNU Lesser General  Public License as  published  by the Free  Software Foundation,  either
@@ -34,8 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef _FIX8_SESSIONWRAPPER_HPP_
-# define _FIX8_SESSIONWRAPPER_HPP_
+#ifndef FIX8_SESSIONWRAPPER_HPP_
+#define FIX8_SESSIONWRAPPER_HPP_
 
 #include <Poco/Net/ServerSocket.h>
 #ifdef HAVE_OPENSSL
@@ -138,7 +138,7 @@ struct SessionConfig : public Configuration
 			get_reset_sequence_number_flag(_ses),
 			get_always_seqnum_assign(_ses), get_silent_disconnect(_ses),
 			get_no_chksum_flag(_ses), get_permissive_mode_flag(_ses), false, get_tcp_recvbuf_sz(_ses),
-			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses));
+			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses), create_login_schedule(_ses));
 
 		_loginParameters = lparam;
 	}
@@ -248,6 +248,7 @@ class ReliableClientSession : public ClientSession<T>
 	f8_atomic<bool> _giving_up;
 	std::vector<Server> _servers;
 	const size_t _failover_cnt;
+	dthread_cancellation_token _cancellation_token;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
@@ -267,12 +268,16 @@ public:
 	bool has_given_up() const { return _giving_up; }
 
 	/// Dtor.
-	virtual ~ReliableClientSession () {}
+	virtual ~ReliableClientSession ()
+	{
+		_thread.request_stop();
+		_thread.join();
+	}
 
 	/*! Start the session - initiate the connection, logon and start heartbeating.
 	  \param wait if true wait till session finishes before returning
-	  \param send_seqnum next send seqnum (not used here)
-	  \param recv_seqnum next recv seqnum (not used here)
+	  \param send_seqnum next send seqnum
+	  \param recv_seqnum next recv seqnum
 	  \param davi default appl version id (FIXT) */
 	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
 	{
@@ -305,7 +310,7 @@ public:
 	    \return 0 on success */
 	int operator()()
 	{
-		while(true)
+		while(!_cancellation_token)
 		{
 			++_attempts;
 
@@ -354,11 +359,13 @@ public:
 				this->_session->log(e.what());
 				excepted = true;
 			}
+#if POCO_VERSION >= 0x01040000
 			catch (Poco::Net::InvalidSocketException& e)
 			{
 				this->_session->log(e.what());
 				excepted = true;
 			}
+#endif
 			catch (Poco::Net::ServiceNotFoundException& e)
 			{
 				//std::cerr << e.what() << std::endl;
@@ -437,6 +444,9 @@ public:
 
 		return 0;
 	}
+
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
+
 
 	/// Convenient scoped pointer for your session
 	typedef scoped_ptr<ReliableClientSession<T> > ReliableClient_ptr;
