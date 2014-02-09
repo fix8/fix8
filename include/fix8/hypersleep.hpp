@@ -42,6 +42,15 @@ namespace FIX8 {
 //----------------------------------------------------------------------------------------
 enum hyperunits_t { h_seconds, h_milliseconds, h_microseconds, h_nanoseconds, h_count };
 
+#ifdef _MSC_VER
+struct timespec
+{
+    time_t tv_sec; // seconds
+    long tv_nsec;  // nanoseconds
+};
+extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
+#endif
+
 //----------------------------------------------------------------------------------------
 namespace
 {
@@ -80,7 +89,7 @@ inline int hypersleep<h_seconds>(const unsigned amt)
    ts.tv_nsec += (amt % (billion));
 	return execute_clock_nanosleep(ts);
 #elif defined _MSC_VER
-	Sleep(amt);	// milliseconds
+	Sleep(amt * thousand);
 	return 0;
 #else
 	const timespec tspec = { amt, amt % billion };
@@ -124,7 +133,7 @@ inline int hypersleep<h_microseconds>(const unsigned amt)
    ts.tv_nsec += (thousand * (amt % million));
 	return execute_clock_nanosleep(ts);
 #elif defined _MSC_VER
-	Sleep(amt);	// milliseconds
+	Sleep(amt / million * thousand);
 	return 0;
 #else
 	const timespec tspec = { amt / million, thousand * (amt % million) };
@@ -146,7 +155,7 @@ inline int hypersleep<h_nanoseconds>(const unsigned amt)
    ts.tv_nsec += amt;
 	return execute_clock_nanosleep(ts);
 #elif defined _MSC_VER
-	Sleep(amt);	// milliseconds
+	Sleep(amt / billion * million);
 	return 0;
 #else
 	const timespec tspec = { amt / billion, amt };

@@ -150,17 +150,6 @@ class Tickval;
 
 
 //-------------------------------------------------------------------------------------------------
-#ifdef _MSC_VER
-class Comparator
-{
-public:
-	bool operator()( const _dthreadcore::thread_id_t& lhs, const _dthreadcore::thread_id_t& rhs ) const
-	{
-		return (lhs.p < rhs.p);
-	}
-};
-#endif
-
 /// dthread delegated async logging class
 class Logger
 {
@@ -206,11 +195,7 @@ protected:
 	f8_concurrent_queue<LogElement> _msg_queue;
 	unsigned _sequence, _osequence;
 
-#ifdef _MSC_VER
-	typedef std::map<_dthreadcore::thread_id_t, char, Comparator> ThreadCodes;
-#else
 	typedef std::map<_dthreadcore::thread_id_t, char> ThreadCodes;
-#endif
 	ThreadCodes _thread_codes;
 
 	typedef std::map<char, _dthreadcore::thread_id_t> RevThreadCodes;
