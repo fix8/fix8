@@ -38,11 +38,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_CONFIGURATION_HPP_
 
 #ifdef HAVE_OPENSSL
-#if _MSC_VER
-#include <ssl/ssh.h>
-#else
 #include <openssl/ssl.h>
-#endif
 #else
 #define SSL_VERIFY_PEER 0
 #endif

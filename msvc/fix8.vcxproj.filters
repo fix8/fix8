@@ -143,5 +143,8 @@
     <ClInclude Include="..\include\fix8\yield.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="f8config_msvc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

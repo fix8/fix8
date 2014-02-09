@@ -127,7 +127,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //#undef HAVE_CLOCK_NANOSLEEP 1
 
 /* Define to 1 if zlib headers and library were found */
-#define HAVE_COMPRESSION 1
+/* #undef HAVE_COMPRESSION */
 
 /* Define to 1 if crypt is present in -lcrypt */
 #define HAVE_CRYPT 1

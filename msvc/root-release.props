@@ -13,12 +13,12 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>./;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(TBB)/include;$(GetOpt)/getopt_mb_uni_vc10_dll;$(OpenSSL)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(Poco)/NetSSL_OpenSSL/include;$(Poco)/Crypto/include;$(Poco)/Util/include;$(TBB)/include;$(GetOpt)/getopt_mb_uni_vc10_dll;$(OpenSSL)/inc32</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(GetOpt)/bin/release/dll;$(boost)/stage/lib;$(tbb)/lib/ia32/vc11;$(poco)/lib;$(SolutionDir)../$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalLibraryDirectories>$(tbb)/lib/ia32/vc11;$(poco)/lib;$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalDependencies>ws2_32.lib;getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

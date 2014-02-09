@@ -48,7 +48,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hftest", "hftest.vcxproj", 
 		{456316E4-03E5-43DF-946A-D35BEFC480F3} = {456316E4-03E5-43DF-946A-D35BEFC480F3}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "runtime", "runtime.vcxproj", "{6BC204CA-6C4F-44E3-BBF8-09A4CA4BC223}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fix8", "fix8.vcxproj", "{6BC204CA-6C4F-44E3-BBF8-09A4CA4BC223}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hfprint", "hfprint.vcxproj", "{D833F04D-6CA4-4D86-83DA-58647617FD5F}"
 	ProjectSection(ProjectDependencies) = postProject

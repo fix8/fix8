@@ -71,19 +71,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>f8cd</TargetName>
-    <OutDir>$(SolutionDir)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>f8cd</TargetName>
-    <OutDir>$(SolutionDir)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>f8c</TargetName>
-    <OutDir>$(SolutionDir)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>f8c</TargetName>
-    <OutDir>$(SolutionDir)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -91,11 +95,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>../compiler;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(TBB)/include;$(Boost);$(Boost)/boost;$(pthreads)/pthreads.2;$(zlib)/include;$(GetOpt)/getopt_mb_uni_vc10_dll</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../compiler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>runtimed.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -108,11 +112,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>../compiler;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(TBB)/include;$(Boost);$(Boost)/boost;$(pthreads)/pthreads.2;$(zlib)/include;$(GetOpt)/getopt_mb_uni_vc10_dll</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../compiler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>runtimed.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -126,14 +130,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../compiler;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(TBB)/include;$(Boost);$(Boost)/boost;$(pthreads)/pthreads.2;$(zlib)/include;$(GetOpt)/getopt_mb_uni_vc10_dll</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../compiler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>runtime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(GetOpt)\bin\$(Configuration)\dll\getopt.dll $(OutDir)\getopt.dll</Command>
@@ -146,14 +150,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../compiler;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(TBB)/include;$(Boost);$(Boost)/boost;$(pthreads)/pthreads.2;$(zlib)/include;$(GetOpt)/getopt_mb_uni_vc10_dll</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../compiler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>runtime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(GetOpt)\bin\$(Configuration)\dll\getopt.dll $(OutDir)\getopt.dll</Command>

@@ -40,7 +40,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
     #if defined(BUILD_F8API)
 	#define F8API __declspec(dllexport)
     #else
-	#define F8API __declspec(dllimport)
+	    #define F8API __declspec(dllimport)
+        #ifdef _DEBUG
+            #define FIX8_LIB_SUFFIX "d.lib"
+        #else
+            #define FIX8_LIB_SUFFIX ".lib"
+        #endif
+        #pragma comment(lib, "fix8" FIX8_LIB_SUFFIX)
     #endif
 #else
     #define F8API

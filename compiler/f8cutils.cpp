@@ -51,7 +51,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 // f8 headers
 #include <fix8/f8includes.hpp>
-#include <usage.hpp>
+#include <fix8/usage.hpp>
 #include <f8c.hpp>
 
 //-----------------------------------------------------------------------------------------
