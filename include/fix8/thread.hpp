@@ -210,7 +210,7 @@ public:
 		}
 		return _exitval;
 #elif (THREAD_SYSTEM == THREAD_TBB)
-		if ( _thread.get() )
+		if ( _thread.get() && _thread->joinable() )
 			_thread->join();
 		return _exitval;
 #endif

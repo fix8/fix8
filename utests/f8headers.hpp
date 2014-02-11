@@ -58,7 +58,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <termios.h>
 #endif
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 

@@ -2,6 +2,18 @@
 
 cd ..\utests
 
+set XML_42_UTEST_SCHEMA="..\schema\FIX42UTEST.xml"
+set EXTRA_FIELDS="<field number='9999' name='SampleUserField'  type='STRING' messages='NewOrderSingle:N ExecutionReport:N OrderCancelRequest:Y' /><field number='9991' name='SampleUserField2' type='STRING' messages='NewOrderSingle:N ExecutionReport:N OrderCancelRequest:Y' />"
+set Configuration=%2
+set Platform=%3
+set OutDir=%4
+set F8C=not_set
+if %Configuration% EQU Debug (
+	set F8C=%OutDir%\f8cd
+) else (
+	set F8C=%OutDir%\f8c
+)
+
 set lost=0
 for %%i in (utest_classes.cpp 
 			utest_classes.hpp 
@@ -61,12 +73,7 @@ if %needClean% == 1 (
 if %needBuild% == 1 (
 
 echo ************going to generate************
-
-		if %2 EQU Debug (
-			..\debug\f8cd -Vp utest -n UTEST ..\schema\FIX42UTEST.xml
-		) else (
-			..\release\f8c -Vp utest -n UTEST ..\schema\FIX42UTEST.xml
-		)
+	    %F8C% "-sVputest" "-n UTEST" %XML_42_UTEST_SCHEMA% -F %EXTRA_FIELDS%
 
 echo ************  generate done  ************
 

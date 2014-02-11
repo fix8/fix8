@@ -55,42 +55,46 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="utest-debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="utest-debug.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="utest-release.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="utest-release.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_utests.cmd build $(Configuration)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_utests.cmd rebuild $(Configuration)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_utests.cmd clean $(Configuration)</NMakeCleanCommandLine>
+    <NMakeBuildCommandLine>$(SolutionDir)\f8c_utests.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_utests.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(SolutionDir)\f8c_utests.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_utests.cmd build $(Configuration)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_utests.cmd rebuild $(Configuration)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_utests.cmd clean $(Configuration)</NMakeCleanCommandLine>
+    <NMakeBuildCommandLine>$(SolutionDir)\f8c_utests.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_utests.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(SolutionDir)\f8c_utests.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
     <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_utests.cmd build $(Configuration)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_utests.cmd rebuild $(Configuration)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_utests.cmd clean $(Configuration)</NMakeCleanCommandLine>
+    <NMakeBuildCommandLine>$(SolutionDir)\f8c_utests.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_utests.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(SolutionDir)\f8c_utests.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_utests.cmd build $(Configuration)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_utests.cmd rebuild $(Configuration)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_utests.cmd clean $(Configuration)</NMakeCleanCommandLine>
+    <NMakeBuildCommandLine>$(SolutionDir)\f8c_utests.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_utests.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>$(SolutionDir)\f8c_utests.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
     <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>

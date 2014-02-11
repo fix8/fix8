@@ -37,8 +37,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 // f8 headers
 #include "f8headers.hpp"
 #include <fix8/f8includes.hpp>
-#include <persist.hpp>
-#include <f8utils.hpp>
+#include <fix8/persist.hpp>
+#include <fix8/f8utils.hpp>
 #include <limits>
 #include <Poco/File.h>
 #include <Poco/Path.h>
