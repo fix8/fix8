@@ -66,6 +66,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 # error Define what thread system to use
 #endif
 
+#if (MALLOC_SYSTEM == MALLOC_TBB)
+#include "tbb/tbbmalloc_proxy.h"
+#endif
+
 #include <errno.h>
 #include <fix8/f8exception.hpp>
 #include <fix8/hypersleep.hpp>

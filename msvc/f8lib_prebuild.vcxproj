@@ -59,8 +59,6 @@
     <NMakeBuildCommandLine>$(SolutionDir)\f8lib_prebuild.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>$(SolutionDir)\f8lib_prebuild.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>$(SolutionDir)\f8lib_prebuild.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
-    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <NMakeOutput>
@@ -70,8 +68,6 @@
     <NMakeBuildCommandLine>$(SolutionDir)\f8lib_prebuild.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>$(SolutionDir)\f8lib_prebuild.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>$(SolutionDir)\f8lib_prebuild.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
-    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <NMakeOutput>
@@ -81,8 +77,6 @@
     <NMakeBuildCommandLine>$(SolutionDir)\f8lib_prebuild.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>$(SolutionDir)\f8lib_prebuild.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>$(SolutionDir)\f8lib_prebuild.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
-    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <NMakeOutput>
@@ -92,8 +86,6 @@
     <NMakeBuildCommandLine>$(SolutionDir)\f8lib_prebuild.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>$(SolutionDir)\f8lib_prebuild.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>$(SolutionDir)\f8lib_prebuild.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
-    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>

@@ -69,8 +69,6 @@
     <NMakeBuildCommandLine>$(SolutionDir)\f8c_utests.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>$(SolutionDir)\f8c_utests.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>$(SolutionDir)\f8c_utests.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
-    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -83,8 +81,6 @@
     <NMakeBuildCommandLine>$(SolutionDir)\f8c_utests.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>$(SolutionDir)\f8c_utests.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>$(SolutionDir)\f8c_utests.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
-    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -14,7 +14,7 @@ if %Platform% EQU x64 (
             copy "%TBB%\build\vs2013\intel64\Debug\tbb*.dll" "%OutDir%"
         )
     ) else (
-        if %1 EQU clean (
+        if %Cmd% EQU clean (
             del "%OutDir%\getopt.dll"
             del "%OutDir%\Poco*64.dll"
             del "%OutDir%\tbb*.dll"

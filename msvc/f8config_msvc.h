@@ -484,6 +484,18 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* tbb thread thread system */
 #define THREAD_TBB 3
 
+/* std malloc */
+#define MALLOC_STD 1
+
+/* tbb malloc */
+#define MALLOC_TBB 2
+
+/* tc malloc */
+#define MALLOC_TC 3
+
+/* malloc system to use */
+#define MALLOC_SYSTEM MALLOC_TBB
+
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #define TIME_WITH_SYS_TIME 1
 

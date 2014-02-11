@@ -20,10 +20,12 @@
       <Link Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
           <AdditionalLibraryDirectories>$(tbb)/build/vs2013/intel64/$(Configuration);$(poco)/lib64;$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
           <AdditionalDependencies>getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+          <ForceSymbolReferences>__TBB_malloc_proxy</ForceSymbolReferences>
       </Link>
       <Link Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
           <AdditionalLibraryDirectories>$(tbb)/build/vs2013/intel64/$(Configuration);$(poco)/lib64;$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
           <AdditionalDependencies>getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+          <ForceSymbolReferences>__TBB_malloc_proxy</ForceSymbolReferences>
       </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
