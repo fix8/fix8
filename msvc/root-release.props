@@ -9,7 +9,8 @@
     <OpenSSL>W:\src\repos\3rdparty-ng\source\fix\fix8repo\win-deps\openssl-1.0.1e</OpenSSL>
   </PropertyGroup>
   <PropertyGroup>
-    <IntDir>$(MSBuildProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -17,7 +18,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-        <AdditionalLibraryDirectories>$(tbb)/lib/ia32/vc11;$(poco)/lib;$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(tbb)/build/vs2013/intel64/Release;$(poco)/lib64;$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <AdditionalDependencies>ws2_32.lib;getopt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

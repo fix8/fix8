@@ -74,20 +74,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)d</TargetName>
     <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)d</TargetName>
     <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -103,6 +103,10 @@
     <PreBuildEvent>
       <Command>copy $(SolutionDir)\f8config_msvc.h  $(SolutionDir)\..\include\fix8\f8config.h</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -118,6 +122,10 @@
     <PreBuildEvent>
       <Command>copy $(SolutionDir)\f8config_msvc.h  $(SolutionDir)\..\include\fix8\f8config.h</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -141,6 +149,10 @@
     <PreBuildEvent>
       <Command>copy $(SolutionDir)\f8config_msvc.h  $(SolutionDir)\..\include\fix8\f8config.h</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -164,6 +176,10 @@
     <PreBuildEvent>
       <Command>copy $(SolutionDir)\f8config_msvc.h  $(SolutionDir)\..\include\fix8\f8config.h</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
