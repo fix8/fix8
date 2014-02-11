@@ -21,7 +21,7 @@ if %Platform% EQU x64 (
         ) else (
             copy "%GetOpt%\bin\%Platform%\%Configuration% Dll\getopt.dll" "%OutDir%\getopt.dll"
             copy "%Poco%\bin64\Poco*64.dll" "%OutDir%"
-            copy "%TBB%\build\vs2013\intel64\Release\*.dll" "%OutDir%"
+            copy "%TBB%\build\vs2013\intel64\Release\tbb*.dll" "%OutDir%"
         )
     )
 ) else (
