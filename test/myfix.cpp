@@ -98,11 +98,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iterator>
 #include <algorithm>
 #include <typeinfo>
+#ifdef _MSC_VER
+#include <signal.h>
+#include <conio.h>
+#else
 #include <sys/ioctl.h>
 #include <signal.h>
 #include <termios.h>
+#endif
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 
@@ -113,8 +117,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <getopt.h>
 #endif
 
-#include <usage.hpp>
-#include <consolemenu.hpp>
+#include <fix8/usage.hpp>
+#include <fix8/consolemenu.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
@@ -153,8 +157,10 @@ void sig_handler(int sig)
    {
    case SIGTERM:
    case SIGINT:
+#ifndef _MSC_VER
    case SIGQUIT:
-      term_received = true;
+#endif
+       term_received = true;
       signal(sig, sig_handler);
       break;
    }
@@ -215,7 +221,9 @@ int main(int argc, char **argv)
 
 	signal(SIGTERM, sig_handler);
 	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+#ifndef _MSC_VER
+    signal(SIGQUIT, sig_handler);
+#endif
 
 	FIX8::tty_save_state save_tty(0);
 	bool restore_tty(false);

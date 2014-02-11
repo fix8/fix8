@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,36 +19,36 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{456316E4-03E5-43DF-946A-D35BEFC480F3}</ProjectGuid>
+    <ProjectGuid>{088850B1-3C98-4EEC-BD18-86FF610A7EB3}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>test_prebuild</RootNamespace>
+    <RootNamespace>f8test</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -72,29 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_test.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_test.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_test.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
+    <TargetName>$(ProjectName)d</TargetName>
+    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_test.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_test.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_test.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
+    <TargetName>$(ProjectName)d</TargetName>
     <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_test.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_test.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_test.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
+    <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <NMakeBuildCommandLine>$(SolutionDir)\f8c_test.cmd build $(Configuration) $(Platform) $(OutDir)</NMakeBuildCommandLine>
-    <NMakeCleanCommandLine>$(SolutionDir)\f8c_test.cmd clean $(Configuration) $(Platform) $(OutDir)</NMakeCleanCommandLine>
-    <NMakeReBuildCommandLine>$(SolutionDir)\f8c_test.cmd rebuild $(Configuration) $(Platform) $(OutDir)</NMakeReBuildCommandLine>
     <OutDir>$(SolutionDir)\$(Platform)\bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\$(Platform)\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
@@ -105,7 +99,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +113,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,7 +129,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,6 +137,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -153,7 +151,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,9 +159,22 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="f8c_test.cmd" />
+    <ClCompile Include="..\test\myfix.cpp" />
+    <ClCompile Include="..\test\Myfix_classes.cpp" />
+    <ClCompile Include="..\test\Myfix_traits.cpp" />
+    <ClCompile Include="..\test\Myfix_types.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\test\myfix.hpp" />
+    <ClInclude Include="..\test\Myfix_classes.hpp" />
+    <ClInclude Include="..\test\Myfix_router.hpp" />
+    <ClInclude Include="..\test\Myfix_types.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

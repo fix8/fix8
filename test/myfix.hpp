@@ -212,8 +212,12 @@ struct RandDev
 	template<typename T>
    static T getrandom(const T range=0)
    {
-		T target(random());
-		return range ? target / (RAND_MAX / range + 1) : target;
+#ifdef _MSC_VER
+       T target(rand());
+#else
+       T target(random());
+#endif
+       return range ? target / (RAND_MAX / range + 1) : target;
 	}
 };
 

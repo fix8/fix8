@@ -107,7 +107,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <termios.h>
 #endif
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 
@@ -118,8 +117,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <getopt.h>
 #endif
 
-#include <usage.hpp>
-#include <consolemenu.hpp>
+#include <fix8/usage.hpp>
+#include <fix8/consolemenu.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"

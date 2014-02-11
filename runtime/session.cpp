@@ -986,7 +986,6 @@ void Session::recover_seqnums()
 
 //-------------------------------------------------------------------------------------------------
 #if !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
-
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 f8String Session::get_thread_policy_string(_dthreadcore::thread_id_t id)
 {
@@ -1048,6 +1047,7 @@ void Session::set_affinity(int core_id)
 	log(ostr.str());
 }
 #endif
+#endif
 
 //-------------------------------------------------------------------------------------------------
 #ifdef HAVE_OPENSSL
@@ -1073,4 +1073,3 @@ void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& priv
 #endif // HAVE_OPENSSL
 
 //-------------------------------------------------------------------------------------------------
-#endif
