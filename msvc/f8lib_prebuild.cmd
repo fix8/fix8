@@ -25,5 +25,25 @@ if %Platform% EQU x64 (
         )
     )
 ) else (
-    @echo off
+    if %Configuration% EQU Debug (
+        if %Cmd% EQU clean (
+            echo "%OutDir%\getopt.dll"
+            echo "%OutDir%\Poco*d.dll"
+            echo "%OutDir%\tbb*.dll"
+        ) else (
+            copy "%GetOpt%\bin\%Platform%\%Configuration% Dll\getopt.dll" "%OutDir%\getopt.dll"
+            copy "%Poco%\bin\Poco*d.dll" "%OutDir%"
+            copy "%TBB%\build\vs2013\ia32\Debug\tbb*.dll" "%OutDir%"
+        )
+    ) else (
+        if %Cmd% EQU clean (
+            del "%OutDir%\getopt.dll"
+            del "%OutDir%\Poco*.dll"
+            del "%OutDir%\tbb*.dll"
+        ) else (
+            copy "%GetOpt%\bin\%Platform%\%Configuration% Dll\getopt.dll" "%OutDir%\getopt.dll"
+            copy "%Poco%\bin\Poco*.dll" "%OutDir%"
+            copy "%TBB%\build\vs2013\ia32\Release\tbb*.dll" "%OutDir%"
+        )
+    )
 )
