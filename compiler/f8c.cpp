@@ -768,7 +768,7 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 #ifdef _MSC_VER
 		outp << "#ifndef _MSC_EXTENSIONS" << endl;
 #endif
-		outp << "const unsigned short " << prefix << ms._name << "::" << gsitr->second._name << "::_fnum;" << endl;
+	//	outp << "const unsigned short " << prefix << ms._name << "::" << gsitr->second._name << "::_fnum;" << endl;
 #ifdef _MSC_VER
 		outp << "#endif // _MSC_EXTENSIONS" << endl;
 #endif
@@ -796,7 +796,8 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
          outh << d2spacer << "static const MsgType _msgtype;" << endl << endl;
       }
 		outh << dspacer << "public:" << endl;
-		outh << d2spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl << endl;
+		//outh << d2spacer << "static const unsigned short _fnum = " << gsitr->first << ';' << endl << endl;
+		outh << d2spacer << "enum { _fnum = " << gsitr->first << " };" << endl << endl;
 		outh << d2spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
 		outh << d2spacer << "~" << gsitr->second._name << "() {}" << endl;
 		if (tgroup->_groups.empty())

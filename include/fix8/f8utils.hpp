@@ -1155,12 +1155,11 @@ public:
 	{
 		if (_instance) // cast operator performs atomic load with acquire
 			return _instance;
-        return create_instance();
+		return create_instance();
 	}
 
     /*! Creates a single instance of the underlying object */
-    static T *create_instance();
-
+   static T *create_instance();
 
 	/*! Get the instance of the underlying object. If not created, create.
 	    \return the instance */
