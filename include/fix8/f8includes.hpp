@@ -67,7 +67,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 
 #if (MALLOC_SYSTEM == MALLOC_TBB)
+#ifdef _MSC_VER
 #include "tbb/tbbmalloc_proxy.h"
+#endif
 #endif
 
 #include <errno.h>
