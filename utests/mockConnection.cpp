@@ -66,7 +66,6 @@ mockConnection.hpp and mockConnection.cpp are used to supply a mock connection o
 	#include <strings.h>
 #endif
 
-#include <regex.h>
 #include <errno.h>
 #define F8MOCK_CONNECTION 1
 #include <fix8/f8includes.hpp>

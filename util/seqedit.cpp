@@ -68,7 +68,6 @@ e.g.\n
 #include <iterator>
 #include <algorithm>
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 #include <cctype>
@@ -76,7 +75,7 @@ e.g.\n
 
 // f8 headers
 #include <fix8/f8includes.hpp>
-#include <usage.hpp>
+#include <fix8/usage.hpp>
 
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>

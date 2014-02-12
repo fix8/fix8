@@ -63,25 +63,21 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define to 1 to enable CODEC timing testing code */
 #define CODECTIMING 0
-#undef POPULATE_METADATA
 
 /* configure options */
-#define CONFIGURE_OPTIONS " '--with-gtest=/home/rich/Source/gtest/gtest-1.6.0' '--with-tbb=/home/rich/Source/tbb/tbb41' '--with-mpmc=tbb' 'LDFLAGS=-L/lib64 -lpthread'"
+#define CONFIGURE_OPTIONS ""
 
 /* Short Date system was configured */
-#define CONFIGURE_SDATE "26/07/2013"
+#define CONFIGURE_SDATE "07/02/2014"
 
 /* Date system was configured */
-#define CONFIGURE_TIME "Fri Jul 26 13:22:45 NZST 2013"
+#define CONFIGURE_TIME "Fri Feb  7 18:00:12 MSK 2014"
 
 /* date/time as seconds since start epoch */
-#define CONFIGURE_TIME_NUM 1374801765
+#define CONFIGURE_TIME_NUM 1391781612
 
 /* compiler spec */
 #define CPPFLAGS ""
-
-/* Default precision for floating point fields (default=2) */
-#define DEFAULT_PRECISION 2
 
 /* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
    systems. This function is required for `alloca.c' support on those systems.
@@ -93,6 +89,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define to 1 for debugging extensions */
 /* #undef DEBUG */
+
+/* Default precision for floating point fields (default=2) */
+#define DEFAULT_PRECISION 2
+
+/* Define to 1 to enable experimental socket read */
+/* #undef EXPERIMENTAL_BUFFERED_SOCKET_READ */
 
 /* Define to 1 if gtest available */
 #define HAS_GTEST 1
@@ -113,7 +115,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define HAVE_ALLOCA_H 1
 
 /* Define to 1 if you have the <arpa/inet.h> header file. */
-#define HAVE_ARPA_INET_H 1
+/* #undef HAVE_ARPA_INET_H */
 
 /* Define to 1 if you have berkeley DB */
 /* #undef HAVE_BDB */
@@ -122,10 +124,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define HAVE_CLOCK_GETTIME 1
 
 /* Define if you have clock_nanosleep() */
-//rb #define HAVE_CLOCK_NANOSLEEP 1
+//#undef HAVE_CLOCK_NANOSLEEP 1
 
 /* Define to 1 if zlib headers and library were found */
-#define HAVE_COMPRESSION 1
+/* #undef HAVE_COMPRESSION */
 
 /* Define to 1 if crypt is present in -lcrypt */
 #define HAVE_CRYPT 1
@@ -136,8 +138,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Define to 1 if you have the <db.h> header file. */
 /* #undef HAVE_DB_H */
 
-/* Define to 1 if the /dev/urandom device is available */
-#define HAVE_DEV_URANDOM 1
+/* Define to 1 if you have the declaration of `TCP_CORK', and to 0 if you
+   don't. */
+#define HAVE_DECL_TCP_CORK 1
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */
@@ -147,7 +150,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define HAVE_DLFCN_H 1
 
 /* Define to 1 if you have the <fcntl.h> header file. */
-#define HAVE_FCNTL_H 1
+/* #undef HAVE_FCNTL_H */
 
 /* Define to 1 if you have the `fork' function. */
 #define HAVE_FORK 1
@@ -174,7 +177,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define HAVE_LIBZ 1
 
 /* Define to 1 if you have the <limits.h> header file. */
-#define HAVE_LIMITS_H 1
+/* #undef HAVE_LIMITS_H */
 
 /* Define to 1 if you have the `localtime_r' function. */
 #define HAVE_LOCALTIME_R 1
@@ -204,34 +207,22 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* #undef HAVE_NDIR_H */
 
 /* Define to 1 if you have the <netdb.h> header file. */
-#define HAVE_NETDB_H 1
+/* #undef HAVE_NETDB_H */
 
 /* Define to 1 if you have the <netinet/in.h> header file. */
-#define HAVE_NETINET_IN_H 1
-
-/* Define to 1 if you have the <netinet/tcp.h> header file. */
-#define HAVE_NETINET_TCP_H 1
+/* #undef HAVE_NETINET_IN_H */
 
 /* Define to 1 if you have openssl */
-/* #undef HAVE_OPENSSL */
+#define HAVE_OPENSSL 1
 
 /* Define to 1 if you have the <openssl/ssl.h> header file. */
-/* #undef HAVE_OPENSSL_SSL_H */
+#define HAVE_OPENSSL_SSL_H 1
 
 /* Define to 1 if you have the `popen' function. */
 #define HAVE_POPEN 1
 
-/* Define to 1 if you have the `pow' function. */
-#define HAVE_POW 1
-
-/* Define to 1 if /proc/[pid]/stat is available */
-#define HAVE_PROC_PID_STAT 1
-
-/* Define to 1 if /proc/[pid]/statm is available */
-#define HAVE_PROC_PID_STATM 1
-
-/* Define to 1 if /proc/stat is available */
-#define HAVE_PROC_STAT 1
+/* Have PTHREAD_PRIO_INHERIT. */
+/* #undef HAVE_PTHREAD_PRIO_INHERIT */
 
 /* Define to 1 if the system has the type `ptrdiff_t'. */
 #define HAVE_PTRDIFF_T 1
@@ -247,16 +238,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define HAVE_REGCOMP 1
 
 /* Define to 1 if you have the <regex.h> header file. */
-//rb #define HAVE_REGEX_H 1
-
-/* Define to 1 if you have the `scandir' function. */
-#define HAVE_SCANDIR 1
+/* #undef HAVE_REGEX_H */
 
 /* Define to 1 if you have the <select.h> header file. */
 /* #undef HAVE_SELECT_H */
 
 /* Define to 1 if you have the <signal.h> header file. */
-#define HAVE_SIGNAL_H 1
+/* #undef HAVE_SIGNAL_H */
 
 /* Define to 1 if you have the `socket' function. */
 #define HAVE_SOCKET 1
@@ -280,15 +268,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Define to 1 if you have the `strcasecmp' function. */
 #define HAVE_STRCASECMP 1
 
-/* Define to 1 if you have the `strchr' function. */
-#define HAVE_STRCHR 1
-
 /* Define to 1 if you have the `strcoll' function and it is properly defined.
    */
 #define HAVE_STRCOLL 1
-
-/* Define to 1 if you have the `strdup' function. */
-#define HAVE_STRDUP 1
 
 /* Define to 1 if you have the `strerror' function. */
 #define HAVE_STRERROR 1
@@ -302,12 +284,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
 
-/* Define to 1 if you have the `strncasecmp' function. */
-#define HAVE_STRNCASECMP 1
-
-/* Define to 1 if you have the `strspn' function. */
-#define HAVE_STRSPN 1
-
 /* Define to 1 if you have the `strtol' function. */
 #define HAVE_STRTOL 1
 
@@ -318,20 +294,17 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define HAVE_SYSCONF 1
 
 /* Define to 1 if you have the <syslog.h> header file. */
-#define HAVE_SYSLOG_H 1
+/* #undef HAVE_SYSLOG_H */
 
 /* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
    */
 /* #undef HAVE_SYS_DIR_H */
 
-/* Define to 1 if you have the <sys/event.h> header file. */
-/* #undef HAVE_SYS_EVENT_H */
-
 /* Define to 1 if you have the <sys/gmon.h> header file. */
 /* #undef HAVE_SYS_GMON_H */
 
 /* Define to 1 if you have the <sys/ioctl.h> header file. */
-#define HAVE_SYS_IOCTL_H 1
+/* #undef HAVE_SYS_IOCTL_H */
 
 /* Define to 1 if you have the <sys/ndir.h> header file, and it defines `DIR'.
    */
@@ -341,7 +314,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define HAVE_SYS_PARAM_H 1
 
 /* Define to 1 if you have the <sys/socket.h> header file. */
-#define HAVE_SYS_SOCKET_H 1
+/* #undef HAVE_SYS_SOCKET_H */
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #define HAVE_SYS_STAT_H 1
@@ -356,16 +329,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define HAVE_SYS_WAIT_H 1
 
 /* Define to 1 if you have the <termios.h> header file. */
-#define HAVE_TERMIOS_H 1
-
-/* Define to 1 if timersub macro is in sys/time.h */
-#define HAVE_TIMERSUB 1
+/* #undef HAVE_TERMIOS_H */
 
 /* Define to 1 if you have the <time.h> header file. */
-#define HAVE_TIME_H 1
+/* #undef HAVE_TIME_H */
 
 /* Define to 1 if you have the <unistd.h> header file. */
-//rb #define HAVE_UNISTD_H 1
+#define HAVE_UNISTD_H 1
 
 /* Define to 1 for valgrind support */
 /* #undef HAVE_VALGRIND */
@@ -382,9 +352,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Define to 1 if you have the <vfork.h> header file. */
 /* #undef HAVE_VFORK_H */
 
-/* Define to 1 if you have the `waitpid' function. */
-#define HAVE_WAITPID 1
-
 /* Define to 1 if `fork' works. */
 #define HAVE_WORKING_FORK 1
 
@@ -392,7 +359,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define HAVE_WORKING_VFORK 1
 
 /* Define to 1 if you have the <zlib.h> header file. */
-#define HAVE_ZLIB_H 1
+/* #undef HAVE_ZLIB_H */
 
 /* Define to 1 if the system has the type `_Bool'. */
 #define HAVE__BOOL 1
@@ -400,52 +367,43 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Default system */
 #define HOST_SYSTEM "x86_64-unknown-linux-gnu"
 
-/* Define to 1 if this system is running a BSD variant */
-/* #undef ISBSD */
-
-/* Define to 1 if this system is running linux */
-#define ISLINUX 1
-
-/* Define to 1 if this system is running sunos/solaris */
-/* #undef ISSUNOS */
-
-/* Define to 1 if `lstat' dereferences a symlink specified with a trailing
-   slash. */
-#define LSTAT_FOLLOWS_SLASHED_SYMLINK 1
-
 /* Additional library flags */
 #define LDFLAGS ""
 
 /* Library spec */
 #define LIBS ""
 
+/* Define to 1 if `lstat' dereferences a symlink specified with a trailing
+   slash. */
+#define LSTAT_FOLLOWS_SLASHED_SYMLINK 1
+
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
 #define LT_OBJDIR ".libs/"
 
 /* Encoded Version */
-#define MAGIC_NUM (MAJOR_VERSION_NUM << 29 | MINOR_VERSION_NUM << 23 | PATCH_VERSION_NUM)
+#define MAGIC_NUM (MAJOR_VERSION_NUM << 24 | MINOR_VERSION_NUM << 12 | PATCH_VERSION_NUM)
 
 /* Major version number */
-#define MAJOR_VERSION_NUM 0
+#define MAJOR_VERSION_NUM 1
 
 /* Maximum length of a FIX field (default=1024) */
-#define MAX_FLD_LENGTH 1024
+#define MAX_FLD_LENGTH 8192
 
 /* Maximum length of a FIX message (default=8192) */
-#define MAX_MSG_LENGTH 8192
+#define MAX_MSG_LENGTH 16384
 
 /* Minor version number */
-#define MINOR_VERSION_NUM 9
-
-/* TBB MPMC */
-#define MPMC_TBB 1
+#define MINOR_VERSION_NUM 0
 
 /* FF MPMC */
 #define MPMC_FF 2
 
 /* MPMC system used */
 #define MPMC_SYSTEM MPMC_TBB
+
+/* TBB MPMC */
+#define MPMC_TBB 1
 
 /* Name of package */
 #define PACKAGE "fix8"
@@ -457,7 +415,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define PACKAGE_NAME "fix8"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "fix8 0.9.2"
+#define PACKAGE_STRING "fix8 1.0.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "fix8"
@@ -466,7 +424,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define PACKAGE_URL "http://www.fix8.org"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.9.2"
+#define PACKAGE_VERSION "1.0.0"
 
 /* Patch number */
 #define PATCH_VERSION_NUM 0
@@ -476,6 +434,19 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 /* Define to 1 if your os supports gprof and you wish to enable profiling */
 /* #undef PROFILING_BUILD */
+
+/* Define to necessary symbol if this constant uses a non-standard name on
+   your system. */
+/* #undef PTHREAD_CREATE_JOINABLE */
+
+/* Poco regex system */
+#define REGEX_POCO 1
+
+/* regex.h regex system */
+#define REGEX_REGEX_H 2
+
+/* POCO regex system used */
+#define REGEX_SYSTEM REGEX_POCO
 
 /* Percentage of message fields to reserve for additional fields */
 #define RESERVE_PERCENT 30
@@ -501,14 +472,41 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* Location of the system config directory */
 #define SYSCONFDIR "/etc"
 
+/* Poco thread system */
+#define THREAD_POCO 1
+
+/* pthread thread system */
+#define THREAD_PTHREAD 2
+
+/* pthread regex system used */
+#define THREAD_SYSTEM THREAD_TBB
+
+/* tbb thread thread system */
+#define THREAD_TBB 3
+
+/* std malloc */
+#define MALLOC_STD 1
+
+/* tbb malloc */
+#define MALLOC_TBB 2
+
+/* tc malloc */
+#define MALLOC_TC 3
+
+/* malloc system to use */
+#define MALLOC_SYSTEM MALLOC_TBB
+
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #define TIME_WITH_SYS_TIME 1
 
 /* Define to 1 if your <sys/time.h> declares `struct tm'. */
 /* #undef TM_IN_SYS_TIME */
 
+/* Define to 1 to enable rdtsc for interval timer if available */
+/* #undef USE_RDTSC */
+
 /* Version number of package */
-#define VERSION "0.9.2"
+#define VERSION "1.0.0"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
@@ -529,6 +527,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
    <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
    #define below would cause a syntax error. */
 /* #undef _UINT32_T */
+
+/* Define for Solaris 2.5.1 so the uint64_t typedef from <sys/synch.h>,
+   <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
+   #define below would cause a syntax error. */
+/* #undef _UINT64_T */
 
 /* Define for Solaris 2.5.1 so the uint8_t typedef from <sys/synch.h>,
    <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
@@ -567,12 +570,13 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
    such a type exists and the standard includes do not define it. */
 /* #undef uint32_t */
 
+/* Define to the type of an unsigned integer type of width exactly 64 bits if
+   such a type exists and the standard includes do not define it. */
+/* #undef uint64_t */
+
 /* Define to the type of an unsigned integer type of width exactly 8 bits if
    such a type exists and the standard includes do not define it. */
 /* #undef uint8_t */
 
 /* Define as `fork' if `vfork' does not work. */
 /* #undef vfork */
-
-/* Define to enable experimental buffered socket read */
-#undef EXPERIMENTAL_BUFFERED_SOCKET_READ
