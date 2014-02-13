@@ -148,14 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\test\hfprint.cpp" />
-    <ClCompile Include="..\test\Perf_classes.cpp" />
-    <ClCompile Include="..\test\Perf_traits.cpp" />
-    <ClCompile Include="..\test\Perf_types.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\test\Perf_classes.hpp" />
-    <ClInclude Include="..\test\Perf_router.hpp" />
-    <ClInclude Include="..\test\Perf_types.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

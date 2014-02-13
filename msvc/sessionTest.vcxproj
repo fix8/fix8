@@ -154,15 +154,6 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_VARIADIC_MAX=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_VARIADIC_MAX=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\utests\utest_classes.cpp" />
-    <ClCompile Include="..\utests\utest_traits.cpp" />
-    <ClCompile Include="..\utests\utest_types.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\utests\mockConnection.hpp" />
-    <ClInclude Include="..\utests\utest_classes.hpp" />
-    <ClInclude Include="..\utests\utest_router.hpp" />
-    <ClInclude Include="..\utests\utest_types.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

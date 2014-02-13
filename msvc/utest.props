@@ -13,19 +13,19 @@
       <PreprocessorDefinitions>_VARIADIC_MAX=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-        <AdditionalDependencies>gtestd.lib;gtest_main-mdd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>gtestd.lib;gtest_main-mdd.lib;utestlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <AdditionalLibraryDirectories>$(gtest)/msvc/$(Platform)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Link Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <AdditionalDependencies>gtest.lib;gtest_main-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>gtest.lib;gtest_main-md.lib;utestlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <AdditionalLibraryDirectories>$(gtest)/msvc/$(Platform)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Link Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-        <AdditionalDependencies>gtestd.lib;gtest_main-mdd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>gtestd.lib;gtest_main-mdd.lib;utestlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <AdditionalLibraryDirectories>$(gtest)/msvc/$(Platform)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Link Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <AdditionalDependencies>gtest.lib;gtest_main-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>gtest.lib;gtest_main-md.lib;utestlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <AdditionalLibraryDirectories>$(gtest)/msvc/$(Platform)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

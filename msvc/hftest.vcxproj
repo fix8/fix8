@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8060C2F6-46FF-4C90-AE23-C170A0866412}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>test</RootNamespace>
+    <RootNamespace>hftest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -154,15 +154,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\test\hftest.hpp" />
-    <ClInclude Include="..\test\Perf_classes.hpp" />
-    <ClInclude Include="..\test\Perf_router.hpp" />
-    <ClInclude Include="..\test\Perf_types.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\test\hftest.cpp" />
-    <ClCompile Include="..\test\Perf_classes.cpp" />
-    <ClCompile Include="..\test\Perf_traits.cpp" />
-    <ClCompile Include="..\test\Perf_types.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

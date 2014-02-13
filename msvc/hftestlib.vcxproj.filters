@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\test\Perf_classes.hpp" />
+    <ClInclude Include="..\test\Perf_router.hpp" />
+    <ClInclude Include="..\test\Perf_types.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\test\Perf_classes.cpp" />
+    <ClCompile Include="..\test\Perf_traits.cpp" />
+    <ClCompile Include="..\test\Perf_types.cpp" />
+  </ItemGroup>
+</Project>
