@@ -152,15 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\test\myprint.cpp" />
-    <ClCompile Include="..\test\Myfix_classes.cpp" />
-    <ClCompile Include="..\test\Myfix_traits.cpp" />
-    <ClCompile Include="..\test\Myfix_types.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\test\myfix.hpp" />
-    <ClInclude Include="..\test\Myfix_classes.hpp" />
-    <ClInclude Include="..\test\Myfix_router.hpp" />
-    <ClInclude Include="..\test\Myfix_types.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
