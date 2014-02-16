@@ -19455,12 +19455,34 @@ if test "x$ac_cv_lib_tcmalloc_malloc" = xyes; then :
 fi
 
 
+
+$as_echo "#define MALLOC_TBB 1" >>confdefs.h
+
+
+$as_echo "#define MALLOC_TCMALLOC 2" >>confdefs.h
+
+
+$as_echo "#define MALLOC_STD 3" >>confdefs.h
+
+
+$as_echo "#define MALLOC_SYSTEM MALLOC_STD" >>confdefs.h
+
+
 if test "$have_tbb" = yes && test x$usetbbmalloc = xyes; then
 	LIBS="$LIBS -ltbbmalloc -ltbbmalloc_proxy"
+
+$as_echo "#define MALLOC_SYSTEM MALLOC_TBB" >>confdefs.h
+
 else if test "$have_tcmalloc_minimal_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc_minimal"
+
+$as_echo "#define MALLOC_SYSTEM MALLOC_TCMALLOC" >>confdefs.h
+
 else if test "$have_tcmalloc_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc"
+
+$as_echo "#define MALLOC_SYSTEM MALLOC_TCMALLOC" >>confdefs.h
+
 fi
 fi
 fi
