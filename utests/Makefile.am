@@ -73,7 +73,7 @@ if TBBSUPPORT
 AM_LDFLAGS += -ltbb
 endif
 if USESSL
-AM_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+AM_LDFLAGS += -lPocoNetSSL -lPocoCrypto -lPocoXML
 endif
 
 built = $(top_srcdir)/runtime

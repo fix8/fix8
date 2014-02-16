@@ -52,7 +52,7 @@ if USECCRYPT
 AM_LDFLAGS += -lcrypt
 endif
 if USESSL
-AM_LDFLAGS += -lPocoNetSSL -lPocoCrypto
+AM_LDFLAGS += -lPocoNetSSL -lPocoCrypto -lPocoXML
 endif
 
 

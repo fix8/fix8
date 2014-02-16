@@ -51,7 +51,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 // f8 headers
 #include <fix8/f8includes.hpp>
-#include <usage.hpp>
+#include <fix8/usage.hpp>
 #include <f8c.hpp>
 
 //-----------------------------------------------------------------------------------------
@@ -442,8 +442,7 @@ void generate_includes(ostream& to)
 {
 	static const string incfiles[] =
 	{
-		"f8exception.hpp", "hypersleep.hpp", "mpmc.hpp", "f8utils.hpp", "f8types.hpp",
-		"traits.hpp", "tickval.hpp", "field.hpp", "message.hpp"
+        "f8includes.hpp"
 	};
 
 	to << "// f8 includes" << endl;

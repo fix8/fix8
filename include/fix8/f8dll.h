@@ -38,9 +38,20 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #if defined(_MSC_VER)
     #if defined(BUILD_F8API)
-	#define F8API __declspec(dllexport)
+	    #define F8API __declspec(dllexport)
     #else
-	#define F8API __declspec(dllimport)
+	    #define F8API __declspec(dllimport)
+        #ifndef FIX8_NO_AUTOLINK
+            #ifdef _DEBUG
+                #define FIX8_LIB_SUFFIX "d.lib"
+            #else
+                #define FIX8_LIB_SUFFIX ".lib"
+            #endif
+            #pragma comment(lib, "fix8" FIX8_LIB_SUFFIX)
+            //#pragma message("Auto linking to fix8" FIX8_LIB_SUFFIX) 
+        #else
+            //#pragma message("Skipping auto linking to fix8" FIX8_LIB_SUFFIX) 
+        #endif
     #endif
 #else
     #define F8API

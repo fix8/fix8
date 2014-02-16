@@ -150,17 +150,6 @@ class Tickval;
 
 
 //-------------------------------------------------------------------------------------------------
-#ifdef _MSC_VER
-class Comparator
-{
-public:
-	bool operator()( const pthread_t& lhs, const pthread_t& rhs ) const
-	{
-		return (lhs.p < rhs.p);
-	}
-};
-#endif
-
 /// dthread delegated async logging class
 class Logger
 {
@@ -181,12 +170,12 @@ protected:
 
 	struct LogElement
 	{
-		pthread_t _tid;
+		_dthreadcore::thread_id_t _tid;
 		std::string _str;
 		unsigned _val;
 		Tickval _when;
 
-		LogElement(const pthread_t tid, const std::string& str, const unsigned val=0)
+		LogElement(const _dthreadcore::thread_id_t tid, const std::string& str, const unsigned val=0)
 			: _tid(tid), _str(str), _val(val), _when(true) {}
 		LogElement() : _tid(), _val(), _when(true) {}
 		LogElement(const LogElement& from) : _tid(from._tid), _str(from._str), _val(from._val), _when(from._when) {}
@@ -206,14 +195,10 @@ protected:
 	f8_concurrent_queue<LogElement> _msg_queue;
 	unsigned _sequence, _osequence;
 
-#ifdef _MSC_VER
-	typedef std::map<pthread_t, char, Comparator> ThreadCodes;
-#else
-	typedef std::map<pthread_t, char> ThreadCodes;
-#endif
+	typedef std::map<_dthreadcore::thread_id_t, char> ThreadCodes;
 	ThreadCodes _thread_codes;
 
-	typedef std::map<char, pthread_t> RevThreadCodes;
+	typedef std::map<char, _dthreadcore::thread_id_t> RevThreadCodes;
 	RevThreadCodes _rev_thread_codes;
 
 public:
@@ -225,7 +210,11 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~Logger() { delete _ofs; }
+	virtual ~Logger()
+	{
+		stop();
+		delete _ofs;
+	}
 
 	/*! Get the underlying stream object.
 	    \return the stream */
@@ -237,7 +226,7 @@ public:
 	    \return true on success */
 	bool send(const std::string& what, const unsigned val=0)
 	{
-		const LogElement le(pthread_self(), what, val);
+		const LogElement le(_dthreadcore::getid(), what, val);
 		return _msg_queue.try_push (le) == 0;
 	}
 
@@ -263,7 +252,7 @@ public:
 
 	/*! Get the thread code for this thread or allocate a new code if not found.
 		\param tid the thread id of the thread to get a code for */
-	char get_thread_code(pthread_t tid);
+	char get_thread_code(_dthreadcore::thread_id_t tid);
 
 	/// Remove dead threads from the thread code cache.
 	void purge_thread_codes();

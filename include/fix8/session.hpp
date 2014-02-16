@@ -38,7 +38,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_SESSION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
-
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
@@ -173,7 +172,7 @@ struct Schedule
 	Schedule() : _start(Tickval::errorticks), _end(Tickval::errorticks), _utc_offset(),
 		_start_day(-1), _end_day(-1) {}
 
-	Schedule(Tickval start, Tickval end, Tickval duration=Tickval::noticks, int utc_offset=0, int start_day=-1, int end_day=-1) :
+    Schedule(const Tickval& start, const Tickval& end, const Tickval& duration = 0/*Tickval::noticks*/, int utc_offset = 0, int start_day = -1, int end_day = -1) :
 		_start(start), _end(end), _duration(duration),
 		_utc_offset(utc_offset), _start_day(start_day), _end_day(end_day),
 		_toffset(static_cast<Tickval::sticks>(_utc_offset) * Tickval::minute)
@@ -482,10 +481,12 @@ protected:
 		return bme->_create._do();
 	}
 
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 #if !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
-	static f8String get_thread_policy_string(pthread_t id);
+	static f8String get_thread_policy_string(_dthreadcore::thread_id_t id);
 	void set_scheduler(int priority);
 	void set_affinity(int core_id);
+#endif
 #endif
 
 public:

@@ -157,7 +157,7 @@ If you have built the test cases, you can also run them as follows:
 
 ## Building on Windows
 
-Please see [this document](https://fix8engine.atlassian.net/wiki/display/FX/Building) for detailed instructions for building on Windows.
+Please see [this document](https://fix8engine.atlassian.net/wiki/display/FX/Building+and+running+on+Windows) for detailed instructions for building on Windows.
 
 ## Support
 

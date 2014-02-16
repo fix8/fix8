@@ -64,7 +64,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 # include <sched.h>
 
 // std wrappers for ff
-# include <pthread.h>
 # include <ff_wrapper.hpp>
 
 # define f8_atomic FIX8::ff_atomic
