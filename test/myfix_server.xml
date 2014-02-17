@@ -16,7 +16,7 @@
 				ignore_logon_sequence_check="true"
 				process_model="threaded"
 				silent_disconnect="false"
-				persist="file0"/>
+				persist="memcached0"/>
 
 	<schedule name="test_schedule0"
 				start_time="22:00:00"
@@ -42,6 +42,11 @@
 	<persist name="file0"
             type="file" dir="./run"
             use_session_id="true"
+            db="server" />
+
+	<persist name="memcached0"
+            type="memcached"
+				config_string="--SVER=127.0.0.1"
             db="server" />
 
 	<persist name="mem0"

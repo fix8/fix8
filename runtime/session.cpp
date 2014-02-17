@@ -113,6 +113,28 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 {
 	_timer.start();
 	_batchmsgs_buffer.reserve(10 * (MAX_MSG_LENGTH + HEADER_CALC_OFFSET));
+
+	ostringstream ostr;
+	if (!_logger)
+	{
+		ostr.str("");
+		ostr << "Warning: no session logger defined for " << _sid;
+		GlobalLogger::log(ostr.str());
+	}
+
+	if (!_plogger)
+	{
+		ostr.str("");
+		ostr << "Warning: no protocol logger defined for " << _sid;
+		GlobalLogger::log(ostr.str());
+	}
+
+	if (!_persist)
+	{
+		ostr.str("");
+		ostr << "Warning: no persister defined for " << _sid;
+		GlobalLogger::log(ostr.str());
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -282,7 +304,7 @@ bool Session::process(const f8String& from)
 		else if (_control & print)
 			cout << *msg << endl;
 
-		bool result, admin_result(msg->is_admin() ? handle_admin(seqnum, msg) : true);
+		bool result(false), admin_result(msg->is_admin() ? handle_admin(seqnum, msg) : true);
 		if (msg->get_msgtype().size() > 1)
 			goto application_call;
 		else switch(msg->get_msgtype()[0])
@@ -415,6 +437,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 {
 	_state = States::st_logon_received;
 	const bool reset_given(msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get());
+	ostringstream ostr;
 
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
@@ -423,7 +446,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		msg->get(hbi);
 		_connection->set_hb_interval(hbi());
 		_state = States::st_continuous;
-		ostringstream ostr;
+		ostr.str("");
 		ostr << "Client setting heartbeat interval to " << hbi();
 		log(ostr.str());
 	}
@@ -441,21 +464,34 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		// important - these objects can't be created until we have a valid SessionID
 		if (_sf)
 		{
-			if (!_logger)
-				_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id);
+			if (!_logger && !(_logger = _sf->create_logger(_sf->_ses, Configuration::session_log, &id)))
+			{
+				ostr.str("");
+				ostr << "Warning: no session logger defined for " << id;
+				GlobalLogger::log(ostr.str());
+			}
 
-			if (!_plogger)
-				_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id);
+			if (!_plogger && !(_plogger = _sf->create_logger(_sf->_ses, Configuration::protocol_log, &id)))
+			{
+				ostr.str("");
+				ostr << "Warning: no protocol logger defined for " << id;
+				GlobalLogger::log(ostr.str());
+			}
 
 			if (!_persist)
 			{
 				f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
-				_persist = _sf->create_persister(_sf->_ses, &id, reset_given);
+				if (!(_persist = _sf->create_persister(_sf->_ses, &id, reset_given)))
+				{
+					ostr.str("");
+					ostr << "Warning: no persister defined for " << id;
+					GlobalLogger::log(ostr.str());
+				}
 			}
 
 			if (_schedule)
 			{
-				ostringstream ostr;
+				ostr.str("");
 				ostr << *_schedule;
 				log(ostr.str());
 			}
@@ -463,7 +499,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		else
 			GlobalLogger::log("Error: SessionConfig object missing in session");
 
-		ostringstream ostr;
+		ostr.str("");
 		ostr << "Connection from " << _connection->get_peer_socket_address().toString();
 		log(ostr.str());
 
@@ -490,7 +526,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		}
 		else
 		{
-			ostringstream ostr;
+			ostr.str("");
 			ostr << id << " failed authentication";
 			log(ostr.str());
 			stop();
@@ -500,7 +536,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 
 		if (_loginParameters._login_schedule.is_valid() && !_loginParameters._login_schedule.test())
 		{
-			ostringstream ostr;
+			ostr.str("");
 			ostr << id << " Session unavailable. Login not accepted.";
 			log(ostr.str());
 			stop();
@@ -509,7 +545,7 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		}
 	}
 
-	ostringstream ostr;
+	ostr.str("");
 	ostr << "Heartbeat interval is " << _connection->get_hb_interval();
 	log(ostr.str());
 

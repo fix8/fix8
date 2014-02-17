@@ -541,6 +541,48 @@ esac])
 
 AM_CONDITIONAL(F8TEST, [test x$oktof8test = xyes])
 
+oktomemcached=no
+AC_ARG_ENABLE([libmemcached],
+[AS_HELP_STRING([--enable-libmemcached],[enable memcached C API support via libmemcached (default=no)])],
+[case "${enableval}" in
+	yes) oktomemcached=yes
+			AC_MSG_CHECKING(for libmemcached)
+			AC_TRY_COMPILE([
+					#include <libmemcached/memcached.h>
+				],,
+				have_libmemcached=yes,have_libmemcached=no)
+		 if test "$have_libmemcached" = yes && test "$oktomemcached" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAVE_LIBMEMCACHED, 1, [Define to 1 if you have libmemcached])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-libmemcached) ;;
+esac])
+AM_CONDITIONAL(LIBMEMCACHEDSUPPORT, [test x$oktomemcached = xyes])
+
+oktohiredis=no
+AC_ARG_ENABLE([libhiredis],
+[AS_HELP_STRING([--enable-libhiredis],[enable redis C API support via libhiredis (default=no)])],
+[case "${enableval}" in
+	yes) oktohiredis=yes
+			AC_MSG_CHECKING(for libhiredis)
+			AC_TRY_COMPILE([
+					#include <hiredis/hiredis.h>
+				],,
+				have_libhiredis=yes,have_libhiredis=no)
+		 if test "$have_libhiredis" = yes && test "$oktohiredis" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAVE_LIBHIREDIS, 1, [Define to 1 if you have libhiredis])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-libhiredis) ;;
+esac])
+AM_CONDITIONAL(LIBHIREDISSUPPORT, [test x$oktohiredis = xyes])
+
 oktobdb=no
 AC_ARG_ENABLE([bdb],
 [AS_HELP_STRING([--enable-bdb],[enable support for Oracle Berkeley DB persistence (default=no)])],
@@ -551,7 +593,6 @@ AC_ARG_ENABLE([bdb],
 	no) ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-bdb) ;;
 esac])
-
 AM_CONDITIONAL(BDBSUPPORT, [test x$oktobdb = xyes])
 
 AC_CHECK_LIB(z, deflate, [

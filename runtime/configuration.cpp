@@ -204,6 +204,21 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 		else if (which->FindAttr("use_session_id", false))
 			db += ('.' + get_sender_comp_id(from)() + '.' + get_target_comp_id(from)());
 
+#if defined HAVE_LIBMEMCACHED
+		if (type == "memcached")
+		{
+			string config_str;
+			if (which->GetAttr("config_string", config_str))
+			{
+				scoped_ptr<MemcachedPersister> result(new MemcachedPersister);
+				if (result->initialise(config_str, db, flag))
+					return result.release();
+			}
+			else
+				throw f8Exception("memcached:config_string attribute must be set when using memcached.");
+		}
+		else
+#endif
 #if defined HAVE_BDB
 		if (type == "bdb")
 		{

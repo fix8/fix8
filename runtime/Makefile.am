@@ -55,4 +55,8 @@ if USESSL
 AM_LDFLAGS += -lPocoNetSSL -lPocoCrypto -lPocoXML
 endif
 
+if LIBMEMCACHEDSUPPORT
+libfix8_la_SOURCES += memcachedpersist.cpp
+AM_LDFLAGS += -lmemcached
+endif
 

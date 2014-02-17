@@ -75,6 +75,10 @@ endif
 if TBBSUPPORT
 GEN_LIBS += -ltbb
 endif
+if LIBMEMCACHEDSUPPORT
+GEN_LIBS += -lmemcached
+endif
+
 ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) -L$(top_srcdir)/runtime
 
 if TOGGLETRACKINGASSIGNMENTS

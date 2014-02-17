@@ -671,6 +671,10 @@ USECOMPRESSION_FALSE
 USECOMPRESSION_TRUE
 BDBSUPPORT_FALSE
 BDBSUPPORT_TRUE
+LIBHIREDISSUPPORT_FALSE
+LIBHIREDISSUPPORT_TRUE
+LIBMEMCACHEDSUPPORT_FALSE
+LIBMEMCACHEDSUPPORT_TRUE
 F8TEST_FALSE
 F8TEST_TRUE
 USECCRYPT_FALSE
@@ -844,6 +848,8 @@ with_regex
 with_thread
 enable_gtest
 enable_f8test
+enable_libmemcached
+enable_libhiredis
 enable_bdb
 with_bdb
 enable_xmlstrictbool
@@ -1511,6 +1517,10 @@ Optional Features:
                           (default=yes if available)
   --enable-f8test         permit f8test client/server to be built
                           (default=yes)
+  --enable-libmemcached   enable memcached C API support via libmemcached
+                          (default=no)
+  --enable-libhiredis     enable redis C API support via libhiredis
+                          (default=no)
   --enable-bdb            enable support for Oracle Berkeley DB persistence
                           (default=no)
   --enable-xmlstrictbool  enable xml strict bool behaviour (default=no)
@@ -20278,6 +20288,106 @@ else
 fi
 
 
+oktomemcached=no
+# Check whether --enable-libmemcached was given.
+if test "${enable_libmemcached+set}" = set; then :
+  enableval=$enable_libmemcached; case "${enableval}" in
+	yes) oktomemcached=yes
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for libmemcached" >&5
+$as_echo_n "checking for libmemcached... " >&6; }
+			cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+					#include <libmemcached/memcached.h>
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+  have_libmemcached=yes
+else
+  have_libmemcached=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+		 if test "$have_libmemcached" = yes && test "$oktomemcached" = yes; then
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+$as_echo "#define HAVE_LIBMEMCACHED 1" >>confdefs.h
+
+		 else
+			  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+		 fi ;;
+	no) ;;
+	*) as_fn_error $? "bad value ${enableval} for --enable-libmemcached" "$LINENO" 5 ;;
+esac
+fi
+
+ if test x$oktomemcached = xyes; then
+  LIBMEMCACHEDSUPPORT_TRUE=
+  LIBMEMCACHEDSUPPORT_FALSE='#'
+else
+  LIBMEMCACHEDSUPPORT_TRUE='#'
+  LIBMEMCACHEDSUPPORT_FALSE=
+fi
+
+
+oktohiredis=no
+# Check whether --enable-libhiredis was given.
+if test "${enable_libhiredis+set}" = set; then :
+  enableval=$enable_libhiredis; case "${enableval}" in
+	yes) oktohiredis=yes
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for libhiredis" >&5
+$as_echo_n "checking for libhiredis... " >&6; }
+			cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+					#include <hiredis/hiredis.h>
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+  have_libhiredis=yes
+else
+  have_libhiredis=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+		 if test "$have_libhiredis" = yes && test "$oktohiredis" = yes; then
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+$as_echo "#define HAVE_LIBHIREDIS 1" >>confdefs.h
+
+		 else
+			  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+		 fi ;;
+	no) ;;
+	*) as_fn_error $? "bad value ${enableval} for --enable-libhiredis" "$LINENO" 5 ;;
+esac
+fi
+
+ if test x$oktohiredis = xyes; then
+  LIBHIREDISSUPPORT_TRUE=
+  LIBHIREDISSUPPORT_FALSE='#'
+else
+  LIBHIREDISSUPPORT_TRUE='#'
+  LIBHIREDISSUPPORT_FALSE=
+fi
+
+
 oktobdb=no
 # Check whether --enable-bdb was given.
 if test "${enable_bdb+set}" = set; then :
@@ -22858,7 +22968,6 @@ $as_echo "#define HAVE_BDB 1" >>confdefs.h
 esac
 fi
 
-
  if test x$oktobdb = xyes; then
   BDBSUPPORT_TRUE=
   BDBSUPPORT_FALSE='#'
@@ -23475,6 +23584,14 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${F8TEST_TRUE}" && test -z "${F8TEST_FALSE}"; then
   as_fn_error $? "conditional \"F8TEST\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${LIBMEMCACHEDSUPPORT_TRUE}" && test -z "${LIBMEMCACHEDSUPPORT_FALSE}"; then
+  as_fn_error $? "conditional \"LIBMEMCACHEDSUPPORT\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${LIBHIREDISSUPPORT_TRUE}" && test -z "${LIBHIREDISSUPPORT_FALSE}"; then
+  as_fn_error $? "conditional \"LIBHIREDISSUPPORT\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BDBSUPPORT_TRUE}" && test -z "${BDBSUPPORT_FALSE}"; then
