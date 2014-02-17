@@ -484,14 +484,14 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 /* tbb thread thread system */
 #define THREAD_TBB 3
 
-/* std malloc */
-#define MALLOC_STD 1
-
 /* tbb malloc */
-#define MALLOC_TBB 2
+#define MALLOC_TBB 1
 
 /* tc malloc */
-#define MALLOC_TC 3
+#define MALLOC_TCMALLOC 2
+
+/* std malloc */
+#define MALLOC_STD 3
 
 /* malloc system to use */
 #define MALLOC_SYSTEM MALLOC_TBB
