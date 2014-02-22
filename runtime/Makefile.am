@@ -59,4 +59,8 @@ if LIBMEMCACHEDSUPPORT
 libfix8_la_SOURCES += memcachedpersist.cpp
 AM_LDFLAGS += -lmemcached
 endif
+if LIBHIREDISSUPPORT
+libfix8_la_SOURCES += redispersist.cpp
+AM_LDFLAGS += -lhiredis
+endif
 

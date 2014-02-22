@@ -314,7 +314,7 @@ public:
 		{
 			++_attempts;
 
-			bool excepted(false);
+			bool excepted(_failover_cnt == 0);
 			try
 			{
 				if (_failover_cnt)
@@ -325,6 +325,7 @@ public:
 					this->_session->log(ostr.str());
 					this->_loginParameters._reset_sequence_numbers = _servers[_current]._reset_sequence_numbers; // permit override
 				}
+
 				//std::cout << "operator()():try" << std::endl;
 #ifdef HAVE_OPENSSL
 				bool secured(this->_ssl.is_secure());
@@ -421,14 +422,14 @@ public:
 			this->_cc = 0;
 			delete this->_sock;
 
-			if (!excepted)
+			if (!excepted || (_failover_cnt == 0 && _attempts > this->_loginParameters._login_retries))
 				break;
 
 			if (_failover_cnt)
 			{
 				++_servers[_current]._retries;
 
-				for (;;) // FIXME possible endless loop condition
+				for (; !_cancellation_token; ) // FIXME possible endless loop condition
 				{
 					if (_servers[_current]._max_retries && _servers[_current]._retries < _servers[_current]._max_retries)
 						break;

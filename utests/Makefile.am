@@ -78,6 +78,9 @@ endif
 if LIBMEMCACHEDSUPPORT
 AM_LDFLAGS += -lmemcached
 endif
+if LIBHIREDISSUPPORT
+AM_LDFLAGS += -lhiredis
+endif
 
 built = $(top_srcdir)/runtime
 
@@ -86,6 +89,9 @@ required_objs = -lutest $(built)/logger.lo $(built)/f8utils.lo $(built)/gzstream
 persist_objs = $(built)/configuration.lo $(built)/xml.lo $(built)/persist.lo $(built)/filepersist.lo
 if LIBMEMCACHEDSUPPORT
 persist_objs += $(built)/memcachedpersist.lo
+endif
+if LIBHIREDISSUPPORT
+persist_objs += $(built)/redispersist.lo
 endif
 session_objs = $(built)/connection.lo $(built)/session.lo
 

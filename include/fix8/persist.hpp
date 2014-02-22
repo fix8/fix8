@@ -588,12 +588,15 @@ public:
 	/// Dtor.
 	virtual ~HiredisPersister();
 
-	/*! Establish 'session' with memcached cloud
-	    \param config_str memcached config string
+	/*! Establish 'session' with redis cloud
+	    \param host server host to connect to
+	    \param port port to connect on
+	    \param connect_timeout connect timeout in secs
 	    \param key_base key base string for this session
 	    \param purge if true, empty database if found
 	    \return true on success */
-	virtual bool initialise(const f8String& config_str, const f8String& key_base, bool purge=false);
+	virtual bool initialise(const f8String& host, unsigned port, unsigned connect_timeout,
+		const f8String& key_base, bool purge=false);
 
 	/*! Persist a message.
 	    \param seqnum sequence number of message
@@ -638,77 +641,6 @@ public:
 	    \param last highest sequence
 	    \return the nearest sequence number or 0 if not found */
 	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
-
-	/*! Find the nearest highest sequence number (lower than) from the given sequence number
-	    \param requested sequence number to start
-	    \return the nearest sequence number or 0 if not found */
-	virtual unsigned find_nearest_seqnum (unsigned requested) const;
-
-	/*! Lookup the specified value by given key
-	    \param key key to find
-	    \param target location for result
-	    \return true if found, false if not */
-	bool get_from_cache(const std::string &key, std::string &target) const
-	{
-		uint32_t flags(0);
-		memcached_return_t rc;
-		size_t value_length;
-
-		char *value(memcached_get(_cache, key.c_str(), key.size(), &value_length, &flags, &rc));
-		if (value)
-		{
-			target.reserve(value_length);
-			target.assign(value, value + value_length);
-			free(value);
-			return true;
-		}
-
-		return false;
-	}
-
-	/*! Write the specified value with the given key
-	    \param key key to write
-	    \param source value to write
-	    \return true if successful, false if not */
-	bool put_to_cache(const std::string &key, const std::string &source)
-	{
-		return memcached_success(memcached_set(_cache, key.c_str(), key.size(), source.c_str(), source.size(), 0, 0));
-	}
-
-	/*! Generate a lookup key based on the key base and the given sequence number
-	    \param seqnum sequence number portion of uniquye key
-	    \return result */
-	const std::string generate_seq_key(unsigned seqnum) const
-	{
-		std::ostringstream ostr;
-		ostr << _key_base << ':' << seqnum;
-		return ostr.str();
-	}
-
-	/*! Generate a control record based on the given sequence numbers
-	    \param sender_seqnum sequence number
-	    \param target_seqnum sequence number
-	    \return result */
-	static std::string generate_ctrl_record(unsigned sender_seqnum, unsigned target_seqnum)
-	{
-		std::ostringstream ostr;
-		ostr << sender_seqnum << ':' << target_seqnum;
-		return ostr.str();
-	}
-
-	/*! Extract a control record from the given string
-	    \param source source string
-	    \param sender_seqnum reference to target sequence number
-	    \param target_seqnum reference to target sequence number
-	    \return true on success */
-	static bool extract_ctrl_record(const std::string& source, unsigned &sender_seqnum, unsigned &target_seqnum)
-	{
-		std::istringstream istr(source);
-		istr >> sender_seqnum;
-		istr.ignore();
-		istr >> target_seqnum;
-		return true;
-	}
 };
 
 #endif // HAVE_LIBHIREDIS

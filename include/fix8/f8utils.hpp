@@ -55,6 +55,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Poco/Exception.h>
 #endif
 
+// file/line stringification
+#define STRINGOF(x) #x
+#define STRINGIFY(x) STRINGOF(x)
+#define FILE_LINE __FILE__ ":" STRINGIFY(__LINE__)
+
 namespace FIX8 {
 
 //----------------------------------------------------------------------------------------

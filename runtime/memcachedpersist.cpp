@@ -71,7 +71,7 @@ bool MemcachedPersister::initialise(const f8String& config_str, const f8String& 
 	{
 		ostringstream eostr;
 		eostr << "Error: no memcached servers were configured for " << _key_base;
-		GlobalLogger::log(eostr.str());
+		GlobalLogger::log(FILE_LINE, eostr.str());
 		return false;
 	}
 	return purge ? memcached_success(memcached_flush(_cache, 0)) : true;
@@ -103,7 +103,7 @@ unsigned MemcachedPersister::get(const unsigned from, const unsigned to, Session
 
 	if (!startSeqNum || from > finish)
 	{
-		GlobalLogger::log("No records found");
+		GlobalLogger::log(FILE_LINE, "No records found");
 		rctx._no_more_records = true;
 		(session.*callback)(Session::SequencePair(0, ""), rctx);
 		return 0;
@@ -137,7 +137,7 @@ bool MemcachedPersister::put(const unsigned sender_seqnum, const unsigned target
 	{
 		ostringstream eostr;
 		eostr << "Error: could not write control record to memcached for " << _key_base;
-		GlobalLogger::log(eostr.str());
+		GlobalLogger::log(FILE_LINE, eostr.str());
 		return false;
 	}
 	return true;
@@ -154,7 +154,7 @@ bool MemcachedPersister::put(const unsigned seqnum, const f8String& what)
 	{
 		ostringstream eostr;
 		eostr << "Error: could not write record for seqnum " << seqnum << " for " << _key_base;
-		GlobalLogger::log(eostr.str());
+		GlobalLogger::log(FILE_LINE, eostr.str());
 		return false;
 	}
 
@@ -173,7 +173,7 @@ bool MemcachedPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) c
 	{
 		ostringstream eostr;
 		eostr << "Warning: memcached does not have control record for " << _key_base;
-		GlobalLogger::log(eostr.str());
+		GlobalLogger::log(FILE_LINE, eostr.str());
 		return false;
 	}
 
@@ -191,7 +191,7 @@ bool MemcachedPersister::get(const unsigned seqnum, f8String& to) const
 	{
 		ostringstream eostr;
 		eostr << "Warning: could not get message record with seqnum " << seqnum << " for " << _key_base;
-		GlobalLogger::log(eostr.str());
+		GlobalLogger::log(FILE_LINE, eostr.str());
 		return false;
 	}
 

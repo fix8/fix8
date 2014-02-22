@@ -351,6 +351,15 @@ public:
 		CopyString(from, fn, max_global_filename_length);
 	}
 
+	/*! Send a message with prefix to the logger.
+	  \param prefix text to prefix message with
+	  \param what message to log
+	  \return true on success */
+	static bool log(const std::string& prefix, const std::string& what)
+	{
+		return Singleton<SingleLogger<fn> >::instance()->send(prefix + ' ' + what);
+	}
+
 	/*! Send a message to the logger.
 	  \param what message to log
 	  \return true on success */

@@ -197,7 +197,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 
 		string dir("./"), db("persist_db");
 		which->GetAttr("dir", dir);
-		which->GetAttr("db", db);
+		which->GetAttr("db", db) || which->GetAttr("session_prefix", db);
 
 		if (sid)
 			db += ('.' + sid->get_senderCompID()() + '.' + sid->get_targetCompID()());
@@ -215,7 +215,23 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 					return result.release();
 			}
 			else
-				throw f8Exception("memcached:config_string attribute must be set when using memcached.");
+				throw f8Exception("memcached:config_string attribute must be given when using memcached.");
+		}
+		else
+#endif
+#if defined HAVE_LIBHIREDIS
+		if (type == "redis")
+		{
+			string host_str;
+			if (which->GetAttr("host", host_str))
+			{
+				scoped_ptr<HiredisPersister> result(new HiredisPersister);
+				if (result->initialise(host_str, which->FindAttr("port", 6379),
+				 which->FindAttr("connect_timeout", static_cast<unsigned>(defaults::connect_timeout)), db, flag))
+					return result.release();
+			}
+			else
+				throw f8Exception("redis:host attribute must be given when using redis.");
 		}
 		else
 #endif

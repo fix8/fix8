@@ -605,7 +605,7 @@ bool Session::handle_resend_request(const unsigned seqnum, const Message *msg)
 		{
 			//cout << "got resend request:" << begin() << " to " << end() << endl;
 			_state = States::st_resend_request_received;
-			f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro);
+			//f8_scoped_spin_lock guard(_per_spl, _connection->get_pmodel() == pm_coro); // no no nanette!
 			_persist->get(begin(), end(), *this, &Session::retrans_callback);
 		}
 	}

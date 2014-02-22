@@ -106,7 +106,8 @@ and framework; and a set of complete client/server test applications.
 
 ## Documentation
 
-Documentation is available at [API Documentation](http://fix8.org/fix8/html/). All the source code is self-documenting using doxygen.
+See our [Wiki](https://fix8engine.atlassian.net/wiki) for detailed help on using Fix8.
+For our complete API Documentation see [here](http://fix8.org/fix8/html/). All the source code is self-documenting using doxygen.
 
 ## External Dependencies (required)
 

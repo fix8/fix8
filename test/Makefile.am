@@ -78,6 +78,9 @@ endif
 if LIBMEMCACHEDSUPPORT
 GEN_LIBS += -lmemcached
 endif
+if LIBHIREDISSUPPORT
+GEN_LIBS += -lhiredis
+endif
 
 ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) -L$(top_srcdir)/runtime
 
