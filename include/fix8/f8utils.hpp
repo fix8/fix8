@@ -236,6 +236,11 @@ inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 }
 
 //----------------------------------------------------------------------------------------
+/*! Create a full path, including nested directories
+    \param path path to create */
+void create_path(const std::string& path);
+
+//----------------------------------------------------------------------------------------
 /// C++11 inspired scoped pointer.
 /*! \tparam T typename */
 template <typename T>
@@ -1031,6 +1036,11 @@ T enum_str_get(const unsigned els, const std::string *sset, const std::string& w
 }
 
 //----------------------------------------------------------------------------------------
+/*! Get the current file umask
+    \return int file mask */
+int get_umask();
+
+//----------------------------------------------------------------------------------------
 /*! Check for file existance.
     \param fname filename to check
     \return true if file exists */
@@ -1041,6 +1051,23 @@ inline bool exist(const std::string& fname)
 #else
 	return access(fname.c_str(), F_OK) == 0;
 #endif
+}
+
+//-----------------------------------------------------------------------------------------
+/*! Split a pathname into directory and filename parts
+    \param source source path
+    \param filepart target for file part
+    \param dirpart target for directory part */
+inline void split_path(const std::string& source, std::string& filepart, std::string& dirpart)
+{
+	std::string::size_type slpos(source.find_last_of("/\\"));
+	if (slpos == std::string::npos)
+		filepart = source;
+	else
+	{
+		filepart.assign(source.substr(slpos + 1));
+		dirpart.assign(source.substr(0, slpos));
+	}
 }
 
 //----------------------------------------------------------------------------------------

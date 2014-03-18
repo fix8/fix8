@@ -83,15 +83,18 @@ GEN_LIBS += -lhiredis
 endif
 
 ALL_LIBS = $(GEN_LIBS) $(POCO_LIBS) -L$(top_srcdir)/runtime
+if !USEOSX
+ALL_LIBS += -rdynamic
+endif
 
 if TOGGLETRACKINGASSIGNMENTS
 libmyfix_la_CXXFLAGS += -fno-var-tracking -fno-var-tracking-assignments
 endif
-f8test_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
-f8print_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
-hftest_LDFLAGS = -rdynamic $(ALL_LIBS) -lhftest
-hfprint_LDFLAGS = -rdynamic $(ALL_LIBS) -lhftest
-harness_LDFLAGS = -rdynamic $(ALL_LIBS) -lmyfix
+f8test_LDFLAGS = $(ALL_LIBS) -lmyfix
+f8print_LDFLAGS = $(ALL_LIBS) -lmyfix
+hftest_LDFLAGS = $(ALL_LIBS) -lhftest
+hfprint_LDFLAGS = $(ALL_LIBS) -lhftest
+harness_LDFLAGS = $(ALL_LIBS) -lmyfix
 
 if USECOMPRESSION
 f8test_LDFLAGS += -lz

@@ -248,7 +248,11 @@ bool FileLogger::rotate(bool force)
 
 	delete _ofs;
 
-	string thislFile(_pathname);
+	string thislFile(_pathname), filepart, dirpart;
+	split_path(thislFile, filepart, dirpart);
+	if (!dirpart.empty() && !exist(dirpart))
+		create_path(dirpart);
+
 #ifdef HAVE_COMPRESSION
 	if (_flags & compress)
 		thislFile += ".gz";

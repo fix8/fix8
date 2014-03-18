@@ -297,14 +297,35 @@ public:
 /// Thread cancellation token
 struct dthread_cancellation_token
 {
+	/// ctor
 	dthread_cancellation_token() { _stop_requested = 0; _thread_state = Unknown; }
+
+	/*! check if a stop has been requested
+	  \return true if stop requested */
 	bool stop_requested() const { return _stop_requested == 1; }
+
+	/// Tell the thread to stop
 	void request_stop() { _thread_state = Stopping; _stop_requested = 1; }
+
+	/*! check if a stop has been requested
+	  \return true if stop requested */
 	operator bool() const { return stop_requested(); }
+
+	/*! check if a stop has been requested
+	  \return false if stop requested */
 	bool operator!() const  { return !stop_requested(); }
+
+	/// Thread state enumerations
 	enum ThreadState { Unknown = 0, Running, Stopping, Stopped };
+
+	/*! Get the current thread state
+	  \return thread state enumeration */
 	int thread_state() const { return _thread_state; }
+
+	/*! Set the thread state
+	  \param state state to set to */
 	void thread_state(ThreadState state) { _thread_state = state; }
+
 private:
 	f8_atomic<int> _stop_requested;
 	f8_atomic<int> _thread_state;
@@ -374,8 +395,9 @@ public:
 
 #if (THREAD_SYSTEM == THREAD_POCO)
 	/*! Join the thread.
+	  \param timeoutInMs optional timeout in ms (Poco only)
 	  \return result of join */
-	int join(int timeoutInMs = 0)
+	int join(int timeoutInMs=0)
 	{
 		int ts = _sub.cancellation_token().thread_state();
 		if (ts == dthread_cancellation_token::Stopping || ts == dthread_cancellation_token::Stopped)

@@ -417,6 +417,19 @@ AC_MSG_CHECKING(for Poco)
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
 
+
+#Check for OSX
+AC_MSG_CHECKING([for OSX/Darwin])
+have_osx=no
+case `uname -s` in
+	Darwin) LIBTOOLIZE=glibtoolize
+				have_osx=yes;;
+	*) LIBTOOLIZE=libtoolize;;
+esac
+AC_MSG_RESULT([$have_osx])
+
+AM_CONDITIONAL(USEOSX, [test x$have_osx = xyes])
+
 regex_set=no
 using_poco_regex=no
 AC_ARG_WITH([regex],

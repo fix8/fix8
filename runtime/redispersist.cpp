@@ -148,7 +148,7 @@ unsigned HiredisPersister::get(const unsigned from, const unsigned to, Session& 
 	redisReply *reply(static_cast<redisReply*>(redisCommand(_cache, "ZRANGEBYSCORE %s %u %u WITHSCORES", _key_base.c_str(), startSeqNum, finish)));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		eostr << "redis error zrange: " << reply->str << " for " << _key_base;
+		eostr << "redis error zrangebyscore: " << reply->str << " for " << _key_base;
 		GlobalLogger::log(FILE_LINE, eostr.str());
 	}
 	else if (reply->type == REDIS_REPLY_ARRAY)
@@ -166,7 +166,7 @@ unsigned HiredisPersister::get(const unsigned from, const unsigned to, Session& 
 	}
 	else
 	{
-		eostr << "redis error zrange: unexpected type: " << reply->type << " for " << _key_base;
+		eostr << "redis error zrangebyscore: unexpected type: " << reply->type << " for " << _key_base;
 		GlobalLogger::log(FILE_LINE, eostr.str());
 	}
 
@@ -232,7 +232,7 @@ bool HiredisPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) con
 	redisReply *reply(static_cast<redisReply*>(redisCommand(_cache, "ZRANGEBYSCORE %s 0 0", _key_base.c_str())));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		eostr << "redis error zrange: " << reply->str << " for " << _key_base;
+		eostr << "redis error zrangebyscore: " << reply->str << " for " << _key_base;
 		GlobalLogger::log(FILE_LINE, eostr.str());
 	}
 	else if (reply->type == REDIS_REPLY_ARRAY)
@@ -248,7 +248,7 @@ bool HiredisPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) con
 	}
 	else
 	{
-		eostr << "redis error zrange: unexpected type: " << reply->type << " for " << _key_base;
+		eostr << "redis error zrangebyscore: unexpected type: " << reply->type << " for " << _key_base;
 		GlobalLogger::log(FILE_LINE, eostr.str());
 	}
 
@@ -267,7 +267,7 @@ bool HiredisPersister::get(const unsigned seqnum, f8String& to) const
 	redisReply *reply(static_cast<redisReply*>(redisCommand(_cache, "ZRANGEBYSCORE %s %u %u", _key_base.c_str(), seqnum, seqnum)));
 	if (reply->type == REDIS_REPLY_ERROR)
 	{
-		eostr << "redis error zrange: " << reply->str << " for " << _key_base;
+		eostr << "redis error zrangebyscore: " << reply->str << " for " << _key_base;
 		GlobalLogger::log(FILE_LINE, eostr.str());
 	}
 	else if (reply->type == REDIS_REPLY_ARRAY && reply->elements == 1)	// we expect one record
@@ -277,7 +277,7 @@ bool HiredisPersister::get(const unsigned seqnum, f8String& to) const
 	}
 	else
 	{
-		eostr << "redis error zrange: unexpected type: " << reply->type << " for " << _key_base;
+		eostr << "redis error zrangebyscore: unexpected type: " << reply->type << " for " << _key_base;
 		GlobalLogger::log(FILE_LINE, eostr.str());
 	}
 

@@ -260,8 +260,9 @@ public:
 	/// Flush the buffer
 	virtual void flush();
 
+	/*! Get the thread cancellation token
+		\return reference to the cancellation token */
 	dthread_cancellation_token& cancellation_token() { return _stopping; }
-
 };
 
 //-------------------------------------------------------------------------------------------------

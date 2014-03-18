@@ -306,9 +306,15 @@ int main(int argc, char **argv)
 			return 1;
 		}
 		scoped_ptr<XmlElement> pcmp(XmlElement::Factory(inputFile)), pcmpfixt;
-		unsigned xmlsz(pcmp->GetLineCnt());
-
-		unsigned fixtsz(0);
+		if (!pcmp.get())
+		{
+			cerr << "Error reading file \'" << inputFile << '\'' << " (" << precompFile << ')';
+			if	(errno)
+				cerr << " (" << strerror(errno) << ')';
+			cerr << endl;
+			return 1;
+		}
+		unsigned xmlsz(pcmp->GetLineCnt()), fixtsz(0);
 		if (!fixt.empty())
 		{
 			pcmpfixt.Reset(XmlElement::Factory(fixt));
@@ -321,14 +327,6 @@ int main(int argc, char **argv)
 				return 1;
 			}
 			fixtsz = pcmpfixt->GetLineCnt();
-		}
-		if (!pcmp.get())
-		{
-			cerr << "Error reading file \'" << inputFile << '\'' << " (" << precompFile << ')';
-			if	(errno)
-				cerr << " (" << strerror(errno) << ')';
-			cerr << endl;
-			return 1;
 		}
 		cout << (fixtsz + xmlsz) << " => ";
 		cout.flush();
