@@ -726,7 +726,7 @@ public:
 	    Not thread safe however this method should never be called across threads. It should
 		 only be called from Session::handle_application().
 	    \param msg ref to ptr containing message
-	    \return detahced Message * */
+	    \return detached Message * */
 	static const Message *detach(const Message *&msg)
 	{
 		const Message *tmp(msg);

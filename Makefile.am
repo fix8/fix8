@@ -35,12 +35,12 @@ AUTOMAKE_OPTIONS = foreign dist-bzip2 dist-zip
 
 SUBDIRS = runtime compiler test util
 
-if USEDOXYGEN
-SUBDIRS += doc
-endif
-
 if USEGTEST
 SUBDIRS += utests
+endif
+
+if USEDOXYGEN
+SUBDIRS += doc
 endif
 
 #############################################################################################
@@ -109,7 +109,11 @@ if USEDOXYGEN
 	$(INSTALL_DATA) $(INSTALL_DATA_HTML_SEARCH_DOC) $(DESTDIR)$(fix8htmldir)/search
 endif
 
-EXTRA_DIST = $(xmltoman) fix8.spec doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen \
+EXTRA_DIST = $(xmltoman) fix8.spec \
 	$(INSTALL_DATA_LOCAL_SCHEMA) $(pkginclude_HEADERS) $(INSTALL_DATA_LOCAL_TEST) version.sh ${ffincludes} \
 	bootstrap README.md LICENSE
+
+if USEDOXYGEN
+EXTRA_DIST += doc/fix8_Logo_RGB_small.png doc/fix8.footer.html doc/mainpage.doxygen
+endif
 

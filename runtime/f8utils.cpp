@@ -171,7 +171,7 @@ string Str_error(const int err, const char *str)
 	const size_t max_str(256);
 	char buf[max_str] = {};
 #ifdef _MSC_VER
-    ignore_value(strerror_s(buf, max_str - 1, err));
+	ignore_value(strerror_s(buf, max_str - 1, err));
 #else
 	ignore_value(strerror_r(err, buf, max_str - 1));
 #endif

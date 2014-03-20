@@ -161,8 +161,8 @@ AC_ARG_ENABLE([doxygen],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-doxygen) ;;
 esac])
 
-AM_CONDITIONAL([USEDOXYGEN],
-	[test -n "$DOXYGEN" && test $oktodox = yes])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
+AM_CONDITIONAL([USEDOXYGEN], [test -n "$DOXYGEN" && test $oktodox = yes])
+AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
 
 DOXYGEN_WARNINGS=YES
 AC_ARG_ENABLE([doxygen-warnings],
