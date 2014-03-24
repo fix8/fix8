@@ -926,6 +926,20 @@ public:
 	    \return value of _no_increment flag */
 	virtual bool get_no_increment() const { return _no_increment; }
 
+	/*! Setup this message to allow it to be resused
+	  This feature is experimental; do not use with pipelined mode */
+	void setup_reuse()
+	{
+		if (_header)
+		{
+			_header->_fp.set(Common_BeginString, FieldTrait::suppress);
+			_header->_fp.set(Common_BodyLength, FieldTrait::suppress);
+			delete _header->remove(Common_MsgSeqNum);
+		}
+		if (_trailer)
+			_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress);
+	}
+
 	/*! Print the message to the specified stream.
 	    \param os refererence to stream to print to
 	    \param depth not used */

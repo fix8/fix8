@@ -138,10 +138,10 @@ namespace States
 
 	enum SessionStates
 	{
-		st_continuous, st_session_terminated,
+		st_none, st_continuous, st_session_terminated,
 		st_wait_for_logon, st_not_logged_in, st_logon_sent, st_logon_received, st_logoff_sent, st_logoff_received,
 		st_test_request_sent, st_sequence_reset_sent, st_sequence_reset_received,
-		st_resend_request_sent, st_resend_request_received
+		st_resend_request_sent, st_resend_request_received, st_num_states
 	};
 
 	static inline bool is_established(const SessionStates& ss)
@@ -389,6 +389,9 @@ protected:
 	std::string _batchmsgs_buffer;
 	Session_Schedule *_schedule;
 
+	/// string representation of Sessionstates
+	static const f8String _state_names[];
+
 	/// Heartbeat generation service thread method.
 	bool heartbeat_service();
 
@@ -456,6 +459,11 @@ protected:
 	    \param msg reference to Message ptr
 	    \return true on success */
 	virtual bool handle_application(const unsigned seqnum, const Message *&msg) = 0;
+
+	/*! This method id called whenever a session state change occurs
+	    \param before previous session state
+	    \param after new session state */
+	virtual void state_change(const States::SessionStates before, const States::SessionStates after) {}
 
 	/*! Permit modification of message just prior to sending.
 	     \param msg Message */
@@ -558,6 +566,8 @@ public:
 	virtual bool send(Message *msg, bool destroy=true, const unsigned custom_seqnum=0, const bool no_increment=false);
 
 	/*! Send message - non-pipelined version.
+		 WARNING: be sure you don't inadvertently use this method. Symptoms will be out of sequence messages (seqnum==1)
+		 and core dumping.
 	    \param msg Message
 	    \param custom_seqnum override sequence number with this value
 	    \param no_increment if true, don't increment the seqnum after sending
@@ -722,6 +732,14 @@ public:
 	    \return new Message */
 	virtual Message *generate_business_reject(const unsigned seqnum, const Message *msg, const int reason, const char *what);
 
+	/*! Call the virtual state_change method with before and after, then set the new state
+	    \param new_state new session state to set */
+	void do_state_change(const States::SessionStates new_state)
+	{
+		state_change(_state, new_state);
+		_state = new_state;
+	}
+
 	/*! Detach message passed to handle_application. Will set source to 0;
 	    Not thread safe however this method should never be called across threads. It should
 		 only be called from Session::handle_application().
@@ -732,6 +750,15 @@ public:
 		const Message *tmp(msg);
 		msg = 0;
 		return tmp;
+	}
+
+	/*! Find the string representation for the given session state
+	    \param state session state
+	    \return string found or "unknown" */
+	static const f8String& get_session_state_string(const States::SessionStates state)
+	{
+		static const f8String unknown("Unknown");
+		return state < States::st_num_states ? _state_names[state] : unknown;
 	}
 };
 

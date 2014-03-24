@@ -266,7 +266,7 @@ int main(int argc, char **argv)
 			else
 				mc->start(false);
 
-			ConsoleMenu cm(TEX::ctx(), mc->session_ptr(), cin, cout, 50);
+			ConsoleMenu cm(TEX::ctx(), cin, cout, 50);
 			MyMenu mymenu(*mc->session_ptr(), 0, cout, &cm);
 			char ch;
 			mymenu.get_tty().set_raw_mode();
@@ -303,6 +303,12 @@ int main(int argc, char **argv)
 bool myfix_session_client::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
+}
+
+//-----------------------------------------------------------------------------------------
+void myfix_session_client::state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after)
+{
+	cout << get_session_state_string(before) << " => " << get_session_state_string(after) << endl;
 }
 
 //-----------------------------------------------------------------------------------------

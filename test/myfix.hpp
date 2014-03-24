@@ -82,6 +82,8 @@ public:
 		 \param msg Mesage decoded (base ptr)
 		 \return true on success */
 	bool handle_application(const unsigned seqnum, const FIX8::Message *&msg);
+
+	void state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after);
 };
 
 //-----------------------------------------------------------------------------------------
@@ -185,6 +187,7 @@ public:
 	bool send_msgs();
 	bool write_msgs();
 	bool read_msgs();
+	bool new_order_single_recycled();
 
 	bool load_msgs(const std::string& fname);
 	FIX8::Message *generate_new_order_single();

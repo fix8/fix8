@@ -136,6 +136,14 @@ If you wish to build the html documentation, you will need:
 
 - [Doxygen](http://www.doxygen.org)
 
+If you wish to use Redis for message persistence:
+
+- [hiredis](https://github.com/redis/hiredis)
+
+If you wish to use libmemcached for message persistence:
+
+- [libmemcached](http://libmemcached.org/libMemcached.html)
+
 If you wish to use BerkeleyDB for message persistence:
 
 - [Berkeley DB C++](http://www.oracle.com/technetwork/products/berkeleydb/downloads/index.html)
@@ -145,8 +153,8 @@ If you wish to use BerkeleyDB for message persistence:
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 1.0.0.tar.gz
-	% cd fix8-1.0.0
+	% tar xvzf 1.1.0.tar.gz
+	% cd fix8-1.1.0
 	% ./bootstrap
 	% ./configure
 	% make
@@ -169,6 +177,11 @@ Please refer to the following pages for help:
 - [API Documentation](http://fix8.org/fix8/html)
 - [Jira Issues page](https://fix8engine.atlassian.net/)
 - [Fix8 News](http://blog.fix8.org/)
+
+## Downloads
+
+Please refer to the following page:
+- [Downloads](http://fix8.org/downloads.html)
 
 ## Getting help or reporting problems
 

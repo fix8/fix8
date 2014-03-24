@@ -48,7 +48,6 @@ typedef std::deque<FIX8::Message *> MsgList;
 class ConsoleMenu
 {
 	const F8MetaCntx& _ctx;
-	Session *_ses;
 	std::istream& _is;
 	std::ostream& _os;
 	const int _lpp;
@@ -57,12 +56,11 @@ class ConsoleMenu
 public:
 	/*! Ctor
 	 \param ctx - reference to generated metadata
-	 \param ses - pointer to session
 	 \param is - reference to input stream
 	 \param os - reference to output stream
 	 \param lpp - lines to print per page */
-	ConsoleMenu (const F8MetaCntx& ctx, Session *ses, std::istream& is=std::cin, std::ostream& os=std::cout, const int lpp=20)
-		: _ctx(ctx), _ses(ses), _is(is), _os(os), _lpp(lpp) {}
+	ConsoleMenu (const F8MetaCntx& ctx, std::istream& is=std::cin, std::ostream& os=std::cout, const int lpp=20)
+		: _ctx(ctx), _is(is), _os(os), _lpp(lpp) {}
 
 	/// Dtor.
 	virtual ~ConsoleMenu () {}

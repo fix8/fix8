@@ -1,3 +1,37 @@
+* Tue Apr 01 2014 David L. Dight <fix@fix8.org> 1.1.0
+- Fixed Jira tickets FX-223, FX-222, FX-221, FX-219, FX-216, FX-214, FX-213, FX-212, FX-211, FX-209,
+							FX-206, FX-205, FX-204, FX-200, FX-198, FX-193, FX-192, FX-191, FX-189, FX-187,
+							FX-185, FX-183, FX-180, FX-178, FX-177, FX-175, FX-184, FX-224, FX-225
+- Fixed Win64 build failed with seqnum mismatch
+- Fixed f8c compiler crashes if schema file not found
+- Fixed Logfile creation should handle new paths
+- Added session state change event callback
+- Fixed Won't reconnect if exchange log session out.
+- Fixed Deadlock in retransmission behaviour
+- Added global logger needs optional file and line attributes when logging
+- Added provide redis persister
+- Fixed Session silently ignores no logger, no plogger and no persister errors
+- Fixed Speedup Win build
+- Update Windows Wiki (confluence) page
+- Fixed Make auto linking fix8 lib optional
+- Fixed Remove public static vars from generated code
+- Fixed hftest works incompletely under win32/64
+- Added malloc configuration defines to f8config.h
+- Fixed Test fix8 with onload/SFC 10G cards
+- Fixed Reliable session fails to re-connect on connection errors
+- Fixed UTs build fails when running via make
+- Add support for Session based BusinessMessageReject ('j')
+- Added support for Session login and logout time
+- Added make socket read buffering optional
+- Added expose FIX8::Session scheduler to user session class
+- Added support for Session Start time and End Time
+- Fixed Hang in FIXReader::sockRead
+- Fixed gcc 4.2 and greater supports -fno-var-tracking -fno-var-tracking-assignments
+- Fixed Complete build options for Pthread API
+- Added message handling: allow non-const operations
+- Fixed Non-standard XML attribute comment problem
+- Added mechanism to support ad-hoc message recycling
+
 * Thu Jan 16 2014 David L. Dight <fix@fix8.org> 1.0.0
 - Our first official GA release
 - Fixed Jira tickets FX-107, FX-129, FX-130, FX-131, FX-134, FX-139, FX-140, FX-141, FX-142, FX-143,

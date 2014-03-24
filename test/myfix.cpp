@@ -138,6 +138,8 @@ bool term_received(false);
 const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
 {
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('r', "New Order Single Recycled - 1st use send as normal then will send recycled message"),
+			&MyMenu::new_order_single_recycled),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('T', "1000 New Order Singles"), &MyMenu::new_order_single_1000),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('R', "Resend request"), &MyMenu::resend_request),
@@ -335,6 +337,12 @@ bool myfix_session_client::handle_application(const unsigned seqnum, const Messa
 }
 
 //-----------------------------------------------------------------------------------------
+void myfix_session_client::state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after)
+{
+	cout << get_session_state_string(before) << " => " << get_session_state_string(after) << endl;
+}
+
+//-----------------------------------------------------------------------------------------
 bool myfix_session_server::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	if (enforce(seqnum, msg))
@@ -429,6 +437,28 @@ Message *MyMenu::generate_new_order_single()
 bool MyMenu::new_order_single()
 {
 	_session.send(generate_new_order_single());
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::new_order_single_recycled()
+{
+	// create a message; first time through we just send it as normal. Note the we pass the no-destroy flag;
+	// second and subsequent times we just recyle the old message
+
+	static bool first(true);
+	static Message *msg(0);
+	if (first)
+	{
+		cout << "Sending new new_order_single" << endl;
+		_session.send(msg = generate_new_order_single(), first = false);
+	}
+	else
+	{
+		msg->setup_reuse();
+		cout << "Sending recycled new_order_single" << endl;
+		_session.send(msg, false);
+	}
 	return true;
 }
 

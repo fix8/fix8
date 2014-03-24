@@ -329,7 +329,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-const size_t max_global_filename_length(256);
+const size_t max_global_filename_length(1024);
 
 /// A global singleton logger
 /*! \tparam fn actual pathname of logfile
