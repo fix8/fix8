@@ -40,7 +40,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 f8c -- compile FIX xml schema\n
 \n
 <tt>
-Usage: f8c [-CFINPRUVWbcdfhiknoprstvx] \<input xml schema\>\n
+Usage: f8c [-CFINPRUVWbcdefhiknoprstvx] \<input xml schema\>\n
    -C,--nocheck            do not embed version checking in generated code (default false)\n
    -F,--xfields            specify additional fields with associated messages (see documentation for details)\n
    -I,--info               print package info, exit\n
@@ -52,6 +52,7 @@ Usage: f8c [-CFINPRUVWbcdfhiknoprstvx] \<input xml schema\>\n
    -V,--verbose            be more verbose when processing\n
    -c,--classes \<server|client\> generate user session classes (default no)\n
    -d,--dump               dump 1st pass parsed source xml file, exit\n
+   -e,--extension          Generate with .cxx/.hxx extensions (default .cpp/.hpp)\n
    -f,--fields             generate code for all defined fields even if they are not used in any message (default no)\n
    -h,--help               help, this screen\n
    -i,--ignore             ignore errors, attempt to generate code anyhow (default no)\n
@@ -101,16 +102,16 @@ using namespace std;
 using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
-const string Ctxt::_exts[count] = { "_types.cpp", "_types.hpp", "_traits.cpp", "_classes.cpp",
-	"_classes.hpp", "_router.hpp", "_session.hpp" };
-
+const string Ctxt::_exts[count] = { "_types.c", "_types.h", "_traits.c", "_classes.c",
+                                    "_classes.h", "_router.h", "_session.h" },
+                  Ctxt::_exts_ver[2] = { "pp", "xx" };
 string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"),
        prefix("Myfix"), gen_classes, extra_fields;
 bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false),
      incpath(true), nconst_router(false);
-unsigned glob_errors(0), glob_warnings(0), tabsize(3);
+unsigned glob_errors(0), glob_warnings(0), tabsize(3), ext_ver(0);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:U");
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:Ue");
 extern string spacer, shortName;
 
 //-----------------------------------------------------------------------------------------
@@ -173,6 +174,7 @@ int main(int argc, char **argv)
 		{ "nowarn",		   0,	0,	'W' },
 		{ "odir",			1,	0,	'o' },
 		{ "dump",			0,	0,	'd' },
+		{ "extension",		0,	0,	'e' },
 		{ "ignore",			0,	0,	'i' },
 		{ "nocheck",		0,	0,	'C' },
 		{ "noconst",		0,	0,	'U' },
@@ -242,6 +244,7 @@ int main(int argc, char **argv)
 		case ':': case '?': return 1;
 		case 'o': CheckAddTrailingSlash(odir = optarg); break;
 		case 'd': dump = true; break;
+		case 'e': ext_ver = 1; break;
 		case 'i': error_ignore = true; break;
 		case 'P': incpath = false; break;
 		case 'k': keep_failed = true; break;
@@ -358,7 +361,7 @@ int main(int argc, char **argv)
 		return 1;
 	for (unsigned ii(0); ii < Ctxt::count; ++ii)
 	{
-		ctxt._out[ii].first.second = prefix + ctxt._exts[ii];
+		ctxt._out[ii].first.second = prefix + ctxt._exts[ii] + ctxt._exts_ver[ext_ver];
 		ctxt._out[ii].first.first = ctxt._out[ii].first.second + ".p2";
 		remove(ctxt._out[ii].first.first.c_str());
 		string target;

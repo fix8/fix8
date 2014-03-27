@@ -185,11 +185,14 @@ Please refer to the following page:
 
 ## Getting help or reporting problems
 
-- Please review the topics on the [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support) and
-the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer). If you cannot find any help there ask the forum for advice.
+- Review the topics on the [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support) and
+the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer).
+If you cannot find any help there **create a new topic and ask the support group for advice.**
 
-- If you believe you have found a problem that needs fixing, please go to the [Jira Issues page](https://fix8engine.atlassian.net/),
-register and create an issue. Provide as much detail as possible.  If you have already implemented a fix, and wish to make a pull
+- Please refrain from emailing us directly. **Any support question sent directly to us will be redirected to the support group.**
+
+- If you believe you have found a problem that needs fixing, **go to the [Jira Issues page](https://fix8engine.atlassian.net/),
+register and create an issue.** Provide as much detail as possible.  If you have already implemented a fix, and wish to make a pull
 request on Github please create an issue in Jira first. This will help us track the problem and ensure that the solution is properly tested.
 
 ## License

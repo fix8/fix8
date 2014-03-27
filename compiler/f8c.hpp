@@ -48,7 +48,7 @@ struct Ctxt
 		classes_hpp, router_hpp, session_hpp, count };
 	typedef std::pair<std::pair<std::string, std::string>, std::ostream *> Output;
 	Output _out[count];
-	static const std::string _exts[count];
+	static const std::string _exts[count], _exts_ver[2];
 	unsigned _version;
 	std::string _clname, _fixns, _systemns, _beginstr;
 };

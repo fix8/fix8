@@ -16,6 +16,7 @@ even the  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOS
 You should  have received a copy of the GNU Lesser General Public  License along with Fix8.
 If not, see <http://www.gnu.org/licenses/>.
 
+BECAUSE THE PROGRAM IS  LICENSED FREE OF  CHARGE, THERE IS NO  WARRANTY FOR THE PROGRAM, TO
 THE EXTENT  PERMITTED  BY  APPLICABLE  LAW.  EXCEPT WHEN  OTHERWISE  STATED IN  WRITING THE
 COPYRIGHT HOLDERS AND/OR OTHER PARTIES  PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY
 KIND,  EITHER EXPRESSED   OR   IMPLIED,  INCLUDING,  BUT   NOT  LIMITED   TO,  THE  IMPLIED
@@ -33,71 +34,74 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef FIX8_INCLUDES_HPP_
-#define FIX8_INCLUDES_HPP_
+#ifndef FIX8_MESSAGEBUS_HPP_
+#define FIX8_MESSAGEBUS_HPP_
 
-#include <fix8/f8dll.h>
-#include <fix8/f8config.h>
+//-------------------------------------------------------------------------------------------------
+namespace FIX8
+{
 
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
+//-------------------------------------------------------------------------------------------------
+namespace MBUS
+{
 
-#ifdef PROFILING_BUILD
-#include <sys/gmon.h>
-#endif
+//-------------------------------------------------------------------------------------------------
+/// Base class for our message
+class GenericMessage
+{
+public:
+	/*! Ctor. */
+	GenericMessage() {}
 
-#if (REGEX_SYSTEM == REGEX_REGEX_H)
-#include <regex.h>
-#elif (REGEX_SYSTEM == REGEX_POCO)
-#include <Poco/RegularExpression.h>
-#endif
+	/// Dtor.
+	virtual ~GenericMessage() {}
+};
 
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
-#include <pthread.h>
-#elif (THREAD_SYSTEM == THREAD_POCO)
-#include <Poco/Thread.h>
-#include <Poco/ThreadTarget.h>
-#include <Poco/Mutex.h>
-#include <fix8/ff/spin-lock.hpp>
-#elif (THREAD_SYSTEM == THREAD_TBB)
-#include <tbb/tbb_thread.h>
-#else
-# error Define what thread system to use
-#endif
+//-------------------------------------------------------------------------------------------------
+/// Base class for our subscriber
+class MessageBusSubscriber
+{
+public:
+	/*! Ctor. */
+	MessageBusSubscriber() {}
 
-#if (MALLOC_SYSTEM == MALLOC_TBB)
-#ifdef _MSC_VER
-#include "tbb/tbbmalloc_proxy.h"
-#endif
-#endif
+	/// Dtor.
+	virtual ~MessageBusSubscriber() {}
 
-#include <errno.h>
-#include <fix8/f8exception.hpp>
-#include <fix8/hypersleep.hpp>
-#include <fix8/mpmc.hpp>
-#include <fix8/f8types.hpp>
-#include <fix8/f8utils.hpp>
-#include <fix8/xml.hpp>
-#include <fix8/thread.hpp>
-#include <fix8/gzstream.hpp>
-#include <fix8/tickval.hpp>
-#include <fix8/logger.hpp>
-#include <fix8/traits.hpp>
-#include <fix8/timer.hpp>
-#include <fix8/field.hpp>
-#include <fix8/message.hpp>
-#include <fix8/session.hpp>
-#include <fix8/coroutine.hpp>
-#include <fix8/yield.hpp>
-#if F8MOCK_CONNECTION
-#include "mockConnection.hpp"
-#else
-#include <fix8/connection.hpp>
-#endif
-#include <fix8/messagebus.hpp>
-#include <fix8/configuration.hpp>
-#include <fix8/persist.hpp>
-#include <fix8/sessionwrapper.hpp>
+	/*! Callback method on receipt of message */
+	virtual bool receive_message(const GenericMessage *msg) { return false; }
+};
 
-#endif // _FIX8_INCLUDES_HPP_
+//-------------------------------------------------------------------------------------------------
+/// Encapsulates a message bus context
+class MessageBus
+{
+public:
+	/*! Ctor. */
+	MessageBus() {}
+
+	/// Dtor.
+	virtual ~MessageBus() {}
+
+	/*! Starts the messaging subsystem */
+	virtual bool start() { return true; }
+
+	/*! Stops the messaging subsystem */
+	virtual bool stop() { return true; }
+
+	/*! Publishes a message to all aubscribers for given topic*/
+	virtual bool publish(const f8String& topic, const GenericMessage *msg) { return false; }
+
+	/*! Creates a subscription for the given topic */
+	virtual bool subscribe(MessageBusSubscriber *subscriber, const f8String& topic) { return false; }
+
+	/*! Removes a subscription for a given subscriber */
+	virtual bool unsubscribe(MessageBusSubscriber *subscriber, const f8String& topic) { return false; }
+};
+
+//-------------------------------------------------------------------------------------------------
+
+} // MBUS
+} // FIX8
+
+#endif // _FIX8_MESSAGEBUS_HPP_

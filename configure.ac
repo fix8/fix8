@@ -135,6 +135,7 @@ case "$CXX" in
 		fi ;;
 	*clang*)
 		LIBS="$LIBS -lstdc++ -lm " ;;
+	*) ;;
 esac
 
 oktotogglevar=yes

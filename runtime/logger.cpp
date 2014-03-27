@@ -182,11 +182,11 @@ void Logger::flush()
 //-------------------------------------------------------------------------------------------------
 void Logger::purge_thread_codes()
 {
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 	f8_scoped_lock guard(_mutex);
 
 	for (ThreadCodes::iterator itr(_thread_codes.begin()); itr != _thread_codes.end();)
 	{
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
 #if defined _MSC_VER || defined __APPLE__
 		// If ESRCH then thread is definitely dead.  Otherwise, we're unsure.
 		if (pthread_kill(itr->first, 0) == ESRCH)
@@ -194,17 +194,15 @@ void Logger::purge_thread_codes()
 		// a little trick to see if a thread is still alive
 		clockid_t clock_id;
 		if (pthread_getcpuclockid(itr->first, &clock_id) == ESRCH)
+#endif
 		{
 			_rev_thread_codes.erase(itr->second);
 			_thread_codes.erase(itr++); // post inc, takes copy before incr;
 		}
 		else
 			++itr;
-#endif
-#elif (THREAD_SYSTEM == THREAD_POCO || THREAD_SYSTEM == THREAD_TBB)
-		++itr;
-#endif
 	}
+#endif
 }
 
 //-------------------------------------------------------------------------------------------------

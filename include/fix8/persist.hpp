@@ -76,6 +76,13 @@ public:
 	    \return true on success */
 	virtual bool put(const unsigned seqnum, const f8String& what) = 0;
 
+	/*! Persist a generic value. Depending on specialisation, provide
+		  direct access to the persister implementation
+	    \param key key to store
+	    \param what value string
+	    \return true on success */
+	virtual bool put(const f8String& key, const f8String& what) { return false; }
+
 	/*! Persist a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
@@ -87,6 +94,19 @@ public:
 	    \param to target message string
 	    \return true on success */
 	virtual bool get(const unsigned seqnum, f8String& to) const = 0;
+
+	/*! Retrieve a generic persisted value. Depending on specialisation, provide
+		  direct access to the persister implementation
+	    \param key key to retrieve
+	    \param to target value string
+	    \return true on success */
+	virtual bool get(const f8String& key, f8String& to) const { return false; }
+
+	/*! Delete a generic persisted value by specified key. Depending on specialisation, provide
+		  direct access to the persister implementation
+	    \param key key to delete
+	    \return true on success */
+	virtual bool del(const f8String& key) { return false; }
 
 	/*! Retrieve a range of persisted messages.
 	    \param from start at sequence number
@@ -503,6 +523,18 @@ public:
 	    \return the nearest sequence number or 0 if not found */
 	virtual unsigned find_nearest_seqnum (unsigned requested) const;
 
+	/*! Persist a generic value.
+	    \param key key to store
+	    \param what value string
+	    \return true on success */
+	virtual bool put(const f8String& key, const f8String& what);
+
+	/*! Retrieve a generic persisted value.
+	    \param key key to retrieve
+	    \param to target value string
+	    \return true on success */
+	virtual bool get(const f8String& key, f8String& to) const;
+
 	/*! Lookup the specified value by given key
 	    \param key key to find
 	    \param target location for result
@@ -641,6 +673,23 @@ public:
 	    \param last highest sequence
 	    \return the nearest sequence number or 0 if not found */
 	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
+
+	/*! Persist a generic value.
+	    \param key key to store
+	    \param what value string
+	    \return true on success */
+	virtual bool put(const f8String& key, const f8String& what);
+
+	/*! Retrieve a generic persisted value.
+	    \param key key to retrieve
+	    \param to target value string
+	    \return true on success */
+	virtual bool get(const f8String& key, f8String& to) const;
+
+	/*! Delete a generic persisted value by specified key.
+	    \param key key to delete
+	    \return true on success */
+	virtual bool del(const f8String& key);
 };
 
 #endif // HAVE_LIBHIREDIS

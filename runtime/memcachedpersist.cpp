@@ -162,6 +162,24 @@ bool MemcachedPersister::put(const unsigned seqnum, const f8String& what)
 }
 
 //-------------------------------------------------------------------------------------------------
+bool MemcachedPersister::put(const f8String& inkey, const f8String& what)
+{
+	if (!_cache)
+		return false;
+
+	const string key(_key_base + inkey);
+	if (!put_to_cache(key, what))
+	{
+		ostringstream eostr;
+		eostr << "Error: could not write record for key " << inkey << " for " << _key_base;
+		GlobalLogger::log(FILE_LINE, eostr.str());
+		return false;
+	}
+
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
 bool MemcachedPersister::get(unsigned& sender_seqnum, unsigned& target_seqnum) const
 {
 	if (!_cache)
@@ -191,6 +209,23 @@ bool MemcachedPersister::get(const unsigned seqnum, f8String& to) const
 	{
 		ostringstream eostr;
 		eostr << "Warning: could not get message record with seqnum " << seqnum << " for " << _key_base;
+		GlobalLogger::log(FILE_LINE, eostr.str());
+		return false;
+	}
+
+	return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool MemcachedPersister::get(const f8String& inkey, f8String& to) const
+{
+	if (!_cache)
+		return false;
+	const string key(_key_base + inkey);
+	if (!get_from_cache(key, to))
+	{
+		ostringstream eostr;
+		eostr << "Warning: could not get message record with key " << inkey << " for " << _key_base;
 		GlobalLogger::log(FILE_LINE, eostr.str());
 		return false;
 	}

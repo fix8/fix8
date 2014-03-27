@@ -777,8 +777,7 @@ class Message : public MessageBase
 protected:
 	MessageBase *_header, *_trailer;
 	unsigned _custom_seqnum;
-	bool _no_increment;
-	bool _end_of_batch;
+	bool _no_increment, _end_of_batch;
 
 public:
 	/*! Ctor.
@@ -926,6 +925,14 @@ public:
 	    \return value of _no_increment flag */
 	virtual bool get_no_increment() const { return _no_increment; }
 
+	/*! Get the end of batch flag
+	    \return true or false */
+	bool get_end_of_batch() const { return _end_of_batch; }
+
+	/*! Set the end of batch flag
+	    \param is_end_of_batch true or false */
+	void set_end_of_batch(bool is_end_of_batch) { _end_of_batch = is_end_of_batch; }
+
 	/*! Setup this message to allow it to be resused
 	  This feature is experimental; do not use with pipelined mode */
 	void setup_reuse()
@@ -955,9 +962,6 @@ public:
 	static void format_codec_timings(const f8String& md, std::ostream& ostr, codec_timings& tobj);
 	static void report_codec_timings(const f8String& tag);
 #endif
-
-	bool get_end_of_batch() const { return _end_of_batch; }
-	void set_end_of_batch(bool is_end_of_batch) { _end_of_batch = is_end_of_batch; }
 };
 
 //-------------------------------------------------------------------------------------------------

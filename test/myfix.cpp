@@ -67,11 +67,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 \n
   \b Notes \n
 \n
-  1. If you have configured with \c --enable-msgrecycle, the example will reuse allocated messages.\n
-  2. The client has a simple menu. Press ? to see options.\n
-  3. The server will wait for the client to logout before exiting.\n
-  4. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
-  5. The example uses the files \c FIX50SP2.xml and \c FIXT11.xml in ./schema\n
+  1. The client has a simple menu. Press ? to see options.\n
+  2. The server will wait for the client to logout before exiting.\n
+  3. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
+  4. The example uses the files \c FIX50SP2.xml and \c FIXT11.xml in ./schema\n
 \n
 */
 

@@ -352,6 +352,7 @@ void print_usage()
 	um.add('o', "odir <dir>", "output target directory (default ./)");
 	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
 	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
+	um.add('e', "extension", "Generate with .cxx/.hxx extensions (default .cpp/.hpp)");
 	um.add('f', "fields", "generate code for all defined fields even if they are not used in any message (default no)");
 	um.add('F', "xfields", "specify additional fields with associated messages (see documentation for details)");
 	um.add('h', "help", "help, this screen");
