@@ -32,7 +32,7 @@
 #include <fix8/f8config.h>
 #ifdef HAVE_ZLIB_H
 
-#include <gzstream.hpp>
+#include <fix8/gzstream.hpp>
 #include <iostream>
 #include <string.h>  // for memcpy
 

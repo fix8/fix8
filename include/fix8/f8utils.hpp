@@ -38,6 +38,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_UTILS_HPP_
 
 //-----------------------------------------------------------------------------------------
+#include <iostream>
+#include <string>
+
 #include <Poco/DateTime.h>
 #include <Poco/Net/SocketAddress.h>
 
@@ -817,7 +820,7 @@ inline double fast_atof (const char *p)
 
 
 //----------------------------------------------------------------------------------------
-/// Convert doublt to ascii
+/// Convert double to ascii
 /*! \param value the source value
     \param str the target string
     \param prec number of precision digits*/
