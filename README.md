@@ -106,8 +106,8 @@ and framework; and a set of complete client/server test applications.
 
 ## Documentation
 
-See our [Wiki](https://fix8engine.atlassian.net/wiki) for detailed help on using Fix8.
-For our complete API Documentation see [here](http://fix8.org/fix8/html/). All the source code is self-documenting using doxygen.
+See our [Wiki](https://fix8engine.atlassian.net/wiki) for detailed help on using Fix8. Access to this documentation is free but a
+login is required. For our complete API Documentation see [here](http://fix8.org/fix8/html/). All the source code is self-documenting using doxygen.
 
 ## External Dependencies (required)
 
@@ -148,7 +148,7 @@ If you wish to use BerkeleyDB for message persistence:
 
 - [Berkeley DB C++](http://www.oracle.com/technetwork/products/berkeleydb/downloads/index.html)
 
-## Building on Linux/UNIX/OSX
+## Building on Linux/UNIX
 
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
@@ -163,6 +163,22 @@ You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to b
 If you have built the test cases, you can also run them as follows:
 
 	% make check
+
+## Building on OSX
+
+You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
+
+	% tar xvzf 1.1.0.tar.gz
+	% cd fix8-1.1.0
+	% export LIBTOOLIZE=`which glibtoolize`
+	% ./bootstrap
+	% ./configure
+	% make
+	% make install
+
+If you are using clang, you may also need the following switch with configure:
+
+	% ./configure --enable-toggleassignmentvars=no
 
 ## Building on Windows
 
