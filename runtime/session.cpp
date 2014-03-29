@@ -1032,8 +1032,7 @@ void Session::recover_seqnums()
 }
 
 //-------------------------------------------------------------------------------------------------
-#if !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
-#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#if (THREAD_SYSTEM == THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
 f8String Session::get_thread_policy_string(_dthreadcore::thread_id_t id)
 {
    int policy;
@@ -1093,7 +1092,18 @@ void Session::set_affinity(int core_id)
 		ostr << "Set thread affinity to " << core_id << " core for thread " << pthread_self();
 	log(ostr.str());
 }
-#endif
+#else
+//-------------------------------------------------------------------------------------------------
+void Session::set_scheduler(int priority)
+{
+	log("set_scheduler: not implemented");
+}
+
+//-------------------------------------------------------------------------------------------------
+void Session::set_affinity(int core_id)
+{
+	log("set_affinity: not implemented");
+}
 #endif
 
 //-------------------------------------------------------------------------------------------------

@@ -111,8 +111,9 @@ bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), noc
      incpath(true), nconst_router(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3), ext_ver(0);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:Ue");
-extern string spacer, shortName;
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:");
+extern string spacer, shortName, precompHdr;
+string precompHdr("stdafx.h");
 
 //-----------------------------------------------------------------------------------------
 // static data
@@ -185,6 +186,7 @@ int main(int argc, char **argv)
 		{ "retain",			0,	0,	'r' },
 		{ "binary",			0,	0,	'b' },
 		{ "classes",		1,	0,	'c' },
+		{ "pch",		      1,	0,	'H' },
 		{ "second",			0,	0,	's' },
 		{ "prefix",			1,	0,	'p' },
 		{ "namespace",		1,	0,	'n' },
@@ -252,6 +254,7 @@ int main(int argc, char **argv)
 		case 's': second_only = true; break;
 		case 't': tabsize = get_value<unsigned>(optarg); break;
 		case 'p': prefix = optarg; break;
+		case 'H': precompHdr = optarg; break;
 		case 'b': binary_report(); return 0;
 		case 'x': fixt = optarg; break;
 		case 'n': ctxt._fixns = optarg; break;
