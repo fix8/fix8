@@ -179,6 +179,7 @@ typedef GeneratedTable<unsigned, BaseEntry> FieldTable;
 /// Static metadata context class - one per FIX xml schema
 struct F8MetaCntx
 {
+	/// 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	const unsigned _version;
 
 	/// Framework generated lookup table to generate Fix messages
@@ -220,7 +221,7 @@ struct F8MetaCntx
 	/// Dtor.
 	~F8MetaCntx() { delete[] _flu; _flu = 0; }
 
-	/*! Get the field BaseEntry object for this filed number. Will use fast field index lookup.
+	/*! Get the field BaseEntry object for this field number. Will use fast field index lookup.
 	  \param fnum field to get
 	  \return ptr to BaseEntry or 0 if not found */
 	const BaseEntry *find_be(const unsigned short fnum) const

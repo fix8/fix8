@@ -429,9 +429,12 @@ void generate_preamble(ostream& to, const string& fname, bool donotedit)
 	to << _csMap.find_ref(cs_divider) << endl;
 	if (precompHdr != "none")
 	{
-		to << "#if defined _MSC_VER" << endl;
-		to << "#include " << '"' << precompHdr << '"' << endl;
-		to << "#endif" << endl;
+		to << "#if defined _MSC_VER" << endl << "#include ";
+		if (precompHdr[0] == '<')
+			to << precompHdr;
+		else
+			to << '"' << precompHdr << '"';
+		to << endl << "#endif" << endl;
 	}
 	to << "#include " << (incpath ? "<fix8/" : "<") << "f8config.h" << '>' << endl;
 	if (!nocheck)
