@@ -351,7 +351,7 @@ void print_usage()
 	um.setdesc("f8c -- compile FIX xml schema");
 	um.add('o', "odir <dir>", "output target directory (default ./)");
 	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
-	um.add('H', "pch <filename|none>", "use alternate precompiled header name for Windows (default stdafx.h); if \"none\" do not include at all");
+	um.add('H', "pch <filename>", "use alternate precompiled header name for Windows (default none)");
 	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
 	um.add('e', "extension", "Generate with .cxx/.hxx extensions (default .cpp/.hpp)");
 	um.add('f', "fields", "generate code for all defined fields even if they are not used in any message (default no)");
@@ -427,7 +427,7 @@ void generate_preamble(ostream& to, const string& fname, bool donotedit)
 	}
 	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
 	to << _csMap.find_ref(cs_divider) << endl;
-	if (precompHdr != "none")
+	if (!precompHdr.empty())
 	{
 		to << "#if defined _MSC_VER" << endl << "#include ";
 		if (precompHdr[0] == '<')

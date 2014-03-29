@@ -113,7 +113,7 @@ unsigned glob_errors(0), glob_warnings(0), tabsize(3), ext_ver(0);
 extern unsigned glob_errors;
 extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:");
 extern string spacer, shortName, precompHdr;
-string precompHdr("stdafx.h");
+string precompHdr;
 
 //-----------------------------------------------------------------------------------------
 // static data
