@@ -40,9 +40,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 f8c -- compile FIX xml schema\n
 \n
 <tt>
-Usage: f8c [-CFINPRUVWbcdefhiknoprstvx] \<input xml schema\>\n
+Usage: f8c [-CFHINPRUVWbcdefhiknoprstvx] \<input xml schema\>\n
    -C,--nocheck            do not embed version checking in generated code (default false)\n
    -F,--xfields            specify additional fields with associated messages (see documentation for details)\n
+   -H,--pch <filename>     use specified precompiled header name for Windows (default none)\n
    -I,--info               print package info, exit\n
    -N,--nounique           do not enforce unique field parsing (default false)\n
    -P,--incpath            prefix system include path with "fix8" in generated compilation units (default yes)\n
@@ -105,14 +106,14 @@ using namespace FIX8;
 const string Ctxt::_exts[count] = { "_types.c", "_types.h", "_traits.c", "_classes.c",
                                     "_classes.h", "_router.h", "_session.h" },
                   Ctxt::_exts_ver[2] = { "pp", "xx" };
-string precompFile, spacer, inputFile, shortName, fixt, shortNameFixt, odir("./"),
+string precompFile, spacer, inputFile, precompHdr, shortName, fixt, shortNameFixt, odir("./"),
        prefix("Myfix"), gen_classes, extra_fields;
 bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false),
      incpath(true), nconst_router(false);
 unsigned glob_errors(0), glob_warnings(0), tabsize(3), ext_ver(0);
 extern unsigned glob_errors;
-extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:Ue");
-extern string spacer, shortName;
+extern const string GETARGLIST("hvVo:p:dikn:rst:x:NRc:fbCIWPF:UeH:");
+extern string spacer, shortName, precompHdr;
 
 //-----------------------------------------------------------------------------------------
 // static data
@@ -185,6 +186,7 @@ int main(int argc, char **argv)
 		{ "retain",			0,	0,	'r' },
 		{ "binary",			0,	0,	'b' },
 		{ "classes",		1,	0,	'c' },
+		{ "pch",		      1,	0,	'H' },
 		{ "second",			0,	0,	's' },
 		{ "prefix",			1,	0,	'p' },
 		{ "namespace",		1,	0,	'n' },
@@ -252,6 +254,7 @@ int main(int argc, char **argv)
 		case 's': second_only = true; break;
 		case 't': tabsize = get_value<unsigned>(optarg); break;
 		case 'p': prefix = optarg; break;
+		case 'H': precompHdr = optarg; break;
 		case 'b': binary_report(); return 0;
 		case 'x': fixt = optarg; break;
 		case 'n': ctxt._fixns = optarg; break;

@@ -298,7 +298,7 @@ public:
 	size_t get_server_cnt() const { return _failover_cnt; }
 
 	/*! Get the Server object for a given server index
-	    \param index of server desired, if not given return current
+	    \param idx of server desired, if not given return current
 	    \return ptr to server, 0 if not found */
 	const Server *get_server(unsigned idx=no_servers_configured) const
 	{

@@ -647,6 +647,7 @@ public:
 /*! Format ASCII decimal value
   \param data source value
   \param to target location for string
+  \param width len of string
   \return number bytes decoded */
 inline void format0(int data, char *to, int width)
 {

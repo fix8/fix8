@@ -160,9 +160,15 @@ struct MessageSpec
 	std::string _name, _description, _comment;
 	bool _is_admin;
 
+	/// Ctor
 	MessageSpec(const std::string& name, bool admin=false) : _group_refcnt(), _hash(), _name(name), _is_admin(admin) {}
+	/// Dtor
 	virtual ~MessageSpec() {}
 
+	/*! Inserter friend.
+	    \param os stream to send to
+	    \param what MessageSpec
+	    \return stream */
 	friend std::ostream& operator<<(std::ostream& os, const MessageSpec& what);
 };
 

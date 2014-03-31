@@ -369,6 +369,7 @@ public:
 	/*! Ctor. Pointer to object, functor version.
 	  \param what instance of class with entry point
 	  \param method pointer to entry point method
+	  \param cancellation_token_method pointer to cancellation_token
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
 	dthread(T what, int (T::*method)()=&T::operator(), dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
@@ -377,6 +378,7 @@ public:
 	/*! Ctor. Reference to object, functor version.
 	  \param what reference wrapper of class with entry point
 	  \param method reference to entry point method
+	  \param cancellation_token_method pointer to cancellation_token
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
 	dthread(reference_wrapper<T> what, int (T::*method)()=&T::operator(), dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
@@ -443,6 +445,7 @@ public:
 	/*! Ctor.
 	  \param func pointer to thread function entry point
 	  \param args pointer to function arguments
+	  \param cancellation_token pointer to cancellation_token
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
 	dthread(int (*func)(void *, dthread_cancellation_token&), void *args, dthread_cancellation_token& cancellation_token, const bool detach=false, const size_t stacksize=0)

@@ -154,6 +154,7 @@ class Configuration
 	/*! Find a session time field by tag from an xml entity.
 	  \param from the xml entity to search
 	  \param tag the tag to find
+	  \param timeonly if true, only use the time part
 	  \return Tickval::ticks time or errorticks if not found */
 	Tickval::ticks get_time_field(const XmlElement *from, const std::string& tag, bool timeonly=false) const
 	{
@@ -275,18 +276,21 @@ public:
 
 	/*! Extract the tcp recv buffer size
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return the recv buffer size count or 0 if the default should be used */
 	unsigned get_tcp_recvbuf_sz(const XmlElement *from, const unsigned def=0) const
 		{ return find_or_default(from, "tcp_recv_buffer", def); }
 
 	/*! Extract the tcp send buffer size
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return the send buffer size count or 0 if the default should be used */
 	unsigned get_tcp_sendbuf_sz(const XmlElement *from, const unsigned def=0) const
 		{ return find_or_default(from, "tcp_send_buffer", def); }
 
 	/*! Extract the FIX version from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return the FIX version or 0 if not found */
 	unsigned get_version(const XmlElement *from, const unsigned def=0) const
 		{ return find_or_default(from, "fix_version", def); }
@@ -300,48 +304,56 @@ public:
 
 	/*! Extract the heartbeat interval from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return the heartbeat interval version or 0 if not found */
 	unsigned get_heartbeat_interval(const XmlElement *from, const unsigned def=defaults::hb_interval) const
 		{ return find_or_default(from, "heartbeat_interval", def); }
 
 	/*! Extract the tcp nodelay flag.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return false if nodelay flag was passed and was false */
 	bool get_tcp_nodelay(const XmlElement *from, const bool def=true) const
 		{ return find_or_default(from, "tcp_nodelay", def); }
 
 	/*! Extract the silent disconnect flag.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if silent_disconnect flag was passed and was true */
 	bool get_silent_disconnect(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "silent_disconnect", def); }
 
 	/*! Extract the ignore_logon_sequence_check flag from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if ignore_logon_sequence_check flag was passed and was true */
 	bool get_ignore_logon_sequence_check_flag(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "ignore_logon_sequence_check", def); }
 
 	/*! Extract the get_no_chksum_flag flag from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if get_no_chksum_flag flag was passed and was true */
 	bool get_no_chksum_flag(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "no_chksum", def); }
 
 	/*! Extract the get_permissive_mode_flag flag from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if get_permissive_mode_flag flag was passed and was true */
 	bool get_permissive_mode_flag(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "permissive_mode", def); }
 
 	/*! Extract the reset_sequence_number flag from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if reset_sequence_number flag was passed and was true */
 	bool get_reset_sequence_number_flag(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "reset_sequence_numbers", def); }
 
 	/*! Extract the always_seqnum_assign flag from a session entity.
 	  \param from xml entity to search
+	  \param def default value if not found
 	  \return true if always_seqnum_assign flag was passed and was true */
 	bool get_always_seqnum_assign(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "always_seqnum_assign", def); }

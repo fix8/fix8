@@ -61,7 +61,7 @@ using namespace FIX8;
 //-----------------------------------------------------------------------------------------
 extern string shortName, odir, prefix;
 extern bool verbose, nocheck, nowarn, incpath;
-extern string spacer;
+extern string spacer, precompHdr;
 extern const string GETARGLIST;
 extern const CSMap _csMap;
 extern unsigned glob_errors, glob_warnings;
@@ -351,6 +351,7 @@ void print_usage()
 	um.setdesc("f8c -- compile FIX xml schema");
 	um.add('o', "odir <dir>", "output target directory (default ./)");
 	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
+	um.add('H', "pch <filename>", "use specified precompiled header name for Windows (default none)");
 	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
 	um.add('e', "extension", "Generate with .cxx/.hxx extensions (default .cpp/.hpp)");
 	um.add('f', "fields", "generate code for all defined fields even if they are not used in any message (default no)");
@@ -426,6 +427,15 @@ void generate_preamble(ostream& to, const string& fname, bool donotedit)
 	}
 	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
 	to << _csMap.find_ref(cs_divider) << endl;
+	if (!precompHdr.empty())
+	{
+		to << "#if defined _MSC_VER" << endl << "#include ";
+		if (precompHdr[0] == '<')
+			to << precompHdr;
+		else
+			to << '"' << precompHdr << '"';
+		to << endl << "#endif" << endl;
+	}
 	to << "#include " << (incpath ? "<fix8/" : "<") << "f8config.h" << '>' << endl;
 	if (!nocheck)
 	{
