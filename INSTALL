@@ -348,6 +348,10 @@ Optional Features:
                           (default=yes if available)
   --enable-f8test         permit f8test client/server to be built
                           (default=yes)
+  --enable-libmemcached   enable memcached C API support via libmemcached
+                          (default=no)
+  --enable-libhiredis     enable redis C API support via libhiredis
+                          (default=no)
   --enable-bdb            enable support for Oracle Berkeley DB persistence
                           (default=no)
   --enable-xmlstrictbool  enable xml strict bool behaviour (default=no)
@@ -358,6 +362,9 @@ Optional Features:
   --enable-codectiming    enable CODEC timing testing code (default=no)
   --enable-debug          enable DEBUG support (default=no)
   --enable-ssl            enable SSL support (through OpenSSL, default=no)
+  --enable-experimental-buffered-socket-read
+                          enable experimental buffered socket read
+                          (default=no)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -382,6 +389,10 @@ Optional Packages:
   --with-sleep=VAL        If using fastflow, sleep for VAL ns instead of yield
                           when waiting for input(default=no)
   --with-poco=DIR         location of Poco
+  --with-regex=VAL        select which regex system will be used (regex|poco,
+                          default=poco)
+  --with-thread=VAL       select which thread system will be used
+                          (pthread|poco|tbb, default=pthread)
   --with-bdb=DIR          Berkeley DB installation directory
 
 Some influential environment variables:

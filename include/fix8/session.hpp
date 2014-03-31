@@ -489,11 +489,11 @@ protected:
 		return bme->_create._do();
 	}
 
+#if (THREAD_SYSTEM == THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
 	/*! Get a string representing the current thread policy for the given thread
 	  e.g. SCHED_OTHER, SCHED_RR, SCHED_FIFO
 	    \param id thread id
 	    \return string */
-#if (THREAD_SYSTEM == THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
 	static f8String get_thread_policy_string(_dthreadcore::thread_id_t id);
 #endif
 

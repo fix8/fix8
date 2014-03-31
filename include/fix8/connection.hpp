@@ -549,6 +549,7 @@ public:
 
 	/*! Write a message to the underlying socket.
 	    \param from Message to write
+	    \param destroy if true delete after send
 	    \return true on success */
 	virtual bool write(Message *from, bool destroy=true) { return _writer.write(from, destroy); }
 
@@ -558,7 +559,8 @@ public:
 	virtual bool write(Message& from) { return _writer.write(from); }
 
 	/*! Write messages to the underlying socket as a single batch.
-	    \param from Message to write
+	    \param msgs vector of Message to write
+	    \param destroy if true delete after send
 	    \return true on success */
 	size_t write_batch(const std::vector<Message *>& msgs, bool destroy) { return _writer.write_batch(msgs, destroy); }
 

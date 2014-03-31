@@ -84,7 +84,7 @@ std::string StrToLower(const std::string& src);
 /*! Decode a weekday name into numeric dow (0=SUN), case insensitive
   only check at most the first 2 unique characters (will ignore any characters after that);
   alternatively, accept numeric dow 0-6;
-  \param src source dow string
+  \param from source dow string
   \return idx dow or -1 if not found */
 int decode_dow (const std::string& from);
 

@@ -351,7 +351,7 @@ void print_usage()
 	um.setdesc("f8c -- compile FIX xml schema");
 	um.add('o', "odir <dir>", "output target directory (default ./)");
 	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
-	um.add('H', "pch <filename>", "use alternate precompiled header name for Windows (default none)");
+	um.add('H', "pch <filename>", "use specified precompiled header name for Windows (default none)");
 	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
 	um.add('e', "extension", "Generate with .cxx/.hxx extensions (default .cpp/.hpp)");
 	um.add('f', "fields", "generate code for all defined fields even if they are not used in any message (default no)");

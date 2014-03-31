@@ -145,8 +145,8 @@ If you wish to use tcmalloc (recommended):
 
 - [gperftools](https://code.google.com/p/gperftools/downloads/list)
 
-Building on Linux/UNIX/OSX
-==========================
+Building on Linux/UNIX
+======================
 
 The build system is based on automake/autoconf/libtool.
 You **must** have libtool (http://www.gnu.org/software/libtool/) installed to build.
@@ -161,6 +161,23 @@ You **must** have libtool (http://www.gnu.org/software/libtool/) installed to bu
 If you have built the test cases, you can also run them as follows:
 
 	% make check
+
+Building on OSX
+===============
+
+You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
+
+	% tar xvzf 1.1.0.tar.gz
+	% cd fix8-1.1.0
+	% export LIBTOOLIZE=`which glibtoolize`
+	% ./bootstrap
+	% ./configure
+	% make
+	% make install
+
+If you are using clang, you may also need the following switch with configure:
+
+	% ./configure --enable-toggleassignmentvars=no
 
 Building on Windows
 ===================
