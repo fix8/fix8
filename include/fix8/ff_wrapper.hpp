@@ -189,6 +189,7 @@ public:
 
 //----------------------------------------------------------------------------------------
 /// generic pthread_mutex wrapper
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 class f8_mutex
 {
 	pthread_mutex_t _pmutex;
@@ -206,7 +207,22 @@ public:
 	bool try_lock() { return pthread_mutex_trylock(&_pmutex) == 0; }
 	void unlock() { pthread_mutex_unlock(&_pmutex); }
 };
+#elif (THREAD_SYSTEM == THREAD_POCO)
+class f8_mutex
+{
+	Poco::Mutex _mutex;
 
+public:
+	f8_mutex(): _mutex() {}
+	void lock() { _mutex.lock(); }
+	bool try_lock() { return _mutex.tryLock(); }
+	void unlock() { _mutex.unlock(); }
+};
+#elif (THREAD_SYSTEM == THREAD_TBB)
+	#if (MPMC_SYSTEM != MPMC_TBB)
+		#error TBB shall be used for locks/queues in case of TBB_THREAD
+	#endif
+#endif
 //----------------------------------------------------------------------------------------
 /// generic pthread_spin_lock wrapper
 
@@ -253,6 +269,7 @@ public:
 	}
 };
 #else
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 class f8_spin_lock
 {
 	pthread_spinlock_t _psl;
@@ -270,6 +287,26 @@ public:
 	bool try_lock() { return pthread_spin_trylock(&_psl) == 0; }
 	void unlock() { pthread_spin_unlock(&_psl); }
 };
+#elif (THREAD_SYSTEM == THREAD_POCO)
+class f8_spin_lock
+{
+	ff::lock_t _lk;
+
+public:
+	f8_spin_lock()
+	{
+		ff::init_unlocked(_lk);
+	}
+
+	void lock() { ff::spin_lock(_lk); }
+	bool try_lock() { throw f8Exception("try_lock is not implemented in ff"); }
+	void unlock() { ff::spin_unlock(_lk); }
+};
+#elif (THREAD_SYSTEM == THREAD_TBB)
+	#if (MPMC_SYSTEM != MPMC_TBB)
+		#error TBB shall be used for locks/queues in case of TBB_THREAD
+	#endif
+#endif
 #endif //__APPLE__
 
 //----------------------------------------------------------------------------------------

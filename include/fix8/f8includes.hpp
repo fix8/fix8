@@ -53,6 +53,25 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Poco/RegularExpression.h>
 #endif
 
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
+#include <pthread.h>
+#elif (THREAD_SYSTEM == THREAD_POCO)
+#include <Poco/Thread.h>
+#include <Poco/ThreadTarget.h>
+#include <Poco/Mutex.h>
+#include <fix8/ff/spin-lock.hpp>
+#elif (THREAD_SYSTEM == THREAD_TBB)
+#include <tbb/tbb_thread.h>
+#else
+# error Define what thread system to use
+#endif
+
+#if (MALLOC_SYSTEM == MALLOC_TBB)
+#ifdef _MSC_VER
+#include "tbb/tbbmalloc_proxy.h"
+#endif
+#endif
+
 #include <errno.h>
 #include <fix8/f8exception.hpp>
 #include <fix8/hypersleep.hpp>
@@ -71,7 +90,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/session.hpp>
 #include <fix8/coroutine.hpp>
 #include <fix8/yield.hpp>
+#if F8MOCK_CONNECTION
+#include "mockConnection.hpp"
+#else
 #include <fix8/connection.hpp>
+#endif
+#include <fix8/messagebus.hpp>
 #include <fix8/configuration.hpp>
 #include <fix8/persist.hpp>
 #include <fix8/sessionwrapper.hpp>

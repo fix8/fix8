@@ -248,6 +248,7 @@ class ReliableClientSession : public ClientSession<T>
 	f8_atomic<bool> _giving_up;
 	std::vector<Server> _servers;
 	const size_t _failover_cnt;
+	dthread_cancellation_token _cancellation_token;
 
 public:
 	/// Ctor. Prepares session for connection as an initiator.
@@ -267,12 +268,16 @@ public:
 	bool has_given_up() const { return _giving_up; }
 
 	/// Dtor.
-	virtual ~ReliableClientSession () {}
+	virtual ~ReliableClientSession ()
+	{
+		_thread.request_stop();
+		_thread.join();
+	}
 
 	/*! Start the session - initiate the connection, logon and start heartbeating.
 	  \param wait if true wait till session finishes before returning
-	  \param send_seqnum next send seqnum (not used here)
-	  \param recv_seqnum next recv seqnum (not used here)
+	  \param send_seqnum next send seqnum
+	  \param recv_seqnum next recv seqnum
 	  \param davi default appl version id (FIXT) */
 	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0, const f8String davi=f8String())
 	{
@@ -293,7 +298,7 @@ public:
 	size_t get_server_cnt() const { return _failover_cnt; }
 
 	/*! Get the Server object for a given server index
-	    \param index of server desired, if not given return current
+	    \param idx of server desired, if not given return current
 	    \return ptr to server, 0 if not found */
 	const Server *get_server(unsigned idx=no_servers_configured) const
 	{
@@ -305,11 +310,11 @@ public:
 	    \return 0 on success */
 	int operator()()
 	{
-		while(true)
+		while(!_cancellation_token)
 		{
 			++_attempts;
 
-			bool excepted(false);
+			bool excepted(_failover_cnt == 0);
 			try
 			{
 				if (_failover_cnt)
@@ -320,6 +325,7 @@ public:
 					this->_session->log(ostr.str());
 					this->_loginParameters._reset_sequence_numbers = _servers[_current]._reset_sequence_numbers; // permit override
 				}
+
 				//std::cout << "operator()():try" << std::endl;
 #ifdef HAVE_OPENSSL
 				bool secured(this->_ssl.is_secure());
@@ -416,14 +422,14 @@ public:
 			this->_cc = 0;
 			delete this->_sock;
 
-			if (!excepted)
+			if (!excepted || (_failover_cnt == 0 && _attempts > this->_loginParameters._login_retries))
 				break;
 
 			if (_failover_cnt)
 			{
 				++_servers[_current]._retries;
 
-				for (;;) // FIXME possible endless loop condition
+				for (; !_cancellation_token; ) // FIXME possible endless loop condition
 				{
 					if (_servers[_current]._max_retries && _servers[_current]._retries < _servers[_current]._max_retries)
 						break;
@@ -439,6 +445,9 @@ public:
 
 		return 0;
 	}
+
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
+
 
 	/// Convenient scoped pointer for your session
 	typedef scoped_ptr<ReliableClientSession<T> > ReliableClient_ptr;

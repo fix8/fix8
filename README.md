@@ -106,7 +106,8 @@ and framework; and a set of complete client/server test applications.
 
 ## Documentation
 
-Documentation is available at [API Documentation](http://fix8.org/fix8/html/). All the source code is self-documenting using doxygen.
+See our [Wiki](https://fix8engine.atlassian.net/wiki) for detailed help on using Fix8. Access to this documentation is free but a
+login is required. For our complete API Documentation see [here](http://fix8.org/fix8/html/). All the source code is self-documenting using doxygen.
 
 ## External Dependencies (required)
 
@@ -135,17 +136,25 @@ If you wish to build the html documentation, you will need:
 
 - [Doxygen](http://www.doxygen.org)
 
+If you wish to use Redis for message persistence:
+
+- [hiredis](https://github.com/redis/hiredis)
+
+If you wish to use libmemcached for message persistence:
+
+- [libmemcached](http://libmemcached.org/libMemcached.html)
+
 If you wish to use BerkeleyDB for message persistence:
 
 - [Berkeley DB C++](http://www.oracle.com/technetwork/products/berkeleydb/downloads/index.html)
 
-## Building on Linux/UNIX/OSX
+## Building on Linux/UNIX
 
 The build system is based on automake/autoconf/libtool.
 You **must** have [libtool](http://www.gnu.org/software/libtool/) installed to build.
 
-	% tar xvzf 1.0.0.tar.gz
-	% cd fix8-1.0.0
+	% tar xvzf 1.1.0.tar.gz
+	% cd fix8-1.1.0
 	% ./bootstrap
 	% ./configure
 	% make
@@ -155,9 +164,25 @@ If you have built the test cases, you can also run them as follows:
 
 	% make check
 
+## Building on OSX
+
+You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoconf-automake-libtool-on-mac-osx-mountain-lion/) installed to build.
+
+	% tar xvzf 1.1.0.tar.gz
+	% cd fix8-1.1.0
+	% export LIBTOOLIZE=`which glibtoolize`
+	% ./bootstrap
+	% ./configure
+	% make
+	% make install
+
+If you are using clang, you may also need the following switch with configure:
+
+	% ./configure --enable-toggleassignmentvars=no
+
 ## Building on Windows
 
-Please see [this document](https://fix8engine.atlassian.net/wiki/display/FX/Building) for detailed instructions for building on Windows.
+Please see [this document](https://fix8engine.atlassian.net/wiki/display/FX/Building+and+running+on+Windows) for detailed instructions for building on Windows.
 
 ## Support
 
@@ -169,13 +194,21 @@ Please refer to the following pages for help:
 - [Jira Issues page](https://fix8engine.atlassian.net/)
 - [Fix8 News](http://blog.fix8.org/)
 
+## Downloads
+
+Please refer to the following page:
+- [Downloads](http://fix8.org/downloads.html)
+
 ## Getting help or reporting problems
 
-- Please review the topics on the [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support) and
-the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer). If you cannot find any help there ask the forum for advice.
+- Review the topics on the [Fix8 support group](https://groups.google.com/forum/#!forum/fix8-support) and
+the [Fix8 developer group](https://groups.google.com/forum/#!forum/fix8-developer).
+If you cannot find any help there **create a new topic and ask the support group for advice.**
 
-- If you believe you have found a problem that needs fixing, please go to the [Jira Issues page](https://fix8engine.atlassian.net/),
-register and create an issue. Provide as much detail as possible.  If you have already implemented a fix, and wish to make a pull
+- Please refrain from emailing us directly. **Any support question sent directly to us will be redirected to the support group.**
+
+- If you believe you have found a problem that needs fixing, **go to the [Jira Issues page](https://fix8engine.atlassian.net/),
+register and create an issue.** Provide as much detail as possible.  If you have already implemented a fix, and wish to make a pull
 request on Github please create an issue in Jira first. This will help us track the problem and ensure that the solution is properly tested.
 
 ## License

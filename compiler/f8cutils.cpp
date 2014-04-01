@@ -51,7 +51,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 // f8 headers
 #include <fix8/f8includes.hpp>
-#include <usage.hpp>
+#include <fix8/usage.hpp>
 #include <f8c.hpp>
 
 //-----------------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ using namespace FIX8;
 //-----------------------------------------------------------------------------------------
 extern string shortName, odir, prefix;
 extern bool verbose, nocheck, nowarn, incpath;
-extern string spacer;
+extern string spacer, precompHdr;
 extern const string GETARGLIST;
 extern const CSMap _csMap;
 extern unsigned glob_errors, glob_warnings;
@@ -351,7 +351,9 @@ void print_usage()
 	um.setdesc("f8c -- compile FIX xml schema");
 	um.add('o', "odir <dir>", "output target directory (default ./)");
 	um.add('p', "prefix <prefix>", "output filename prefix (default Myfix)");
+	um.add('H', "pch <filename>", "use specified precompiled header name for Windows (default none)");
 	um.add('d', "dump", "dump 1st pass parsed source xml file, exit");
+	um.add('e', "extension", "Generate with .cxx/.hxx extensions (default .cpp/.hpp)");
 	um.add('f', "fields", "generate code for all defined fields even if they are not used in any message (default no)");
 	um.add('F', "xfields", "specify additional fields with associated messages (see documentation for details)");
 	um.add('h', "help", "help, this screen");
@@ -425,6 +427,15 @@ void generate_preamble(ostream& to, const string& fname, bool donotedit)
 	}
 	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
 	to << _csMap.find_ref(cs_divider) << endl;
+	if (!precompHdr.empty())
+	{
+		to << "#if defined _MSC_VER" << endl << "#include ";
+		if (precompHdr[0] == '<')
+			to << precompHdr;
+		else
+			to << '"' << precompHdr << '"';
+		to << endl << "#endif" << endl;
+	}
 	to << "#include " << (incpath ? "<fix8/" : "<") << "f8config.h" << '>' << endl;
 	if (!nocheck)
 	{
@@ -442,8 +453,7 @@ void generate_includes(ostream& to)
 {
 	static const string incfiles[] =
 	{
-		"f8exception.hpp", "hypersleep.hpp", "mpmc.hpp", "f8utils.hpp", "f8types.hpp",
-		"traits.hpp", "tickval.hpp", "field.hpp", "message.hpp"
+        "f8includes.hpp"
 	};
 
 	to << "// f8 includes" << endl;

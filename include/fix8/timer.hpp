@@ -99,6 +99,7 @@ class Timer
    unsigned _granularity;
 
    std::priority_queue<TimerEvent<T> > _event_queue;
+	dthread_cancellation_token _cancellation_token;
 
 public:
 	/*! Ctor.
@@ -107,7 +108,11 @@ public:
    explicit Timer(T& monitor, int granularity=10) : _monitor(monitor), _thread(ref(*this)), _granularity(granularity) {}
 
 	/// Dtor.
-   virtual ~Timer() {}
+   virtual ~Timer()
+	{
+		_thread.request_stop();
+		_thread.join();
+	}
 
 	/*! Schedule a timer event. Callback method in event called on timer expiry.
 	  \param what TimeEvent to schedule
@@ -119,10 +124,6 @@ public:
 	  \return number of timer events that were waiting on the queue */
    size_t clear();
 
-	/*! Kill timer thread.
-	  \param sig signal to kill with */
-   void kill(const int sig=SIGKILL) { _thread.kill(sig); }
-
 	/// Join timer thread. Wait till exits.
    void join() { _thread.join(); }
 
@@ -132,6 +133,9 @@ public:
 	/*! Timer thread entry point.
 	  \return result at timer thread exit */
    int operator()();
+
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token;}
+
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -140,7 +144,7 @@ int Timer<T>::operator()()
 {
    unsigned elapsed(0);
 
-   while(true)
+   while(!_cancellation_token)
    {
       bool shouldsleep(false);
       {
@@ -313,4 +317,3 @@ public:
 } // FIX8
 
 #endif // _FIX8_TIMER_HPP_
-

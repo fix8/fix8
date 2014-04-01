@@ -69,8 +69,21 @@ namespace FIX8
 	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
 		= f8_atomic<SingleLogger<glob_log0> *>();
 #endif
-	template<>
-	f8_mutex Singleton<SingleLogger<glob_log0> >::_mutex = f8_mutex();
+    //template<>
+    //f8_spin_lock Singleton<SingleLogger<glob_log0> >::_mutex;
+
+    template<>
+    SingleLogger<glob_log0>* Singleton<SingleLogger<glob_log0> >::create_instance()
+    {
+        static f8_spin_lock mutex;
+        f8_scoped_spin_lock guard(mutex);
+        if (_instance == 0)
+        {
+            SingleLogger<glob_log0> *p(new SingleLogger<glob_log0>); // avoid race condition between mem assignment and construction
+            _instance = p;
+        }
+        return _instance;
+    }
 
 	const string Logger::_bit_names[] =
 		{ "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer", "inbound", "outbound" };
@@ -169,6 +182,7 @@ void Logger::flush()
 //-------------------------------------------------------------------------------------------------
 void Logger::purge_thread_codes()
 {
+#if (THREAD_SYSTEM == THREAD_PTHREAD)
 	f8_scoped_lock guard(_mutex);
 
 	for (ThreadCodes::iterator itr(_thread_codes.begin()); itr != _thread_codes.end();)
@@ -188,10 +202,11 @@ void Logger::purge_thread_codes()
 		else
 			++itr;
 	}
+#endif
 }
 
 //-------------------------------------------------------------------------------------------------
-char Logger::get_thread_code(pthread_t tid)
+char Logger::get_thread_code(_dthreadcore::thread_id_t tid)
 {
 	f8_scoped_lock guard(_mutex);
 
@@ -231,7 +246,11 @@ bool FileLogger::rotate(bool force)
 
 	delete _ofs;
 
-	string thislFile(_pathname);
+	string thislFile(_pathname), filepart, dirpart;
+	split_path(thislFile, filepart, dirpart);
+	if (!dirpart.empty() && !exist(dirpart))
+		create_path(dirpart);
+
 #ifdef HAVE_COMPRESSION
 	if (_flags & compress)
 		thislFile += ".gz";

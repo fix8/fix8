@@ -108,7 +108,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <termios.h>
 #endif
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 
@@ -119,7 +118,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <getopt.h>
 #endif
 
-#include <usage.hpp>
+#include <fix8/usage.hpp>
 #include "Perf_types.hpp"
 #include "Perf_router.hpp"
 #include "Perf_classes.hpp"
@@ -584,7 +583,7 @@ bool hf_session_client::handle_application(const unsigned seqnum, const FIX8::Me
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg) const
+bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg)
 {
 	static unsigned oid(0), eoid(0);
 	FIX8::TEX::OrderQty qty;
@@ -654,7 +653,7 @@ bool tex_router_server::operator() (const FIX8::TEX::NewOrderSingle *msg) const
 }
 
 //-----------------------------------------------------------------------------------------
-bool tex_router_client::operator() (const FIX8::TEX::ExecutionReport *msg) const
+bool tex_router_client::operator() (const FIX8::TEX::ExecutionReport *msg)
 {
 	static int exrecv(0);
 	if (++exrecv % update_count == 0)

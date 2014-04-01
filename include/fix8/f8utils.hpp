@@ -38,6 +38,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_UTILS_HPP_
 
 //-----------------------------------------------------------------------------------------
+#include <iostream>
+#include <string>
+
 #include <Poco/DateTime.h>
 #include <Poco/Net/SocketAddress.h>
 
@@ -54,6 +57,11 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Poco/RegularExpression.h>
 #include <Poco/Exception.h>
 #endif
+
+// file/line stringification
+#define STRINGOF(x) #x
+#define STRINGIFY(x) STRINGOF(x)
+#define FILE_LINE __FILE__ ":" STRINGIFY(__LINE__)
 
 namespace FIX8 {
 
@@ -76,7 +84,7 @@ std::string StrToLower(const std::string& src);
 /*! Decode a weekday name into numeric dow (0=SUN), case insensitive
   only check at most the first 2 unique characters (will ignore any characters after that);
   alternatively, accept numeric dow 0-6;
-  \param src source dow string
+  \param from source dow string
   \return idx dow or -1 if not found */
 int decode_dow (const std::string& from);
 
@@ -229,6 +237,11 @@ inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 	return strcasecmp(__lhs.c_str(), __rhs.c_str()) < 0;
 #endif
 }
+
+//----------------------------------------------------------------------------------------
+/*! Create a full path, including nested directories
+    \param path path to create */
+void create_path(const std::string& path);
 
 //----------------------------------------------------------------------------------------
 /// C++11 inspired scoped pointer.
@@ -807,7 +820,7 @@ inline double fast_atof (const char *p)
 
 
 //----------------------------------------------------------------------------------------
-/// Convert doublt to ascii
+/// Convert double to ascii
 /*! \param value the source value
     \param str the target string
     \param prec number of precision digits*/
@@ -1026,6 +1039,11 @@ T enum_str_get(const unsigned els, const std::string *sset, const std::string& w
 }
 
 //----------------------------------------------------------------------------------------
+/*! Get the current file umask
+    \return int file mask */
+int get_umask();
+
+//----------------------------------------------------------------------------------------
 /*! Check for file existance.
     \param fname filename to check
     \return true if file exists */
@@ -1036,6 +1054,23 @@ inline bool exist(const std::string& fname)
 #else
 	return access(fname.c_str(), F_OK) == 0;
 #endif
+}
+
+//-----------------------------------------------------------------------------------------
+/*! Split a pathname into directory and filename parts
+    \param source source path
+    \param filepart target for file part
+    \param dirpart target for directory part */
+inline void split_path(const std::string& source, std::string& filepart, std::string& dirpart)
+{
+	std::string::size_type slpos(source.find_last_of("/\\"));
+	if (slpos == std::string::npos)
+		filepart = source;
+	else
+	{
+		filepart.assign(source.substr(slpos + 1));
+		dirpart.assign(source.substr(0, slpos));
+	}
 }
 
 //----------------------------------------------------------------------------------------
@@ -1117,7 +1152,7 @@ template <typename T>
 class Singleton
 {
 	static f8_atomic<T*> _instance;
-	static f8_mutex _mutex;
+    //static f8_spin_lock _mutex;
 
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
@@ -1155,16 +1190,11 @@ public:
 	{
 		if (_instance) // cast operator performs atomic load with acquire
 			return _instance;
-
-		f8_scoped_lock guard(_mutex);
-		if (_instance == 0)
-		{
-			T *p(new T); // avoid race condition between mem assignment and construction
-			_instance = p;
-		}
-		return _instance;
+		return create_instance();
 	}
 
+    /*! Creates a single instance of the underlying object */
+   static T *create_instance();
 
 	/*! Get the instance of the underlying object. If not created, create.
 	    \return the instance */

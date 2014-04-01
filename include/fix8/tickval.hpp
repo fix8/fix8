@@ -41,8 +41,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #ifndef _MSC_VER
 #include <sys/time.h>
 #include <limits.h>
-#else
-#include <pthread.h>
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -329,8 +327,6 @@ public:
 	/*! Cast to unsigned long long.
 	  \return ticks as unsigned long long */
 	operator Tickval::ticks () { return _value; }
-
-	operator unsigned long long() { return _value; }
 
 	/*! Cast to double.
 	  \return ticks as double */

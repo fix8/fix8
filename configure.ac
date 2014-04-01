@@ -118,12 +118,6 @@ AC_FUNC_CLOSEDIR_VOID
 AC_FUNC_REALLOC
 AC_FUNC_STRCOLL
 
-AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
-            CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
-            CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
-            CC="$PTHREAD_CC"],
-           [AC_MSG_ERROR([Pthread API support is required.])])
-
 AC_CHECK_TOOL([STRIP],[strip])
 AC_CHECK_TOOL([DOXYGEN],[doxygen])
 
@@ -141,6 +135,7 @@ case "$CXX" in
 		fi ;;
 	*clang*)
 		LIBS="$LIBS -lstdc++ -lm " ;;
+	*) ;;
 esac
 
 oktotogglevar=yes
@@ -167,8 +162,8 @@ AC_ARG_ENABLE([doxygen],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-doxygen) ;;
 esac])
 
-AM_CONDITIONAL([USEDOXYGEN],
-	[test -n "$DOXYGEN" && test $oktodox = yes])AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
+AM_CONDITIONAL([USEDOXYGEN], [test -n "$DOXYGEN" && test $oktodox = yes])
+AM_COND_IF([USEDOXYGEN],[AC_CONFIG_FILES([doc/Makefile])])
 
 DOXYGEN_WARNINGS=YES
 AC_ARG_ENABLE([doxygen-warnings],
@@ -367,12 +362,20 @@ AM_CONDITIONAL(TBBSUPPORT, [test x$have_tbb = xyes])
 AC_CHECK_LIB(tcmalloc_minimal, malloc, have_tcmalloc_minimal_lib=yes)
 AC_CHECK_LIB(tcmalloc, malloc, have_tcmalloc_lib=yes)
 
+AC_DEFINE(MALLOC_TBB, 1, [TBB malloc])
+AC_DEFINE(MALLOC_TCMALLOC, 2, [tcmalloc])
+AC_DEFINE(MALLOC_STD, 3, [std malloc])
+AC_DEFINE(MALLOC_SYSTEM, MALLOC_STD, [malloc system to use])
+
 if test "$have_tbb" = yes && test x$usetbbmalloc = xyes; then
 	LIBS="$LIBS -ltbbmalloc -ltbbmalloc_proxy"
+	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TBB, [malloc system to use])
 else if test "$have_tcmalloc_minimal_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc_minimal"
+	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TCMALLOC, [malloc system to use])
 else if test "$have_tcmalloc_lib" = yes && test x$usetcmalloc = xyes; then
 	LIBS="$LIBS -ltcmalloc"
+	AC_DEFINE(MALLOC_SYSTEM, MALLOC_TCMALLOC, [malloc system to use])
 fi
 fi
 fi
@@ -415,6 +418,19 @@ AC_MSG_CHECKING(for Poco)
 AC_DEFINE(MPMC_TBB, 1, [TBB MPMC])
 AC_DEFINE(MPMC_FF, 2, [FF MPMC])
 
+
+#Check for OSX
+AC_MSG_CHECKING([for OSX/Darwin])
+have_osx=no
+case `uname -s` in
+	Darwin) LIBTOOLIZE=glibtoolize
+				have_osx=yes;;
+	*) LIBTOOLIZE=libtoolize;;
+esac
+AC_MSG_RESULT([$have_osx])
+
+AM_CONDITIONAL(USEOSX, [test x$have_osx = xyes])
+
 regex_set=no
 using_poco_regex=no
 AC_ARG_WITH([regex],
@@ -448,6 +464,44 @@ AC_DEFINE(REGEX_REGEX_H, 2, [regex.h regex system])
 if test "$regex_set" = no; then
 	using_poco_regex=yes
 	AC_DEFINE(REGEX_SYSTEM, REGEX_POCO, [POCO regex system used])
+fi
+
+thread_set=no
+using_poco_thread=no
+using_tbb_thread=no
+AC_ARG_WITH([thread],
+[AS_HELP_STRING([--with-thread=VAL],[select which thread system will be used (pthread|poco|tbb, default=pthread)])],
+[case "${withval}" in
+	pthread) AX_PTHREAD([LIBS="$PTHREAD_LIBS $LIBS"
+				CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
+				CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+				CC="$PTHREAD_CC"],
+				[AC_MSG_ERROR([Pthread API support is required.])])
+				thread_set=yes
+				AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread system used])
+				;;
+	tbb) using_tbb_thread=yes
+			thread_set=yes
+			AC_DEFINE(THREAD_SYSTEM, THREAD_TBB, [tbb thread system used])
+			AC_DEFINE(MPMC_SYSTEM, MPMC_TBB, [MPMC system used])
+			;;
+	poco) using_poco_thread=yes
+			thread_set=yes
+			AC_DEFINE(THREAD_SYSTEM, THREAD_POCO, [poco thread system used])
+			;;
+	*) echo
+		echo "ERROR: Unknown value ${withval} for REGEX given."
+		echo
+		exit 1
+esac])
+
+AC_DEFINE(THREAD_POCO, 1, [Poco thread system])
+AC_DEFINE(THREAD_PTHREAD, 2, [pthread thread system])
+AC_DEFINE(THREAD_TBB, 3, [tbb thread thread system])
+if test "$thread_set" = no; then
+	using_poco_thread=no
+	using_tbb_thread=no
+	AC_DEFINE(THREAD_SYSTEM, THREAD_PTHREAD, [pthread regex system used])
 fi
 
 oktogtest=yes
@@ -509,6 +563,48 @@ esac])
 
 AM_CONDITIONAL(F8TEST, [test x$oktof8test = xyes])
 
+oktomemcached=no
+AC_ARG_ENABLE([libmemcached],
+[AS_HELP_STRING([--enable-libmemcached],[enable memcached C API support via libmemcached (default=no)])],
+[case "${enableval}" in
+	yes) oktomemcached=yes
+			AC_MSG_CHECKING(for libmemcached)
+			AC_TRY_COMPILE([
+					#include <libmemcached/memcached.h>
+				],,
+				have_libmemcached=yes,have_libmemcached=no)
+		 if test "$have_libmemcached" = yes && test "$oktomemcached" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAVE_LIBMEMCACHED, 1, [Define to 1 if you have libmemcached])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-libmemcached) ;;
+esac])
+AM_CONDITIONAL(LIBMEMCACHEDSUPPORT, [test x$oktomemcached = xyes])
+
+oktohiredis=no
+AC_ARG_ENABLE([libhiredis],
+[AS_HELP_STRING([--enable-libhiredis],[enable redis C API support via libhiredis (default=no)])],
+[case "${enableval}" in
+	yes) oktohiredis=yes
+			AC_MSG_CHECKING(for libhiredis)
+			AC_TRY_COMPILE([
+					#include <hiredis/hiredis.h>
+				],,
+				have_libhiredis=yes,have_libhiredis=no)
+		 if test "$have_libhiredis" = yes && test "$oktohiredis" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAVE_LIBHIREDIS, 1, [Define to 1 if you have libhiredis])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-libhiredis) ;;
+esac])
+AM_CONDITIONAL(LIBHIREDISSUPPORT, [test x$oktohiredis = xyes])
+
 oktobdb=no
 AC_ARG_ENABLE([bdb],
 [AS_HELP_STRING([--enable-bdb],[enable support for Oracle Berkeley DB persistence (default=no)])],
@@ -519,7 +615,6 @@ AC_ARG_ENABLE([bdb],
 	no) ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-bdb) ;;
 esac])
-
 AM_CONDITIONAL(BDBSUPPORT, [test x$oktobdb = xyes])
 
 AC_CHECK_LIB(z, deflate, [

@@ -171,7 +171,7 @@ string Str_error(const int err, const char *str)
 	const size_t max_str(256);
 	char buf[max_str] = {};
 #ifdef _MSC_VER
-    ignore_value(strerror_s(buf, max_str - 1, err));
+	ignore_value(strerror_s(buf, max_str - 1, err));
 #else
 	ignore_value(strerror_r(err, buf, max_str - 1));
 #endif
@@ -182,6 +182,37 @@ string Str_error(const int err, const char *str)
 		return ostr.str();
 	}
 	return string(buf);
+}
+
+//----------------------------------------------------------------------------------------
+int get_umask()
+{
+#ifdef _MSC_VER
+	const int mask(_umask(0));
+	_umask(mask);
+#else
+	const int mask(umask(0));
+	umask(mask);
+#endif
+	return mask;
+}
+
+//----------------------------------------------------------------------------------------
+void create_path(const string& path)
+{
+	string new_path;
+	for(string::const_iterator pos(path.begin()); pos != path.end(); ++pos)
+	{
+		new_path += *pos;
+		if(*pos == '/' || *pos == '\\' || pos + 1 == path.end())
+		{
+#ifdef _MSC_VER
+			_mkdir(new_path.c_str());
+#else
+			mkdir(new_path.c_str(), 0777); // umask applied after
+#endif
+		}
+	}
 }
 
 //----------------------------------------------------------------------------------------

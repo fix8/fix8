@@ -52,14 +52,16 @@ class Session;
 template <typename T>
 class AsyncSocket
 {
-	dthread<AsyncSocket> _thread;
-
 protected:
 	coroutine _coro;
 	Poco::Net::StreamSocket *_sock;
 	f8_concurrent_queue<T> _msg_queue;
 	Session& _session;
 	ProcessModel _pmodel;
+	dthread_cancellation_token  _cancellation_token;
+
+private:
+	dthread<AsyncSocket> _thread;
 
 public:
 	/*! Ctor.
@@ -67,10 +69,14 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: _thread(FIX8::ref(*this)), _sock(sock), _session(session), _pmodel(pmodel) {}
+		: _sock(sock), _session(session), _pmodel(pmodel), _thread(FIX8::ref(*this))
+	{
+	}
 
 	/// Dtor.
-	virtual ~AsyncSocket() {}
+	virtual ~AsyncSocket()
+	{
+	}
 
 	/*! Get the number of messages queued on this socket.
 	    \return number of queued messages */
@@ -78,25 +84,30 @@ public:
 
 	/*! Function operator. Called by thread to process message on queue.
 	    \return 0 on success */
-	int operator()() { return execute(); }
+	int operator()() { return execute(_cancellation_token); }
 
 	/*! Execute the function operator
 	    \return result of operator */
-	virtual int execute() { return 0; }
+	virtual int execute(dthread_cancellation_token& cancellation_token) { return 0; }
 
 	/// Start the processing thread.
 	virtual void start() { _thread.start(); }
 
+	/// Start the processing thread.
+	virtual void request_stop() { _thread.request_stop(); }
+
 	/// Stop the processing thread and quit.
-	virtual void quit() { _thread.kill(1); }
+	virtual void quit() { _thread.request_stop(); _thread.join(); }
 
 	/*! Get the underlying socket object.
 	    \return the socket */
 	Poco::Net::StreamSocket *socket() { return _sock; }
 
 	/*! Wait till processing thead has finished.
-	    \return 0 on success */
+		 \return 0 on success */
 	int join() { return _thread.join(); }
+
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -107,6 +118,7 @@ class FIXReader : public AsyncSocket<f8String>
 	f8_atomic<bool> _socket_error;
 
 	dthread<FIXReader> _callback_thread;
+	dthread_cancellation_token _callback_cancellation_token;
 
 #if EXPERIMENTAL_BUFFERED_SOCKET_READ
     char _read_buffer[_max_msg_len*2];
@@ -222,7 +234,10 @@ public:
 	}
 
 	/// Dtor.
-	virtual ~FIXReader() {}
+	virtual ~FIXReader()
+	{
+		quit();
+	}
 
 	/// Start the processing threads.
 	virtual void start()
@@ -241,8 +256,12 @@ public:
 	virtual void quit()
 	{
 		if (_pmodel == pm_pipeline)
-			_callback_thread.kill(1);
-		AsyncSocket<f8String>::quit();
+		{
+			_callback_thread.request_stop();
+			_callback_thread.join();
+		}
+		if (_pmodel != pm_coro)
+			AsyncSocket<f8String>::quit();
 	}
 
 	/// Send a message to the processing method instructing it to quit.
@@ -252,17 +271,20 @@ public:
 		{
 			const f8String from;
 			_msg_queue.try_push(from);
+			_callback_thread.request_stop();
 		}
+		if (_pmodel != pm_coro)
+			AsyncSocket<f8String>::request_stop();
 	}
 
 	/*! Reader thread method. Reads messages and places them on the queue for processing.
 	    Supports pipelined, threaded and coroutine process models.
 		 \return 0 on success */
-   virtual int execute();
+   virtual int execute(dthread_cancellation_token& cancellation_token);
 
 	/*! Wait till writer thread has finished.
-	    \return 0 on success */
-   int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
+		 \return 0 on success */
+	int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
 
 	/// Calculate the length of the Fix message preamble, e.g. "8=FIX.4.4^A9=".
 	void set_preamble_sz();
@@ -278,6 +300,8 @@ public:
 		static const Poco::Timespan ts;
 		return _sock->poll(ts, Poco::Net::Socket::SELECT_READ);
 	}
+
+	dthread_cancellation_token& callback_cancellation_token() { return _callback_cancellation_token; }
 };
 
 //----------------------------------------------------------------------------------------
@@ -295,7 +319,10 @@ public:
 		: AsyncSocket<Message *>(sock, session, pmodel) {}
 
 	/// Dtor.
-	virtual ~FIXWriter() {}
+	virtual ~FIXWriter()
+	{
+		quit();
+	}
 
 	/*! Place Fix message on outbound message queue.
 	    \param from message to send
@@ -350,8 +377,8 @@ public:
 		return result;
 	}
 	/*! Wait till writer thead has finished.
-	    \return 0 on success */
-   int join() { return _pmodel == pm_pipeline ? AsyncSocket<Message *>::join() : -1; }
+		 \return 0 on success */
+	int join() { return _pmodel == pm_pipeline ? AsyncSocket<Message *>::join() : -1; }
 
 	/*! Send Fix message directly
 	    \param from message to send
@@ -414,11 +441,24 @@ public:
 	}
 
 	/// Send a message to the processing method instructing it to quit.
-	virtual void stop() { _msg_queue.try_push(0); }
+	virtual void stop()
+	{
+		_msg_queue.try_push(0);
+		if (_pmodel == pm_pipeline)
+			AsyncSocket::request_stop();
+	}
 
     /*! Writer thread method. Reads messages from the queue and sends them over the socket.
         \return 0 on success */
-    virtual int execute();
+    virtual int execute(dthread_cancellation_token& cancellation_token);
+
+	/// Stop the processing threads and quit.
+	virtual void quit()
+	{
+		if (_pmodel == pm_pipeline)
+			AsyncSocket<Message *>::quit();
+	}
+
 };
 
 //----------------------------------------------------------------------------------------
@@ -509,6 +549,7 @@ public:
 
 	/*! Write a message to the underlying socket.
 	    \param from Message to write
+	    \param destroy if true delete after send
 	    \return true on success */
 	virtual bool write(Message *from, bool destroy=true) { return _writer.write(from, destroy); }
 
@@ -518,7 +559,8 @@ public:
 	virtual bool write(Message& from) { return _writer.write(from); }
 
 	/*! Write messages to the underlying socket as a single batch.
-	    \param from Message to write
+	    \param msgs vector of Message to write
+	    \param destroy if true delete after send
 	    \return true on success */
 	size_t write_batch(const std::vector<Message *>& msgs, bool destroy) { return _writer.write_batch(msgs, destroy); }
 
@@ -608,7 +650,7 @@ public:
 
 	/*! Call the FIXreader method
 	    \return result of call */
-	int reader_execute() { return _reader.execute(); }
+	int reader_execute() { return _reader.execute(_reader.cancellation_token()); }
 
 	/*! Check if the reader will block
 	    \return true if won't block */
@@ -616,7 +658,7 @@ public:
 
 	/*! Call the FIXreader method
 	    \return result of call */
-	int writer_execute() { return _writer.execute(); }
+	int writer_execute() { return _writer.execute(_writer.cancellation_token()); }
 
 	/*! Check if the writer will block
 	    \return true if won't block */

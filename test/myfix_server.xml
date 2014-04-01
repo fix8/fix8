@@ -7,8 +7,10 @@
 				heartbeat_interval="10"
 				session_log="session_log_file"
 				protocol_log="protocol_log"
-				ip="127.0.0.1" port="11001"
+				ip="0.0.0.0" port="11001"
 				sender_comp_id="TEX_DLD"
+				tcp_recv_buffer="100663296"
+				tcp_send_buffer="100663296"
 				tcp_nodelay="true"
 				reset_sequence_numbers="false"
 				ignore_logon_sequence_check="true"
@@ -40,6 +42,16 @@
 	<persist name="file0"
             type="file" dir="./run"
             use_session_id="true"
+            db="server" />
+
+	<persist name="memcached0"
+            type="memcached"
+				config_string="--SERVER=127.0.0.1"
+            db="server" />
+
+	<persist name="redis0"
+            type="redis"
+				host="127.0.0.1" port="6379" connect_timeout="1"
             db="server" />
 
 	<persist name="mem0"

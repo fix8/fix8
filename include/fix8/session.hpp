@@ -38,7 +38,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #define FIX8_SESSION_HPP_
 
 #include <Poco/Net/StreamSocket.h>
-
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
 
@@ -139,10 +138,10 @@ namespace States
 
 	enum SessionStates
 	{
-		st_continuous, st_session_terminated,
+		st_none, st_continuous, st_session_terminated,
 		st_wait_for_logon, st_not_logged_in, st_logon_sent, st_logon_received, st_logoff_sent, st_logoff_received,
 		st_test_request_sent, st_sequence_reset_sent, st_sequence_reset_received,
-		st_resend_request_sent, st_resend_request_received
+		st_resend_request_sent, st_resend_request_received, st_num_states
 	};
 
 	static inline bool is_established(const SessionStates& ss)
@@ -173,7 +172,7 @@ struct Schedule
 	Schedule() : _start(Tickval::errorticks), _end(Tickval::errorticks), _utc_offset(),
 		_start_day(-1), _end_day(-1) {}
 
-	Schedule(Tickval start, Tickval end, Tickval duration=Tickval::noticks, int utc_offset=0, int start_day=-1, int end_day=-1) :
+    Schedule(const Tickval& start, const Tickval& end, const Tickval& duration = 0/*Tickval::noticks*/, int utc_offset = 0, int start_day = -1, int end_day = -1) :
 		_start(start), _end(end), _duration(duration),
 		_utc_offset(utc_offset), _start_day(start_day), _end_day(end_day),
 		_toffset(static_cast<Tickval::sticks>(_utc_offset) * Tickval::minute)
@@ -390,6 +389,9 @@ protected:
 	std::string _batchmsgs_buffer;
 	Session_Schedule *_schedule;
 
+	/// string representation of Sessionstates
+	static const f8String _state_names[];
+
 	/// Heartbeat generation service thread method.
 	bool heartbeat_service();
 
@@ -458,6 +460,11 @@ protected:
 	    \return true on success */
 	virtual bool handle_application(const unsigned seqnum, const Message *&msg) = 0;
 
+	/*! This method id called whenever a session state change occurs
+	    \param before previous session state
+	    \param after new session state */
+	virtual void state_change(const States::SessionStates before, const States::SessionStates after) {}
+
 	/*! Permit modification of message just prior to sending.
 	     \param msg Message */
 	virtual void modify_outbound(Message *msg) {}
@@ -482,11 +489,21 @@ protected:
 		return bme->_create._do();
 	}
 
-#if !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
-	static f8String get_thread_policy_string(pthread_t id);
-	void set_scheduler(int priority);
-	void set_affinity(int core_id);
+#if (THREAD_SYSTEM == THREAD_PTHREAD) && !defined _MSC_VER && defined _GNU_SOURCE && defined __linux__
+	/*! Get a string representing the current thread policy for the given thread
+	  e.g. SCHED_OTHER, SCHED_RR, SCHED_FIFO
+	    \param id thread id
+	    \return string */
+	static f8String get_thread_policy_string(_dthreadcore::thread_id_t id);
 #endif
+
+	/*! Set the scheduling policy for the current thread
+	    \param priority scheduler priority */
+	void set_scheduler(int priority);
+
+	/*! Set the CPU affinity mask for the given thread
+	    \param core_id core to mask on */
+	void set_affinity(int core_id);
 
 public:
 	/*! Ctor. Initiator.
@@ -557,6 +574,8 @@ public:
 	virtual bool send(Message *msg, bool destroy=true, const unsigned custom_seqnum=0, const bool no_increment=false);
 
 	/*! Send message - non-pipelined version.
+		 WARNING: be sure you don't inadvertently use this method. Symptoms will be out of sequence messages (seqnum==1)
+		 and core dumping.
 	    \param msg Message
 	    \param custom_seqnum override sequence number with this value
 	    \param no_increment if true, don't increment the seqnum after sending
@@ -721,16 +740,33 @@ public:
 	    \return new Message */
 	virtual Message *generate_business_reject(const unsigned seqnum, const Message *msg, const int reason, const char *what);
 
+	/*! Call the virtual state_change method with before and after, then set the new state
+	    \param new_state new session state to set */
+	void do_state_change(const States::SessionStates new_state)
+	{
+		state_change(_state, new_state);
+		_state = new_state;
+	}
+
 	/*! Detach message passed to handle_application. Will set source to 0;
 	    Not thread safe however this method should never be called across threads. It should
 		 only be called from Session::handle_application().
 	    \param msg ref to ptr containing message
-	    \return detahced Message * */
+	    \return detached Message * */
 	static const Message *detach(const Message *&msg)
 	{
 		const Message *tmp(msg);
 		msg = 0;
 		return tmp;
+	}
+
+	/*! Find the string representation for the given session state
+	    \param state session state
+	    \return string found or "unknown" */
+	static const f8String& get_session_state_string(const States::SessionStates state)
+	{
+		static const f8String unknown("Unknown");
+		return state < States::st_num_states ? _state_names[state] : unknown;
 	}
 };
 

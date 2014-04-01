@@ -64,11 +64,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iterator>
 #include <algorithm>
 #include <typeinfo>
+#ifdef _MSC_VER
+#include <signal.h>
+#include <conio.h>
+#else
 #include <sys/ioctl.h>
 #include <signal.h>
 #include <termios.h>
+#endif
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 
@@ -79,8 +83,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <getopt.h>
 #endif
 
-#include <usage.hpp>
-#include <consolemenu.hpp>
+#include <fix8/usage.hpp>
+#include <fix8/consolemenu.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
@@ -244,6 +248,7 @@ void print_usage()
 	um.add('v', "version", "print version then exit");
 	um.add('o', "offset", "bytes to skip on each line before parsing FIX message");
 	um.add('s', "summary", "summary, generate message summary");
+	um.add('c', "context", "print the f8c generated beginstring and version");
 	um.add("e.g.");
 	um.add("@f8print myfix_server_protocol.log");
 	um.add("@f8print f8print -s -o 12 myfix_client_protocol.log");

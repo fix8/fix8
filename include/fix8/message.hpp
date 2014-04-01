@@ -179,6 +179,7 @@ typedef GeneratedTable<unsigned, BaseEntry> FieldTable;
 /// Static metadata context class - one per FIX xml schema
 struct F8MetaCntx
 {
+	/// 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	const unsigned _version;
 
 	/// Framework generated lookup table to generate Fix messages
@@ -220,7 +221,7 @@ struct F8MetaCntx
 	/// Dtor.
 	~F8MetaCntx() { delete[] _flu; _flu = 0; }
 
-	/*! Get the field BaseEntry object for this filed number. Will use fast field index lookup.
+	/*! Get the field BaseEntry object for this field number. Will use fast field index lookup.
 	  \param fnum field to get
 	  \return ptr to BaseEntry or 0 if not found */
 	const BaseEntry *find_be(const unsigned short fnum) const
@@ -777,8 +778,7 @@ class Message : public MessageBase
 protected:
 	MessageBase *_header, *_trailer;
 	unsigned _custom_seqnum;
-	bool _no_increment;
-	bool _end_of_batch;
+	bool _no_increment, _end_of_batch;
 
 public:
 	/*! Ctor.
@@ -926,6 +926,28 @@ public:
 	    \return value of _no_increment flag */
 	virtual bool get_no_increment() const { return _no_increment; }
 
+	/*! Get the end of batch flag
+	    \return true or false */
+	bool get_end_of_batch() const { return _end_of_batch; }
+
+	/*! Set the end of batch flag
+	    \param is_end_of_batch true or false */
+	void set_end_of_batch(bool is_end_of_batch) { _end_of_batch = is_end_of_batch; }
+
+	/*! Setup this message to allow it to be resused
+	  This feature is experimental; do not use with pipelined mode */
+	void setup_reuse()
+	{
+		if (_header)
+		{
+			_header->_fp.set(Common_BeginString, FieldTrait::suppress);
+			_header->_fp.set(Common_BodyLength, FieldTrait::suppress);
+			delete _header->remove(Common_MsgSeqNum);
+		}
+		if (_trailer)
+			_trailer->_fp.set(Common_CheckSum, FieldTrait::suppress);
+	}
+
 	/*! Print the message to the specified stream.
 	    \param os refererence to stream to print to
 	    \param depth not used */
@@ -941,9 +963,6 @@ public:
 	static void format_codec_timings(const f8String& md, std::ostream& ostr, codec_timings& tobj);
 	static void report_codec_timings(const f8String& tag);
 #endif
-
-	bool get_end_of_batch() const { return _end_of_batch; }
-	void set_end_of_batch(bool is_end_of_batch) { _end_of_batch = is_end_of_batch; }
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -66,25 +66,10 @@ mockConnection.hpp and mockConnection.cpp are used to supply a mock connection o
 	#include <strings.h>
 #endif
 
-#include <regex.h>
 #include <errno.h>
-#include <fix8/f8exception.hpp>
-#include <fix8/hypersleep.hpp>
-#include <fix8/mpmc.hpp>
-#include <fix8/f8types.hpp>
-#include <fix8/f8utils.hpp>
-#include <fix8/xml.hpp>
-#include <fix8/thread.hpp>
-#include <fix8/gzstream.hpp>
-#include <fix8/tickval.hpp>
-#include <fix8/logger.hpp>
-#include <fix8/traits.hpp>
-#include <fix8/timer.hpp>
-#include <fix8/field.hpp>
-#include <fix8/message.hpp>
-#include <mockConnection.hpp>
-#include <fix8/session.hpp>
-#include <fix8/persist.hpp>
+#define F8MOCK_CONNECTION 1
+#include <fix8/f8includes.hpp>
+//#include "mockConnection.hpp"
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;

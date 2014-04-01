@@ -197,13 +197,44 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 
 		string dir("./"), db("persist_db");
 		which->GetAttr("dir", dir);
-		which->GetAttr("db", db);
+		which->GetAttr("db", db) || which->GetAttr("session_prefix", db);
 
 		if (sid)
 			db += ('.' + sid->get_senderCompID()() + '.' + sid->get_targetCompID()());
 		else if (which->FindAttr("use_session_id", false))
 			db += ('.' + get_sender_comp_id(from)() + '.' + get_target_comp_id(from)());
 
+#if defined HAVE_LIBMEMCACHED
+		if (type == "memcached")
+		{
+			string config_str;
+			if (which->GetAttr("config_string", config_str))
+			{
+				scoped_ptr<MemcachedPersister> result(new MemcachedPersister);
+				if (result->initialise(config_str, db, flag))
+					return result.release();
+			}
+			else
+				throw f8Exception("memcached:config_string attribute must be given when using memcached.");
+		}
+		else
+#endif
+#if defined HAVE_LIBHIREDIS
+		if (type == "redis")
+		{
+			string host_str;
+			if (which->GetAttr("host", host_str))
+			{
+				scoped_ptr<HiredisPersister> result(new HiredisPersister);
+				if (result->initialise(host_str, which->FindAttr("port", 6379),
+				 which->FindAttr("connect_timeout", static_cast<unsigned>(defaults::connect_timeout)), db, flag))
+					return result.release();
+			}
+			else
+				throw f8Exception("redis:host attribute must be given when using redis.");
+		}
+		else
+#endif
 #if defined HAVE_BDB
 		if (type == "bdb")
 		{
@@ -286,7 +317,7 @@ Logger::LogFlags Configuration::get_logflags(const XmlElement *from) const
 	if (from && from->GetAttr("flags", flags_str))
 	{
 		istringstream istr(flags_str);
-		for(char extr[32]; !istr.get(extr, sizeof(extr), '|').eof() || extr[0]; istr.ignore(1))
+		for(char extr[32]; !istr.get(extr, sizeof(extr), '|').fail(); istr.ignore(1))
 		{
 			string result(extr);
 			flags.set(Logger::num_flags, Logger::_bit_names, trim(result));

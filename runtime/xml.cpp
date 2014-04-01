@@ -488,7 +488,10 @@ int XmlElement::ParseAttrs(const string& attlst)
 			break;
 		case oc0:
 			if (c == '*')
+			{
 				state = comment;
+				break;
+			}
 			else
 			{
 				tmptag += '/';

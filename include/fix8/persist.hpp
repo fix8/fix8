@@ -40,6 +40,12 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #if defined HAVE_BDB
 # include <db_cxx.h>
 #endif
+#if defined HAVE_LIBMEMCACHED
+# include <libmemcached/memcached.h>
+#endif
+#if defined HAVE_LIBHIREDIS
+# include <hiredis/hiredis.h>
+#endif
 
 //-------------------------------------------------------------------------------------------------
 namespace FIX8 {
@@ -70,6 +76,13 @@ public:
 	    \return true on success */
 	virtual bool put(const unsigned seqnum, const f8String& what) = 0;
 
+	/*! Persist a generic value. Depending on specialisation, provide
+		  direct access to the persister implementation
+	    \param key key to store
+	    \param what value string
+	    \return true on success */
+	virtual bool put(const f8String& key, const f8String& what) { return false; }
+
 	/*! Persist a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
@@ -81,6 +94,19 @@ public:
 	    \param to target message string
 	    \return true on success */
 	virtual bool get(const unsigned seqnum, f8String& to) const = 0;
+
+	/*! Retrieve a generic persisted value. Depending on specialisation, provide
+		  direct access to the persister implementation
+	    \param key key to retrieve
+	    \param to target value string
+	    \return true on success */
+	virtual bool get(const f8String& key, f8String& to) const { return false; }
+
+	/*! Delete a generic persisted value by specified key. Depending on specialisation, provide
+		  direct access to the persister implementation
+	    \param key key to delete
+	    \return true on success */
+	virtual bool del(const f8String& key) { return false; }
 
 	/*! Retrieve a range of persisted messages.
 	    \param from start at sequence number
@@ -190,6 +216,8 @@ class BDBPersister : public Persister
 		return _persist_queue.try_push(what);
 	}
 
+	dthread_cancellation_token _cancellation_token;
+
 public:
 	/// Ctor.
 	BDBPersister() : _thread(ref(*this)), _dbEnv(0), _db(new Db(&_dbEnv, 0)), _wasCreated() {}
@@ -253,6 +281,8 @@ public:
 	/*! Persister thread entry point.
 	  \return 0 on success */
 	int operator()();	// write thread
+
+	dthread_cancellation_token& cancellation_token() { return _cancellation_token;	}
 };
 
 #endif // HAVE_BDB
@@ -419,6 +449,250 @@ public:
 	    \return the nearest sequence number or 0 if not found */
 	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
 };
+
+//-------------------------------------------------------------------------------------------------
+#if defined HAVE_LIBMEMCACHED
+/// memcached message persister.
+class MemcachedPersister : public Persister
+{
+	memcached_st *_cache;
+	/// this will usually be the SessionID
+	f8String _key_base;
+	unsigned _server_count;
+
+public:
+	/// Ctor.
+	MemcachedPersister() : _cache(), _server_count() {}
+
+	/// Dtor.
+	virtual ~MemcachedPersister();
+
+	/*! Establish 'session' with memcached cloud
+	    \param config_str memcached config string
+	    \param key_base key base string for this session
+	    \param purge if true, empty database if found
+	    \return true on success */
+	virtual bool initialise(const f8String& config_str, const f8String& key_base, bool purge=false);
+
+	/*! Persist a message.
+	    \param seqnum sequence number of message
+	    \param what message string
+	    \return true on success */
+	virtual bool put(const unsigned seqnum, const f8String& what);
+
+	/*! Persist a sequence control record.
+	    \param sender_seqnum sequence number of last sent message
+	    \param target_seqnum sequence number of last received message
+	    \return true on success */
+	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
+
+	/*! Retrieve a persisted message.
+	    \param seqnum sequence number of message
+	    \param to target message string
+	    \return true on success */
+	virtual bool get(const unsigned seqnum, f8String& to) const;
+
+	/*! Retrieve a range of persisted messages.
+	    \param from start at sequence number
+	    \param to end sequence number
+	    \param session session containing callback method
+	    \param callback method it call with each retrieved message
+	    \return number of messages retrieved */
+	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
+		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
+
+	/*! Retrieve sequence number of last peristed message.
+	    \param to target sequence number
+	    \return sequence number of last peristed message on success */
+	virtual unsigned get_last_seqnum(unsigned& to) const;
+
+	/*! Retrieve a sequence control record.
+	    \param sender_seqnum sequence number of last sent message
+	    \param target_seqnum sequence number of last received message
+	    \return true on success */
+	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
+
+	/*! Find the nearest highest sequence number from the sequence to last provided.
+	    \param requested sequence number to start
+	    \param last highest sequence
+	    \return the nearest sequence number or 0 if not found */
+	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
+
+	/*! Find the nearest highest sequence number (lower than) from the given sequence number
+	    \param requested sequence number to start
+	    \return the nearest sequence number or 0 if not found */
+	virtual unsigned find_nearest_seqnum (unsigned requested) const;
+
+	/*! Persist a generic value.
+	    \param key key to store
+	    \param what value string
+	    \return true on success */
+	virtual bool put(const f8String& key, const f8String& what);
+
+	/*! Retrieve a generic persisted value.
+	    \param key key to retrieve
+	    \param to target value string
+	    \return true on success */
+	virtual bool get(const f8String& key, f8String& to) const;
+
+	/*! Lookup the specified value by given key
+	    \param key key to find
+	    \param target location for result
+	    \return true if found, false if not */
+	bool get_from_cache(const std::string &key, std::string &target) const
+	{
+		uint32_t flags(0);
+		memcached_return_t rc;
+		size_t value_length;
+
+		char *value(memcached_get(_cache, key.c_str(), key.size(), &value_length, &flags, &rc));
+		if (value)
+		{
+			target.reserve(value_length);
+			target.assign(value, value + value_length);
+			free(value);
+			return true;
+		}
+
+		return false;
+	}
+
+	/*! Write the specified value with the given key
+	    \param key key to write
+	    \param source value to write
+	    \return true if successful, false if not */
+	bool put_to_cache(const std::string &key, const std::string &source)
+	{
+		return memcached_success(memcached_set(_cache, key.c_str(), key.size(), source.c_str(), source.size(), 0, 0));
+	}
+
+	/*! Generate a lookup key based on the key base and the given sequence number
+	    \param seqnum sequence number portion of uniquye key
+	    \return result */
+	const std::string generate_seq_key(unsigned seqnum) const
+	{
+		std::ostringstream ostr;
+		ostr << _key_base << ':' << seqnum;
+		return ostr.str();
+	}
+
+	/*! Generate a control record based on the given sequence numbers
+	    \param sender_seqnum sequence number
+	    \param target_seqnum sequence number
+	    \return result */
+	static std::string generate_ctrl_record(unsigned sender_seqnum, unsigned target_seqnum)
+	{
+		std::ostringstream ostr;
+		ostr << sender_seqnum << ':' << target_seqnum;
+		return ostr.str();
+	}
+
+	/*! Extract a control record from the given string
+	    \param source source string
+	    \param sender_seqnum reference to target sequence number
+	    \param target_seqnum reference to target sequence number
+	    \return true on success */
+	static bool extract_ctrl_record(const std::string& source, unsigned &sender_seqnum, unsigned &target_seqnum)
+	{
+		std::istringstream istr(source);
+		istr >> sender_seqnum;
+		istr.ignore();
+		istr >> target_seqnum;
+		return true;
+	}
+};
+
+#endif // HAVE_LIBMEMCACHED
+
+//-------------------------------------------------------------------------------------------------
+#if defined HAVE_LIBHIREDIS
+/// redis message persister.
+class HiredisPersister : public Persister
+{
+	redisContext *_cache;
+	/// this will usually be the SessionID
+	f8String _key_base;
+
+public:
+	/// Ctor.
+	HiredisPersister() : _cache() {}
+
+	/// Dtor.
+	virtual ~HiredisPersister();
+
+	/*! Establish 'session' with redis cloud
+	    \param host server host to connect to
+	    \param port port to connect on
+	    \param connect_timeout connect timeout in secs
+	    \param key_base key base string for this session
+	    \param purge if true, empty database if found
+	    \return true on success */
+	virtual bool initialise(const f8String& host, unsigned port, unsigned connect_timeout,
+		const f8String& key_base, bool purge=false);
+
+	/*! Persist a message.
+	    \param seqnum sequence number of message
+	    \param what message string
+	    \return true on success */
+	virtual bool put(const unsigned seqnum, const f8String& what);
+
+	/*! Persist a sequence control record.
+	    \param sender_seqnum sequence number of last sent message
+	    \param target_seqnum sequence number of last received message
+	    \return true on success */
+	virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
+
+	/*! Retrieve a persisted message.
+	    \param seqnum sequence number of message
+	    \param to target message string
+	    \return true on success */
+	virtual bool get(const unsigned seqnum, f8String& to) const;
+
+	/*! Retrieve a range of persisted messages.
+	    \param from start at sequence number
+	    \param to end sequence number
+	    \param session session containing callback method
+	    \param callback method it call with each retrieved message
+	    \return number of messages retrieved */
+	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
+		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
+
+	/*! Retrieve sequence number of last peristed message.
+	    \param to target sequence number
+	    \return sequence number of last peristed message on success */
+	virtual unsigned get_last_seqnum(unsigned& to) const;
+
+	/*! Retrieve a sequence control record.
+	    \param sender_seqnum sequence number of last sent message
+	    \param target_seqnum sequence number of last received message
+	    \return true on success */
+	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
+
+	/*! Find the nearest highest sequence number from the sequence to last provided.
+	    \param requested sequence number to start
+	    \param last highest sequence
+	    \return the nearest sequence number or 0 if not found */
+	virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
+
+	/*! Persist a generic value.
+	    \param key key to store
+	    \param what value string
+	    \return true on success */
+	virtual bool put(const f8String& key, const f8String& what);
+
+	/*! Retrieve a generic persisted value.
+	    \param key key to retrieve
+	    \param to target value string
+	    \return true on success */
+	virtual bool get(const f8String& key, f8String& to) const;
+
+	/*! Delete a generic persisted value by specified key.
+	    \param key key to delete
+	    \return true on success */
+	virtual bool del(const f8String& key);
+};
+
+#endif // HAVE_LIBHIREDIS
 
 //-------------------------------------------------------------------------------------------------
 

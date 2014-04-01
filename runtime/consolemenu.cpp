@@ -51,7 +51,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 
 #include <fix8/f8includes.hpp>
-#include <consolemenu.hpp>
+#include <fix8/consolemenu.hpp>
 
 //-------------------------------------------------------------------------------------------------
 using namespace FIX8;

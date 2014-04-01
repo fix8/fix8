@@ -48,7 +48,7 @@ struct Ctxt
 		classes_hpp, router_hpp, session_hpp, count };
 	typedef std::pair<std::pair<std::string, std::string>, std::ostream *> Output;
 	Output _out[count];
-	static const std::string _exts[count];
+	static const std::string _exts[count], _exts_ver[2];
 	unsigned _version;
 	std::string _clname, _fixns, _systemns, _beginstr;
 };
@@ -160,9 +160,15 @@ struct MessageSpec
 	std::string _name, _description, _comment;
 	bool _is_admin;
 
+	/// Ctor
 	MessageSpec(const std::string& name, bool admin=false) : _group_refcnt(), _hash(), _name(name), _is_admin(admin) {}
+	/// Dtor
 	virtual ~MessageSpec() {}
 
+	/*! Inserter friend.
+	    \param os stream to send to
+	    \param what MessageSpec
+	    \return stream */
 	friend std::ostream& operator<<(std::ostream& os, const MessageSpec& what);
 };
 

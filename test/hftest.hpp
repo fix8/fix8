@@ -55,7 +55,7 @@ public:
 	/*! Execution report handler. Here is where you provide your own methods for the messages you wish to
 		 handle. Only those messages that are of interest to you need to be implemented.
 	    \param msg Execution report message session */
-	virtual bool operator() (const FIX8::TEX::ExecutionReport *msg) const;
+	virtual bool operator() (const FIX8::TEX::ExecutionReport *msg);
 };
 
 /// Example client session. Derives from FIX8::Session.
@@ -117,7 +117,7 @@ public:
 	/*! NewOrderSingle message handler. Here is where you provide your own methods for the messages you wish to
 		 handle. Only those messages that are of interest to you need to be implemented.
 	    \param msg NewOrderSingle message */
-	virtual bool operator() (const FIX8::TEX::NewOrderSingle *msg) const;
+	virtual bool operator() (const FIX8::TEX::NewOrderSingle *msg);
 };
 
 /// Example server session. Derives from FIX8::Session.

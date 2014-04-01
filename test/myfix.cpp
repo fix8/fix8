@@ -67,11 +67,10 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 \n
   \b Notes \n
 \n
-  1. If you have configured with \c --enable-msgrecycle, the example will reuse allocated messages.\n
-  2. The client has a simple menu. Press ? to see options.\n
-  3. The server will wait for the client to logout before exiting.\n
-  4. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
-  5. The example uses the files \c FIX50SP2.xml and \c FIXT11.xml in ./schema\n
+  1. The client has a simple menu. Press ? to see options.\n
+  2. The server will wait for the client to logout before exiting.\n
+  3. The server uses \c myfix_client.xml and the client uses \c myfix_server.xml for configuration settings.\n
+  4. The example uses the files \c FIX50SP2.xml and \c FIXT11.xml in ./schema\n
 \n
 */
 
@@ -98,11 +97,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iterator>
 #include <algorithm>
 #include <typeinfo>
+#ifdef _MSC_VER
+#include <signal.h>
+#include <conio.h>
+#else
 #include <sys/ioctl.h>
 #include <signal.h>
 #include <termios.h>
+#endif
 
-#include <regex.h>
 #include <errno.h>
 #include <string.h>
 
@@ -113,8 +116,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <getopt.h>
 #endif
 
-#include <usage.hpp>
-#include <consolemenu.hpp>
+#include <fix8/usage.hpp>
+#include <fix8/consolemenu.hpp>
 #include "Myfix_types.hpp"
 #include "Myfix_router.hpp"
 #include "Myfix_classes.hpp"
@@ -134,6 +137,8 @@ bool term_received(false);
 const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
 {
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
+	MyMenu::Handlers::TypePair(MyMenu::MenuItem('r', "New Order Single Recycled - 1st use send as normal then will send recycled message"),
+			&MyMenu::new_order_single_recycled),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('T', "1000 New Order Singles"), &MyMenu::new_order_single_1000),
 	MyMenu::Handlers::TypePair(MyMenu::MenuItem('R', "Resend request"), &MyMenu::resend_request),
@@ -153,8 +158,10 @@ void sig_handler(int sig)
    {
    case SIGTERM:
    case SIGINT:
+#ifndef _MSC_VER
    case SIGQUIT:
-      term_received = true;
+#endif
+       term_received = true;
       signal(sig, sig_handler);
       break;
    }
@@ -215,7 +222,9 @@ int main(int argc, char **argv)
 
 	signal(SIGTERM, sig_handler);
 	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+#ifndef _MSC_VER
+    signal(SIGQUIT, sig_handler);
+#endif
 
 	FIX8::tty_save_state save_tty(0);
 	bool restore_tty(false);
@@ -255,7 +264,14 @@ int main(int argc, char **argv)
 				TimerEvent<FIX8::Session> sample_callback(static_cast<bool (FIX8::Session::*)()>(&myfix_session_server::sample_scheduler_callback), true);
 				inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
 
-				inst->start(true, next_send, next_receive);
+				const ProcessModel pm(ms->get_process_model(ms->_ses));
+				inst->start(pm == pm_pipeline, next_send, next_receive);
+				cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+				if (inst->session_ptr()->get_connection()->is_secure())
+					cout << "Session is secure (SSL)" << endl;
+				if (pm != pm_pipeline)
+					while (!inst->session_ptr()->is_shutdown())
+						FIX8::hypersleep<h_milliseconds>(100);
 				cout << "Session(" << scnt << ") finished." << endl;
 				inst->stop();
             if (once)
@@ -317,6 +333,12 @@ int main(int argc, char **argv)
 bool myfix_session_client::handle_application(const unsigned seqnum, const Message *&msg)
 {
 	return enforce(seqnum, msg) || msg->process(_router);
+}
+
+//-----------------------------------------------------------------------------------------
+void myfix_session_client::state_change(const FIX8::States::SessionStates before, const FIX8::States::SessionStates after)
+{
+	cout << get_session_state_string(before) << " => " << get_session_state_string(after) << endl;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -414,6 +436,28 @@ Message *MyMenu::generate_new_order_single()
 bool MyMenu::new_order_single()
 {
 	_session.send(generate_new_order_single());
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool MyMenu::new_order_single_recycled()
+{
+	// create a message; first time through we just send it as normal. Note the we pass the no-destroy flag;
+	// second and subsequent times we just recyle the old message
+
+	static bool first(true);
+	static Message *msg(0);
+	if (first)
+	{
+		cout << "Sending new new_order_single" << endl;
+		_session.send(msg = generate_new_order_single(), first = false);
+	}
+	else
+	{
+		msg->setup_reuse();
+		cout << "Sending recycled new_order_single" << endl;
+		_session.send(msg, false);
+	}
 	return true;
 }
 
