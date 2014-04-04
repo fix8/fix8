@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-      <Poco>W:\src\repos\3rdparty-ng\source\fix\fix8repo\win-deps\poco-develop</Poco>
-      <TBB>W:\src\repos\3rdparty-ng\source\fix\fix8repo\win-deps\tbb42_20131003oss</TBB>
-      <GetOpt>W:\src\repos\3rdparty-ng\source\fix\fix8repo\win-deps\getopt_mb_uni_vc10</GetOpt>
-      <gtest>W:\src\repos\3rdparty-ng\source\fix\fix8repo\win-deps\gtest-1.7.0</gtest>
+      <Poco>C:\Users\User\src\secure\repos\fix8-win-deps\poco-develop</Poco>
+      <TBB>C:\Users\User\src\secure\repos\fix8-win-deps\tbb42_20131003oss</TBB>
+      <GetOpt>C:\Users\User\src\secure\repos\fix8-win-deps\getopt_mb_uni_vc10</GetOpt>
+      <gtest>C:\Users\User\src\secure\repos\fix8-win-deps\gtest-1.7.0</gtest>
       <OpenSSL32>c:\OpenSSL-Win32</OpenSSL32>
       <OpenSSL64>c:\OpenSSL-Win64</OpenSSL64>
   </PropertyGroup>

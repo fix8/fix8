@@ -212,7 +212,7 @@ public:
 
 	/*! Process the config file.
 	  \return the number of sessions processed (found) */
-	int process();
+	F8API int process();
 
 	/*! Find a session entity by index.
 	  \param num index of session
@@ -228,30 +228,30 @@ public:
 	/*! Extract the role from a session entity.
 	  \param from xml entity to search
 	  \return the connection role or Connection::cn_unknown if not found */
-	Connection::Role get_role(const XmlElement *from) const;
+	F8API Connection::Role get_role(const XmlElement *from) const;
 
 	/*! Extract the ip addresses from a server_group entity.
 	  \param from xml entity to search
 	  \param target target vector of Server to store addresses
 	  \return number of addresses stored */
-	size_t get_addresses(const XmlElement *from, std::vector<Server>& target) const;
+	F8API size_t get_addresses(const XmlElement *from, std::vector<Server>& target) const;
 
 	/*! Extract the ip address from a session entity.
 	  \param from xml entity to search
 	  \return Poco::Net::SocketAddress */
-	Poco::Net::SocketAddress get_address(const XmlElement *from) const;
+	F8API Poco::Net::SocketAddress get_address(const XmlElement *from) const;
 
 	/*! Extract the logflags from the flags attribute in a log entity.
 	  \param from xml entity to search
 	  \return LogFLags object */
-	Logger::LogFlags get_logflags(const XmlElement *from) const;
+	F8API Logger::LogFlags get_logflags(const XmlElement *from) const;
 
 	/*! Extract the session log filename address from a session entity.
 	  \param from xml entity to search
 	  \param to target logfile string
 	  \param sid optional session id to build name from
 	  \return target string */
-	std::string& get_logname(const XmlElement *from, std::string& to, const SessionID *sid=0) const;
+	F8API std::string& get_logname(const XmlElement *from, std::string& to, const SessionID *sid=0) const;
 
 	/*! Extract the connect_timeout interval (sec) from a session entity.
 	  \param from xml entity to search
@@ -361,7 +361,7 @@ public:
 	/*! Extract process model.
 	  \param from xml entity to search
 	  \return pm_thread, pm_pipeline or pm_coro */
-	ProcessModel get_process_model(const XmlElement *from) const;
+	F8API ProcessModel get_process_model(const XmlElement *from) const;
 
 	/*! Extract default_appl_ver_id from a session entity.
 	  \param from xml entity to search
@@ -385,7 +385,7 @@ public:
 	/*! Extract the SSL context from a ssl_context entity.
 	  \param from xml entity to search
 	  \return ssl context */
-	SslContext get_ssl_context(const XmlElement *from) const;
+	F8API SslContext get_ssl_context(const XmlElement *from) const;
 #endif
 
 	/*! Create a new persister object from a session entity.
@@ -393,35 +393,35 @@ public:
 	  \param sid optional session id to build name from
 	  \param flag additional flag for persister use
 	  \return new persister or 0 if unable to create */
-	Persister *create_persister(const XmlElement *from, const SessionID *sid=0, bool flag=false) const;
+	F8API Persister *create_persister(const XmlElement *from, const SessionID *sid=0, bool flag=false) const;
 
 	/*! Create a new logger object from a session entity.
 	  \param from xml entity to search
 	  \param ltype log type
 	  \param sid optional session id to build name from
 	  \return new logger or 0 if unable to create */
-	Logger *create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid=0) const;
+	F8API Logger *create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid=0) const;
 
 	/*! Create schedule object from a session entity.
 	  \param from xml entity to search
 	  \return Schedule */
-	Schedule create_schedule(const XmlElement *from) const;
+	F8API Schedule create_schedule(const XmlElement *from) const;
 
 	/*! Create login schedule object from a session entity.
 	  \param from xml entity to search
 	  \return login Schedule */
-	Schedule create_login_schedule(const XmlElement *from) const;
+	F8API Schedule create_login_schedule(const XmlElement *from) const;
 
 	/*! Create a new session schedule object from a session entity.
 	  \param from xml entity to search
 	  \return new Session_Schedule or 0 if unable to create */
-	Session_Schedule *create_session_schedule(const XmlElement *from) const;
+	F8API Session_Schedule *create_session_schedule(const XmlElement *from) const;
 
 	/*! Get all active sessions that have been read; filter by role if desired.
 	  \param target vector to place results
 	  \param role role to filter (cn_unknown means all)
 	  \return number of sessions found */
-	unsigned get_all_sessions(std::vector<const XmlElement *>& target, const Connection::Role role=Connection::cn_unknown) const;
+	F8API unsigned get_all_sessions(std::vector<const XmlElement *>& target, const Connection::Role role=Connection::cn_unknown) const;
 
 	/*! Return ptr to the root XmlElement
 	  \return root element */
