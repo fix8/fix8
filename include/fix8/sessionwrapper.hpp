@@ -66,7 +66,7 @@ public:
 
 	/// Prints the certificate to stdout and waits for user input on the console
 	/// to decide if a certificate should be accepted/rejected.
-   void onInvalidCertificate(const void* pSender, Poco::Net::VerificationErrorArgs& errorCert);
+   F8API void onInvalidCertificate( const void* pSender, Poco::Net::VerificationErrorArgs& errorCert );
 };
 
 /// An implementation of PrivateKeyPassphraseHandler that
@@ -81,7 +81,7 @@ public:
 	/// Destroys the Fix8PassPhraseHandler.
    ~Fix8PassPhraseHandler() {}
 
-   void onPrivateKeyRequested(const void* pSender, std::string& privateKey);
+   F8API void onPrivateKeyRequested( const void* pSender, std::string& privateKey );
 };
 
 //-------------------------------------------------------------------------------------------------

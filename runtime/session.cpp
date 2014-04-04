@@ -60,16 +60,6 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 
-//-------------------------------------------------------------------------------------------------
-const f8String Session::_state_names[] =
-{
-	"none", "continuous", "session_terminated",
-	"wait_for_logon", "not_logged_in", "logon_sent", "logon_received", "logoff_sent",
-	"logoff_received", "test_request_sent", "sequence_reset_sent",
-	"sequence_reset_received", "resend_request_sent", "resend_request_received"
-};
-
-//-------------------------------------------------------------------------------------------------
 #ifndef _MSC_VER
 const Tickval::ticks Tickval::noticks;
 const Tickval::sticks Tickval::nosticks;
@@ -84,6 +74,18 @@ const Tickval::ticks Tickval::day;
 const Tickval::ticks Tickval::week;
 #endif
 
+//-------------------------------------------------------------------------------------------------
+#if defined(_MSC_VER) && !defined(BUILD_F8API)
+// no need in definition since it is in dll already
+#else
+const f8String Session::_state_names[] =
+{
+	"none", "continuous", "session_terminated",
+	"wait_for_logon", "not_logged_in", "logon_sent", "logon_received", "logoff_sent",
+	"logoff_received", "test_request_sent", "sequence_reset_sent",
+	"sequence_reset_received", "resend_request_sent", "resend_request_received"
+};
+#endif
 //-------------------------------------------------------------------------------------------------
 void SessionID::make_id()
 {
@@ -1128,5 +1130,4 @@ void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& priv
 }
 
 #endif // HAVE_OPENSSL
-
 //-------------------------------------------------------------------------------------------------

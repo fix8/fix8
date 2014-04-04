@@ -127,7 +127,7 @@ class FIXReader : public AsyncSocket<f8String>
 
 	/*! Process messages from inbound queue, calls session process method.
 	    \return number of messages processed */
-	int callback_processor();
+	F8API int callback_processor();
 
 	size_t _bg_sz; // 8=FIXx.x^A9=x
 
@@ -280,14 +280,14 @@ public:
 	/*! Reader thread method. Reads messages and places them on the queue for processing.
 	    Supports pipelined, threaded and coroutine process models.
 		 \return 0 on success */
-   virtual int execute(dthread_cancellation_token& cancellation_token);
+   F8API virtual int execute(dthread_cancellation_token& cancellation_token);
 
 	/*! Wait till writer thread has finished.
 		 \return 0 on success */
 	int join() { return _pmodel != pm_coro ? AsyncSocket<f8String>::join() : -1; }
 
 	/// Calculate the length of the Fix message preamble, e.g. "8=FIX.4.4^A9=".
-	void set_preamble_sz();
+	F8API void set_preamble_sz();
 
 	/*! Check to see if the socket is in error
 	    \return true if there was a socket error */
@@ -450,7 +450,7 @@ public:
 
     /*! Writer thread method. Reads messages from the queue and sends them over the socket.
         \return 0 on success */
-    virtual int execute(dthread_cancellation_token& cancellation_token);
+    F8API virtual int execute(dthread_cancellation_token& cancellation_token);
 
 	/// Stop the processing threads and quit.
 	virtual void quit()
@@ -534,10 +534,10 @@ public:
 	bool is_secure() const { return _secured; }
 
 	/// Start the reader and writer threads.
-	void start();
+	F8API void start();
 
 	/// Stop the reader and writer threads.
-	void stop();
+	F8API void stop();
 
 	/*! Get the connection state.
 	    \return true if connected */
@@ -691,7 +691,7 @@ public:
 
 	/*! Establish connection.
 	    \return true on success */
-	bool connect();
+	F8API bool connect();
 };
 
 //-------------------------------------------------------------------------------------------------

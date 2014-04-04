@@ -240,7 +240,7 @@ public:
 
 	/*! The logging thread entry point.
 	    \return 0 on success */
-	int operator()();
+    F8API int operator()();
 
 	/// string representation of logflags
 	static const std::string _bit_names[];
@@ -252,13 +252,13 @@ public:
 
 	/*! Get the thread code for this thread or allocate a new code if not found.
 		\param tid the thread id of the thread to get a code for */
-	char get_thread_code(_dthreadcore::thread_id_t tid);
+    F8API char get_thread_code( _dthreadcore::thread_id_t tid );
 
 	/// Remove dead threads from the thread code cache.
-	void purge_thread_codes();
+    F8API void purge_thread_codes();
 
 	/// Flush the buffer
-	virtual void flush();
+    F8API virtual void flush();
 
 	/*! Get the thread cancellation token
 		\return reference to the cancellation token */
@@ -277,7 +277,7 @@ public:
 	    \param pathname pathname to log to
 	    \param flags ebitset flags
 	    \param rotnum number of logfile rotations to retain (default=5) */
-	FileLogger(const std::string& pathname, const LogFlags flags, const unsigned rotnum=rotation_default);
+	F8API FileLogger(const std::string& pathname, const LogFlags flags, const unsigned rotnum=rotation_default);
 
 	/// Dtor.
 	virtual ~FileLogger() {}
@@ -285,7 +285,7 @@ public:
 	/*! Perform logfile rotation
 	    \param force force the rotation (even if the file is set ti append)
 	    \return true on success */
-	virtual bool rotate(bool force=false);
+    F8API virtual bool rotate( bool force = false );
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -381,7 +381,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------------------
-extern char glob_log0[max_global_filename_length];
+F8API extern char glob_log0[max_global_filename_length];
 typedef SingleLogger<glob_log0> GlobalLogger;
 
 //-------------------------------------------------------------------------------------------------

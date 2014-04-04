@@ -151,8 +151,9 @@ struct FieldTrait
 	    \param os stream to send to
 	    \param what FieldTrait
 	    \return stream */
-	friend std::ostream& operator<<(std::ostream& os, const FieldTrait& what);
+	friend F8API std::ostream& operator<<(std::ostream& os, const FieldTrait& what);
 };
+F8API std::ostream& operator<<( std::ostream& os, const FieldTrait& what );
 
 //-------------------------------------------------------------------------------------------------
 /// Fast index lookup for FieldTrait
@@ -622,8 +623,9 @@ public:
 	    \param os stream to send to
 	    \param what FieldTraits
 	    \return stream */
-	friend std::ostream& operator<<(std::ostream& os, const FieldTraits& what);
+	friend F8API std::ostream& operator<<(std::ostream& os, const FieldTraits& what);
 };
+F8API std::ostream& operator<<( std::ostream& os, const FieldTraits& what );
 
 } // FIX8
 
