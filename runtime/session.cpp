@@ -945,6 +945,7 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		modify_outbound(msg);
 		char output[MAX_MSG_LENGTH + HEADER_CALC_OFFSET], *ptr(output);
 		size_t enclen(msg->encode(&ptr));
+		const char *optr(ptr);
 		if (msg->get_end_of_batch())
 		{
 			if (!_batchmsgs_buffer.empty())
@@ -964,7 +965,7 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 			_last_sent.now();
 
 			if (_plogger && _plogger->has_flag(Logger::outbound))
-				plog(ptr);
+				plog(optr);
 
 			//cout << "send_process" << endl;
 
@@ -989,6 +990,9 @@ bool Session::send_process(Message *msg) // called from the connection (possibly
 		else
 		{
 			_batchmsgs_buffer.append(ptr);
+			if (_plogger && _plogger->has_flag(Logger::outbound))
+				plog(ptr);
+
 			if (!is_dup)
 			{
 				if (!msg->get_custom_seqnum() && !msg->get_no_increment() && msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET)

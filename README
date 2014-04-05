@@ -27,6 +27,10 @@ Features
 * Fix8 offers message recycling and a meta-data aware test harness.
   Incorporates lock free queues, atomics and many other modern techniques.
 
+* Leverage standard components. Fix8 optionally uses industry recognised components for many important functions,
+  including Poco, TBB, Redis, Memcached, BerkeleyDB, Fastflow, Google Test, Google Performance Tools, Doxygen
+  and more. We didn't reinvent the wheel.
+
 * Fix8 contains a built-in unit test framework that's being continually revised and extended.
   Fix8 also has a metadata driven test harness that can be scripted to support captured or canned data playback.
 

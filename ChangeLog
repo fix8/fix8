@@ -1,8 +1,8 @@
-* Tue Apr 01 2014 David L. Dight <fix@fix8.org> 1.1.0
+* Sun Apr 06 2014 David L. Dight <fix@fix8.org> 1.1.0
 - Fixed Jira tickets FX-223, FX-222, FX-221, FX-219, FX-216, FX-214, FX-213, FX-212, FX-211, FX-209,
 							FX-206, FX-205, FX-204, FX-200, FX-198, FX-193, FX-192, FX-191, FX-189, FX-187,
 							FX-185, FX-183, FX-180, FX-178, FX-177, FX-175, FX-184, FX-224, FX-225, FX-226,
-							FX-227, FX-203
+							FX-227, FX-203, FX-230
 - Fixed Win64 build failed with seqnum mismatch
 - Fixed f8c compiler crashes if schema file not found
 - Fixed Logfile creation should handle new paths
@@ -35,6 +35,7 @@
 - Added permit alternate source/header extensions when generating code
 - Added generic access to key/value pair put() and get() in Persister
 - Added precompiled header to f8c generated files
+- Fixed f8print will not decode f8test runs properly
 
 * Thu Jan 16 2014 David L. Dight <fix@fix8.org> 1.0.0
 - Our first official GA release
