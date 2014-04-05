@@ -190,14 +190,13 @@ int main(int argc, char **argv)
 	unsigned msgs(0);
 	MessageCount *mc(summary ? new MessageCount : 0);
 
-	const int bufsz(4096);
-	char buffer[bufsz];
+	char buffer[MAX_MSG_LENGTH];
 
 	try
 	{
 		while (!ifs().eof() && !term_received)
 		{
-			ifs().getline(buffer, bufsz);
+			ifs().getline(buffer, MAX_MSG_LENGTH);
 			if (buffer[0])
 			{
 				scoped_ptr<Message> msg(Message::factory(TEX::ctx(), buffer + offset));
