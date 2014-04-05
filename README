@@ -179,7 +179,7 @@ You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoc
 	% make
 	% make install
 
-If you are using clang, you may also need the following switch with configure:
+If you are using clang and it complains about no-var-tracking compiler switches, you may also need the following switch with configure:
 
 	% ./configure --enable-toggleassignmentvars=no
 

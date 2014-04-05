@@ -137,7 +137,7 @@ ostream *open_ofile(const string& odir, const string& fname, string& target);
 void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ostream& ost_cpp);
 const string& mkel(const string& base, const string& compon, string& where);
 const string& filepart(const string& source, string& where);
-void generate_preamble(ostream& to, const string& fname, bool donotedit=true);
+void generate_preamble(ostream& to, const string& fname, bool isheader, bool donotedit=true);
 void generate_includes(ostream& to);
 unsigned parse_groups(MessageSpec& ritr, const string& name,
 	const FieldToNumMap& ftonSpec, FieldSpecMap& fspec, XmlElement::XmlSet& grplist,
@@ -946,14 +946,14 @@ int process(XmlElement& xf, Ctxt& ctxt)
    process_group_ordering(globmap);
 
 	// output file preambles
-	generate_preamble(osu_hpp, ctxt._out[Ctxt::router_hpp].first.second);
+	generate_preamble(osu_hpp, ctxt._out[Ctxt::router_hpp].first.second, true);
 	osu_hpp << "#ifndef " << bintoaschex(ctxt._out[Ctxt::router_hpp].first.second) << endl;
 	osu_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::router_hpp].first.second) << endl << endl;
 	osu_hpp << _csMap.find_ref(cs_start_namespace) << endl;
 	osu_hpp << "namespace " << ctxt._fixns << " {" << endl;
 	osu_hpp << endl << _csMap.find_ref(cs_divider) << endl;
 
-	generate_preamble(osc_hpp, ctxt._out[Ctxt::classes_hpp].first.second);
+	generate_preamble(osc_hpp, ctxt._out[Ctxt::classes_hpp].first.second, true);
 	osc_hpp << "#ifndef " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl;
 	osc_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::classes_hpp].first.second) << endl << endl;
 	osc_hpp << _csMap.find_ref(cs_start_namespace) << endl;
@@ -966,7 +966,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_hpp << "class " << ctxt._clname << "_Router;" << endl;
 	osc_hpp << endl << _csMap.find_ref(cs_divider) << endl;
 
-	generate_preamble(osc_cpp, ctxt._out[Ctxt::classes_cpp].first.second);
+	generate_preamble(osc_cpp, ctxt._out[Ctxt::classes_cpp].first.second, false);
 	osc_cpp << _csMap.find_ref(cs_generated_includes) << endl;
    generate_includes(osc_cpp);
 	osc_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first.second << '"' << endl;
@@ -978,7 +978,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_cpp << _csMap.find_ref(cs_start_anon_namespace) << endl << endl;
 	osc_cpp << _csMap.find_ref(cs_divider) << endl;
 
-	generate_preamble(osr_cpp, ctxt._out[Ctxt::traits_cpp].first.second);
+	generate_preamble(osr_cpp, ctxt._out[Ctxt::traits_cpp].first.second, false);
 	osr_cpp << _csMap.find_ref(cs_generated_includes) << endl;
    generate_includes(osr_cpp);
 	osr_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first.second << '"' << endl;
@@ -1203,7 +1203,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	if (!gen_classes.empty())
 	{
 		bool is_server(gen_classes == "server");
-		generate_preamble(oss_hpp, ctxt._out[Ctxt::session_hpp].first.second, false);
+		generate_preamble(oss_hpp, ctxt._out[Ctxt::session_hpp].first.second, true, false);
 		oss_hpp << "#ifndef " << bintoaschex(ctxt._out[Ctxt::session_hpp].first.second) << endl;
 		oss_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::session_hpp].first.second) << endl;
 		oss_hpp << endl << _csMap.find_ref(cs_divider) << endl;
@@ -1283,14 +1283,14 @@ int process(XmlElement& xf, Ctxt& ctxt)
 // ================================= Field processing =====================================
 
 	// output file preambles
-	generate_preamble(ost_hpp, ctxt._out[Ctxt::types_hpp].first.second);
+	generate_preamble(ost_hpp, ctxt._out[Ctxt::types_hpp].first.second, true);
 	ost_hpp << "#ifndef " << bintoaschex(ctxt._out[Ctxt::types_hpp].first.second) << endl;
 	ost_hpp << "#define " << bintoaschex(ctxt._out[Ctxt::types_hpp].first.second) << endl << endl;
 	ost_hpp << _csMap.find_ref(cs_start_namespace) << endl;
 	ost_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	ost_hpp << endl << _csMap.find_ref(cs_divider) << endl;
-	generate_preamble(ost_cpp, ctxt._out[Ctxt::types_cpp].first.second);
+	generate_preamble(ost_cpp, ctxt._out[Ctxt::types_cpp].first.second, false);
 	ost_cpp << _csMap.find_ref(cs_generated_includes) << endl;
    generate_includes(ost_cpp);
 	ost_cpp << "#include \"" << ctxt._out[Ctxt::types_hpp].first.second << '"' << endl;
