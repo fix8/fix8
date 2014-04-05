@@ -416,7 +416,7 @@ string insert_year()
 }
 
 //-------------------------------------------------------------------------------------------------
-void generate_preamble(ostream& to, const string& fname, bool donotedit)
+void generate_preamble(ostream& to, const string& fname, bool isheader, bool donotedit)
 {
 	to << _csMap.find_ref(cs_divider) << endl;
 	string result;
@@ -427,14 +427,14 @@ void generate_preamble(ostream& to, const string& fname, bool donotedit)
 	}
 	to << _csMap.find_ref(cs_copyright) << insert_year() << _csMap.find_ref(cs_copyright2) << endl;
 	to << _csMap.find_ref(cs_divider) << endl;
-	if (!precompHdr.empty())
+	if (!precompHdr.empty() && !isheader)
 	{
-		to << "#if defined _MSC_VER" << endl << "#include ";
+		to << "#include ";
 		if (precompHdr[0] == '<')
 			to << precompHdr;
 		else
 			to << '"' << precompHdr << '"';
-		to << endl << "#endif" << endl;
+		to << endl;
 	}
 	to << "#include " << (incpath ? "<fix8/" : "<") << "f8config.h" << '>' << endl;
 	if (!nocheck)

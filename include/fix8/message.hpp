@@ -892,7 +892,8 @@ public:
 
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object
-	    \param from pointer to raw buffer containing Fix message
+	    \param from pointer to raw buffer containing Fix message one complete message string only,
+				no trailing or leading characters
 	    \param no_chksum if true, do not perform chksum verification
 	    \param permissive_mode if true, ignore unknown fields
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
@@ -904,7 +905,8 @@ public:
 
 	/*! Using supplied metatdata context and raw input buffer, decode and create appropriate Fix message
 	    \param ctx reference to metadata object
-	    \param from reference to string raw buffer containing Fix message
+	    \param from reference to string raw buffer containing Fix message; one complete message string only,
+				no trailing or leading characters
 	    \param no_chksum if true, do not perform chksum verification
 	    \param permissive_mode if true, ignore unknown fields
 	    \return pointer to newly created Message (which will be a super class of the generated type) */

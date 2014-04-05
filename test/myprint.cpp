@@ -247,7 +247,7 @@ void print_usage()
 	um.add('v', "version", "print version then exit");
 	um.add('o', "offset", "bytes to skip on each line before parsing FIX message");
 	um.add('s', "summary", "summary, generate message summary");
-	um.add('c', "context", "print the f8c generated beginstring and version");
+	um.add('c', "context", "print the f8c generated beginstring and version. Use this to check which FIX version this build will work with.");
 	um.add("e.g.");
 	um.add("@f8print myfix_server_protocol.log");
 	um.add("@f8print f8print -s -o 12 myfix_client_protocol.log");
