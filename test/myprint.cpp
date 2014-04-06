@@ -190,14 +190,13 @@ int main(int argc, char **argv)
 	unsigned msgs(0);
 	MessageCount *mc(summary ? new MessageCount : 0);
 
-	const int bufsz(4096);
-	char buffer[bufsz];
+	char buffer[MAX_MSG_LENGTH];
 
 	try
 	{
 		while (!ifs().eof() && !term_received)
 		{
-			ifs().getline(buffer, bufsz);
+			ifs().getline(buffer, MAX_MSG_LENGTH);
 			if (buffer[0])
 			{
 				scoped_ptr<Message> msg(Message::factory(TEX::ctx(), buffer + offset));
@@ -248,7 +247,7 @@ void print_usage()
 	um.add('v', "version", "print version then exit");
 	um.add('o', "offset", "bytes to skip on each line before parsing FIX message");
 	um.add('s', "summary", "summary, generate message summary");
-	um.add('c', "context", "print the f8c generated beginstring and version");
+	um.add('c', "context", "print the f8c generated beginstring and version. Use this to check which FIX version this build will work with.");
 	um.add("e.g.");
 	um.add("@f8print myfix_server_protocol.log");
 	um.add("@f8print f8print -s -o 12 myfix_client_protocol.log");

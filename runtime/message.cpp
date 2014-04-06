@@ -244,7 +244,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_c
 	msg->check_set_rlm(fitr->second);
 #endif
 
-	const char *pp(from.data() + from.size() - 7);
+	const char *pp(from.data() + from.size() - 7);	 // FIXME: assumes supplied string is one complete message only
 	if (*pp != '1' || *(pp + 1) != '0') // 10=XXX^A
 		throw InvalidMessage(from);
 	if (!no_chksum) // permit chksum calculation to be skipped

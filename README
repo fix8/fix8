@@ -27,6 +27,10 @@ Features
 * Fix8 offers message recycling and a meta-data aware test harness.
   Incorporates lock free queues, atomics and many other modern techniques.
 
+* Leverage standard components. Fix8 optionally uses industry recognised components for many important functions,
+  including Poco, TBB, Redis, Memcached, BerkeleyDB, Fastflow, Google Test, Google Performance Tools, Doxygen
+  and more. We didn't reinvent the wheel.
+
 * Fix8 contains a built-in unit test framework that's being continually revised and extended.
   Fix8 also has a metadata driven test harness that can be scripted to support captured or canned data playback.
 
@@ -175,7 +179,7 @@ You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoc
 	% make
 	% make install
 
-If you are using clang, you may also need the following switch with configure:
+If you are using clang and it complains about no-var-tracking compiler switches, you may also need the following switch with configure:
 
 	% ./configure --enable-toggleassignmentvars=no
 

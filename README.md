@@ -24,6 +24,8 @@ and framework; and a set of complete client/server test applications.
 
 * Fix8 is a complete C++ FIX framework, with client/server session and connection classes (including SSL); support for the standard FIX field types; FIX printer, async logger, async message persister and XML configuration classes.
 
+* Leverage standard components. Fix8 optionally uses industry recognised components for many important functions, including Poco, TBB, Redis, Memcached, BerkeleyDB, Fastflow, Google Test, Google Performance Tools, Doxygen and more. We didn't reinvent the wheel.
+
 * Fix8 statically supports nested components and groups to any depth. The Fix8 compiler and runtime library takes the pain out of using repeating groups.
 
 * Fix8 applications are fast. On production level hardware, client NewOrderSingle encode latency is now 2.1us, and ExecutionReport decode 3.2us. Without the framework overhead, NewOrderSingle encode latency is 1.4us. This is being continually improved.
@@ -176,7 +178,7 @@ You **must** have [glibtool, autotools](http://www.jattcode.com/installing-autoc
 	% make
 	% make install
 
-If you are using clang, you may also need the following switch with configure:
+If you are using clang and it complains about no-var-tracking compiler switches, you may also need the following switch with configure:
 
 	% ./configure --enable-toggleassignmentvars=no
 
