@@ -259,7 +259,7 @@ public:
 	    \param from start at sequence number
 	    \param to end sequence number
 	    \param session session containing callback method
-	    \param callback method it call with each retrieved message
+	    \param callback method to call with each retrieved message
 	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
@@ -322,7 +322,7 @@ public:
 	    \param from start at sequence number
 	    \param to end sequence number
 	    \param session session containing callback method
-	    \param callback method it call with each retrieved message
+	    \param callback method to call with each retrieved message
 	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
@@ -426,7 +426,7 @@ public:
 	    \param from start at sequence number
 	    \param to end sequence number
 	    \param session session containing callback method
-	    \param callback method it call with each retrieved message
+	    \param callback method to call with each retrieved message
 	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
@@ -442,7 +442,6 @@ public:
 	    \return true on success */
 	virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
 
-	/// Stop the persister thread.
 	/*! Find the nearest highest sequence number from the sequence to last provided.
 	    \param requested sequence number to start
 	    \param last highest sequence
@@ -496,7 +495,7 @@ public:
 	    \param from start at sequence number
 	    \param to end sequence number
 	    \param session session containing callback method
-	    \param callback method it call with each retrieved message
+	    \param callback method to call with each retrieved message
 	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
@@ -652,7 +651,7 @@ public:
 	    \param from start at sequence number
 	    \param to end sequence number
 	    \param session session containing callback method
-	    \param callback method it call with each retrieved message
+	    \param callback method to call with each retrieved message
 	    \return number of messages retrieved */
 	virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
