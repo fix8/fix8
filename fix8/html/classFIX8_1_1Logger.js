@@ -2,10 +2,10 @@ var classFIX8_1_1Logger =
 [
     [ "LogElement", "structFIX8_1_1Logger_1_1LogElement.html", "structFIX8_1_1Logger_1_1LogElement" ],
     [ "LogFlags", "classFIX8_1_1Logger.html#a478225c58aaf0244c2b1ada179d61eb4", null ],
-    [ "RevThreadCodes", "classFIX8_1_1Logger.html#a288d6d01354fe848f48150f3e656076e", null ],
-    [ "ThreadCodes", "classFIX8_1_1Logger.html#ac5f6d1d28f18cb2ebc868dfc1efdf40b", null ],
-    [ "rotation_default", "classFIX8_1_1Logger.html#a561ddce2f84ca1db284f33001023a756ac734d9dd38106ba8e9b80a243b251fe2", null ],
-    [ "max_rotation", "classFIX8_1_1Logger.html#a561ddce2f84ca1db284f33001023a756aca181bd419c261d0dde6df584a079025", null ],
+    [ "RevThreadCodes", "classFIX8_1_1Logger.html#a4dc8c2daa42efce7dc755dea4d3e7db0", null ],
+    [ "ThreadCodes", "classFIX8_1_1Logger.html#a5adf41b0cd8a8d9ecc6092509edd4cdc", null ],
+    [ "rotation_default", "classFIX8_1_1Logger.html#a869e3057ba0856fb3780b4621486c6cbac734d9dd38106ba8e9b80a243b251fe2", null ],
+    [ "max_rotation", "classFIX8_1_1Logger.html#a869e3057ba0856fb3780b4621486c6cbaca181bd419c261d0dde6df584a079025", null ],
     [ "Flags", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736c", [
       [ "append", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca3d3bb2cf8aa48d1149f998933b2aa443", null ],
       [ "timestamp", "classFIX8_1_1Logger.html#af598c69563afde5b6ccc34cdb2ce736ca1ef54871de8a1398f024ad2f6376e8eb", null ],
@@ -22,11 +22,11 @@ var classFIX8_1_1Logger =
     ] ],
     [ "Logger", "classFIX8_1_1Logger.html#a6898b6f924a43a1bcec5ea0a1ae8fcde", null ],
     [ "~Logger", "classFIX8_1_1Logger.html#ad970bc9c6ab4a80b42bda329eb4376c6", null ],
+    [ "cancellation_token", "classFIX8_1_1Logger.html#a6692c3153c508de64be236e735f4cbe2", null ],
     [ "flush", "classFIX8_1_1Logger.html#a5cc08473729523bb4bde48459f2ac468", null ],
     [ "get_stream", "classFIX8_1_1Logger.html#a8aee5d01bebcad62a5eae8f613233369", null ],
-    [ "get_thread_code", "classFIX8_1_1Logger.html#a7d54594857fa5bbd58f465476e1c6a81", null ],
+    [ "get_thread_code", "classFIX8_1_1Logger.html#a0cf65472f9854dbf6fb3d2b66f0f6e29", null ],
     [ "has_flag", "classFIX8_1_1Logger.html#a0eb3d8d99829f835c85a27745d8f4663", null ],
-    [ "kill", "classFIX8_1_1Logger.html#ab0e04af2b8ac7360e7796223a8e034ab", null ],
     [ "operator()", "classFIX8_1_1Logger.html#aa11f47142886e4dd38230ad63ce0377f", null ],
     [ "purge_thread_codes", "classFIX8_1_1Logger.html#a8175e14a66ef836973ac504cf04170ef", null ],
     [ "rotate", "classFIX8_1_1Logger.html#a96598126c3eb87a72b3581a223b7b489", null ],
@@ -42,7 +42,7 @@ var classFIX8_1_1Logger =
     [ "_osequence", "classFIX8_1_1Logger.html#ac82651d126acdac512113beee695bb11", null ],
     [ "_rev_thread_codes", "classFIX8_1_1Logger.html#a1a7b69255874cb0e2ae4629858c93a02", null ],
     [ "_sequence", "classFIX8_1_1Logger.html#ab8da984b4ce7f89a11653dcff6222b6b", null ],
-    [ "_stopping", "classFIX8_1_1Logger.html#a7f67dc0117481b760c6c62b04f6a98de", null ],
+    [ "_stopping", "classFIX8_1_1Logger.html#a7182b604a4536f85d71b21b18a35ce91", null ],
     [ "_thread", "classFIX8_1_1Logger.html#a38bb01364574b762666b588ebf5b0280", null ],
     [ "_thread_codes", "classFIX8_1_1Logger.html#a476ab5cc45fc17d77fcf89b94c296970", null ]
 ];

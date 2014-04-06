@@ -1,10 +1,10 @@
 var classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d =
 [
+    [ "_fnum", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#adbc120d4eb454181b61c98afaaa4a9baa5d98df8c2dabe523ccbb61532d9afe21", null ],
     [ "NoComplexEventTimes", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#a9fb7e6a7605ed24cf86a9fd9de01ad70", null ],
     [ "~NoComplexEventTimes", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#ad9cf6271043085bb0af843cbaf901b6a", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#aee5494a3c08e9172ba5f3bbfe074c584", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#a897d96d35437810323be6184fc12cf96", null ],
-    [ "_fnum", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#a59fc5448695fc8ba409466bd628e355f", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#a65ed2c2dfacaba14afe5e5d6d84b080f", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#a3002269ae1d4686aed40c0b953965fb6", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_1N2568ce2ae555f51fb1de9d03be81778d.html#a1a9bd6390eeb3b200fc7a65a2d75b05c", null ]

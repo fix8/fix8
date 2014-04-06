@@ -1,10 +1,10 @@
 var classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f =
 [
+    [ "_fnum", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a306c7bb9026bcedd641079ba83ef0bdbac0748e744f71a04bc5ec0072effb1948", null ],
     [ "NoComplexEventTimes", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a04c9cd516a596867bca5a7fa5f961220", null ],
     [ "~NoComplexEventTimes", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a545102fb8cf15fa3e632b15aa566c2df", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a1758332c622bfbd96618e400fe6c2197", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a01e0a895567ea1c405bae47afb7390d8", null ],
-    [ "_fnum", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a8f637e06b10803477f686a79a3edb9ea", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a9b4a030bbf767046567e52b4e710335e", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#a214d470a2490de01fa446d308d722567", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoC7ea558b3809044d131953afe9d602f7f.html#ad7bfaa2fb69fed5ccadaa560a0ef00e6", null ]

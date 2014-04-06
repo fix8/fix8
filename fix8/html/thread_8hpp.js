@@ -2,6 +2,7 @@ var thread_8hpp =
 [
     [ "reference_wrapper", "classFIX8_1_1reference__wrapper.html", "classFIX8_1_1reference__wrapper" ],
     [ "_dthreadcore", "classFIX8_1_1__dthreadcore.html", "classFIX8_1_1__dthreadcore" ],
+    [ "dthread_cancellation_token", "structFIX8_1_1dthread__cancellation__token.html", "structFIX8_1_1dthread__cancellation__token" ],
     [ "dthread", "classFIX8_1_1dthread.html", "classFIX8_1_1dthread" ],
     [ "_helper", "classFIX8_1_1dthread_1_1__helper.html", "classFIX8_1_1dthread_1_1__helper" ],
     [ "dthread<>", "classFIX8_1_1dthread_3_4.html", "classFIX8_1_1dthread_3_4" ],

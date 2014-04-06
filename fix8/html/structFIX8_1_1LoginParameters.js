@@ -1,7 +1,7 @@
 var structFIX8_1_1LoginParameters =
 [
     [ "LoginParameters", "structFIX8_1_1LoginParameters.html#a73da2512c53dbc0ecdd22f19be05b9b7", null ],
-    [ "LoginParameters", "structFIX8_1_1LoginParameters.html#a6c18b91052718d9c90ddfde3f16e451a", null ],
+    [ "LoginParameters", "structFIX8_1_1LoginParameters.html#ab8386a89a75cc9ecbc08921c000f5e94", null ],
     [ "LoginParameters", "structFIX8_1_1LoginParameters.html#a2aa7085b17417ed3696ebd826dea313a", null ],
     [ "operator=", "structFIX8_1_1LoginParameters.html#ac81740865000459b9496438df2688835", null ],
     [ "_always_seqnum_assign", "structFIX8_1_1LoginParameters.html#aeea540fe15f77a8cb0aa77d2c3885c53", null ],
@@ -10,6 +10,7 @@ var structFIX8_1_1LoginParameters =
     [ "_hb_int", "structFIX8_1_1LoginParameters.html#a2a3eb76e55a5922d31cd373e769fd41c", null ],
     [ "_login_retries", "structFIX8_1_1LoginParameters.html#a655e9cca70befcef8ac0846995ea26a2", null ],
     [ "_login_retry_interval", "structFIX8_1_1LoginParameters.html#ab113e18f1416194169393b6f3224847b", null ],
+    [ "_login_schedule", "structFIX8_1_1LoginParameters.html#a86ab3ecd3d8c560f3dce6d5f9fe1bbcf", null ],
     [ "_no_chksum_flag", "structFIX8_1_1LoginParameters.html#a93093d839b87f7d7f783c289380b42ee", null ],
     [ "_pem_path", "structFIX8_1_1LoginParameters.html#a8c25bc6c9d34e5e348317aac1b5eca33", null ],
     [ "_permissive_mode_flag", "structFIX8_1_1LoginParameters.html#a249e69d1bd272d0640412286b89a565d", null ],

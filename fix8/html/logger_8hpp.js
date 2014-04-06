@@ -11,6 +11,6 @@ var logger_8hpp =
     [ "BCLogger", "classFIX8_1_1BCLogger.html", "classFIX8_1_1BCLogger" ],
     [ "SingleLogger", "classFIX8_1_1SingleLogger.html", "classFIX8_1_1SingleLogger" ],
     [ "GlobalLogger", "logger_8hpp.html#a1beb48800ede87e560cf9b9861beb7f0", null ],
-    [ "max_global_filename_length", "logger_8hpp.html#a27994926f6936871625db686be6e5ea2", null ],
+    [ "max_global_filename_length", "logger_8hpp.html#a0f3311ae59b172590afbd844ef95892d", null ],
     [ "glob_log0", "logger_8hpp.html#a595619ea9e58f25f16ff139c53723175", null ]
 ];

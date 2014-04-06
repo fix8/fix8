@@ -1,10 +1,10 @@
 var classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8 =
 [
+    [ "_fnum", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8.html#a2ff2b8bc34493ae8ac9486406d1af5eda277a1b23a432f986d9627fc881dc635f", null ],
     [ "NoComplexEventTimes", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8.html#a679d022af11dc153ba2cc25dac302944", null ],
     [ "~NoComplexEventTimes", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8.html#a850575ffc13792d03c9a295655eddece", null ],
     [ "create_group", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8.html#a5c0f00f89cd9fc39409ddaa0d21942d4", null ],
     [ "get_msgtype", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8.html#a8e6d35274fedeecfe055efbdfa925b8e", null ],
-    [ "_fnum", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8.html#ab6a4cdfb9c5aa0673a50da37101f028a", null ],
     [ "_ftha", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8.html#a423e40e593eece1aa4addf85b40c16e0", null ],
     [ "_msgtype", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8.html#a344723f7e32d1a7f66a5d98fddd39539", null ],
     [ "_traits", "classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoComplexEvents_1_106476d2455dba0a14c3a30c3b0599fe8.html#a08e33b2e9f3405192d24ce2805b2bc91", null ]

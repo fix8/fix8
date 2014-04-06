@@ -19,7 +19,7 @@ var classFIX8_1_1MessageBase =
     [ "copy_legal", "classFIX8_1_1MessageBase.html#a1ce4da0089afb03b17ec13f480fafa65", null ],
     [ "decode", "classFIX8_1_1MessageBase.html#ace7b1ee5d0b85712809a924b69dd7c4d", null ],
     [ "decode_group", "classFIX8_1_1MessageBase.html#a2bc1d25a3ed42195165b31747e0e71d6", null ],
-    [ "encode", "classFIX8_1_1MessageBase.html#a6dddad44c0281083018292422724f44f", null ],
+    [ "encode", "classFIX8_1_1MessageBase.html#acbf190dde2be87a5604f08c7c490c649", null ],
     [ "encode", "classFIX8_1_1MessageBase.html#aac521801b9e2f11fb36ffc71feb980da", null ],
     [ "encode_group", "classFIX8_1_1MessageBase.html#a671358815dee320e1791a33d1994b7d3", null ],
     [ "encode_group", "classFIX8_1_1MessageBase.html#abaf8f8ebae9c26ac1df9668d2b3c187f", null ],

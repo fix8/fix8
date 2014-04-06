@@ -2,9 +2,10 @@ var classFIX8_1_1FIXWriter =
 [
     [ "FIXWriter", "classFIX8_1_1FIXWriter.html#a4d27f4d2490da75b25015e5892463ba1", null ],
     [ "~FIXWriter", "classFIX8_1_1FIXWriter.html#a3d2612fbcd4ea437476569ffc2257bad", null ],
-    [ "execute", "classFIX8_1_1FIXWriter.html#a9395a902dec1c7575a2a915e0eb93409", null ],
+    [ "execute", "classFIX8_1_1FIXWriter.html#a42e7f54fac5a68f8e918aa9cf5a046b3", null ],
     [ "join", "classFIX8_1_1FIXWriter.html#a13176a9f9f6bf74b908805626bbf3c7d", null ],
     [ "poll", "classFIX8_1_1FIXWriter.html#a9bf9b87b70d0f1ca2d6aa0dc90bc2432", null ],
+    [ "quit", "classFIX8_1_1FIXWriter.html#ac2966d608d9576f56fd828e36e1492e0", null ],
     [ "send", "classFIX8_1_1FIXWriter.html#a342ad299aedb98f6339a3e60a0b530b5", null ],
     [ "start", "classFIX8_1_1FIXWriter.html#a92503dc513d2c24021e89dceaa879acc", null ],
     [ "stop", "classFIX8_1_1FIXWriter.html#acaa271b6f8da55c941fc62b03c3a0133", null ],

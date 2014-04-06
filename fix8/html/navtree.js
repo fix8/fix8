@@ -24,7 +24,7 @@ var NAVTREE =
         [ "Variables", "functions_vars.html", "functions_vars" ],
         [ "Typedefs", "functions_type.html", null ],
         [ "Enumerations", "functions_enum.html", null ],
-        [ "Enumerator", "functions_eval.html", null ],
+        [ "Enumerator", "functions_eval.html", "functions_eval" ],
         [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ],
@@ -32,11 +32,10 @@ var NAVTREE =
       [ "File List", "files.html", "files" ],
       [ "File Members", "globals.html", [
         [ "All", "globals.html", "globals_dup" ],
-        [ "Functions", "globals_func.html", "globals_func" ],
+        [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
-        [ "Enumerator", "globals_eval.html", null ],
-        [ "Macros", "globals_defs.html", "globals_defs" ]
+        [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
   ] ]
@@ -45,117 +44,104 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "FIX50SP2_8xml.html",
-"Myfix__types_8hpp.html#a0b551868a720e3032123a52f88f1f753",
-"Myfix__types_8hpp.html#a192b436bcc1348e993c4c26d8169f3e9",
-"Myfix__types_8hpp.html#a27ec878f1072523cbaf9aace40f52331",
-"Myfix__types_8hpp.html#a35e74ddd4d2626807cea8afd39754af6",
-"Myfix__types_8hpp.html#a43b78827e91aefb4bdd15b44283f6bef",
-"Myfix__types_8hpp.html#a4f5050b0d8e2ccacd1e3dfdf7a70d4d6",
-"Myfix__types_8hpp.html#a5d3da39c6f30045d08fceeae791b93c8",
-"Myfix__types_8hpp.html#a6b7f55459b110a69545b03bbafc649e4",
-"Myfix__types_8hpp.html#a78bd2ec6e70d8142c2494bd88776200b",
-"Myfix__types_8hpp.html#a860c03cf5957d072d1a2768a696bbbe5",
-"Myfix__types_8hpp.html#a92a523129acb3dda5216475d5be27374",
-"Myfix__types_8hpp.html#a9f709aa4f3bc7191cb089d07ea768a78",
-"Myfix__types_8hpp.html#aac60774dd5b62999074d426c9224d8f5",
-"Myfix__types_8hpp.html#ab913b06efe5f749b1ed74093582f9668",
-"Myfix__types_8hpp.html#ac60c2957107e6464dfc5a885ca4c19ed",
-"Myfix__types_8hpp.html#ad31a9efd51461e68fa585fc60bb8fc73",
-"Myfix__types_8hpp.html#ae0b6252be9b5d0755184cb09b42ea570",
-"Myfix__types_8hpp.html#aef4e0678589dc3d411c99b079242717b",
-"Myfix__types_8hpp.html#afb75c35179196c701db38d1375599cfd",
-"Perf__types_8hpp.html#a7523b00cfe0ed2606e30979c1d23c37b",
-"atomic-ppc_8h.html#ad58c2b976c21094e226d00bf67ba4cd0",
-"classFIX8_1_1ConsoleMenu.html#a7ca30ac342ef4e3d4d2d14255b3ad93f",
-"classFIX8_1_1Field_3_01char_00_01field_01_4.html#a14c65a01c8bb60a1081445bca59161f6",
-"classFIX8_1_1MessageBase.html#a061999433f017d186c5ccb451424b11a",
-"classFIX8_1_1SessionID.html#a0973dc2e178dfbf64236fe27dab0190b",
-"classFIX8_1_1TEX_1_1Advertisement_1_1NoLegs_1_1NoLegSecurityAltID.html#a5fcc24b7b7ca02f85ce49e7c106cd917",
-"classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoInstrAttrib.html#a38ca0cb462354dd54ca560d2942c0f33",
-"classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html",
-"classFIX8_1_1TEX_1_1AllocationReportAck_1_1NoPartyIDs_1_1NoPartySubIDs.html",
-"classFIX8_1_1TEX_1_1AllocationReport_1_1NoStipulations.html#ae0dbeb4cbdc247c5deffa26c45760de7",
-"classFIX8_1_1TEX_1_1AssignmentReport_1_1NoPartyIDs.html",
-"classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a3ecad81101686b3f2069b30ae0f9bda1",
-"classFIX8_1_1TEX_1_1CollateralInquiryAck_1_1NoPartyIDs_1_1NoPartySubIDs.html#a23a6818b74e63532b6cb5ce4167bbf96",
-"classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html",
-"classFIX8_1_1TEX_1_1CollateralReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#af4d5fbfa958e0b76b5853ba74d1b4f3d",
-"classFIX8_1_1TEX_1_1CollateralResponse_1_1NoEvents.html#ae789c6e044d934b55bbdaf30cbdb912d",
-"classFIX8_1_1TEX_1_1Confirmation_1_1NoDlvyInst_1_1NoSettlPartyIDs.html",
-"classFIX8_1_1TEX_1_1ContraryIntentionReport_1_1NoExpiration.html#aeff1970d2def5edbb1efae92502abde8",
-"classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoSides_1_1NoPartyIDs_1_1NoPartySubIDs.html#afbe58438b9600c639c75290c632fa568",
-"classFIX8_1_1TEX_1_1CrossOrderCancelRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac0d5c3cfe5a1ca91d36b8f0a091121a5",
-"classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoMarketSegments_1_1NoTradingSessionRules_1_1NoTimeInForceRules.html#adb322cbcb4b0c6241017b29cfd44a325",
-"classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoMarketSegments_1_1NoTradingSessionRules_1_1NoExecInstRules.html#a7028045a47be3188f1d205695b2ce60d",
-"classFIX8_1_1TEX_1_1DontKnowTrade_1_1NoLegs_1_1NoLegSecurityAltID.html#a5140486f7bf543719cdf0a0384e0ce15",
-"classFIX8_1_1TEX_1_1ExecutionAcknowledgement_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a7c9f38bf4091229613a804931f6684b6",
-"classFIX8_1_1TEX_1_1ExecutionReport_1_1NoLegs.html#abcaa5fc89f57715413fc6e6de7eac14a",
-"classFIX8_1_1TEX_1_1IOI_1_1NoInstrumentParties.html#a0cd026617bb0a2d29785787f6e26c5db",
-"classFIX8_1_1TEX_1_1ListStrikePrice_1_1NoStrikes_1_1NoInstrumentParties.html#a6cd1fdf20530477cf8d0e848cfb3b6f7",
-"classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoStatsIndicators.html#aefd7cf72bced996992f48de8599f0e67",
-"classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUndlyInstrumentParti24c8a6feba8472b33b5b52667e31b60e.html#ad953c9a1a53eff7bad4288edcd47f8ab",
-"classFIX8_1_1TEX_1_1MarketDefinitionUpdateReport_1_1NoOrdTypeRules.html#a0c8b2cae81d710a7e5e8831e4309d153",
-"classFIX8_1_1TEX_1_1MassQuote_1_1NoPartyIDs.html#a1813b033aa61e47b62cef21d23a1ca3d",
-"classFIX8_1_1TEX_1_1MultilegOrderCancelReplace_1_1NoLegs_1_1NoLegAllocs.html",
-"classFIX8_1_1TEX_1_1Myfix__Router.html#ace158c4a14d468b26c0ec79d32257945",
-"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoUnderlyings.html#a0b799888f2789758d26b926d6fc8ef4a",
-"classFIX8_1_1TEX_1_1NewOrderList_1_1NoRootPartyIDs_1_1NoRootPartySubIDs.html#a4d7b177112131693d9e21a30304ca3ee",
-"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a2280ec68f0c79d4d029184e403354c13",
-"classFIX8_1_1TEX_1_1News_1_1NoNewsRefIDs.html#ae808dc8f86e1380006e85493fe5e5acf",
-"classFIX8_1_1TEX_1_1OrderCancelReplaceRequest_1_1NoSecurityAltID.html#af40b502320f716ca88dbc5d3a4dff74c",
-"classFIX8_1_1TEX_1_1OrderMassActionReport_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#aa81134ac32f19f0913d2ad2b0f942d67",
-"classFIX8_1_1TEX_1_1OrderMassCancelReport.html#aab0fb83929a4183e1c5a9f7249379a4b",
-"classFIX8_1_1TEX_1_1OrderMassCancelRequest_1_1NoUnderlyingSecurityAltID.html#a9e07102d35a08d556de2ab5a05e669cc",
-"classFIX8_1_1TEX_1_1OrderStatusRequest_1_1NoSecurityAltID.html#a94321d6eec5523b2a8f53bd9b771b94e",
-"classFIX8_1_1TEX_1_1PartyDetailsListRequest.html#a92a1a41c7e1bc7d3c2b6fc7d492fa563",
-"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#a8376033fd1583b97879dec9c6355a0a2",
-"classFIX8_1_1TEX_1_1PositionReport_1_1NoInstrumentParties.html#a3bea8fa89022dc42f31f2f625070d45d",
-"classFIX8_1_1TEX_1_1QuoteCancel_1_1NoQuoteEntries_1_1NoLegs.html#a50c585bca128964edf108c389d36fbef",
-"classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoUnderlyings.html#a2d60a945ea92c5ab395b82fc5e7658e9",
-"classFIX8_1_1TEX_1_1QuoteRequest_1_1NoRelatedSym_1_1NoUnderlyings_1_1NoUnderlyingStips.html#af1307dab1b4ba1955468b29a721bb74e",
-"classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoComplexEvents.html#afd1c2e68ffe45af4f91d63f033ab25c8",
-"classFIX8_1_1TEX_1_1QuoteStatusRequest_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a9e08be424fca63d4b496af4065ee1b01",
-"classFIX8_1_1TEX_1_1Quote_1_1NoStipulations.html#ab3d681893bf9df88bf17bc1fcf22dd10",
-"classFIX8_1_1TEX_1_1RegistrationInstructions_1_1NoDistribInsts.html#ac8a097deac9b736d4d7b945d173518dc",
-"classFIX8_1_1TEX_1_1RequestForPositions_1_1NoEvents.html#a258a7a1029aad88cf4b0e2512ae8cca2",
-"classFIX8_1_1TEX_1_1SecurityDefinitionRequest_1_1NoStipulations.html#a87f6804feb6c9e6ca7141ee329f4977d",
-"classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoSecurityAltID.html#a57095746e7924786ecc51909230b4374",
-"classFIX8_1_1TEX_1_1SecurityDefinition_1_1NoSecurityAltID.html#a45e9324000fb5ad395cc16605221e966",
-"classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#a48c7b52ba204f9a55c9ce98ec22439c4",
-"classFIX8_1_1TEX_1_1SecurityList_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#a23755947c4ede974963d9edcdd159c1c",
-"classFIX8_1_1TEX_1_1SecurityStatusRequest.html",
-"classFIX8_1_1TEX_1_1SecurityStatus_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#afab7dd673aa566ab04fd1461512cc9e7",
-"classFIX8_1_1TEX_1_1SettlementObligationReport_1_1NoSettlOblig_1_1NoSecurityAltID.html#adf86644023b4853db84e6b3c0c608a02",
-"classFIX8_1_1TEX_1_1StreamAssignmentRequest_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoSecurityAltID.html#ac5abbd1ea2289c3c5f13fcbe61667a39",
-"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoSides_1_1NoPartyIDs.html#a112e18d868267452c8caa3305461f06b",
-"classFIX8_1_1TEX_1_1TradeCaptureReportRequestAck_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a3399f715ddddc7c9bca26af51fcbff38",
-"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoLegs_1_1NoLegStipulations.html",
-"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a974ca5936fa8cc8e9c61d89c75bce42a",
-"classFIX8_1_1TEX_1_1UserResponse.html#a633d38afa60a9979e1e13f615894c919",
-"classFIX8_1_1UTEST_1_1Email_1_1LinesOfText.html#a1514239b63e749af26fadf28436eefc8",
-"classFIX8_1_1UTEST_1_1MassQuote_1_1NoQuoteSets_1_1NoQuoteEntries.html#a053efe1b4ebfa94867352538bb654171",
-"classFIX8_1_1UTEST_1_1SecurityDefinition.html#a9462100cedfc73dcb5a81b207cc1b612",
-"classFIX8_1_1ebitset__r.html#aa619aa1c955a404c5313b43f6fd4485d",
-"classMyMenu.html#ab64647226fa0f4566edcdb477c90cbdf",
-"classff_1_1SWSR__Ptr__Buffer.html#adb9eafb6b9832b17e5a4091ecd6b3901",
-"classff_1_1ff__farm.html#aa699348b158006c2a17deb05e067b8a4",
-"classff_1_1ff__node.html#ace6c9c787c359639b63b578caab6ff38",
-"classff_1_1spinBarrier.html#ad341193132d6c7ee681edd4a94726a4a",
-"classff_1_1zmqOnDemand.html#a306256ffc114c23a34f3615c4a909350",
-"dnode_8hpp.html#afa0774b04170a93bf709443eeac461ba",
-"f8precomp_8cpp.html#ad6cc64c4f5bb4f11812fd270162e6891",
-"functions_func_0x71.html",
-"myfix_8cpp_source.html",
-"session_8hpp.html#a95240585037fdfcc9ac6ee61133cd4e8ab0c0b5e0904bbbaf07262d3b3de1dc6b",
-"structFIX8_1_1InvalidRepeatingGroup.html#abee3a3ca7c3ff4ff64d514f5f1db0512",
-"structff_1_1descriptor1__N.html#aa00abb5b384e64b8a352f3773937b00a",
-"utest__types_8hpp.html#a15a8c27520e799d2184bda0bbe6ddabf",
-"utest__types_8hpp.html#a4b6a268d720e4fc72d68e56425957e4f",
-"utest__types_8hpp.html#a87e472792f10c7237dcf49508d3de44c",
-"utest__types_8hpp.html#ac259df53dd11ede6f3daf0f86d85f62d",
-"utest__types_8hpp.html#af7d3a4ce8197bb0ef81178f523bde281"
+"Myfix__types_8hpp.html#a0cba5d2b6087b1c2375d92efb54162b3",
+"Myfix__types_8hpp.html#a1a29fd6bff4cfc87f87340737431155d",
+"Myfix__types_8hpp.html#a28d4119c84598cdb618971563cbbc9b5",
+"Myfix__types_8hpp.html#a382379c05060e2659b66a3d6eb36105e",
+"Myfix__types_8hpp.html#a44dadfcf8be487f71ec4514b23f40502",
+"Myfix__types_8hpp.html#a4ff0f363ad34efe6703edb4662a77ed4",
+"Myfix__types_8hpp.html#a5e4c2616cf01804b9769e106b379fb10",
+"Myfix__types_8hpp.html#a6c8890caa1b6ca1db5dfb0ff903d8afe",
+"Myfix__types_8hpp.html#a79cfa8af2ab5406ba7dd87727cee8279",
+"Myfix__types_8hpp.html#a8723efa0ba4f2092bd968fe115a76004",
+"Myfix__types_8hpp.html#a93acad9491f8591908bcb342a1655ebc",
+"Myfix__types_8hpp.html#aa0bda97c65dc9ae10c4e41c006afa266",
+"Myfix__types_8hpp.html#aad532dfc817df174e8d85efa16104965",
+"Myfix__types_8hpp.html#aba4787d77ff62bde1af6e11811a8e52a",
+"Myfix__types_8hpp.html#ac761a659e8ef5b01c9706782a6c08c77",
+"Myfix__types_8hpp.html#ad4125cf2b5b3ec2103a4b17413859c85",
+"Myfix__types_8hpp.html#ae1c1420b0be345225de510d087d84e2f",
+"Myfix__types_8hpp.html#af048bb18024c86d7332115d40ba29cb4",
+"Myfix__types_8hpp.html#afc9ba276080cdc1a93e747698b807a47",
+"Perf__types_8hpp.html#a886e771bd3f5398e9826328910da13a9",
+"classFIX8_1_1Configuration.html#a857a2b80970326445afd5f635bcbd05b",
+"classFIX8_1_1Field_3_01TZTimeOnly_00_01field_01_4.html#a8b9301af28a71c7bffcbec6be73adf04",
+"classFIX8_1_1Logger.html#a24892c6b55cde6cd91e97e0180ddfa39",
+"classFIX8_1_1ReliableClientSession.html#ace6eb31714c1c399084dcd6a64f2b319",
+"classFIX8_1_1TEX_1_1AdjustedPositionReport_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates.html#af71c059e769341e91b0ba44038779eae",
+"classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoAllocs.html#a2588e7a99bbfde3b894517216289a535a09dd96e27de07d9913d3030eaa05e1de",
+"classFIX8_1_1TEX_1_1AllocationInstructionAlert_1_1NoUnderlyings_1_1NoUnderlyingSecurityAltID.html#af9fc03e12f37dfae518ea40bdebd20dda88bbbd63e9e83240e74999dee028032b",
+"classFIX8_1_1TEX_1_1AllocationInstruction_1_1NoRateSources.html#a60e821ceb5a4afd3069408ce45068682a595002fd156137e4f6bfd63fcf008384",
+"classFIX8_1_1TEX_1_1AllocationReport_1_1NoInstrAttrib.html#a94ef36f70cdb864baf958ebd9cbdb938",
+"classFIX8_1_1TEX_1_1ApplicationMessageRequest_1_1NoApplIDs.html#ab84e529014b46e87612b8f597957dbe0",
+"classFIX8_1_1TEX_1_1BidRequest_1_1NoBidDescriptors.html#aad8039d59bf5ef915d5ad87659d7839d",
+"classFIX8_1_1TEX_1_1CollateralAssignment_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#af43b1e754652b6d838ab13ac46e4cc38",
+"classFIX8_1_1TEX_1_1CollateralInquiry_1_1NoDlvyInst_1_1NoSettlPartyIDs_1_1NoSettlPartySubIDs.html#af7327e0aec49c327c5aa997ba49f3aba",
+"classFIX8_1_1TEX_1_1CollateralReport_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#af52ac2d3f1e41d860848a1899fd33417",
+"classFIX8_1_1TEX_1_1CollateralRequest_1_1NoSecurityAltID.html#a90fbfc86b3617e4780a47790c54af0a5",
+"classFIX8_1_1TEX_1_1CollateralResponse_1_1NoUnderlyings_1_1NoUnderlyingStips.html#ac3bb0db22e310551191a50559adb137f",
+"classFIX8_1_1TEX_1_1Confirmation_1_1NoSecurityAltID.html#ad95ee59abcd065134e240421dd70b3cc",
+"classFIX8_1_1TEX_1_1CrossOrderCancelReplaceRequest_1_1NoEvents.html#abdac35606933fe5bce9a55a9395740d4",
+"classFIX8_1_1TEX_1_1CrossOrderCancelRequest_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#ad82b1290386ad1f4b582127bd7fc2766",
+"classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoDerivativeInstrumentParties_1_1NoDerivativeInstrumentPartySubIDs.html#a74aa5f4c041ae024be70ca188fecb072",
+"classFIX8_1_1TEX_1_1DerivativeSecurityListUpdateReport_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ac2a35a865f3984c478a974a9c77a68de",
+"classFIX8_1_1TEX_1_1DerivativeSecurityList_1_1NoRelatedSym_1_1NoSecurityAltID.html#a173d3523402e3aba9d0dae0ff8e6d0f3",
+"classFIX8_1_1TEX_1_1Email_1_1NoRelatedSym_1_1NoEvents.html#a4382189563901e9a80591304b468f117a977b67dce8aaa14036bdb50ee7eacfe1",
+"classFIX8_1_1TEX_1_1ExecutionReport_1_1NoAllocs_1_1NoNestedPartyIDs.html#aa1aff81601c635c56381aa6244af7aed",
+"classFIX8_1_1TEX_1_1ExecutionReport_1_1NoTrdRegTimestamps.html#a9878dab572488ec2de476f71ee95232d",
+"classFIX8_1_1TEX_1_1IOI_1_1NoUnderlyings_1_1NoUndlyInstrumentParties_1_1NoUndlyInstrumentPartySubIDs.html#ad9c058b78321d1ea25508cd6d545d3ae",
+"classFIX8_1_1TEX_1_1MarketDataIncrementalRefresh_1_1NoMDEntries_1_1NoComplexEvents.html#aac2f8cf2cefecdf86cbb02f9c9821b49",
+"classFIX8_1_1TEX_1_1MarketDataRequest_1_1NoRelatedSym.html#abfe6907cbc553990a15313ad60f0fad5",
+"classFIX8_1_1TEX_1_1MarketDataSnapshotFullRefresh_1_1NoMDEntries_1_1NoPartyIDs_1_1NoPartySubIDs.html#a52276d26ffd09bf941f57ba144266412",
+"classFIX8_1_1TEX_1_1MassQuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries_1_1NoComplexEvents.html#ae739c11514677c20284c486244760736",
+"classFIX8_1_1TEX_1_1MassQuote_1_1NoQuoteSets_1_1NoUnderlyingStips.html#a8c50b76d1de9c2b24b99e5603fc23022",
+"classFIX8_1_1TEX_1_1MultilegOrderCancelReplace_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a65a681e6b91a57e5feb96badebb18757",
+"classFIX8_1_1TEX_1_1NewOrderCross_1_1NoLegs_1_1NoLegSecurityAltID.html#a298a2c9b704020fd6da88e55d15b6e92",
+"classFIX8_1_1TEX_1_1NewOrderList_1_1NoOrders_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a0209ab64a638d63e66f18740da9967dd",
+"classFIX8_1_1TEX_1_1NewOrderMultileg_1_1NoLegs_1_1NoLegSecurityAltID.html",
+"classFIX8_1_1TEX_1_1NewOrderSingle_1_1NoStipulations.html#a84d902bc2868727de2e126fbf40f30c4a2551ef7119fbcfb6af573aeeaacbdd50",
+"classFIX8_1_1TEX_1_1OrderCancelReject.html#a457f1b4752358701a1cb42d3f2055795",
+"classFIX8_1_1TEX_1_1OrderCancelRequest_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a4b840b29549f851874be07781697996f",
+"classFIX8_1_1TEX_1_1OrderMassActionRequest_1_1NoComplexEvents_1_1NoComplexEventDates.html#a3fafbdf9410cae6275816fcd1b0f4fe4a91e5753a1fae91c50b1e2dfcf3d3ad61",
+"classFIX8_1_1TEX_1_1OrderMassCancelReport_1_1NoUndlyInstrumentParties.html#a475998293af46b60555fec05152102c3",
+"classFIX8_1_1TEX_1_1OrderMassStatusRequest_1_1NoUnderlyingSecurityAltID.html#a12d2324297d14be759775607f99d76f9",
+"classFIX8_1_1TEX_1_1PartyDetailsListReport_1_1NoPartyList_1_1NoRelatedPartyIDs_1_1NoRelatedContee389371d0f643c7b025b09f86eea6de6.html#a2f2837444fdd52900283db0e70732363",
+"classFIX8_1_1TEX_1_1PositionMaintenanceReport_1_1NoLegs.html#ae9b6ce301f2a14b0b68ba2daff2e6671",
+"classFIX8_1_1TEX_1_1PositionMaintenanceRequest_1_1NoPositions_1_1NoNestedPartyIDs.html#ad073b9021a459f6a1469cbeff3b8ab21",
+"classFIX8_1_1TEX_1_1PositionReport_1_1NoUnderlyings_1_1NoUnderlyingStips.html#a98a72dc9550c5372d5664a5b18929d59",
+"classFIX8_1_1TEX_1_1QuoteRequestReject_1_1NoRelatedSym_1_1NoComplexEvents_1_1NoComplexEventDates_1_1NoComplexEventTimes.html#aedb2cea61c1e5b05157a14b22d289ded",
+"classFIX8_1_1TEX_1_1QuoteRequest_1_1NoRelatedSym_1_1NoLegs.html#ab5a58d93c53d4ccb3f28d3aa6fd51c5e",
+"classFIX8_1_1TEX_1_1QuoteResponse_1_1NoLegs_1_1NoNestedPartyIDs.html#a4b96a7a5b76bef71dc7d7b2b53c7a24c",
+"classFIX8_1_1TEX_1_1QuoteStatusReport_1_1NoStipulations.html#a5d9c64187e9c41d1febfd92e2dab9f48",
+"classFIX8_1_1TEX_1_1Quote_1_1NoEvents.html#a6341cc52af6ec5be63590386600935ee",
+"classFIX8_1_1TEX_1_1RFQRequest_1_1NoRelatedSym_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a2455ebde85734fbb3fcd34b255a5605e",
+"classFIX8_1_1TEX_1_1RequestForPositionsAck_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#adde34944e67a52d4ed92e2653c1bac60",
+"classFIX8_1_1TEX_1_1ResendRequest.html#a58abc87ec5c90496f3ad401b36cf424f",
+"classFIX8_1_1TEX_1_1SecurityDefinitionUpdateReport_1_1NoLegs_1_1NoLegSecurityAltID.html#a15ee7d4ef82d4fb9acb2fb0965c9d9be",
+"classFIX8_1_1TEX_1_1SecurityDefinition_1_1NoLegs_1_1NoLegSecurityAltID.html",
+"classFIX8_1_1TEX_1_1SecurityListRequest_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html",
+"classFIX8_1_1TEX_1_1SecurityListUpdateReport_1_1NoRelatedSym_1_1NoTickRules.html#ac2e837d7587c2e7a54af4c31ae47e106a361df6f0c6c302de1306531ebf1d0046",
+"classFIX8_1_1TEX_1_1SecurityList_1_1NoRelatedSym_1_1NoStrikeRules_1_1NoMaturityRules.html#a968ed2018a38adfdc27a152fc78ee098",
+"classFIX8_1_1TEX_1_1SecurityStatusRequest_1_1NoUnderlyings_1_1NoUndlyInstrumentParties.html#a7310d7ef0691fb5fe6d23bcdffacfb68",
+"classFIX8_1_1TEX_1_1SettlementInstructions_1_1NoSettlInst_1_1NoDlvyInst_1_1NoSettlPartyIDs_1_1NoSettlPartySubIDs.html#a42940010e65f023c210e3773f643fcbd",
+"classFIX8_1_1TEX_1_1StreamAssignmentReport_1_1NoAsgnReqs_1_1NoRelatedSym_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html#a75c45b95c549787a7262073082c0df07",
+"classFIX8_1_1TEX_1_1TradeCaptureReportAck_1_1NoLegs_1_1NoOfLegUnderlyings.html",
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequest.html#abac6dc1f83f7129f5964ed3105f1a009",
+"classFIX8_1_1TEX_1_1TradeCaptureReportRequest_1_1NoSecurityAltID.html#ad607a03f1519a1fa317383041684ebee",
+"classFIX8_1_1TEX_1_1TradeCaptureReport_1_1NoSides_1_1NoContAmts.html#a6e04afc73bb255afb1e2c31165b89e90",
+"classFIX8_1_1TEX_1_1TradingSessionList_1_1NoTradingSessions_1_1NoMatchRules.html#ab723aa248564ae4c2af6ff449884c245",
+"classFIX8_1_1TimerEvent.html#ac46b02a2aac64125a266e6b116803ed2",
+"classFIX8_1_1presorted__set_3_01unsigned_01short_00_01FieldTrait_00_01FieldTrait_1_1Compare_01_4.html#a3d2315ed424645a5715bc2da93b02e5a",
+"classtex__router__client.html",
+"f8cutils_8cpp.html#a8beb6acf3b778482cf332b866053489a",
+"functions_eval_v.html",
+"namespacemembers_i.html",
+"structFIX8_1_1FieldTrait_1_1Compare.html",
+"tickval_8hpp.html"
 ];
 
+var SYNCONMSG = 'click to disable panel synchronisation';
+var SYNCOFFMSG = 'click to enable panel synchronisation';
 var SYNCONMSG = 'click to disable panel synchronisation';
 var SYNCOFFMSG = 'click to enable panel synchronisation';
 var navTreeSubIndices = new Array();
@@ -238,12 +224,12 @@ function createIndent(o,domNode,node,level)
   var level=-1;
   var n = node;
   while (n.parentNode) { level++; n=n.parentNode; }
-  var imgNode = document.createElement("img");
-  imgNode.style.paddingLeft=(16*level).toString()+'px';
-  imgNode.width  = 16;
-  imgNode.height = 22;
-  imgNode.border = 0;
   if (node.childrenData) {
+    var imgNode = document.createElement("img");
+    imgNode.style.paddingLeft=(16*level).toString()+'px';
+    imgNode.width  = 16;
+    imgNode.height = 22;
+    imgNode.border = 0;
     node.plus_img = imgNode;
     node.expandToggle = document.createElement("a");
     node.expandToggle.href = "javascript:void(0)";
@@ -260,8 +246,12 @@ function createIndent(o,domNode,node,level)
     domNode.appendChild(node.expandToggle);
     imgNode.src = node.relpath+"ftv2pnode.png";
   } else {
-    imgNode.src = node.relpath+"ftv2node.png";
-    domNode.appendChild(imgNode);
+    var span = document.createElement("span");
+    span.style.display = 'inline-block';
+    span.style.width   = 16*(level+1)+'px';
+    span.style.height  = '22px';
+    span.innerHTML = '&#160;';
+    domNode.appendChild(span);
   } 
 }
 
@@ -480,7 +470,7 @@ function showNode(o, node, index, hash)
       if (!node.childrenVisited) {
         getNode(o, node);
       }
-      $(node.getChildrenUL()).show();
+      $(node.getChildrenUL()).css({'display':'block'});
       if (node.isLast) {
         node.plus_img.src = node.relpath+"ftv2mlastnode.png";
       } else {
@@ -512,8 +502,22 @@ function showNode(o, node, index, hash)
   }
 }
 
+function removeToInsertLater(element) {
+  var parentNode = element.parentNode;
+  var nextSibling = element.nextSibling;
+  parentNode.removeChild(element);
+  return function() {
+    if (nextSibling) {
+      parentNode.insertBefore(element, nextSibling);
+    } else {
+      parentNode.appendChild(element);
+    }
+  };
+}
+
 function getNode(o, po)
 {
+  var insertFunction = removeToInsertLater(po.li);
   po.childrenVisited = true;
   var l = po.childrenData.length-1;
   for (var i in po.childrenData) {
@@ -521,6 +525,7 @@ function getNode(o, po)
     po.children[i] = newNode(o, po, nodeData[0], nodeData[1], nodeData[2],
       i==l);
   }
+  insertFunction();
 }
 
 function gotoNode(o,subIndex,root,hash,relpath)
@@ -624,7 +629,10 @@ function initNavTree(toroot,relpath)
     navSync.click(function(){ toggleSyncButton(relpath); });
   }
 
-  navTo(o,toroot,window.location.hash,relpath);
+  $(window).load(function(){
+    navTo(o,toroot,window.location.hash,relpath);
+    showRoot();
+  });
 
   $(window).bind('hashchange', function(){
      if (window.location.hash && window.location.hash.length>1){
@@ -647,7 +655,5 @@ function initNavTree(toroot,relpath)
        navTo(o,toroot,window.location.hash,relpath);
      }
   })
-
-  $(window).load(showRoot);
 }
 

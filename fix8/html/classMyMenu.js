@@ -30,6 +30,7 @@ var classMyMenu =
     [ "new_order_single", "classMyMenu.html#a1d3b0ca23e9ef99df200bc80e841f2ff", null ],
     [ "new_order_single_1000", "classMyMenu.html#ad22302f6f8a8d8e9c800855732395825", null ],
     [ "new_order_single_50", "classMyMenu.html#ad0bda1a05f1378cc4b8fe6e93fa065cf", null ],
+    [ "new_order_single_recycled", "classMyMenu.html#ad9fdd17da9b78726ebc37e5aa2bae3a1", null ],
     [ "nothing", "classMyMenu.html#aa2d8310db7e2730d0e72643a17f3a586", null ],
     [ "nothing", "classMyMenu.html#aa2d8310db7e2730d0e72643a17f3a586", null ],
     [ "preload_new_order_single", "classMyMenu.html#a6794c45cab27418705bc3baf3b82fe5c", null ],

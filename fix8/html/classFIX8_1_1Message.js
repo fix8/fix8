@@ -22,6 +22,7 @@ var classFIX8_1_1Message =
     [ "set_custom_seqnum", "classFIX8_1_1Message.html#a80885765d3abc13c7b83c497256512c3", null ],
     [ "set_end_of_batch", "classFIX8_1_1Message.html#ab7a38f54a1cb91a86e478fe0e300b0bd", null ],
     [ "set_no_increment", "classFIX8_1_1Message.html#a2659bc88f41949c8369067aa1e060114", null ],
+    [ "setup_reuse", "classFIX8_1_1Message.html#a06477d1ac9ebe550f79e48c5c3906112", null ],
     [ "Trailer", "classFIX8_1_1Message.html#ac28982f16a861f4d033a26626b2c9ffb", null ],
     [ "operator<<", "classFIX8_1_1Message.html#a2504e9ef602040d181c571a055726116", null ],
     [ "_custom_seqnum", "classFIX8_1_1Message.html#a54a1790f783e645a66f22f59073a9b2e", null ],

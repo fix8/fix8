@@ -1,6 +1,6 @@
 var classFIX8_1_1ConsoleMenu =
 [
-    [ "ConsoleMenu", "classFIX8_1_1ConsoleMenu.html#ada483b1d9c0d18d3935a39da930fa546", null ],
+    [ "ConsoleMenu", "classFIX8_1_1ConsoleMenu.html#a965b3eae9e516c96b03efacab395b9bf", null ],
     [ "~ConsoleMenu", "classFIX8_1_1ConsoleMenu.html#a6972ba0c57115ca2f359789eb50ad7c1", null ],
     [ "CreateMsgs", "classFIX8_1_1ConsoleMenu.html#aa793a1886b1691b5f636a0204f5a6a75", null ],
     [ "DeleteMsgs", "classFIX8_1_1ConsoleMenu.html#a5ea6b1ab9375c4ecc4c88e07458a5992", null ],
@@ -18,6 +18,5 @@ var classFIX8_1_1ConsoleMenu =
     [ "_is", "classFIX8_1_1ConsoleMenu.html#ada23748f981b22695c8120d1db128920", null ],
     [ "_lpp", "classFIX8_1_1ConsoleMenu.html#ae087da34a14c03229e989c7725d7b75c", null ],
     [ "_opt_keys", "classFIX8_1_1ConsoleMenu.html#ac4bb9b67f1a8607d86a8c23ce61883c4", null ],
-    [ "_os", "classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712", null ],
-    [ "_ses", "classFIX8_1_1ConsoleMenu.html#a1dbb47b76f890fd3401eb373de190ea7", null ]
+    [ "_os", "classFIX8_1_1ConsoleMenu.html#aee7aef01632fb82385d2b65f8ab8b712", null ]
 ];

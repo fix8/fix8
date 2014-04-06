@@ -1,123 +1,16 @@
 var hierarchy =
 [
-    [ "__xchg_dummy", "struct____xchg__dummy.html", null ],
-    [ "_opaque_pthread_attr_t", "struct__opaque__pthread__attr__t.html", null ],
-    [ "_opaque_pthread_condattr_t", "struct__opaque__pthread__condattr__t.html", null ],
-    [ "_opaque_pthread_mutexattr_t", "struct__opaque__pthread__mutexattr__t.html", null ],
     [ "FIX8::AsyncSocket< f8String >", "classFIX8_1_1AsyncSocket.html", [
       [ "FIX8::FIXReader", "classFIX8_1_1FIXReader.html", null ]
     ] ],
     [ "FIX8::AsyncSocket< Message * >", "classFIX8_1_1AsyncSocket.html", [
       [ "FIX8::FIXWriter", "classFIX8_1_1FIXWriter.html", null ]
     ] ],
-    [ "atomic64_t", "structatomic64__t.html", null ],
-    [ "atomic_t", "structatomic__t.html", null ],
-    [ "CLDevice", "structCLDevice.html", null ],
     [ "coroutine", "classcoroutine.html", null ],
     [ "coroutine_ref", "classcoroutine__ref.html", null ],
-    [ "dnode", null, [
-      [ "ff::ff_dinout< CommImplIn, CommImplOut >", "classff_1_1ff__dinout.html", null ]
-    ] ],
     [ "FIX8::ebitset< Flags >", "classFIX8_1_1ebitset.html", null ],
     [ "FIX8::ebitset< TraitTypes, unsigned short >", "classFIX8_1_1ebitset.html", null ],
     [ "FIX8::ebitset_r< SessionControl >", "classFIX8_1_1ebitset__r.html", null ],
-    [ "Environment", "classEnvironment.html", null ],
-    [ "ff::Barrier", "classff_1_1Barrier.html", null ],
-    [ "ff::basePartition", "structff_1_1basePartition.html", [
-      [ "ff::basePartitionList", "structff_1_1basePartitionList.html", null ]
-    ] ],
-    [ "ff::basePartitioner", "classff_1_1basePartitioner.html", [
-      [ "ff::LinearPartitioner< T >", "classff_1_1LinearPartitioner.html", null ]
-    ] ],
-    [ "ff::baseTask", "classff_1_1baseTask.html", null ],
-    [ "ff::Buf_ctl", "structff_1_1Buf__ctl.html", null ],
-    [ "ff::BufferPool", "classff_1_1BufferPool.html", null ],
-    [ "ff::commPattern< Impl >", "classff_1_1commPattern.html", null ],
-    [ "ff::commTransport< Impl >", "classff_1_1commTransport.html", null ],
-    [ "ff::descriptor1_N", "structff_1_1descriptor1__N.html", null ],
-    [ "ff::descriptorN_1", "structff_1_1descriptorN__1.html", null ],
-    [ "ff::dynlinkedlist", "classff_1_1dynlinkedlist.html", null ],
-    [ "ff::dynlinkedlist::Node", "structff_1_1dynlinkedlist_1_1Node.html", null ],
-    [ "ff::dynqueue", "classff_1_1dynqueue.html", null ],
-    [ "ff::dynqueue::Node", "structff_1_1dynqueue_1_1Node.html", null ],
-    [ "ff::ff_allocator", "classff_1_1ff__allocator.html", [
-      [ "ff::ffa_wrapper", "classff_1_1ffa__wrapper.html", null ]
-    ] ],
-    [ "ff::ff_node", "classff_1_1ff__node.html", [
-      [ "ff::ff_dnode< CommImpl >", "classff_1_1ff__dnode.html", null ],
-      [ "ff::ff_farm< lb_t, gt_t >", "classff_1_1ff__farm.html", null ],
-      [ "ff::ff_farm< lb_t, gt_t >::ff_node_F< T >", "structff_1_1ff__farm_1_1ff__node__F.html", null ],
-      [ "ff::ff_map::mapC", "classff_1_1ff__map_1_1mapC.html", null ],
-      [ "ff::ff_map::mapE", "classff_1_1ff__map_1_1mapE.html", null ],
-      [ "ff::ff_map::mapW", "classff_1_1ff__map_1_1mapW.html", null ],
-      [ "ff::ff_minode", "classff_1_1ff__minode.html", null ],
-      [ "ff::ff_monode", "classff_1_1ff__monode.html", null ],
-      [ "ff::ff_oclNode", "classff_1_1ff__oclNode.html", null ],
-      [ "ff::ff_ofarm::ofarmC", "classff_1_1ff__ofarm_1_1ofarmC.html", null ],
-      [ "ff::ff_ofarm::ofarmE", "classff_1_1ff__ofarm_1_1ofarmE.html", null ],
-      [ "ff::ff_pipeline", "classff_1_1ff__pipeline.html", null ],
-      [ "ff::forall_Scheduler", "classff_1_1forall__Scheduler.html", null ],
-      [ "ff::forallreduce_W< Tres >", "classff_1_1forallreduce__W.html", null ],
-      [ "ff::Fstage< T >", "classff_1_1Fstage.html", null ],
-      [ "ff::ff_dnode< CommImplIn >", "classff_1_1ff__dnode.html", [
-        [ "ff::ff_dinout< CommImplIn, CommImplOut >", "classff_1_1ff__dinout.html", null ]
-      ] ],
-      [ "ff::ff_farm< map_lb, map_gt >", "classff_1_1ff__farm.html", [
-        [ "ff::ff_map", "classff_1_1ff__map.html", null ]
-      ] ],
-      [ "ff::ff_farm< ofarm_lb, ofarm_gt >", "classff_1_1ff__farm.html", [
-        [ "ff::ff_ofarm", "classff_1_1ff__ofarm.html", null ]
-      ] ],
-      [ "ff::ff_farm<>", "classff_1_1ff__farm.html", [
-        [ "ff::ff_forall_farm< Tres >", "classff_1_1ff__forall__farm.html", null ]
-      ] ]
-    ] ],
-    [ "ff::ff_thread", "classff_1_1ff__thread.html", [
-      [ "ff::ff_gatherer", "classff_1_1ff__gatherer.html", [
-        [ "ff::map_gt", "classff_1_1map__gt.html", null ],
-        [ "ff::ofarm_gt", "classff_1_1ofarm__gt.html", null ]
-      ] ],
-      [ "ff::ff_loadbalancer", "classff_1_1ff__loadbalancer.html", [
-        [ "ff::map_lb", "classff_1_1map__lb.html", null ],
-        [ "ff::ofarm_lb", "classff_1_1ofarm__lb.html", null ]
-      ] ],
-      [ "ff::ff_node::thWorker", "classff_1_1ff__node_1_1thWorker.html", null ]
-    ] ],
-    [ "ff::FFAllocator", "classff_1_1FFAllocator.html", null ],
-    [ "ff::FFAxThreadData", "structff_1_1FFAxThreadData.html", null ],
-    [ "ff::forall_task_t", "structff_1_1forall__task__t.html", null ],
-    [ "ff::Lamport_Buffer", "classff_1_1Lamport__Buffer.html", null ],
-    [ "ff::MPMC_Ptr_Queue", "classff_1_1MPMC__Ptr__Queue.html", null ],
-    [ "ff::MPMC_Ptr_Queue::element_t", "structff_1_1MPMC__Ptr__Queue_1_1element__t.html", null ],
-    [ "ff::MSqueue", "classff_1_1MSqueue.html", null ],
-    [ "ff::MSqueue::Node", "structff_1_1MSqueue_1_1Node.html", null ],
-    [ "ff::MSqueue::Pointer", "structff_1_1MSqueue_1_1Pointer.html", null ],
-    [ "ff::multiSWSR", "classff_1_1multiSWSR.html", null ],
-    [ "ff::scalableMPMCqueue< Q >", "classff_1_1scalableMPMCqueue.html", null ],
-    [ "ff::Seg_ctl", "structff_1_1Seg__ctl.html", null ],
-    [ "ff::SegmentAllocator", "classff_1_1SegmentAllocator.html", null ],
-    [ "ff::SlabCache", "classff_1_1SlabCache.html", null ],
-    [ "ff::spinBarrier", "classff_1_1spinBarrier.html", null ],
-    [ "ff::squeue< T >", "classff_1_1squeue.html", null ],
-    [ "ff::squeue< T >::data_type", "structff_1_1squeue_1_1data__type.html", null ],
-    [ "ff::staticlinkedlist", "classff_1_1staticlinkedlist.html", null ],
-    [ "ff::staticlinkedlist::Node", "structff_1_1staticlinkedlist_1_1Node.html", null ],
-    [ "ff::svector< T >", "classff_1_1svector.html", null ],
-    [ "ff::SWSR_Ptr_Buffer", "classff_1_1SWSR__Ptr__Buffer.html", null ],
-    [ "ff::threadMapper", "classff_1_1threadMapper.html", null ],
-    [ "ff::uMPMC_Ptr_Queue", "classff_1_1uMPMC__Ptr__Queue.html", null ],
-    [ "ff::uSWSR_Ptr_Buffer", "classff_1_1uSWSR__Ptr__Buffer.html", null ],
-    [ "ff::xThreadData", "structff_1_1xThreadData.html", null ],
-    [ "ff::zmq1_1", "classff_1_1zmq1__1.html", null ],
-    [ "ff::zmq1_N", "classff_1_1zmq1__N.html", null ],
-    [ "ff::zmqAllGather", "classff_1_1zmqAllGather.html", null ],
-    [ "ff::zmqBcast", "classff_1_1zmqBcast.html", null ],
-    [ "ff::zmqFromAny", "classff_1_1zmqFromAny.html", null ],
-    [ "ff::zmqOnDemand", "classff_1_1zmqOnDemand.html", null ],
-    [ "ff::zmqScatter", "classff_1_1zmqScatter.html", null ],
-    [ "ff::zmqTransport", "classff_1_1zmqTransport.html", null ],
-    [ "ff_queue", "classff__queue.html", null ],
-    [ "ff_queue::bucket_t", "structff__queue_1_1bucket__t.html", null ],
     [ "filestdin", "classfilestdin.html", null ],
     [ "FIX8::_dthreadcore", "classFIX8_1_1__dthreadcore.html", [
       [ "FIX8::dthread< FIX8::AsyncSocket >", "classFIX8_1_1dthread.html", null ],
@@ -129,8 +22,8 @@ var hierarchy =
       [ "FIX8::dthread< T >", "classFIX8_1_1dthread.html", null ],
       [ "FIX8::dthread<>", "classFIX8_1_1dthread_3_4.html", null ]
     ] ],
-    [ "FIX8::_Pair< Key, Val >", "structFIX8_1_1__Pair.html", null ],
-    [ "FIX8::_Pair< const char *, Val >", "structFIX8_1_1__Pair_3_01const_01char_01_5_00_01Val_01_4.html", null ],
+    [ "FIX8::_pair< Key, Val >", "structFIX8_1_1__pair.html", null ],
+    [ "FIX8::_pair< const char *, Val >", "structFIX8_1_1__pair_3_01const_01char_01_5_00_01Val_01_4.html", null ],
     [ "FIX8::AsyncSocket< T >", "classFIX8_1_1AsyncSocket.html", null ],
     [ "FIX8::BaseEntry", "structFIX8_1_1BaseEntry.html", null ],
     [ "FIX8::BaseField", "classFIX8_1_1BaseField.html", [
@@ -183,6 +76,7 @@ var hierarchy =
     [ "FIX8::DeleteObject", "structFIX8_1_1DeleteObject.html", null ],
     [ "FIX8::dthread< T >::_helper", "classFIX8_1_1dthread_1_1__helper.html", null ],
     [ "FIX8::dthread<>::_helper", "classFIX8_1_1dthread_3_4_1_1__helper.html", null ],
+    [ "FIX8::dthread_cancellation_token", "structFIX8_1_1dthread__cancellation__token.html", null ],
     [ "FIX8::ebitset< T, B >", "classFIX8_1_1ebitset.html", null ],
     [ "FIX8::ebitset_r< T, B >", "classFIX8_1_1ebitset__r.html", null ],
     [ "FIX8::EnumType< field >", "structFIX8_1_1EnumType.html", null ],
@@ -1796,45 +1690,7 @@ var hierarchy =
       [ "FIX8::TEX::TradingSessionStatus::NoEvents", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoEvents.html", null ],
       [ "FIX8::TEX::TradingSessionStatus::NoInstrumentParties", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoInstrumentParties.html", null ],
       [ "FIX8::TEX::TradingSessionStatus::NoInstrumentParties::NoInstrumentPartySubIDs", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoInstrumentParties_1_1NoInstrumentPartySubIDs.html", null ],
-      [ "FIX8::TEX::TradingSessionStatus::NoSecurityAltID", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoSecurityAltID.html", null ],
-      [ "FIX8::UTEST::Allocation::NoAllocs", "classFIX8_1_1UTEST_1_1Allocation_1_1NoAllocs.html", null ],
-      [ "FIX8::UTEST::Allocation::NoAllocs::NoMiscFees", "classFIX8_1_1UTEST_1_1Allocation_1_1NoAllocs_1_1NoMiscFees.html", null ],
-      [ "FIX8::UTEST::Allocation::NoExecs", "classFIX8_1_1UTEST_1_1Allocation_1_1NoExecs.html", null ],
-      [ "FIX8::UTEST::Allocation::NoOrders", "classFIX8_1_1UTEST_1_1Allocation_1_1NoOrders.html", null ],
-      [ "FIX8::UTEST::BidRequest::NoBidComponents", "classFIX8_1_1UTEST_1_1BidRequest_1_1NoBidComponents.html", null ],
-      [ "FIX8::UTEST::BidRequest::NoBidDescriptors", "classFIX8_1_1UTEST_1_1BidRequest_1_1NoBidDescriptors.html", null ],
-      [ "FIX8::UTEST::BidResponse::NoBidComponents", "classFIX8_1_1UTEST_1_1BidResponse_1_1NoBidComponents.html", null ],
-      [ "FIX8::UTEST::Email::LinesOfText", "classFIX8_1_1UTEST_1_1Email_1_1LinesOfText.html", null ],
-      [ "FIX8::UTEST::Email::NoRelatedSym", "classFIX8_1_1UTEST_1_1Email_1_1NoRelatedSym.html", null ],
-      [ "FIX8::UTEST::Email::NoRoutingIDs", "classFIX8_1_1UTEST_1_1Email_1_1NoRoutingIDs.html", null ],
-      [ "FIX8::UTEST::ExecutionReport::NoContraBrokers", "classFIX8_1_1UTEST_1_1ExecutionReport_1_1NoContraBrokers.html", null ],
-      [ "FIX8::UTEST::IndicationofInterest::NoIOIQualifiers", "classFIX8_1_1UTEST_1_1IndicationofInterest_1_1NoIOIQualifiers.html", null ],
-      [ "FIX8::UTEST::IndicationofInterest::NoRoutingIDs", "classFIX8_1_1UTEST_1_1IndicationofInterest_1_1NoRoutingIDs.html", null ],
-      [ "FIX8::UTEST::ListStatus::NoOrders", "classFIX8_1_1UTEST_1_1ListStatus_1_1NoOrders.html", null ],
-      [ "FIX8::UTEST::ListStrikePrice::NoStrikes", "classFIX8_1_1UTEST_1_1ListStrikePrice_1_1NoStrikes.html", null ],
-      [ "FIX8::UTEST::Logon::NoMsgTypes", "classFIX8_1_1UTEST_1_1Logon_1_1NoMsgTypes.html", null ],
-      [ "FIX8::UTEST::MarketDataIncrementalRefresh::NoMDEntries", "classFIX8_1_1UTEST_1_1MarketDataIncrementalRefresh_1_1NoMDEntries.html", null ],
-      [ "FIX8::UTEST::MarketDataRequest::NoMDEntryTypes", "classFIX8_1_1UTEST_1_1MarketDataRequest_1_1NoMDEntryTypes.html", null ],
-      [ "FIX8::UTEST::MarketDataRequest::NoRelatedSym", "classFIX8_1_1UTEST_1_1MarketDataRequest_1_1NoRelatedSym.html", null ],
-      [ "FIX8::UTEST::MarketDataSnapshotFullRefresh::NoMDEntries", "classFIX8_1_1UTEST_1_1MarketDataSnapshotFullRefresh_1_1NoMDEntries.html", null ],
-      [ "FIX8::UTEST::MassQuote::NoQuoteSets", "classFIX8_1_1UTEST_1_1MassQuote_1_1NoQuoteSets.html", null ],
-      [ "FIX8::UTEST::MassQuote::NoQuoteSets::NoQuoteEntries", "classFIX8_1_1UTEST_1_1MassQuote_1_1NoQuoteSets_1_1NoQuoteEntries.html", null ],
-      [ "FIX8::UTEST::NewOrderList::NoOrders", "classFIX8_1_1UTEST_1_1NewOrderList_1_1NoOrders.html", null ],
-      [ "FIX8::UTEST::NewOrderList::NoOrders::NoAllocs", "classFIX8_1_1UTEST_1_1NewOrderList_1_1NoOrders_1_1NoAllocs.html", null ],
-      [ "FIX8::UTEST::NewOrderList::NoOrders::NoTradingSessions", "classFIX8_1_1UTEST_1_1NewOrderList_1_1NoOrders_1_1NoTradingSessions.html", null ],
-      [ "FIX8::UTEST::NewOrderSingle::NoAllocs", "classFIX8_1_1UTEST_1_1NewOrderSingle_1_1NoAllocs.html", null ],
-      [ "FIX8::UTEST::NewOrderSingle::NoTradingSessions", "classFIX8_1_1UTEST_1_1NewOrderSingle_1_1NoTradingSessions.html", null ],
-      [ "FIX8::UTEST::News::LinesOfText", "classFIX8_1_1UTEST_1_1News_1_1LinesOfText.html", null ],
-      [ "FIX8::UTEST::News::NoRelatedSym", "classFIX8_1_1UTEST_1_1News_1_1NoRelatedSym.html", null ],
-      [ "FIX8::UTEST::News::NoRoutingIDs", "classFIX8_1_1UTEST_1_1News_1_1NoRoutingIDs.html", null ],
-      [ "FIX8::UTEST::OrderCancelReplaceRequest::NoAllocs", "classFIX8_1_1UTEST_1_1OrderCancelReplaceRequest_1_1NoAllocs.html", null ],
-      [ "FIX8::UTEST::OrderCancelReplaceRequest::NoTradingSessions", "classFIX8_1_1UTEST_1_1OrderCancelReplaceRequest_1_1NoTradingSessions.html", null ],
-      [ "FIX8::UTEST::QuoteAcknowledgement::NoQuoteSets", "classFIX8_1_1UTEST_1_1QuoteAcknowledgement_1_1NoQuoteSets.html", null ],
-      [ "FIX8::UTEST::QuoteAcknowledgement::NoQuoteSets::NoQuoteEntries", "classFIX8_1_1UTEST_1_1QuoteAcknowledgement_1_1NoQuoteSets_1_1NoQuoteEntries.html", null ],
-      [ "FIX8::UTEST::QuoteCancel::NoQuoteEntries", "classFIX8_1_1UTEST_1_1QuoteCancel_1_1NoQuoteEntries.html", null ],
-      [ "FIX8::UTEST::QuoteRequest::NoRelatedSym", "classFIX8_1_1UTEST_1_1QuoteRequest_1_1NoRelatedSym.html", null ],
-      [ "FIX8::UTEST::SecurityDefinition::NoRelatedSym", "classFIX8_1_1UTEST_1_1SecurityDefinition_1_1NoRelatedSym.html", null ],
-      [ "FIX8::UTEST::SecurityDefinitionRequest::NoRelatedSym", "classFIX8_1_1UTEST_1_1SecurityDefinitionRequest_1_1NoRelatedSym.html", null ]
+      [ "FIX8::TEX::TradingSessionStatus::NoSecurityAltID", "classFIX8_1_1TEX_1_1TradingSessionStatus_1_1NoSecurityAltID.html", null ]
     ] ],
     [ "FIX8::Inst", "classFIX8_1_1Inst.html", null ],
     [ "FIX8::Inst::_gen< T >", "structFIX8_1_1Inst_1_1__gen.html", null ],
@@ -1851,6 +1707,9 @@ var hierarchy =
     ] ],
     [ "FIX8::Logger::LogElement", "structFIX8_1_1Logger_1_1LogElement.html", null ],
     [ "FIX8::LoginParameters", "structFIX8_1_1LoginParameters.html", null ],
+    [ "FIX8::MBUS::GenericMessage", "classFIX8_1_1MBUS_1_1GenericMessage.html", null ],
+    [ "FIX8::MBUS::MessageBus", "classFIX8_1_1MBUS_1_1MessageBus.html", null ],
+    [ "FIX8::MBUS::MessageBusSubscriber", "classFIX8_1_1MBUS_1_1MessageBusSubscriber.html", null ],
     [ "FIX8::MessageBase", "classFIX8_1_1MessageBase.html", [
       [ "FIX8::Message", "classFIX8_1_1Message.html", [
         [ "FIX8::TEX::AdjustedPositionReport", "classFIX8_1_1TEX_1_1AdjustedPositionReport.html", null ],
@@ -1978,60 +1837,12 @@ var hierarchy =
         [ "FIX8::TEX::TradingSessionStatusRequest", "classFIX8_1_1TEX_1_1TradingSessionStatusRequest.html", null ],
         [ "FIX8::TEX::UserNotification", "classFIX8_1_1TEX_1_1UserNotification.html", null ],
         [ "FIX8::TEX::UserRequest", "classFIX8_1_1TEX_1_1UserRequest.html", null ],
-        [ "FIX8::TEX::UserResponse", "classFIX8_1_1TEX_1_1UserResponse.html", null ],
-        [ "FIX8::UTEST::Advertisement", "classFIX8_1_1UTEST_1_1Advertisement.html", null ],
-        [ "FIX8::UTEST::Allocation", "classFIX8_1_1UTEST_1_1Allocation.html", null ],
-        [ "FIX8::UTEST::AllocationACK", "classFIX8_1_1UTEST_1_1AllocationACK.html", null ],
-        [ "FIX8::UTEST::BidRequest", "classFIX8_1_1UTEST_1_1BidRequest.html", null ],
-        [ "FIX8::UTEST::BidResponse", "classFIX8_1_1UTEST_1_1BidResponse.html", null ],
-        [ "FIX8::UTEST::BusinessMessageReject", "classFIX8_1_1UTEST_1_1BusinessMessageReject.html", null ],
-        [ "FIX8::UTEST::DontKnowTrade", "classFIX8_1_1UTEST_1_1DontKnowTrade.html", null ],
-        [ "FIX8::UTEST::Email", "classFIX8_1_1UTEST_1_1Email.html", null ],
-        [ "FIX8::UTEST::ExecutionReport", "classFIX8_1_1UTEST_1_1ExecutionReport.html", null ],
-        [ "FIX8::UTEST::Heartbeat", "classFIX8_1_1UTEST_1_1Heartbeat.html", null ],
-        [ "FIX8::UTEST::IndicationofInterest", "classFIX8_1_1UTEST_1_1IndicationofInterest.html", null ],
-        [ "FIX8::UTEST::ListCancelRequest", "classFIX8_1_1UTEST_1_1ListCancelRequest.html", null ],
-        [ "FIX8::UTEST::ListExecute", "classFIX8_1_1UTEST_1_1ListExecute.html", null ],
-        [ "FIX8::UTEST::ListStatus", "classFIX8_1_1UTEST_1_1ListStatus.html", null ],
-        [ "FIX8::UTEST::ListStatusRequest", "classFIX8_1_1UTEST_1_1ListStatusRequest.html", null ],
-        [ "FIX8::UTEST::ListStrikePrice", "classFIX8_1_1UTEST_1_1ListStrikePrice.html", null ],
-        [ "FIX8::UTEST::Logon", "classFIX8_1_1UTEST_1_1Logon.html", null ],
-        [ "FIX8::UTEST::Logout", "classFIX8_1_1UTEST_1_1Logout.html", null ],
-        [ "FIX8::UTEST::MarketDataIncrementalRefresh", "classFIX8_1_1UTEST_1_1MarketDataIncrementalRefresh.html", null ],
-        [ "FIX8::UTEST::MarketDataRequest", "classFIX8_1_1UTEST_1_1MarketDataRequest.html", null ],
-        [ "FIX8::UTEST::MarketDataRequestReject", "classFIX8_1_1UTEST_1_1MarketDataRequestReject.html", null ],
-        [ "FIX8::UTEST::MarketDataSnapshotFullRefresh", "classFIX8_1_1UTEST_1_1MarketDataSnapshotFullRefresh.html", null ],
-        [ "FIX8::UTEST::MassQuote", "classFIX8_1_1UTEST_1_1MassQuote.html", null ],
-        [ "FIX8::UTEST::NewOrderList", "classFIX8_1_1UTEST_1_1NewOrderList.html", null ],
-        [ "FIX8::UTEST::NewOrderSingle", "classFIX8_1_1UTEST_1_1NewOrderSingle.html", null ],
-        [ "FIX8::UTEST::News", "classFIX8_1_1UTEST_1_1News.html", null ],
-        [ "FIX8::UTEST::OrderCancelReject", "classFIX8_1_1UTEST_1_1OrderCancelReject.html", null ],
-        [ "FIX8::UTEST::OrderCancelReplaceRequest", "classFIX8_1_1UTEST_1_1OrderCancelReplaceRequest.html", null ],
-        [ "FIX8::UTEST::OrderCancelRequest", "classFIX8_1_1UTEST_1_1OrderCancelRequest.html", null ],
-        [ "FIX8::UTEST::OrderStatusRequest", "classFIX8_1_1UTEST_1_1OrderStatusRequest.html", null ],
-        [ "FIX8::UTEST::Quote", "classFIX8_1_1UTEST_1_1Quote.html", null ],
-        [ "FIX8::UTEST::QuoteAcknowledgement", "classFIX8_1_1UTEST_1_1QuoteAcknowledgement.html", null ],
-        [ "FIX8::UTEST::QuoteCancel", "classFIX8_1_1UTEST_1_1QuoteCancel.html", null ],
-        [ "FIX8::UTEST::QuoteRequest", "classFIX8_1_1UTEST_1_1QuoteRequest.html", null ],
-        [ "FIX8::UTEST::QuoteStatusRequest", "classFIX8_1_1UTEST_1_1QuoteStatusRequest.html", null ],
-        [ "FIX8::UTEST::Reject", "classFIX8_1_1UTEST_1_1Reject.html", null ],
-        [ "FIX8::UTEST::ResendRequest", "classFIX8_1_1UTEST_1_1ResendRequest.html", null ],
-        [ "FIX8::UTEST::SecurityDefinition", "classFIX8_1_1UTEST_1_1SecurityDefinition.html", null ],
-        [ "FIX8::UTEST::SecurityDefinitionRequest", "classFIX8_1_1UTEST_1_1SecurityDefinitionRequest.html", null ],
-        [ "FIX8::UTEST::SecurityStatus", "classFIX8_1_1UTEST_1_1SecurityStatus.html", null ],
-        [ "FIX8::UTEST::SecurityStatusRequest", "classFIX8_1_1UTEST_1_1SecurityStatusRequest.html", null ],
-        [ "FIX8::UTEST::SequenceReset", "classFIX8_1_1UTEST_1_1SequenceReset.html", null ],
-        [ "FIX8::UTEST::SettlementInstructions", "classFIX8_1_1UTEST_1_1SettlementInstructions.html", null ],
-        [ "FIX8::UTEST::TestRequest", "classFIX8_1_1UTEST_1_1TestRequest.html", null ],
-        [ "FIX8::UTEST::TradingSessionStatus", "classFIX8_1_1UTEST_1_1TradingSessionStatus.html", null ],
-        [ "FIX8::UTEST::TradingSessionStatusRequest", "classFIX8_1_1UTEST_1_1TradingSessionStatusRequest.html", null ]
+        [ "FIX8::TEX::UserResponse", "classFIX8_1_1TEX_1_1UserResponse.html", null ]
       ] ],
       [ "FIX8::TEX::header", "classFIX8_1_1TEX_1_1header.html", null ],
       [ "FIX8::TEX::header", "classFIX8_1_1TEX_1_1header.html", null ],
       [ "FIX8::TEX::trailer", "classFIX8_1_1TEX_1_1trailer.html", null ],
-      [ "FIX8::TEX::trailer", "classFIX8_1_1TEX_1_1trailer.html", null ],
-      [ "FIX8::UTEST::header", "classFIX8_1_1UTEST_1_1header.html", null ],
-      [ "FIX8::UTEST::trailer", "classFIX8_1_1UTEST_1_1trailer.html", null ]
+      [ "FIX8::TEX::trailer", "classFIX8_1_1TEX_1_1trailer.html", null ]
     ] ],
     [ "FIX8::MessageSpec", "structFIX8_1_1MessageSpec.html", null ],
     [ "FIX8::Minst", "classFIX8_1_1Minst.html", null ],
@@ -2068,20 +1879,19 @@ var hierarchy =
       [ "FIX8::TEX::Perf_Router", "classFIX8_1_1TEX_1_1Perf__Router.html", [
         [ "tex_router_client", "classtex__router__client.html", null ],
         [ "tex_router_server", "classtex__router__server.html", null ]
-      ] ],
-      [ "FIX8::UTEST::utest_Router", "classFIX8_1_1UTEST_1_1utest__Router.html", null ]
+      ] ]
     ] ],
+    [ "FIX8::Schedule", "structFIX8_1_1Schedule.html", null ],
     [ "FIX8::scoped_ptr< T >", "classFIX8_1_1scoped__ptr.html", null ],
     [ "FIX8::Server", "structFIX8_1_1Server.html", null ],
     [ "FIX8::Session", "classFIX8_1_1Session.html", [
-      [ "check_session", "classcheck__session.html", null ],
       [ "hf_session_client", "classhf__session__client.html", null ],
       [ "hf_session_server", "classhf__session__server.html", null ],
       [ "myfix_session_client", "classmyfix__session__client.html", null ],
-      [ "myfix_session_server", "classmyfix__session__server.html", null ],
-      [ "test_session", "classtest__session.html", null ]
+      [ "myfix_session_server", "classmyfix__session__server.html", null ]
     ] ],
     [ "FIX8::Session::RetransmissionContext", "structFIX8_1_1Session_1_1RetransmissionContext.html", null ],
+    [ "FIX8::Session_Schedule", "structFIX8_1_1Session__Schedule.html", null ],
     [ "FIX8::SessionID", "classFIX8_1_1SessionID.html", null ],
     [ "FIX8::SessionInstance< T >", "classFIX8_1_1SessionInstance.html", null ],
     [ "FIX8::Singleton< T >", "classFIX8_1_1Singleton.html", null ],
@@ -2096,20 +1906,9 @@ var hierarchy =
     [ "FIX8::tty_save_state", "classFIX8_1_1tty__save__state.html", null ],
     [ "FIX8::Type2Type< T >", "structFIX8_1_1Type2Type.html", null ],
     [ "FIX8::Type2Types< T, R >", "structFIX8_1_1Type2Types.html", null ],
-    [ "log_fixture", "classlog__fixture.html", null ],
     [ "MyMenu", "classMyMenu.html", null ],
     [ "MyMenu::MenuItem", "structMyMenu_1_1MenuItem.html", null ],
-    [ "Ocl_Utilities", "classOcl__Utilities.html", [
-      [ "ff::ff_oclNode", "classff_1_1ff__oclNode.html", null ]
-    ] ],
-    [ "persist_fixture", "classpersist__fixture.html", null ],
     [ "RandDev", "structRandDev.html", null ],
-    [ "ff::scalableMPMCqueue< MSqueue >", "classff_1_1scalableMPMCqueue.html", [
-      [ "ff::multiMSqueue", "classff_1_1multiMSqueue.html", null ]
-    ] ],
-    [ "session_fixture", "classsession__fixture.html", [
-      [ "initiator_fixture", "classinitiator__fixture.html", null ]
-    ] ],
     [ "FIX8::Singleton< SingleLogger< fn > >", "classFIX8_1_1Singleton.html", [
       [ "FIX8::SingleLogger< fn >", "classFIX8_1_1SingleLogger.html", null ]
     ] ],
@@ -2139,36 +1938,18 @@ var hierarchy =
         [ "FIX8::XMLError", "structFIX8_1_1XMLError.html", null ]
       ] ]
     ] ],
-    [ "ios", null, [
-      [ "gzstreambase", "classgzstreambase.html", [
-        [ "ogzstream", "classogzstream.html", null ]
-      ] ]
-    ] ],
     [ "ostream", null, [
       [ "FIX8::bcostream", "classFIX8_1_1bcostream.html", null ],
-      [ "FIX8::fptrostream", "classFIX8_1_1fptrostream.html", null ],
-      [ "ogzstream", "classogzstream.html", null ]
+      [ "FIX8::fptrostream", "classFIX8_1_1fptrostream.html", null ]
     ] ],
     [ "streambuf", null, [
       [ "FIX8::bcoutbuf", "classFIX8_1_1bcoutbuf.html", null ],
       [ "FIX8::fdinbuf", "classFIX8_1_1fdinbuf.html", null ],
-      [ "FIX8::fdoutbuf", "classFIX8_1_1fdoutbuf.html", null ],
-      [ "gzstreambuf", "classgzstreambuf.html", null ]
-    ] ],
-    [ "ff::svector< bool >", "classff_1_1svector.html", null ],
-    [ "ff::svector< ff::basePartition >", "classff_1_1svector.html", null ],
-    [ "ff::svector< ff::ff_node * >", "classff_1_1svector.html", null ],
-    [ "ff::svector< int >", "classff_1_1svector.html", null ],
-    [ "ff::svector< void * >", "classff_1_1svector.html", null ],
-    [ "Test", null, [
-      [ "sessionTest", "classsessionTest.html", null ]
+      [ "FIX8::fdoutbuf", "classFIX8_1_1fdoutbuf.html", null ]
     ] ],
     [ "FIX8::Timer< FIX8::Session >", "classFIX8_1_1Timer.html", null ],
     [ "FIX8::TimerEvent< FIX8::Session >", "classFIX8_1_1TimerEvent.html", null ],
     [ "UsageMan", "classUsageMan.html", null ],
     [ "XmlElement", "classXmlElement.html", null ],
-    [ "XmlElement::EntityOrderComp", "structXmlElement_1_1EntityOrderComp.html", null ],
-    [ "message_t", null, [
-      [ "ff::zmqTransportMsg_t", "classff_1_1zmqTransportMsg__t.html", null ]
-    ] ]
+    [ "XmlElement::EntityOrderComp", "structXmlElement_1_1EntityOrderComp.html", null ]
 ];
