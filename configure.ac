@@ -619,6 +619,27 @@ AC_ARG_ENABLE([bdb],
 esac])
 AM_CONDITIONAL(BDBSUPPORT, [test x$oktobdb = xyes])
 
+oktozeromq=no
+AC_ARG_ENABLE([zeromq],
+[AS_HELP_STRING([--enable-zeromq],[enable zeromq messagebus support (default=no)])],
+[case "${enableval}" in
+	yes) oktozeromq=yes
+			AC_MSG_CHECKING(for zeromq)
+			AC_TRY_COMPILE([
+					#include <zmq.hpp>
+				],,
+				have_zeromq=yes,have_zeromq=no)
+		 if test "$have_zeromq" = yes && test "$oktozeromq" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAS_ZEROMQ_MBUS, 1, [Define to 1 if you have zeromq])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-zeromq) ;;
+esac])
+AM_CONDITIONAL(ZEROMQSUPPORT, [test x$oktozeromq = xyes])
+
 AC_CHECK_LIB(z, deflate, [
 	AC_CHECK_HEADERS([zlib.h],
 	[

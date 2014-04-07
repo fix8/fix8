@@ -157,7 +157,7 @@ class Logger
 	std::list<std::string> _buffer;
 
 public:
-	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, buffer, inbound, outbound, num_flags };
+	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, buffer, inbound, outbound, nolf, num_flags };
 	enum { rotation_default = 5, max_rotation = 64} ;
 	typedef ebitset<Flags> LogFlags;
 

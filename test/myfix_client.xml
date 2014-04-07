@@ -73,8 +73,8 @@
 				type="protocol"
 				filename="./run/myfix_client_protocol.log"
 				rotation="5"
-				flags_old="append|inbound"
-				flags="append|inbound|outbound|direction|sequence"/>
+				flags_old="append|inbound|outbound|direction|sequence"
+				flags="append|inbound|outbound|nolf"/>
 
 	<server_group name="FO_Group0">
 		<server name="Host_01" ip="192.168.1.121" port="12345" max_retries="3"/>

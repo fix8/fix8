@@ -86,7 +86,7 @@ namespace FIX8
     }
 
 	const string Logger::_bit_names[] =
-		{ "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer", "inbound", "outbound" };
+		{ "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer", "inbound", "outbound", "nolf", };
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -158,7 +158,11 @@ int Logger::operator()()
 			else
 			{
 				f8_scoped_lock guard(_mutex);
-				get_stream() << ostr.str() << msg_ptr->_str << endl;
+				get_stream() << ostr.str() << msg_ptr->_str;
+				if (_flags & nolf)
+					get_stream().flush();
+				else
+					get_stream() << endl;
 			}
 		}
 #if (MPMC_SYSTEM == MPMC_FF)
