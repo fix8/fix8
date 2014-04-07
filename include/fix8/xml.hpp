@@ -73,8 +73,8 @@ public:
 	/*! XmlSet ordering preserved from source file */
 	typedef std::set<const XmlElement *, EntityOrderComp> XmlSet;
 	typedef std::map<std::string, std::string> XmlAttrs;
-	XmlAttrs *attrs_;
-	static const XmlAttrs emptyattrs_;
+    XmlAttrs *attrs_;
+    F8API static const XmlAttrs emptyattrs_;
 
 private:
 	typedef std::multimap<std::string, XmlElement *> XmlSubEls;
@@ -84,7 +84,7 @@ private:
 
 	/// Set of all child elements in file order
 	XmlSet *ordchildren_;
-	static const XmlSet emptyset_;
+    F8API static const XmlSet emptyset_;
 
 	/// Copy Ctor. Non-copyable.
 	XmlElement(const XmlElement&);
@@ -100,15 +100,15 @@ public:
 	  \param txtline xml sourcefile line number
 	  \param depth depth nesting level
 	  \param rootAttr root attribute string */
-	XmlElement(std::istream& ifs, int subidx, XmlElement *parent=0, int txtline=0, int depth=0, const char *rootAttr=0);
+    F8API XmlElement( std::istream& ifs, int subidx, XmlElement *parent = 0, int txtline = 0, int depth = 0, const char *rootAttr = 0 );
 
 	/// Dtor.
-	virtual ~XmlElement();
+    F8API virtual ~XmlElement();
 
 	/*! Parse the xml attributes from an element.
 	  \param attlst string of attributes
 	  \return number of attributes extracted */
-	int ParseAttrs(const std::string& attlst);
+    F8API int ParseAttrs( const std::string& attlst );
 
 	/*! Find an element with a given name, attribute name and attribute value.
 	  \param what the name to search for
@@ -117,7 +117,7 @@ public:
 	  \param aval the attribute value
 	  \param delim the Xpath delimiter
 	  \return the found or 0 if not found */
-	const XmlElement *find(const std::string& what, bool ignorecase=false,
+    F8API const XmlElement *find( const std::string& what, bool ignorecase = false,
 		const std::string *atag=0, const std::string *aval=0, const char delim='/') const;
 
 	/*! Recursively find all elements with a given name, attribute name and attribute value.
@@ -128,14 +128,14 @@ public:
 	  \param aval the attribute value
 	  \param delim the Xpath delimiter
 	  \return the number of found elements */
-	int find(const std::string& what, XmlSet& eset, bool ignorecase=false,
+    F8API int find( const std::string& what, XmlSet& eset, bool ignorecase = false,
 		const std::string *atag=0, const std::string *aval=0, const char delim='/') const;
 
 	/*! Find an attribute's with the given name.
 	  \param what attribute to find
 	  \param target where to place value
 	  \return true if found */
-	bool GetAttr(const std::string& what, std::string& target) const;
+    F8API bool GetAttr( const std::string& what, std::string& target ) const;
 
 	/*! Find an attribute's value with the name "value".
 	  \param target where to place value
@@ -160,7 +160,7 @@ public:
 	  \param what attribute to find
 	  \param value attribute value
 	  \return true if found */
-	bool findAttrByValue(const std::string& what, const std::string& value) const;
+    F8API bool findAttrByValue( const std::string& what, const std::string& value ) const;
 
 	/*! Find an attribute with the given name and return its typed value.
 	  \tparam type of target attribute
@@ -201,13 +201,13 @@ public:
 	/*! Insert an element as a child of this element
 	  \param what elekent to insert
 	  \return true if successful */
-	bool Insert(XmlElement *what);
+    F8API bool Insert( XmlElement *what );
 
 	/*! Perform xml translation on the supplied string inplace.
 	  Translate predefined entities and numeric character references.
 	  \param what source string to translate
 	  \return the translated string */
-	const std::string& InplaceXlate (std::string& what);
+    F8API const std::string& InplaceXlate( std::string& what );
 
 	/*! Get the depth of this element
 	  \return the depth */
@@ -264,7 +264,7 @@ public:
 	/*! Create a new root element (and recursively parse) from a given xml filename.
 	  \param fname the xml filename
 	  \return the new element */
-	static XmlElement *Factory(const std::string& fname);
+    F8API static XmlElement *Factory( const std::string& fname );
 
 	/*! Get an iterator to the first child attribute.
 	  \return const_iterator to first attribute */
@@ -294,8 +294,10 @@ public:
 	    \param os stream to send to
 	    \param en XmlElement REFErence
 	    \return stream */
-	friend std::ostream& operator<<(std::ostream& os, const XmlElement& en);
+	friend F8API std::ostream& operator<<(std::ostream& os, const XmlElement& en);
 };
+
+F8API std::ostream& operator<<( std::ostream& os, const XmlElement& en );
 
 #endif // _XML_ELEMENT_HPP_
 
