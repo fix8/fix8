@@ -58,6 +58,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <Poco/Exception.h>
 #endif
 
+#include <fix8/f8dll.h>
+
 // file/line stringification
 #define STRINGOF(x) #x
 #define STRINGIFY(x) STRINGOF(x)
@@ -69,42 +71,42 @@ namespace FIX8 {
 /*! In place string to upper case.
   \param src source string
   \return reference to modified string */
-std::string& InPlaceStrToUpper(std::string& src);
+F8API std::string& InPlaceStrToUpper(std::string& src);
 
 /*! In place string to lower case.
   \param src source string
   \return reference to modified string */
-std::string& InPlaceStrToLower(std::string& src);
+F8API std::string& InPlaceStrToLower( std::string& src );
 
 /*! String to lower case.
   \param src source string
   \return to new lowercase string */
-std::string StrToLower(const std::string& src);
+F8API std::string StrToLower( const std::string& src );
 
 /*! Decode a weekday name into numeric dow (0=SUN), case insensitive
   only check at most the first 2 unique characters (will ignore any characters after that);
   alternatively, accept numeric dow 0-6;
   \param from source dow string
   \return idx dow or -1 if not found */
-int decode_dow (const std::string& from);
+F8API int decode_dow( const std::string& from );
 
 /*! Check if string has trailing slash, if not add.
   \param source source string
   \return reference to modified string */
-std::string& CheckAddTrailingSlash(std::string& source);
+F8API std::string& CheckAddTrailingSlash( std::string& source );
 
 /*! Replace any character found in the supplied set in string with supplied character
   \param iset set of characters
   \param src source string
   \param repl character to replace
   \return reference to modified string */
-std::string& InPlaceReplaceInSet(const std::string& iset, std::string& src, const char repl='_');
+F8API std::string& InPlaceReplaceInSet( const std::string& iset, std::string& src, const char repl = '_' );
 
 /*! Find standard error string for given errno.
   \param err errno value
   \param str if not 0, prepend string to error string
   \return error string */
-std::string Str_error(const int err, const char *str=0);
+F8API std::string Str_error( const int err, const char *str = 0 );
 
 /*! Format Tickval into string.
   \param result target string
@@ -112,13 +114,13 @@ std::string Str_error(const int err, const char *str=0);
   \param dplaces number of decimal places to report seconds (default 6)
   \param use_gm if true, use gmtime, if false localtime
   \return reference to target string */
-const std::string& GetTimeAsStringMS(std::string& result, const class Tickval *tv=0, const unsigned dplaces=6, bool use_gm=false);
+F8API const std::string& GetTimeAsStringMS( std::string& result, const class Tickval *tv = 0, const unsigned dplaces = 6, bool use_gm = false );
 
 /*! Trim leading and trailing whitespace from a string, inplace.
   \param source source string
   \param ws string containing whitespace characters to trim out
   \return trimmed string */
-const std::string& trim(std::string& source, const std::string& ws=" \t");
+F8API const std::string& trim( std::string& source, const std::string& ws = " \t" );
 
 //----------------------------------------------------------------------------------------
 /*! Sidestep the warn_unused_result attribute
@@ -241,7 +243,7 @@ inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 //----------------------------------------------------------------------------------------
 /*! Create a full path, including nested directories
     \param path path to create */
-void create_path(const std::string& path);
+F8API void create_path( const std::string& path );
 
 //----------------------------------------------------------------------------------------
 /// C++11 inspired scoped pointer.
@@ -824,7 +826,7 @@ inline double fast_atof (const char *p)
 /*! \param value the source value
     \param str the target string
     \param prec number of precision digits*/
-extern "C" { size_t modp_dtoa(double value, char* str, int prec); }
+extern "C" { size_t modp_dtoa( double value, char* str, int prec ); }
 
 //----------------------------------------------------------------------------------------
 /// Bitset for enums.
@@ -1041,7 +1043,7 @@ T enum_str_get(const unsigned els, const std::string *sset, const std::string& w
 //----------------------------------------------------------------------------------------
 /*! Get the current file umask
     \return int file mask */
-int get_umask();
+F8API int get_umask();
 
 //----------------------------------------------------------------------------------------
 /*! Check for file existance.
@@ -1151,7 +1153,7 @@ struct free_ptr
 template <typename T>
 class Singleton
 {
-	static f8_atomic<T*> _instance;
+	F8API static f8_atomic<T*> _instance;
     //static f8_spin_lock _mutex;
 
 	Singleton(const Singleton&);
@@ -1194,7 +1196,7 @@ public:
 	}
 
     /*! Creates a single instance of the underlying object */
-   static T *create_instance();
+   F8API static T *create_instance();
 
 	/*! Get the instance of the underlying object. If not created, create.
 	    \return the instance */
