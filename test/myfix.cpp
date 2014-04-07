@@ -111,6 +111,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 // f8 headers
 #include <fix8/f8includes.hpp>
+#include <fix8/zeromq_mbus.hpp>
 
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>

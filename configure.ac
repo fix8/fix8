@@ -125,7 +125,11 @@ AC_CHECK_TOOL([DOXYGEN],[doxygen])
 
 # test for gcc >= 4.2
 is_late_gcc=no
+is_clang=no
 case "$CXX" in
+  *clang*)
+		is_clang=yes
+		LIBS="$LIBS -lstdc++ -lm " ;;
   *g++*)
 		GCC_VERSION=`$CC -dumpversion`
 		gcc_major=`echo $GCC_VERSION | cut -d. -f1`
@@ -133,8 +137,6 @@ case "$CXX" in
 		if test $gcc_major -ge 4 -a $gcc_minor -ge 2; then
 			is_late_gcc=yes
 		fi ;;
-	*clang*)
-		LIBS="$LIBS -lstdc++ -lm " ;;
 	*) ;;
 esac
 
@@ -148,7 +150,7 @@ AC_ARG_ENABLE([toggleassignmentvars],
 esac])
 
 # use -fvar-tracking-assignments-toggle
-AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$is_late_gcc = xyes && test x$oktotogglevar = xyes])
+AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$is_clang = xno && test x$is_late_gcc = xyes && test x$oktotogglevar = xyes])
 
 if test -z "$DOXYGEN";
 	then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
@@ -616,6 +618,27 @@ AC_ARG_ENABLE([bdb],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-bdb) ;;
 esac])
 AM_CONDITIONAL(BDBSUPPORT, [test x$oktobdb = xyes])
+
+oktozeromq=no
+AC_ARG_ENABLE([zeromq],
+[AS_HELP_STRING([--enable-zeromq],[enable zeromq messagebus support (default=no)])],
+[case "${enableval}" in
+	yes) oktozeromq=yes
+			AC_MSG_CHECKING(for zeromq)
+			AC_TRY_COMPILE([
+					#include <zmq.hpp>
+				],,
+				have_zeromq=yes,have_zeromq=no)
+		 if test "$have_zeromq" = yes && test "$oktozeromq" = yes; then
+			AC_MSG_RESULT(yes)
+			AC_DEFINE(HAS_ZEROMQ_MBUS, 1, [Define to 1 if you have zeromq])
+		 else
+			  AC_MSG_RESULT(no)
+		 fi ;;
+	no) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-zeromq) ;;
+esac])
+AM_CONDITIONAL(ZEROMQSUPPORT, [test x$oktozeromq = xyes])
 
 AC_CHECK_LIB(z, deflate, [
 	AC_CHECK_HEADERS([zlib.h],

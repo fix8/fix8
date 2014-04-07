@@ -669,6 +669,8 @@ USESSL_TRUE
 Z_LIB
 USECOMPRESSION_FALSE
 USECOMPRESSION_TRUE
+ZEROMQSUPPORT_FALSE
+ZEROMQSUPPORT_TRUE
 BDBSUPPORT_FALSE
 BDBSUPPORT_TRUE
 LIBHIREDISSUPPORT_FALSE
@@ -854,6 +856,7 @@ enable_libmemcached
 enable_libhiredis
 enable_bdb
 with_bdb
+enable_zeromq
 enable_xmlstrictbool
 enable_bufgloblogging
 enable_valgrind
@@ -1525,6 +1528,7 @@ Optional Features:
                           (default=no)
   --enable-bdb            enable support for Oracle Berkeley DB persistence
                           (default=no)
+  --enable-zeromq         enable zeromq messagebus support (default=no)
   --enable-xmlstrictbool  enable xml strict bool behaviour (default=no)
   --enable-bufgloblogging enable buffered global logging behaviour
                           (default=no)
@@ -18902,7 +18906,11 @@ fi
 
 # test for gcc >= 4.2
 is_late_gcc=no
+is_clang=no
 case "$CXX" in
+  *clang*)
+		is_clang=yes
+		LIBS="$LIBS -lstdc++ -lm " ;;
   *g++*)
 		GCC_VERSION=`$CC -dumpversion`
 		gcc_major=`echo $GCC_VERSION | cut -d. -f1`
@@ -18910,8 +18918,6 @@ case "$CXX" in
 		if test $gcc_major -ge 4 -a $gcc_minor -ge 2; then
 			is_late_gcc=yes
 		fi ;;
-	*clang*)
-		LIBS="$LIBS -lstdc++ -lm " ;;
 	*) ;;
 esac
 
@@ -18927,7 +18933,7 @@ fi
 
 
 # use -fvar-tracking-assignments-toggle
- if test x$is_late_gcc = xyes && test x$oktotogglevar = xyes; then
+ if test x$is_clang = xno && test x$is_late_gcc = xyes && test x$oktotogglevar = xyes; then
   TOGGLETRACKINGASSIGNMENTS_TRUE=
   TOGGLETRACKINGASSIGNMENTS_FALSE='#'
 else
@@ -23025,6 +23031,56 @@ else
 fi
 
 
+oktozeromq=no
+# Check whether --enable-zeromq was given.
+if test "${enable_zeromq+set}" = set; then :
+  enableval=$enable_zeromq; case "${enableval}" in
+	yes) oktozeromq=yes
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for zeromq" >&5
+$as_echo_n "checking for zeromq... " >&6; }
+			cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+					#include <zmq.hpp>
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+  have_zeromq=yes
+else
+  have_zeromq=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+		 if test "$have_zeromq" = yes && test "$oktozeromq" = yes; then
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+$as_echo "#define HAS_ZEROMQ_MBUS 1" >>confdefs.h
+
+		 else
+			  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+		 fi ;;
+	no) ;;
+	*) as_fn_error $? "bad value ${enableval} for --enable-zeromq" "$LINENO" 5 ;;
+esac
+fi
+
+ if test x$oktozeromq = xyes; then
+  ZEROMQSUPPORT_TRUE=
+  ZEROMQSUPPORT_FALSE='#'
+else
+  ZEROMQSUPPORT_TRUE='#'
+  ZEROMQSUPPORT_FALSE=
+fi
+
+
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for deflate in -lz" >&5
 $as_echo_n "checking for deflate in -lz... " >&6; }
 if ${ac_cv_lib_z_deflate+:} false; then :
@@ -23648,6 +23704,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BDBSUPPORT_TRUE}" && test -z "${BDBSUPPORT_FALSE}"; then
   as_fn_error $? "conditional \"BDBSUPPORT\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${ZEROMQSUPPORT_TRUE}" && test -z "${ZEROMQSUPPORT_FALSE}"; then
+  as_fn_error $? "conditional \"ZEROMQSUPPORT\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USECOMPRESSION_TRUE}" && test -z "${USECOMPRESSION_FALSE}"; then
