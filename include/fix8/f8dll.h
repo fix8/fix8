@@ -33,6 +33,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
+// F8API required only non-inlined publics, public/private statics that exposed via inline
+// functions - or the entire class could be marked with F8API.
+//-------------------------------------------------------------------------------------------------
 #ifndef FIX8_DLL_H_INCLUDED_
 #define FIX8_DLL_H_INCLUDED_
 
@@ -48,9 +51,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
                 #define FIX8_LIB_SUFFIX ".lib"
             #endif
             #pragma comment(lib, "fix8" FIX8_LIB_SUFFIX)
-            //#pragma message("Auto linking to fix8" FIX8_LIB_SUFFIX) 
+            //#pragma message("Auto linking to fix8" FIX8_LIB_SUFFIX)
         #else
-            //#pragma message("Skipping auto linking to fix8" FIX8_LIB_SUFFIX) 
+            //#pragma message("Skipping auto linking to fix8" FIX8_LIB_SUFFIX)
         #endif
     #endif
 #else
