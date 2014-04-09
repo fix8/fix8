@@ -204,7 +204,7 @@ protected:
 public:
 	/*! Ctor.
 	    \param flags ebitset flags */
-	Logger(const LogFlags flags) : _thread(ref(*this)), _flags(flags), _ofs(), _lines(), _sequence(), _osequence()
+	Logger(const LogFlags flags) : _thread(std::ref(*this)), _flags(flags), _ofs(), _lines(), _sequence(), _osequence()
 	{
 		_thread.start();
 	}

@@ -105,7 +105,7 @@ public:
 	/*! Ctor.
 	  \param monitor reference to callback class
 	  \param granularity timer recheck interval in ms */
-   explicit Timer(T& monitor, int granularity=10) : _monitor(monitor), _thread(ref(*this)), _granularity(granularity) {}
+   explicit Timer(T& monitor, int granularity=10) : _monitor(monitor), _thread(std::ref(*this)), _granularity(granularity) {}
 
 	/// Dtor.
    virtual ~Timer()

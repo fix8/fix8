@@ -69,7 +69,7 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	AsyncSocket(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: _sock(sock), _session(session), _pmodel(pmodel), _thread(FIX8::ref(*this))
+		: _sock(sock), _session(session), _pmodel(pmodel), _thread(std::ref(*this))
 	{
 	}
 
@@ -224,7 +224,7 @@ public:
 	    \param session session
 	    \param pmodel process model */
 	FIXReader(Poco::Net::StreamSocket *sock, Session& session, const ProcessModel pmodel=pm_pipeline)
-		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(FIX8::ref(*this), &FIXReader::callback_processor)
+		: AsyncSocket<f8String>(sock, session, pmodel), _callback_thread(std::ref(*this), &FIXReader::callback_processor)
 #if EXPERIMENTAL_BUFFERED_SOCKET_READ
 		, _read_buffer(), _read_buffer_rptr(_read_buffer), _read_buffer_wptr(_read_buffer)
 #endif

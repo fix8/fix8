@@ -53,42 +53,6 @@ namespace FIX8
 {
 
 //----------------------------------------------------------------------------------------
-/// This is a modified and stripped down version of c++11 reference_wrapper.
-/*!  \tparam T class to reference wrap */
-template<typename T>
-class reference_wrapper
-{
-	T *_data;
-
-public:
-	/*! Ctor.
-	  \param _indata instance of object to wrapper */
-	reference_wrapper(T& _indata) : _data(&_indata) {}
-
-	/*! Cast to enclosed type operator
-	  \return reference to object */
-	operator T&() const { return this->get(); }
-
-	/*! Accessor.
-	  \return reference to object */
-	T& get() const { return *_data; }
-};
-
-/// Denotes a reference should be taken to a variable.
-/*! \tparam T class to wrapper
-   \param _t instance of class
-   \return reference_wrappered object */
-template<typename T>
-inline reference_wrapper<T> ref(T& _t) { return reference_wrapper<T>(_t); }
-
-/// Denotes a const reference should be taken to a variable.
-/*! \tparam T class to wrapper
-    \param _t instance of class
-    \return const reference_wrappered object */
-template<typename T>
-inline reference_wrapper<const T> cref(T& _t) { return reference_wrapper<const T>(_t); }
-
-//----------------------------------------------------------------------------------------
 /// pthread wrapper abstract base
 class _dthreadcore
 {
@@ -381,7 +345,7 @@ public:
 	  \param cancellation_token_method pointer to cancellation_token
 	  \param detach detach thread if true
 	  \param stacksize default thread stacksize */
-	dthread(reference_wrapper<T> what, int (T::*method)()=&T::operator(), dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
+	dthread(std::reference_wrapper<T> what, int (T::*method)()=&T::operator(), dthread_cancellation_token& (T::*cancellation_token_method)()=&T::cancellation_token, const bool detach=false, const size_t stacksize=0)
 		: _dthreadcore(detach, stacksize), _sub(what, method, cancellation_token_method) {}
 
 	/// Dtor.

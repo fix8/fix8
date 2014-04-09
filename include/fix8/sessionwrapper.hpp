@@ -253,7 +253,7 @@ class ReliableClientSession : public ClientSession<T>
 public:
 	/// Ctor. Prepares session for connection as an initiator.
 	ReliableClientSession (const F8MetaCntx& ctx, const std::string& conf_file, const std::string& session_name)
-		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(ref(*this)),
+		: ClientSession<T>(ctx, conf_file, session_name, true), _thread(std::ref(*this)),
 		_send_seqnum(), _recv_seqnum(), _current(), _attempts(),
 		_failover_cnt(this->get_addresses(this->_ses, _servers))
 	{

@@ -220,7 +220,7 @@ class BDBPersister : public Persister
 
 public:
 	/// Ctor.
-	BDBPersister() : _thread(ref(*this)), _dbEnv(0), _db(new Db(&_dbEnv, 0)), _wasCreated() {}
+	BDBPersister() : _thread(std::ref(*this)), _dbEnv(0), _db(new Db(&_dbEnv, 0)), _wasCreated() {}
 	/// Dtor.
 	virtual ~BDBPersister();
 
