@@ -33,15 +33,15 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
+#if __cplusplus < 201103L
+#error Fix8 requires C++11 support.
+#endif
+//-------------------------------------------------------------------------------------------------
 #ifndef FIX8_INCLUDES_HPP_
 #define FIX8_INCLUDES_HPP_
-
+//-------------------------------------------------------------------------------------------------
 #include <fix8/f8dll.h>
 #include <fix8/f8config.h>
-
-#ifdef HAS_TR1_UNORDERED_MAP
-#include <tr1/unordered_map>
-#endif
 
 #ifdef PROFILING_BUILD
 #include <sys/gmon.h>

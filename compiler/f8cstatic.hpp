@@ -145,10 +145,7 @@ const CSMap::TypePair cs_valueTable[] =
 "#include <iterator>\n"
 "#include <algorithm>\n"
 "#include <cerrno>\n"
-"#include <string.h>\n"
-"#if defined HAS_TR1_UNORDERED_MAP\n"
-"#include <tr1/unordered_map>\n"
-"#endif"),
+"#include <string.h>"),
 	CSMap::TypePair(cs_divider,
 "//-------------------------------------------------------------------------------------------------"),
 CSMap::TypePair(cs_copyright,

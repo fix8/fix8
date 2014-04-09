@@ -73,6 +73,9 @@ BRAND_DESCRIPTION='Modern fast FIX Framework'
 BRAND_COMPANY_SHORTNAME='fix8'
 BRAND_COMPANY_LONGNAME='fix8 by David L. Dight'
 
+# Check for C++11
+AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
+
 # Checks for programs.
 LT_INIT
 AC_PROG_CXX
@@ -527,20 +530,6 @@ AC_MSG_CHECKING(for gtest)
         AC_MSG_RESULT(no)
     fi
 AM_CONDITIONAL(USEGTEST, [test x$have_gtest = xyes && test "$oktogtest" = yes])
-
-
-AC_MSG_CHECKING(for tr1/unordered_map)
-	AC_TRY_COMPILE([
-	#include <tr1/unordered_map>
-	#include <string>
-		],[std::tr1::unordered_map<std::string, std::string> uom; uom["blah"]="blather";],
-		have_tr1_unordered_map=yes, have_tr1_unordered_map=no)
-	if test "$have_tr1_unordered_map" = yes; then
-	    AC_MSG_RESULT(yes)
-	    AC_DEFINE(HAS_TR1_UNORDERED_MAP, 1, [Define to 1 if TR1 hashmaps are available])
-	else
-	    AC_MSG_RESULT(no)
-	fi
 
 AC_CHECK_LIB(crypt, crypt, [
 	AC_CHECK_HEADERS([crypt.h],

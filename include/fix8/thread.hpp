@@ -477,4 +477,4 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_THREAD_HPP_
+#endif // FIX8_THREAD_HPP_
