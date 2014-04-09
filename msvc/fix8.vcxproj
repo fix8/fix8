@@ -171,6 +171,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\runtime\memcachedpersist.cpp" />
+    <ClCompile Include="..\runtime\redispersist.cpp" />
     <ClCompile Include="..\runtime\xml.cpp" />
     <ClCompile Include="..\runtime\configuration.cpp" />
     <ClCompile Include="..\runtime\connection.cpp" />
