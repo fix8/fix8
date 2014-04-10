@@ -44,7 +44,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 namespace FIX8 {
 
 //-------------------------------------------------------------------------------------------------
-typedef std::string f8String;
+using f8String = std::string;
 
 //-------------------------------------------------------------------------------------------------
 /// Supported session process models
@@ -89,7 +89,7 @@ template<typename Key, typename Val>
 class GeneratedTable
 {
 public:
-	typedef _pair<Key, Val> Pair;
+	using Pair = _pair<Key, Val>;
 
 #ifndef _MSC_VER
 private:
@@ -100,7 +100,7 @@ private:
 	/// The number of elements in the data set
 	const size_t _pairsz;
 
-	typedef Val NotFoundType;
+	using NotFoundType = Val;
 	/// The value to return when the key is not found
 	const NotFoundType& _noval;
 
@@ -181,12 +181,12 @@ public:
 /*! \tparam Key the key
    \tparam Val the value
    \tparam Compare the comparitor */
-template<typename Key, typename Val, typename Compare=std::less<Key> >
+template<typename Key, typename Val, typename Compare=std::less<Key>>
 struct StaticTable
 {
-	typedef typename std::map<Key, Val, Compare> TypeMap;
-	typedef typename TypeMap::value_type TypePair;
-	typedef Val NotFoundType;
+	using TypeMap = typename std::map<Key, Val, Compare>;
+	using TypePair = typename TypeMap::value_type;
+	using NotFoundType = Val;
 
 	/// The container
 	const TypeMap _valuemap;
@@ -240,17 +240,17 @@ template<typename K, typename T, typename Comp>
 class presorted_set
 {
 public:
-	typedef T* iterator;
-	typedef const T* const_iterator;
-	typedef std::pair<iterator, bool> result;
+	using iterator = T*;
+	using const_iterator = const T*;
+	using result = std::pair<iterator, bool>;
 
 private:
 	const size_t _reserve;
 	size_t _sz, _rsz;
 	T *_arr;
 
-	typedef std::pair<iterator, iterator> internal_result;
-	typedef std::pair<const_iterator, const_iterator> const_internal_result;
+	using internal_result = std::pair<iterator, iterator>;
+	using const_internal_result = std::pair<const_iterator, const_iterator>;
 
 	/*! Calculate the amount of space to reserve in set
 	  \param sz number of elements currently in set; if 0 retun reserve elements as size to reserve
@@ -431,14 +431,14 @@ public:
 template<typename T>
 struct Type2Type
 {
-	typedef T type;
+	using type = T;
 };
 
 template<typename T, typename R>
 struct Type2Types
 {
-	typedef T type;
-	typedef R rtype;
+	using type = T;
+	using rtype = R;
 };
 
 } // FIX8

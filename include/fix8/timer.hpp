@@ -98,7 +98,7 @@ class Timer
 	f8_spin_lock _spin_lock;
    unsigned _granularity;
 
-   std::priority_queue<TimerEvent<T> > _event_queue;
+   std::priority_queue<TimerEvent<T>> _event_queue;
 	dthread_cancellation_token _cancellation_token;
 
 public:

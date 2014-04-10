@@ -54,9 +54,6 @@ namespace FIX8 {
 /// Base (ABC) Persister class
 class Persister
 {
-	Persister(const Persister&);
-	Persister& operator=(const Persister&);
-
 protected:
 	bool _opened;
 
@@ -66,6 +63,9 @@ public:
 
 	/// Dtor.
 	virtual ~Persister() {}
+
+	Persister(const Persister&) = delete;
+	Persister& operator=(const Persister&) = delete;
 
 	/// Maximum length of persisted FIX message.
 	enum { MaxMsgLen = MAX_MSG_LENGTH };
@@ -229,31 +229,31 @@ public:
 	    \param dbFname database name
 	    \param purge if true, empty database if found
 	    \return true on success */
-    F8API virtual bool initialise(const f8String& dbDir, const f8String& dbFname, bool purge=false);
+	F8API virtual bool initialise(const f8String& dbDir, const f8String& dbFname, bool purge=false);
 
 	/*! Find the nearest highest sequence number from the sequence to last provided.
 	    \param requested sequence number to start
 	    \param last highest sequence
 	    \return the nearest sequence number or 0 if not found */
-    F8API virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
+	F8API virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
 
 	/*! Persist a message.
 	    \param seqnum sequence number of message
 	    \param what message string
 	    \return true on success */
-    F8API virtual bool put(const unsigned seqnum, const f8String& what);
+	F8API virtual bool put(const unsigned seqnum, const f8String& what);
 
 	/*! Persist a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
 	    \return true on success */
-    F8API virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
+	F8API virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
 
 	/*! Retrieve a persisted message.
 	    \param seqnum sequence number of message
 	    \param to target message string
 	    \return true on success */
-    F8API virtual bool get(const unsigned seqnum, f8String& to) const;
+	F8API virtual bool get(const unsigned seqnum, f8String& to) const;
 
 	/*! Retrieve a range of persisted messages.
 	    \param from start at sequence number
@@ -267,20 +267,20 @@ public:
 	/*! Retrieve sequence number of last peristed message.
 	    \param to target sequence number
 	    \return sequence number of last peristed message on success */
-    F8API virtual unsigned get_last_seqnum(unsigned& to) const;
+	F8API virtual unsigned get_last_seqnum(unsigned& to) const;
 
 	/*! Retrieve a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
 	    \return true on success */
-    F8API virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
+	F8API virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
 
 	/// Stop the persister thread.
 	void stop() { write(KeyDataBuffer()); _thread.join(); }
 
 	/*! Persister thread entry point.
 	  \return 0 on success */
-    F8API int operator()();	// write thread
+	F8API int operator()();	// write thread
 
 	dthread_cancellation_token& cancellation_token() { return _cancellation_token;	}
 };
@@ -291,7 +291,7 @@ public:
 /// Memory based message persister.
 class MemoryPersister : public Persister
 {
-	typedef std::map<unsigned, const f8String> Store;
+	using Store = std::map<unsigned, const f8String>;
 	Store _store;
 
 public:
@@ -304,19 +304,19 @@ public:
 	    \param seqnum sequence number of message
 	    \param what message string
 	    \return true on success */
-    F8API virtual bool put( const unsigned seqnum, const f8String& what );
+	F8API virtual bool put( const unsigned seqnum, const f8String& what );
 
 	/*! Persist a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
 	    \return true on success */
-    F8API virtual bool put( const unsigned sender_seqnum, const unsigned target_seqnum );
+	F8API virtual bool put( const unsigned sender_seqnum, const unsigned target_seqnum );
 
 	/*! Retrieve a persisted message.
 	    \param seqnum sequence number of message
 	    \param to target message string
 	    \return true on success */
-    F8API virtual bool get( const unsigned seqnum, f8String& to ) const;
+	F8API virtual bool get( const unsigned seqnum, f8String& to ) const;
 
 	/*! Retrieve a range of persisted messages.
 	    \param from start at sequence number
@@ -324,25 +324,25 @@ public:
 	    \param session session containing callback method
 	    \param callback method to call with each retrieved message
 	    \return number of messages retrieved */
-    F8API virtual unsigned get( const unsigned from, const unsigned to, Session& session,
+	F8API virtual unsigned get( const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
 
 	/*! Retrieve sequence number of last peristed message.
 	    \param to target sequence number
 	    \return sequence number of last peristed message on success */
-    F8API virtual unsigned get_last_seqnum( unsigned& to ) const;
+	F8API virtual unsigned get_last_seqnum( unsigned& to ) const;
 
 	/*! Retrieve a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
 	    \return true on success */
-    F8API virtual bool get( unsigned& sender_seqnum, unsigned& target_seqnum ) const;
+	F8API virtual bool get( unsigned& sender_seqnum, unsigned& target_seqnum ) const;
 
 	/*! Find the nearest highest sequence number from the sequence to last provided.
 	    \param requested sequence number to start
 	    \param last highest sequence
 	    \return the nearest sequence number or 0 if not found */
-    F8API virtual unsigned find_nearest_highest_seqnum( const unsigned requested, const unsigned last ) const;
+	F8API virtual unsigned find_nearest_highest_seqnum( const unsigned requested, const unsigned last ) const;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -387,7 +387,7 @@ class FilePersister : public Persister
 	unsigned _rotnum;
 	bool _wasCreated;
 
-	typedef std::map<uint32_t, Prec> Index;
+	using Index = std::map<uint32_t, Prec>;
 	Index _index;
 
 public:
@@ -428,25 +428,25 @@ public:
 	    \param session session containing callback method
 	    \param callback method to call with each retrieved message
 	    \return number of messages retrieved */
-    F8API virtual unsigned get( const unsigned from, const unsigned to, Session& session,
+	F8API virtual unsigned get( const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
 
 	/*! Retrieve sequence number of last peristed message.
 	    \param to target sequence number
 	    \return sequence number of last peristed message on success */
-    F8API virtual unsigned get_last_seqnum( unsigned& to ) const;
+	F8API virtual unsigned get_last_seqnum( unsigned& to ) const;
 
 	/*! Retrieve a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
 	    \return true on success */
-    F8API virtual bool get( unsigned& sender_seqnum, unsigned& target_seqnum ) const;
+	F8API virtual bool get( unsigned& sender_seqnum, unsigned& target_seqnum ) const;
 
 	/*! Find the nearest highest sequence number from the sequence to last provided.
 	    \param requested sequence number to start
 	    \param last highest sequence
 	    \return the nearest sequence number or 0 if not found */
-    F8API virtual unsigned find_nearest_highest_seqnum( const unsigned requested, const unsigned last ) const;
+	F8API virtual unsigned find_nearest_highest_seqnum( const unsigned requested, const unsigned last ) const;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -464,32 +464,32 @@ public:
 	MemcachedPersister() : _cache(), _server_count() {}
 
 	/// Dtor.
-    F8API virtual ~MemcachedPersister();
+	F8API virtual ~MemcachedPersister();
 
 	/*! Establish 'session' with memcached cloud
 	    \param config_str memcached config string
 	    \param key_base key base string for this session
 	    \param purge if true, empty database if found
 	    \return true on success */
-    F8API virtual bool initialise(const f8String& config_str, const f8String& key_base, bool purge=false);
+	F8API virtual bool initialise(const f8String& config_str, const f8String& key_base, bool purge=false);
 
 	/*! Persist a message.
 	    \param seqnum sequence number of message
 	    \param what message string
 	    \return true on success */
-    F8API virtual bool put(const unsigned seqnum, const f8String& what);
+	F8API virtual bool put(const unsigned seqnum, const f8String& what);
 
 	/*! Persist a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
 	    \return true on success */
-    F8API virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
+	F8API virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
 
 	/*! Retrieve a persisted message.
 	    \param seqnum sequence number of message
 	    \param to target message string
 	    \return true on success */
-    F8API virtual bool get(const unsigned seqnum, f8String& to) const;
+	F8API virtual bool get(const unsigned seqnum, f8String& to) const;
 
 	/*! Retrieve a range of persisted messages.
 	    \param from start at sequence number
@@ -497,42 +497,42 @@ public:
 	    \param session session containing callback method
 	    \param callback method to call with each retrieved message
 	    \return number of messages retrieved */
-    F8API virtual unsigned get(const unsigned from, const unsigned to, Session& session,
+	F8API virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
 
 	/*! Retrieve sequence number of last peristed message.
 	    \param to target sequence number
 	    \return sequence number of last peristed message on success */
-    F8API virtual unsigned get_last_seqnum(unsigned& to) const;
+	F8API virtual unsigned get_last_seqnum(unsigned& to) const;
 
 	/*! Retrieve a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
 	    \return true on success */
-    F8API virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
+	F8API virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
 
 	/*! Find the nearest highest sequence number from the sequence to last provided.
 	    \param requested sequence number to start
 	    \param last highest sequence
 	    \return the nearest sequence number or 0 if not found */
-    F8API virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
+	F8API virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
 
 	/*! Find the nearest highest sequence number (lower than) from the given sequence number
 	    \param requested sequence number to start
 	    \return the nearest sequence number or 0 if not found */
-    F8API virtual unsigned find_nearest_seqnum (unsigned requested) const;
+	F8API virtual unsigned find_nearest_seqnum (unsigned requested) const;
 
 	/*! Persist a generic value.
 	    \param key key to store
 	    \param what value string
 	    \return true on success */
-    F8API virtual bool put(const f8String& key, const f8String& what);
+	F8API virtual bool put(const f8String& key, const f8String& what);
 
 	/*! Retrieve a generic persisted value.
 	    \param key key to retrieve
 	    \param to target value string
 	    \return true on success */
-    F8API virtual bool get(const f8String& key, f8String& to) const;
+	F8API virtual bool get(const f8String& key, f8String& to) const;
 
 	/*! Lookup the specified value by given key
 	    \param key key to find
@@ -617,7 +617,7 @@ public:
 	HiredisPersister() : _cache() {}
 
 	/// Dtor.
-    F8API virtual ~HiredisPersister();
+	F8API virtual ~HiredisPersister();
 
 	/*! Establish 'session' with redis cloud
 	    \param host server host to connect to
@@ -626,26 +626,26 @@ public:
 	    \param key_base key base string for this session
 	    \param purge if true, empty database if found
 	    \return true on success */
-    F8API virtual bool initialise(const f8String& host, unsigned port, unsigned connect_timeout,
+	F8API virtual bool initialise(const f8String& host, unsigned port, unsigned connect_timeout,
 		const f8String& key_base, bool purge=false);
 
 	/*! Persist a message.
 	    \param seqnum sequence number of message
 	    \param what message string
 	    \return true on success */
-    F8API virtual bool put(const unsigned seqnum, const f8String& what);
+	F8API virtual bool put(const unsigned seqnum, const f8String& what);
 
 	/*! Persist a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
 	    \return true on success */
-    F8API virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
+	F8API virtual bool put(const unsigned sender_seqnum, const unsigned target_seqnum);
 
 	/*! Retrieve a persisted message.
 	    \param seqnum sequence number of message
 	    \param to target message string
 	    \return true on success */
-    F8API virtual bool get(const unsigned seqnum, f8String& to) const;
+	F8API virtual bool get(const unsigned seqnum, f8String& to) const;
 
 	/*! Retrieve a range of persisted messages.
 	    \param from start at sequence number
@@ -653,42 +653,42 @@ public:
 	    \param session session containing callback method
 	    \param callback method to call with each retrieved message
 	    \return number of messages retrieved */
-    F8API virtual unsigned get(const unsigned from, const unsigned to, Session& session,
+	F8API virtual unsigned get(const unsigned from, const unsigned to, Session& session,
 		bool (Session::*)(const Session::SequencePair& with, Session::RetransmissionContext& rctx)) const;
 
 	/*! Retrieve sequence number of last peristed message.
 	    \param to target sequence number
 	    \return sequence number of last peristed message on success */
-    F8API virtual unsigned get_last_seqnum(unsigned& to) const;
+	F8API virtual unsigned get_last_seqnum(unsigned& to) const;
 
 	/*! Retrieve a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
 	    \return true on success */
-    F8API virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
+	F8API virtual bool get(unsigned& sender_seqnum, unsigned& target_seqnum) const;
 
 	/*! Find the nearest highest sequence number from the sequence to last provided.
 	    \param requested sequence number to start
 	    \param last highest sequence
 	    \return the nearest sequence number or 0 if not found */
-    F8API virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
+	F8API virtual unsigned find_nearest_highest_seqnum (const unsigned requested, const unsigned last) const;
 
 	/*! Persist a generic value.
 	    \param key key to store
 	    \param what value string
 	    \return true on success */
-    F8API virtual bool put(const f8String& key, const f8String& what);
+	F8API virtual bool put(const f8String& key, const f8String& what);
 
 	/*! Retrieve a generic persisted value.
 	    \param key key to retrieve
 	    \param to target value string
 	    \return true on success */
-    F8API virtual bool get(const f8String& key, f8String& to) const;
+	F8API virtual bool get(const f8String& key, f8String& to) const;
 
 	/*! Delete a generic persisted value by specified key.
 	    \param key key to delete
 	    \return true on success */
-    F8API virtual bool del(const f8String& key);
+	F8API virtual bool del(const f8String& key);
 };
 
 #endif // HAVE_LIBHIREDIS

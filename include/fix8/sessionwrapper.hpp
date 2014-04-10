@@ -66,7 +66,7 @@ public:
 
 	/// Prints the certificate to stdout and waits for user input on the console
 	/// to decide if a certificate should be accepted/rejected.
-   F8API void onInvalidCertificate( const void* pSender, Poco::Net::VerificationErrorArgs& errorCert );
+	F8API void onInvalidCertificate( const void* pSender, Poco::Net::VerificationErrorArgs& errorCert );
 };
 
 /// An implementation of PrivateKeyPassphraseHandler that
@@ -81,7 +81,7 @@ public:
 	/// Destroys the Fix8PassPhraseHandler.
    ~Fix8PassPhraseHandler() {}
 
-   F8API void onPrivateKeyRequested( const void* pSender, std::string& privateKey );
+	F8API void onPrivateKeyRequested( const void* pSender, std::string& privateKey );
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -234,7 +234,7 @@ public:
 		{ _session->start(_cc, wait, send_seqnum, recv_seqnum, davi); }
 
 	/// Convenient scoped pointer for your session
-	typedef scoped_ptr<ClientSession<T> > Client_ptr;
+	using Client_ptr = scoped_ptr<ClientSession<T>>;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -243,7 +243,7 @@ public:
 template<typename T>
 class ReliableClientSession : public ClientSession<T>
 {
-	dthread<ReliableClientSession<T> > _thread;
+	dthread<ReliableClientSession<T>> _thread;
 	unsigned _send_seqnum, _recv_seqnum, _current, _attempts;
 	f8_atomic<bool> _giving_up;
 	std::vector<Server> _servers;
@@ -450,7 +450,7 @@ public:
 
 
 	/// Convenient scoped pointer for your session
-	typedef scoped_ptr<ReliableClientSession<T> > ReliableClient_ptr;
+	using ReliableClient_ptr = scoped_ptr<ReliableClientSession<T>>;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -504,7 +504,7 @@ public:
 	Poco::Net::StreamSocket accept(Poco::Net::SocketAddress& claddr) { return _server_sock->acceptConnection(claddr); }
 
 	/// Convenient scoped pointer for your session
-	typedef scoped_ptr<ServerSession<T> > Server_ptr;
+	using Server_ptr = scoped_ptr<ServerSession<T>>;
 
 #ifdef HAVE_OPENSSL
 	bool is_secure() const { return _ssl.is_secure(); }
@@ -560,7 +560,7 @@ public:
 	void stop() { _session->stop(); }
 
 	/// Convenient scoped pointer for your session instance.
-	typedef scoped_ptr<SessionInstance<T> > Instance_ptr;
+	using Instance_ptr = scoped_ptr<SessionInstance<T>>;
 };
 
 } // FIX8

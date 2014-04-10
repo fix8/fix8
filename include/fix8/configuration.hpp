@@ -95,7 +95,7 @@ class Configuration
 
 	const std::string _xmlfile;
 	const XmlElement *_root;
-	typedef std::map<const std::string, const XmlElement *> ConfigMap;
+	using ConfigMap = std::map<const std::string, const XmlElement *>;
 	ConfigMap _sessions, _persisters, _loggers, _server_group, _ssl_context, _schedules, _logins;
 	std::vector<const XmlElement *> _allsessions;
 

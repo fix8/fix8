@@ -60,20 +60,6 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 
-#ifndef _MSC_VER
-const Tickval::ticks Tickval::noticks;
-const Tickval::sticks Tickval::nosticks;
-const Tickval::ticks Tickval::errorticks;
-const Tickval::ticks Tickval::thousand;
-const Tickval::ticks Tickval::million;
-const Tickval::ticks Tickval::billion;
-const Tickval::ticks Tickval::second;
-const Tickval::ticks Tickval::minute;
-const Tickval::ticks Tickval::hour;
-const Tickval::ticks Tickval::day;
-const Tickval::ticks Tickval::week;
-#endif
-
 //-------------------------------------------------------------------------------------------------
 #if defined(_MSC_VER) && !defined(BUILD_F8API)
 // no need in definition since it is in dll already

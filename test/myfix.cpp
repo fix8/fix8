@@ -466,7 +466,7 @@ bool MyMenu::new_order_single_recycled()
 bool MyMenu::new_order_single_50()
 {
 	vector<Message *> msgs;
-	for (int ii(0); ii < 50; ++ii)
+	for (auto ii(0); ii < 50; ++ii)
 		msgs.push_back(generate_new_order_single());
 
 	_session.send_batch(msgs);
@@ -477,7 +477,7 @@ bool MyMenu::new_order_single_50()
 bool MyMenu::new_order_single_1000()
 {
 	vector<Message *> msgs;
-	for (int ii(0); ii < 1000; ++ii)
+	for (auto ii(0); ii < 1000; ++ii)
 		msgs.push_back(generate_new_order_single());
 
 	_session.send_batch(msgs);
@@ -490,7 +490,7 @@ bool MyMenu::help()
 	get_ostr() << endl;
 	get_ostr() << "Key\tCommand" << endl;
 	get_ostr() << "===\t=======" << endl;
-	for (Handlers::TypeMap::const_iterator itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
+	for (auto itr(_handlers._valuemap.begin()); itr != _handlers._valuemap.end(); ++itr)
 		get_ostr() << itr->first._key << '\t' << itr->first._help << endl;
 	get_ostr() << endl;
 	return true;

@@ -835,7 +835,7 @@ extern "C" { size_t modp_dtoa( double value, char* str, int prec ); }
 template<typename T, typename B=unsigned int>
 class ebitset
 {
-	typedef B integral_type;
+	using integral_type = B;
 	integral_type a_;
 
 public:
@@ -930,7 +930,7 @@ public:
 template<typename T, typename B=unsigned int>
 class ebitset_r
 {
-	typedef B integral_type;
+	using integral_type = B;
 	f8_atomic<integral_type> a_;
 
 public:

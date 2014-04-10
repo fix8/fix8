@@ -153,7 +153,8 @@ struct FieldTrait
 	    \return stream */
 	friend F8API std::ostream& operator<<(std::ostream& os, const FieldTrait& what);
 };
-F8API std::ostream& operator<<( std::ostream& os, const FieldTrait& what );
+
+F8API std::ostream& operator<<(std::ostream& os, const FieldTrait& what);
 
 //-------------------------------------------------------------------------------------------------
 /// Fast index lookup for FieldTrait
@@ -180,9 +181,9 @@ template<>
 class presorted_set<unsigned short, FieldTrait, FieldTrait::Compare>
 {
 public:
-	typedef FieldTrait* iterator;
-	typedef const FieldTrait* const_iterator;
-	typedef std::pair<iterator, bool> result;
+	using iterator = FieldTrait*;
+	using const_iterator = const FieldTrait*;
+	using result = std::pair<iterator, bool>;
 
 	/*! Calculate the amount of space to reserve in set
 	  \param sz number of elements currently in set; if 0 retun reserve elements as size to reserve
@@ -202,8 +203,8 @@ private:
 	FieldTrait *_arr;
 	const FieldTrait_Hash_Array *_ftha;
 
-	typedef std::pair<iterator, iterator> internal_result;
-	typedef std::pair<const_iterator, const_iterator> const_internal_result;
+	using internal_result = std::pair<iterator, iterator>;
+	using const_internal_result = std::pair<const_iterator, const_iterator>;
 
 public:
 	/*! ctor - initialise from static sorted set. Used by Message encoder/decoder.
@@ -393,7 +394,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
-typedef presorted_set<unsigned short, FieldTrait, FieldTrait::Compare> Presence;
+using Presence = presorted_set<unsigned short, FieldTrait, FieldTrait::Compare>;
 
 /// A collection of FieldTraits for a message. Which fields are required, which are present.
 class FieldTraits
@@ -625,7 +626,8 @@ public:
 	    \return stream */
 	friend F8API std::ostream& operator<<(std::ostream& os, const FieldTraits& what);
 };
-F8API std::ostream& operator<<( std::ostream& os, const FieldTraits& what );
+
+F8API std::ostream& operator<<(std::ostream& os, const FieldTraits& what);
 
 } // FIX8
 

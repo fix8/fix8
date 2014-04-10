@@ -139,8 +139,8 @@ inline void current_utc_time(struct timespec *ts)
 class Tickval
 {
 public:
-	typedef unsigned long long ticks; // unsigned ticks
-	typedef long long sticks; // signed ticks
+	using ticks = unsigned long long;
+	using sticks = long long;
 	static const ticks noticks = 0ULL;
 	static const sticks nosticks = 0LL;
 	static const ticks errorticks = ULLONG_MAX;

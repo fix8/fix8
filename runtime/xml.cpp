@@ -573,7 +573,7 @@ XmlElement::~XmlElement()
 	delete decl_;
 
 	if (children_ && !_was_include)
-		for_each (children_->begin(), children_->end(), free_ptr<Delete2ndPairObject<> >());
+		for_each (children_->begin(), children_->end(), free_ptr<Delete2ndPairObject<>>());
 	delete children_;
 	delete ordchildren_;
 }

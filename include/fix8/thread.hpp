@@ -58,18 +58,18 @@ class _dthreadcore
 {
 #if (THREAD_SYSTEM == THREAD_PTHREAD)
 public:
-	typedef pthread_t thread_id_t;
+	using thread_id_t = pthread_t;
 private:
 	pthread_attr_t _attr;
 	pthread_t _tid;
 #elif (THREAD_SYSTEM == THREAD_POCO)
 public:
-	typedef Poco::Thread::TID thread_id_t;
+	using thread_id_t = Poco::Thread::TID;
 private:
 	Poco::Thread _thread;
 #elif (THREAD_SYSTEM == THREAD_TBB)
 public:
-	typedef tbb::tbb_thread::id thread_id_t;
+	using thread_id_t = tbb::tbb_thread::id;
 private:
 	scoped_ptr< tbb::tbb_thread > _thread;
 #endif

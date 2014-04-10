@@ -280,7 +280,7 @@ public:
 	/*! Reader thread method. Reads messages and places them on the queue for processing.
 	    Supports pipelined, threaded and coroutine process models.
 		 \return 0 on success */
-   F8API virtual int execute(dthread_cancellation_token& cancellation_token);
+	F8API virtual int execute(dthread_cancellation_token& cancellation_token);
 
 	/*! Wait till writer thread has finished.
 		 \return 0 on success */
@@ -450,7 +450,7 @@ public:
 
     /*! Writer thread method. Reads messages from the queue and sends them over the socket.
         \return 0 on success */
-    F8API virtual int execute(dthread_cancellation_token& cancellation_token);
+	F8API virtual int execute(dthread_cancellation_token& cancellation_token);
 
 	/// Stop the processing threads and quit.
 	virtual void quit()
