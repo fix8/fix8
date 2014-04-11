@@ -64,7 +64,7 @@ RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 #if defined(_MSC_VER) && !defined(BUILD_F8API)
 // no need in definition since it is in dll already
 #else
-const f8String Session::_state_names[] =
+const vector<f8String> Session::_state_names
 {
 	"none", "continuous", "session_terminated",
 	"wait_for_logon", "not_logged_in", "logon_sent", "logon_received", "logoff_sent",

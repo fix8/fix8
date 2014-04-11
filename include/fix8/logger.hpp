@@ -158,7 +158,7 @@ class Logger
 
 public:
 	enum Flags { append, timestamp, sequence, compress, pipe, broadcast, thread, direction, buffer, inbound, outbound, nolf, num_flags };
-	enum { rotation_default = 5, max_rotation = 64} ;
+	enum { rotation_default = 5, max_rotation = 64};
 	using LogFlags = ebitset<Flags>;
 
 protected:
@@ -243,7 +243,7 @@ public:
 	F8API int operator()();
 
 	/// string representation of logflags
-	static const std::string _bit_names[];
+	static const std::vector<std::string> _bit_names;
 
 	/*! Check if the given log flag is set
 		\param flg flag bit to check

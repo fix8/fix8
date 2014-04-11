@@ -66,14 +66,11 @@ namespace FIX8
 	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0>>::_instance;
 #else
 	template<>
-	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0>>::_instance
+	f8_atomic<SingleLogger<glob_log0>*> Singleton<SingleLogger<glob_log0>>::_instance
 		= f8_atomic<SingleLogger<glob_log0> *>();
 #endif
-    //template<>
-    //f8_spin_lock Singleton<SingleLogger<glob_log0>>::_mutex;
-
     template<>
-    SingleLogger<glob_log0>* Singleton<SingleLogger<glob_log0>>::create_instance()
+    SingleLogger<glob_log0> *Singleton<SingleLogger<glob_log0>>::create_instance()
     {
         static f8_spin_lock mutex;
         f8_scoped_spin_lock guard(mutex);
@@ -85,7 +82,7 @@ namespace FIX8
         return _instance;
     }
 
-	const string Logger::_bit_names[] =
+	const vector<string> Logger::_bit_names
 		{ "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer", "inbound", "outbound", "nolf", };
 }
 

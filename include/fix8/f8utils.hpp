@@ -884,17 +884,16 @@ public:
 	void set(const integral_type bset) { a_ = bset; }
 
 	/*! From a set of strings representing the names of each bit in order, set the named bit on.
-	    \param els number of elements in set
 	    \param sset the set of strings
 	    \param what the string to find and set
 	    \param on set or clear the found bit
 	    \return true if found and set */
-	bool set(const unsigned els, const std::string *sset, const std::string& what, bool on=true)
+	bool set(const std::vector<std::string>& sset, const std::string& what, bool on=true)
 	{
-		const std::string *last(sset + els), *result(std::find(sset, last, what));
-		if (result == last)
+		auto itr(std::find(sset.cbegin(), sset.cend(), what));
+		if (itr == sset.cend())
 			return false;
-		set(static_cast<T>(std::distance(sset, result)), on);
+		set(static_cast<T>(std::distance(sset.cbegin(), itr)), on);
 		return true;
 	}
 

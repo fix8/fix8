@@ -202,7 +202,7 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 	else
 		return;
 
-	ost_cpp << typestr << itr->second._name << "_realm[] = " << endl << spacer << "{ ";
+	ost_cpp << typestr << itr->second._name << "_realm[]  " << endl << spacer << "{ ";
 	unsigned cnt(0);
 	for (RealmMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
 	{
@@ -230,7 +230,7 @@ void process_value_enums(FieldSpecMap::const_iterator itr, ostream& ost_hpp, ost
 	ost_hpp << "const size_t " << itr->second._name << "_realm_els(" << itr->second._dvals->size() << ");" << endl;
 	ost_cpp << " };" << endl;
 
-	ost_cpp << "const char *" << itr->second._name << "_descriptions[] = " << endl << spacer << "{ ";
+	ost_cpp << "const char *" << itr->second._name << "_descriptions[]  " << endl << spacer << "{ ";
 	cnt = 0;
 	for (RealmMap::const_iterator ditr(itr->second._dvals->begin()); ditr != itr->second._dvals->end(); ++ditr)
 	{
@@ -451,7 +451,7 @@ void generate_preamble(ostream& to, const string& fname, bool isheader, bool don
 //-------------------------------------------------------------------------------------------------
 void generate_includes(ostream& to)
 {
-	static const string incfiles[] =
+	static const string incfiles[]
 	{
         "f8includes.hpp"
 	};
