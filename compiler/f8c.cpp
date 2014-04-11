@@ -825,10 +825,10 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 void generate_group_traits(const MessageSpec& ms, const string& gname, const string& prefix, ostream& outp)
 {
    if (prefix.empty())
-      outp << "const FieldTrait " << gname << "_traits[] ="
+      outp << "const FieldTrait " << gname << "_traits[]"
          << " // refs:" << ms._group_refcnt << endl << '{' << endl;
    else
-      outp << "const FieldTrait " << prefix << gname << "::_traits[] =" << endl << '{' << endl;
+      outp << "const FieldTrait " << prefix << gname << "::_traits[]" << endl << '{' << endl;
    for (Presence::const_iterator flitr(ms._fields.get_presence().begin());
       flitr != ms._fields.get_presence().end(); ++flitr)
    {
@@ -1018,7 +1018,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		if (mitr->second._fields.get_presence().size())
 		{
 			osr_cpp << _csMap.find_ref(cs_divider) << endl;
-			osr_cpp << "const FieldTrait " << mitr->second._name << "::_traits[] ="
+			osr_cpp << "const FieldTrait " << mitr->second._name << "::_traits[]"
 				<< endl << '{' << endl;
 			for (Presence::const_iterator flitr(mitr->second._fields.get_presence().begin());
 				flitr != mitr->second._fields.get_presence().end(); ++flitr)
@@ -1118,7 +1118,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	osc_cpp << endl;
 
-	osc_cpp << "const char *cn[] = // Component names" << endl << '{' << endl;
+	osc_cpp << "const char *cn[] // Component names" << endl << '{' << endl;
 	osc_cpp << spacer << "\"\"," << endl;
 	for (Components::iterator citr(components.begin()); citr != components.end(); ++citr)
 		osc_cpp << spacer << '"' << citr->first << "\", // " << (1 + distance(components.begin(), citr)) << endl;
@@ -1128,7 +1128,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	osc_cpp << endl << _csMap.find_ref(cs_divider) << endl;
 	osc_cpp << "const " << ctxt._fixns << "::" << ctxt._clname << "_BaseMsgEntry::Pair "
-		<< "msgpairs[] =" << endl << '{' << endl;
+		<< "msgpairs[] " << endl << '{' << endl;
 	for (MessageSpecMap::const_iterator mitr(mspec.begin()); mitr != mspec.end(); ++mitr)
 	{
 		if (mitr != mspec.begin())
@@ -1316,7 +1316,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	// generate realmbase objs
 	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
-	ost_cpp << "const RealmBase realmbases[] =" << endl << '{' << endl;
+	ost_cpp << "const RealmBase realmbases[] " << endl << '{' << endl;
 	unsigned dcnt(0);
 	for (FieldSpecMap::iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{
@@ -1339,7 +1339,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 
 	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
 	ost_cpp << "extern const " << ctxt._clname << "_BaseEntry::Pair fldpairs[];" << endl;
-	ost_cpp << "const " << ctxt._clname << "_BaseEntry::Pair fldpairs[] ="
+	ost_cpp << "const " << ctxt._clname << "_BaseEntry::Pair fldpairs[] "
       << endl << '{' << endl;
 	for (FieldSpecMap::const_iterator fitr(fspec.begin()); fitr != fspec.end(); ++fitr)
 	{

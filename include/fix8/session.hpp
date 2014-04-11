@@ -390,7 +390,7 @@ protected:
 	Session_Schedule *_schedule;
 
 	/// string representation of Sessionstates
-	F8API static const f8String _state_names[];
+	F8API static const std::vector<f8String> _state_names;
 
 	/// Heartbeat generation service thread method.
 	F8API bool heartbeat_service();
@@ -766,7 +766,7 @@ public:
 	static const f8String& get_session_state_string(const States::SessionStates state)
 	{
 		static const f8String unknown("Unknown");
-		return state < States::st_num_states ? _state_names[state] : unknown;
+		return state < _state_names.size() ? _state_names[state] : unknown;
 	}
 };
 

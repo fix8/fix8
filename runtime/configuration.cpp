@@ -320,7 +320,7 @@ Logger::LogFlags Configuration::get_logflags(const XmlElement *from) const
 		for(char extr[32]; !istr.get(extr, sizeof(extr), '|').fail(); istr.ignore(1))
 		{
 			string result(extr);
-			flags.set(Logger::num_flags, Logger::_bit_names, trim(result));
+			flags.set(Logger::_bit_names, trim(result));
 		}
 	}
 
