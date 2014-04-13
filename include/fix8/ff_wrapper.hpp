@@ -47,13 +47,13 @@ class ff_unbounded_queue
 	ff::uMPMC_Ptr_Queue _queue;
 
 public:
-	using value_type T;
+	using value_type = T;
 
 	//! Reference type
-	using reference T&;
+	using reference = T&;
 
 	//! Const reference type
-	using const_reference const T&;
+	using const_reference = const T&;
 
 	explicit ff_unbounded_queue() { _queue.init(); }
 	~ff_unbounded_queue() {}
@@ -92,13 +92,13 @@ class ff_unbounded_queue<T*>
 	ff::uMPMC_Ptr_Queue _queue;
 
 public:
-	using value_type T;
+	using value_type = T;
 
 	//! Reference type
-	using reference T&;
+	using reference = T&;
 
 	//! Const reference type
-	using const_reference const T&;
+	using const_reference = const T&;
 
 	explicit ff_unbounded_queue() { _queue.init(); }
 	~ff_unbounded_queue() {}
@@ -136,7 +136,7 @@ class ff_atomic
 	mutable atomic_long_t _rep;
 
 public:
-	using value_type T;
+	using value_type = T;
 
 	value_type operator=(const value_type rhs)
 		{ atomic_long_set(&_rep, rhs); return rhs; }
@@ -169,7 +169,7 @@ class ff_atomic<T*>
 	atomic_long_t _rep;
 
 public:
-	using value_type T*;
+	using value_type = T*;
 
 	T* operator=(T* rhs)
 	{
