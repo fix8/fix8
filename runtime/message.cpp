@@ -215,7 +215,7 @@ unsigned MessageBase::check_positions()
 //-------------------------------------------------------------------------------------------------
 Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_chksum, bool permissive_mode)
 {
-	char mtype[MAX_MSGTYPE_FIELD_LEN] = {}, len[MAX_MSGTYPE_FIELD_LEN] = {};
+	char mtype[MAX_MSGTYPE_FIELD_LEN] {}, len[MAX_MSGTYPE_FIELD_LEN] {};
 	const size_t hlen(extract_header(from, len, mtype));
 
 	if (!hlen)
@@ -491,7 +491,7 @@ void MessageBase::print_field(const unsigned short fnum, ostream& os) const
 //-------------------------------------------------------------------------------------------------
 BaseField *MessageBase::replace(const unsigned short fnum, BaseField *with)
 {
-	BaseField *old(0);
+	BaseField *old(nullptr);
 	Fields::iterator itr(_fields.find(fnum));
 	if (itr != _fields.end())
 	{
@@ -516,7 +516,7 @@ BaseField *MessageBase::replace(const unsigned short fnum, BaseField *with)
 //-------------------------------------------------------------------------------------------------
 BaseField *MessageBase::replace(const unsigned short fnum, Presence::const_iterator fitr, BaseField *with)
 {
-	BaseField *old(0);
+	BaseField *old(nullptr);
 	Fields::iterator itr(_fields.find(fnum));
 	if (itr != _fields.end())
 	{
@@ -541,7 +541,7 @@ BaseField *MessageBase::replace(const unsigned short fnum, Presence::const_itera
 //-------------------------------------------------------------------------------------------------
 BaseField *MessageBase::remove(const unsigned short fnum)
 {
-	BaseField *old(0);
+	BaseField *old(nullptr);
 	Fields::iterator itr(_fields.find(fnum));
 	if (itr != _fields.end())
 	{
@@ -563,7 +563,7 @@ BaseField *MessageBase::remove(const unsigned short fnum)
 //-------------------------------------------------------------------------------------------------
 BaseField *MessageBase::remove(const unsigned short fnum, Presence::const_iterator fitr)
 {
-	BaseField *old(0);
+	BaseField *old(nullptr);
 	Fields::iterator itr(_fields.find(fnum));
 	if (itr != _fields.end())
 	{

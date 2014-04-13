@@ -675,7 +675,7 @@ inline size_t parse_decimal(const char *begin, size_t len, int &to)
 /// see http://gmbabar.wordpress.com/2010/12/01/mktime-slow-use-custom-function/
 inline time_t time_to_epoch (const tm& ltm, int utcdiff=0)
 {
-   static const int mon_days[] = {0,
+   static const int mon_days[] {0,
       31,
       31 + 28,
       31 + 28 + 31,
@@ -756,7 +756,7 @@ inline Tickval::ticks date_time_parse(const char *ptr, size_t len)
 {
 	Tickval::ticks result(Tickval::noticks);
    int millisecond(0);
-   tm tms = {};
+   tm tms {};
 
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
@@ -793,7 +793,7 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=fals
 {
 	Tickval::ticks result(Tickval::noticks);
    int millisecond(0);
-   tm tms = {};
+   tm tms {};
 
 	ptr += parse_decimal(ptr, 2, tms.tm_hour);
 	++ptr;
@@ -820,7 +820,7 @@ inline Tickval::ticks time_parse(const char *ptr, size_t len, bool timeonly=fals
 
 inline Tickval::ticks date_parse(const char *ptr, size_t len)
 {
-   tm tms = {};
+   tm tms {};
 
 	ptr += parse_decimal(ptr, 4, tms.tm_year);
 	tms.tm_year -= 1900;
@@ -908,7 +908,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -989,7 +989,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -1070,7 +1070,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -1151,7 +1151,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }
@@ -1233,7 +1233,7 @@ public:
 	  \return stream */
 	std::ostream& print(std::ostream& os) const
    {
-      char buf[MAX_MSGTYPE_FIELD_LEN] = {};
+      char buf[MAX_MSGTYPE_FIELD_LEN] {};
       print(buf);
       return os << buf;
    }

@@ -169,7 +169,7 @@ string StrToLower(const string& src)
 string Str_error(const int err, const char *str)
 {
 	const size_t max_str(256);
-	char buf[max_str] = {};
+	char buf[max_str] {};
 #ifdef _MSC_VER
 	ignore_value(strerror_s(buf, max_str - 1, err));
 #else
@@ -226,10 +226,10 @@ const string& trim(string& source, const string& ws)
 //----------------------------------------------------------------------------------------
 namespace
 {
-	typedef pair<char, int> Day;
-	typedef multimap<char, int> Daymap;
-	static const string day_names[] = { "su", "mo", "tu", "we", "th", "fr", "sa" };
-	static const Day days[] = { Day('s',0), Day('m',1), Day('t',2), Day('w',3), Day('t',4), Day('f',5), Day('s', 6) };
+	using Day = pair<char, int>;
+	using Daymap = multimap<char, int>;
+	static const string day_names[] { "su", "mo", "tu", "we", "th", "fr", "sa" };
+	static const Day days[] { Day('s',0), Day('m',1), Day('t',2), Day('w',3), Day('t',4), Day('f',5), Day('s', 6) };
 	static const Daymap daymap(days, days + sizeof(days)/sizeof(Day));
 };
 

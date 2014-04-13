@@ -104,7 +104,7 @@ class Configuration
 	  \param from the map to search
 	  \return the found entity or 0 if not found */
 	const XmlElement *find_element(const std::string& tag, const ConfigMap& from) const
-		{ ConfigMap::const_iterator itr(from.find(tag)); return itr != from.end() ? itr->second : 0; }
+		{ ConfigMap::const_iterator itr(from.find(tag)); return itr != from.end() ? itr->second : nullptr; }
 
 	/*! Find a logger by tag.
 	  \param tag the tag to find
@@ -218,7 +218,7 @@ public:
 	  \param num index of session
 	  \return the session entity or 0 if not found */
 	const XmlElement *get_session(const unsigned num) const
-		{ return num < _allsessions.size() ? _allsessions[num] : 0; }
+		{ return num < _allsessions.size() ? _allsessions[num] : nullptr; }
 
 	/*! Find a session entity by name.
 	  \param tag name of session

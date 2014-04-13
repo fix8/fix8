@@ -103,9 +103,9 @@ using namespace std;
 using namespace FIX8;
 
 //-----------------------------------------------------------------------------------------
-const string Ctxt::_exts[count] = { "_types.c", "_types.h", "_traits.c", "_classes.c",
+const string Ctxt::_exts[count] { "_types.c", "_types.h", "_traits.c", "_classes.c",
                                     "_classes.h", "_router.h", "_session.h" },
-                  Ctxt::_exts_ver[2] = { "pp", "xx" };
+                  Ctxt::_exts_ver[2] { "pp", "xx" };
 string precompFile, spacer, inputFile, precompHdr, shortName, fixt, shortNameFixt, odir("./"),
        prefix("Myfix"), gen_classes, extra_fields;
 bool verbose(false), error_ignore(false), gen_fields(false), norealm(false), nocheck(false), nowarn(false),
@@ -164,7 +164,7 @@ int main(int argc, char **argv)
 	Ctxt ctxt;
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",			0,	0,	'h' },
 		{ "version",		0,	0,	'v' },
@@ -794,7 +794,7 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 		outh << dspacer << "public:" << endl;
       outh << d2spacer << "enum { _fnum = " << gsitr->first << " };" << endl << endl;
 		outh << d2spacer << gsitr->second._name << "() : GroupBase(_fnum) {}" << endl;
-		outh << d2spacer << "~" << gsitr->second._name << "() {}" << endl;
+		outh << d2spacer << "~" << gsitr->second._name << "() = default;" << endl;
 		if (tgroup->_groups.empty())
 			outh << d2spacer << "MessageBase *create_group() const { return new MessageBase(ctx(), _msgtype(), _traits, "
 				<< tgroup->_fields.get_presence().size()
@@ -805,9 +805,18 @@ void generate_group_bodies(const MessageSpec& ms, const FieldSpecMap& fspec, int
 			outh << d2spacer << spacer << "MessageBase *mb(new MessageBase(ctx(), _msgtype(), _traits, "
 				<< tgroup->_fields.get_presence().size()
 				<< ", &_ftha));" << endl;
-			for (GroupMap::const_iterator gsitr(tgroup->_groups.begin()); gsitr != tgroup->_groups.end(); ++gsitr)
-				outh << d2spacer << spacer << "mb->append_group(new " << gsitr->second._name << "); // "
-					<< gsitr->first << endl;
+
+         outh << d2spacer << spacer << "mb->get_groups().insert({";
+         if (tgroup->_groups.size() == 1)
+            outh << tgroup->_groups.begin()->first << ", new " << tgroup->_groups.begin()->second._name << " });" << endl;
+         else
+         {
+            outh << endl;
+            for (GroupMap::const_iterator gsitr(tgroup->_groups.begin()); gsitr != tgroup->_groups.end(); ++gsitr)
+               outh << d2spacer << spacer << spacer << "{ " << gsitr->first << ", new " << gsitr->second._name << " }," << endl;
+            outh << d2spacer << spacer << "});" << endl;
+         }
+
 			outh << d2spacer << spacer << "return mb;" << endl;
 			outh << d2spacer << '}' << endl;
 		}
@@ -836,7 +845,7 @@ void generate_group_traits(const MessageSpec& ms, const string& gname, const str
       if (flitr != ms._fields.get_presence().begin())
       {
          outp << ',';
-         if (Presence::distance(ms._fields.get_presence().begin(), flitr) % 3 == 0)
+         if (Presence::distance(ms._fields.get_presence().begin(), flitr) % 4 == 0)
             outp << endl;
          else
             spaceme = false;
@@ -845,9 +854,9 @@ void generate_group_traits(const MessageSpec& ms, const string& gname, const str
       ostringstream tostr;
       tostr << "0x" << setfill('0') << setw(2) << hex << flitr->_field_traits.get();
       outp << (spaceme ? spacer : " ");
-      outp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ',' << setw(2)
+      outp << '{' << setw(4) << right << flitr->_fnum << ',' << setw(2)
          << right << flitr->_ftype << ',' << setw(3) << right << flitr->_pos <<
-         ',' << setw(3) << right << flitr->_component << ',' << tostr.str() << ')';
+         ',' << setw(3) << right << flitr->_component << ',' << tostr.str() << '}';
    }
    outp << endl << "};" << endl;
    if (prefix.empty())
@@ -960,7 +969,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_hpp << "namespace " << ctxt._fixns << " {" << endl;
 
 	osc_hpp << endl << _csMap.find_ref(cs_divider) << endl;
-	osc_hpp << "typedef MsgTable " << ctxt._clname << "_BaseMsgEntry;" << endl;
+	osc_hpp << "using " << ctxt._clname << "_BaseMsgEntry = MsgTable;" << endl;
 	osc_hpp << "/// Compiler generated metadata object, accessed through this function" << endl;
 	osc_hpp << "const F8MetaCntx& ctx();" << endl;
 	osc_hpp << "class " << ctxt._clname << "_Router;" << endl;
@@ -1027,7 +1036,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 				if (flitr != mitr->second._fields.get_presence().begin())
 				{
 					osr_cpp << ',';
-					if (Presence::distance(mitr->second._fields.get_presence().begin(), flitr) % 3 == 0)
+					if (Presence::distance(mitr->second._fields.get_presence().begin(), flitr) % 4 == 0)
 						osr_cpp << endl;
 					else
 						spaceme = false;
@@ -1036,9 +1045,9 @@ int process(XmlElement& xf, Ctxt& ctxt)
 				ostringstream tostr;
 				tostr << "0x" << setfill('0') << setw(2) << hex << flitr->_field_traits.get();
 				osr_cpp << (spaceme ? spacer : " ");
-				osr_cpp << "FieldTrait(" << setw(4) << right << flitr->_fnum << ','
+				osr_cpp << '{' << setw(4) << right << flitr->_fnum << ','
 					<< setw(2) << right << flitr->_ftype << ',' << setw(3) << right
-					<< flitr->_pos << ',' << setw(3) << right << flitr->_component << ',' << tostr.str() << ')';
+					<< flitr->_pos << ',' << setw(3) << right << flitr->_component << ',' << tostr.str() << '}';
 			}
 			osr_cpp << endl << "};" << endl;
 			osr_cpp << "const FieldTrait_Hash_Array " << mitr->second._name << "::_ftha(" << mitr->second._name << "::_traits, "
@@ -1078,21 +1087,25 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		else if (!mitr->second._groups.empty())
 		{
 			osc_hpp << endl << spacer << '{' << endl;
-			for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
-			{
-				FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
-				osc_hpp << spacer << spacer;
-				osc_hpp << "_groups.insert(";
-				if (gitr != mitr->second._groups.begin())
-					osc_hpp << "_groups.end(), ";
-				osc_hpp << "Groups::value_type(" << gsitr->first << ", new " << gsitr->second._name << "));" << endl;
-			}
-			osc_hpp << spacer << '}' << endl;
+         osc_hpp << spacer << spacer << "_groups.insert({";
+         if (mitr->second._groups.size() == 1)
+            osc_hpp << mitr->second._groups.begin()->first << ", new " << mitr->second._groups.begin()->second._name << " });" << endl;
+         else
+         {
+            osc_hpp << endl;
+            for (GroupMap::const_iterator gitr(mitr->second._groups.begin()); gitr != mitr->second._groups.end(); ++gitr)
+            {
+               FieldSpecMap::const_iterator gsitr(fspec.find(gitr->first));
+               osc_hpp << spacer << spacer << spacer << "{ " << gsitr->first << ", new " << gsitr->second._name << " }," << endl;
+            }
+            osc_hpp << spacer << spacer << "});" << endl;
+         }
+         osc_hpp << spacer << '}' << endl;
 		}
 		else
 			osc_hpp << " {}" << endl;
 
-		osc_hpp << spacer << "~" << mitr->second._name << "() {}" << endl;
+		osc_hpp << spacer << "~" << mitr->second._name << "() = default;" << endl;
 		if (!isHeader && !isTrailer)
 		{
 			osc_hpp << spacer << "bool process(Router& rt) const { return (static_cast<" << ctxt._clname << "_Router&>(rt))(this); }" << endl;
@@ -1142,7 +1155,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		if (!mitr->second._comment.empty())
 			osc_cpp << ',' << endl << spacer << spacer << '"' << mitr->second._comment << "\" }";
 		else
-			osc_cpp << ", 0 }";
+			osc_cpp << " }";
 		osc_cpp << " }";
 	}
 	osc_cpp << endl << "}; // " << mspec.size() << endl;
@@ -1155,10 +1168,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	osc_cpp << endl << "extern const " << ctxt._clname << "_BaseEntry::Pair fldpairs[];" << endl << endl
       << "/// Compiler generated metadata object, accessed through this function" << endl
       << "const F8MetaCntx& ctx() // avoid SIOF" << endl << '{' << endl
-      << spacer << "static const BaseMsgEntry nvbme = { Minst(Type2Type<void *>()) };" << endl
+      << spacer << "static const BaseMsgEntry nvbme { Minst(Type2Type<void *>()) };" << endl
       << spacer << "static const " << ctxt._clname << "_BaseMsgEntry "
          << "bme(msgpairs, " << mspec.size() << ", nvbme);" << endl
-      << spacer << "static const BaseEntry nvbe = { Inst(Type2Type<void *>()) };" << endl
+      << spacer << "static const BaseEntry nvbe { Inst(Type2Type<void *>()) };" << endl
       << spacer << "static const " << ctxt._clname << "_BaseEntry "
          << "be(fldpairs, " << fields_generated << ", nvbe);" << endl
       << spacer << "static const F8MetaCntx _ctx(" << ctxt._version << ", bme, be, cn, \"" << ctxt._beginstr << "\");" << endl
@@ -1307,8 +1320,8 @@ int process(XmlElement& xf, Ctxt& ctxt)
 			continue;
 		if (!fitr->second._comment.empty())
 			ost_hpp << "// " << fitr->second._comment << endl;
-		ost_hpp << "typedef Field<" << FieldSpec::_typeToCPP.find_ref(fitr->second._ftype)
-			<< ", " << fitr->first << "> " << fitr->second._name << ';' << endl;
+		ost_hpp << "using " << fitr->second._name << " = Field<" << FieldSpec::_typeToCPP.find_ref(fitr->second._ftype)
+			<< ", " << fitr->first << ">;" << endl;
 		if (fitr->second._dvals)
 			process_value_enums(fitr, ost_hpp, ost_cpp);
 		ost_hpp << _csMap.find_ref(cs_divider) << endl;
@@ -1323,8 +1336,8 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		if ((!fitr->second._used && !gen_fields) || !fitr->second._dvals)
 			continue;
 		ost_cpp << spacer << "{ reinterpret_cast<const void *>(" << fitr->second._name << "_realm), "
-			<< "static_cast<RealmBase::RealmType>(" << fitr->second._dtype << "), " << endl << spacer << spacer
-			<< "static_cast<FieldTrait::FieldType>(" << fitr->second._ftype << "), "
+			<< "RealmBase::RealmType(" << fitr->second._dtype << "), "
+			<< "FieldTrait::FieldType(" << fitr->second._ftype << "), "
 			<< fitr->second._dvals->size() << ", " << fitr->second._name << "_descriptions }," << endl;
 		fitr->second._doffset = dcnt++;
 	}
@@ -1335,7 +1348,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
 	ost_cpp << endl << _csMap.find_ref(cs_end_anon_namespace) << endl;
 
 	// generate field instantiator lookup
-	ost_hpp << "typedef FieldTable " << ctxt._clname << "_BaseEntry;" << endl;
+	ost_hpp << "using " << ctxt._clname << "_BaseEntry = FieldTable;" << endl;
 
 	ost_cpp << endl << _csMap.find_ref(cs_divider) << endl;
 	ost_cpp << "extern const " << ctxt._clname << "_BaseEntry::Pair fldpairs[];" << endl;
@@ -1373,12 +1386,10 @@ int process(XmlElement& xf, Ctxt& ctxt)
 		if (fitr->second._dvals)
 			ost_cpp << "&" << ctxt._fixns << "::realmbases[" << fitr->second._doffset << ']';
 		else
-			ost_cpp << '0';
+			ost_cpp << "nullptr";
 		ost_cpp << ", \"" << fitr->second._name << '\"';
 		if (!fitr->second._comment.empty())
 			ost_cpp << ',' << endl << spacer << spacer << '"' << fitr->second._comment << '"';
-		else
-			ost_cpp << ", 0";
 		ost_cpp << " } }";
 	}
 	ost_cpp << endl << "}; // " << fields_generated << endl;

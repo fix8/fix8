@@ -96,16 +96,11 @@ public:
 	/*! Get an element from a group
 	  \param idx index of element to get
 	  \return pointer to element or 0 if index out of range */
-	MessageBase *get_element(const unsigned idx) const { return idx < _msgs.size() ? _msgs[idx] : 0; }
+	MessageBase *get_element(const unsigned idx) const { return idx < _msgs.size() ? _msgs[idx] : nullptr; }
 
 	/*! Empty messages from container
 	    \param reuse if true clear vector */
-	void clear(bool reuse=true)
-	{
-		std::for_each (_msgs.begin(), _msgs.end(), free_ptr<>());
-		if (reuse)
-			_msgs.clear();
-	}
+	void clear(bool reuse=true);
 
 	friend class MessageBase;
 };
@@ -140,7 +135,7 @@ class Minst
 		static Message *_make_cast() { return reinterpret_cast<Message *>(new T); }
 	};
 
-	static Message *dummy() { return 0; }
+	static Message *dummy() { return nullptr; }
 
 public:
 	Minst() : _do(dummy) {}
@@ -157,7 +152,7 @@ public:
 template<>
 struct Minst::_gen<void *>
 {
-	static Message *_make() { return 0; }
+	static Message *_make() { return nullptr; }
 };
 
 struct BaseMsgEntry
@@ -216,13 +211,13 @@ struct F8MetaCntx
 	}
 
 	/// Dtor.
-	~F8MetaCntx() { delete[] _flu; _flu = 0; }
+	~F8MetaCntx() { delete[] _flu; _flu = nullptr; }
 
 	/*! Get the field BaseEntry object for this field number. Will use fast field index lookup.
 	  \param fnum field to get
 	  \return ptr to BaseEntry or 0 if not found */
 	const BaseEntry *find_be(const unsigned short fnum) const
-		{ return fnum < _flu_sz ? _flu[fnum] : 0; }
+		{ return fnum < _flu_sz ? _flu[fnum] : nullptr; }
 
 	/*! 4 digit fix version <Major:1><Minor:1><Revision:2> eg. 4.2r10 is 4210
 	  \return version */
@@ -271,9 +266,9 @@ public:
 		_msgType(msgType), _ctx(ctx) {}
 
 	/// Copy ctor.
-	F8API MessageBase( const MessageBase& from );
+	F8API MessageBase(const MessageBase& from);
 	/// Assignment operator
-	F8API MessageBase& operator=( const MessageBase& that );
+	F8API MessageBase& operator=(const MessageBase& that);
 
 	/// Dtor.
 	virtual ~MessageBase() { clear(false); }
@@ -282,8 +277,8 @@ public:
 	    \param reuse if true clear vector */
 	virtual void clear(bool reuse=true)
 	{
-		std::for_each (_fields.begin(), _fields.end(), free_ptr<Delete2ndPairObject<>>());
-		std::for_each (_groups.begin(), _groups.end(), free_ptr<Delete2ndPairObject<>>());
+		std::for_each (_fields.begin(), _fields.end(), [](Fields::value_type& pp) { delete pp.second; });
+		std::for_each (_groups.begin(), _groups.end(), [](Groups::value_type& pp) { delete pp.second; });
 		if (reuse)
 		{
 			_fields.clear();
@@ -471,6 +466,8 @@ public:
 		return false;
 	}
 
+	Groups& get_groups() { return _groups; }
+
 	/*! Add fix field to this message.
 	    \tparam T field type
 	    \param what pointer to field
@@ -514,7 +511,7 @@ public:
 	const T *get() const
 	{
 		Fields::const_iterator fitr(_fields.find(T::get_field_id()));
-		return fitr == _fields.end() ? 0 : &fitr->second->from<T>();
+		return fitr == _fields.end() ? nullptr : &fitr->second->from<T>();
 	}
 
 	/*! Populate supplied field with value from message.
@@ -546,7 +543,7 @@ public:
 	BaseField *get_field(const unsigned short fnum) const
 	{
 		Fields::const_iterator itr(_fields.find(fnum));
-		return itr != _fields.end() ? itr->second : 0;
+		return itr != _fields.end() ? itr->second : nullptr;
 	}
 
 	/*! Get an iterator to fields present in this message.
@@ -593,7 +590,7 @@ public:
 	GroupBase *find_group(const unsigned short fnum) const
 	{
 		Groups::const_iterator gitr(_groups.find(fnum));
-		return gitr != _groups.end() ? gitr->second : 0;
+		return gitr != _groups.end() ? gitr->second : nullptr;
 	}
 
 	/*! Add a repeating group at the end of a message group. Assume key is not < last.
@@ -738,20 +735,28 @@ public:
 
 	/*! Get pointer to begin_string Field; used by header/trailer.
 	    \return Field */
-	virtual begin_string *get_begin_string() { return 0; }
+	virtual begin_string *get_begin_string() { return nullptr; }
 
 	/*! Get pointer to body_length Field; used by header/trailer.
 	    \return Field */
-	virtual body_length *get_body_length() { return 0; }
+	virtual body_length *get_body_length() { return nullptr; }
 
 	/*! Get pointer to msg_type Field; used by header/trailer.
 	    \return Field */
-	virtual msg_type *get_msg_type() { return 0; }
+	virtual msg_type *get_msg_type() { return nullptr; }
 
 	/*! Get pointer to check_sum Field; used by header/trailer.
 	    \return Field */
-	virtual check_sum *get_check_sum() { return 0; }
+	virtual check_sum *get_check_sum() { return nullptr; }
 };
+
+//-------------------------------------------------------------------------------------------------
+inline void GroupBase::clear(bool reuse)
+{
+	std::for_each (_msgs.begin(), _msgs.end(), [](MessageBase *pp) { delete pp; });
+	if (reuse)
+		_msgs.clear();
+}
 
 //-------------------------------------------------------------------------------------------------
 #if defined CODECTIMING
@@ -882,7 +887,7 @@ public:
 	    \return string containing formatted value */
 	static f8String fmt_chksum(const unsigned val)
 	{
-		char buf[4] = { '0', '0', '0', 0 };
+		char buf[4] { '0', '0', '0', 0 };
 		itoa<unsigned>(val, buf + (val > 99 ? 0 : val > 9 ? 1 : 2), 10);
 		return f8String(buf);
 	}

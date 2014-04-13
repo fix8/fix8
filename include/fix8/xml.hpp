@@ -108,7 +108,7 @@ public:
 	/*! Parse the xml attributes from an element.
 	  \param attlst string of attributes
 	  \return number of attributes extracted */
-	F8API int ParseAttrs( const std::string& attlst );
+	F8API int ParseAttrs(const std::string& attlst);
 
 	/*! Find an element with a given name, attribute name and attribute value.
 	  \param what the name to search for
@@ -117,7 +117,7 @@ public:
 	  \param aval the attribute value
 	  \param delim the Xpath delimiter
 	  \return the found or 0 if not found */
-	F8API const XmlElement *find( const std::string& what, bool ignorecase = false,
+	F8API const XmlElement *find(const std::string& what, bool ignorecase = false,
 		const std::string *atag=0, const std::string *aval=0, const char delim='/') const;
 
 	/*! Recursively find all elements with a given name, attribute name and attribute value.

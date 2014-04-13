@@ -316,7 +316,7 @@ int ConsoleMenu::CreateMsgs(tty_save_state& tty, MsgList& lst) const
 //-------------------------------------------------------------------------------------------------
 f8String& ConsoleMenu::GetString(tty_save_state& tty, f8String& to) const
 {
-	char buff[128] = {};
+	char buff[128] {};
 	tty.unset_raw_mode();
 	_is.getline(buff, sizeof(buff));
 	tty.set_raw_mode();

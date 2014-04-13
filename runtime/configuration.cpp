@@ -153,10 +153,10 @@ Schedule Configuration::create_schedule(const XmlElement *which) const
 		string daytmp;
 		const int start_day(which->GetAttr("start_day", daytmp) ? decode_dow(daytmp) : -1);
 		const int end_day(which->GetAttr("end_day", daytmp) ? decode_dow(daytmp) : start_day < 0 ? -1 : start_day);
-		return Schedule (start, end, duration, utc_offset, start_day, end_day);
+		return {start, end, duration, utc_offset, start_day, end_day};
 	}
 
-	return Schedule();
+	return {};
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -173,7 +173,7 @@ Session_Schedule *Configuration::create_session_schedule(const XmlElement *from)
 		return new Session_Schedule(sch, reject_code, reject_text);
 	}
 
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -182,7 +182,7 @@ Schedule Configuration::create_login_schedule(const XmlElement *from) const
 	string name;
 	const XmlElement *which;
 	return from && from->GetAttr("login", name) && (which = find_login_schedule(name))
-		? Schedule(create_schedule(which)) : Schedule();
+		? create_schedule(which) : Schedule{};
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -252,7 +252,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -295,7 +295,7 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -339,10 +339,10 @@ unsigned Configuration::get_all_sessions(vector<const XmlElement *>& target, con
 //-------------------------------------------------------------------------------------------------
 ProcessModel Configuration::get_process_model(const XmlElement *from) const
 {
-	static const f8String process_strings[] = { "threaded", "pipelined", "coroutine" };
+	static const vector<f8String> process_strings { "threaded", "pipelined", "coroutine" };
 	string pm;
 	return from && from->GetAttr("process_model", pm)
-		? enum_str_get(pm_count, process_strings, pm, pm_thread) : pm_pipeline; // default to pipelined
+		? enum_str_get(process_strings, pm, pm_thread) : pm_pipeline; // default to pipelined
 }
 
 //-------------------------------------------------------------------------------------------------

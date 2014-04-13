@@ -59,7 +59,7 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 namespace FIX8
 {
-	char glob_log0[max_global_filename_length] = { "global_filename_not_set.log" };
+	char glob_log0[max_global_filename_length] { "global_filename_not_set.log" };
 
 #ifdef _MSC_VER
 	template<>

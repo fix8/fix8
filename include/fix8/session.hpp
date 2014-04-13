@@ -86,7 +86,7 @@ public:
 	F8API void make_id();
 
 	/// Create a sessionid string.
-	F8API void from_string( const f8String& from );
+	F8API void from_string(const f8String& from);
 
 	/*! Get the beginstring field.
 	    \return beginstring */

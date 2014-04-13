@@ -1025,18 +1025,17 @@ public:
 /*! From a set of strings representing the names of an enumeration in order,
   return the enum of the given string.
 	 \tparam T enum return type
-	 \param els number of elements in set; if 0 return default value
 	 \param sset the set of strings; if null return default value
 	 \param what the string to find
 	 \param def the default value to return if not found
 	 \return enum value or default */
 template<typename T>
-T enum_str_get(const unsigned els, const std::string *sset, const std::string& what, const T def)
+T enum_str_get(const std::vector<std::string>& sset, const std::string& what, const T def)
 {
-	if (!sset || !els)
+	if (sset.empty())
 		return def;
-	const std::string *last(sset + els), *result(std::find(sset, last, what));
-	return result == last ? def : static_cast<T>(std::distance(sset, result));
+	auto itr(std::find(sset.cbegin(), sset.cend(), what));
+	return itr == sset.cend() ? def : static_cast<T>(std::distance(sset.begin(), itr));
 }
 
 //----------------------------------------------------------------------------------------
@@ -1089,62 +1088,6 @@ inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
    target[sz - 1] = 0;
    return target;
 }
-
-
-//----------------------------------------------------------------------------------------
-/// Delete ptr.
-struct DeleteObject
-{
-	/*! delete ptr operator
-		 \tparam T typename
-		 \param m object to delete */
-	template<typename T>
-	void operator()(const T& m) const { delete m; }
-};
-
-/// Delete array.
-struct DeleteArrayObject
-{
-	/*! delete array operator
-		 \tparam T typename
-		 \param m object to delete */
-	template<typename T>
-	void operator()(const T& m) const { delete[] m; }
-};
-
-/// Delete 1st of pair.
-template <typename Deleter = DeleteObject>
-struct Delete1stPairObject
-{
-	/*! delete 1st of a std::pair operator
-		 \tparam T typename
-		 \param m object to delete */
-	template<typename A, typename B>
-	void operator()(const std::pair<A, B>& m) const { Deleter()(m.first); }
-};
-
-/// Delete 2nd of pair.
-template <typename Deleter = DeleteObject>
-struct Delete2ndPairObject
-{
-	/*! delete 2nd of a std::pair operator
-		 \tparam T typename
-		 \param m object to delete */
-	template<typename A, typename B>
-	void operator()(const std::pair<A, B>& m) const { Deleter()(m.second); }
-};
-
-/// Parameterisable deleter functor.
-/*! \tparam Deleter the desired deleter (see above) */
-template <typename Deleter = DeleteObject>
-struct free_ptr
-{
-	/*! function operator
-		 \tparam T typename
-		 \param ptr object to delete */
-	template<typename T>
-	void operator()(const T& ptr) const { Deleter()(ptr); }
-};
 
 //----------------------------------------------------------------------------------------
 /// A lockfree Singleton.
@@ -1325,13 +1268,16 @@ public:
 	}
 };
 
+//----------------------------------------------------------------------------------------
 #if defined POCO_VERSION && POCO_VERSION <= 0x01040100
-inline bool operator==(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b) {
-    return a.host() == b.host() && a.port() == b.port();
+inline bool operator==(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b)
+{
+	return a.host() == b.host() && a.port() == b.port();
 }
 
-inline bool operator!=(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b) {
-    return !(a == b);
+inline bool operator!=(const Poco::Net::SocketAddress &a, const Poco::Net::SocketAddress &b)
+{
+	return !(a == b);
 }
 #endif
 

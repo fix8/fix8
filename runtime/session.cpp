@@ -1029,7 +1029,7 @@ f8String Session::get_thread_policy_string(_dthreadcore::thread_id_t id)
 {
    int policy;
 	ostringstream ostr;
-   sched_param param = {};
+   sched_param param {};
    if (!pthread_getschedparam(id,  &policy, &param))
 		return policy == SCHED_OTHER ? "SCHED_OTHER" : policy == SCHED_RR ? "SCHED_RR"
 			  : policy == SCHED_FIFO ? "SCHED_FIFO" : "UNKNOWN";
@@ -1042,7 +1042,7 @@ f8String Session::get_thread_policy_string(_dthreadcore::thread_id_t id)
 void Session::set_scheduler(int priority)
 {
    pthread_t thread(pthread_self());
-   sched_param param = { priority };
+   sched_param param { priority };
 
 	ostringstream ostr;
 	ostr << "Current scheduler policy: " << get_thread_policy_string(thread);

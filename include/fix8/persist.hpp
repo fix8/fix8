@@ -55,11 +55,11 @@ namespace FIX8 {
 class Persister
 {
 protected:
-	bool _opened;
+	bool _opened = false;
 
 public:
 	/// Ctor.
-	Persister() : _opened() {}
+	Persister() = default;
 
 	/// Dtor.
 	virtual ~Persister() {}
@@ -395,32 +395,32 @@ public:
 	FilePersister(unsigned rotnum=0) : _fod(-1), _iod(-1), _rotnum(rotnum), _wasCreated() {}
 
 	/// Dtor.
-    F8API virtual ~FilePersister();
+	F8API virtual ~FilePersister();
 
 	/*! Open existing database or create new database.
 	    \param dbDir database directory
 	    \param dbFname database name
 	    \param purge if true, empty database if found
 	    \return true on success */
-    F8API virtual bool initialise( const f8String& dbDir, const f8String& dbFname, bool purge = false );
+	F8API virtual bool initialise( const f8String& dbDir, const f8String& dbFname, bool purge = false );
 
 	/*! Persist a message.
 	    \param seqnum sequence number of message
 	    \param what message string
 	    \return true on success */
-    F8API virtual bool put( const unsigned seqnum, const f8String& what );
+	F8API virtual bool put( const unsigned seqnum, const f8String& what );
 
 	/*! Persist a sequence control record.
 	    \param sender_seqnum sequence number of last sent message
 	    \param target_seqnum sequence number of last received message
 	    \return true on success */
-    F8API virtual bool put( const unsigned sender_seqnum, const unsigned target_seqnum );
+	F8API virtual bool put( const unsigned sender_seqnum, const unsigned target_seqnum );
 
 	/*! Retrieve a persisted message.
 	    \param seqnum sequence number of message
 	    \param to target message string
 	    \return true on success */
-    F8API virtual bool get( const unsigned seqnum, f8String& to ) const;
+	F8API virtual bool get( const unsigned seqnum, f8String& to ) const;
 
 	/*! Retrieve a range of persisted messages.
 	    \param from start at sequence number
@@ -454,14 +454,14 @@ public:
 /// memcached message persister.
 class MemcachedPersister : public Persister
 {
-	memcached_st *_cache;
+	memcached_st *_cache = nullptr;
 	/// this will usually be the SessionID
 	f8String _key_base;
-	unsigned _server_count;
+	unsigned _server_count = 0;
 
 public:
 	/// Ctor.
-	MemcachedPersister() : _cache(), _server_count() {}
+	MemcachedPersister() = default;
 
 	/// Dtor.
 	F8API virtual ~MemcachedPersister();
@@ -608,13 +608,13 @@ public:
 /// redis message persister.
 class HiredisPersister : public Persister
 {
-	redisContext *_cache;
+	redisContext *_cache = nullptr;
 	/// this will usually be the SessionID
 	f8String _key_base;
 
 public:
 	/// Ctor.
-	HiredisPersister() : _cache() {}
+	HiredisPersister() = default;
 
 	/// Dtor.
 	F8API virtual ~HiredisPersister();

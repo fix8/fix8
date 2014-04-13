@@ -135,16 +135,16 @@ bool term_received(false);
 unsigned batch_size(1000), preload_count(0), update_count(5000);
 
 //-----------------------------------------------------------------------------------------
-const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
+const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
 {
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "Send a NewOrderSingle msg"), &MyMenu::new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('p', "Preload n NewOrderSingle msgs"), &MyMenu::preload_new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('b', "Batch preload and send n NewOrderSingle msgs"), &MyMenu::batch_preload_new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "Send n NewOrderSingle msgs"), &MyMenu::multi_new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('a', "Send all Preloaded NewOrderSingle msgs"), &MyMenu::send_all_preloaded),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+	{ { 'n', "Send a NewOrderSingle msg" }, &MyMenu::new_order_single },
+	{ { 'p', "Preload n NewOrderSingle msgs" }, &MyMenu::preload_new_order_single },
+	{ { 'b', "Batch preload and send n NewOrderSingle msgs" }, &MyMenu::batch_preload_new_order_single },
+	{ { 'N', "Send n NewOrderSingle msgs" }, &MyMenu::multi_new_order_single },
+	{ { 'a', "Send all Preloaded NewOrderSingle msgs" }, &MyMenu::send_all_preloaded },
+	{ { '?', "Help" }, &MyMenu::help },
+	{ { 'l', "Logout" }, &MyMenu::do_logout },
+	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
 const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
 	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
@@ -179,7 +179,7 @@ int main(int argc, char **argv)
 	unsigned next_send(0), next_receive(0);
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },
@@ -297,7 +297,7 @@ int main(int argc, char **argv)
 			{
 				cout << "Coroutine mode." << endl;
 				fd_set rfds;
-				timeval tv = { 0, 0 };
+				timeval tv {};
 
 				while (!term_received)
 				{

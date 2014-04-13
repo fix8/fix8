@@ -90,12 +90,14 @@ class GeneratedTable
 {
 public:
 	using Pair = _pair<Key, Val>;
+	using iterator = Pair*;
+	using const_iterator = const Pair*;
 
 #ifndef _MSC_VER
 private:
 #endif
 	/// The actual data set
-	const Pair *_pairs;
+	const_iterator _pairs;
 
 	/// The number of elements in the data set
 	const size_t _pairsz;
@@ -107,25 +109,25 @@ private:
 	/*! Find a key; complexity log2(N)+2
 	  \param key the key to find
 	  \return Pair * if found, 0 if not found */
-   const Pair *_find(const Key& key) const
+   const_iterator _find(const Key& key) const
    {
-		const Pair *res(std::lower_bound (begin(), end(), reinterpret_cast<const Pair&>(key), Pair::Less));
+		const_iterator res(std::lower_bound (begin(), end(), reinterpret_cast<const Pair&>(key), Pair::Less));
       /// res != end && key >= res
-      return res != end() && !Pair::Less(reinterpret_cast<const Pair&>(key), *res) ? res : 0;
+      return res != end() && !Pair::Less(reinterpret_cast<const Pair&>(key), *res) ? res : nullptr;
    }
 
 public:
 	///Ctor.
-	GeneratedTable(const Pair *pairs, const size_t pairsz, const NotFoundType& noval)
+	GeneratedTable(const_iterator pairs, const size_t pairsz, const NotFoundType& noval)
 		: _pairs(pairs), _pairsz(pairsz), _noval(noval) {}
 
 	/*! Get iterator to start of Pairs
 	  \return pointer to first pair */
-	const Pair *begin() const { return _pairs; }
+	const_iterator begin() const { return _pairs; }
 
 	/*! Get iterator to last + 1 of Pairs
 	  \return pointer to last + 1 pair */
-	const Pair *end() const { return _pairs + _pairsz; }
+	const_iterator end() const { return _pairs + _pairsz; }
 
 	/*! Find a key (reference). If not found, throw InvalidMetadata.
 	  Ye Olde Binary Chop
@@ -133,7 +135,7 @@ public:
 	  \return value found (reference) */
 	const Val& find_ref(const Key& key) const
 	{
-		const Pair *res(_find(key));
+		const_iterator res(_find(key));
 		if (res)
 			return res->_value;
 		throw InvalidMetadata<Key>(key);
@@ -144,7 +146,7 @@ public:
 	  \return value found (value) or _noval if not found */
 	const Val find_val(const Key& key) const
 	{
-		const Pair *res(_find(key));
+		const_iterator res(_find(key));
 		return res ? res->_value : _noval;
 	}
 
@@ -153,23 +155,23 @@ public:
 	  \return value found (pointer) or 0 if not found */
 	const Val *find_ptr(const Key& key) const
 	{
-		const Pair *res(_find(key));
-		return res ? &res->_value : 0;
+		const_iterator res(_find(key));
+		return res ? &res->_value : nullptr;
 	}
 
 	/*! Find a key pair record (pointer).
 	  \param key the key to find
 	  \return key/value pair (pointer) or 0 if not found */
-	const Pair *find_pair_ptr(const Key& key) const
+	const_iterator find_pair_ptr(const Key& key) const
 	{
-		const Pair *res(_find(key));
-		return res ? res : 0;
+		const_iterator res(_find(key));
+		return res ? res : nullptr;
 	}
 
 	/*! Get the pair at index location
 	  \param idx of the pair to retrieve
 	  \return reference to pair or _noval if not found */
-	const Pair *at(const size_t idx) const { return idx < _pairsz ? _pairs + idx : 0; }
+	const_iterator at(const size_t idx) const { return idx < _pairsz ? _pairs + idx : nullptr; }
 
 	/*! Get the number of elements in the data set.
 	  \return number of elements */

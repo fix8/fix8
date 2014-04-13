@@ -135,17 +135,17 @@ const string GETARGLIST("hl:svqc:R:S:rdo");
 bool term_received(false);
 
 //-----------------------------------------------------------------------------------------
-const MyMenu::Handlers::TypePair MyMenu::_valueTable[] =
+const MyMenu::Handlers::TypePair MyMenu::_valueTable[]
 {
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('n', "New Order Single"), &MyMenu::new_order_single),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('r', "New Order Single Recycled - 1st use send as normal then will send recycled message"),
-			&MyMenu::new_order_single_recycled),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('N', "50 New Order Singles"), &MyMenu::new_order_single_50),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('T', "1000 New Order Singles"), &MyMenu::new_order_single_1000),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('R', "Resend request"), &MyMenu::resend_request),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('?', "Help"), &MyMenu::help),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('l', "Logout"), &MyMenu::do_logout),
-	MyMenu::Handlers::TypePair(MyMenu::MenuItem('x', "Exit"), &MyMenu::do_exit),
+	{ { 'n', "New Order Single" }, &MyMenu::new_order_single },
+	{ { 'r', "New Order Single Recycled - 1st use send as normal then will send recycled message" },
+		&MyMenu::new_order_single_recycled },
+	{ { 'N', "50 New Order Singles" }, &MyMenu::new_order_single_50 },
+	{ { 'T', "1000 New Order Singles" }, &MyMenu::new_order_single_1000 },
+	{ { 'R', "Resend request" }, &MyMenu::resend_request },
+	{ { '?', "Help" }, &MyMenu::help },
+	{ { 'l', "Logout" }, &MyMenu::do_logout },
+	{ { 'x', "Exit" }, &MyMenu::do_exit },
 };
 const MyMenu::Handlers MyMenu::_handlers(MyMenu::_valueTable,
 	sizeof(MyMenu::_valueTable)/sizeof(MyMenu::Handlers::TypePair), &MyMenu::nothing);
@@ -162,9 +162,9 @@ void sig_handler(int sig)
 #ifndef _MSC_VER
    case SIGQUIT:
 #endif
-       term_received = true;
-      signal(sig, sig_handler);
-      break;
+		term_received = true;
+		signal(sig, sig_handler);
+		break;
    }
 }
 
@@ -177,7 +177,7 @@ int main(int argc, char **argv)
 	unsigned next_send(0), next_receive(0);
 
 #ifdef HAVE_GETOPT_LONG
-	option long_options[] =
+	option long_options[]
 	{
 		{ "help",		0,	0,	'h' },
 		{ "version",	0,	0,	'v' },
@@ -293,6 +293,7 @@ int main(int argc, char **argv)
 				mc->start(false, next_send, next_receive);
 
 			MyMenu mymenu(*mc->session_ptr(), 0, cout);
+			cout << "Menu started. Press '?' for help..." << endl;
 			char ch(0);
 			mymenu.get_tty().set_raw_mode();
 			save_tty = mymenu.get_tty();
@@ -403,7 +404,7 @@ Message *MyMenu::generate_new_order_single()
 	*gr5 << new TEX::UnderlyingSymbol("BOOM");
 	// nested repeating groups
 	GroupBase *nus(gr5->find_group<TEX::NewOrderSingle::NoUnderlyings::NoUnderlyingStips>());
-	static const char *secIDs[] = { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
+	static const char *secIDs[] { "Reverera", "Orlanda", "Withroon", "Longweed", "Blechnod" };
 	*gr5 << new TEX::NoUnderlyingStips(sizeof(secIDs)/sizeof(char *));
 	for (size_t ii(0); ii < sizeof(secIDs)/sizeof(char *); ++ii)
 	{
