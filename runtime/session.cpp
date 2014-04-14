@@ -46,6 +46,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
+#include <tuple>
 
 #ifndef _MSC_VER
 #include <strings.h>
@@ -452,11 +453,45 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		default_appl_ver_id davi;
 		msg->get(davi);
 
-		sender_comp_id sci;
+		sender_comp_id sci; // so this is our tci
 		msg->Header()->get(sci);
-		target_comp_id tci;
+		target_comp_id tci; // so this is our sci
 		msg->Header()->get(tci);
 		SessionID id(_ctx._beginStr, tci(), sci());
+
+		if (!_loginParameters._clients.empty())
+		{
+			auto itr(_loginParameters._clients.find(sci()));
+			bool iserr(false);
+			if (itr == _loginParameters._clients.cend())
+			{
+				ostr.str("");
+				ostr << "Remote (" << sci << ") not found (" << id << "). NOT authorised to proceed.";
+				iserr = true;
+			}
+
+			if (!iserr && get<1>(itr->second) != Poco::Net::IPAddress()
+				&& get<1>(itr->second) != _connection->get_peer_socket_address().host())
+			{
+				ostr.str("");
+				ostr << "Remote (" << get<0>(itr->second) << ", " << sci << ") NOT authorised to proceed ("
+					<< _connection->get_peer_socket_address().toString() << ").";
+				iserr = true;
+			}
+
+			if (iserr)
+			{
+				GlobalLogger::log(ostr.str());
+				stop();
+				do_state_change(States::st_session_terminated);
+				return false;
+			}
+
+			ostr.str("");
+			ostr << "Remote (" << get<0>(itr->second) << ", " << sci << ") authorised to proceed ("
+				<< _connection->get_peer_socket_address().toString() << ").";
+			GlobalLogger::log(ostr.str());
+		}
 
 		// important - these objects can't be created until we have a valid SessionID
 		if (_sf)

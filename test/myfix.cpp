@@ -266,8 +266,8 @@ int main(int argc, char **argv)
 				inst->session_ptr()->get_timer().schedule(sample_callback, 60000); // call sample_scheduler_callback every minute forever
 
 				const ProcessModel pm(ms->get_process_model(ms->_ses));
-				inst->start(pm == pm_pipeline, next_send, next_receive);
 				cout << (pm == pm_pipeline ? "Pipelined" : "Threaded") << " mode." << endl;
+				inst->start(pm == pm_pipeline, next_send, next_receive);
 				if (inst->session_ptr()->get_connection()->is_secure())
 					cout << "Session is secure (SSL)" << endl;
 				if (pm != pm_pipeline)
@@ -311,16 +311,19 @@ int main(int argc, char **argv)
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
+		GlobalLogger::log(e.what());
 	}
 	catch (exception& e)	// also catches Poco::Net::NetException
 	{
 		cerr << "exception: " << e.what() << endl;
 		restore_tty = true;
+		GlobalLogger::log(e.what());
 	}
 	catch (...)
 	{
 		cerr << "unknown exception" << endl;
 		restore_tty = true;
+		GlobalLogger::log("unknown exception");
 	}
 
 	if (restore_tty && !server)

@@ -16,6 +16,7 @@
 				ignore_logon_sequence_check="true"
 				process_model="threaded"
 				silent_disconnect="false"
+				target_comp_id="client_Group0"
 				persist="file0"/>
 
 	<schedule name="test_schedule0"
@@ -79,5 +80,10 @@
 				type="protocol"
 				flags="sequence|append|direction|inbound|outbound"
 				filename="|/bin/cat"/>
+
+	<client_group name="client_Group0">
+		<client name="Goldsteins" target_comp_id="DLD_TEX" ip="192.168.0.37" active="false"/>
+		<client name="Goldsteins" target_comp_id="DLD_TEX" ip="127.0.0.1" />
+	</client_group>
 
 </fix8>

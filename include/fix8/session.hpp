@@ -149,6 +149,11 @@ namespace States
 }
 
 //-------------------------------------------------------------------------------------------------
+/// Class to hold client info settings for server sessions
+using Client = std::tuple<f8String, Poco::Net::IPAddress>; // name, ip
+using Clients = std::unordered_map<f8String, Client>; // tci : name, ip
+
+//-------------------------------------------------------------------------------------------------
 namespace defaults
 {
 	enum
@@ -266,23 +271,20 @@ struct Schedule
 //-------------------------------------------------------------------------------------------------
 struct LoginParameters
 {
-	LoginParameters() : _login_retry_interval(defaults::retry_interval), _login_retries(defaults::login_retries),
-		_connect_timeout(defaults::connect_timeout), _reset_sequence_numbers(), _always_seqnum_assign(),
-		_silent_disconnect(), _no_chksum_flag(), _permissive_mode_flag(), _reliable(),
-		_recv_buf_sz(), _send_buf_sz(), _hb_int(defaults::hb_interval) {}
+	LoginParameters() = default;
 
 	LoginParameters(unsigned login_retry_interval, unsigned login_retries,
 		const default_appl_ver_id& davi, unsigned connect_timeout, bool reset_seqnum=false,
 		bool always_seqnum_assign=false, bool silent_disconnect=false, bool no_chksum_flag=false,
 		bool permissive_mode_flag=false, bool reliable=false,
 		unsigned recv_buf_sz=0, unsigned send_buf_sz=0, unsigned hb_int=defaults::hb_interval,
-		const Schedule& sch=Schedule(), const f8String& pem_path=f8String()) :
+		const Schedule& sch=Schedule(), const Clients& clients=Clients(), const f8String& pem_path=f8String()) :
 			_login_retry_interval(login_retry_interval), _login_retries(login_retries), _connect_timeout(connect_timeout),
 			_reset_sequence_numbers(reset_seqnum), _always_seqnum_assign(always_seqnum_assign),
 			_silent_disconnect(silent_disconnect), _no_chksum_flag(no_chksum_flag),
 			_permissive_mode_flag(permissive_mode_flag), _reliable(reliable),
-			_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz), _hb_int(defaults::hb_interval),
-			_login_schedule(sch), _pem_path(pem_path) {}
+			_davi(davi), _recv_buf_sz(recv_buf_sz), _send_buf_sz(send_buf_sz), _hb_int(hb_int),
+			_login_schedule(sch), _clients(clients), _pem_path(pem_path) {}
 
 	LoginParameters(const LoginParameters& from)
 		: _login_retry_interval(from._login_retry_interval), _login_retries(from._login_retries),
@@ -291,7 +293,7 @@ struct LoginParameters
 		_no_chksum_flag(from._no_chksum_flag), _permissive_mode_flag(from._permissive_mode_flag),
 		_reliable(from._reliable), _davi(from._davi),
 		_recv_buf_sz(from._recv_buf_sz), _send_buf_sz(from._send_buf_sz), _hb_int(from._hb_int),
-		_login_schedule(from._login_schedule), _pem_path(from._pem_path)
+		_login_schedule(from._login_schedule), _clients(from._clients), _pem_path(from._pem_path)
 	{}
 
 	LoginParameters& operator=(const LoginParameters& that)
@@ -312,16 +314,20 @@ struct LoginParameters
 			_send_buf_sz = that._send_buf_sz;
 			_hb_int = that._hb_int;
 			_login_schedule = that._login_schedule;
+			_clients = that._clients;
 			_pem_path = that._pem_path;
 		}
 		return *this;
 	}
 
-	unsigned _login_retry_interval, _login_retries, _connect_timeout;
-	bool _reset_sequence_numbers, _always_seqnum_assign, _silent_disconnect, _no_chksum_flag, _permissive_mode_flag, _reliable;
+	unsigned _login_retry_interval = defaults::retry_interval, _login_retries = defaults::login_retries,
+				_connect_timeout = defaults::connect_timeout;
+	bool _reset_sequence_numbers = false, _always_seqnum_assign, _silent_disconnect = false, _no_chksum_flag = false,
+		  _permissive_mode_flag = false, _reliable = false;
 	default_appl_ver_id _davi;
-	unsigned _recv_buf_sz, _send_buf_sz, _hb_int;
+	unsigned _recv_buf_sz = 0, _send_buf_sz = 0, _hb_int = defaults::hb_interval;
 	Schedule _login_schedule;
+	Clients _clients;
 	f8String _pem_path;
 };
 

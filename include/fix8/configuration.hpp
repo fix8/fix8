@@ -94,9 +94,9 @@ class Configuration
 	static RegExp _ipexp;
 
 	const std::string _xmlfile;
-	const XmlElement *_root;
+	const XmlElement *_root, *_default;
 	using ConfigMap = std::map<const std::string, const XmlElement *>;
-	ConfigMap _sessions, _persisters, _loggers, _server_group, _ssl_context, _schedules, _logins;
+	ConfigMap _sessions, _persisters, _loggers, _server_group, _ssl_context, _schedules, _logins, _client_group;
 	std::vector<const XmlElement *> _allsessions;
 
 	/*! Find an xml entity by tag in the supplied map.
@@ -121,6 +121,11 @@ class Configuration
 	  \return the found entity or 0 if not found */
 	const XmlElement *find_server_group(const std::string& tag) const { return find_element(tag, _server_group); }
 
+	/*! Find a _client_group by tag.
+	  \param tag the tag to find
+	  \return the found entity or 0 if not found */
+	const XmlElement *find_client_group(const std::string& tag) const { return find_element(tag, _client_group); }
+
 	/*! Find a _ssl_context by tag.
 	  \param tag the tag to find
 	  \return the found entity or 0 if not found */
@@ -136,6 +141,15 @@ class Configuration
 	  \return the found entity or 0 if not found */
 	const XmlElement *find_login_schedule(const std::string& tag) const { return find_element(tag, _logins); }
 
+	/*! Search the given element for a tag or look in the default element
+	  \param from the xml entity to search
+	  \param tag the tag to find
+	  \param target place to put the resul
+	  \param is_session if true, special case for session map
+	  \return true if found and stored */
+	bool from_or_default(const XmlElement *from, const f8String& tag, f8String& target) const
+		{ return (from && from->GetAttr(tag, target)) || (_default && _default->GetAttr(tag, target)); }
+
 	/*! Find a fix8 field typed value by tag from an xml entity.
 	  \tparam location type
 	  \param from the xml entity to search
@@ -146,7 +160,7 @@ class Configuration
 	T& get_string_field(const XmlElement *from, const std::string& tag, T& to) const
 	{
 		std::string val;
-		if (from && from->GetAttr(tag, val))
+		if (from_or_default(from, tag, val))
 			to.set(val);
 		return to;
 	}
@@ -171,7 +185,16 @@ class Configuration
 	  \return the found attribute vakue or the default value if not found */
 	template<typename T>
 	T find_or_default(const XmlElement *from, const std::string& tag, const T def) const
-		{	return from ? from->FindAttr(tag, def) : def; }
+	{
+		if (from)
+		{
+			if (from->HasAttr(tag))
+				return from->FindAttr(tag, def);
+			if (_default)
+				return _default->FindAttr(tag, def);
+		}
+		return def;
+	}
 
 	/*! Load a repeating group into a supplied map.
 	  \param tag the tag to find
@@ -183,14 +206,14 @@ class Configuration
 		XmlElement::XmlSet slist;
 		if (_root->find(tag, slist))
 		{
-			for(XmlElement::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
+			for(const auto *pp : slist)
 			{
 				std::string name;
-				if ((*itr)->GetAttr("name", name) && is_session ? (*itr)->FindAttr("active", false) : true)
+				if (pp->GetAttr("name", name) && is_session ? pp->FindAttr("active", false) : true)
 				{
-					map_name.insert(ConfigMap::value_type(name, *itr));
+					map_name.insert(ConfigMap::value_type(name, pp));
 					if (is_session)
-						_allsessions.push_back(*itr);
+						_allsessions.push_back(pp);
 				}
 			}
 		}
@@ -205,7 +228,11 @@ public:
 	  \param xmlfile xml config filename.
 	  \param do_process if true, process the file on construction */
 	Configuration(const std::string& xmlfile, bool do_process=false)
-		: _xmlfile(xmlfile), _root(XmlElement::Factory(_xmlfile)) { if (do_process) process(); }
+		: _xmlfile(xmlfile), _root(XmlElement::Factory(_xmlfile)), _default(_root ? _root->find("fix8/default") : nullptr)
+	{
+		if (do_process)
+			process();
+	}
 
 	/// Dtor.
 	virtual ~Configuration() {}
@@ -236,10 +263,15 @@ public:
 	  \return number of addresses stored */
 	F8API size_t get_addresses(const XmlElement *from, std::vector<Server>& target) const;
 
-	/*! Extract the ip address from a session entity.
+	/*! Extract the ip address and port from a session entity.
 	  \param from xml entity to search
 	  \return Poco::Net::SocketAddress */
 	F8API Poco::Net::SocketAddress get_address(const XmlElement *from) const;
+
+	/*! Extract the ip address from a session entity.
+	  \param from xml entity to search
+	  \return Poco::Net::IPAddress */
+	F8API Poco::Net::IPAddress get_ip(const XmlElement *from) const;
 
 	/*! Extract the logflags from the flags attribute in a log entity.
 	  \param from xml entity to search
@@ -315,6 +347,27 @@ public:
 	  \return false if nodelay flag was passed and was false */
 	bool get_tcp_nodelay(const XmlElement *from, const bool def=true) const
 		{ return find_or_default(from, "tcp_nodelay", def); }
+
+	/*! Extract the tcp keepalive flag.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return false if keepalive flag was passed and was false */
+	bool get_tcp_keepalive(const XmlElement *from, const bool def=false) const
+		{ return find_or_default(from, "tcp_keepalive", def); }
+
+	/*! Extract the tcp reuseaddr flag.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return false if reuseaddr flag was passed and was false */
+	bool get_tcp_reuseaddr(const XmlElement *from, const bool def=false) const
+		{ return find_or_default(from, "tcp_reuseaddr", def); }
+
+	/*! Extract the socket linger setting from a session entity.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return the socket linger value (secs) */
+	int get_tcp_linger(const XmlElement *from, const int def=-1) const
+		{ return find_or_default(from, "tcp_linger", def); }
 
 	/*! Extract the silent disconnect flag.
 	  \param from xml entity to search
@@ -407,6 +460,11 @@ public:
 	  \return Schedule */
 	F8API Schedule create_schedule(const XmlElement *from) const;
 
+	/*! Create clients object from a session entity.
+	  \param from xml entity to search
+	  \return Clients */
+	F8API Clients create_clients(const XmlElement *from) const;
+
 	/*! Create login schedule object from a session entity.
 	  \param from xml entity to search
 	  \return login Schedule */
@@ -436,4 +494,4 @@ public:
 
 } // FIX8
 
-#endif // _FIX8_CONFIGURATION_HPP_
+#endif // FIX8_CONFIGURATION_HPP_

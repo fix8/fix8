@@ -264,6 +264,14 @@ struct InvalidConfiguration : f8Exception
 };
 
 //-------------------------------------------------------------------------------------------------
+/// An bad or missing configuration parameter.
+struct ConfigurationError : f8Exception
+{
+	ConfigurationError(const std::string& str) { format("Configuration error", str); }
+	ConfigurationError(const std::string& str, const std::string& str1) { format(str, str1); }
+};
+
+//-------------------------------------------------------------------------------------------------
 /// Could not open a logfile
 struct LogfileException : f8Exception
 {

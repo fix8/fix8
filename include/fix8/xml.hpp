@@ -146,6 +146,12 @@ public:
 		return GetAttr(valstr, target);
 	}
 
+	/*! Check if an attribute's with the given name is present.
+	  \param what attribute to find
+	  \return true if found */
+	bool HasAttr(const std::string& what) const
+		{ return attrs_ ? attrs_->find(what) != attrs_->end() : false; }
+
 	/*! Find an element and obtain the attribute's value with the name "value".
 	  \param what name to find
 	  \param target where to place value

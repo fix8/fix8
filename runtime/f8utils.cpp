@@ -134,9 +134,10 @@ string& CheckAddTrailingSlash(string& src)
 //-----------------------------------------------------------------------------------------
 string& InPlaceStrToUpper(string& src)
 {
-	for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
-		if (islower(*itr))
-			*itr = toupper(*itr);
+	//for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
+	for (auto& itr : src)
+		if (islower(itr))
+			itr = toupper(itr);
 	return src;
 }
 
@@ -152,9 +153,9 @@ string& InPlaceReplaceInSet(const string& iset, string& src, const char repl)
 //-----------------------------------------------------------------------------------------
 string& InPlaceStrToLower(string& src)
 {
-	for (string::iterator itr(src.begin()); itr != src.end(); ++itr)
-		if (isupper(*itr))
-			*itr = tolower(*itr);
+	for (auto& itr : src)
+		if (isupper(itr))
+			itr = tolower(itr);
 	return src;
 }
 
@@ -229,7 +230,7 @@ namespace
 	using Day = pair<char, int>;
 	using Daymap = multimap<char, int>;
 	static const string day_names[] { "su", "mo", "tu", "we", "th", "fr", "sa" };
-	static const Day days[] { Day('s',0), Day('m',1), Day('t',2), Day('w',3), Day('t',4), Day('f',5), Day('s', 6) };
+	static const Day days[] { {'s',0}, {'m',1}, {'t',2}, {'w',3}, {'t',4}, {'f',5}, {'s', 6} };
 	static const Daymap daymap(days, days + sizeof(days)/sizeof(Day));
 };
 

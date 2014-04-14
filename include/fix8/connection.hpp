@@ -682,7 +682,7 @@ public:
 		 \param secured true for ssl connection
 	*/
     ClientConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-							Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
+							Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, bool no_delay=true,
 							bool secured=false)
 		 : Connection(sock, addr, session, pmodel, hb_interval, secured), _no_delay(no_delay) {}
 
@@ -706,15 +706,20 @@ public:
 	    \param hb_interval heartbeat interval
 	    \param pmodel process model
 	    \param no_delay set or clear the tcp no delay flag on the socket
+	    \param reuse_addr set or clear the resueaddr flag on the socket
+	    \param linger set the tcp linger value (secs) on the socket, -1=disable
+	    \param keepalive set or clear the tcp keepalive flag on the socket
 		 \param secured true for ssl connection
 	*/
 	ServerConnection(Poco::Net::StreamSocket *sock, Poco::Net::SocketAddress& addr,
-						  Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, const bool no_delay=true,
-						  bool secured=false	) :
+						  Session &session, const unsigned hb_interval, const ProcessModel pmodel=pm_pipeline, bool no_delay=true,
+						  bool reuse_addr=false, int linger=-1, bool keepalive=false, bool secured=false) :
 		Connection(sock, addr, session, hb_interval, pmodel, secured)
 	{
-		_sock->setLinger(false, 0);
+		_sock->setLinger(linger >= 0, linger);
 		_sock->setNoDelay(no_delay);
+		_sock->setReuseAddress(reuse_addr);
+		_sock->setKeepAlive(keepalive);
 	}
 
 	/// Dtor.

@@ -138,7 +138,8 @@ struct SessionConfig : public Configuration
 			get_reset_sequence_number_flag(_ses),
 			get_always_seqnum_assign(_ses), get_silent_disconnect(_ses),
 			get_no_chksum_flag(_ses), get_permissive_mode_flag(_ses), false, get_tcp_recvbuf_sz(_ses),
-			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses), create_login_schedule(_ses));
+			get_tcp_sendbuf_sz(_ses), get_heartbeat_interval(_ses),
+			create_login_schedule(_ses), create_clients(_ses));
 
 		_loginParameters = lparam;
 	}
@@ -193,10 +194,9 @@ public:
 		{
 #ifdef HAVE_OPENSSL
 			bool secured(_ssl.is_secure());
-			_sock =
-				secured
-					? new Poco::Net::SecureStreamSocket(_ssl._context)
-					: new Poco::Net::StreamSocket;
+			_sock = secured
+				? new Poco::Net::SecureStreamSocket(_ssl._context)
+				: new Poco::Net::StreamSocket;
 #else
 			bool secured(false);
 			_sock = new Poco::Net::StreamSocket;
@@ -329,10 +329,9 @@ public:
 				//std::cout << "operator()():try" << std::endl;
 #ifdef HAVE_OPENSSL
 				bool secured(this->_ssl.is_secure());
-				this->_sock =
-					secured
-						? new Poco::Net::SecureStreamSocket(this->_ssl._context)
-						: new Poco::Net::StreamSocket;
+				this->_sock = secured
+					? new Poco::Net::SecureStreamSocket(this->_ssl._context)
+					: new Poco::Net::StreamSocket;
 #else
 				bool secured(false);
 				this->_sock = new Poco::Net::StreamSocket;
@@ -474,13 +473,12 @@ public:
 		,_ssl(get_ssl_context(_ses), false)
 #endif
 	{
+		_server_sock =
 #ifdef HAVE_OPENSSL
-		_server_sock = _ssl.is_secure()
-			? new Poco::Net::SecureServerSocket(_addr, 64, _ssl._context)
-			: new Poco::Net::ServerSocket(_addr);
-#else
-		_server_sock = new Poco::Net::ServerSocket(_addr);
+			_ssl.is_secure() ? new Poco::Net::SecureServerSocket(_addr, 64, _ssl._context) :
 #endif
+			new Poco::Net::ServerSocket(_addr);
+
 		if (_loginParameters._recv_buf_sz)
 			Connection::set_recv_buf_sz(_loginParameters._recv_buf_sz, _server_sock);
 		if (_loginParameters._send_buf_sz)
@@ -513,10 +511,34 @@ public:
 #endif
 };
 
+/// Base Server session instance.
+class BaseSessionInstance
+{
+public:
+	/// Ctor. Prepares session instance with inbound connection.
+	BaseSessionInstance () = default;
+
+	/// Dtor.
+	virtual ~BaseSessionInstance () {}
+
+	/*! Get a pointer to the session
+	  \return the session pointer */
+	virtual Session *session_ptr() = 0;
+
+	/*! Start the session - accept the connection, logon and start heartbeating.
+	  \param wait if true wait till session finishes before returning
+	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
+	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0) {}
+
+	/// Stop the session. Cleanup.
+	virtual void stop() {}
+};
+
 /// Server session instance.
 /*! \tparam T your derived session class */
 template<typename T>
-class SessionInstance
+class SessionInstance : public BaseSessionInstance
 {
 	Poco::Net::SocketAddress _claddr;
 	Poco::Net::StreamSocket *_sock;
@@ -528,11 +550,14 @@ public:
 	SessionInstance (ServerSession<T>& sf) :
 		_sock(new Poco::Net::StreamSocket(sf.accept(_claddr))),
 		_session(new T(sf._ctx)),
+		_sc(_sock, _claddr, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_process_model(sf._ses),
+		sf.get_tcp_nodelay(sf._ses), sf.get_tcp_reuseaddr(sf._ses), sf.get_tcp_linger(sf._ses), sf.get_tcp_keepalive(sf._ses),
 #ifdef HAVE_OPENSSL
-		_sc(_sock, _claddr, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_process_model(sf._ses), sf.get_tcp_nodelay(sf._ses), sf.is_secure())
+		sf.is_secure()
 #else
-		_sc(_sock, _claddr, *_session, sf.get_heartbeat_interval(sf._ses), sf.get_process_model(sf._ses), sf.get_tcp_nodelay(sf._ses), false)
+		false
 #endif
+			)
 	{
 		_session->set_login_parameters(sf._loginParameters);
 		_session->set_session_config(&sf);
@@ -547,17 +572,17 @@ public:
 
 	/*! Get a pointer to the session
 	  \return the session pointer */
-	T *session_ptr() { return _session; }
+	virtual T *session_ptr() override { return _session; }
 
 	/*! Start the session - accept the connection, logon and start heartbeating.
 	  \param wait if true wait till session finishes before returning
 	  \param send_seqnum if supplied, override the send login sequence number, set next send to seqnum+1
 	  \param recv_seqnum if supplied, override the receive login sequence number, set next recv to seqnum+1 */
-	void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0)
+	virtual void start(bool wait, const unsigned send_seqnum=0, const unsigned recv_seqnum=0) override
 		{ _session->start(&_sc, wait, send_seqnum, recv_seqnum); }
 
 	/// Stop the session. Cleanup.
-	void stop() { _session->stop(); }
+	virtual void stop() override { _session->stop(); }
 
 	/// Convenient scoped pointer for your session instance.
 	using Instance_ptr = scoped_ptr<SessionInstance<T>>;
