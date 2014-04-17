@@ -81,11 +81,13 @@ void MainWindow::buildMainWindow()
     messageIcon.addPixmap(QPixmap(":/images/svg/hideMessageArea.svg"),QIcon::Normal,QIcon::On);
     showMessageA->setIcon(messageIcon);
 
-
+    setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::AllowTabbedDocks);
     connect(copyWindowA,SIGNAL(triggered()),this,SLOT(copyWindowSlot()));
     consoleDock = new QDockWidget(tr("Console"),this);
     consoleDock->setObjectName("ConsoleDock");
     consoleArea = new QTextBrowser(consoleDock);
+    addDockWidget(Qt::BottomDockWidgetArea,consoleDock);
+
     QPalette palette;
     QBrush brush(QColor(255, 170, 0, 255));
     brush.setStyle(Qt::SolidPattern);
@@ -113,7 +115,7 @@ void MainWindow::buildMainWindow()
     fnt.setBold(true);
     consoleDock->setFont(fnt);
     consoleDock->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea);
-
+    consoleDock->setFloating(false);
     optionMenu->addAction(hideToolBarA);
     optionMenu->setTearOffEnabled(true);
     hideColumMenu = new QMenu(this);

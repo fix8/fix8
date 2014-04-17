@@ -47,7 +47,7 @@ RESOURCES += \
 
 LIBS += -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUtil
 
-INCLUDEPATH += /usr/local/include /usr/local/include/fix8 /home/david/qt/fix8log/f8
+INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ./f8
 DEPENDPATH += /usr/local/include
 
 
