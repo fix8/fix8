@@ -311,3 +311,7 @@ void MainWindow::showEvent(QShowEvent *se)
     qDebug() << "\t2 Main Window Show Event" << __FILE__ << __LINE__;
     QMainWindow::showEvent(se);
 }
+QSize MainWindow::sizeHint() const
+{
+    return QSize(800,900);
+}

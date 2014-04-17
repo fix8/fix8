@@ -45,7 +45,7 @@ public:
     void iconStyleSlot(QAction *);
     void iconSizeSlot(QAction *);
     void quitSlot();
-
+    QSize sizeHint() const;
     void setColorSlot(QColor color);
     //void showMessageSlot(FixTable::MessageKind mk,QString message);
     void showMessageArea(bool);
