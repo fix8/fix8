@@ -34,34 +34,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <algorithm>
-
-#ifndef _MSC_VER
-# include <strings.h>
-# include <sys/time.h>
-# include <unistd.h>
-# include <netdb.h>
-# include <syslog.h>
-#endif
-
-#include <string.h>
-#include <time.h>
-#include <errno.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <time.h>
-
-#include <map>
-#include <set>
-#include <list>
-#include <vector>
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //----------------------------------------------------------------------------------------

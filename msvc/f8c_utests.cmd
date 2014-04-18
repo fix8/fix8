@@ -73,7 +73,7 @@ if %needClean% == 1 (
 if %needBuild% == 1 (
 
 echo ************going to generate************
-	    %F8C% "-sVputest" "-n UTEST" %XML_42_UTEST_SCHEMA% -F %EXTRA_FIELDS%
+	    %F8C% "-sVputest" "-n UTEST" "-Hprecomp.hpp" %XML_42_UTEST_SCHEMA% -F %EXTRA_FIELDS%
 
 echo ************  generate done  ************
 

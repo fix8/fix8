@@ -2,13 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\test\hfprint.cpp" />
-    <ClCompile Include="..\test\Perf_classes.cpp" />
-    <ClCompile Include="..\test\Perf_traits.cpp" />
-    <ClCompile Include="..\test\Perf_types.cpp" />
+    <ClCompile Include="..\test\precomp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\test\Perf_classes.hpp" />
-    <ClInclude Include="..\test\Perf_router.hpp" />
-    <ClInclude Include="..\test\Perf_types.hpp" />
+    <ClInclude Include="..\test\precomp.hpp" />
   </ItemGroup>
 </Project>
