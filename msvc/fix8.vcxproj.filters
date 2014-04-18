@@ -66,6 +66,9 @@
     <ClCompile Include="..\runtime\redispersist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\runtime\precomp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\fix8\configuration.hpp">
@@ -150,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="f8config_msvc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\precomp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

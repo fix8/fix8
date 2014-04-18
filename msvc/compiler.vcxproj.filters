@@ -27,6 +27,9 @@
     <ClCompile Include="..\compiler\f8precomp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\compiler\precomp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\compiler\f8cstatic.hpp">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="..\include\yield.hpp">
       <Filter>External Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\compiler\precomp.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
