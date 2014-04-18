@@ -242,7 +242,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 
 		char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
 		unsigned result;
-		if ((result = MessageBase::extract_element(to.data(), to.size(), tag, val)))
+		if ((result = MessageBase::extract_element(to.data(), static_cast<unsigned>(to.size()), tag, val)))
 		{
 			if (*tag != '8')
 				throw IllegalMessage(to);
@@ -250,7 +250,7 @@ bool FIXReader::read(f8String& to)	// read a complete FIX message
 			if (_session.get_ctx()._beginStr.compare(val))	// invalid FIX version
 				throw InvalidVersion(string(val));
 
-			if ((result = MessageBase::extract_element(to.data() + result, to.size() - result, tag, val)))
+			if ((result = MessageBase::extract_element(to.data() + result, static_cast<unsigned>(to.size()) - result, tag, val)))
 			{
 				if (*tag != '9')
 					throw IllegalMessage(to);

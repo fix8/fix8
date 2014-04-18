@@ -65,7 +65,7 @@ codec_timings Message::_encode_timings, Message::_decode_timings;
 unsigned MessageBase::extract_header(const f8String& from, char *len, char *mtype)
 {
 	const char *dptr(from.data());
-	const size_t flen(from.size());
+	const unsigned flen(static_cast<unsigned>(from.size()));
 	char tag[MAX_MSGTYPE_FIELD_LEN], val[MAX_FLD_LENGTH];
 	unsigned s_offset(0), result;
 
@@ -100,8 +100,8 @@ unsigned MessageBase::extract_trailer(const f8String& from, f8String& chksum)
 //-------------------------------------------------------------------------------------------------
 unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned ignore, bool permissive_mode)
 {
-	const unsigned fsize(from.size() - ignore), npos(0xffffffff);
-	unsigned pos(_pos.size()), last_valid_pos(npos);
+	const unsigned fsize(static_cast<unsigned>(from.size()) - ignore), npos(0xffffffff);
+	unsigned pos(static_cast<unsigned>(_pos.size())), last_valid_pos(npos);
 	const char *dptr(from.data());
 	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
 	size_t last_valid_offset(0);
@@ -153,7 +153,7 @@ unsigned MessageBase::decode(const f8String& from, unsigned s_offset, unsigned i
 		throw MissingMandatoryField(ostr.str());
 	}
 
-	return permissive_mode && last_valid_pos == pos ? last_valid_offset : s_offset;
+	return permissive_mode && last_valid_pos == pos ? static_cast<unsigned>(last_valid_offset) : s_offset;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -163,7 +163,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 	GroupBase *grpbase(find_group(fnum));
 	if (!grpbase)
 		throw InvalidRepeatingGroup(fnum);
-	const unsigned fsize(from.size() - ignore);
+	const unsigned fsize(static_cast<unsigned>(from.size()) - ignore);
 	const char *dptr(from.data());
 	char tag[MAX_FLD_LENGTH], val[MAX_FLD_LENGTH];
 
@@ -216,7 +216,7 @@ unsigned MessageBase::check_positions()
 Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_chksum, bool permissive_mode)
 {
 	char mtype[MAX_MSGTYPE_FIELD_LEN] {}, len[MAX_MSGTYPE_FIELD_LEN] {};
-	const size_t hlen(extract_header(from, len, mtype));
+	const unsigned hlen(extract_header(from, len, mtype));
 
 	if (!hlen)
 	{
@@ -251,7 +251,7 @@ Message *Message::factory(const F8MetaCntx& ctx, const f8String& from, bool no_c
 	{
 		const f8String chksum(pp + 3, 3);
 		msg->_trailer->get_check_sum()->set(chksum);
-		const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), mchkval(calc_chksum(from, 0, from.size() - 7));
+		const unsigned chkval(fast_atoi<unsigned>(chksum.c_str())), mchkval(calc_chksum(from, 0, static_cast<unsigned>(from.size()) - 7));
 		if (chkval != mchkval)
 			throw BadCheckSum(mchkval);
 	}
@@ -398,7 +398,7 @@ size_t Message::encode(char **hmsg_store) const
 		throw MissingMandatoryField(Common_BodyLength);
 	_header->_fp.clear(Common_BodyLength, FieldTrait::suppress);
 
-	_header->get_body_length()->set(msgLen);
+	_header->get_body_length()->set(static_cast<int>(msgLen));
 	hmsg += _header->get_body_length()->encode(hmsg);
 
 	if (!_trailer->get_check_sum())

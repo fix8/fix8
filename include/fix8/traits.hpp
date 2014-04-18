@@ -164,10 +164,10 @@ struct FieldTrait_Hash_Array
    unsigned short *_arr;
 
    FieldTrait_Hash_Array(const FieldTrait *from, const size_t els)
-      : _els(els), _sz((from + _els - 1)->_fnum + 1), _arr(new unsigned short [_sz])
+      : _els(static_cast<unsigned>(els)), _sz((from + _els - 1)->_fnum + 1), _arr(new unsigned short [_sz])
    {
 		std::fill(_arr, _arr + _sz, 0);
-      for (unsigned offset(0); offset < _els; ++offset)
+		for (unsigned offset(0); offset < _els; ++offset)
 			*(_arr + (from + offset)->_fnum) = offset;
    }
 

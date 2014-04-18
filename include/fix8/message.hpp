@@ -816,8 +816,8 @@ public:
 	    \return number of bytes consumed */
 	unsigned decode(const f8String& from, unsigned offset=0, unsigned ignore=0, bool permissive_mode=false)
 	{
-		const size_t hlen(_header->decode(from, offset, 0, permissive_mode));
-		const size_t blen(MessageBase::decode(from, hlen, 0, permissive_mode));
+		const unsigned hlen(_header->decode(from, offset, 0, permissive_mode));
+		const unsigned blen(MessageBase::decode(from, hlen, 0, permissive_mode));
 		return _trailer->decode(from, blen, ignore, permissive_mode);
 	}
 

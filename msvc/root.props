@@ -16,11 +16,11 @@
   <ItemDefinitionGroup>
       <ClCompile Condition="'$(Platform)'=='x64'">
         <AdditionalIncludeDirectories>./;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(Poco)/NetSSL_OpenSSL/include;$(Poco)/Crypto/include;$(Poco)/Util/include;$(TBB)/include;$(GetOpt)/getopt_mb_uni_vc10_dll;$(OpenSSL64)/include</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       </ClCompile>
       <ClCompile Condition="'$(Platform)'=='Win32'">
         <AdditionalIncludeDirectories>./;$(SolutionDir)/../include;$(Poco)/Foundation/include;$(Poco)/Net/include;$(Poco)/NetSSL_OpenSSL/include;$(Poco)/Crypto/include;$(Poco)/Util/include;$(TBB)/include;$(GetOpt)/getopt_mb_uni_vc10_dll;$(OpenSSL32)/include</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       </ClCompile>
       <Link Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
           <AdditionalLibraryDirectories>$(tbb)/build/vs2013/intel64/$(Configuration);$(poco)/lib64;$(SolutionDir)/$(Platform)/bin/$(Configuration);$(GetOpt)/bin/$(Platform)/$(Configuration) Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

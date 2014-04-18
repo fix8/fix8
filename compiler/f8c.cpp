@@ -938,7 +938,7 @@ int process(XmlElement& xf, Ctxt& ctxt)
          unsigned cgs(0), ugs(0), vars(0);
          for (CommonGroupMap::const_iterator gcitr(globmap.begin()); gcitr != globmap.end(); ++gcitr)
          {
-            vars += gcitr->second.size();
+            vars += static_cast<unsigned>(gcitr->second.size());
             for (CommonGroups::const_iterator gitr(gcitr->second.begin()); gitr != gcitr->second.end(); ++gitr)
             {
                if (gitr->second._group_refcnt > 1)
