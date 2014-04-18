@@ -683,7 +683,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 			for (size_t cnt(0); cnt < grnoul->size(); ++cnt)
 			{
 				TEX::UnderlyingSymbol unsym;
-				MessageBase *me(grnoul->get_element(cnt));
+				MessageBase *me(grnoul->get_element(static_cast<unsigned>(cnt)));
 				me->get(unsym);
 				cout << "Underlying symbol:" << unsym() << endl;
 				// This is how you extract values from a nested repeating group
@@ -693,7 +693,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 					for (size_t cnt(0); cnt < nus->size(); ++cnt)
 					{
 						TEX::UnderlyingStipType stipType;
-						MessageBase *me(nus->get_element(cnt));
+						MessageBase *me(nus->get_element(static_cast<unsigned>(cnt)));
 						me->get(stipType);
 						cout << "Underlying StipType:" << stipType() << endl;
 					}
@@ -707,7 +707,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 			for (size_t cnt(0); cnt < grallocs->size(); ++cnt)
 			{
 				TEX::AllocAccount acc;
-				MessageBase *me(grallocs->get_element(cnt));
+				MessageBase *me(grallocs->get_element(static_cast<unsigned>(cnt)));
 				me->get(acc);
 				cout << "TEX::NewOrderSingle::NoAllocs Account:" << acc() << endl;
 				// This is how you extract values from a nested repeating group
@@ -717,7 +717,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 					for (size_t cnt(0); cnt < nnpi->size(); ++cnt)
 					{
 						TEX::NestedPartyID npi;
-						MessageBase *me(nnpi->get_element(cnt));
+						MessageBase *me(nnpi->get_element(static_cast<unsigned>(cnt)));
 						me->get(npi);
 						cout << "TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs NestedPartyID:" << npi() << endl;
 						// This is how you extract values from a nested nested repeating group
@@ -727,7 +727,7 @@ bool tex_router_server::operator() (const TEX::NewOrderSingle *msg) const
 							for (size_t cnt(0); cnt < nnpsi->size(); ++cnt)
 							{
 								TEX::NestedPartySubID npsi;
-								MessageBase *me(nnpsi->get_element(cnt));
+								MessageBase *me(nnpsi->get_element(static_cast<unsigned>(cnt)));
 								me->get(npsi);
 								cout << "TEX::NewOrderSingle::NoAllocs::NoNestedPartyIDs::NoNestedPartySubIDs NestedPartySubID:" << npsi() << endl;
 							}

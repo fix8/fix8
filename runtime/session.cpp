@@ -56,6 +56,10 @@ const vector<f8String> Session::_state_names
 	"sequence_reset_received", "resend_request_sent", "resend_request_received"
 };
 #endif
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4273)
+#endif
 //-------------------------------------------------------------------------------------------------
 void SessionID::make_id()
 {
@@ -838,7 +842,7 @@ Message *Session::generate_business_reject(const unsigned seqnum, const Message 
 	{
 		msg = create_msg(Common_MsgType_BUSINESS_REJECT);
 	}
-	catch (InvalidMetadata<f8String>& e)
+	catch (InvalidMetadata<f8String>&)
 	{
 		// since this is an application message, it may not be supported in supplied schema
 		return 0;
@@ -1167,3 +1171,6 @@ void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& priv
 
 #endif // HAVE_OPENSSL
 //-------------------------------------------------------------------------------------------------
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
