@@ -33,9 +33,8 @@ MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
         else
             stackW->setCurrentWidget(noDataL);
     }
-
     readSettings();
-    move(x+100,y+90);
+    move(x+100,y+90); // offset from window copied
 
 }
 void MainWindow::buildMainWindow()
@@ -45,44 +44,95 @@ void MainWindow::buildMainWindow()
     optionMenu = mainMenuBar->addMenu(tr("&Option"));
     mainToolBar = new QToolBar("Tool Bar",this);
     mainToolBar->setObjectName("MainToolBar");
+    searchToolBar = new QToolBar("SearchArea",this);
+
     hideToolBarA = mainToolBar->toggleViewAction();
     mainToolBar->setMovable(true);
+    searchToolBar->setMovable(true);
+
     addToolBar(Qt::TopToolBarArea,mainToolBar);
+    addToolBar(Qt::TopToolBarArea,searchToolBar);
 
     closeA = new QAction(tr("&Close Window"),this);
     closeA->setIcon(QIcon(":/images/32x32/application-exit.png"));
     closeA->setToolTip(tr("Close This Window"));
 
     quitA = new QAction(tr("&Quit"),this);
-    connect(quitA,SIGNAL(triggered()),this,SLOT(quitSlot()));
     quitA->setIcon(QIcon(":/images/32x32/exit.svg"));
     quitA->setToolTip(tr("Exit Application"));
+    connect(quitA,SIGNAL(triggered()),this,SLOT(quitSlot()));
 
     newTabA = new QAction(tr("New Tab"),this);
     newTabA->setIcon((QIcon(":/images/svg/newspreadsheet.svg")));
     newTabA->setToolTip(tr("Create A New Empty Tab"));
 
     copyTabA = new QAction(tr("Copy Tab"),this);
-    connect(copyTabA,SIGNAL(triggered()),this,SLOT(copyTabSlot()));
     copyTabA->setIcon((QIcon(":/images/svg/spreadsheetCopy.svg")));
     copyTabA->setToolTip(tr("Create New Tab From Current Tab"));
+    connect(copyTabA,SIGNAL(triggered()),this,SLOT(copyTabSlot()));
+
     newWindowA = new QAction("New &Window",this);
     newWindowA->setIcon((QIcon(":/images/32x32/newwindow.svg")));
     newWindowA->setToolTip(tr("Open New Window"));
+
     copyWindowA = new QAction("&Copy Window",this);
     copyWindowA->setIcon((QIcon(":/images/32x32/copywindow.svg")));
     copyWindowA->setToolTip(tr("Copy Window"));
+    connect(copyWindowA,SIGNAL(triggered()),this,SLOT(copyWindowSlot()));
+
     showMessageA = new QAction(tr("Show/Hide Msgs"),this);
-    connect(showMessageA,SIGNAL(triggered(bool)),this,SLOT(showMessageArea(bool)));
     showMessageA->setToolTip(tr("Show/Hide Message Area"));
     showMessageA->setCheckable(true);
-    QIcon messageIcon;
-    messageIcon.addPixmap(QPixmap(":/images/svg/showMessageArea.svg"),QIcon::Normal,QIcon::Off);
-    messageIcon.addPixmap(QPixmap(":/images/svg/hideMessageArea.svg"),QIcon::Normal,QIcon::On);
-    showMessageA->setIcon(messageIcon);
+    connect(showMessageA,SIGNAL(triggered(bool)),this,SLOT(showMessageArea(bool)));
+    QIcon icon;
+    icon.addPixmap(QPixmap(":/images/svg/showMessageArea.svg"),QIcon::Normal,QIcon::Off);
+    icon.addPixmap(QPixmap(":/images/svg/hideMessageArea.svg"),QIcon::Normal,QIcon::On);
+    showMessageA->setIcon(icon);
 
+    searchBackA  = new QAction(tr("Back"),this);
+    searchBackA->setIcon((QIcon(":/images/svg/back.svg")));
+    searchBeginA = new QAction(tr("Begining"),this);
+    searchBeginA->setIcon((QIcon(":/images/svg/begining.svg")));
+    searchEndA   = new QAction(tr("End"),this);
+    searchEndA->setIcon((QIcon(":/images/svg/end.svg")));
+    searchNextA  = new QAction(tr("Next"),this);
+    searchNextA->setIcon((QIcon(":/images/svg/forward.svg")));
+    searchEditA  = new QAction(tr("Edit"),this);
+    searchEditA->setIcon(QIcon(":/images/svg/edittabname.svg"));
+    //searchOnA   = new QAction(tr("Search On/Off"),this);
+  //icon.addPixmap(QPixmap(":/images/svg/led green.svg"),QIcon::Normal,QIcon::On);
+  //icon.addPixmap(QPixmap(":/images/svg/led off.svg"),QIcon::Normal,QIcon::Off);
+   // searchOnA->setIcon(icon);
+    //searchOnA->setCheckable(true);
+    //searchOnA->setToolTip(tr("Turn On/Off Search"));
+    //searchToolBar->addAction(searchOnA);
+    searchArea = new QWidget(this);
+    QHBoxLayout *searchBox = new QHBoxLayout();
+    searchBox->setMargin(0);
+    searchArea->setLayout(searchBox);
+    searchL = new QLabel(searchArea);
+    searchL->setText(tr("Search:"));
+    searchCB = new QComboBox(searchArea);
+    searchCB->setEditable(true);
+
+    searchBox->addWidget(searchL,0);
+    searchBox->addWidget(searchCB,1);
+
+    searchToolBar->addWidget(searchArea);
+    searchToolBar->addAction(searchEditA);
+    searchToolBar->addAction(searchBeginA);
+    searchToolBar->addAction(searchBackA);
+    searchToolBar->addAction(searchNextA);
+    searchToolBar->addAction(searchEndA);
+    QHBoxLayout *space = new QHBoxLayout();
+    space->addStretch(1);
+    space->setMargin(0);
+    QWidget *spaceW = new QWidget();
+    spaceW->setLayout(space);
+
+    searchArea->setLayout(searchBox);
+    searchToolBar->addWidget(spaceW);
     setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::AllowTabbedDocks);
-    connect(copyWindowA,SIGNAL(triggered()),this,SLOT(copyWindowSlot()));
     consoleDock = new QDockWidget(tr("Console"),this);
     consoleDock->setObjectName("ConsoleDock");
     consoleArea = new QTextBrowser(consoleDock);
@@ -119,8 +169,6 @@ void MainWindow::buildMainWindow()
     optionMenu->addAction(hideToolBarA);
     optionMenu->setTearOffEnabled(true);
     hideColumMenu = new QMenu(this);
-
-
     hideColumMenu->setTitle(tr("Columns"));
     hideColumMenu->setTearOffEnabled(true);
     hideColActionGroup = new QActionGroup(this);
@@ -173,9 +221,7 @@ void MainWindow::buildMainWindow()
     fileMenu->addAction(copyTabA);
     fileMenu->addAction(newTabA);
     fileMenu->addAction(copyWindowA);
-
     fileMenu->addAction(newWindowA);
-
     fileMenu->addAction(closeA);
     fileMenu->addSeparator();
     fileMenu->addAction(quitA);
@@ -196,10 +242,8 @@ void MainWindow::buildMainWindow()
     connect(configPB,SIGNAL(clicked()),this,SLOT(configSlot()));
 
     // restore should be in settings but must come after
-
     hideConsoleA = consoleDock->toggleViewAction();
     optionMenu->addAction(hideConsoleA);
-
 
     stackW = new QStackedWidget(this);
     setCentralWidget(stackW);
@@ -217,15 +261,12 @@ void MainWindow::buildMainWindow()
     noDataL->setAlignment(Qt::AlignCenter);
     workAreaSplitter = new QSplitter(Qt::Horizontal,this);
     tabW = new QTabWidget(workAreaSplitter);
-    //QLabel *label = new QLabel("TBD\nMessage Area");
-   // label->setAlignment(Qt::AlignCenter);
     workAreaSplitter->addWidget(tabW);
-    //workAreaSplitter->addWidget(label);
 
     connect(tabW,SIGNAL(tabCloseRequested(int)),this,SLOT(tabCloseRequestSlot(int)));
     connect(tabW,SIGNAL(currentChanged(int)),this,SLOT(tabCurentChangedSlot(int)));
 
-    // build tabnname edit area
+    // build tabname edit area
     tabNameEditArea = new QWidget(this);
     QHBoxLayout *tabNameBox = new QHBoxLayout(tabNameEditArea);
     tabNameBox->setMargin(0);
@@ -243,7 +284,6 @@ void MainWindow::buildMainWindow()
     editTabNamePB->setCheckable(true);
     editTabNamePB->setFlat(true);
     editTabNamePB->setToolTip(tr("Edit name of current tab"));
-    QIcon icon;
     icon.addPixmap(QPixmap(":/images/svg/checkmark.svg"),QIcon::Normal,QIcon::On);
     icon.addPixmap(QPixmap(":/images/svg/edittabname.svg"),QIcon::Normal,QIcon::Off);
     editTabNamePB->setIcon(icon);
@@ -259,7 +299,6 @@ void MainWindow::buildMainWindow()
     connect(tabNameLineEdit,SIGNAL(returnPressed()),this,SLOT(tabNameReturnKeySlot()));
 
     tabW->setCornerWidget(tabNameEditArea);
-
     tabW->setTabPosition(QTabWidget::South);
     tabW->setTabsClosable(true);
     stackW->insertWidget(ShowNoDataLabel,noDataL);
@@ -268,9 +307,7 @@ void MainWindow::buildMainWindow()
     connect(newWindowA,SIGNAL(triggered()),this,SLOT(createWindowSlot()));
     connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
 
-
     buildHideColumnMenu();
-
 }
 
 MainWindow::~MainWindow()
@@ -297,7 +334,6 @@ void MainWindow::buildHideColumnMenu()
 }
 void MainWindow::showEvent(QShowEvent *se)
 {
-    qDebug() << "\t1 Main Window Show Event" << __FILE__ << __LINE__;
     if (tabW->count() > 0) {
         stackW->setCurrentWidget(tabW);
         copyTabA->setEnabled(true);
@@ -308,10 +344,11 @@ void MainWindow::showEvent(QShowEvent *se)
         copyTabA->setEnabled(false);
         showMessageA->setEnabled(false);
     }
-    qDebug() << "\t2 Main Window Show Event" << __FILE__ << __LINE__;
     QMainWindow::showEvent(se);
 }
+
 QSize MainWindow::sizeHint() const
 {
+    // TODO: figure out default size based on pixel density
     return QSize(800,900);
 }

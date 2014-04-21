@@ -6,6 +6,7 @@
 #include <globals.h>
 class QAction;
 class QActionGroup;
+class QComboBox;
 class QDockWidget;
 class QFileDialog;
 class QLabel;
@@ -23,7 +24,6 @@ class QToolBar;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     MainWindow();
     MainWindow(const MainWindow & sibling,bool copyAll = false);
@@ -47,7 +47,6 @@ public:
     void quitSlot();
     QSize sizeHint() const;
     void setColorSlot(QColor color);
-    //void showMessageSlot(FixTable::MessageKind mk,QString message);
     void showMessageArea(bool);
     void tabCloseRequestSlot(int);
     void tabCurentChangedSlot(int);
@@ -66,6 +65,7 @@ protected:
     void showEvent(QShowEvent *);
     QAction  *closeA;
     QAction  *copyWindowA;
+    QAction  *filterOnA;
     QAction  *hideConsoleA;
     QAction  *hideToolBarA;
     QAction  *iconSizeSmallA;
@@ -79,13 +79,20 @@ protected:
     QAction  *copyTabA;
     QAction  *quitA;
     QAction  *saveA;
+    QAction  *searchBackA;
+    QAction  *searchBeginA;
+    QAction  *searchEndA;
+    QAction  *searchNextA;
+    QAction  *searchEditA;
     QAction  *showMessageA;
     QActionGroup *hideColActionGroup;
     QActionGroup *iconSizeActionGroup;
     QActionGroup *iconsStyleGroup;
     QColor menubarColor;
+    QComboBox *searchCB;
     QDockWidget *consoleDock;
     QFileDialog *fileDialog;
+    QLabel   *searchL;
     QLabel   *noDataL;
     QLineEdit *tabNameLineEdit;
     QMenu    *fileMenu;
@@ -105,8 +112,9 @@ protected:
     QTextBrowser *consoleArea;
     //QToggleButton editTabNamePB;
     QToolBar *mainToolBar;
+    QToolBar *searchToolBar;
     QList <FixTable *> fixTableLists;
-    QWidget messageArea;
+    QWidget *searchArea;
     QWidget *tabNameEditArea;
     void buildMainWindow();
 private:

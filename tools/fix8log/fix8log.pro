@@ -5,7 +5,6 @@
 #-------------------------------------------------
 
 QT       += core gui
-CONFIG += console
 QMAKE_CXXFLAGS += -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
