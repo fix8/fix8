@@ -85,6 +85,7 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
     msg_type mt;
     msg_seq_num snum;
     QString str;
+    QString name;
     IntItem *seqItem;
     QStandardItem *senderItem;
     QStandardItem *targetItem;
@@ -131,24 +132,27 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             MessageFieldList *mlf = new MessageFieldList();
             for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)
             {
+                //    std::cout << "first: " << itr->first;
+                //    std::cout << "  second: " <<*itr->second << std::endl;
+                const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
 
-                 std::cout << "first: " << itr->first;
-                 std::cout << "  second: " <<*itr->second << std::endl;
-                 const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
-                 QVariant var = trait;
-                 MessageField mf(itr->first,var);
-                 mlf->append(mf);
-                 //std::string s =  *itr->second;
+                name =
+                        QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
+                QVariant var = trait;
+                MessageField mf(itr->first,name,var);
+                mlf->append(mf);
+                //std::string s =  *itr->second;
                 // qDebug() << "Second :" << QString::fromStdString(*itr->second.);
                 // qDebug() << "Trait Type:" << var.typeName()  << ", " << trait;
-                 //std::cout << "Trait: " << trait << std::endl;
-                 //const BaseMsgEntry *bme(TEX::ctx()._bme.find_ptr(itr->first));
+                //std::cout << "Trait: " << trait << std::endl;
+                //const BaseMsgEntry *bme(TEX::ctx()._bme.find_ptr(itr->first));
 
             }
             QVariant userDataVar;
             userDataVar.setValue((void*)mlf);
             int num = snum();
             seqItem = new IntItem(num);
+            seqItem->setData(userDataVar);
             itemList.append(seqItem);
 
             bstatus = msg->Header()->get(scID);
@@ -160,7 +164,7 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             msg->Header()->get(tcID);
             qstr = QString::fromStdString(tcID());
             targetItem =  new QStandardItem(qstr);
-             targetItem->setData(userDataVar);
+            targetItem->setData(userDataVar);
             itemList.append(targetItem);
 
             msg->Header()->get(sendTime);
@@ -178,7 +182,6 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
 
             msg->Header()->get(bodyLength);
             num = bodyLength();
-
             bodyLengthItem = new IntItem(num);
             beginStrItem->setData(userDataVar);
             bodyLengthItem->setData(0,num);
@@ -187,24 +190,24 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             msg->Trailer()->get(checkSum);
             num = QString::fromStdString(checkSum()).toInt();
             checkSumItem = new IntItem(num);
-            beginStrItem->setData(userDataVar);
+            checkSumItem->setData(userDataVar);
             itemList.append(checkSumItem);
 
             msg->Header()->get(encryptMethod);
             num = encryptMethod();
             encryptMethodItem = new QStandardItem(QString::number(num));
-            beginStrItem->setData(userDataVar);
+            encryptMethodItem->setData(userDataVar);
             itemList.append(encryptMethodItem);
 
             msg->Header()->get(heartBeatInt);
             num = heartBeatInt();
             heartBeatIntItem = new IntItem(num);
-            beginStrItem->setData(userDataVar);
+            heartBeatIntItem->setData(userDataVar);
             itemList.append(heartBeatIntItem);
             mt = msg->get_msgtype();
             qstr = QString::fromStdString(mt());
             messgeTypeItem = new QStandardItem(qstr);
-            beginStrItem->setData(userDataVar);
+            messgeTypeItem->setData(userDataVar);
             itemList.append(messgeTypeItem);
 
             _model->appendRow(itemList);

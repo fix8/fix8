@@ -147,19 +147,16 @@ void MainWindow::tabNameReturnKeySlot()
     editTabNamePB->setChecked(false);
     editTabNamePB->setToolTip("Edit current tab name");
     tabW->setTabText(index,tabName);
-
 }
 void MainWindow::tabCurentChangedSlot(int)
 {
     if (!editTabNamePB->isChecked())
         return;
-
     cancelTabNameSlot();
 }
 void MainWindow::showMessageArea(bool bstatus)
 {
     WorkSheet *workSheet;
-    qDebug() << "Hide message Area" << bstatus ;
     for(int i=0;i < tabW->count();i++) {
         workSheet = qobject_cast <WorkSheet *> (tabW->widget(i));
         if(bstatus)

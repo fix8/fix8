@@ -1,10 +1,9 @@
 #include "messagefield.h"
 
-MessageField::MessageField(qint32 k, QVariant v) :
-    QPair<qint32,QVariant>()
+MessageField::MessageField(qint32 ID, QString &Name,QVariant Var) :
+    id(ID),name(Name),variant(Var)
 {
-    first = k;
-    second = v;
+
 }
 MessageFieldList::MessageFieldList() : QList<MessageField>()
 {
