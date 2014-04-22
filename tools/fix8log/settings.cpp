@@ -1,6 +1,7 @@
 
 #include "mainwindow.h"
 #include "globals.h"
+#include "worksheet.h"
 #include <QDebug>
 #include <QDir>
 #include <QtWidgets>
@@ -28,6 +29,7 @@ void MainWindow::readSettings()
    }
    QSize toolbarIconSize = settings.value("ToolButtonSize",GUI::Globals::regIconSize).toSize();
    mainToolBar->setIconSize(toolbarIconSize);
+   searchToolBar->setIconSize(toolbarIconSize);
    if (toolbarIconSize == GUI::Globals::smallIconSize)
        iconSizeSmallA->setChecked(true);
    else if (toolbarIconSize == GUI::Globals::largeIconSize)
@@ -42,11 +44,20 @@ void MainWindow::readSettings()
     QColor color = var.value<QColor>();
     pal.setColor(QPalette::Background,color);
     mainMenuBar->setPalette(pal);
+
+    messageSplitterSettings = settings.value("MessageSplitter").toByteArray();
+
 }
 void MainWindow::writeSettings()
 {
   QSettings settings("fix8","logviewer");
   settings.setValue("Geometry",saveGeometry());
   settings.setValue("MainWindowState",saveState());
-
+  if (tabW->count() > 0) {
+      WorkSheet *ws =  qobject_cast <WorkSheet *> (tabW->widget(0));
+      if (ws) {
+          QByteArray ba = ws->splitter->saveState();
+          settings.setValue("MessageSplitter",ba);
+      }
+  }
 }

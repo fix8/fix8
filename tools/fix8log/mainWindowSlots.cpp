@@ -50,6 +50,7 @@ void MainWindow::iconSizeSlot(QAction *action)
     else if (action == iconSizeLargeA)
         is  = GUI::Globals::largeIconSize;
     mainToolBar->setIconSize(is);
+    searchToolBar->setIconSize(is);
     settings.setValue("ToolButtonSize",is);
 }
 void MainWindow::configSlot()

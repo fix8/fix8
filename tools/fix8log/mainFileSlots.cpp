@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "messagearea.h"
 #include "globals.h"
 #include "intItem.h"
 #include "worksheet.h"
@@ -87,6 +88,7 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         fileName = iter.next();
         QFileInfo fi(fileName);
         WorkSheet *workSheet = new WorkSheet(this);
+        workSheet->splitter->restoreState(messageSplitterSettings);
         if (havePreviousHeader)
             workSheet->fixTable->horizontalHeader()->restoreState(prevHeaderSettings);
         QList <GUI::Message> messageList;

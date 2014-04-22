@@ -27,6 +27,7 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent)
     stackLayout = new QStackedLayout(this);
     setLayout(stackLayout);
     splitter = new QSplitter(Qt::Horizontal,this);
+    splitter->setObjectName("messageSplitter");
     fixTable = new FixTable();
     messageArea = new MessageArea(this);
     splitter->addWidget(fixTable);

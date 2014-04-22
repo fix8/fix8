@@ -24,9 +24,10 @@ MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
     if (copyAll) {
         for (int i=0;i<mw.tabW->count();i++) {
             WorkSheet *oldWorkSheet = qobject_cast <WorkSheet *> (mw.tabW->widget(i));
+            QByteArray ba = oldWorkSheet->splitter->saveState();
             WorkSheet *newWorkSheet = new WorkSheet(*oldWorkSheet,this);
+            newWorkSheet->splitter->restoreState(ba);
             tabW->addTab(newWorkSheet,mw.tabW->tabText(i));
-
         }
         if (tabW->count() > 0)
             stackW->setCurrentWidget(workAreaSplitter);
@@ -42,11 +43,12 @@ void MainWindow::buildMainWindow()
     mainMenuBar = menuBar();
     fileMenu = mainMenuBar->addMenu(tr("&File"));
     optionMenu = mainMenuBar->addMenu(tr("&Option"));
-    mainToolBar = new QToolBar("Tool Bar",this);
+    mainToolBar = new QToolBar("Main Toolbar",this);
     mainToolBar->setObjectName("MainToolBar");
-    searchToolBar = new QToolBar("SearchArea",this);
-
+    searchToolBar = new QToolBar("Search Toolbar",this);
+    searchToolBar->setObjectName("SearchToolBar");
     hideToolBarA = mainToolBar->toggleViewAction();
+    hideSearchToolBarA = searchToolBar->toggleViewAction();
     mainToolBar->setMovable(true);
     searchToolBar->setMovable(true);
 
@@ -167,6 +169,7 @@ void MainWindow::buildMainWindow()
     consoleDock->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea);
     consoleDock->setFloating(false);
     optionMenu->addAction(hideToolBarA);
+    optionMenu->addAction(hideSearchToolBarA);
     optionMenu->setTearOffEnabled(true);
     hideColumMenu = new QMenu(this);
     hideColumMenu->setTitle(tr("Columns"));

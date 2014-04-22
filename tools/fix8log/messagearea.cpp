@@ -13,13 +13,18 @@ MessageArea::MessageArea(QWidget *parent) :
     headerLabels << "Field" <<  "Value";
 
     model->setHorizontalHeaderLabels(headerLabels);
-    tableView = new QTableView(this);
+    tableView = new QTableView(this); 
     tableView->setModel(model);
+    QHeaderView *horHeader = tableView->horizontalHeader();
+    horHeader->setSectionResizeMode(QHeaderView::Interactive);
+    horHeader->setStretchLastSection(true);
+    horHeader->setSectionsMovable(true);
+    horHeader->setSortIndicatorShown(true);
     stackLayout->insertWidget(0,tableView);
 }
 void MessageArea::setMessageFieldList(MessageFieldList *mfl)
 {
-    model->clear();
+    model->removeRows(0,model->rowCount());
     if (!mfl || (mfl->count() < 1))
         return;
     QListIterator <MessageField> iter(*mfl);

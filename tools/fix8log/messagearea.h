@@ -9,6 +9,7 @@ class MessageFieldList;
 
 class MessageArea : public QWidget
 {
+
 public:
     explicit MessageArea(QWidget *parent = 0);
     void setMessageFieldList(MessageFieldList *);

@@ -68,6 +68,7 @@ protected:
     QAction  *filterOnA;
     QAction  *hideConsoleA;
     QAction  *hideToolBarA;
+    QAction  *hideSearchToolBarA;
     QAction  *iconSizeSmallA;
     QAction  *iconSizeRegA;
     QAction  *iconSizeLargeA;
@@ -88,6 +89,7 @@ protected:
     QActionGroup *hideColActionGroup;
     QActionGroup *iconSizeActionGroup;
     QActionGroup *iconsStyleGroup;
+    QByteArray messageSplitterSettings;
     QColor menubarColor;
     QComboBox *searchCB;
     QDockWidget *consoleDock;
