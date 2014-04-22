@@ -55,6 +55,14 @@ void MainWindow::buildMainWindow()
     addToolBar(Qt::TopToolBarArea,mainToolBar);
     addToolBar(Qt::TopToolBarArea,searchToolBar);
 
+    autoSaveA = new  QAction(tr("&Auto Save"),this);
+    QIcon autoIcon;
+    autoIcon.addPixmap(QPixmap(":/images/svg/saveOn.svg"),QIcon::Normal,QIcon::On);
+    autoIcon.addPixmap(QPixmap(":/images/svg/saveOff.svg"),QIcon::Normal,QIcon::Off);
+    autoSaveA->setIcon(autoIcon);
+    autoSaveA->setToolTip(tr("Automatically Save Session For Next Use"));
+    autoSaveA->setCheckable(true);
+
     closeA = new QAction(tr("&Close Window"),this);
     closeA->setIcon(QIcon(":/images/32x32/application-exit.png"));
     closeA->setToolTip(tr("Close This Window"));
@@ -86,10 +94,10 @@ void MainWindow::buildMainWindow()
     showMessageA->setToolTip(tr("Show/Hide Message Area"));
     showMessageA->setCheckable(true);
     connect(showMessageA,SIGNAL(triggered(bool)),this,SLOT(showMessageArea(bool)));
-    QIcon icon;
-    icon.addPixmap(QPixmap(":/images/svg/showMessageArea.svg"),QIcon::Normal,QIcon::Off);
-    icon.addPixmap(QPixmap(":/images/svg/hideMessageArea.svg"),QIcon::Normal,QIcon::On);
-    showMessageA->setIcon(icon);
+    QIcon showIcon;
+    showIcon.addPixmap(QPixmap(":/images/svg/showMessageArea.svg"),QIcon::Normal,QIcon::Off);
+    showIcon.addPixmap(QPixmap(":/images/svg/hideMessageArea.svg"),QIcon::Normal,QIcon::On);
+    showMessageA->setIcon(showIcon);
 
     searchBackA  = new QAction(tr("Back"),this);
     searchBackA->setIcon((QIcon(":/images/svg/back.svg")));
@@ -101,13 +109,7 @@ void MainWindow::buildMainWindow()
     searchNextA->setIcon((QIcon(":/images/svg/forward.svg")));
     searchEditA  = new QAction(tr("Edit"),this);
     searchEditA->setIcon(QIcon(":/images/svg/edittabname.svg"));
-    //searchOnA   = new QAction(tr("Search On/Off"),this);
-  //icon.addPixmap(QPixmap(":/images/svg/led green.svg"),QIcon::Normal,QIcon::On);
-  //icon.addPixmap(QPixmap(":/images/svg/led off.svg"),QIcon::Normal,QIcon::Off);
-   // searchOnA->setIcon(icon);
-    //searchOnA->setCheckable(true);
-    //searchOnA->setToolTip(tr("Turn On/Off Search"));
-    //searchToolBar->addAction(searchOnA);
+
     searchArea = new QWidget(this);
     QHBoxLayout *searchBox = new QHBoxLayout();
     searchBox->setMargin(0);
@@ -221,6 +223,7 @@ void MainWindow::buildMainWindow()
     optionMenu->addSeparator();
     optionMenu->addAction(showMessageA);
     connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
+    fileMenu->addAction(autoSaveA);
     fileMenu->addAction(copyTabA);
     fileMenu->addAction(newTabA);
     fileMenu->addAction(copyWindowA);
@@ -236,7 +239,7 @@ void MainWindow::buildMainWindow()
     mainToolBar->addAction(copyTabA);
     mainToolBar->addSeparator();
     mainToolBar->addAction(showMessageA);
-
+    mainToolBar->addAction(autoSaveA);
     configPB = new QPushButton(this);
     configPB->setIcon(QIcon(":/images/svg/preferences-color.svg"));
     configPB->setToolTip(tr("Set Menubar Color"));
@@ -287,9 +290,10 @@ void MainWindow::buildMainWindow()
     editTabNamePB->setCheckable(true);
     editTabNamePB->setFlat(true);
     editTabNamePB->setToolTip(tr("Edit name of current tab"));
-    icon.addPixmap(QPixmap(":/images/svg/checkmark.svg"),QIcon::Normal,QIcon::On);
-    icon.addPixmap(QPixmap(":/images/svg/edittabname.svg"),QIcon::Normal,QIcon::Off);
-    editTabNamePB->setIcon(icon);
+    QIcon editTabIcon;
+    editTabIcon.addPixmap(QPixmap(":/images/svg/checkmark.svg"),QIcon::Normal,QIcon::On);
+    editTabIcon.addPixmap(QPixmap(":/images/svg/edittabname.svg"),QIcon::Normal,QIcon::Off);
+    editTabNamePB->setIcon(editTabIcon);
     tabNameBox->addWidget(tabNameLineEdit,1);
     tabNameBox->addWidget(cancelEditTabNamePB,0,Qt::AlignRight);
     tabNameBox->addWidget(editTabNamePB,0);

@@ -37,5 +37,7 @@
         <file>images/svg/begining.svg</file>
         <file>images/svg/end.svg</file>
         <file>images/svg/forward.svg</file>
+        <file>images/svg/saveOff.svg</file>
+        <file>images/svg/saveOn.svg</file>
     </qresource>
 </RCC>

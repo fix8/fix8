@@ -63,6 +63,7 @@ signals:
 protected:
     enum {ShowNoDataLabel,ShowTab};
     void showEvent(QShowEvent *);
+    QAction  *autoSaveA;
     QAction  *closeA;
     QAction  *copyWindowA;
     QAction  *filterOnA;
