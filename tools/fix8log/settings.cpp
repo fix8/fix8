@@ -44,7 +44,7 @@ void MainWindow::readSettings()
     QColor color = var.value<QColor>();
     pal.setColor(QPalette::Background,color);
     mainMenuBar->setPalette(pal);
-
+    menubarColor = color;
     messageSplitterSettings = settings.value("MessageSplitter").toByteArray();
 
 }

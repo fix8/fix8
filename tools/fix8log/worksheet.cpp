@@ -45,7 +45,6 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent)
     horHeader->setStretchLastSection(true);
     horHeader->setSectionsMovable(true);
     horHeader->setSortIndicatorShown(true);
-
 }
 WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):QWidget(parent)
 {

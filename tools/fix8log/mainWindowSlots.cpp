@@ -11,8 +11,8 @@
 void MainWindow::quitSlot()
 {
     writeSettings();
-    qApp->quit();
-
+    emit exitApp();
+    //qApp->quit();
 }
 
 void MainWindow::hideColumnActionSlot(QAction *action)

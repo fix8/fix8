@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 QMAKE_CXXFLAGS += -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,7 +26,9 @@ SOURCES += main.cpp\
     intItem.cpp \
     worksheet.cpp \
     messagefield.cpp \
-    messagearea.cpp
+    messagearea.cpp \
+    database.cpp \
+    windowdata.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -38,7 +40,9 @@ HEADERS  += mainwindow.h \
     intItem.h \
     worksheet.h \
     messagefield.h \
-    messagearea.h
+    messagearea.h \
+    database.h \
+    windowdata.h
 
 RESOURCES += \
     resources.qrc

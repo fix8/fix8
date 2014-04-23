@@ -3,7 +3,9 @@
 
 #include <QMainWindow>
 #include "fixtable.h"
-#include <globals.h>
+#include "globals.h"
+#include "windowdata.h"
+
 class QAction;
 class QActionGroup;
 class QComboBox;
@@ -24,10 +26,13 @@ class QToolBar;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    friend class Fix8Log;
 public:
     MainWindow();
     MainWindow(const MainWindow & sibling,bool copyAll = false);
     ~MainWindow();
+    WindowData getWindowData();
+    void setWindowData(const WindowData &wd);
     protected slots:
     void cancelTabNameSlot();
     void closeSlot();
@@ -60,6 +65,7 @@ signals:
     void createWindow(MainWindow *);
     void copyWindow(MainWindow *);
     void deleteWindow(MainWindow *);
+    void exitApp();
 protected:
     enum {ShowNoDataLabel,ShowTab};
     void showEvent(QShowEvent *);
@@ -125,6 +131,7 @@ private:
     QByteArray fileDirState;
     QString  lastSelectedDir;
     QString fileFilter;
+    int windowDataID;
 
 };
 

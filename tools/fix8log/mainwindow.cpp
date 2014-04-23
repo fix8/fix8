@@ -5,7 +5,7 @@
 #include <QStandardItemModel>
 
 MainWindow::MainWindow()
-    : QMainWindow(0),fileDialog(0)
+    : QMainWindow(0),fileDialog(0),windowDataID(-1)
 {
     buildMainWindow();
     copyTabA->setEnabled(false); // not enabled when no intital tab
@@ -13,7 +13,7 @@ MainWindow::MainWindow()
 }
 
 MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
-    : QMainWindow(0),fileDialog(0)
+    : QMainWindow(0),fileDialog(0),windowDataID(-1)
 {
     buildMainWindow();
     QRect rect = mw.geometry();
@@ -358,4 +358,17 @@ QSize MainWindow::sizeHint() const
 {
     // TODO: figure out default size based on pixel density
     return QSize(800,900);
+}
+WindowData MainWindow::getWindowData()
+{
+    WindowData wd;
+    wd.color = menubarColor;
+    wd.geometry = this->saveGeometry();
+    wd.state    = this->saveState();
+    wd.id       = this->windowDataID;
+    return wd;
+}
+void MainWindow::setWindowData(const WindowData &wd)
+{
+    windowDataID = wd.id;
 }
