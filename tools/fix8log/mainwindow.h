@@ -34,6 +34,7 @@ public:
     WindowData getWindowData();
     void setWindowData(const WindowData &wd);
     protected slots:
+    void autoSaveOnSlot(bool);
     void cancelTabNameSlot();
     void closeSlot();
     void currentColorChangedSlot(QColor);
@@ -58,17 +59,7 @@ public:
     void tabNameModifiedSlot(QString);
     void tabNameReturnKeySlot();
 protected:
-    void displayConsoleMessage(GUI::Message);
-    void readSettings();
-    void writeSettings();
-signals:
-    void createWindow(MainWindow *);
-    void copyWindow(MainWindow *);
-    void deleteWindow(MainWindow *);
-    void exitApp();
-protected:
     enum {ShowNoDataLabel,ShowTab};
-    void showEvent(QShowEvent *);
     QAction  *autoSaveA;
     QAction  *closeA;
     QAction  *copyWindowA;
@@ -125,7 +116,18 @@ protected:
     QList <FixTable *> fixTableLists;
     QWidget *searchArea;
     QWidget *tabNameEditArea;
+    void setAutoSaveOn(bool);
     void buildMainWindow();
+    void displayConsoleMessage(GUI::Message);
+    void showEvent(QShowEvent *);
+    void readSettings();
+    void writeSettings();
+signals:
+    void autoSaveOn(bool);
+    void createWindow(MainWindow *);
+    void copyWindow(MainWindow *);
+    void deleteWindow(MainWindow *);
+    void exitApp();
 private:
     void buildHideColumnMenu();
     QByteArray fileDirState;

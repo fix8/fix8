@@ -13,15 +13,18 @@ public:
     explicit Fix8Log(QObject *parent = 0);
     bool init();
 public slots:
+    void autoSaveOnSlot(bool);
     void createNewWindowSlot(MainWindow *mw=0);
     void copyWindowSlot(MainWindow *mw);
     void deleteMainWindowSlot(MainWindow *mw);
     void displayConsoleMessage(GUI::Message);
     void exitAppSlot();
 protected:
+    void wireSignalAndSlots(MainWindow *mw);
     QList <MainWindow *> mainWindows;
     bool firstTimeToUse;
     Database *database;
+    bool autoSaveOn;
 };
 
 #endif // FIX8LOG_H

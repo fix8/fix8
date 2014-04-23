@@ -8,45 +8,48 @@
 
 using namespace GUI;
 Fix8Log::Fix8Log(QObject *parent) :
-    QObject(parent),firstTimeToUse(false),database(0)
+    QObject(parent),firstTimeToUse(false),database(0),autoSaveOn(false)
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
     MainWindow *mw = new MainWindow();
-    connect(mw,SIGNAL(createWindow(MainWindow*)),this,SLOT(createNewWindowSlot(MainWindow*)));
-    connect(mw,SIGNAL(copyWindow(MainWindow*)),this,SLOT(copyWindowSlot(MainWindow*)));
-    connect(mw,SIGNAL(deleteWindow(MainWindow*)),this,SLOT(deleteMainWindowSlot(MainWindow*)));
-    connect(mw,SIGNAL(exitApp()),this,SLOT(exitAppSlot()));
+    wireSignalAndSlots(mw);
     mw->show();
     mainWindows.append(mw);
 }
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {
     MainWindow *newMW  =new MainWindow(*mw);
-    connect(newMW,SIGNAL(createWindow(MainWindow*)),this,SLOT(createNewWindowSlot(MainWindow*)));
-    connect(newMW,SIGNAL(deleteWindow(MainWindow*)),this,SLOT(deleteMainWindowSlot(MainWindow*)));
-    connect(newMW,SIGNAL(copyWindow(MainWindow*)),this,SLOT(copyWindowSlot(MainWindow*)));
-    connect(newMW,SIGNAL(exitApp()),this,SLOT(exitAppSlot()));
+    wireSignalAndSlots(newMW);
     newMW->show();
     mainWindows.append(newMW);
 }
 void Fix8Log::copyWindowSlot(MainWindow *mw)
 {
     MainWindow *newMW  =new MainWindow(*mw,true);
-    connect(newMW,SIGNAL(createWindow(MainWindow*)),this,SLOT(createNewWindowSlot(MainWindow*)));
-    connect(newMW,SIGNAL(copyWindow(MainWindow*)),this,SLOT(copyWindowSlot(MainWindow*)));
-    connect(newMW,SIGNAL(deleteWindow(MainWindow*)),this,SLOT(deleteMainWindowSlot(MainWindow*)));
-    connect(newMW,SIGNAL(exitApp()),this,SLOT(exitAppSlot()));
+    wireSignalAndSlots(newMW);
     newMW->show();
     mainWindows.append(newMW);
 }
+void Fix8Log::wireSignalAndSlots(MainWindow *mw)
+{
+    if (!mw) {
+        qWarning() << "Error - wire signals and slots, window is null" << __FILE__ << __LINE__;
+        return;
+    }
+    connect(mw,SIGNAL(createWindow(MainWindow*)),this,SLOT(createNewWindowSlot(MainWindow*)));
+    connect(mw,SIGNAL(copyWindow(MainWindow*)),this,SLOT(copyWindowSlot(MainWindow*)));
+    connect(mw,SIGNAL(deleteWindow(MainWindow*)),this,SLOT(deleteMainWindowSlot(MainWindow*)));
+    connect(mw,SIGNAL(exitApp()),this,SLOT(exitAppSlot()));
+    connect(mw,SIGNAL(autoSaveOn(bool)),this,SLOT(autoSaveOnSlot(bool)));
+    mw->setAutoSaveOn(autoSaveOn);
+}
+
 void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
 {
-    qDebug() << "Here in delete";
     mainWindows.removeOne(mw);
     mw->deleteLater();
     if (mainWindows.count() < 1) {
-        qDebug() << "Exit FROM APP, out of windows";
         qApp->exit();
     }
 }
@@ -80,7 +83,6 @@ bool Fix8Log::init()
         }
     }
     dbFileName = dbPath + QDir::separator() + dbFileName;
-    qDebug() << "DB FILE NAME = " << dbFileName;
     QFile dbFile(dbFileName);
     if (!dbFile.exists()) {
         firstTimeToUse = true;
@@ -126,4 +128,14 @@ void Fix8Log::exitAppSlot()
         qDebug() << "Status of add window data to database = " << bstatus << __FILE__;
     }
     qApp->exit();
+}
+void Fix8Log::autoSaveOnSlot(bool on)
+{
+    MainWindow *mw;
+    QListIterator <MainWindow *> iter(mainWindows);
+    autoSaveOn = on;
+    while(iter.hasNext()) {
+        mw = iter.next();
+        mw->setAutoSaveOn(autoSaveOn);
+    }
 }

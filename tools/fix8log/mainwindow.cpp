@@ -62,7 +62,7 @@ void MainWindow::buildMainWindow()
     autoSaveA->setIcon(autoIcon);
     autoSaveA->setToolTip(tr("Automatically Save Session For Next Use"));
     autoSaveA->setCheckable(true);
-
+    connect(autoSaveA,SIGNAL(triggered(bool)),this,SLOT(autoSaveOnSlot(bool)));
     closeA = new QAction(tr("&Close Window"),this);
     closeA->setIcon(QIcon(":/images/32x32/application-exit.png"));
     closeA->setToolTip(tr("Close This Window"));
@@ -371,4 +371,8 @@ WindowData MainWindow::getWindowData()
 void MainWindow::setWindowData(const WindowData &wd)
 {
     windowDataID = wd.id;
+}
+void MainWindow::setAutoSaveOn(bool on)
+{
+    autoSaveA->setChecked(on);
 }

@@ -165,3 +165,7 @@ void MainWindow::showMessageArea(bool bstatus)
             workSheet->messageArea->show();
     }
 }
+void MainWindow::autoSaveOnSlot(bool isOn)
+{
+    emit autoSaveOn(isOn);
+}
