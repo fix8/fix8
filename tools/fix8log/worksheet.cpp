@@ -120,21 +120,42 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
     int i=0;
     //_model = (QStandardItemModel *)fixTable->model();
     QString errorStr;
-    while(!dataFile->atEnd()) {
+    //QTime myTimer;
+     QElapsedTimer myTimer;
+    int linecount = 0;
+
+    qint32 fileSize = dataFile->size();
+    QByteArray ba;
+
+    // get line count
+    myTimer.start();
+
+     while(!dataFile->atEnd()) {
+         ba = dataFile->readLine();
+         linecount++;
+     }
+     int nMilliseconds = myTimer.elapsed();
+     qDebug() << "TIME TO READ NUM OF LINES:" <<  nMilliseconds  << __FILE__ << __LINE__;
+     qDebug() << "NUM OF LINES:" <<  linecount  << __FILE__ << __LINE__;
+
+    dataFile->seek(0);
+     myTimer.start();
+     _model->setRowCount(linecount);
+     int colPosition = 0;
+     int rowPosition = 0;
+   while(!dataFile->atEnd()) {
         itemList.clear();
         try {
-            QByteArray ba = dataFile->readLine();
+            ba = dataFile->readLine();
             ba.truncate(ba.size()-1); // strip eol charactor
             scoped_ptr<Message> msg(Message::factory(TEX::ctx(),ba.data()));
             msg->Header()->get(snum);
             const Presence& pre(msg->get_fp().get_presence());
             MessageFieldList *mlf = new MessageFieldList();
+            colPosition = 0;
             for (Fields::const_iterator itr(msg->fields_begin()); itr != msg->fields_end(); ++itr)
             {
-                //    std::cout << "first: " << itr->first;
-                //    std::cout << "  second: " <<*itr->second << std::endl;
                 const FieldTrait::FieldType trait(pre.find(itr->first)->_ftype);
-
                 name =
                         QString::fromStdString(TEX::ctx().find_be(itr->first)->_name);
                 QVariant var = trait;
@@ -151,65 +172,85 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             userDataVar.setValue((void*)mlf);
             int num = snum();
             seqItem = new IntItem(num);
+            _model->setItem(rowPosition,colPosition,seqItem);
+            colPosition++;
             seqItem->setData(userDataVar);
-            itemList.append(seqItem);
+            //itemList.append(seqItem);
 
             bstatus = msg->Header()->get(scID);
             qstr = QString::fromStdString(scID());
             senderItem =  new QStandardItem(qstr);
             senderItem->setData(userDataVar);
-            itemList.append(senderItem);
+            _model->setItem(rowPosition,colPosition,senderItem);
+            colPosition++;
+            // itemList.append(senderItem);
 
             msg->Header()->get(tcID);
             qstr = QString::fromStdString(tcID());
             targetItem =  new QStandardItem(qstr);
             targetItem->setData(userDataVar);
-            itemList.append(targetItem);
+            _model->setItem(rowPosition,colPosition,targetItem);
+            colPosition++;
+            // itemList.append(targetItem);
 
             msg->Header()->get(sendTime);
             Tickval tv  = sendTime();
             QDateTime dt = QDateTime::fromTime_t(tv.secs());
             sendTimeItem = new QStandardItem(dt.toString());
             sendTimeItem->setData(userDataVar);
-            itemList.append(sendTimeItem);
+            _model->setItem(rowPosition,colPosition,sendTimeItem);
+            colPosition++;
+            // itemList.append(sendTimeItem);
 
             msg->Header()->get(beginStr);
             qstr = QString::fromStdString(beginStr());
             beginStrItem = new QStandardItem(qstr);
             beginStrItem->setData(userDataVar);
-            itemList.append(beginStrItem);
+            _model->setItem(rowPosition,colPosition,beginStrItem);
+            colPosition++;
+           // itemList.append(beginStrItem);
 
             msg->Header()->get(bodyLength);
             num = bodyLength();
             bodyLengthItem = new IntItem(num);
-            beginStrItem->setData(userDataVar);
+            bodyLengthItem->setData(userDataVar);
             bodyLengthItem->setData(0,num);
-            itemList.append(bodyLengthItem);
+            _model->setItem(rowPosition,colPosition,bodyLengthItem);
+            colPosition++;
+           // itemList.append(bodyLengthItem);
 
             msg->Trailer()->get(checkSum);
             num = QString::fromStdString(checkSum()).toInt();
             checkSumItem = new IntItem(num);
             checkSumItem->setData(userDataVar);
-            itemList.append(checkSumItem);
+            _model->setItem(rowPosition,colPosition,checkSumItem);
+            colPosition++;
+            //itemList.append(checkSumItem);
 
             msg->Header()->get(encryptMethod);
             num = encryptMethod();
             encryptMethodItem = new QStandardItem(QString::number(num));
             encryptMethodItem->setData(userDataVar);
-            itemList.append(encryptMethodItem);
+            _model->setItem(rowPosition,colPosition,encryptMethodItem);
+            colPosition++;
+            //itemList.append(encryptMethodItem);
 
             msg->Header()->get(heartBeatInt);
             num = heartBeatInt();
             heartBeatIntItem = new IntItem(num);
             heartBeatIntItem->setData(userDataVar);
-            itemList.append(heartBeatIntItem);
+            _model->setItem(rowPosition,colPosition,heartBeatIntItem);
+            colPosition++;
+           // itemList.append(heartBeatIntItem);
             mt = msg->get_msgtype();
             qstr = QString::fromStdString(mt());
             messgeTypeItem = new QStandardItem(qstr);
             messgeTypeItem->setData(userDataVar);
-            itemList.append(messgeTypeItem);
-
-            _model->appendRow(itemList);
+            _model->setItem(rowPosition,colPosition,messgeTypeItem);
+            //itemList.append(messgeTypeItem);
+            //_model->set
+           // _model->appendRow(itemList);
+            rowPosition++;
         }
         catch (f8Exception&  e){
             errorStr =  "Error - Invalid data in file: " + fileName + ", on  row: " + QString::number(i);
@@ -219,6 +260,8 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
         }
         i++;
     }
+    nMilliseconds = myTimer.elapsed();
+    qDebug() << "TIME TO LOAD = " << nMilliseconds;
     qstr = QString::number(_model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     msgList.append(GUI::Message(qstr));
     return true;
