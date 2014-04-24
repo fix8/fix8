@@ -12,6 +12,8 @@ class Fix8Log : public QObject
 public:
     explicit Fix8Log(QObject *parent = 0);
     bool init();
+    void readSettings();
+    void writeSettings();
 public slots:
     void autoSaveOnSlot(bool);
     void createNewWindowSlot(MainWindow *mw=0);

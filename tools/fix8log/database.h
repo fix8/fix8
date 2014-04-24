@@ -27,6 +27,7 @@ public:
     bool tableIsValid(TableType);
     QList<WindowData> getWindows();
     bool deleteAllWindows();
+    bool deleteWindow(int windowID);
     bool addWindow(const WindowData &);
 private:
     QString name;

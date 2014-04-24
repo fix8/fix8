@@ -12,10 +12,7 @@ Fix8Log::Fix8Log(QObject *parent) :
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
-    MainWindow *mw = new MainWindow();
-    wireSignalAndSlots(mw);
-    mw->show();
-    mainWindows.append(mw);
+
 }
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {
@@ -70,6 +67,10 @@ bool Fix8Log::init()
     QString errorStr;
     QString dbPath = QCoreApplication::applicationDirPath() + QDir::separator()  +  "share";
     QDir dir(dbPath);
+
+
+    readSettings();
+    qDebug() << "AFTER READ SETTINS, autosave = " << autoSaveOn << __FILE__ << __LINE__;
     if (!dir.exists()) {
         bstatus = dir.mkdir(dbPath);
         if (!bstatus) {
@@ -112,11 +113,33 @@ bool Fix8Log::init()
             displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
         }
     }
+    QList <WindowData> windowDataList = database->getWindows();
+    QListIterator <WindowData> iter(windowDataList);
+    MainWindow *newMW;
+    if (autoSaveOn){
+        while(iter.hasNext()) {
+            WindowData wd = iter.next();
+            newMW  =new MainWindow();
+            wireSignalAndSlots(newMW);
+            newMW->setWindowData(wd);
+            mainWindows.append(newMW);
+            newMW->setAutoSaveOn(autoSaveOn);
+            newMW->show();
+            qDebug() << "\tWindow FROM Database created";
+        }
+    }
+    if (mainWindows.count() < 1) {
+        newMW = new MainWindow();
+        wireSignalAndSlots(newMW);
+        newMW->show();
+        newMW->setAutoSaveOn(autoSaveOn);
+        mainWindows.append(newMW);
+    }
+
     return bstatus;
 }
 void Fix8Log::exitAppSlot()
 {
-    qDebug() << "Here in Exit App";
     MainWindow *mw;
     bool bstatus;
     bstatus = database->deleteAllWindows();
@@ -125,8 +148,8 @@ void Fix8Log::exitAppSlot()
         mw = iter.next();
         WindowData wd = mw->getWindowData();
         bstatus = database->addWindow(wd);
-        qDebug() << "Status of add window data to database = " << bstatus << __FILE__;
     }
+    writeSettings();
     qApp->exit();
 }
 void Fix8Log::autoSaveOnSlot(bool on)
@@ -138,4 +161,17 @@ void Fix8Log::autoSaveOnSlot(bool on)
         mw = iter.next();
         mw->setAutoSaveOn(autoSaveOn);
     }
+    QSettings settings("fix8","logviewer");
+    settings.setValue("AutoSave",autoSaveOn);
+}
+void Fix8Log::readSettings()
+{
+    QSettings settings("fix8","logviewer");
+    autoSaveOn = (bool) settings.value("AutoSave",false).toBool();
+
+}
+void Fix8Log::writeSettings()
+{
+    QSettings settings("fix8","logviewer");
+    settings.setValue("AutoSave",autoSaveOn);
 }

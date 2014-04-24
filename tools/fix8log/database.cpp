@@ -163,7 +163,7 @@ QList<WindowData> Database::getWindows()
         return windowDataList;
     }
     QSqlQuery query(*handle);
-    str = "select * from models";
+    str = "select * from windows";
     bstatus = query.prepare(str);
     if (bstatus == 0) {
         qWarning("Error in get windows in prepare statement...");
@@ -188,6 +188,7 @@ QList<WindowData> Database::getWindows()
         blue  = query.value(3).toInt(&ok);
         wd.color    = QColor(red,green,blue);
         wd.geometry = query.value(4).toByteArray();
+
         wd.state    = query.value(5).toByteArray();
         windowDataList.append(wd);
     }
@@ -230,34 +231,64 @@ bool Database::addWindow(const WindowData &wd)
     }
     return true;
 }
+bool Database::deleteWindow(int windowID)
+{
+    bool   bstatus = false;
+    QString filter;
+    QString str;
+    if (!handle) {
+        errorMessage = tr("Error - delete window  - handle is not initialized");
+        qWarning() << errorMessage;
+        return false;
+    }
+    QSqlQuery query(*handle);
+    filter = "id=\'" + QString::number(windowID) + "\'";
+    str  = "delete from windows where " + filter;
+    bstatus = query.prepare(str);
+    if (bstatus == false) {
+        qWarning() << "Delete window failed in prepare " << __FILE__ << __LINE__;
+        sqlError = query.lastError();
+        goto done;
+        bstatus = query.exec();
+        if (bstatus == false) {
+            sqlError = query.lastError();
+            errorMessage = sqlError.databaseText();
+            qWarning() << errorMessage;
+        }
+    }
+    // DELETE TABLES
+done:
+    return bstatus;
+}
+
 bool Database::deleteAllWindows()
 {
     if (!handle) {
-       errorMessage = tr("Error deleteAllWindows  - handle is not initialized");
-       qWarning() << errorMessage;
-       return false;
-     }
-     QSqlQuery query(*handle);
-     QString str  = "delete from windows";
-     bool bstatus = query.prepare(str);
-     if (bstatus == 0) {
-       qWarning() << "Error Database - delete all windows in prepare statement"
-              << __FILE__ << __LINE__;
-       sqlError = query.lastError();
-       errorMessage = sqlError.databaseText();
-       qWarning() << errorMessage;
-       return false;
-     }
-     bstatus = query.exec();
-     if (bstatus == false) {
-       qWarning() << "Delete all in windows failed"
-              << __FILE__ << __LINE__;
+        errorMessage = tr("Error deleteAllWindows  - handle is not initialized");
+        qWarning() << errorMessage;
+        return false;
+    }
+    QSqlQuery query(*handle);
+    QString str  = "delete from windows";
+    bool bstatus = query.prepare(str);
+    if (bstatus == 0) {
+        qWarning() << "Error Database - delete all windows in prepare statement"
+                   << __FILE__ << __LINE__;
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+        return false;
+    }
+    bstatus = query.exec();
+    if (bstatus == false) {
+        qWarning() << "Delete all in windows failed"
+                   << __FILE__ << __LINE__;
 
-       sqlError = query.lastError();
-       errorMessage = sqlError.databaseText();
-       qWarning() << errorMessage;
-       return false;
-     }
-     return true;
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+        return false;
+    }
+    return true;
 }
 

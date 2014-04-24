@@ -35,6 +35,7 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent)
     stackLayout->addWidget(splitter);
     _model = new QStandardItemModel();
     fixTable->setModel(_model);
+    fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
     for(int i=0;i<NumColumns;i++) {
         headerItem[i] = new QStandardItem(headerLabel[i]);
@@ -52,6 +53,7 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):QWidget(parent)
     setLayout(stackLayout);
     splitter = new QSplitter(Qt::Horizontal,this);
     fixTable = new FixTable();
+    fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
 
     messageArea = new MessageArea(this);
@@ -121,7 +123,7 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
     //_model = (QStandardItemModel *)fixTable->model();
     QString errorStr;
     //QTime myTimer;
-     QElapsedTimer myTimer;
+    QElapsedTimer myTimer;
     int linecount = 0;
 
     qint32 fileSize = dataFile->size();
@@ -130,20 +132,23 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
     // get line count
     myTimer.start();
 
-     while(!dataFile->atEnd()) {
-         ba = dataFile->readLine();
-         linecount++;
-     }
-     int nMilliseconds = myTimer.elapsed();
-     qDebug() << "TIME TO READ NUM OF LINES:" <<  nMilliseconds  << __FILE__ << __LINE__;
-     qDebug() << "NUM OF LINES:" <<  linecount  << __FILE__ << __LINE__;
+    while(!dataFile->atEnd()) {
+        ba = dataFile->readLine();
+        linecount++;
+    }
+    int nMilliseconds = myTimer.elapsed();
+    qDebug() << "TIME TO READ NUM OF LINES:" <<  nMilliseconds  << __FILE__ << __LINE__;
+    qDebug() << "NUM OF LINES:" <<  linecount  << __FILE__ << __LINE__;
 
     dataFile->seek(0);
-     myTimer.start();
-     _model->setRowCount(linecount);
-     int colPosition = 0;
-     int rowPosition = 0;
-   while(!dataFile->atEnd()) {
+    myTimer.start();
+    _model->setRowCount(linecount);
+    int colPosition = 0;
+    int rowPosition = 0;
+
+    messgeTypeItem = new QStandardItem(qstr);
+    while(!dataFile->atEnd()) {
+
         itemList.clear();
         try {
             ba = dataFile->readLine();
@@ -168,6 +173,17 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
                 //const BaseMsgEntry *bme(TEX::ctx()._bme.find_ptr(itr->first));
 
             }
+            /* Latter do malolocs together as an array to optimize speed
+            seqItem = new IntItem();
+            senderItem =  new QStandardItem();
+            targetItem =  new QStandardItem();
+            sendTimeItem = new QStandardItem();
+            beginStrItem = new QStandardItem();
+            bodyLengthItem = new IntItem();
+            checkSumItem = new IntItem();
+            encryptMethodItem = new QStandardItem(QString::number(num));
+            heartBeatIntItem = new IntItem(num);
+            */
             QVariant userDataVar;
             userDataVar.setValue((void*)mlf);
             int num = snum();
@@ -175,7 +191,6 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             _model->setItem(rowPosition,colPosition,seqItem);
             colPosition++;
             seqItem->setData(userDataVar);
-            //itemList.append(seqItem);
 
             bstatus = msg->Header()->get(scID);
             qstr = QString::fromStdString(scID());
@@ -183,7 +198,6 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             senderItem->setData(userDataVar);
             _model->setItem(rowPosition,colPosition,senderItem);
             colPosition++;
-            // itemList.append(senderItem);
 
             msg->Header()->get(tcID);
             qstr = QString::fromStdString(tcID());
@@ -191,7 +205,6 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             targetItem->setData(userDataVar);
             _model->setItem(rowPosition,colPosition,targetItem);
             colPosition++;
-            // itemList.append(targetItem);
 
             msg->Header()->get(sendTime);
             Tickval tv  = sendTime();
@@ -200,7 +213,6 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             sendTimeItem->setData(userDataVar);
             _model->setItem(rowPosition,colPosition,sendTimeItem);
             colPosition++;
-            // itemList.append(sendTimeItem);
 
             msg->Header()->get(beginStr);
             qstr = QString::fromStdString(beginStr());
@@ -208,7 +220,6 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             beginStrItem->setData(userDataVar);
             _model->setItem(rowPosition,colPosition,beginStrItem);
             colPosition++;
-           // itemList.append(beginStrItem);
 
             msg->Header()->get(bodyLength);
             num = bodyLength();
@@ -217,7 +228,6 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             bodyLengthItem->setData(0,num);
             _model->setItem(rowPosition,colPosition,bodyLengthItem);
             colPosition++;
-           // itemList.append(bodyLengthItem);
 
             msg->Trailer()->get(checkSum);
             num = QString::fromStdString(checkSum()).toInt();
@@ -225,7 +235,6 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             checkSumItem->setData(userDataVar);
             _model->setItem(rowPosition,colPosition,checkSumItem);
             colPosition++;
-            //itemList.append(checkSumItem);
 
             msg->Header()->get(encryptMethod);
             num = encryptMethod();
@@ -233,7 +242,6 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             encryptMethodItem->setData(userDataVar);
             _model->setItem(rowPosition,colPosition,encryptMethodItem);
             colPosition++;
-            //itemList.append(encryptMethodItem);
 
             msg->Header()->get(heartBeatInt);
             num = heartBeatInt();
@@ -241,15 +249,12 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             heartBeatIntItem->setData(userDataVar);
             _model->setItem(rowPosition,colPosition,heartBeatIntItem);
             colPosition++;
-           // itemList.append(heartBeatIntItem);
+
             mt = msg->get_msgtype();
             qstr = QString::fromStdString(mt());
             messgeTypeItem = new QStandardItem(qstr);
             messgeTypeItem->setData(userDataVar);
             _model->setItem(rowPosition,colPosition,messgeTypeItem);
-            //itemList.append(messgeTypeItem);
-            //_model->set
-           // _model->appendRow(itemList);
             rowPosition++;
         }
         catch (f8Exception&  e){

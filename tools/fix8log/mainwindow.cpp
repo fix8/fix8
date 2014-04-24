@@ -371,6 +371,9 @@ WindowData MainWindow::getWindowData()
 void MainWindow::setWindowData(const WindowData &wd)
 {
     windowDataID = wd.id;
+    restoreGeometry(wd.geometry);
+    restoreState(wd.state);
+    setColorSlot(wd.color);
 }
 void MainWindow::setAutoSaveOn(bool on)
 {

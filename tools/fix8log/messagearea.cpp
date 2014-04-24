@@ -13,7 +13,9 @@ MessageArea::MessageArea(QWidget *parent) :
     headerLabels << "Field" <<  "Name" << "Value";
     model->setHorizontalHeaderLabels(headerLabels);
     tableView = new QTableView(this);
+    tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tableView->setModel(model);
+    tableView->verticalHeader()->setVisible(false);
     QHeaderView *horHeader = tableView->horizontalHeader();
     horHeader->setSectionResizeMode(QHeaderView::Interactive);
     horHeader->setStretchLastSection(true);
