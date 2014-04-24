@@ -20,6 +20,8 @@ public slots:
     void copyWindowSlot(MainWindow *mw);
     void deleteMainWindowSlot(MainWindow *mw);
     void displayConsoleMessage(GUI::Message);
+    void displayConsoleMessage(QString, GUI::Message::MessageType = GUI::Message::InfoMsg);
+
     void exitAppSlot();
 protected:
     void wireSignalAndSlots(MainWindow *mw);

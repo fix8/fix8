@@ -12,7 +12,6 @@ Fix8Log::Fix8Log(QObject *parent) :
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
-
 }
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {
@@ -41,7 +40,6 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
     connect(mw,SIGNAL(autoSaveOn(bool)),this,SLOT(autoSaveOnSlot(bool)));
     mw->setAutoSaveOn(autoSaveOn);
 }
-
 void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
 {
     mainWindows.removeOne(mw);
@@ -59,6 +57,11 @@ void Fix8Log::displayConsoleMessage(GUI::Message msg)
         mw->displayConsoleMessage(msg);
     }
 }
+void Fix8Log::displayConsoleMessage(QString str, GUI::Message::MessageType mt)
+{
+    GUI::Message m(str,mt);
+    displayConsoleMessage(m);
+}
 bool Fix8Log::init()
 {
     bool bstatus;
@@ -68,9 +71,7 @@ bool Fix8Log::init()
     QString dbPath = QCoreApplication::applicationDirPath() + QDir::separator()  +  "share";
     QDir dir(dbPath);
 
-
     readSettings();
-    qDebug() << "AFTER READ SETTINS, autosave = " << autoSaveOn << __FILE__ << __LINE__;
     if (!dir.exists()) {
         bstatus = dir.mkdir(dbPath);
         if (!bstatus) {
@@ -101,7 +102,7 @@ bool Fix8Log::init()
     if (!bstatus) {
         bstatus = database->createTable(Database::Windows);
         if (!bstatus) {
-            errorStr =  "Failed to Create Windows Table.";
+            errorStr =  "Failed to create windows table.";
             displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
         }
     }
@@ -109,7 +110,7 @@ bool Fix8Log::init()
     if (!bstatus) {
         bstatus = database->createTable(Database::WorkSheet);
         if (!bstatus) {
-            errorStr = "Failed to Create Worksheet Table.";
+            errorStr = "Failed to create worksheet table.";
             displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
         }
     }
@@ -125,8 +126,8 @@ bool Fix8Log::init()
             mainWindows.append(newMW);
             newMW->setAutoSaveOn(autoSaveOn);
             newMW->show();
-            qDebug() << "\tWindow FROM Database created";
         }
+        displayConsoleMessage("Session restored from autosave");
     }
     if (mainWindows.count() < 1) {
         newMW = new MainWindow();
@@ -135,7 +136,6 @@ bool Fix8Log::init()
         newMW->setAutoSaveOn(autoSaveOn);
         mainWindows.append(newMW);
     }
-
     return bstatus;
 }
 void Fix8Log::exitAppSlot()
@@ -148,6 +148,9 @@ void Fix8Log::exitAppSlot()
         mw = iter.next();
         WindowData wd = mw->getWindowData();
         bstatus = database->addWindow(wd);
+        if (!bstatus) {
+            displayConsoleMessage("Error failed saving window to database",GUI::Message::ErrorMsg);
+        }
     }
     writeSettings();
     qApp->exit();
@@ -157,6 +160,10 @@ void Fix8Log::autoSaveOnSlot(bool on)
     MainWindow *mw;
     QListIterator <MainWindow *> iter(mainWindows);
     autoSaveOn = on;
+    QString str = "on";
+    if (!autoSaveOn)
+        str = "off";
+    displayConsoleMessage("Autosave turned " + str);
     while(iter.hasNext()) {
         mw = iter.next();
         mw->setAutoSaveOn(autoSaveOn);
@@ -168,7 +175,6 @@ void Fix8Log::readSettings()
 {
     QSettings settings("fix8","logviewer");
     autoSaveOn = (bool) settings.value("AutoSave",false).toBool();
-
 }
 void Fix8Log::writeSettings()
 {

@@ -8,6 +8,8 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include "windowdata.h"
+#include "worksheetdata.h"
+
 #define LDB_DRIVER "QSQLITE"
 
 
@@ -25,10 +27,16 @@ public:
     bool isOpen();
     bool open();
     bool tableIsValid(TableType);
+    // Window Methods
     QList<WindowData> getWindows();
     bool deleteAllWindows();
     bool deleteWindow(int windowID);
-    bool addWindow(const WindowData &);
+    bool addWindow(const WindowData &);    
+    // WorkSheets Methods
+    QList <WorkSheetData> getWorkSheets(int windowID);
+    bool addWorkSheet(WorkSheetData &);
+    bool deleteWorkSheetByWindowID(int windowID);
+    bool deleteWorkSheet(int workSheetID);
 private:
     QString name;
     QSqlDatabase *handle;

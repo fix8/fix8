@@ -28,7 +28,10 @@ SOURCES += main.cpp\
     messagefield.cpp \
     messagearea.cpp \
     database.cpp \
-    windowdata.cpp
+    windowdata.cpp \
+    databaseWindows.cpp \
+    worksheetdata.cpp \
+    databaseWorksheets.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -42,7 +45,8 @@ HEADERS  += mainwindow.h \
     messagefield.h \
     messagearea.h \
     database.h \
-    windowdata.h
+    windowdata.h \
+    worksheetdata.h
 
 RESOURCES += \
     resources.qrc
