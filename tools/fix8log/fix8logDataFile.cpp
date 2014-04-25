@@ -51,6 +51,14 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     QFile dataFile(fileName);
     QList<QStandardItem *> itemList;
     QStandardItemModel *model = new QStandardItemModel();
+     model->setColumnCount(WorkSheet::NumColumns);
+    QStandardItem *headerItem[WorkSheet::NumColumns];
+    for(int i=0;i<WorkSheet::NumColumns;i++) {
+        headerItem[i] = new QStandardItem(WorkSheet::headerLabel[i]);
+        model->setHorizontalHeaderItem(i,headerItem[i]);
+    }
+    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,20);
+
     QList <GUI::Message> msgList;
     bstatus =  dataFile.open(QIODevice::ReadOnly);
     if (!bstatus) {
@@ -62,7 +70,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
     int i=0;
     QElapsedTimer myTimer;
     int linecount = 0;
-
+    int nMilliseconds;
     qint32 fileSize = dataFile.size();
     QByteArray ba;
 
@@ -71,12 +79,14 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
         ba = dataFile.readLine();
         linecount++;
     }
+    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,20);
 
+    qDebug() << "IN readLogFile, num of lines: " << linecount << __FILE__ << __LINE__;
     dataFile.seek(0);
     model->setRowCount(linecount);
     int colPosition = 0;
     int rowPosition = 0;
-
+    myTimer.start();
     messgeTypeItem = new QStandardItem(qstr);
     while(!dataFile.atEnd()) {
         itemList.clear();
@@ -97,6 +107,8 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
                 MessageField mf(itr->first,name,var);
                 mlf->append(mf);
             }
+            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+
             /* Latter do malolocs together as an array to optimize speed
         seqItem = new IntItem();
         senderItem =  new QStandardItem();
@@ -112,7 +124,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
             userDataVar.setValue((void*)mlf);
             int num = snum();
             seqItem = new IntItem(num);
-            model->setItem(rowPosition,colPosition,seqItem);
+            model->setItem(rowPosition,0,seqItem);
             colPosition++;
             seqItem->setData(userDataVar);
 
@@ -189,8 +201,8 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
         }
         i++;
     }
-    // nMilliseconds = myTimer.elapsed();
-    //qDebug() << "TIME TO LOAD = " << nMilliseconds;
+    nMilliseconds = myTimer.elapsed();
+    qDebug() << "TIME TO LOAD = " << nMilliseconds;
     qstr = QString::number(model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     msgList.append(GUI::Message(qstr));
     dataFile.close();

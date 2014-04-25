@@ -25,10 +25,11 @@ public slots:
     void displayConsoleMessage(GUI::Message);
     void displayConsoleMessage(QString, GUI::Message::MessageType = GUI::Message::InfoMsg);
     void exitAppSlot();
+    void lastWindowClosedSlot();
 protected:
-    void wireSignalAndSlots(MainWindow *mw);
     QStandardItemModel *readLogFile(const QString &fileName,QString &errorStr);
-
+    void saveSession();
+    void wireSignalAndSlots(MainWindow *mw);
     QList <MainWindow *> mainWindows;
     bool firstTimeToUse;
     Database *database;

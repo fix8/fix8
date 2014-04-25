@@ -12,6 +12,7 @@ Fix8Log::Fix8Log(QObject *parent) :
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
+    connect(qApp,SIGNAL(lastWindowClosed()),this,SLOT(lastWindowClosedSlot()));
 }
 void Fix8Log::createNewWindowSlot(MainWindow *mw)
 {
@@ -42,9 +43,14 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
 }
 void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
 {
+    if (mainWindows.count() == 1)  {
+        if (autoSaveOn)
+            saveSession();
+    }
     mainWindows.removeOne(mw);
     mw->deleteLater();
     if (mainWindows.count() < 1) {
+        writeSettings();
         qApp->exit();
     }
 }
@@ -68,7 +74,7 @@ bool Fix8Log::init()
     bool createdTable = false;
     QString dbFileName = "fix8log.sql";
     QString errorStr;
-    QStandardItemModel *model;
+    QStandardItemModel *model = 0;
     QString dbPath = QCoreApplication::applicationDirPath() + QDir::separator()  +  "share";
     QDir dir(dbPath);
 
@@ -115,28 +121,54 @@ bool Fix8Log::init()
             displayConsoleMessage(GUI::Message(errorStr,GUI::Message::ErrorMsg));
         }
     }
+
+    // initial screeen
+    MainWindow  *initialMainWindow = new MainWindow();
+    initialMainWindow->show();
+    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+
     QList <WindowData> windowDataList = database->getWindows();
+    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+
     QListIterator <WindowData> iter(windowDataList);
     QStringList errorStrList;
     MainWindow *newMW;
     QMap <QString, QStandardItemModel *>::iterator currentItemIter;
     bool haveError = false;
+    bool isInitial = true;
     if (autoSaveOn){
         while(iter.hasNext()) {
             WindowData wd = iter.next();
+            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+
             QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
+            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+
             if (wsdList.count() > 0) {
-                newMW  =new MainWindow();
+                if (isInitial) {
+                    newMW = initialMainWindow;
+                    isInitial = false;
+                }
+                else
+                    newMW  =new MainWindow();
                 newMW->setWindowData(wd);
+                wireSignalAndSlots(newMW);
+                mainWindows.append(newMW);
+                newMW->setAutoSaveOn(autoSaveOn);
                 QListIterator <WorkSheetData> iter2(wsdList);
                 while(iter2.hasNext()) {
                     model = 0;
                     WorkSheetData wsd = iter2.next();
                     currentItemIter =  fileNameModelMap.find(wsd.fileName);
-                    if (currentItemIter != fileNameModelMap.end())
+                    if (currentItemIter != fileNameModelMap.end()) {
                         model = currentItemIter.value();
+                    }
                     else {
+                        qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+
                         model = readLogFile(wsd.fileName,errorStr);
+                        qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+
                         if (!model)
                             errorStrList.append(errorStr);
                         else
@@ -144,9 +176,7 @@ bool Fix8Log::init()
                     }
                     if (model) {
                         newMW->addWorkSheet(model,wsd);
-                        wireSignalAndSlots(newMW);
-                        mainWindows.append(newMW);
-                        newMW->setAutoSaveOn(autoSaveOn);
+
                         newMW->show();
                     }
                 }
@@ -167,37 +197,40 @@ bool Fix8Log::init()
 }
 void Fix8Log::exitAppSlot()
 {
+    if (autoSaveOn)
+        saveSession();
+    writeSettings();
+    qApp->exit();
+}
+void Fix8Log::saveSession()
+{
     MainWindow *mw;
     WorkSheetData wsd;
     bool bstatus;
-    if (autoSaveOn) {
-        bstatus = database->deleteAllWindows();
+
+    bstatus = database->deleteAllWindows();
+    if (!bstatus)
+        qWarning() << "Delete all windows from database failed" << __FILE__ << __LINE__;
+    bstatus = database->deleteAllWorkSheets();
+    if (!bstatus)
+        qWarning() << "Delete all worksheets from database failed" << __FILE__ << __LINE__;
+    QListIterator <MainWindow *> iter(mainWindows);
+    while(iter.hasNext()) {
+        mw = iter.next();
+        WindowData wd = mw->getWindowData();
+        bstatus = database->addWindow(wd);
         if (!bstatus)
-            qWarning() << "Delete all windows from database failed" << __FILE__ << __LINE__;
-        bstatus = database->deleteAllWorkSheets();
-        if (!bstatus)
-            qWarning() << "Delete all worksheets from database failed" << __FILE__ << __LINE__;
-        QListIterator <MainWindow *> iter(mainWindows);
-        while(iter.hasNext()) {
-            mw = iter.next();
-            WindowData wd = mw->getWindowData();
-            bstatus = database->addWindow(wd);
-            if (!bstatus)
-                displayConsoleMessage("Error failed saving window to database",GUI::Message::ErrorMsg);
-            else {
-                QList<WorkSheetData> wsdList = mw->getWorksheetData(wd.id);
-                qDebug() << "Save worksheet data one at a time, later do batch for speed" << __FILE__ << __LINE__;
-                QListIterator <WorkSheetData> wsdIter(wsdList);
-                while(wsdIter.hasNext()) {
-                    wsd = wsdIter.next();
-                    bstatus = database->addWorkSheet(wsd);
-                    qDebug() << "Status of add work sheet to database = " << bstatus;
-                }
+            displayConsoleMessage("Error failed saving window to database",GUI::Message::ErrorMsg);
+        else {
+            QList<WorkSheetData> wsdList = mw->getWorksheetData(wd.id);
+            qDebug() << "Save worksheet data one at a time, later do batch for speed" << __FILE__ << __LINE__;
+            QListIterator <WorkSheetData> wsdIter(wsdList);
+            while(wsdIter.hasNext()) {
+                wsd = wsdIter.next();
+                bstatus = database->addWorkSheet(wsd);
             }
         }
     }
-    writeSettings();
-    qApp->exit();
 }
 void Fix8Log::autoSaveOnSlot(bool on)
 {
@@ -225,4 +258,7 @@ void Fix8Log::writeSettings()
     QSettings settings("fix8","logviewer");
     settings.setValue("AutoSave",autoSaveOn);
 }
-
+void Fix8Log::lastWindowClosedSlot()
+{
+    qDebug() << "Last Window closed";
+}

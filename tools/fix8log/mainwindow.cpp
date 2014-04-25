@@ -388,12 +388,24 @@ void MainWindow::addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd)
         qWarning() << "Failed to add work sheet, as model is null" <<  __FILE__ << __LINE__;
         return;
     }
-    newWorkSheet = new WorkSheet(model,wsd);
+    qDebug() << "Create a new work sheet" << __FILE__ << __LINE__;
+    newWorkSheet = new WorkSheet(model,wsd,this);
+    qDebug() << "Create a new work sheet" << __FILE__ << __LINE__;
+
     QString str = wsd.fileName;
     if (wsd.tabAlias.length() > 0)
         str = wsd.tabAlias;
-    tabW->addTab(newWorkSheet,str);
+    qDebug() << "Add to tab widget" << __FILE__ << __LINE__;
+
+    int index = tabW->addTab(newWorkSheet,str);
     tabW->setToolTip(wsd.fileName);
+    if (tabW->count() > 0) {
+        stackW->setCurrentWidget(workAreaSplitter);
+        copyTabA->setEnabled(true);
+        showMessageA->setEnabled(true);
+        if (tabW->count() > 1)
+            tabW->setCurrentIndex(index);
+    }
 }
 void MainWindow::setAutoSaveOn(bool on)
 {

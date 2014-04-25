@@ -87,16 +87,20 @@ WorkSheet::WorkSheet(QStandardItemModel *model,
     fixTable->setModel(model);
     fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
+    qDebug() << "1 Create work sheet " << __FILE__ << __LINE__;
     for(int i=0;i<NumColumns;i++) {
         headerItem[i] = new QStandardItem(headerLabel[i]);
-        _model->setHorizontalHeaderItem(i,headerItem[i]);
+       // _model->setHorizontalHeaderItem(i,headerItem[i]);
     }
+
     QHeaderView *horHeader = fixTable->horizontalHeader();
     horHeader->setSectionResizeMode(QHeaderView::Interactive);
     horHeader->setStretchLastSection(true);
     horHeader->setSectionsMovable(true);
     horHeader->setSortIndicatorShown(true);
+
     horHeader->restoreState(wsd.headerState);
+
     fixFileName = wsd.fileName;
 }
 
@@ -323,10 +327,14 @@ void  WorkSheet::hideColumn(int colNum, bool hideCol)
 }
 void  WorkSheet::rowSelectedSlot(QModelIndex mi)
 {
-    QStandardItem *item = (QStandardItem *) _model->itemFromIndex(mi);
+    //QStandardItem *item = (QStandardItem *) _model->itemFromIndex(mi);
     QVariant var = mi.data(Qt::UserRole+1);
     MessageFieldList *mfl = (MessageFieldList *) var.value<void *>();
-    messageArea->setMessageFieldList(mfl);
+    if (mfl)
+        messageArea->setMessageFieldList(mfl);
+    else
+        qWarning() << "No Message Fields Found for row" << __FILE__ << __LINE__;
+
 }
 void WorkSheet::setAlias(QString &str)
 {
