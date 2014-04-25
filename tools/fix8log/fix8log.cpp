@@ -68,6 +68,7 @@ bool Fix8Log::init()
     bool createdTable = false;
     QString dbFileName = "fix8log.sql";
     QString errorStr;
+    QStandardItemModel *model;
     QString dbPath = QCoreApplication::applicationDirPath() + QDir::separator()  +  "share";
     QDir dir(dbPath);
 
@@ -116,19 +117,45 @@ bool Fix8Log::init()
     }
     QList <WindowData> windowDataList = database->getWindows();
     QListIterator <WindowData> iter(windowDataList);
+    QStringList errorStrList;
     MainWindow *newMW;
+    QMap <QString, QStandardItemModel *>::iterator currentItemIter;
+    bool haveError = false;
     if (autoSaveOn){
         while(iter.hasNext()) {
             WindowData wd = iter.next();
-            newMW  =new MainWindow();
-            wireSignalAndSlots(newMW);
-            newMW->setWindowData(wd);
-            mainWindows.append(newMW);
-            newMW->setAutoSaveOn(autoSaveOn);
-            newMW->show();
+            QList <WorkSheetData> wsdList = database->getWorkSheets(wd.id);
+            if (wsdList.count() > 0) {
+                newMW  =new MainWindow();
+                newMW->setWindowData(wd);
+                QListIterator <WorkSheetData> iter2(wsdList);
+                while(iter2.hasNext()) {
+                    model = 0;
+                    WorkSheetData wsd = iter2.next();
+                    currentItemIter =  fileNameModelMap.find(wsd.fileName);
+                    if (currentItemIter != fileNameModelMap.end())
+                        model = currentItemIter.value();
+                    else {
+                        model = readLogFile(wsd.fileName,errorStr);
+                        if (!model)
+                            errorStrList.append(errorStr);
+                        else
+                            fileNameModelMap.insert(wsd.fileName,model);
+                    }
+                    if (model) {
+                        newMW->addWorkSheet(model,wsd);
+                        wireSignalAndSlots(newMW);
+                        mainWindows.append(newMW);
+                        newMW->setAutoSaveOn(autoSaveOn);
+                        newMW->show();
+                    }
+                }
+            }
         }
+        qDebug() << "TODO - Display error messages here, and if no work sheets created lets delete main window" << __FILE__ << __LINE__;
         displayConsoleMessage("Session restored from autosave");
     }
+    // if no main windows lets create one
     if (mainWindows.count() < 1) {
         newMW = new MainWindow();
         wireSignalAndSlots(newMW);
@@ -141,15 +168,32 @@ bool Fix8Log::init()
 void Fix8Log::exitAppSlot()
 {
     MainWindow *mw;
+    WorkSheetData wsd;
     bool bstatus;
-    bstatus = database->deleteAllWindows();
-    QListIterator <MainWindow *> iter(mainWindows);
-    while(iter.hasNext()) {
-        mw = iter.next();
-        WindowData wd = mw->getWindowData();
-        bstatus = database->addWindow(wd);
-        if (!bstatus) {
-            displayConsoleMessage("Error failed saving window to database",GUI::Message::ErrorMsg);
+    if (autoSaveOn) {
+        bstatus = database->deleteAllWindows();
+        if (!bstatus)
+            qWarning() << "Delete all windows from database failed" << __FILE__ << __LINE__;
+        bstatus = database->deleteAllWorkSheets();
+        if (!bstatus)
+            qWarning() << "Delete all worksheets from database failed" << __FILE__ << __LINE__;
+        QListIterator <MainWindow *> iter(mainWindows);
+        while(iter.hasNext()) {
+            mw = iter.next();
+            WindowData wd = mw->getWindowData();
+            bstatus = database->addWindow(wd);
+            if (!bstatus)
+                displayConsoleMessage("Error failed saving window to database",GUI::Message::ErrorMsg);
+            else {
+                QList<WorkSheetData> wsdList = mw->getWorksheetData(wd.id);
+                qDebug() << "Save worksheet data one at a time, later do batch for speed" << __FILE__ << __LINE__;
+                QListIterator <WorkSheetData> wsdIter(wsdList);
+                while(wsdIter.hasNext()) {
+                    wsd = wsdIter.next();
+                    bstatus = database->addWorkSheet(wsd);
+                    qDebug() << "Status of add work sheet to database = " << bstatus;
+                }
+            }
         }
     }
     writeSettings();
@@ -181,3 +225,4 @@ void Fix8Log::writeSettings()
     QSettings settings("fix8","logviewer");
     settings.setValue("AutoSave",autoSaveOn);
 }
+

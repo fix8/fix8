@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     windowdata.cpp \
     databaseWindows.cpp \
     worksheetdata.cpp \
-    databaseWorksheets.cpp
+    databaseWorksheets.cpp \
+    fix8logDataFile.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \

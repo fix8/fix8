@@ -11,10 +11,10 @@ public:
     qint32     id;
     qint32     windowID;
     QString    tabAlias;
+    QString    fileName;
+    int        selectedRow;
     QByteArray splitterState;
     QByteArray headerState;
-    QString    fileName;
-    QString    selectedRow;
 };
 
 #endif // WORKSHEETDATA_H

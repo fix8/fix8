@@ -7,14 +7,12 @@
 #include <QtWidgets>
 //#include <QStandardItemModel>
 
-
 void MainWindow::quitSlot()
 {
     writeSettings();
     emit exitApp();
     //qApp->quit();
 }
-
 void MainWindow::hideColumnActionSlot(QAction *action)
 {
     WorkSheet *workSheet;
@@ -83,7 +81,6 @@ void MainWindow::setColorSlot(QColor color)
     //pal.setColor(QPalette::Base,color);
     mainMenuBar->setPalette(pal);
     menubarColor = color;
-
 }
 void MainWindow::currentColorChangedSlot(QColor color)
 {
@@ -103,7 +100,6 @@ void MainWindow::editTabNameSlot(bool isOn)
         editTabNamePB->setToolTip("Save");
         tabNameLineEdit->setText(tabName);
         tabNameLineEdit->selectAll();
-
     }
     else  {
         cancelEditTabNamePB->hide();
@@ -112,7 +108,6 @@ void MainWindow::editTabNameSlot(bool isOn)
         tabName = tabNameLineEdit->text();
         tabW->setTabText(index,tabName);
     }
-
 }
 void MainWindow::cancelTabNameSlot()
 {
@@ -121,7 +116,6 @@ void MainWindow::cancelTabNameSlot()
     editTabNamePB->setToolTip("Edit current tab name");
     editTabNamePB->setChecked(false);
     editTabNamePB->setEnabled(true);
-
 }
 void MainWindow::tabNameModifiedSlot(QString str)
 {
@@ -134,10 +128,10 @@ void MainWindow::tabNameModifiedSlot(QString str)
     else
          tabNameLineEdit->setToolTip(tr("Enter tab name"));
 }
-
 void MainWindow::tabNameReturnKeySlot()
 {
     QString tabName;
+    WorkSheet *worksheet;
     int index = tabW->currentIndex();
     tabName = tabNameLineEdit->text();
     if (tabName.length() < 1)
@@ -147,6 +141,8 @@ void MainWindow::tabNameReturnKeySlot()
     editTabNamePB->setChecked(false);
     editTabNamePB->setToolTip("Edit current tab name");
     tabW->setTabText(index,tabName);
+    worksheet = qobject_cast <WorkSheet *> (tabW->widget(index));
+    worksheet->setAlias(tabName);
 }
 void MainWindow::tabCurentChangedSlot(int)
 {

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QModelIndex>
 #include "globals.h"
+#include "worksheetdata.h"
 class QFile;
 class QLabel;
 class QSplitter;
@@ -18,17 +19,18 @@ class WorkSheet : public QWidget
     Q_OBJECT
 public:
     explicit WorkSheet(QWidget *parent = 0);
+    WorkSheet(QStandardItemModel *model,const WorkSheetData &wsd,QWidget *parent = 0);
     WorkSheet(WorkSheet &,QWidget *parent = 0);
     ~WorkSheet();
     enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
     static QString headerLabel[NumColumns];
-
     //FixTable(QWidget * parent = 0);
-
     QString getFileName();
     QStandardItemModel *getModel();
+    WorkSheetData getWorksheetData();
     bool loadFileName(QString &fileName,QList <GUI::Message> &returnMessageList);
     void  hideColumn(int colNum, bool hideCol);
+    void setAlias(QString &);
 signals:
     void sendMessage(GUI::Message);
     void sendMessages(QList < GUI::Message>);
@@ -44,6 +46,7 @@ private:
     QString fixFileName;
     QStandardItemModel *_model;
     QStandardItem *headerItem[NumColumns];
+    QString alias;
 };
 
 #endif // WORKSHEET_H

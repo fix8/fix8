@@ -5,7 +5,8 @@
 #include "fixtable.h"
 #include "globals.h"
 #include "windowdata.h"
-
+#include "worksheetdata.h"
+#include <QList>
 class QAction;
 class QActionGroup;
 class QComboBox;
@@ -31,7 +32,9 @@ public:
     MainWindow();
     MainWindow(const MainWindow & sibling,bool copyAll = false);
     ~MainWindow();
+    void addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd);
     WindowData getWindowData();
+    QList <WorkSheetData> getWorksheetData(qint32 windowID);
     void setWindowData(const WindowData &wd);
     protected slots:
     void autoSaveOnSlot(bool);

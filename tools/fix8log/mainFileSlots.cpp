@@ -186,16 +186,10 @@ void MainWindow::copyTabSlot()
         qWarning() << "No work sheet to copy" << __FILE__ << __LINE__;
         return;
     }
-
-    qDebug() << "1 Create a nw work sheet" << __FILE__ << __LINE__;
     newWorkSheet = new WorkSheet(*workSheet);
-    qDebug() << "2 After create work sheet";
     QString fileName = workSheet->getFileName();
     QFileInfo fi(fileName);
-    qDebug() << "3 Add tab...";
     int index = tabW->addTab(newWorkSheet,fi.fileName());
     tabW->setToolTip(fileName);
-    qDebug() << "4 Set current index";
     tabW->setCurrentIndex(index);
-    qDebug() << "5 After set Curernt index";
 }

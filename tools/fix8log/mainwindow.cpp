@@ -36,7 +36,6 @@ MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
     }
     readSettings();
     move(x+100,y+90); // offset from window copied
-
 }
 void MainWindow::buildMainWindow()
 {
@@ -313,22 +312,16 @@ void MainWindow::buildMainWindow()
     connect(newTabA,SIGNAL(triggered()),this,SLOT(createTabSlot()));
     connect(newWindowA,SIGNAL(triggered()),this,SLOT(createWindowSlot()));
     connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
-
     buildHideColumnMenu();
 }
-
 MainWindow::~MainWindow()
 {
 
 }
-
 void MainWindow::createWindowSlot()
 {
     emit createWindow(this);
 }
-
-
-
 void MainWindow::buildHideColumnMenu()
 {
     for (int i=0;i<FixTable::NumColumns;i++) {
@@ -353,7 +346,6 @@ void MainWindow::showEvent(QShowEvent *se)
     }
     QMainWindow::showEvent(se);
 }
-
 QSize MainWindow::sizeHint() const
 {
     // TODO: figure out default size based on pixel density
@@ -374,6 +366,34 @@ void MainWindow::setWindowData(const WindowData &wd)
     restoreGeometry(wd.geometry);
     restoreState(wd.state);
     setColorSlot(wd.color);
+}
+QList <WorkSheetData> MainWindow::getWorksheetData(qint32 windowID)
+{
+    QList <WorkSheetData> wsdList;
+    WorkSheetData  wsd;
+    if (tabW->count() > 0) {
+        WorkSheet *ws =  qobject_cast <WorkSheet *> (tabW->widget(0));
+        if (ws) {
+            wsd  = ws->getWorksheetData();
+            wsd.id = windowID;
+            wsdList.append(wsd);
+        }
+    }
+    return wsdList;
+}
+void MainWindow::addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd)
+{
+    WorkSheet *newWorkSheet;
+    if (!model) {
+        qWarning() << "Failed to add work sheet, as model is null" <<  __FILE__ << __LINE__;
+        return;
+    }
+    newWorkSheet = new WorkSheet(model,wsd);
+    QString str = wsd.fileName;
+    if (wsd.tabAlias.length() > 0)
+        str = wsd.tabAlias;
+    tabW->addTab(newWorkSheet,str);
+    tabW->setToolTip(wsd.fileName);
 }
 void MainWindow::setAutoSaveOn(bool on)
 {

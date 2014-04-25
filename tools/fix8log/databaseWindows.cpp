@@ -49,12 +49,10 @@ QList<WindowData> Database::getWindows()
     }
     return windowDataList;
 }
-bool Database::addWindow(const WindowData &wd)
+bool Database::addWindow(WindowData &wd)
 {
     bool bstatus;
     QString filter;
-
-
     if (!handle) {
         errorMessage = tr("Error database addWindow  - handle is not initialized");
         qWarning() << errorMessage;
@@ -84,6 +82,8 @@ bool Database::addWindow(const WindowData &wd)
         qWarning() << errorMessage;
         return false;
     }
+    QVariant variant = query.lastInsertId();
+    wd.id = variant.toInt();
     return true;
 }
 bool Database::deleteWindow(int windowID)
@@ -104,15 +104,15 @@ bool Database::deleteWindow(int windowID)
         qWarning() << "Delete window failed in prepare " << __FILE__ << __LINE__;
         sqlError = query.lastError();
         goto done;
-        bstatus = query.exec();
-        if (bstatus == false) {
-            sqlError = query.lastError();
-            errorMessage = sqlError.databaseText();
-            qWarning() << errorMessage;
-        }
     }
-    // DELETE TABLES
+    bstatus = query.exec();
+    if (bstatus == false) {
+        sqlError = query.lastError();
+        errorMessage = sqlError.databaseText();
+        qWarning() << errorMessage;
+    }
 done:
+    bstatus = deleteWorkSheetByWindowID(windowID);
     return bstatus;
 }
 

@@ -1,6 +1,6 @@
 #include "worksheetdata.h"
 
-WorkSheetData::WorkSheetData()
+WorkSheetData::WorkSheetData():id(-1),windowID(-1),selectedRow(-1)
 {
 }
 WorkSheetData::WorkSheetData(const WorkSheetData &wsd)

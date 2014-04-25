@@ -31,10 +31,11 @@ public:
     QList<WindowData> getWindows();
     bool deleteAllWindows();
     bool deleteWindow(int windowID);
-    bool addWindow(const WindowData &);    
+    bool addWindow(WindowData &);
     // WorkSheets Methods
     QList <WorkSheetData> getWorkSheets(int windowID);
     bool addWorkSheet(WorkSheetData &);
+    bool deleteAllWorkSheets();
     bool deleteWorkSheetByWindowID(int windowID);
     bool deleteWorkSheet(int workSheetID);
 private:

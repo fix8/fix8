@@ -70,10 +70,36 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):QWidget(parent)
     horHeader->setStretchLastSection(true);
     horHeader->setSectionsMovable(true);
     horHeader->setSortIndicatorShown(true);
-
-    qDebug() << "copy old model to new work sheet" << __FILE__;
-
 }
+WorkSheet::WorkSheet(QStandardItemModel *model,
+                     const WorkSheetData &wsd,QWidget *parent): QWidget(parent)
+{
+    stackLayout = new QStackedLayout(this);
+    setLayout(stackLayout);
+    splitter = new QSplitter(Qt::Horizontal,this);
+    splitter->setObjectName("messageSplitter");
+    fixTable = new FixTable();
+    messageArea = new MessageArea(this);
+    splitter->addWidget(fixTable);
+    splitter->addWidget(messageArea);
+    splitter->restoreState(wsd.splitterState);
+    stackLayout->addWidget(splitter);
+    fixTable->setModel(model);
+    fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
+    for(int i=0;i<NumColumns;i++) {
+        headerItem[i] = new QStandardItem(headerLabel[i]);
+        _model->setHorizontalHeaderItem(i,headerItem[i]);
+    }
+    QHeaderView *horHeader = fixTable->horizontalHeader();
+    horHeader->setSectionResizeMode(QHeaderView::Interactive);
+    horHeader->setStretchLastSection(true);
+    horHeader->setSectionsMovable(true);
+    horHeader->setSortIndicatorShown(true);
+    horHeader->restoreState(wsd.headerState);
+    fixFileName = wsd.fileName;
+}
+
 WorkSheet::~WorkSheet()
 {
     qDebug() << "WokSheet Delete" << __FILE__ << __LINE__;
@@ -301,4 +327,18 @@ void  WorkSheet::rowSelectedSlot(QModelIndex mi)
     QVariant var = mi.data(Qt::UserRole+1);
     MessageFieldList *mfl = (MessageFieldList *) var.value<void *>();
     messageArea->setMessageFieldList(mfl);
+}
+void WorkSheet::setAlias(QString &str)
+{
+    alias = str;
+}
+WorkSheetData WorkSheet::getWorksheetData()
+{
+    WorkSheetData wsd;
+    wsd.fileName = fixFileName;
+    QHeaderView *horHeader = fixTable->horizontalHeader();
+    wsd.headerState = horHeader->saveState();
+    wsd.splitterState = splitter->saveState();
+    wsd.tabAlias = alias;
+    return wsd;
 }
