@@ -1,19 +1,25 @@
 #include "mainwindow.h"
 #include "worksheet.h"
 #include "globals.h"
+#include <QQuickView>
 #include <QtWidgets>
 #include <QStandardItemModel>
 
-MainWindow::MainWindow()
-    : QMainWindow(0),fileDialog(0),windowDataID(-1)
+MainWindow::MainWindow(bool showLoading)
+    : QMainWindow(0),fileDialog(0),qmlObject(0),windowDataID(-1),
+      loadingActive(showLoading)
 {
     buildMainWindow();
+    if (loadingActive) {
+        stackW->setCurrentIndex(ShowProgress);
+    }
     copyTabA->setEnabled(false); // not enabled when no intital tab
     readSettings();
 }
 
 MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
-    : QMainWindow(0),fileDialog(0),windowDataID(-1)
+    : QMainWindow(0),fileDialog(0),qmlObject(0),windowDataID(-1),
+      loadingActive(false)
 {
     buildMainWindow();
     QRect rect = mw.geometry();
@@ -37,6 +43,29 @@ MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
     readSettings();
     move(x+100,y+90); // offset from window copied
 }
+void MainWindow::setLoading(bool bstatus)
+{
+    loadingActive = bstatus;
+    if (bstatus)
+        stackW->setCurrentIndex(ShowProgress);
+    else {
+        if (tabW->count() > 0)
+            stackW->setCurrentWidget(tabW);
+        else
+            stackW->setCurrentWidget(noDataL);
+    }
+}
+void MainWindow::setLoadMessage(QString str)
+{
+    QVariant returnedValue;
+    if (!qmlObject) {
+        qWarning() << "Failed to set load message, qmlObject = 0"
+                   << __FILE__ << __LINE__;
+        return;
+    }
+    QMetaObject::invokeMethod (qmlObject, "setMessage", Q_RETURN_ARG(QVariant, returnedValue),  Q_ARG(QVariant,str));
+}
+
 void MainWindow::buildMainWindow()
 {
     mainMenuBar = menuBar();
@@ -264,6 +293,18 @@ void MainWindow::buildMainWindow()
     noDataL->setPalette(pal);
     noDataL->setObjectName("No_Data_Label");
     noDataL->setAlignment(Qt::AlignCenter);
+
+    progressView = new QQuickView(QUrl("qrc:qml/loadProgress.qml"));
+    qmlObject = progressView->rootObject();
+    if (!qmlObject) {
+        qWarning() << "qml root object not found" << __FILE__ << __LINE__ ;
+    }
+    else
+        connect(qmlObject,SIGNAL(cancel()),this,SLOT(cancelSessionRestoreSlot()));
+
+    progressView->setResizeMode(QQuickView::SizeRootObjectToView);
+    progressWidget = QWidget::createWindowContainer(progressView,this);
+
     workAreaSplitter = new QSplitter(Qt::Horizontal,this);
     tabW = new QTabWidget(workAreaSplitter);
     workAreaSplitter->addWidget(tabW);
@@ -309,6 +350,7 @@ void MainWindow::buildMainWindow()
     tabW->setTabsClosable(true);
     stackW->insertWidget(ShowNoDataLabel,noDataL);
     stackW->insertWidget(ShowTab,workAreaSplitter);
+    stackW->insertWidget(ShowProgress,progressWidget);
     connect(newTabA,SIGNAL(triggered()),this,SLOT(createTabSlot()));
     connect(newWindowA,SIGNAL(triggered()),this,SLOT(createWindowSlot()));
     connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
@@ -334,15 +376,17 @@ void MainWindow::buildHideColumnMenu()
 }
 void MainWindow::showEvent(QShowEvent *se)
 {
-    if (tabW->count() > 0) {
-        stackW->setCurrentWidget(tabW);
-        copyTabA->setEnabled(true);
-        showMessageA->setEnabled(true);
-    }
-    else {
-        stackW->setCurrentWidget(noDataL);
-        copyTabA->setEnabled(false);
-        showMessageA->setEnabled(false);
+    if (!loadingActive)  {
+        if (tabW->count() > 0) {
+            stackW->setCurrentWidget(tabW);
+            copyTabA->setEnabled(true);
+            showMessageA->setEnabled(true);
+        }
+        else {
+            stackW->setCurrentWidget(noDataL);
+            copyTabA->setEnabled(false);
+            showMessageA->setEnabled(false);
+        }
     }
     QMainWindow::showEvent(se);
 }
@@ -383,29 +427,27 @@ QList <WorkSheetData> MainWindow::getWorksheetData(qint32 windowID)
 }
 void MainWindow::addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd)
 {
+    int currentIndex = stackW->currentIndex();
+    stackW->setCurrentIndex(ShowProgress);
     WorkSheet *newWorkSheet;
     if (!model) {
         qWarning() << "Failed to add work sheet, as model is null" <<  __FILE__ << __LINE__;
+        stackW->setCurrentIndex(currentIndex);
         return;
     }
-    qDebug() << "Create a new work sheet" << __FILE__ << __LINE__;
     newWorkSheet = new WorkSheet(model,wsd,this);
-    qDebug() << "Create a new work sheet" << __FILE__ << __LINE__;
-
     QString str = wsd.fileName;
     if (wsd.tabAlias.length() > 0)
         str = wsd.tabAlias;
-    qDebug() << "Add to tab widget" << __FILE__ << __LINE__;
-
     int index = tabW->addTab(newWorkSheet,str);
     tabW->setToolTip(wsd.fileName);
     if (tabW->count() > 0) {
-        stackW->setCurrentWidget(workAreaSplitter);
         copyTabA->setEnabled(true);
         showMessageA->setEnabled(true);
         if (tabW->count() > 1)
             tabW->setCurrentIndex(index);
     }
+    stackW->setCurrentIndex(ShowTab);
 }
 void MainWindow::setAutoSaveOn(bool on)
 {

@@ -5,6 +5,7 @@
 #include "intItem.h"
 #include "messagearea.h"
 #include <QDebug>
+#include <QQuickView>
 #include <QtWidgets>
 #include <iostream>
 #include <string.h>
@@ -22,17 +23,9 @@ QString WorkSheet::headerLabel[] =
  tr("BeginStr"), tr("BodyLength"),tr("CheckSum"),tr("EncryptMethod"),
  tr("HeartBtInt"),tr("Message Type")};
 
-WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent)
+WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false)
 {
-    stackLayout = new QStackedLayout(this);
-    setLayout(stackLayout);
-    splitter = new QSplitter(Qt::Horizontal,this);
-    splitter->setObjectName("messageSplitter");
-    fixTable = new FixTable();
-    messageArea = new MessageArea(this);
-    splitter->addWidget(fixTable);
-    splitter->addWidget(messageArea);
-    stackLayout->addWidget(splitter);
+    build();
     _model = new QStandardItemModel();
     fixTable->setModel(_model);
     fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -47,20 +40,10 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent)
     horHeader->setSectionsMovable(true);
     horHeader->setSortIndicatorShown(true);
 }
-WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):QWidget(parent)
+WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
+    QWidget(parent),cancelLoad(false)
 {
-    stackLayout = new QStackedLayout(this);
-    setLayout(stackLayout);
-    splitter = new QSplitter(Qt::Horizontal,this);
-    fixTable = new FixTable();
-    fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
-
-    messageArea = new MessageArea(this);
-    splitter->addWidget(fixTable);
-    splitter->addWidget(messageArea);
-    stackLayout->addWidget(splitter);
-
+    build();
     QStandardItemModel *oldModel;
     _model = oldws.getModel();
     fixFileName = oldws.getFileName();
@@ -72,45 +55,57 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):QWidget(parent)
     horHeader->setSortIndicatorShown(true);
 }
 WorkSheet::WorkSheet(QStandardItemModel *model,
-                     const WorkSheetData &wsd,QWidget *parent): QWidget(parent)
+                     const WorkSheetData &wsd,QWidget *parent):
+    QWidget(parent),cancelLoad(false)
+{
+    build();
+    fixTable->setModel(model);
+    fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
+    for(int i=0;i<NumColumns;i++)
+        headerItem[i] = new QStandardItem(headerLabel[i]);
+    QHeaderView *horHeader = fixTable->horizontalHeader();
+    horHeader->setSectionResizeMode(QHeaderView::Interactive);
+    horHeader->setStretchLastSection(true);
+    horHeader->setSectionsMovable(true);
+    horHeader->setSortIndicatorShown(true);
+    horHeader->restoreState(wsd.headerState);
+    fixFileName = wsd.fileName;
+}
+void WorkSheet::build()
 {
     stackLayout = new QStackedLayout(this);
     setLayout(stackLayout);
+    progressView = new QQuickView(QUrl("qrc:qml/loadProgress.qml"));
+    progressView->setResizeMode(QQuickView::SizeRootObjectToView);
+    progressWidget = QWidget::createWindowContainer(progressView,this);
+    qmlObject = progressView->rootObject();
+    if (!qmlObject) {
+        qWarning() << "qml root object not found" << __FILE__ << __LINE__ ;
+    }
+    else
+        connect(qmlObject,SIGNAL(cancel()),this,SLOT(cancelLoadSlot()));
     splitter = new QSplitter(Qt::Horizontal,this);
     splitter->setObjectName("messageSplitter");
     fixTable = new FixTable();
     messageArea = new MessageArea(this);
     splitter->addWidget(fixTable);
     splitter->addWidget(messageArea);
-    splitter->restoreState(wsd.splitterState);
-    stackLayout->addWidget(splitter);
-    fixTable->setModel(model);
-    fixTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    connect(fixTable,SIGNAL(clicked(QModelIndex)),this,SLOT(rowSelectedSlot(QModelIndex)));
-    qDebug() << "1 Create work sheet " << __FILE__ << __LINE__;
-    for(int i=0;i<NumColumns;i++) {
-        headerItem[i] = new QStandardItem(headerLabel[i]);
-       // _model->setHorizontalHeaderItem(i,headerItem[i]);
-    }
+    stackLayout->insertWidget(0,splitter);
+    stackLayout->insertWidget(1,progressWidget);
+    stackLayout->setCurrentIndex(0);
 
-    QHeaderView *horHeader = fixTable->horizontalHeader();
-    horHeader->setSectionResizeMode(QHeaderView::Interactive);
-    horHeader->setStretchLastSection(true);
-    horHeader->setSectionsMovable(true);
-    horHeader->setSortIndicatorShown(true);
-
-    horHeader->restoreState(wsd.headerState);
-
-    fixFileName = wsd.fileName;
 }
-
 WorkSheet::~WorkSheet()
 {
     qDebug() << "WokSheet Delete" << __FILE__ << __LINE__;
 }
 
-bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
+bool WorkSheet::loadFileName(QString &fileName,
+                             QList <GUI::Message> &msgList,
+                             quint32 &returnCode)
 {
+
     fixFileName = fileName;
     bool bstatus;
     msg_type mt;
@@ -140,6 +135,9 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
     QString qstr;
     QString seqNumStr;
     QString senderID;
+    QVariant returnedValue;
+    stackLayout->setCurrentIndex(1);
+    showLoadProcess(true);
     QFile *dataFile = new QFile(fileName);
     QList<QStandardItem *> itemList;
     bstatus =  dataFile->open(QIODevice::ReadOnly);
@@ -147,6 +145,8 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
         GUI::Message message(tr("Failed to open file: ") + fileName);
         msgList.append(message);
         delete dataFile;
+        showLoadProcess(false);
+        returnCode = FILE_NOT_FOUND;
         return false;
     }
     int i=0;
@@ -178,7 +178,6 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
 
     messgeTypeItem = new QStandardItem(qstr);
     while(!dataFile->atEnd()) {
-
         itemList.clear();
         try {
             ba = dataFile->readLine();
@@ -214,6 +213,7 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             encryptMethodItem = new QStandardItem(QString::number(num));
             heartBeatIntItem = new IntItem(num);
             */
+
             QVariant userDataVar;
             userDataVar.setValue((void*)mlf);
             int num = snum();
@@ -293,12 +293,25 @@ bool WorkSheet::loadFileName(QString &fileName,QList <GUI::Message> &msgList)
             qWarning() << "Error - " << e.what();
             msgList.append(GUI::Message(errorStr,GUI::Message::ErrorMsg));
         }
+        if (i%100 == 0) { // every 100 iterations allow gui to process events
+            if (cancelLoad) {
+                showLoadProcess(false);
+                returnCode = CANCEL;
+                return false;
+            }
+            //qDebug() << i << "Process Events" << __FILE__ << __LINE__;
+
+           qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,3);
+        }
         i++;
+
     }
     nMilliseconds = myTimer.elapsed();
     qDebug() << "TIME TO LOAD = " << nMilliseconds;
     qstr = QString::number(_model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     msgList.append(GUI::Message(qstr));
+    showLoadProcess(false);
+    returnCode = OK;
     return true;
 }
 QStandardItemModel *WorkSheet::getModel()
@@ -349,4 +362,26 @@ WorkSheetData WorkSheet::getWorksheetData()
     wsd.splitterState = splitter->saveState();
     wsd.tabAlias = alias;
     return wsd;
+}
+void WorkSheet::cancelLoadSlot()
+{
+    cancelLoad = true;
+}
+void WorkSheet::showLoadProcess(bool isBeingLoaded)
+{
+    QVariant returnedValue;
+    QString str;
+    if (isBeingLoaded) {
+        stackLayout->setCurrentIndex(1);
+        if (!qmlObject)
+            qWarning() << "Failed to set load message, qmlObject = 0"
+                       << __FILE__ << __LINE__;
+        else {
+            str = "Loading : " + fixFileName;
+            QMetaObject::invokeMethod (qmlObject, "setMessage", Q_RETURN_ARG(QVariant, returnedValue),  Q_ARG(QVariant,str));
+        }
+    }
+    else
+        stackLayout->setCurrentIndex(0);
+
 }

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql qml quick
 QMAKE_CXXFLAGS += -Wno-uninitialized -Wno-unused-variable -Wno-unused-parameter
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -57,5 +57,8 @@ LIBS += -L/usr/local/lib  -lrt -lfix8 -ltbb  -lPocoFoundation -lPocoNet -lPocoUt
 
 INCLUDEPATH += /usr/local/include /usr/local/include/fix8 ./f8
 DEPENDPATH += /usr/local/include
+
+OTHER_FILES += \
+    qml/loadProgress.qml
 
 

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QQuickItem>
 #include "fixtable.h"
 #include "globals.h"
 #include "windowdata.h"
@@ -17,6 +18,7 @@ class QLineEdit;
 class QMenu;
 class QMenuBar;
 class QPushButton;
+class QQuickView;
 class QSplitter;
 class QStackedWidget;
 class QStandardItemModel;
@@ -29,15 +31,19 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     friend class Fix8Log;
 public:
-    MainWindow();
+    MainWindow(bool showLoading=false);
     MainWindow(const MainWindow & sibling,bool copyAll = false);
     ~MainWindow();
     void addWorkSheet(QStandardItemModel *model,WorkSheetData &wsd);
     WindowData getWindowData();
     QList <WorkSheetData> getWorksheetData(qint32 windowID);
+    void setLoading(bool);
+    void setLoadMessage(QString);
     void setWindowData(const WindowData &wd);
+
     protected slots:
     void autoSaveOnSlot(bool);
+    void cancelSessionRestoreSlot();
     void cancelTabNameSlot();
     void closeSlot();
     void currentColorChangedSlot(QColor);
@@ -62,7 +68,7 @@ public:
     void tabNameModifiedSlot(QString);
     void tabNameReturnKeySlot();
 protected:
-    enum {ShowNoDataLabel,ShowTab};
+    enum {ShowNoDataLabel,ShowTab,ShowProgress};
     QAction  *autoSaveA;
     QAction  *closeA;
     QAction  *copyWindowA;
@@ -108,15 +114,19 @@ protected:
     QPushButton *cancelEditTabNamePB;
     QPushButton *configPB;
     QPushButton *editTabNamePB;
+    QQuickItem  *qmlObject;
+    QQuickView *progressView;
     QSplitter *workAreaSplitter;
     QStackedWidget *stackW;
     QStandardItemModel *_model;
     QTabWidget *tabW;
     QTextBrowser *consoleArea;
     //QToggleButton editTabNamePB;
+
     QToolBar *mainToolBar;
     QToolBar *searchToolBar;
     QList <FixTable *> fixTableLists;
+    QWidget *progressWidget;
     QWidget *searchArea;
     QWidget *tabNameEditArea;
     void setAutoSaveOn(bool);
@@ -127,6 +137,7 @@ protected:
     void writeSettings();
 signals:
     void autoSaveOn(bool);
+    void cancelSessionRestore();
     void createWindow(MainWindow *);
     void copyWindow(MainWindow *);
     void deleteWindow(MainWindow *);
@@ -137,6 +148,7 @@ private:
     QString  lastSelectedDir;
     QString fileFilter;
     int windowDataID;
+    bool loadingActive;
 
 };
 

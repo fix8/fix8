@@ -5,6 +5,7 @@
         <file>images/64x64/application-exit.png</file>
         <file>images/128x128/application-exit.png</file>
         <file>images/32x32/folder-favorites.png</file>
+        <file>images/32x32/background.png</file>
         <file>images/32x32/system-file-manager.png</file>
         <file>images/48x48/system-file-manager.png</file>
         <file>images/48x48/folder-favorites.png</file>
@@ -39,5 +40,6 @@
         <file>images/svg/forward.svg</file>
         <file>images/svg/saveOff.svg</file>
         <file>images/svg/saveOn.svg</file>
+        <file>qml/loadProgress.qml</file>
     </qresource>
 </RCC>

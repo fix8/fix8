@@ -8,7 +8,8 @@
 
 using namespace GUI;
 Fix8Log::Fix8Log(QObject *parent) :
-    QObject(parent),firstTimeToUse(false),database(0),autoSaveOn(false)
+    QObject(parent),firstTimeToUse(false),database(0),autoSaveOn(false),
+    cancelSessionRestore(false)
 {
     Globals::Instance()->version = 0.1;
     Globals::Instance()->versionStr = "0.1";
@@ -39,6 +40,7 @@ void Fix8Log::wireSignalAndSlots(MainWindow *mw)
     connect(mw,SIGNAL(deleteWindow(MainWindow*)),this,SLOT(deleteMainWindowSlot(MainWindow*)));
     connect(mw,SIGNAL(exitApp()),this,SLOT(exitAppSlot()));
     connect(mw,SIGNAL(autoSaveOn(bool)),this,SLOT(autoSaveOnSlot(bool)));
+    connect(mw,SIGNAL(cancelSessionRestore()),this,SLOT(cancelSessionRestoreSlot()));
     mw->setAutoSaveOn(autoSaveOn);
 }
 void Fix8Log::deleteMainWindowSlot(MainWindow *mw)
@@ -123,12 +125,13 @@ bool Fix8Log::init()
     }
 
     // initial screeen
-    MainWindow  *initialMainWindow = new MainWindow();
+    MainWindow  *initialMainWindow = new MainWindow(true);
+
     initialMainWindow->show();
-    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,20);
 
     QList <WindowData> windowDataList = database->getWindows();
-    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
+    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,20);
 
     QListIterator <WindowData> iter(windowDataList);
     QStringList errorStrList;
@@ -150,11 +153,13 @@ bool Fix8Log::init()
                     isInitial = false;
                 }
                 else
-                    newMW  =new MainWindow();
+                    newMW  =new MainWindow(true);
                 newMW->setWindowData(wd);
                 wireSignalAndSlots(newMW);
                 mainWindows.append(newMW);
                 newMW->setAutoSaveOn(autoSaveOn);
+                newMW->show();
+
                 QListIterator <WorkSheetData> iter2(wsdList);
                 while(iter2.hasNext()) {
                     model = 0;
@@ -164,20 +169,21 @@ bool Fix8Log::init()
                         model = currentItemIter.value();
                     }
                     else {
-                        qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
-
+                        newMW->setLoadMessage("Loading File " + wsd.fileName);
                         model = readLogFile(wsd.fileName,errorStr);
-                        qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
-
+                        qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,4);
+                        if (cancelSessionRestore) {
+                            newMW->setLoading(false);
+                            goto done;
+                        }
                         if (!model)
                             errorStrList.append(errorStr);
                         else
                             fileNameModelMap.insert(wsd.fileName,model);
                     }
+                    newMW->setLoading(false);
                     if (model) {
                         newMW->addWorkSheet(model,wsd);
-
-                        newMW->show();
                     }
                 }
             }
@@ -185,6 +191,7 @@ bool Fix8Log::init()
         qDebug() << "TODO - Display error messages here, and if no work sheets created lets delete main window" << __FILE__ << __LINE__;
         displayConsoleMessage("Session restored from autosave");
     }
+done:
     // if no main windows lets create one
     if (mainWindows.count() < 1) {
         newMW = new MainWindow();
@@ -261,4 +268,10 @@ void Fix8Log::writeSettings()
 void Fix8Log::lastWindowClosedSlot()
 {
     qDebug() << "Last Window closed";
+}
+void Fix8Log::cancelSessionRestoreSlot()
+{
+    qDebug() << "Fix Log Cancel Session Restore";
+    cancelSessionRestore = true;
+    displayConsoleMessage("Session Restore Cancelled");
 }

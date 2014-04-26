@@ -57,7 +57,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
         headerItem[i] = new QStandardItem(WorkSheet::headerLabel[i]);
         model->setHorizontalHeaderItem(i,headerItem[i]);
     }
-    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,20);
+    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,5);
 
     QList <GUI::Message> msgList;
     bstatus =  dataFile.open(QIODevice::ReadOnly);
@@ -79,9 +79,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
         ba = dataFile.readLine();
         linecount++;
     }
-    qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,20);
 
-    qDebug() << "IN readLogFile, num of lines: " << linecount << __FILE__ << __LINE__;
     dataFile.seek(0);
     model->setRowCount(linecount);
     int colPosition = 0;
@@ -107,8 +105,16 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
                 MessageField mf(itr->first,name,var);
                 mlf->append(mf);
             }
-            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,40);
-
+            if (i%100 == 0) { // every 100 iterations allow gui to process events
+                qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,3);
+                if (cancelSessionRestore) {
+                    qDebug() << "Does clear delete objects - if not have memory leak" << __FILE__ << __LINE__;
+                    model->clear();
+                    delete model;
+                    dataFile.close();
+                    return 0;
+                }
+            }
             /* Latter do malolocs together as an array to optimize speed
         seqItem = new IntItem();
         senderItem =  new QStandardItem();

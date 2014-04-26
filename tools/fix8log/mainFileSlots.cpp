@@ -42,10 +42,8 @@ void MainWindow::createTabSlot()
 }
 void MainWindow::fileDirChangedSlot(const QString &newDir)
 {
-    qDebug() << "FILE DIR CHANGED SLOT";
     QSettings settings("fix8","logviewer");
     QByteArray ba = fileDialog->saveState();
-    qDebug() << "saving dir state as : " << ba;
     settings.setValue("FileDirState",ba);
     settings.setValue("LastSelectedDir",newDir);
 }
@@ -92,10 +90,24 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         if (havePreviousHeader)
             workSheet->fixTable->horizontalHeader()->restoreState(prevHeaderSettings);
         QList <GUI::Message> messageList;
-        bstatus = workSheet->loadFileName(fileName,messageList);
+        index = tabW->addTab(workSheet,fi.fileName());
+        tabW->setToolTip(fileName);
+        tabW->setCurrentWidget(workSheet);
+        workSheet->showLoadProcess(true);
+        stackW->setCurrentWidget(workAreaSplitter);
+        quint32 returnStatus = 0;
+        bstatus = workSheet->loadFileName(fileName,messageList,returnStatus);
         if (!bstatus) {
-            GUI::Message msg("Loading File: " + fileName + " Failed",GUI::Message::ErrorMsg);
-            messageList.append(msg);
+            if (returnStatus == CANCEL) {
+                GUI::Message msg("Canceled Loading File: " + fileName);
+                messageList.append(msg);
+                tabW->removeTab(index);
+                delete workSheet;
+            }
+            else {
+                GUI::Message msg("Loading File: " + fileName + " Failed",GUI::Message::ErrorMsg);
+                messageList.append(msg);
+            }
         }
         if (messageList.count() > 0) {
             QListIterator <GUI::Message> messageIter(messageList);
@@ -104,8 +116,7 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
                 displayConsoleMessage(message);
             }
         }
-        index = tabW->addTab(workSheet,fi.fileName());
-        tabW->setToolTip(fileName);
+
     }
     if (tabW->count() > 0) {
         stackW->setCurrentWidget(workAreaSplitter);
@@ -151,26 +162,19 @@ void MainWindow::tabCloseRequestSlot(int tabPosition)
         stackW->setCurrentWidget(noDataL);
         copyTabA->setEnabled(false);
         showMessageA->setEnabled(false);
-
     }
 
     if (worksheet) {
-        qDebug() << "1 Delete Work SHeet later" << __FILE__;
         delete worksheet;
-        qDebug() << "2 Delete Work SHeet later" << __FILE__;
-
     }
-
 }
 void MainWindow::closeSlot()
 {
     writeSettings();
     emit deleteWindow(this);
-
 }
 void MainWindow::copyWindowSlot()
 {
-    qDebug() << "Cop Window" << __FILE__;
     emit copyWindow(this);
 }
 void MainWindow::copyTabSlot()

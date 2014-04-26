@@ -165,3 +165,8 @@ void MainWindow::autoSaveOnSlot(bool isOn)
 {
     emit autoSaveOn(isOn);
 }
+void MainWindow::cancelSessionRestoreSlot()
+{
+    qDebug()  << "Cancel Session Restore Slot " << __FILE__ << __LINE__;
+    emit cancelSessionRestore();
+}

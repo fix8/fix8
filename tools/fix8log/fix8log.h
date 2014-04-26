@@ -19,6 +19,7 @@ public:
     void writeSettings();
 public slots:
     void autoSaveOnSlot(bool);
+    void cancelSessionRestoreSlot();
     void createNewWindowSlot(MainWindow *mw=0);
     void copyWindowSlot(MainWindow *mw);
     void deleteMainWindowSlot(MainWindow *mw);
@@ -35,6 +36,7 @@ protected:
     Database *database;
     bool autoSaveOn;
     QMap <QString, QStandardItemModel *> fileNameModelMap;
+    bool cancelSessionRestore;
 };
 
 #endif // FIX8LOG_H
