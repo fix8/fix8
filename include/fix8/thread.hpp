@@ -97,7 +97,7 @@ protected:
 		_thread.start(_run<T>, sub);
 		return 0;
 #elif (THREAD_SYSTEM == THREAD_TBB)
-		_thread.Reset(new tbb::tbb_thread(_run<T>, sub));
+		_thread.reset(new tbb::tbb_thread(_run<T>, sub));
 		return 0;
 #endif
 	}
