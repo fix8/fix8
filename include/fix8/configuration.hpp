@@ -199,7 +199,7 @@ private:
 			}
 		}
 
-		return map_name.size();
+		return static_cast<unsigned>(map_name.size());
 	}
 
 public:

@@ -1001,7 +1001,7 @@ inline char *CopyString(const std::string& src, char *target, unsigned limit=0)
 {
    if (!target)
       return 0;
-   const unsigned sz(limit && src.size() > limit ? limit : src.size() + 1);
+   const unsigned sz(limit && static_cast<unsigned>(src.size()) > limit ? limit : (unsigned)src.size() + 1);
    src.copy(target, sz - 1);
    target[sz - 1] = 0;
    return target;

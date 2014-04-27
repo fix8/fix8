@@ -562,7 +562,7 @@ illegal_char:
 		}
 	}
 
-	return attrs_ ? attrs_->size() : 0;
+	return attrs_ ? static_cast<int>(attrs_->size()) : 0;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -623,7 +623,7 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 		if (atag && aval && !findAttrByValue(*atag, *aval))
 			return 0;
 		eset.insert(this);
-		return eset.size();
+		return static_cast<int>(eset.size());
 	}
 
 	if (children_)
@@ -639,7 +639,7 @@ int XmlElement::find(const string& what, XmlSet& eset, bool ignorecase,
 			pair<XmlSubEls::iterator, XmlSubEls::iterator> result(children_->equal_range(nwhat));
 			while (result.first != result.second)
 				(*result.first++).second->find(lwhat, eset, ignorecase, atag, aval, delim);
-			return eset.size();
+			return static_cast<int>(eset.size());
 		}
 	}
 

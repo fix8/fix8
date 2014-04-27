@@ -83,7 +83,7 @@ int Configuration::process()
 		if (!load_map("fix8/" + get<0>(pp), _groups[get<1>(pp)], get<2>(pp)) && get<2>(pp))
 			throw ConfigurationError("could not locate server session in configuration", get<0>(pp));
 
-	return _groups[g_sessions].size();
+	return static_cast<int>(_groups[g_sessions].size());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -195,7 +195,7 @@ Schedule Configuration::create_login_schedule(const XmlElement *from) const
 	string name;
 	const XmlElement *which;
 	return from_or_default(from, "login", name) && (which = find_group(g_logins, name))
-		? create_schedule(which) : Schedule{};
+		? create_schedule(which) : Schedule();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -372,7 +372,7 @@ unsigned Configuration::get_all_sessions(vector<const XmlElement *>& target, con
 	for (const auto *pp : _allsessions)
 		if (role == Connection::cn_unknown || get_role(pp) == role)
 			target.push_back(pp);
-	return target.size();
+	return static_cast<unsigned>(target.size());
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -302,17 +302,17 @@ TEST(message, calc_chksum)
 		 "49=CME\00150=G\00156=1G9125N\00157=ADMIN\001143=US,IL\00158=Logout confirmed.\001789=618\00110=121\001");
 
     EXPECT_EQ(unsigned(172), Message::calc_chksum(msg));
-    EXPECT_EQ(unsigned(121), Message::calc_chksum(msg, 0, msg.length()-7));
+    EXPECT_EQ(unsigned(121), Message::calc_chksum(msg, 0, static_cast<int>(msg.length()-7)));
     EXPECT_EQ(unsigned(15), Message::calc_chksum(msg, 10, 5));
     EXPECT_EQ(unsigned(16), Message::calc_chksum(msg, 10, 6));
 
     f8String empty;
     EXPECT_EQ(unsigned(0),Message::calc_chksum(empty));
 
-    EXPECT_EQ(unsigned(172), Message::calc_chksum(msg.c_str(), msg.length()));
-    EXPECT_EQ(unsigned(121), Message::calc_chksum(msg.c_str(), msg.length(), 0, msg.length()-7));
-    EXPECT_EQ(unsigned(15), Message::calc_chksum(msg.c_str(), msg.length(), 10, 5));
-    EXPECT_EQ(unsigned(16), Message::calc_chksum(msg.c_str(), msg.length(), 10, 6));
+    EXPECT_EQ(unsigned(172), Message::calc_chksum(msg.c_str(), static_cast<int>(msg.length())));
+    EXPECT_EQ(unsigned(121), Message::calc_chksum(msg.c_str(), static_cast<unsigned>(msg.length()), 0, static_cast<int>(msg.length())-7));
+    EXPECT_EQ(unsigned(15), Message::calc_chksum(msg.c_str(), static_cast<unsigned>(msg.length()), 10, 5));
+    EXPECT_EQ(unsigned(16), Message::calc_chksum(msg.c_str(), static_cast<unsigned>(msg.length()), 10, 6));
     EXPECT_EQ(unsigned(0), Message::calc_chksum(empty.c_str()));
 }
 
@@ -337,13 +337,13 @@ void extract_element_test(f8String msg, f8String expect_tag, f8String expect_val
 {
     char cVal[MAX_FLD_LENGTH];
     char cTag[MAX_FLD_LENGTH];
-    MessageBase::extract_element(msg.c_str(), msg.length(), cTag, cVal);
+    MessageBase::extract_element(msg.c_str(), static_cast<unsigned>(msg.length()), cTag, cVal);
     EXPECT_EQ(expect_val, f8String(cVal));
     EXPECT_EQ(expect_tag, f8String(cTag));
 
     f8String sVal;
     f8String sTag;
-    MessageBase::extract_element(msg.c_str(), msg.length(), sTag, sVal);
+    MessageBase::extract_element(msg.c_str(), static_cast<unsigned>(msg.length()), sTag, sVal);
     EXPECT_EQ(expect_val, sVal);
     EXPECT_EQ(expect_tag, sTag);
 }
