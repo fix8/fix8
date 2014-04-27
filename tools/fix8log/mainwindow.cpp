@@ -198,9 +198,7 @@ void MainWindow::buildMainWindow()
     consoleDock->setFont(fnt);
     consoleDock->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea);
     consoleDock->setFloating(false);
-    optionMenu->addAction(hideToolBarA);
-    optionMenu->addAction(hideSearchToolBarA);
-    optionMenu->setTearOffEnabled(true);
+
     hideColumMenu = new QMenu(this);
     hideColumMenu->setTitle(tr("Columns"));
     hideColumMenu->setTearOffEnabled(true);
@@ -243,13 +241,17 @@ void MainWindow::buildMainWindow()
     iconsStyleGroup->addAction(iconsWithTextA);
     iconsStyleGroup->addAction(iconsTextOnlyA);
 
+    hideConsoleA = consoleDock->toggleViewAction();
     configureIconsMenu->addMenu(iconSizeMenu);
     configureIconsMenu->addMenu(iconStyleMenu);
-
+    optionMenu->addAction(hideToolBarA);
+    optionMenu->addAction(hideSearchToolBarA);
+    optionMenu->addAction(hideConsoleA);
+    optionMenu->addAction(showMessageA);
+    optionMenu->setTearOffEnabled(true);
     optionMenu->addMenu(hideColumMenu);
     optionMenu->addMenu(configureIconsMenu);
-    optionMenu->addSeparator();
-    optionMenu->addAction(showMessageA);
+
     connect(closeA,SIGNAL(triggered()),this,SLOT(closeSlot()));
     fileMenu->addAction(autoSaveA);
     fileMenu->addAction(copyTabA);
@@ -276,8 +278,7 @@ void MainWindow::buildMainWindow()
     connect(configPB,SIGNAL(clicked()),this,SLOT(configSlot()));
 
     // restore should be in settings but must come after
-    hideConsoleA = consoleDock->toggleViewAction();
-    optionMenu->addAction(hideConsoleA);
+
 
     stackW = new QStackedWidget(this);
     setCentralWidget(stackW);

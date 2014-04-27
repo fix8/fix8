@@ -12,7 +12,10 @@ MessageArea::MessageArea(QWidget *parent) :
     QStringList headerLabels;
     headerLabels << "Field" <<  "Name" << "Value";
     model->setHorizontalHeaderLabels(headerLabels);
-    tableView = new QTableView(this);
+    QWidget *workArea = new QWidget(this);
+    QVBoxLayout *wBox = new QVBoxLayout();
+    workArea->setLayout(wBox);
+    tableView = new QTableView(workArea);
     tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tableView->setModel(model);
     tableView->verticalHeader()->setVisible(false);
@@ -21,10 +24,39 @@ MessageArea::MessageArea(QWidget *parent) :
     horHeader->setStretchLastSection(true);
     horHeader->setSectionsMovable(true);
     horHeader->setSortIndicatorShown(true);
-    stackLayout->insertWidget(0,tableView);
+
+    infoArea = new QWidget(workArea);
+    QFont fnt = infoArea->font();
+    fnt.setBold(true);
+    fnt.setPointSize(fnt.pointSize()+2);
+    infoArea->setFont(fnt);
+    QPalette pal = infoArea->palette();
+    QColor fgColor = pal.color(QPalette::WindowText);
+    QColor bgColor = pal.color(QPalette::Window);
+    pal.setColor(QPalette::WindowText,bgColor);
+    pal.setColor(QPalette::Window,fgColor);
+    infoArea->setAutoFillBackground(true);
+    infoArea->setPalette(pal);
+    QFormLayout *infoForm = new QFormLayout();
+    infoArea->setLayout(infoForm);
+    seqNumV = new QLabel(infoArea);
+    seqNumV->setAlignment(Qt::AlignCenter);
+    messageTypeV = new QLabel(infoArea);
+    messageTypeV->setAlignment(Qt::AlignCenter);
+    infoForm->addRow("Seq Num",seqNumV);
+    infoForm->addRow("Mesg Type",messageTypeV);
+
+    wBox->addWidget(tableView,1);
+    wBox->addWidget(infoArea,0,Qt::AlignBottom);
+
+    stackLayout->insertWidget(0,workArea);
 }
-void MessageArea::setMessageFieldList(MessageFieldList *mfl)
+void MessageArea::setMessageFieldList(MessageFieldList *mfl,int seqNum, QString &msgType)
+
+
 {
+    seqNumV->setText(QString::number(seqNum));
+    messageTypeV->setText(msgType);
     model->removeRows(0,model->rowCount());
     if (!mfl || (mfl->count() < 1))
         return;

@@ -31,7 +31,6 @@ public:
     ~WorkSheet();
     enum {MsgSeqNum,SenderCompID,TargetCompID,SendingTime,BeginStr,BodyLength,CheckSum,EncryptMethod,HeartBtInt,MessageType,NumColumns};
     static QString headerLabel[NumColumns];
-    //FixTable(QWidget * parent = 0);
     QString getFileName();
     QStandardItemModel *getModel();
     WorkSheetData getWorksheetData();
@@ -63,6 +62,7 @@ private:
     QWidget *progressWidget;
     QQuickItem  *qmlObject;
     bool cancelLoad;
+    int linecount;
 
 };
 

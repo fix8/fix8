@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     databaseWindows.cpp \
     worksheetdata.cpp \
     databaseWorksheets.cpp \
-    fix8logDataFile.cpp
+    fix8logDataFile.cpp \
+    messageitem.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -47,7 +48,8 @@ HEADERS  += mainwindow.h \
     messagearea.h \
     database.h \
     windowdata.h \
-    worksheetdata.h
+    worksheetdata.h \
+    messageitem.h
 
 RESOURCES += \
     resources.qrc

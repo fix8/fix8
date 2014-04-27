@@ -10,6 +10,12 @@ Rectangle {
     function doCancel() {
         cancel()
     }
+    function  setLoadFile(str1,str2)
+    {
+        message.text = str1;
+        message2.text = str2;
+        state = "loadingfile"
+    }
 
     function setMessage(str) {
         message.text = str;
@@ -59,7 +65,15 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: busyID.bottom
         anchors.topMargin: 75
-        text:"Loading File"
+    }
+    Text {
+        id:message2
+        font.bold: true;
+        font.italic: true
+        color:"white"
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: message.bottom
+        anchors.topMargin: 22
     }
     Button {
         id:cancelButton
@@ -80,6 +94,14 @@ Rectangle {
         State {
             name: "loading"
             PropertyChanges { target: busyID; running:true}
+            PropertyChanges { target:message2; opacity: 0.0}
+            },
+        State {
+            name: "loadingfile"
+            PropertyChanges { target: busyID; running:true}
+            PropertyChanges { target:title; opacity: 0.0}
+             PropertyChanges { target:horLine; opacity: 0.0}
+             PropertyChanges { target:message2; opacity: 1.0}
             },
         State {
             name:"finished"

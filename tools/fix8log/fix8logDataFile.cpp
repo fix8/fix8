@@ -82,6 +82,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
 
     dataFile.seek(0);
     model->setRowCount(linecount);
+    model->setColumnCount(WorkSheet::NumColumns);
     int colPosition = 0;
     int rowPosition = 0;
     myTimer.start();
@@ -115,17 +116,7 @@ QStandardItemModel *Fix8Log::readLogFile(const QString &fileName,QString &errorS
                     return 0;
                 }
             }
-            /* Latter do malolocs together as an array to optimize speed
-        seqItem = new IntItem();
-        senderItem =  new QStandardItem();
-        targetItem =  new QStandardItem();
-        sendTimeItem = new QStandardItem();
-        beginStrItem = new QStandardItem();
-        bodyLengthItem = new IntItem();
-        checkSumItem = new IntItem();
-        encryptMethodItem = new QStandardItem(QString::number(num));
-        heartBeatIntItem = new IntItem(num);
-        */
+
             QVariant userDataVar;
             userDataVar.setValue((void*)mlf);
             int num = snum();

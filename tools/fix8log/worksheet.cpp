@@ -23,7 +23,7 @@ QString WorkSheet::headerLabel[] =
  tr("BeginStr"), tr("BodyLength"),tr("CheckSum"),tr("EncryptMethod"),
  tr("HeartBtInt"),tr("Message Type")};
 
-WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false)
+WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false),linecount(0)
 {
     build();
     _model = new QStandardItemModel();
@@ -41,7 +41,7 @@ WorkSheet::WorkSheet(QWidget *parent ) : QWidget(parent),cancelLoad(false)
     horHeader->setSortIndicatorShown(true);
 }
 WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
-    QWidget(parent),cancelLoad(false)
+    QWidget(parent),cancelLoad(false),linecount(0)
 {
     build();
     QStandardItemModel *oldModel;
@@ -56,7 +56,7 @@ WorkSheet::WorkSheet(WorkSheet &oldws,QWidget *parent):
 }
 WorkSheet::WorkSheet(QStandardItemModel *model,
                      const WorkSheetData &wsd,QWidget *parent):
-    QWidget(parent),cancelLoad(false)
+    QWidget(parent),cancelLoad(false),linecount(0)
 {
     build();
     fixTable->setModel(model);
@@ -137,7 +137,6 @@ bool WorkSheet::loadFileName(QString &fileName,
     QString senderID;
     QVariant returnedValue;
     stackLayout->setCurrentIndex(1);
-    showLoadProcess(true);
     QFile *dataFile = new QFile(fileName);
     QList<QStandardItem *> itemList;
     bstatus =  dataFile->open(QIODevice::ReadOnly);
@@ -154,29 +153,30 @@ bool WorkSheet::loadFileName(QString &fileName,
     QString errorStr;
     //QTime myTimer;
     QElapsedTimer myTimer;
-    int linecount = 0;
+    linecount = 0;
 
     qint32 fileSize = dataFile->size();
     QByteArray ba;
 
     // get line count
-    myTimer.start();
 
     while(!dataFile->atEnd()) {
         ba = dataFile->readLine();
         linecount++;
     }
-    int nMilliseconds = myTimer.elapsed();
-    qDebug() << "TIME TO READ NUM OF LINES:" <<  nMilliseconds  << __FILE__ << __LINE__;
+    showLoadProcess(true);
+
     qDebug() << "NUM OF LINES:" <<  linecount  << __FILE__ << __LINE__;
 
     dataFile->seek(0);
     myTimer.start();
     _model->setRowCount(linecount);
+    _model->setColumnCount(NumColumns);
+    // MessageItem **messageItems = new MessageItem[NumColumns];
     int colPosition = 0;
     int rowPosition = 0;
-
-    messgeTypeItem = new QStandardItem(qstr);
+    int nMilliseconds = 0;
+    //messgeTypeItem = new MessageItem(qstr);
     while(!dataFile->atEnd()) {
         itemList.clear();
         try {
@@ -195,30 +195,20 @@ bool WorkSheet::loadFileName(QString &fileName,
                 QVariant var = trait;
                 MessageField mf(itr->first,name,var);
                 mlf->append(mf);
-                //std::string s =  *itr->second;
-                // qDebug() << "Second :" << QString::fromStdString(*itr->second.);
-                // qDebug() << "Trait Type:" << var.typeName()  << ", " << trait;
-                //std::cout << "Trait: " << trait << std::endl;
-                //const BaseMsgEntry *bme(TEX::ctx()._bme.find_ptr(itr->first));
-
             }
-            /* Latter do malolocs together as an array to optimize speed
-            seqItem = new IntItem();
-            senderItem =  new QStandardItem();
-            targetItem =  new QStandardItem();
-            sendTimeItem = new QStandardItem();
-            beginStrItem = new QStandardItem();
-            bodyLengthItem = new IntItem();
-            checkSumItem = new IntItem();
-            encryptMethodItem = new QStandardItem(QString::number(num));
-            heartBeatIntItem = new IntItem(num);
-            */
-
+            if (i%100 == 0) { // every 100 iterations allow gui to process events
+                if (cancelLoad) {
+                    showLoadProcess(false);
+                    returnCode = CANCEL;
+                    return false;
+                }
+                qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,3);
+            }
             QVariant userDataVar;
             userDataVar.setValue((void*)mlf);
             int num = snum();
             seqItem = new IntItem(num);
-            _model->setItem(rowPosition,colPosition,seqItem);
+            _model->setItem(rowPosition,0,seqItem);
             colPosition++;
             seqItem->setData(userDataVar);
 
@@ -293,21 +283,10 @@ bool WorkSheet::loadFileName(QString &fileName,
             qWarning() << "Error - " << e.what();
             msgList.append(GUI::Message(errorStr,GUI::Message::ErrorMsg));
         }
-        if (i%100 == 0) { // every 100 iterations allow gui to process events
-            if (cancelLoad) {
-                showLoadProcess(false);
-                returnCode = CANCEL;
-                return false;
-            }
-            //qDebug() << i << "Process Events" << __FILE__ << __LINE__;
-
-           qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,3);
-        }
         i++;
-
     }
     nMilliseconds = myTimer.elapsed();
-    qDebug() << "TIME TO LOAD = " << nMilliseconds;
+    qDebug() << "TIME TO LOAD (milliseconds) " << nMilliseconds;
     qstr = QString::number(_model->rowCount()) + tr(" Messages were read from file: ") + fileName;
     msgList.append(GUI::Message(qstr));
     showLoadProcess(false);
@@ -340,13 +319,18 @@ void  WorkSheet::hideColumn(int colNum, bool hideCol)
 }
 void  WorkSheet::rowSelectedSlot(QModelIndex mi)
 {
-    //QStandardItem *item = (QStandardItem *) _model->itemFromIndex(mi);
     QVariant var = mi.data(Qt::UserRole+1);
+    int row = mi.row();
+    QModelIndex otherIndex = _model->index(row,MsgSeqNum);
+    QString str =  _model->data(otherIndex).toString();
+    int seqN = str.toInt();
     MessageFieldList *mfl = (MessageFieldList *) var.value<void *>();
-    if (mfl)
-        messageArea->setMessageFieldList(mfl);
-    else
+    if (!mfl)
         qWarning() << "No Message Fields Found for row" << __FILE__ << __LINE__;
+    otherIndex = _model->index(row,MessageType);
+    str =  _model->data(otherIndex).toString();
+    messageArea->setMessageFieldList(mfl,seqN,str);
+
 
 }
 void WorkSheet::setAlias(QString &str)
@@ -370,15 +354,20 @@ void WorkSheet::cancelLoadSlot()
 void WorkSheet::showLoadProcess(bool isBeingLoaded)
 {
     QVariant returnedValue;
-    QString str;
+    QString str1;
+    QString str2;
     if (isBeingLoaded) {
         stackLayout->setCurrentIndex(1);
         if (!qmlObject)
             qWarning() << "Failed to set load message, qmlObject = 0"
                        << __FILE__ << __LINE__;
         else {
-            str = "Loading : " + fixFileName;
-            QMetaObject::invokeMethod (qmlObject, "setMessage", Q_RETURN_ARG(QVariant, returnedValue),  Q_ARG(QVariant,str));
+            str1 = "Loading : " + fixFileName;
+            str2 = "(Number of records:" + QString::number(linecount) + ")";
+            QMetaObject::invokeMethod (qmlObject, "setLoadFile",
+                                       Q_RETURN_ARG(QVariant, returnedValue),
+                                       Q_ARG(QVariant,str1),
+                                       Q_ARG(QVariant,str2));
         }
     }
     else

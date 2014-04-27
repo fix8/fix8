@@ -96,7 +96,10 @@ void MainWindow::fileSelectionFinishedSlot(int returnCode)
         workSheet->showLoadProcess(true);
         stackW->setCurrentWidget(workAreaSplitter);
         quint32 returnStatus = 0;
+        workSheet->setUpdatesEnabled(false);
         bstatus = workSheet->loadFileName(fileName,messageList,returnStatus);
+        workSheet->setUpdatesEnabled(true);
+
         if (!bstatus) {
             if (returnStatus == CANCEL) {
                 GUI::Message msg("Canceled Loading File: " + fileName);
