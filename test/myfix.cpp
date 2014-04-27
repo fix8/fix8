@@ -88,32 +88,7 @@ Usage: f8test [-NRScdhlmoqrsv]\n
 */
 
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <memory>
-#include <fstream>
-#include <iomanip>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <set>
-#include <vector>
-#include <iterator>
-#include <algorithm>
-#include <typeinfo>
-#include <thread>
-#ifdef _MSC_VER
-#include <signal.h>
-#include <conio.h>
-#else
-#include <sys/ioctl.h>
-#include <signal.h>
-#include <termios.h>
-#endif
-
-#include <errno.h>
-#include <string.h>
-
+#include "precomp.hpp"
 // f8 headers
 #include <fix8/f8includes.hpp>
 //#include <fix8/zeromq_mbus.hpp>

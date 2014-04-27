@@ -34,24 +34,8 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-#include <tuple>
-
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
+#include <fix8/f8config.h>
 #ifdef HAVE_OPENSSL
 #include <Poco/Net/Context.h>
 #endif

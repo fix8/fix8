@@ -4,10 +4,12 @@
     <ClInclude Include="..\test\Perf_classes.hpp" />
     <ClInclude Include="..\test\Perf_router.hpp" />
     <ClInclude Include="..\test\Perf_types.hpp" />
+    <ClInclude Include="..\test\precomp.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\test\Perf_classes.cpp" />
     <ClCompile Include="..\test\Perf_traits.cpp" />
     <ClCompile Include="..\test\Perf_types.cpp" />
+    <ClCompile Include="..\test\precomp.cpp" />
   </ItemGroup>
 </Project>

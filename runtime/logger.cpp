@@ -33,23 +33,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-----------------------------------------------------------------------------------------
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <iterator>
-#include <memory>
-#include <iomanip>
-#include <algorithm>
-#include <numeric>
-#include <time.h>
-#ifndef _MSC_VER
-#include <strings.h>
-#endif
-
+#include "precomp.hpp"
 #include <fix8/f8includes.hpp>
 
 //-------------------------------------------------------------------------------------------------

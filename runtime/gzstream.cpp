@@ -29,13 +29,11 @@
 // DD: 05/03/2012 - changes to improve portability; ios:out append enabled;
 //
 
+#include "precomp.hpp"
 #include <fix8/f8config.h>
 #ifdef HAVE_ZLIB_H
 
 #include <fix8/gzstream.hpp>
-#include <iostream>
-#include <string.h>  // for memcpy
-
 
 #ifdef GZSTREAM_NAMESPACE
 namespace GZSTREAM_NAMESPACE {
