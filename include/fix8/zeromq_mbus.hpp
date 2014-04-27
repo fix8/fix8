@@ -34,96 +34,82 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 */
 //-------------------------------------------------------------------------------------------------
-#ifndef FIX8_MPMC_HPP_
-#define FIX8_MPMC_HPP_
+#ifndef FIX8_ZEROMQ_MBUS_
+#define FIX8_ZEROMQ_MBUS_
 
 //-------------------------------------------------------------------------------------------------
-// provide generic names to Multi Producer Multi Consumer queues and mutexes from
-// different libraries
+#if defined HAS_ZEROMQ_MBUS
+#include <zmq.hpp>
 
 //-------------------------------------------------------------------------------------------------
-# include <atomic>
-template<typename T> using f8_atomic = std::atomic<T>;
-
-//-------------------------------------------------------------------------------------------------
-#if (MPMC_SYSTEM == MPMC_TBB)
-
-# include <tbb/concurrent_queue.h>
-# include <tbb/mutex.h>
-
-using f8_mutex = tbb::mutex;
-using f8_spin_lock = tbb::spin_mutex;
-template<typename T> using f8_concurrent_queue = tbb::concurrent_bounded_queue<T>;
-
-//-------------------------------------------------------------------------------------------------
-#elif (MPMC_SYSTEM == MPMC_FF)
-
-# include <ff/allocator.hpp>
-# include <ff/buffer.hpp>
-# include <ff/MPMCqueues.hpp>
-# include <sched.h>
-
-// std wrappers for ff
-# include <ff_wrapper.hpp>
-
-template<typename T> using f8_concurrent_queue = FIX8::ff_unbounded_queue<T>;
-
-//-------------------------------------------------------------------------------------------------
-#endif // MPMC_SYSTEM
-
-//----------------------------------------------------------------------------------------
-/// Your bog standard RAII scoped lock
-namespace FIX8 {
-
-template<typename T>
-class f8_scoped_lock_impl
+namespace FIX8
 {
-	T *_local_mutex = nullptr;
-	bool _disabled = false;
 
+//-------------------------------------------------------------------------------------------------
+namespace MBUS
+{
+
+//-------------------------------------------------------------------------------------------------
+/// Base class for our message
+class ZeromqMessage : public GenericMessage
+{
 public:
-	f8_scoped_lock_impl() = default;
-	f8_scoped_lock_impl(T& mutex) { acquire(mutex); }
-	f8_scoped_lock_impl(T& mutex, bool disable) : _disabled(disable)
-	{
-		if (!_disabled)
-			acquire(mutex);
-	}
+	/*! Ctor. */
+	ZeromqMessage() {}
 
-	~f8_scoped_lock_impl() { release(); }
-
-	f8_scoped_lock_impl(const f8_scoped_lock_impl&) = delete;
-	f8_scoped_lock_impl& operator=(const f8_scoped_lock_impl&) = delete;
-
-	void acquire(T& mutex)
-	{
-		mutex.lock();
-		_local_mutex = &mutex;
-	}
-
-	bool try_acquire(T& mutex)
-	{
-		bool result(mutex.try_lock());
-		if(result)
-			_local_mutex = &mutex;
-		return result;
-	}
-
-	void release()
-	{
-		if (!_disabled && _local_mutex)
-		{
-			_local_mutex->unlock();
-			_local_mutex = nullptr;
-		}
-	}
+	/// Dtor.
+	virtual ~ZeromqMessage() {}
 };
 
-using f8_scoped_lock = f8_scoped_lock_impl<f8_mutex>;
-using f8_scoped_spin_lock = f8_scoped_lock_impl<f8_spin_lock>;
+//-------------------------------------------------------------------------------------------------
+/// Base class for our subscriber
+class ZeromqBusSubscriber : public MessageBusSubscriber
+{
+public:
+	/*! Ctor. */
+	ZeromqBusSubscriber() {}
 
-} // namespace
+	/// Dtor.
+	virtual ~ZeromqBusSubscriber() {}
+
+	/*! Callback method on receipt of message */
+	virtual bool receive_message(const GenericMessage *msg) { return false; }
+};
+
+//-------------------------------------------------------------------------------------------------
+/// Encapsulates a message bus context
+class ZeromqBus : public MessageBus
+{
+public:
+	/*! Ctor. */
+	ZeromqBus() {}
+
+	/// Dtor.
+	virtual ~ZeromqBus() {}
+
+	/*! Starts the messaging subsystem */
+	virtual bool start() { return true; }
+
+	/*! Stops the messaging subsystem */
+	virtual bool stop() { return true; }
+
+	/*! Publishes a message to all aubscribers for given topic*/
+	virtual bool publish(const f8String& topic, const ZeromqMessage *msg) { return false; }
+
+	/*! Creates a subscription for the given topic */
+	virtual bool subscribe(MessageBusSubscriber *subscriber, const f8String& topic) { return false; }
+
+	/*! Creates a subscription for the given topic, returns new subscriber */
+	virtual MessageBusSubscriber *subscribe(const f8String& topic) { return 0; }
+
+	/*! Removes a subscription for a given subscriber */
+	virtual bool unsubscribe(MessageBusSubscriber *subscriber, const f8String& topic) { return false; }
+};
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // _FIX8_MPMC_HPP_
+} // MBUS
+} // FIX8
+
+#endif // HAS_ZEROMQ_MBUS
+#endif // FIX8_ZEROMQ_MBUS_

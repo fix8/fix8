@@ -260,7 +260,7 @@ struct PeerResetConnection : f8Exception
 /// An invalid configuration parameter was passed.
 struct InvalidConfiguration : f8Exception
 {
-	InvalidConfiguration(const std::string& str) { format("Invalid configuration setting in", str); }
+	InvalidConfiguration(const std::string& str) { format("Invalid configuration setting in", str.empty() ? "unknown" : str); }
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -49,7 +49,11 @@ Environment* Environment::m_Environment = NULL;
  * TODO
  */
 Environment::Environment(){
-    pthread_mutex_init(&mutex_set_policy, NULL);
+    if (pthread_mutex_init(&mutex_set_policy, NULL)!=0) {
+        ff::error("FATAL ERROR: Environment: pthread_mutex_init fails!\n");
+        abort();
+    }
+
     nodeId =0;
     
     //cl_int status;

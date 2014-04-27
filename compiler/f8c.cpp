@@ -85,6 +85,7 @@ e.g.\n
 #include <set>
 #include <iterator>
 #include <algorithm>
+#include <algorithm>
 
 #include <errno.h>
 #include <string.h>
@@ -285,10 +286,10 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	scoped_ptr<XmlElement> cfr;
+	unique_ptr<XmlElement> cfr;
 	if (second_only)
 	{
-		cfr.Reset(XmlElement::Factory(inputFile));
+		cfr.reset(XmlElement::Factory(inputFile));
 		if (!cfr.get())
 		{
 			cerr << "Error reading file \'" << inputFile << '\'';
@@ -302,7 +303,7 @@ int main(int argc, char **argv)
 	{
 		cout << "expanding " << shortName << ' ';
 		cout.flush();
-		scoped_ptr<ostream> pre_out(open_ofile(odir, shortName + ".p1", precompFile));
+		unique_ptr<ostream> pre_out(open_ofile(odir, shortName + ".p1", precompFile));
 		if (!pre_out.get())
 		{
 			cerr << endl << "Error opening: " << odir << '/' << shortName;
@@ -311,7 +312,7 @@ int main(int argc, char **argv)
 			cerr << endl;
 			return 1;
 		}
-		scoped_ptr<XmlElement> pcmp(XmlElement::Factory(inputFile)), pcmpfixt;
+		unique_ptr<XmlElement> pcmp(XmlElement::Factory(inputFile)), pcmpfixt;
 		if (!pcmp.get())
 		{
 			cerr << "Error reading file \'" << inputFile << '\'' << " (" << precompFile << ')';
@@ -323,7 +324,7 @@ int main(int argc, char **argv)
 		unsigned xmlsz(pcmp->GetLineCnt()), fixtsz(0);
 		if (!fixt.empty())
 		{
-			pcmpfixt.Reset(XmlElement::Factory(fixt));
+			pcmpfixt.reset(XmlElement::Factory(fixt));
 			if (!pcmpfixt.get())
 			{
 				cerr << "Error reading file \'" << fixt << '\'';
@@ -340,8 +341,8 @@ int main(int argc, char **argv)
 			precompfixt(*pcmpfixt, *pcmp, *pre_out, nounique);
 		else
 			precomp(*pcmp, *pre_out);
-		pre_out.Reset();
-		cfr.Reset(XmlElement::Factory(precompFile));
+		pre_out.reset();
+		cfr.reset(XmlElement::Factory(precompFile));
 		cout << cfr->GetLineCnt() << " lines" << endl;
 		if (!retain_precomp)
 			remove(precompFile.c_str());
@@ -389,7 +390,7 @@ int main(int argc, char **argv)
             size_t added(0);
             while (istr.good())
             {
-               scoped_ptr<XmlElement> nel(new XmlElement(istr, 0, flds));
+               unique_ptr<XmlElement> nel(new XmlElement(istr, 0, flds));
                string what;
                if (nel->GetTag().empty() || !nel->GetAttr("messages", what) || !flds->Insert(nel.get()))
                   continue;
@@ -417,7 +418,7 @@ int main(int argc, char **argv)
                   nel->GetAttr(name_tag, field_name);
                   ostr << "<field name='" << field_name << "' required='" << mandatory << "' />";
                   istringstream mistr(ostr.str());
-                  scoped_ptr<XmlElement> mel(new XmlElement(mistr, 0, msgs));
+                  unique_ptr<XmlElement> mel(new XmlElement(mistr, 0, msgs));
                   if (!mel->GetTag().empty() && tmsg->Insert(mel.get()))
                      mel.release();
                }

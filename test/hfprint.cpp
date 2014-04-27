@@ -114,20 +114,6 @@ void sig_handler(int sig)
    }
 }
 
-//----------------------------------------------------------------------------------------
-/// Abstract file or stdin input.
-class filestdin
-{
-   std::istream *ifs_;
-   bool nodel_;
-
-public:
-   filestdin(std::istream *ifs, bool nodel=false) : ifs_(ifs), nodel_(nodel) {}
-   ~filestdin() { if (!nodel_) delete ifs_; }
-
-   std::istream& operator()() { return *ifs_; }
-};
-
 //-----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -200,7 +186,7 @@ int main(int argc, char **argv)
 			ifs().getline(buffer, bufsz);
 			if (buffer[0])
 			{
-				scoped_ptr<Message> msg(Message::factory(TEX::ctx(), buffer + offset));
+				unique_ptr<Message> msg(Message::factory(TEX::ctx(), buffer + offset));
 				if (summary)
 				{
 					MessageCount::iterator mitr(mc->find(msg->get_msgtype()));

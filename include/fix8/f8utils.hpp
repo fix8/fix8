@@ -40,6 +40,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 //-----------------------------------------------------------------------------------------
 #include <iostream>
 #include <string>
+#include <memory>
 
 #include <Poco/DateTime.h>
 #include <Poco/Net/SocketAddress.h>
@@ -244,89 +245,6 @@ inline bool operator^ (const std::basic_string<_CharT, _Traits, _Alloc>& __lhs,
 /*! Create a full path, including nested directories
     \param path path to create */
 F8API void create_path( const std::string& path );
-
-//----------------------------------------------------------------------------------------
-/// C++11 inspired scoped pointer.
-/*! \tparam T typename */
-template <typename T>
-class scoped_ptr
-{
-	T *ptr_;
-
-	/// Copy Ctor. Non-copyable.
-	scoped_ptr(const scoped_ptr&);
-
-	/// Assignment operator. Non-copyable.
-	void operator=(const scoped_ptr&);
-
-public:
-	/*! Ctor.
-	  \param p pointer to T */
-	explicit scoped_ptr(T *p=0) : ptr_(p) {}
-
-	/// Dtor. Destroys object.
-	~scoped_ptr() { delete ptr_; }
-
-	/*! Equivalence operator (other is scoped_ptr)
-	  \tparam U type of that object
-	  \return true if objects are equivalent */
-	template <typename U>
-	bool operator==(const scoped_ptr<U>& that) const { return ptr_ == that.get(); }
-
-	/*! Equivalence operator (other is ptr)
-	  \tparam U type of that object
-	  \return true if objects are equivalent */
-	template <typename U>
-	bool operator==(const scoped_ptr<U> *that) const { return ptr_ == that; }
-
-	/*! Non-equivalence operator (other is scoped_ptr)
-	  \tparam U type of that object
-	  \return true if objects are not equal */
-	template <typename U>
-	bool operator!=(const scoped_ptr<U>& that) const { return ptr_ != that.get(); }
-
-	/*! Non-equivalence operator (other is scoped_ptr)
-	  \tparam U type of that object
-	  \return true if objects are not equal */
-	template <typename U>
-	bool operator!=(const scoped_ptr<U> *that) const { return ptr_ != that; }
-
-	/*! Equivalence operator (other is scoped_ptr)
-	  \return true if objects are equivalent */
-	bool operator==(const scoped_ptr<T>& that) const { return ptr_ == that.get(); }
-
-	/*! Equivalence operator (other is ptr)
-	  \return true if objects are equivalent */
-	bool operator==(const T *that) const { return (ptr_ == that); }
-
-	/*! Non-equivalence operator (other is scoped_ptr)
-	  \return true if objects are not equal */
-	bool operator!=(const scoped_ptr<T>& that) const { return ptr_ != that.get(); }
-
-	/*! Non-equivalence operator (other is ptr)
-	  \return true if objects are not equal */
-	bool operator!=(const T *that) const { return ptr_ != that; }
-
-	/*! Member selection operator.
-	  \return pointer to object */
-	T *operator->() const { return ptr_; }
-
-	/*! Member dereference operator.
-	  \return object */
-	T& operator*() const { return *ptr_; }
-
-	/*! Member dereference operator.
-	  \return object */
-	T *release() { T *tmp(ptr_); ptr_ = 0; return tmp; }
-
-	/*! Replace the pointer with the supplied pointer.
-	  \return the original pointer */
-	T *Reset(T *p=0) { delete ptr_; return ptr_ = p; }
-
-	/*! Get the object pointer.
-	  \return object */
-	T *get() const { return ptr_; }
-};
 
 //----------------------------------------------------------------------------------------
 /// A class to contain regex matches using RegExp.
@@ -1101,32 +1019,12 @@ class Singleton
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
 
-	static T *_replace(const T* with)
-	{
-#if (MPMC_SYSTEM == MPMC_TBB)
-		return _instance.fetch_and_store(with);
-#else
-		T *was(_instance);
-		_instance = with;
-		return was;
-#endif
-	}
-
 public:
 	/// Ctor.
 	Singleton() {}
 
 	/// Dtor.
-	virtual ~Singleton()
-	{
-#if (MPMC_SYSTEM == MPMC_TBB)
-		delete _instance.fetch_and_store(0);
-#else
-		T *was(_instance);
-		delete was;
-		_instance = 0;
-#endif
-	}
+	virtual ~Singleton() { delete _instance.exchange(nullptr); }
 
 	/*! Get the instance of the underlying object. If not created, create.
 	    \return the instance */
@@ -1147,11 +1045,11 @@ public:
 	/*! Replace the instance object with a new instance.
 	    \param what the new instance
 	    \return the original instance */
-	static T *reset(T *what) { return _replace(what); }
+	static T *reset(T *what) { return _instance.exchange(what); }
 
 	/*! Get the instance of the underlying object removing it from the singleton.
 	    \return the instance */
-	static T *release() { return _replace(0); }
+	static T *release() { return _instance.exchange(nullptr); }
 };
 
 //---------------------------------------------------------------------------------------------------
@@ -1266,6 +1164,20 @@ public:
 				_raw_mode = true;
 		}
 	}
+};
+
+//----------------------------------------------------------------------------------------
+/// Abstract file or stdin input.
+class filestdin
+{
+   std::istream *ifs_;
+   bool nodel_;
+
+public:
+   filestdin(std::istream *ifs, bool nodel=false) : ifs_(ifs), nodel_(nodel) {}
+   ~filestdin() { if (!nodel_) delete ifs_; }
+
+   std::istream& operator()() { return *ifs_; }
 };
 
 //----------------------------------------------------------------------------------------

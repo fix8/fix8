@@ -169,7 +169,7 @@ unsigned MessageBase::decode_group(const unsigned short fnum, const f8String& fr
 
 	for (bool ok(true); ok && s_offset < fsize; )
 	{
-		scoped_ptr<MessageBase> grp(grpbase->create_group());
+		unique_ptr<MessageBase> grp(grpbase->create_group());
 
 		for (unsigned pos(0); s_offset < fsize && (result = extract_element(dptr + s_offset, fsize - s_offset, tag, val));)
 		{

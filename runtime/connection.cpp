@@ -294,7 +294,7 @@ int FIXWriter::execute(dthread_cancellation_token& cancellation_token)
 			_msg_queue.pop (inmsg); // will block
 			if (!inmsg)
 				break;
-			scoped_ptr<Message> msg(inmsg);
+			unique_ptr<Message> msg(inmsg);
 			_session.send_process(msg.get());
 			++processed;
 		}

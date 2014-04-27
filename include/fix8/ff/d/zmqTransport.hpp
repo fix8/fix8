@@ -30,8 +30,8 @@
   *
   */
 
-#ifndef _FF_ZMQTRANSPORT_HPP_ 
-#define _FF_ZMQTRANSPORT_HPP_
+#ifndef FF_ZMQTRANSPORT_HPP
+#define FF_ZMQTRANSPORT_HPP
 
 /* 
  * The manual of 0MQ can be found at : http://zguide.zeromq.org/
@@ -306,4 +306,4 @@ protected:
  */
 
 } // namespace
-#endif /* _ZMQTRANSPORT_HPP_INCLUDE_ */
+#endif /* FF_ZMQTRANSPORT_HPP */

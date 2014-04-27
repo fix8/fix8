@@ -231,15 +231,13 @@ int main(int argc, char **argv)
 
 		if (server)
 		{
-			ServerSession<myfix_session_server>::Server_ptr
-				ms(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX1"));
+			unique_ptr<ServerSessionBase> ms(new ServerSession<myfix_session_server>(TEX::ctx(), conf_file, "TEX1"));
 
 			for (unsigned scnt(0); !term_received; )
 			{
 				if (!ms->poll())
 					continue;
-				SessionInstance<myfix_session_server>::Instance_ptr
-					inst(new SessionInstance<myfix_session_server>(*ms));
+				unique_ptr<FIX8::SessionInstanceBase> inst(ms->create_server_instance());
 				if (!quiet)
 					inst->session_ptr()->control() |= Session::printnohb;
 				ostringstream sostr;
@@ -252,7 +250,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			scoped_ptr<ClientSession<myfix_session_client> >
+			unique_ptr<ClientSessionBase>
 				mc(reliable ? new ReliableClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1")
 							   : new ClientSession<myfix_session_client>(TEX::ctx(), conf_file, "DLD1"));
 			if (!quiet)

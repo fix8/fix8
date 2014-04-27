@@ -71,7 +71,7 @@ private:
 public:
 	using thread_id_t = tbb::tbb_thread::id;
 private:
-	scoped_ptr< tbb::tbb_thread > _thread;
+	std::unique_ptr<tbb::tbb_thread> _thread;
 #endif
 
 #if (THREAD_SYSTEM == THREAD_PTHREAD)

@@ -136,8 +136,8 @@ Session::Session(const F8MetaCntx& ctx, const SessionID& sid, Persister *persist
 }
 
 //-------------------------------------------------------------------------------------------------
-Session::Session(const F8MetaCntx& ctx, Persister *persist, Logger *logger, Logger *plogger) :
-	_ctx(ctx), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
+Session::Session(const F8MetaCntx& ctx, const sender_comp_id& sci, Persister *persist, Logger *logger, Logger *plogger) :
+	_ctx(ctx), _sci(sci), _connection(), _req_next_send_seq(), _req_next_receive_seq(),
 	_sf(), _persist(persist), _logger(logger), _plogger(plogger),	// acceptor
 	_timer(*this, 10), _hb_processor(&Session::heartbeat_service, true),
 	_session_scheduler(&Session::activation_service, true), _schedule()
@@ -257,7 +257,7 @@ bool Session::enforce(const unsigned seqnum, const Message *msg)
 	if (States::is_established(_state))
 	{
 		if (_state != States::st_logon_received)
-			compid_check(seqnum, msg);
+			compid_check(seqnum, msg, _sid);
 		if (msg->get_msgtype() != Common_MsgType_SEQUENCE_RESET && sequence_check(seqnum, msg))
 			return false;
 	}
@@ -381,12 +381,15 @@ application_call:
 }
 
 //-------------------------------------------------------------------------------------------------
-void Session::compid_check(const unsigned seqnum, const Message *msg)
+void Session::compid_check(const unsigned seqnum, const Message *msg, const SessionID& id) const
 {
-	if (!_sid.same_sender_comp_id(msg->Header()->get<target_comp_id>()->get()))
-		throw BadCompidId(msg->Header()->get<target_comp_id>()->get());
-	if (!_sid.same_target_comp_id(msg->Header()->get<sender_comp_id>()->get()))
-		throw BadCompidId(msg->Header()->get<sender_comp_id>()->get());
+	if (_loginParameters._enforce_compids)
+	{
+		if (!id.same_sender_comp_id(msg->Header()->get<target_comp_id>()->get()))
+			throw BadCompidId(msg->Header()->get<target_comp_id>()->get());
+		if (!id.same_target_comp_id(msg->Header()->get<sender_comp_id>()->get()))
+			throw BadCompidId(msg->Header()->get<sender_comp_id>()->get());
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -436,9 +439,27 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 	do_state_change(States::st_logon_received);
 	const bool reset_given(msg->have(Common_ResetSeqNumFlag) && msg->get<reset_seqnum_flag>()->get());
 	ostringstream ostr;
+	sender_comp_id sci; // so this should be our tci
+	msg->Header()->get(sci);
+	target_comp_id tci; // so this should be our sci
+	msg->Header()->get(tci);
+	SessionID id(_ctx._beginStr, tci(), sci());
 
 	if (_connection->get_role() == Connection::cn_initiator)
 	{
+		if (id != _sid)
+		{
+			ostr.str("");
+			ostr << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sid.get_senderCompID() << ')';
+			GlobalLogger::log(ostr.str());
+			if (_loginParameters._enforce_compids)
+			{
+				stop();
+				do_state_change(States::st_session_terminated);
+				return false;
+			}
+		}
+
 		enforce(seqnum, msg);
 		heartbeat_interval hbi;
 		msg->get(hbi);
@@ -453,11 +474,18 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		default_appl_ver_id davi;
 		msg->get(davi);
 
-		sender_comp_id sci; // so this is our tci
-		msg->Header()->get(sci);
-		target_comp_id tci; // so this is our sci
-		msg->Header()->get(tci);
-		SessionID id(_ctx._beginStr, tci(), sci());
+		if (_sci() != tci())
+		{
+			ostr.str("");
+			ostr << "Inbound TargetCompID not recognised (" << tci << "), expecting (" << _sci << ')';
+			GlobalLogger::log(ostr.str());
+			if (_loginParameters._enforce_compids)
+			{
+				stop();
+				do_state_change(States::st_session_terminated);
+				return false;
+			}
+		}
 
 		if (!_loginParameters._clients.empty())
 		{

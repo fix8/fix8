@@ -1,8 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 
-#ifndef _FF_OCL_UTILITIES_HPP_
-#define _FF_OCL_UTILITIES_HPP_
-
 /*!
  * \link
  * \file ocl_utilities.hpp
@@ -39,6 +36,10 @@
   Mehdi Goli: m.goli@rgu.ac.uk
   aldinuc: minor changes */
 //OpenCL
+
+#ifndef FF_OCL_UTILITIES_HPP
+#define FF_OCL_UTILITIES_HPP
+
 
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
@@ -272,4 +273,4 @@ public:
  * }
  */
 
-#endif 
+#endif  /* FF_OCL_UTILITIES_HPP */
