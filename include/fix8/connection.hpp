@@ -335,7 +335,7 @@ public:
 		f8_scoped_spin_lock guard(_con_spl);
 		if (destroy)
 		{
-			scoped_ptr<Message> msg(from);
+			std::unique_ptr<Message> msg(from);
 			return _session.send_process(msg.get());
 		}
 		return _session.send_process(from);
@@ -370,7 +370,7 @@ public:
 		{
 			for (std::vector<Message *>::const_iterator itr(msgs.begin()), eitr(msgs.end()); itr != eitr; ++itr)
 			{
-				scoped_ptr<Message> smsg(*itr);
+				std::unique_ptr<Message> smsg(*itr);
 			}
 		}
 		///@todo: need assert on result==msgs.size()

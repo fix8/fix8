@@ -8,9 +8,6 @@
  * \brief TODO
  */
 
-#ifndef _FF_UTILS_HPP_
-#define _FF_UTILS_HPP_
-
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it
@@ -29,6 +26,9 @@
  *
  ****************************************************************************
  */
+
+#ifndef FF_UTILS_HPP
+#define FF_UTILS_HPP
 
 #include <assert.h>
 #include <stdio.h>
@@ -120,7 +120,10 @@ static inline void error(const char * str, ...) {
     const char err[]="ERROR: ";
     va_list argp;
     char * p=(char *)malloc(strlen(str)+strlen(err)+10);
-    if (!p) abort();
+    if (!p) {
+        printf("FATAL ERROR: no enough memory!\n");
+        abort();
+    }
     strcpy(p,err);
     strcpy(p+strlen(err), str);
     va_start(argp, str);
@@ -211,7 +214,11 @@ static inline double ffTime(int tag, bool lock=false) {
     static struct timeval tv_stop  = {0,0};
     // needed to protect gettimeofday
     // if multiple threads call ffTime
+#if (__cplusplus >= 201103L) || (defined __GXX_EXPERIMENTAL_CXX0X__) || (defined(HAS_CXX11_VARIADIC_TEMPLATES))
+    static lock_t L;
+#else
     static lock_t L = {0};
+#endif
 
     double res=0.0;
     switch(tag) {
@@ -242,4 +249,4 @@ static inline double ffTime(int tag, bool lock=false) {
 
 } // namespace ff
 
-#endif /* _FF_UTILS_HPP_ */
+#endif /* FF_UTILS_HPP */

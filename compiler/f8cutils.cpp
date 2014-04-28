@@ -97,7 +97,7 @@ ostream *open_ofile(const string& odir, const string& fname, string& target)
 	string odirect(odir);
 	ofs << CheckAddTrailingSlash(odirect) << fname;
 	target = ofs.str();
-	scoped_ptr<ofstream> os(new ofstream(target.c_str()));
+	unique_ptr<ofstream> os(new ofstream(target.c_str()));
 	if (!*os)
 	{
 		cerr << "Error opening file \'" << target << '\'';
@@ -296,8 +296,8 @@ int process_message_fields(const std::string& where, const XmlElement *xt, Field
 string bintoaschex(const string& from)
 {
 	ostringstream result;
-	for (string::const_iterator itr(from.begin()); itr != from.end(); ++itr)
-		result << uppercase << hex << setw(2) << setfill('0') << static_cast<unsigned short>(*itr);
+	for (const auto& cc : from)
+		result << uppercase << hex << setw(2) << setfill('0') << static_cast<unsigned short>(cc);
 	return "FIX8_" + result.str() + '_';
 }
 

@@ -91,12 +91,20 @@ struct SslContext
 /// Class to encapsulate a Fix8 configuration.
 class Configuration
 {
+protected:
+	enum group_types
+	{
+		g_sessions, g_persisters, g_loggers, g_server_group,
+		g_ssl_context, g_schedules, g_logins, g_client_group,
+		g_count
+	};
+
+private:
 	static RegExp _ipexp;
 
-	const std::string _xmlfile;
 	const XmlElement *_root, *_default;
 	using ConfigMap = std::map<const std::string, const XmlElement *>;
-	ConfigMap _sessions, _persisters, _loggers, _server_group, _ssl_context, _schedules, _logins, _client_group;
+	std::vector<ConfigMap> _groups;
 	std::vector<const XmlElement *> _allsessions;
 
 	/*! Find an xml entity by tag in the supplied map.
@@ -106,46 +114,19 @@ class Configuration
 	const XmlElement *find_element(const std::string& tag, const ConfigMap& from) const
 		{ ConfigMap::const_iterator itr(from.find(tag)); return itr != from.end() ? itr->second : nullptr; }
 
-	/*! Find a logger by tag.
+protected:
+	/*! Find an element in a specified group.
+	  \param type group type enum
 	  \param tag the tag to find
 	  \return the found entity or 0 if not found */
-	const XmlElement *find_logger(const std::string& tag) const { return find_element(tag, _loggers); }
+	const XmlElement *find_group(group_types type, const std::string& tag) const
+		{ return find_element(tag, _groups[type]); }
 
-	/*! Find a persister by tag.
-	  \param tag the tag to find
-	  \return the found entity or 0 if not found */
-	const XmlElement *find_persister(const std::string& tag) const { return find_element(tag, _persisters); }
-
-	/*! Find a _server_group by tag.
-	  \param tag the tag to find
-	  \return the found entity or 0 if not found */
-	const XmlElement *find_server_group(const std::string& tag) const { return find_element(tag, _server_group); }
-
-	/*! Find a _client_group by tag.
-	  \param tag the tag to find
-	  \return the found entity or 0 if not found */
-	const XmlElement *find_client_group(const std::string& tag) const { return find_element(tag, _client_group); }
-
-	/*! Find a _ssl_context by tag.
-	  \param tag the tag to find
-	  \return the found entity or 0 if not found */
-	const XmlElement *find_ssl_context(const std::string& tag) const { return find_element(tag, _ssl_context); }
-
-	/*! Find a session schedule by tag.
-	  \param tag the tag to find
-	  \return the found entity or 0 if not found */
-	const XmlElement *find_schedule(const std::string& tag) const { return find_element(tag, _schedules); }
-
-	/*! Find a session login schedule by tag.
-	  \param tag the tag to find
-	  \return the found entity or 0 if not found */
-	const XmlElement *find_login_schedule(const std::string& tag) const { return find_element(tag, _logins); }
-
+private:
 	/*! Search the given element for a tag or look in the default element
 	  \param from the xml entity to search
 	  \param tag the tag to find
 	  \param target place to put the resul
-	  \param is_session if true, special case for session map
 	  \return true if found and stored */
 	bool from_or_default(const XmlElement *from, const f8String& tag, f8String& target) const
 		{ return (from && from->GetAttr(tag, target)) || (_default && _default->GetAttr(tag, target)); }
@@ -228,7 +209,23 @@ public:
 	  \param xmlfile xml config filename.
 	  \param do_process if true, process the file on construction */
 	Configuration(const std::string& xmlfile, bool do_process=false)
-		: _xmlfile(xmlfile), _root(XmlElement::Factory(_xmlfile)), _default(_root ? _root->find("fix8/default") : nullptr)
+		: _root(XmlElement::Factory(xmlfile)),
+		_default(_root ? _root->find("fix8/default") : nullptr),
+		_groups(g_count)
+	{
+		if (!exist(xmlfile))
+			throw ConfigurationError("server config file not found", xmlfile);
+		if (do_process)
+			process();
+	}
+
+	/*! Ctor.
+	  \param istr xml stream
+	  \param do_process if true, process the stream on construction */
+	Configuration(std::istream& istr, bool do_process=false)
+		: _root(XmlElement::Factory(istr, "stream")),
+		_default(_root ? _root->find("fix8/default") : nullptr),
+		_groups(g_count)
 	{
 		if (do_process)
 			process();
@@ -246,11 +243,6 @@ public:
 	  \return the session entity or 0 if not found */
 	const XmlElement *get_session(const unsigned num) const
 		{ return num < _allsessions.size() ? _allsessions[num] : nullptr; }
-
-	/*! Find a session entity by name.
-	  \param tag name of session
-	  \return the session entity or 0 if not found */
-	const XmlElement *find_session(const std::string& tag) const { return find_element(tag, _sessions); }
 
 	/*! Extract the role from a session entity.
 	  \param from xml entity to search
@@ -283,7 +275,7 @@ public:
 	  \param to target logfile string
 	  \param sid optional session id to build name from
 	  \return target string */
-	F8API std::string& get_logname(const XmlElement *from, std::string& to, const SessionID *sid=0) const;
+	F8API std::string& get_logname(const XmlElement *from, std::string& to, const SessionID *sid=nullptr) const;
 
 	/*! Extract the connect_timeout interval (sec) from a session entity.
 	  \param from xml entity to search
@@ -376,6 +368,13 @@ public:
 	bool get_silent_disconnect(const XmlElement *from, const bool def=false) const
 		{ return find_or_default(from, "silent_disconnect", def); }
 
+	/*! Extract the enforce_compids flag. When false, compids are not checked.
+	  \param from xml entity to search
+	  \param def default value if not found
+	  \return true if enforce_compids flag was passed and was true */
+	bool get_enforce_compids_flag(const XmlElement *from, const bool def=true) const
+		{ return find_or_default(from, "enforce_compids", def); }
+
 	/*! Extract the ignore_logon_sequence_check flag from a session entity.
 	  \param from xml entity to search
 	  \param def default value if not found
@@ -446,14 +445,14 @@ public:
 	  \param sid optional session id to build name from
 	  \param flag additional flag for persister use
 	  \return new persister or 0 if unable to create */
-	F8API Persister *create_persister(const XmlElement *from, const SessionID *sid=0, bool flag=false) const;
+	F8API Persister *create_persister(const XmlElement *from, const SessionID *sid=nullptr, bool flag=false) const;
 
 	/*! Create a new logger object from a session entity.
 	  \param from xml entity to search
 	  \param ltype log type
 	  \param sid optional session id to build name from
 	  \return new logger or 0 if unable to create */
-	F8API Logger *create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid=0) const;
+	F8API Logger *create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid=nullptr) const;
 
 	/*! Create schedule object from a session entity.
 	  \param from xml entity to search
@@ -484,10 +483,6 @@ public:
 	/*! Return ptr to the root XmlElement
 	  \return root element */
 	const XmlElement *get_root() const { return _root; }
-
-	/*! Get the xml filename
-	  \return xml filename */
-	const std::string& get_xmlfile() const { return _xmlfile; }
 };
 
 //-------------------------------------------------------------------------------------------------

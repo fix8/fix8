@@ -727,17 +727,22 @@ const string& XmlElement::InplaceXlate (string& what)
 }
 
 //-----------------------------------------------------------------------------------------
-XmlElement *XmlElement::Factory(const string& fname)
+XmlElement *XmlElement::Factory(istream& ifs, const char *docpath)
 {
-	ifstream ifs(fname.c_str());
-
 #ifdef _MSC_VER
 	stringstream buffer;
 	buffer << ifs.rdbuf();
-   return ifs ? new XmlElement(buffer, 0, 0, 0, 0, fname.c_str()) : nullptr;
+   return ifs ? new XmlElement(buffer, 0, nullptr, 0, 0, docpath) : nullptr;
 #else
-	return ifs ? new XmlElement(ifs, 0, 0, 0, 0, fname.c_str()) : nullptr;
+	return ifs ? new XmlElement(ifs, 0, nullptr, 0, 0, docpath) : nullptr;
 #endif
+}
+
+//-----------------------------------------------------------------------------------------
+XmlElement *XmlElement::Factory(const string& fname)
+{
+	ifstream ifs(fname.c_str());
+	return Factory(ifs, fname.c_str());
 }
 
 //-----------------------------------------------------------------------------------------

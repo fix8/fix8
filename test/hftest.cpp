@@ -239,8 +239,7 @@ int main(int argc, char **argv)
 
 		if (server)
 		{
-			FIX8::ServerSession<hf_session_server>::Server_ptr
-				ms(new FIX8::ServerSession<hf_session_server>(FIX8::TEX::ctx(), conf_file, "TEX1"));
+			unique_ptr<FIX8::ServerSessionBase> ms(new FIX8::ServerSession<hf_session_server>(FIX8::TEX::ctx(), conf_file, "TEX1"));
 
 			XmlElement::XmlSet eset;
 
@@ -248,8 +247,7 @@ int main(int argc, char **argv)
 			{
 				if (!ms->poll())
 					continue;
-				FIX8::SessionInstance<hf_session_server>::Instance_ptr
-					inst(new FIX8::SessionInstance<hf_session_server>(*ms));
+				unique_ptr<FIX8::SessionInstanceBase> inst(ms->create_server_instance());
 				if (!quiet)
 					inst->session_ptr()->control() |= FIX8::Session::print;
 				ostringstream sostr;
@@ -274,7 +272,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			FIX8::scoped_ptr<FIX8::ClientSession<hf_session_client> >
+			unique_ptr<FIX8::ClientSessionBase>
 				mc(reliable ? new FIX8::ReliableClientSession<hf_session_client>(FIX8::TEX::ctx(), conf_file, "DLD1")
 							   : new FIX8::ClientSession<hf_session_client>(FIX8::TEX::ctx(), conf_file, "DLD1"));
 			if (!quiet)

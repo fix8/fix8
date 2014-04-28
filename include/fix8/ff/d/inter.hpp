@@ -10,9 +10,6 @@
  *
  */
  
-#ifndef _FF_COMMINTERFACE_HPP_
-#define _FF_COMMINTERFACE_HPP_
-
 /* ***************************************************************************
  *
  *  This program is free software; you can redistribute it and/or modify it
@@ -30,6 +27,10 @@
  *
  ****************************************************************************
  */
+
+#ifndef FF_COMMINTERFACE_HPP
+#define FF_COMMINTERFACE_HPP
+
 
 namespace ff {
 
@@ -222,4 +223,4 @@ public:
 
 
 } // namespace
-#endif  // _FF_COMMINTERFACE_HPP_
+#endif  /* FF_COMMINTERFACE_HPP */

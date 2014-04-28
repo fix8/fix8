@@ -205,7 +205,7 @@ struct F8MetaCntx
 	{
 		if (_flu_sz == 1)
 			throw f8Exception("F8MetaCntx initialisation incomplete");
-		std::fill(_flu, _flu + _flu_sz, static_cast<BaseEntry *>(0));
+		std::fill(_flu, _flu + _flu_sz, nullptr);
       for (unsigned offset(0); offset < _be.size(); ++offset)
 			*(_flu + _be.at(offset)->_key) = &_be.at(offset)->_value;
 	}
@@ -298,7 +298,7 @@ public:
 	    \param ignore bytes to ignore counting back from end of message
 	    \param permissive_mode if true, ignore unknown fields
 	    \return number of bytes consumed */
-	F8API unsigned decode( const f8String& from, unsigned offset, unsigned ignore = 0, bool permissive_mode = false );
+	F8API unsigned decode(const f8String& from, unsigned offset, unsigned ignore=0, bool permissive_mode=false);
 
 	/*! Decode repeating group from string.
 	    \param fnum repeating group fix field num (no...)
@@ -306,29 +306,29 @@ public:
 	    \param offset in bytes to decode from
 	    \param ignore bytes to ignore counting back from end of message
 	    \return number of bytes consumed */
-	F8API unsigned decode_group( const unsigned short fnum, const f8String& from, unsigned offset, unsigned ignore = 0 );
+	F8API unsigned decode_group(const unsigned short fnum, const f8String& from, unsigned offset, unsigned ignore=0);
 
 	/*! Encode message to stream.
 	    \param to stream to encode to
 	    \return number of bytes encoded */
-	F8API size_t encode( std::ostream& to ) const;
+	F8API size_t encode(std::ostream& to) const;
 
 	/*! Encode message to buffer.
 	    \param to buffer to encode to
 	    \return number of bytes encoded */
-	F8API size_t encode( char *to ) const;
+	F8API size_t encode(char *to) const;
 
 	/*! Encode group message to stream.
 	    \param fnum repeating group fix field num (no...)
 	    \param to stream to encode to
 	    \return number of bytes encoded */
-	F8API size_t encode_group( const unsigned short fnum, std::ostream& to ) const;
+	F8API size_t encode_group(const unsigned short fnum, std::ostream& to) const;
 
 	/*! Encode group message to buffer.
 	    \param fnum repeating group fix field num (no...)
 	    \param to buffer to encode to
 	    \return number of bytes encoded */
-	F8API size_t encode_group( const unsigned short fnum, char *to ) const;
+	F8API size_t encode_group(const unsigned short fnum, char *to) const;
 
 	/*! Check to see if positions of fields are as required.
 	  \return field number of field not in order, 0 if all ok */
@@ -338,7 +338,7 @@ public:
 	    \param to target message
 	    \param force if true copy all fields regardless, replacing any existing, adding any new
 	    \return number of fields copied */
-	F8API unsigned copy_legal( MessageBase *to, bool force = false ) const;
+	F8API unsigned copy_legal(MessageBase *to, bool force=false) const;
 
 	/*! Check that this field has the realm (domain) pointer set; if not then set.
 	    \param where field to check */
@@ -559,24 +559,24 @@ public:
 		 \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
 	    \param with field to replace with
 	    \return pointer to original field or 0 if not found */
-	F8API BaseField *replace( const unsigned short fnum, Presence::const_iterator itr, BaseField *with );
+	F8API BaseField *replace(const unsigned short fnum, Presence::const_iterator itr, BaseField *with);
 
 	/*! Replace a field value with another field value.
 	    \param fnum field number
 	    \param with field to replace with
 	    \return pointer to original field or 0 if not found */
-	F8API BaseField *replace( const unsigned short fnum, BaseField *with );
+	F8API BaseField *replace(const unsigned short fnum, BaseField *with);
 
 	/*! Remove a field from this message.
 	    \param fnum field number
 		 \param itr hint iterator: if end, set to itr of found element, if not end use it to locate element
 	    \return pointer to original field or 0 if not found */
-	F8API BaseField *remove( const unsigned short fnum, Presence::const_iterator itr );
+	F8API BaseField *remove(const unsigned short fnum, Presence::const_iterator itr);
 
 	/*! Remove a field from this message.
 	    \param fnum field number
 	    \return pointer to original field or 0 if not found */
-	F8API BaseField *remove( const unsigned short fnum );
+	F8API BaseField *remove(const unsigned short fnum);
 
 	/*! Find a group of a specified type.
 	    \tparam T type of group to get
@@ -632,18 +632,18 @@ public:
 	/*! Print the message to the specified stream.
 	    \param os refererence to stream to print to
 	    \param depth nesting depth */
-	F8API virtual void print( std::ostream& os, int depth = 0 ) const;
+	F8API virtual void print(std::ostream& os, int depth=0) const;
 
 	/*! Print the field specified by the field num from message to the specified stream.
 	    \param fnum field number
 	    \param os refererence to stream to print to */
-	F8API virtual void print_field( const unsigned short fnum, std::ostream& os ) const;
+	F8API virtual void print_field(const unsigned short fnum, std::ostream& os) const;
 
 	/*! Print the repeating group to the specified stream.
 	    \param fnum field number
 	    \param os refererence to stream to print to
 	    \param depth nesting depth */
-	F8API virtual void print_group( const unsigned short fnum, std::ostream& os, int depth = 0 ) const;
+	F8API virtual void print_group(const unsigned short fnum, std::ostream& os, int depth=0) const;
 
 	/*! Get the FieldTraits
 	   \return reference to FieldTraits object */
@@ -824,12 +824,12 @@ public:
 	/*! Encode message to stream.
 	    \param to stream to encode to
 	    \return number of bytes encoded */
-	F8API size_t encode( f8String& to ) const;
+	F8API size_t encode(f8String& to) const;
 
 	/*! Encode message to stream. Perform absolutely minimal copying of output buffer.
 	    \param to pointer to pointer to buffer
 	    \return number of bytes encoded; to ptr is updated with address of start of encoded message string */
-	F8API size_t encode( char **to ) const;
+	F8API size_t encode(char **to) const;
 
 	/*! Clone this message. Performs a deep copy.
 	    \return pointer to copy of this message */
@@ -912,7 +912,7 @@ public:
 	    \param no_chksum if true, do not perform chksum verification
 	    \param permissive_mode if true, ignore unknown fields
 	    \return pointer to newly created Message (which will be a super class of the generated type) */
-	F8API static Message *factory( const F8MetaCntx& ctx, const f8String& from, bool no_chksum = false, bool permissive_mode = false );
+	F8API static Message *factory(const F8MetaCntx& ctx, const f8String& from, bool no_chksum=false, bool permissive_mode=false);
 
 	/*! Set the custom sequence number. Used to override and suppress automatic seqnum assignment.
 	    \param seqnum the outbound sequence number to use for this message. */
@@ -955,7 +955,7 @@ public:
 	/*! Print the message to the specified stream.
 	    \param os refererence to stream to print to
 	    \param depth not used */
-	F8API virtual void print( std::ostream& os, int depth = 0 ) const;
+	F8API virtual void print(std::ostream& os, int depth=0) const;
 
 	/*! Inserter friend.
 	    \param os stream to send to

@@ -126,22 +126,20 @@ AC_CHECK_TOOL([DOXYGEN],[doxygen])
 
 # check what version of gcc we're using
 
-# test for gcc >= 4.2
-is_late_gcc=no
-is_clang=no
+# compiler specific settings
 case "$CXX" in
   *clang*)
-		is_clang=yes
 		LIBS="$LIBS -lstdc++ -lm " ;;
   *g++*)
 		GCC_VERSION=`$CC -dumpversion`
 		gcc_major=`echo $GCC_VERSION | cut -d. -f1`
-		gcc_minor=`echo $GCC_VERSION | cut -d. -f2`
-		if test $gcc_major -ge 4 -a $gcc_minor -ge 2; then
-			is_late_gcc=yes
-		fi ;;
+		gcc_minor=`echo $GCC_VERSION | cut -d. -f2` ;;
 	*) ;;
 esac
+
+m4_include(m4/ax_check_compile_flag.m4)
+has_assignmentvars=no
+AX_CHECK_COMPILE_FLAG([-fno-var-tracking-assignments], [has_assignmentvars=yes])
 
 oktotogglevar=yes
 AC_ARG_ENABLE([toggleassignmentvars],
@@ -152,8 +150,8 @@ AC_ARG_ENABLE([toggleassignmentvars],
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-toggleassignmentvars) ;;
 esac])
 
-# use -fvar-tracking-assignments-toggle
-AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$is_clang = xno && test x$is_late_gcc = xyes && test x$oktotogglevar = xyes])
+# use -fvar-tracking-assignments
+AM_CONDITIONAL(TOGGLETRACKINGASSIGNMENTS, [test x$has_assignmentvars = xyes && test x$oktotogglevar = xyes])
 
 if test -z "$DOXYGEN";
 	then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])

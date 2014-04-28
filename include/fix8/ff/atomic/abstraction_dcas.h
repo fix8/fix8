@@ -1,5 +1,5 @@
-#ifndef __LIBLFDS_H_
-#define __LIBLFDS_H_
+#ifndef FF_LIBLFDS_H
+#define FF_LIBLFDS_H
 
 /* 
  * This file is taken from liblfds.6 a portable, license-free, 
@@ -518,4 +518,4 @@ static INLINE atom_t abstraction_cas( volatile atom_t *destination, atom_t excha
   }
 #endif
 
-#endif // __LIBLFDS_H_
+#endif /* FF_LIBLFDS_H */

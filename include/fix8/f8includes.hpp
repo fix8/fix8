@@ -73,6 +73,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #endif
 
 #include <unordered_map>
+#include <functional>
 #include <errno.h>
 #include <fix8/f8exception.hpp>
 #include <fix8/hypersleep.hpp>
@@ -100,5 +101,6 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <fix8/configuration.hpp>
 #include <fix8/persist.hpp>
 #include <fix8/sessionwrapper.hpp>
+#include <fix8/multisession.hpp>
 
 #endif // _FIX8_INCLUDES_HPP_

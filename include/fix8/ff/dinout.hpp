@@ -4,9 +4,6 @@
  *  \brief Contains the definition of the \p ff_dnode class, which is an extension 
  *  of the base class \p ff_node, with features oriented to distributed systems.
  */
- 
-#ifndef _FF_DNODE_HPP_
-#define _FF_DNODE_HPP_
 /* ***************************************************************************
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License version 3 as 
@@ -24,7 +21,9 @@
  *
  ****************************************************************************
  */
-
+ 
+#ifndef FF_DNODE_HPP
+#define FF_DNODE_HPP
 
 #include <cstdlib>
 #include <ff/dnode.hpp>
@@ -295,4 +294,4 @@ dnode_cbk_t ff_dnode<CommImpl>::cb=0;
 
 } // namespace ff
 
-#endif /* _FF_NODE_HPP_ */
+#endif /* FF_NODE_HPP */

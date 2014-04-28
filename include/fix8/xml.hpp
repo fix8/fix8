@@ -94,7 +94,7 @@ public:
 	  \param txtline xml sourcefile line number
 	  \param depth depth nesting level
 	  \param rootAttr root attribute string */
-	F8API XmlElement(std::istream& ifs, int subidx, XmlElement *parent=0, int txtline=0, int depth=0, const char *rootAttr=0);
+	F8API XmlElement(std::istream& ifs, int subidx, XmlElement *parent=nullptr, int txtline=0, int depth=0, const char *rootAttr=nullptr);
 
 	/// Dtor.
 	F8API virtual ~XmlElement();
@@ -118,7 +118,7 @@ public:
 	  \param delim the Xpath delimiter
 	  \return the found or 0 if not found */
 	F8API const XmlElement *find(const std::string& what, bool ignorecase = false,
-		const std::string *atag=0, const std::string *aval=0, const char delim='/') const;
+		const std::string *atag=nullptr, const std::string *aval=nullptr, const char delim='/') const;
 
 	/*! Recursively find all elements with a given name, attribute name and attribute value.
 	  \param what the name to search for
@@ -129,7 +129,7 @@ public:
 	  \param delim the Xpath delimiter
 	  \return the number of found elements */
 	F8API int find( const std::string& what, XmlSet& eset, bool ignorecase = false,
-		const std::string *atag=0, const std::string *aval=0, const char delim='/') const;
+		const std::string *atag=nullptr, const std::string *aval=nullptr, const char delim='/') const;
 
 	/*! Find an attribute's with the given name.
 	  \param what attribute to find
@@ -268,9 +268,15 @@ public:
 	const std::string *GetDecl() const { return decl_; }
 
 	/*! Create a new root element (and recursively parse) from a given xml filename.
+	  \param istr an open std::istream of an xml document
+	  \param docpath string providing info about the document or path
+	  \return the new element */
+	F8API static XmlElement *Factory(std::istream& istr, const char *docpath=nullptr);
+
+	/*! Create a new root element (and recursively parse) from a given xml istream.
 	  \param fname the xml filename
 	  \return the new element */
-	F8API static XmlElement *Factory( const std::string& fname );
+	F8API static XmlElement *Factory(const std::string& fname);
 
 	/*! Get an iterator to the first child attribute.
 	  \return const_iterator to first attribute */
