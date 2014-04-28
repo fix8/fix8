@@ -64,7 +64,7 @@ public:
 class hf_session_client : public FIX8::Session
 {
 	tex_router_client _router;
-	typedef std::queue<FIX8::TEX::NewOrderSingle *> Nos_queue;
+	using Nos_queue = std::queue<FIX8::TEX::NewOrderSingle *>;
 	Nos_queue _nos_queue;
 
 public:
@@ -166,7 +166,7 @@ class MyMenu
 	std::istream _istr;
 	std::ostream& _ostr;
 
-	typedef FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem> Handlers;
+	using Handlers = FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
 	static const Handlers _handlers;
 	static const Handlers::TypePair _valueTable[];
 

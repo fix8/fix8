@@ -59,21 +59,18 @@ using namespace std;
 //-------------------------------------------------------------------------------------------------
 namespace FIX8
 {
-	char glob_log0[max_global_filename_length] = { "global_filename_not_set.log" };
+	char glob_log0[max_global_filename_length] { "global_filename_not_set.log" };
 
 #ifdef _MSC_VER
 	template<>
-	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance;
+	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0>>::_instance;
 #else
 	template<>
-	f8_atomic<SingleLogger<glob_log0> *> Singleton<SingleLogger<glob_log0> >::_instance
+	f8_atomic<SingleLogger<glob_log0>*> Singleton<SingleLogger<glob_log0>>::_instance
 		= f8_atomic<SingleLogger<glob_log0> *>();
 #endif
-    //template<>
-    //f8_spin_lock Singleton<SingleLogger<glob_log0> >::_mutex;
-
     template<>
-    SingleLogger<glob_log0>* Singleton<SingleLogger<glob_log0> >::create_instance()
+    SingleLogger<glob_log0> *Singleton<SingleLogger<glob_log0>>::create_instance()
     {
         static f8_spin_lock mutex;
         f8_scoped_spin_lock guard(mutex);
@@ -85,8 +82,8 @@ namespace FIX8
         return _instance;
     }
 
-	const string Logger::_bit_names[] =
-		{ "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer", "inbound", "outbound" };
+	const vector<string> Logger::_bit_names
+		{ "append", "timestamp", "sequence", "compress", "pipe", "broadcast", "thread", "direction", "buffer", "inbound", "outbound", "nolf", };
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -158,7 +155,11 @@ int Logger::operator()()
 			else
 			{
 				f8_scoped_lock guard(_mutex);
-				get_stream() << ostr.str() << msg_ptr->_str << endl;
+				get_stream() << ostr.str() << msg_ptr->_str;
+				if (_flags & nolf)
+					get_stream().flush();
+				else
+					get_stream() << endl;
 			}
 		}
 #if (MPMC_SYSTEM == MPMC_FF)

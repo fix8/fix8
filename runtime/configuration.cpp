@@ -46,6 +46,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
+#include <tuple>
 
 #ifndef _MSC_VER
 #include <strings.h>
@@ -67,16 +68,16 @@ RegExp Configuration::_ipexp("^([^:]+):([0-9]+)$");
 int Configuration::process()
 {
 	if (!exist(_xmlfile))
-		throw f8Exception("server config file not found", _xmlfile);
+		throw ConfigurationError("server config file not found", _xmlfile);
 	if (!_root)
-		throw f8Exception("could not create root xml entity");
-
+		throw ConfigurationError("could not create root xml entity");
 	if (!load_map("fix8/session", _sessions, true))
-		throw f8Exception("could not locate server session in config file", _xmlfile);
+		throw ConfigurationError("could not locate server session in config file", _xmlfile);
 
 	load_map("fix8/persist", _persisters);
 	load_map("fix8/log", _loggers);
 	load_map("fix8/server_group", _server_group);
+	load_map("fix8/client_group", _client_group);
 	load_map("fix8/ssl_context", _ssl_context);
 	load_map("fix8/schedule", _schedules);
 	load_map("fix8/login", _logins);
@@ -88,7 +89,8 @@ int Configuration::process()
 Connection::Role Configuration::get_role(const XmlElement *from) const
 {
 	string role;
-	return from && from->GetAttr("role", role) ? role % "initiator" ? Connection::cn_initiator
+	return from_or_default(from, "role", role)
+		? role % "initiator" ? Connection::cn_initiator
 		: role % "acceptor" ? Connection::cn_acceptor : Connection::cn_unknown : Connection::cn_unknown;
 }
 
@@ -97,8 +99,19 @@ Poco::Net::SocketAddress Configuration::get_address(const XmlElement *from) cons
 {
 	Poco::Net::SocketAddress to;
 	string ip, port;
-	if (from && from->GetAttr("ip", ip) && from->GetAttr("port", port))
+	if (from_or_default(from, "ip", ip) && from_or_default(from, "port", port))
 		to = Poco::Net::SocketAddress(ip, port);
+
+	return to;
+}
+
+//-------------------------------------------------------------------------------------------------
+Poco::Net::IPAddress Configuration::get_ip(const XmlElement *from) const
+{
+	Poco::Net::IPAddress to;
+	string ip;
+	if (from_or_default(from, "ip", ip))
+		to = Poco::Net::IPAddress(ip);
 
 	return to;
 }
@@ -108,20 +121,19 @@ size_t Configuration::get_addresses(const XmlElement *from, vector<Server>& targ
 {
 	string name;
 	const XmlElement *which;
-	if (from && from->GetAttr("server_group", name) && (which = find_server_group(name)))
+	if (from_or_default(from, "server_group", name) && (which = find_server_group(name)))
 	{
 		XmlElement::XmlSet slist;
 		if (which->find("server_group/server", slist))
 		{
 			const Poco::Net::SocketAddress empty_addr;
-			for(XmlElement::XmlSet::const_iterator itr(slist.begin()); itr != slist.end(); ++itr)
+			for(const auto *pp : slist)
 			{
 				string name;
-				Poco::Net::SocketAddress addr(get_address(*itr));
-				if ((*itr)->GetAttr("name", name) && addr != empty_addr && (*itr)->FindAttr("active", true))
-					target.push_back(Server(name, (*itr)->FindAttr("max_retries",
-						static_cast<int>(defaults::login_retries)), addr,
-						(*itr)->FindAttr("reset_sequence_numbers", false)));
+				Poco::Net::SocketAddress addr(get_address(pp));
+				if (pp->GetAttr("name", name) && addr != empty_addr && pp->FindAttr("active", true))
+					target.push_back(Server(name, pp->FindAttr("max_retries", static_cast<int>(defaults::login_retries)), addr,
+						pp->FindAttr("reset_sequence_numbers", false)));
 			}
 		}
 		return target.size();
@@ -148,23 +160,23 @@ Schedule Configuration::create_schedule(const XmlElement *which) const
 		else
 		{
 			if (end <= start)
-				throw f8Exception("Schedule end time cannot be equal to or before session start time");
+				throw ConfigurationError("Schedule end time cannot be equal to or before session start time");
 		}
 		string daytmp;
 		const int start_day(which->GetAttr("start_day", daytmp) ? decode_dow(daytmp) : -1);
 		const int end_day(which->GetAttr("end_day", daytmp) ? decode_dow(daytmp) : start_day < 0 ? -1 : start_day);
-		return Schedule (start, end, duration, utc_offset, start_day, end_day);
+		return {start, end, duration, utc_offset, start_day, end_day};
 	}
 
-	return Schedule();
+	return {};
 }
 
 //-------------------------------------------------------------------------------------------------
 Session_Schedule *Configuration::create_session_schedule(const XmlElement *from) const
 {
 	string name;
-	const XmlElement *which;
-	if (from && from->GetAttr("schedule", name) && (which = find_schedule(name)))
+	const XmlElement *which(0);
+	if (from_or_default(from, "schedule", name) && (which = find_schedule(name)))
 	{
 		Schedule sch(create_schedule(which));
 		f8String reject_text("Business messages are not accepted now.");
@@ -173,7 +185,7 @@ Session_Schedule *Configuration::create_session_schedule(const XmlElement *from)
 		return new Session_Schedule(sch, reject_code, reject_text);
 	}
 
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -181,8 +193,8 @@ Schedule Configuration::create_login_schedule(const XmlElement *from) const
 {
 	string name;
 	const XmlElement *which;
-	return from && from->GetAttr("login", name) && (which = find_login_schedule(name))
-		? Schedule(create_schedule(which)) : Schedule();
+	return from_or_default(from, "login", name) && (which = find_login_schedule(name))
+		? create_schedule(which) : Schedule{};
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -190,7 +202,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 {
 	string name, type;
 	const XmlElement *which;
-	if (from && from->GetAttr("persist", name) && (which = find_persister(name)) && which->GetAttr("type", type))
+	if (from_or_default(from, "persist", name) && (which = find_persister(name)) && which->GetAttr("type", type))
 	{
 		if (type == "mem")
 			return new MemoryPersister;
@@ -215,7 +227,7 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 					return result.release();
 			}
 			else
-				throw f8Exception("memcached:config_string attribute must be given when using memcached.");
+				throw ConfigurationError("memcached: config_string attribute must be given when using memcached");
 		}
 		else
 #endif
@@ -227,11 +239,11 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 			{
 				scoped_ptr<HiredisPersister> result(new HiredisPersister);
 				if (result->initialise(host_str, which->FindAttr("port", 6379),
-				 which->FindAttr("connect_timeout", static_cast<unsigned>(defaults::connect_timeout)), db, flag))
-					return result.release();
+					which->FindAttr("connect_timeout", static_cast<unsigned>(defaults::connect_timeout)), db, flag))
+						return result.release();
 			}
 			else
-				throw f8Exception("redis:host attribute must be given when using redis.");
+				throw ConfigurationError("redis: host attribute must be given when using redis");
 		}
 		else
 #endif
@@ -252,14 +264,14 @@ Persister *Configuration::create_persister(const XmlElement *from, const Session
 		}
 	}
 
-	return 0;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------
 Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype, const SessionID *sid) const
 {
 	string name;
-	if (from && from->GetAttr(ltype == session_log ? "session_log" : "protocol_log", name))
+	if (from_or_default(from, ltype == session_log ? "session_log" : "protocol_log", name))
 	{
 		const XmlElement *which(find_logger(name));
 		if (which)
@@ -274,7 +286,7 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 
 				if (logname[0] == '|')
 #ifndef HAVE_POPEN
-					throw f8Exception("popen not supported on your platform");
+					throw ConfigurationError("popen not supported on your platform");
 #endif
 					return new PipeLogger(logname, get_logflags(which));
 
@@ -295,7 +307,33 @@ Logger *Configuration::create_logger(const XmlElement *from, const Logtype ltype
 		}
 	}
 
-	return 0;
+	return nullptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+Clients Configuration::create_clients(const XmlElement *from) const
+{
+	string name;
+	const XmlElement *which;
+	Clients clients;
+	if (from_or_default(from, "target_comp_id", name) && (which = find_client_group(name)))
+	{
+		XmlElement::XmlSet slist;
+		if (which->find("client_group/client", slist))
+		{
+			// <client name="Goldsteins" target_comp_id="DLD_TEX" ip="192.168.0.17" active="true" />
+			for(const auto *pp : slist)
+			{
+				string name, tci;
+				const Poco::Net::IPAddress addr(get_ip(pp));
+				if (pp->GetAttr("name", name) && pp->GetAttr("target_comp_id", tci) && pp->FindAttr("active", true))
+					if (!clients.insert(Clients::value_type(tci, Client(name, addr))).second)
+						throw ConfigurationError("Failed to add client from client_group", tci);
+			}
+		}
+	}
+
+	return clients;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -320,7 +358,7 @@ Logger::LogFlags Configuration::get_logflags(const XmlElement *from) const
 		for(char extr[32]; !istr.get(extr, sizeof(extr), '|').fail(); istr.ignore(1))
 		{
 			string result(extr);
-			flags.set(Logger::num_flags, Logger::_bit_names, trim(result));
+			flags.set(Logger::_bit_names, trim(result));
 		}
 	}
 
@@ -330,19 +368,19 @@ Logger::LogFlags Configuration::get_logflags(const XmlElement *from) const
 //-------------------------------------------------------------------------------------------------
 unsigned Configuration::get_all_sessions(vector<const XmlElement *>& target, const Connection::Role role) const
 {
-	for (vector<const XmlElement *>::const_iterator itr(_allsessions.begin()); itr != _allsessions.end(); ++itr)
-		if (role == Connection::cn_unknown || get_role(*itr) == role)
-			target.push_back(*itr);
+	for (const auto *pp : _allsessions)
+		if (role == Connection::cn_unknown || get_role(pp) == role)
+			target.push_back(pp);
 	return target.size();
 }
 
 //-------------------------------------------------------------------------------------------------
 ProcessModel Configuration::get_process_model(const XmlElement *from) const
 {
-	static const f8String process_strings[] = { "threaded", "pipelined", "coroutine" };
+	static const vector<f8String> process_strings { "threaded", "pipelined", "coroutine" };
 	string pm;
-	return from && from->GetAttr("process_model", pm)
-		? enum_str_get(pm_count, process_strings, pm, pm_thread) : pm_pipeline; // default to pipelined
+	return from_or_default(from, "process_model", pm)
+		? enum_str_get(process_strings, pm, pm_thread) : pm_pipeline; // default to pipelined
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -352,7 +390,7 @@ SslContext Configuration::get_ssl_context(const XmlElement *from) const
 	SslContext target;
 	string name;
 	const XmlElement *which;
-	if (from && from->GetAttr("ssl_context", name) && (which = find_ssl_context(name)))
+	if (from_or_default(from, "ssl_context", name) && (which = find_ssl_context(name)))
 	{
 		static std::string empty, cipher("ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"), relaxed("relaxed");
 		target._private_key_file = which->FindAttrRef("private_key_file", empty);

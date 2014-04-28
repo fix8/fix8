@@ -48,7 +48,9 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 #include <cerrno>
 #include <stdint.h>
+#if !defined(_MSC_VER)
 #include <unistd.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -68,7 +70,7 @@ bool HiredisPersister::initialise(const f8String& host, unsigned port, unsigned 
 		return true;
 	ostringstream eostr;
 	_key_base = key_base;
-	const timeval timeout = { connect_timeout, 0 }; // seconds
+	const timeval timeout { connect_timeout, 0 }; // seconds
 	if (!(_cache = redisConnectWithTimeout(host.c_str(), port, timeout)) || _cache->err)
 	{
 		if (_cache->err)

@@ -46,6 +46,7 @@ HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
+#include <tuple>
 
 #ifndef _MSC_VER
 #include <strings.h>
@@ -61,29 +62,17 @@ using namespace std;
 RegExp SessionID::_sid("([^:]+):([^-]+)->(.+)");
 
 //-------------------------------------------------------------------------------------------------
-const f8String Session::_state_names[] =
+#if defined(_MSC_VER) && !defined(BUILD_F8API)
+// no need in definition since it is in dll already
+#else
+const vector<f8String> Session::_state_names
 {
 	"none", "continuous", "session_terminated",
 	"wait_for_logon", "not_logged_in", "logon_sent", "logon_received", "logoff_sent",
 	"logoff_received", "test_request_sent", "sequence_reset_sent",
 	"sequence_reset_received", "resend_request_sent", "resend_request_received"
 };
-
-//-------------------------------------------------------------------------------------------------
-#ifndef _MSC_VER
-const Tickval::ticks Tickval::noticks;
-const Tickval::sticks Tickval::nosticks;
-const Tickval::ticks Tickval::errorticks;
-const Tickval::ticks Tickval::thousand;
-const Tickval::ticks Tickval::million;
-const Tickval::ticks Tickval::billion;
-const Tickval::ticks Tickval::second;
-const Tickval::ticks Tickval::minute;
-const Tickval::ticks Tickval::hour;
-const Tickval::ticks Tickval::day;
-const Tickval::ticks Tickval::week;
 #endif
-
 //-------------------------------------------------------------------------------------------------
 void SessionID::make_id()
 {
@@ -464,11 +453,45 @@ bool Session::handle_logon(const unsigned seqnum, const Message *msg)
 		default_appl_ver_id davi;
 		msg->get(davi);
 
-		sender_comp_id sci;
+		sender_comp_id sci; // so this is our tci
 		msg->Header()->get(sci);
-		target_comp_id tci;
+		target_comp_id tci; // so this is our sci
 		msg->Header()->get(tci);
 		SessionID id(_ctx._beginStr, tci(), sci());
+
+		if (!_loginParameters._clients.empty())
+		{
+			auto itr(_loginParameters._clients.find(sci()));
+			bool iserr(false);
+			if (itr == _loginParameters._clients.cend())
+			{
+				ostr.str("");
+				ostr << "Remote (" << sci << ") not found (" << id << "). NOT authorised to proceed.";
+				iserr = true;
+			}
+
+			if (!iserr && get<1>(itr->second) != Poco::Net::IPAddress()
+				&& get<1>(itr->second) != _connection->get_peer_socket_address().host())
+			{
+				ostr.str("");
+				ostr << "Remote (" << get<0>(itr->second) << ", " << sci << ") NOT authorised to proceed ("
+					<< _connection->get_peer_socket_address().toString() << ").";
+				iserr = true;
+			}
+
+			if (iserr)
+			{
+				GlobalLogger::log(ostr.str());
+				stop();
+				do_state_change(States::st_session_terminated);
+				return false;
+			}
+
+			ostr.str("");
+			ostr << "Remote (" << get<0>(itr->second) << ", " << sci << ") authorised to proceed ("
+				<< _connection->get_peer_socket_address().toString() << ").";
+			GlobalLogger::log(ostr.str());
+		}
 
 		// important - these objects can't be created until we have a valid SessionID
 		if (_sf)
@@ -1041,7 +1064,7 @@ f8String Session::get_thread_policy_string(_dthreadcore::thread_id_t id)
 {
    int policy;
 	ostringstream ostr;
-   sched_param param = {};
+   sched_param param {};
    if (!pthread_getschedparam(id,  &policy, &param))
 		return policy == SCHED_OTHER ? "SCHED_OTHER" : policy == SCHED_RR ? "SCHED_RR"
 			  : policy == SCHED_FIFO ? "SCHED_FIFO" : "UNKNOWN";
@@ -1054,7 +1077,7 @@ f8String Session::get_thread_policy_string(_dthreadcore::thread_id_t id)
 void Session::set_scheduler(int priority)
 {
    pthread_t thread(pthread_self());
-   sched_param param = { priority };
+   sched_param param { priority };
 
 	ostringstream ostr;
 	ostr << "Current scheduler policy: " << get_thread_policy_string(thread);
@@ -1132,5 +1155,4 @@ void Fix8PassPhraseHandler::onPrivateKeyRequested(const void*, std::string& priv
 }
 
 #endif // HAVE_OPENSSL
-
 //-------------------------------------------------------------------------------------------------

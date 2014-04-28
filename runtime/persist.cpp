@@ -409,7 +409,7 @@ unsigned MemoryPersister::get(const unsigned from, const unsigned to, Session& s
 //-------------------------------------------------------------------------------------------------
 bool MemoryPersister::put(const unsigned sender_seqnum, const unsigned target_seqnum)
 {
-	const unsigned arr[2] = { sender_seqnum, target_seqnum };
+	const unsigned arr[2] { sender_seqnum, target_seqnum };
 	return _store.insert(Store::value_type(0,
 		f8String(reinterpret_cast<const char *>(arr), sizeof(arr)))).second;
 }

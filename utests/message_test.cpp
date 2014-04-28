@@ -168,7 +168,7 @@ TEST(message, neworder_decode)
 
     FIELD_TEST(BeginString, "FIX.4.2", header, EXPECT_EQ);
     //FIELD_TEST(SendingTime, Poco::DateTime(2013, 3, 4, 5, 6, 14), header, EXPECT_EQ);
-    tm tms = { 14, 6, 5, 4, 2, 113 }; // mon is 0-11, year is from 1900
+    tm tms { 14, 6, 5, 4, 2, 113 }; // mon is 0-11, year is from 1900
     SendingTime st(tms);
     FIELD_TEST(SendingTime, st.get(), header, EXPECT_EQ);
 
@@ -195,15 +195,15 @@ TEST(message, neworder_decode)
     FIELD_TEST(Text, "TEST", neworder, EXPECT_EQ);
 
 	 // test UTCDateOnly
-    tm tvtds = { 0, 0, 0, 4, 2, 113 };
+    tm tvtds { 0, 0, 0, 4, 2, 113 };
     TotalVolumeTradedDate tvtd(tvtds);
     FIELD_TEST(TotalVolumeTradedDate, tvtd.get(), neworder, EXPECT_EQ);
 	 // test UTCTimeOnly
-    tm tvtts = { 14, 6, 5 };
+    tm tvtts { 14, 6, 5 };
     TotalVolumeTradedTime tvtt(tvtts);
     FIELD_TEST(TotalVolumeTradedTime, tvtt.get(), neworder, EXPECT_EQ);
 	 // test MonthYear
-    tm tvdds = { 0, 0, 0, 0, 2, 113 };
+    tm tvdds { 0, 0, 0, 0, 2, 113 };
     DeliveryDate tvdd(tvdds);
     FIELD_TEST(DeliveryDate, tvdd.get(), neworder, EXPECT_EQ);
 

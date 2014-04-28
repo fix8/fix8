@@ -43,7 +43,7 @@ class UsageMan
 {
 	const std::string prognm_, params_;
 	std::string argstr_, description_;
-	typedef std::map<const char, const std::pair<const std::string, const std::string> > OPTEL;
+	using OPTEL = std::map<const char, const std::pair<const std::string, const std::string>>;
 	OPTEL optels_;
 	std::list<std::string> xtrlines_;
 	const int splen_, argoptlen_;

@@ -65,7 +65,7 @@ static void strreverse(char* begin, char* end)
 }
 
 // slighly modified by DD to return target length
-size_t modp_dtoa(double value, char* str, int prec) // DD
+F8API size_t modp_dtoa(double value, char* str, int prec) // DD
 {
 	/* if input is larger than thres_max, revert to exponential */
     const double thres_max = (double)(0x7FFFFFFF);

@@ -13,28 +13,28 @@
 
 class coroutine
 {
+  friend class coroutine_ref;
+  int value_;
+
 public:
   coroutine() : value_(0) {}
   bool is_child() const { return value_ < 0; }
   bool is_parent() const { return !is_child(); }
   bool is_complete() const { return value_ == -1; }
-private:
-  friend class coroutine_ref;
-  int value_;
 };
 
 class coroutine_ref
 {
+  void operator=(const coroutine_ref&) = delete;
+  int& value_;
+  bool modified_;
+
 public:
   coroutine_ref(coroutine& c) : value_(c.value_), modified_(false) {}
   coroutine_ref(coroutine* c) : value_(c->value_), modified_(false) {}
   ~coroutine_ref() { if (!modified_) value_ = -1; }
   operator int() const { return value_; }
   int& operator=(int v) { modified_ = true; return value_ = v; }
-private:
-  void operator=(const coroutine_ref&);
-  int& value_;
-  bool modified_;
 };
 
 #define CORO_REENTER(c) \

@@ -159,7 +159,7 @@ class MyMenu
 	std::istream _istr;
 	std::ostream& _ostr;
 
-	typedef FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem> Handlers;
+	using Handlers = FIX8::StaticTable<const MenuItem, bool (MyMenu::*)(), MenuItem>;
 	static const Handlers _handlers;
 	static const Handlers::TypePair _valueTable[];
 
