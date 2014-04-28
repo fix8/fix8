@@ -48,13 +48,16 @@ MainWindow::MainWindow(const MainWindow &mw,bool copyAll)
 void MainWindow::setLoading(bool bstatus)
 {
     loadingActive = bstatus;
-    if (bstatus)
+    if (bstatus) {
         stackW->setCurrentIndex(ShowProgress);
+     }
     else {
-        if (tabW->count() > 0)
-            stackW->setCurrentWidget(tabW);
-        else
-            stackW->setCurrentWidget(noDataL);
+        if (tabW->count() > 0) {
+            stackW->setCurrentIndex(ShowTab);
+        }
+        else {
+            stackW->setCurrentIndex(ShowNoDataLabel);
+        }
     }
 }
 void MainWindow::setLoadMessage(QString str)
@@ -381,12 +384,12 @@ void MainWindow::showEvent(QShowEvent *se)
 {
     if (!loadingActive)  {
         if (tabW->count() > 0) {
-            stackW->setCurrentWidget(tabW);
+            stackW->setCurrentIndex(ShowTab);
             copyTabA->setEnabled(true);
             showMessageA->setEnabled(true);
         }
         else {
-            stackW->setCurrentWidget(noDataL);
+            stackW->setCurrentIndex(ShowNoDataLabel);
             copyTabA->setEnabled(false);
             showMessageA->setEnabled(false);
         }

@@ -1,13 +1,19 @@
 #ifndef FIX8LOG_H
 #define FIX8LOG_H
-
+#include <QFutureWatcher>
 #include <QObject>
+#include <QtConcurrent/QtConcurrent>
 #include <QMap>
 #include <QString>
 #include <globals.h>
+
 #include "mainwindow.h"
+
 class QStandardItemModel;
 class Database;
+class FutureReadData;
+
+FutureReadData * readLogFileInThread(const QString &fileName,QString &errorStr);
 
 class Fix8Log : public QObject
 {
@@ -15,6 +21,7 @@ class Fix8Log : public QObject
 public:
     explicit Fix8Log(QObject *parent = 0);
     bool init();
+    void readFileInAnotherThread(const QString &fileName,QString &errorStr);
     void readSettings();
     void writeSettings();
 public slots:
@@ -26,6 +33,7 @@ public slots:
     void displayConsoleMessage(GUI::Message);
     void displayConsoleMessage(QString, GUI::Message::MessageType = GUI::Message::InfoMsg);
     void exitAppSlot();
+     void finishedReadingDataFileSlot();
     void lastWindowClosedSlot();
     void  setTimeFormatSlot(GUI::Globals::TimeFormat);
 protected:
